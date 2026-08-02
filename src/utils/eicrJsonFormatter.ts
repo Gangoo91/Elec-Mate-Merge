@@ -410,6 +410,10 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       insulation_test_voltage: na(result.insulationTestVoltage),
       insulation_live_neutral: na(result.insulationLiveNeutral),
       insulation_live_earth: na(result.insulationLiveEarth),
+      // Voice/AI dictation writes N-E onto rows (set_insulation_ne) — the
+      // template schema expects the key; dropping it printed dictated
+      // readings as N/A.
+      insulation_neutral_earth: na(result.insulationNeutralEarth),
       insulation_resistance: na(result.insulationResistance),
       polarity: (() => {
         const v = result.polarity;
@@ -540,6 +544,10 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       insulation_test_voltage: na(result.insulationTestVoltage),
       insulation_live_neutral: na(result.insulationLiveNeutral),
       insulation_live_earth: na(result.insulationLiveEarth),
+      // Voice/AI dictation writes N-E onto rows (set_insulation_ne) — the
+      // template schema expects the key; dropping it printed dictated
+      // readings as N/A.
+      insulation_neutral_earth: na(result.insulationNeutralEarth),
       insulation_resistance: na(result.insulationResistance),
       polarity: (() => {
         const v = result.polarity;
@@ -1504,11 +1512,19 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     phases: normalisePhases(get('phases')),
     supply_voltage: get('supplyVoltageCustom') || get('supplyVoltage'),
     supplyVoltage: get('supplyVoltageCustom') || get('supplyVoltage'),
-    supply_frequency: get('supplyFrequency', '50'),
+    // Marker-preserving, in lockstep with the nested supply_characteristics
+    // copies — whichever copy the template reads, a LIM must print as LIM.
+    supply_frequency: isMarker(formData.supplyFrequency)
+      ? String(formData.supplyFrequency)
+      : get('supplyFrequency', '50'),
     supply_pme: get('supplyPME'),
     supplyPME: get('supplyPME'),
-    earthing_arrangement: normaliseEarthing(get('earthingArrangement')),
-    earthingArrangement: normaliseEarthing(get('earthingArrangement')),
+    earthing_arrangement: isMarker(formData.earthingArrangement)
+      ? String(formData.earthingArrangement)
+      : normaliseEarthing(get('earthingArrangement')),
+    earthingArrangement: isMarker(formData.earthingArrangement)
+      ? String(formData.earthingArrangement)
+      : normaliseEarthing(get('earthingArrangement')),
 
     // Main Protective Device (flat - camelCase only to avoid duplicate with nested object)
     mainProtectiveDevice: get('mainProtectiveDevice'),
@@ -1735,7 +1751,12 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     prospective_fault_current: get('prospectiveFaultCurrent'),
     supply_polarity_confirmed: getBool('supplyPolarityConfirmed'),
     other_sources_of_supply: get('otherSourcesOfSupply'),
-    other_sources_of_supply_present: getBool('otherSourcesOfSupplyPresent'),
+    // 'N/A' passthrough in lockstep with the nested copy — a user-selected
+    // N/A must not collapse to false ("No") on the certificate.
+    other_sources_of_supply_present:
+      formData.otherSourcesOfSupplyPresent === 'N/A'
+        ? 'N/A'
+        : getBool('otherSourcesOfSupplyPresent'),
     dc_conductor_config: get('dcConductorConfig'),
 
     // Section J - Particulars — keep marker passthrough (LIM/N/V/N/A) in step

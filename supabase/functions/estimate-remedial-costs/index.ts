@@ -2,11 +2,13 @@
 // Batch processes EICR defects using pricing_embeddings + practical_work_intelligence
 import { captureException } from '../_shared/sentry.ts';
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
-import { searchPricingKnowledge, formatPricingContext } from '../_shared/rag-cost-engineer.ts';
 import {
-  searchPracticalWorkIntelligence,
-  formatForAIContext,
-} from '../_shared/rag-practical-work.ts';
+  searchPricingKnowledge,
+  formatPricingContext,
+  searchLabourTimeKnowledge,
+  formatLabourTimeContext,
+} from '../_shared/rag-cost-engineer.ts';
+import { searchPracticalWorkIntelligence } from '../_shared/rag-practical-work.ts';
 
 // Attempt to repair truncated JSON (e.g. from finish_reason: 'length')
 function repairJSON(str: string): any {
@@ -136,7 +138,8 @@ serve(async (req) => {
       });
     }
 
-    const { defects, region, labourRate } = await req.json();
+    const { defects, region, labourRate, propertyType, numberOfBedrooms, propertyAge, postcode } =
+      await req.json();
 
     if (!defects || !Array.isArray(defects) || defects.length === 0) {
       return new Response(
@@ -184,9 +187,14 @@ serve(async (req) => {
       );
     }
 
-    // Build combined description for efficient single-embedding RAG search
+    // Build combined description for efficient single-embedding RAG search —
+    // include the inspector's recommended action where given (it names the
+    // actual remedial work, which is what pricing rows match on)
     const combinedDescription = defects
-      .map((d: any) => `${d.code}: ${d.description}${d.location ? ` at ${d.location}` : ''}`)
+      .map(
+        (d: any) =>
+          `${d.code}: ${d.description}${d.location ? ` at ${d.location}` : ''}${d.recommendation ? ` — ${d.recommendation}` : ''}`
+      )
       .join('. ');
 
     const pricingQuery = `electrical remedial materials: ${combinedDescription}`;
@@ -224,55 +232,93 @@ serve(async (req) => {
       throw new Error('No embedding returned');
     }
 
-    // Parallel RAG: pricing knowledge + practical work intelligence
-    // Wrap each in try/catch so RAG failures don't block the AI call
-    const [pricingResults, practicalResults] = await Promise.all([
-      searchPricingKnowledge(
-        pricingQuery,
-        embedding,
-        supabase,
-        { info: console.log, debug: console.log, warn: console.warn, error: console.error },
-        'eicr-remedial'
-      ).catch((err: any) => {
-        console.warn('Pricing RAG failed, continuing without:', err?.message);
-        return [] as any[];
-      }),
+    const ragLogger = {
+      info: console.log,
+      debug: console.log,
+      warn: console.warn,
+      error: console.error,
+    };
+
+    // Parallel RAG: pricing knowledge + practical work intelligence + labour
+    // time standards (project_mgmt_knowledge — previously unused here, so
+    // labour times came only from one hardcoded heuristic line).
+    // Wrap each in catch so RAG failures don't block the AI call.
+    const [pricingResults, practicalResults, labourTimeResults] = await Promise.all([
+      searchPricingKnowledge(pricingQuery, embedding, supabase, ragLogger, 'eicr-remedial').catch(
+        (err: any) => {
+          console.warn('Pricing RAG failed, continuing without:', err?.message);
+          return [] as any[];
+        }
+      ),
       searchPracticalWorkIntelligence(supabase, {
         query: `remedial work ${combinedDescription.substring(0, 150)}`,
         matchCount: 4,
       }),
+      searchLabourTimeKnowledge(
+        `electrical remedial labour time: ${combinedDescription.substring(0, 300)}`,
+        embedding,
+        supabase,
+        ragLogger,
+        'eicr-remedial'
+      ).catch((err: any) => {
+        console.warn('Labour time RAG failed, continuing without:', err?.message);
+        return [] as any[];
+      }),
     ]);
 
-    // Format RAG context for AI — keep minimal to reduce token usage
+    // Format RAG context for AI — keep compact to control token usage
     const pricingContext = formatPricingContext(
       Array.isArray(pricingResults) ? pricingResults.slice(0, 10) : []
     );
-    // Only use topic names from practical results (full content is too verbose for cost estimation)
+    // Topic + short excerpt — topic names alone carried no usable signal
     const practicalSummary = practicalResults.results
       .slice(0, 4)
-      .map((pw: any) => pw.primary_topic || pw.content?.substring(0, 80))
+      .map((pw: any) => {
+        const topic = pw.primary_topic || '';
+        const excerpt = (pw.content || '').substring(0, 140).trim();
+        return topic && excerpt ? `${topic}: ${excerpt}` : topic || excerpt;
+      })
       .filter(Boolean)
-      .join('; ');
+      .join('\n');
+    const usableLabourRows = (Array.isArray(labourTimeResults) ? labourTimeResults : [])
+      .filter((r: any) => r?.topic && r?.content)
+      .slice(0, 6);
+    const labourTimeContext =
+      usableLabourRows.length > 0 ? formatLabourTimeContext(usableLabourRows) : '';
 
-    // Build defect list for the prompt
+    // Build defect list for the prompt — recommendation is the inspector's
+    // named remedial action, the strongest signal for what to price
     const defectList = defects
       .map(
         (d: any, i: number) =>
-          `${i + 1}. [${d.code}] ${d.description}${d.location ? ` — Location: ${d.location}` : ''}${d.circuitRef ? ` — Circuit: ${d.circuitRef}` : ''}`
+          `${i + 1}. [${d.code}] ${d.description}${d.location ? ` — Location: ${d.location}` : ''}${d.circuitRef ? ` — Circuit: ${d.circuitRef}` : ''}${d.recommendation ? ` — Recommended action: ${d.recommendation}` : ''}`
       )
       .join('\n');
+
+    // Property + region context (all optional)
+    const propertyBits = [
+      propertyType ? String(propertyType) : '',
+      numberOfBedrooms ? `${numberOfBedrooms} bedrooms` : '',
+      propertyAge ? `approx. ${propertyAge} old` : '',
+    ]
+      .filter(Boolean)
+      .join(', ');
+    const effectiveRegion = postcode || region;
 
     const systemPrompt = `UK electrical remedial cost estimator. Quote items for EICR defects.
 
 LABOUR: £${effectiveLabourRate}/hr EXACTLY. No other rate.
-TIMES: Be realistic — replace MCB: 0.25h, bonding: 0.5h, socket swap: 0.25h, cable run: 0.5-2h, DB change: 4-6h, PFC calc: 0.1h, labelling: 0.25h. Err LOW.
+TIMES: Ground labour hours in the LABOUR TIME STANDARDS below where relevant. Fallback heuristics — replace MCB: 0.25h, bonding: 0.5h, socket swap: 0.25h, cable run: 0.5-2h, DB change: 4-6h, PFC calc: 0.1h, labelling: 0.25h. Err LOW.
 MATERIALS: 15% markup on trade prices. Use DB prices below where available.
 TESTING: ONE combined item for the whole job (not per defect).
 COMBINE: Same location/circuit = combine labour. Making good = ONE item.
 DESCRIPTIONS: Keep concise. defectDescription = original observation text.
+${propertyBits ? `PROPERTY: ${propertyBits} — factor access, cable-run lengths and board size accordingly.` : ''}
+${effectiveRegion ? `REGION: ${effectiveRegion} — reflect typical material availability and job conditions for this area (labour stays at the stated rate).` : ''}
 
 ${pricingContext}
-${practicalSummary ? `\nRELATED: ${practicalSummary}` : ''}
+${labourTimeContext ? `\n${labourTimeContext}` : ''}
+${practicalSummary ? `\nRELATED JOB INTEL:\n${practicalSummary}` : ''}
 
 DEFECTS:
 ${defectList}`;

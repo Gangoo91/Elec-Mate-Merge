@@ -109,6 +109,50 @@ async function storeQueryCache(
   }
 }
 
+// Words that appear in every query preamble / carry no pricing signal
+const KEYWORD_STOPWORDS = new Set([
+  'electrical',
+  'remedial',
+  'materials',
+  'material',
+  'location',
+  'circuit',
+  'defect',
+  'defects',
+  'work',
+  'works',
+  'with',
+  'from',
+  'that',
+  'this',
+  'have',
+  'been',
+  'required',
+  'install',
+  'installed',
+  'installation',
+  'missing',
+  'damaged',
+  'present',
+  'evident',
+  'observed',
+]);
+
+/**
+ * Extract distinctive, PostgREST-safe keyword terms from a free-text query.
+ * The previous keyword leg passed the ENTIRE query into a single ilike
+ * pattern — a whole-paragraph match that never hit, and any comma in the
+ * text broke the `.or()` filter syntax outright.
+ */
+function extractKeywordTerms(query: string, maxTerms = 6): string[] {
+  const words = query
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .split(/\s+/)
+    .filter((w) => w.length >= 4 && !KEYWORD_STOPWORDS.has(w));
+  return Array.from(new Set(words)).slice(0, maxTerms);
+}
+
 /**
  * Hybrid search: keyword + vector search combined
  */
@@ -132,6 +176,10 @@ export async function searchPricingKnowledge(
   logger.debug('Starting hybrid pricing search', { query, jobType });
 
   try {
+    // Keyword leg matches per-term (single sanitised words), never the whole
+    // query string — see extractKeywordTerms above for why.
+    const keywordTerms = extractKeywordTerms(query);
+
     // Parallel execution: vector search + keyword search
     const [vectorResults, keywordResults] = await Promise.all([
       // Vector search with lower threshold
@@ -141,12 +189,18 @@ export async function searchPricingKnowledge(
         match_count: 12, // Increase from 8 → 12
       }),
 
-      // Keyword search for common terms
-      supabase
-        .from('pricing_embeddings')
-        .select('*')
-        .or(`item_name.ilike.%${query}%,content.ilike.%${query}%`)
-        .limit(8),
+      // Keyword search for distinctive terms
+      keywordTerms.length > 0
+        ? supabase
+            .from('pricing_embeddings')
+            .select('*')
+            .or(
+              keywordTerms
+                .map((t) => `item_name.ilike.%${t}%,content.ilike.%${t}%`)
+                .join(',')
+            )
+            .limit(8)
+        : Promise.resolve({ data: [] as PricingResult[] }),
     ]);
 
     // Merge results (dedupe by id)

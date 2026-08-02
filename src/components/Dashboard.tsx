@@ -1,24 +1,25 @@
 /**
- * Inspection & Testing Dashboard — editorial redesign matching ElectricianHub
- * / SiteSafety / BusinessHub.
+ * Inspection & Testing hub.
  *
- * Sticky text-only masthead, date-eyebrow Hero with thematic two-tone
- * headline + state-aware verdict + CTA, `01 · AT A GLANCE` HeadlineStats
- * (In progress · Part P · Expiring · Completed), optional `02 · CONTINUE`
- * row when there's a draft, then numbered hairline tool grids:
- *   03 · CORE      (Certificates · Specialist · My Reports · Notices & Labels)
- *   04 · COMPLIANCE (Expiring Certs · Customers · Part P · Circuit Designer · I&T Hub)
+ * Masthead → certs. Nothing sits between them unless something is genuinely
+ * overdue, in which case one compact alert line does. The four-stat board that
+ * used to occupy the first screen is gone: every number it held already lives
+ * on the card it describes, so it was repeating the page back to itself before
+ * letting anyone start work.
  *
- * The HubCard / ContinueCard chrome is gone — uniform hairline cells with
- * black 2px gaps and single-yellow accents, mobile-flat per the project
- * working agreement.
+ * Volt appears in three places and nowhere else: the EICR launcher (the cert
+ * started most often), a card's meta count when it needs action, and the
+ * "Open" affordance. Everything else is graphite and white, so volt always
+ * reads as "this one".
+ *
+ * Every card shares CARD_BASE — one press treatment, Capacitor haptics for
+ * iOS/Android, no tap-flash.
  */
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
 import RecoverUnsavedWork from './dashboard/RecoverUnsavedWork';
 import HelpPanel from './HelpPanel';
 import { useNotifications } from '@/hooks/useNotifications';
@@ -31,69 +32,12 @@ import { reportCloud } from '@/utils/reportCloud';
 import { useDesignedCircuits } from '@/hooks/useDesignedCircuits';
 import { useQsTeamContext } from '@/hooks/useQsReview';
 import { useQsPendingCount } from '@/hooks/useQsReviewQueue';
+import { useHaptic } from '@/hooks/useHaptic';
+import { CARD_BASE, CARD_PRIMARY, CARD_NEUTRAL } from '@/components/ui/card-recipe';
 
 // ─────────────────────────────────────────────────────────────────────────
 // Editorial helpers
 // ─────────────────────────────────────────────────────────────────────────
-
-const partOfDay = (): 'MORNING' | 'AFTERNOON' | 'EVENING' => {
-  const h = new Date().getHours();
-  if (h < 12) return 'MORNING';
-  if (h < 18) return 'AFTERNOON';
-  return 'EVENING';
-};
-
-const dateEyebrow = (): string => {
-  const d = new Date();
-  const weekday = d.toLocaleDateString('en-GB', { weekday: 'long' }).toUpperCase();
-  const day = d.getDate();
-  const month = d.toLocaleDateString('en-GB', { month: 'long' }).toUpperCase();
-  return `${weekday} · ${day} ${month} · ${partOfDay()}`;
-};
-
-interface HeroHeadline {
-  yellow: string;
-  white: string;
-}
-
-const HEADLINES_OVERDUE: HeroHeadline[] = [
-  { yellow: 'Test done.', white: 'Now sign it off.' },
-  { yellow: 'The schedule', white: 'needs your name.' },
-  { yellow: 'Inspection complete.', white: 'Make it official.' },
-  { yellow: 'Loose ends.', white: 'Tie them off.' },
-  { yellow: 'Compliance backlog —', white: 'clear it down.' },
-];
-
-const HEADLINES_DRAFT: HeroHeadline[] = [
-  { yellow: 'Inspection in.', white: 'Cert one tap away.' },
-  { yellow: 'Pick up', white: 'the test sheet.' },
-  { yellow: 'Schedule done.', white: 'Sign block calling.' },
-  { yellow: 'From test results', white: 'to signed PDF.' },
-];
-
-const HEADLINES_HEALTHY: HeroHeadline[] = [
-  { yellow: 'Inspection &', white: 'testing, sorted.' },
-  { yellow: 'Test it.', white: 'Sign it. Send it.' },
-  { yellow: 'From inspection', white: 'to certificate.' },
-  { yellow: 'Inspect, test,', white: 'certify.' },
-  { yellow: 'Initial.', white: 'Periodic. Issued.' },
-  { yellow: 'Continuity, insulation,', white: 'polarity — done.' },
-];
-
-const HEADLINES_EMPTY: HeroHeadline[] = [
-  { yellow: 'First inspection.', white: 'First test. First cert.' },
-  { yellow: 'Open the schedule,', white: 'fire up the megger.' },
-  { yellow: 'Inspection &', white: 'testing starts here.' },
-];
-
-const pickHeadline = (pool: HeroHeadline[]): HeroHeadline => {
-  const now = new Date();
-  const hour = now.getHours();
-  const dayOfYear = Math.floor(
-    (now.getTime() - new Date(now.getFullYear(), 0, 0).getTime()) / 86400000
-  );
-  return pool[(hour + dayOfYear) % pool.length];
-};
 
 // ─────────────────────────────────────────────────────────────────────────
 // Sticky masthead — College pattern
@@ -131,58 +75,43 @@ const PageMasthead = () => {
 // Hero
 // ─────────────────────────────────────────────────────────────────────────
 
-const Hero = ({
-  headline,
-  verdict,
-  cta,
-}: {
-  headline: HeroHeadline;
-  verdict: string;
-  cta?: { label: string; onClick: () => void };
-}) => (
-  <motion.section
-    variants={containerVariants}
-    initial="hidden"
-    animate="visible"
-    className="relative pt-2 sm:pt-4"
-  >
-    <motion.div variants={itemVariants}>
-      <Eyebrow>{dateEyebrow()}</Eyebrow>
-    </motion.div>
-
-    <motion.h1
+/**
+ * Alert line — the one thing that can legitimately delay someone from starting
+ * a cert: work that is actually overdue.
+ *
+ * Absent when everything is clear, so the default page is masthead → certs.
+ * The whole row is the tap target and it lands on the action list.
+ */
+const AlertLine = ({ text, onClick }: { text: string; onClick: () => void }) => {
+  const haptic = useHaptic();
+  return (
+    <motion.button
       variants={itemVariants}
-      className="mt-3 font-semibold tracking-tight leading-[1.05] text-[34px] sm:text-[44px] lg:text-[56px]"
+      initial="hidden"
+      animate="visible"
+      type="button"
+      onClick={() => {
+        haptic.light();
+        onClick();
+      }}
+      // The standard graphite card surface, with volt reserved for the WORDS.
+      // A translucent volt wash (bg-elec-yellow/[0.12]) goes muddy brown on
+      // this ground — volt is only ever solid-with-black-text, or plain text.
+      // A neutral surface also stops this competing with the solid volt EICR
+      // card directly beneath it.
+      className={cn(
+        CARD_BASE,
+        CARD_NEUTRAL,
+        'min-h-11 w-full flex-row items-center justify-between gap-3 px-4 py-3'
+      )}
     >
-      <span className="text-elec-yellow">{headline.yellow}</span>{' '}
-      <span className="text-white">{headline.white}</span>
-    </motion.h1>
-
-    <motion.p
-      variants={itemVariants}
-      className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] leading-relaxed text-white/90 max-w-2xl"
-    >
-      {verdict}
-    </motion.p>
-
-    {cta && (
-      <motion.div variants={itemVariants} className="mt-5 sm:mt-6">
-        <button
-          type="button"
-          onClick={cta.onClick}
-          className={cn(
-            'group inline-flex items-center gap-2 h-10 px-4 rounded-full',
-            'border border-elec-yellow/25 bg-elec-yellow/10 hover:bg-elec-yellow/20',
-            'text-[13px] font-medium text-elec-yellow touch-manipulation transition-colors'
-          )}
-        >
-          <span>{cta.label}</span>
-          <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-        </button>
-      </motion.div>
-    )}
-  </motion.section>
-);
+      <span className="min-w-0 text-[13px] font-semibold leading-snug text-elec-yellow">
+        {text}
+      </span>
+      <span className="shrink-0 text-[12px] font-bold text-elec-yellow">View</span>
+    </motion.button>
+  );
+};
 
 // ─────────────────────────────────────────────────────────────────────────
 // QuickStart strip — hairline 4-cell mini-grid for one-tap cert launch.
@@ -192,155 +121,76 @@ const Hero = ({
 // ─────────────────────────────────────────────────────────────────────────
 
 interface QuickLaunch {
-  eyebrow: string;
   title: string;
   description: string;
   onClick: () => void;
+  /** The most-reached-for cert gets the solid volt card. */
+  primary?: boolean;
 }
 
-const QuickStartStrip = ({
-  number,
-  label,
-  items,
-}: {
-  number: string;
-  label: string;
-  items: QuickLaunch[];
-}) => (
-  <motion.section
-    variants={containerVariants}
-    initial="hidden"
-    animate="visible"
-    className="space-y-4"
-  >
-    <motion.div variants={itemVariants}>
-      <Eyebrow>
-        {number} · {label}
-      </Eyebrow>
-    </motion.div>
-
-    <motion.div
-      variants={itemVariants}
-      className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden"
+const QuickStartStrip = ({ label, items }: { label: string; items: QuickLaunch[] }) => {
+  const haptic = useHaptic();
+  return (
+    <motion.section
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-3"
     >
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
+      <motion.h2
+        variants={itemVariants}
+        className="text-[15px] font-semibold tracking-tight text-white"
+      >
+        {label}
+      </motion.h2>
 
-      {items.map((q) => (
-        <button
-          key={q.title}
-          type="button"
-          onClick={q.onClick}
-          className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors px-5 py-5 sm:px-6 sm:py-6 flex flex-col text-left touch-manipulation"
-        >
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50">
-            {q.eyebrow}
-          </span>
-          <span className="mt-2 text-[18px] sm:text-[20px] font-semibold tracking-tight leading-tight text-white group-hover:text-elec-yellow transition-colors">
-            {q.title}
-          </span>
-          <span className="mt-1.5 text-[11.5px] leading-snug text-white/55 line-clamp-2">
-            {q.description}
-          </span>
-          <div className="mt-3 inline-flex items-center gap-1 text-[11px] font-medium text-elec-yellow">
-            Start
-            <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
-          </div>
-        </button>
-      ))}
-    </motion.div>
-  </motion.section>
-);
-
-// ─────────────────────────────────────────────────────────────────────────
-// HeadlineStats
-// ─────────────────────────────────────────────────────────────────────────
-
-interface InspStat {
-  label: string;
-  value: string | number;
-  sub?: string;
-  accent?: boolean;
-  onClick: () => void;
-}
-
-const InspHeadlineStats = ({
-  stats,
-  number = '01',
-  label = 'AT A GLANCE',
-}: {
-  stats: InspStat[];
-  number?: string;
-  label?: string;
-}) => (
-  <motion.section
-    variants={containerVariants}
-    initial="hidden"
-    animate="visible"
-    className="space-y-4"
-  >
-    <motion.div variants={itemVariants}>
-      <Eyebrow>
-        {number} · {label}
-      </Eyebrow>
-    </motion.div>
-
-    <motion.div
-      variants={itemVariants}
-      className="relative grid grid-cols-2 lg:grid-cols-4 gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden"
-    >
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
-
-      {stats.map((stat) => {
-        const valueStr = String(stat.value);
-        const isNumericish =
-          typeof stat.value === 'number' || /^[\d.,+\-/%hkm£]+$/i.test(valueStr);
-        const sizeClass =
-          isNumericish || valueStr.length <= 5
-            ? 'text-4xl sm:text-5xl lg:text-[56px]'
-            : valueStr.length <= 8
-              ? 'text-3xl sm:text-4xl lg:text-5xl'
-              : 'text-2xl sm:text-3xl lg:text-4xl';
-
-        return (
+      {/* Two-up on phones. The old layout stacked one full-width row per type,
+          each ~250px tall, so reaching Minor Works meant scrolling past two
+          screens of cards for a four-item list. */}
+      <motion.div
+        variants={itemVariants}
+        className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4"
+      >
+        {items.map((q) => (
           <button
-            key={stat.label}
+            key={q.title}
             type="button"
-            onClick={stat.onClick}
-            className={cn(
-              'group relative bg-[hsl(0_0%_10%)] px-5 py-6 sm:px-7 sm:py-8 flex flex-col text-left touch-manipulation',
-              'hover:bg-[hsl(0_0%_15%)] transition-colors',
-              stat.accent &&
-                'bg-gradient-to-br from-elec-yellow/[0.06] via-amber-500/[0.02] to-transparent hover:from-elec-yellow/[0.10]'
-            )}
+            onClick={() => {
+              // Capacitor Haptics — the Taptic Engine on iOS and the vibrator
+              // on Android. navigator.vibrate (used elsewhere on this page
+              // before) does nothing at all on iOS, native app included.
+              haptic.light();
+              q.onClick();
+            }}
+            className={cn(CARD_BASE, q.primary ? CARD_PRIMARY : CARD_NEUTRAL, 'p-4')}
           >
-            <div
-              className={cn(
-                'text-[10px] font-medium uppercase tracking-[0.18em]',
-                stat.accent ? 'text-elec-yellow/80' : 'text-white/50'
-              )}
-            >
-              {stat.label}
-            </div>
+            {/* No "BS 7671" eyebrow: it was identical on three of the four
+                cards, so it separated nothing and just added a line of type. */}
             <span
               className={cn(
-                'mt-3 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none',
-                sizeClass,
-                stat.accent ? 'text-elec-yellow' : 'text-white'
+                'text-[16px] font-bold leading-tight tracking-tight transition-colors sm:text-[17px]',
+                q.primary ? 'text-black' : 'text-white group-hover:text-elec-yellow'
               )}
             >
-              {stat.value}
+              {q.title}
             </span>
-            {stat.sub && (
-              <span className="mt-3 text-[11.5px] text-white/55 group-hover:text-white/75 transition-colors">
-                {stat.sub}
-              </span>
-            )}
+            <span
+              className={cn(
+                'mt-1 text-[11.5px] leading-snug',
+                q.primary ? 'text-black/70' : 'text-white'
+              )}
+            >
+              {q.description}
+            </span>
+            {/* No "Start →" link — the whole card is the button, and a tiny
+                text link inside a tappable card is a smaller target for the
+                same job. */}
           </button>
-        );
-      })}
-    </motion.div>
-  </motion.section>
-);
+        ))}
+      </motion.div>
+    </motion.section>
+  );
+};
 
 // ─────────────────────────────────────────────────────────────────────────
 // EditorialToolGrid — same DNA as Business Hub. Cards trigger either an
@@ -359,102 +209,79 @@ interface ToolCard {
 }
 
 const EditorialToolGrid = ({
-  number,
   label,
   cards,
   columns = 'three',
 }: {
-  number: string;
   label: string;
   cards: ToolCard[];
   columns?: 'two' | 'three';
 }) => {
   const navigate = useNavigate();
+  const haptic = useHaptic();
   if (cards.length === 0) return null;
 
-  const colClass =
-    columns === 'two'
-      ? 'grid-cols-1 sm:grid-cols-2'
-      : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
-
-  const largestColCount = columns === 'two' ? 2 : 3;
-  const fillerCount = (largestColCount - (cards.length % largestColCount)) % largestColCount;
+  // 2-up on phones. These were a single column of 220px-tall cards, so the
+  // Compliance group alone was five full screens of scrolling.
+  const colClass = columns === 'two' ? 'sm:grid-cols-2' : 'sm:grid-cols-2 lg:grid-cols-3';
 
   return (
     <motion.section
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="space-y-4"
+      className="space-y-3"
     >
-      <motion.div variants={itemVariants}>
-        <Eyebrow>
-          {number} · {label}
-        </Eyebrow>
-      </motion.div>
+      <motion.h2
+        variants={itemVariants}
+        className="text-[15px] font-semibold tracking-tight text-white"
+      >
+        {label}
+      </motion.h2>
 
       <motion.div
         variants={itemVariants}
-        className={cn(
-          'relative grid auto-rows-[220px] sm:auto-rows-[240px] gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden',
-          colClass
-        )}
+        className={cn('grid grid-cols-2 gap-2.5 sm:gap-3', colClass)}
       >
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
-
-        {cards.map((card, i) => (
+        {cards.map((card) => (
           <button
             key={card.id}
             type="button"
             onClick={() => {
+              haptic.light();
               if (card.onClick) card.onClick();
               else if (card.to) navigate(card.to);
             }}
-            className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full"
+            className={cn(CARD_BASE, CARD_NEUTRAL, 'p-3.5 sm:p-4')}
           >
-            <div className="flex items-baseline justify-between gap-2">
-              <div className="flex items-baseline gap-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-                  · {card.eyebrow}
-                </span>
-              </div>
-              {card.alert && (
-                <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-red-300 border border-red-400/30 bg-red-500/10 px-1.5 py-0.5 rounded">
-                  Action
-                </span>
-              )}
-            </div>
+            <span className="min-w-0 truncate text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+              {card.eyebrow}
+            </span>
 
-            <h3 className="mt-3 sm:mt-4 text-[20px] sm:text-[22px] lg:text-[24px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
+            <span className="mt-1.5 text-[15px] font-bold leading-tight tracking-tight text-white transition-colors group-hover:text-elec-yellow sm:text-[17px]">
               {card.title}
-            </h3>
-            <p className="mt-2 text-[12.5px] leading-relaxed text-white/60 max-w-[34ch]">
+            </span>
+            <span className="mt-1 text-[11.5px] leading-snug text-white sm:text-[12.5px]">
               {card.description}
-            </p>
+            </span>
 
-            <div className="flex-grow" />
+            <span className="flex-grow" />
 
-            <div className="mt-5 flex items-center justify-between gap-3 pt-3 border-t border-white/[0.05]">
-              <span className="text-[11px] text-white/55 truncate tabular-nums">
-                {card.meta ?? 'Open'}
+            {/* The live number for this area. This is where the deleted status
+                strip's data went — a count next to the thing it counts beats a
+                scoreboard at the top of the page. Volt when it needs action. */}
+            <span className="mt-3 flex items-baseline justify-between gap-2 border-t border-white/[0.10] pt-2.5">
+              <span
+                className={cn(
+                  'min-w-0 truncate text-[11px] tabular-nums',
+                  card.alert ? 'font-semibold text-elec-yellow' : 'text-white'
+                )}
+              >
+                {card.meta ?? ''}
               </span>
-              <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow shrink-0">
-                Open
-                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
-              </span>
-            </div>
+              <span className="shrink-0 text-[12px] font-bold text-elec-yellow">Open</span>
+            </span>
           </button>
-        ))}
-
-        {Array.from({ length: fillerCount }).map((_, i) => (
-          <div
-            key={`filler-${i}`}
-            aria-hidden
-            className="hidden lg:block bg-[hsl(0_0%_10%)]"
-          />
         ))}
       </motion.div>
     </motion.section>
@@ -485,65 +312,68 @@ const TYPE_LABELS: Record<string, string> = {
 };
 
 const ContinueRow = ({
-  number,
   reportType,
   clientName,
   address,
   onClick,
 }: {
-  number: string;
   reportType: string;
   clientName: string;
   address: string;
   onClick: () => void;
-}) => (
-  <motion.section
-    variants={containerVariants}
-    initial="hidden"
-    animate="visible"
-    className="space-y-4"
-  >
-    <motion.div variants={itemVariants}>
-      <Eyebrow>{number} · CONTINUE</Eyebrow>
-    </motion.div>
-
-    <motion.div
-      variants={itemVariants}
-      className="relative bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl overflow-hidden"
+}) => {
+  const haptic = useHaptic();
+  return (
+    <motion.section
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-3"
     >
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
-      <button
-        type="button"
-        onClick={onClick}
-        className="group w-full text-left p-5 sm:p-6 lg:p-7 hover:bg-white/[0.06] transition-colors touch-manipulation flex flex-col gap-3"
+      <motion.h2
+        variants={itemVariants}
+        className="text-[15px] font-semibold tracking-tight text-white"
       >
-        <div className="flex items-baseline gap-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
-            Draft
+        Continue
+      </motion.h2>
+
+      {/*
+        One wide row rather than a five-row stack. This card describes a single
+        draft, and it was spending ~190px of height on it: eyebrow, title,
+        address, a rule, then "Pick up where you left off" next to "Resume" —
+        a helper line that said exactly what the button already said. Laid out
+        across the width instead, it's ~72px and reads in one glance.
+      */}
+      <motion.button
+        variants={itemVariants}
+        type="button"
+        onClick={() => {
+          haptic.light();
+          onClick();
+        }}
+        className={cn(CARD_BASE, CARD_NEUTRAL, 'w-full flex-row items-center gap-3 px-4 py-3')}
+      >
+        <span className="min-w-0 flex-1">
+          <span className="flex items-baseline gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em]">
+            <span className="text-elec-yellow">Draft</span>
+            <span className="min-w-0 truncate text-white">
+              · {TYPE_LABELS[reportType] ?? reportType.toUpperCase()}
+            </span>
           </span>
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            · {TYPE_LABELS[reportType] ?? reportType.toUpperCase()}
+          <span className="mt-1 block truncate text-[16px] font-bold leading-tight tracking-tight text-white transition-colors group-hover:text-elec-yellow">
+            {clientName || 'Untitled'}
           </span>
-        </div>
-        <h3 className="text-[20px] sm:text-[22px] lg:text-[24px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
-          {clientName || 'Untitled'}
-        </h3>
-        <p className="text-[13px] text-white/60">
-          {address || 'No address'}
-        </p>
-        <div className="mt-2 flex items-center justify-between pt-3 border-t border-white/[0.05]">
-          <span className="text-[11px] text-white/55 uppercase tracking-[0.14em]">
-            Pick up where you left off
-          </span>
-          <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow">
-            Resume
-            <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
-          </span>
-        </div>
-      </button>
-    </motion.div>
-  </motion.section>
-);
+          {address && (
+            <span className="mt-0.5 block truncate text-[11.5px] leading-snug text-white">
+              {address}
+            </span>
+          )}
+        </span>
+        <span className="shrink-0 text-[13px] font-bold text-elec-yellow">Resume</span>
+      </motion.button>
+    </motion.section>
+  );
+};
 
 // ─────────────────────────────────────────────────────────────────────────
 // Main page
@@ -627,81 +457,27 @@ const Dashboard = ({
   };
 
   // ── Hero state ───────────────────────────────────────────────────────
-  const { headline, verdict, cta } = useMemo(() => {
-    if (overduePartP || expiredCertsCount > 0) {
-      const bits: string[] = [];
-      if (partPOverdueCount > 0)
-        bits.push(`${partPOverdueCount} Part P ${partPOverdueCount === 1 ? 'notification' : 'notifications'} overdue`);
-      if (expiredCertsCount > 0)
-        bits.push(`${expiredCertsCount} ${expiredCertsCount === 1 ? 'certificate' : 'certificates'} expired`);
-      return {
-        headline: pickHeadline(HEADLINES_OVERDUE),
-        verdict: `${bits.join(' · ')}. Closing these out keeps you compliant.`,
-        cta: { label: 'View action list', onClick: () => onNavigate('notifications') },
-      };
-    }
-    if (recentDraft) {
-      return {
-        headline: pickHeadline(HEADLINES_DRAFT),
-        verdict: `${inProgressCount} ${inProgressCount === 1 ? 'cert' : 'certs'} in progress, ${totalCount} on file. Resume the draft below or start fresh.`,
-        cta: { label: 'Resume draft', onClick: handleContinue },
-      };
-    }
-    if (totalCount > 0) {
-      return {
-        headline: pickHeadline(HEADLINES_HEALTHY),
-        verdict: `${totalCount} ${totalCount === 1 ? 'certificate' : 'certificates'} on file, ${completedCount} completed. Pick a cert type to start the next one.`,
-        cta: { label: 'Start a new cert', onClick: () => onNavigate('certificates') },
-      };
-    }
+  /**
+   * Only a genuine problem earns space above the certs. Counts of healthy work
+   * ("46 on file") live on the cards that own them, so there's nothing to say
+   * when everything is clear — and the page opens straight onto the certs.
+   */
+  const alert = useMemo(() => {
+    if (!overduePartP && expiredCertsCount === 0) return null;
+    const bits: string[] = [];
+    if (partPOverdueCount > 0)
+      bits.push(
+        `${partPOverdueCount} building ${partPOverdueCount === 1 ? 'notification' : 'notifications'} overdue`
+      );
+    if (expiredCertsCount > 0)
+      bits.push(
+        `${expiredCertsCount} ${expiredCertsCount === 1 ? 'certificate has' : 'certificates have'} expired`
+      );
     return {
-      headline: pickHeadline(HEADLINES_EMPTY),
-      verdict:
-        'No certificates yet. Pick a type — we generate the model form, run the maths, and hand you a signed PDF.',
-      cta: { label: 'Start your first cert', onClick: () => onNavigate('certificates') },
+      text: bits.join(' · '),
+      onClick: () => onNavigate(partPOverdueCount > 0 ? 'notifications' : 'my-reports'),
     };
-  }, [overduePartP, expiredCertsCount, partPOverdueCount, recentDraft, inProgressCount, totalCount, completedCount, handleContinue, onNavigate]);
-
-  // ── Stats ────────────────────────────────────────────────────────────
-  const stats: InspStat[] = [
-    {
-      label: 'In progress',
-      value: inProgressCount,
-      sub: inProgressCount > 0 ? 'Drafts open' : 'Nothing live',
-      accent: true,
-      onClick: () => onNavigate('my-reports'),
-    },
-    {
-      label: 'Part P',
-      value: partPDueCount,
-      sub:
-        partPOverdueCount > 0
-          ? `${partPOverdueCount} overdue`
-          : partPDueCount > 0
-            ? 'Pending'
-            : 'All clear',
-      onClick: () => onNavigate('notifications'),
-    },
-    {
-      label: 'Expiring',
-      value: expiringCount,
-      sub:
-        expiredCertsCount > 0
-          ? `${expiredCertsCount} expired`
-          : expiringCount > 0
-            ? 'Within 90 days'
-            : nextDueDate
-              ? `Next due ${nextDueDate}`
-              : 'All clear',
-      onClick: () => navigate('/certificate-expiry'),
-    },
-    {
-      label: 'Completed',
-      value: completedCount,
-      sub: 'On file',
-      onClick: () => onNavigate('my-reports'),
-    },
-  ];
+  }, [overduePartP, expiredCertsCount, partPOverdueCount, onNavigate]);
 
   // ── Tool grids ───────────────────────────────────────────────────────
   const coreTools: ToolCard[] = [
@@ -813,33 +589,38 @@ const Dashboard = ({
       <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-elec-dark min-h-screen pb-24">
         <PageMasthead />
 
-        <div className="px-4 py-4 space-y-12 sm:space-y-16 max-w-7xl mx-auto">
-          <Hero headline={headline} verdict={verdict} cta={cta} />
+        {/* Tighter rhythm than the old space-y-12/16 — that spacing existed to
+            give a full-screen hero room to breathe, and without it the gaps
+            just pushed the tools further down. */}
+        <div className="mx-auto max-w-7xl space-y-8 px-4 py-4 sm:space-y-10 lg:px-8">
+          {/* Certs first. The four-stat strip that used to sit here is gone —
+              every number it held already lives on the card it describes
+              ("4 in progress" on Certificates, "1 overdue" on Building
+              Notifications, "136 on file" on My Reports), so a separate board
+              was repeating the page back to itself before letting anyone
+              start work. Only a genuine problem earns space above the certs. */}
+          {alert && <AlertLine text={alert.text} onClick={alert.onClick} />}
 
           <QuickStartStrip
-            number="01"
-            label="START A CERT"
+            label="Start a cert"
             items={[
               {
-                eyebrow: 'BS 7671',
                 title: 'EICR',
-                description: 'Periodic inspection report for an existing installation.',
+                description: 'Periodic inspection of an existing installation.',
                 onClick: () => onNavigate('eicr'),
+                primary: true,
               },
               {
-                eyebrow: 'BS 7671',
                 title: 'EIC',
-                description: 'Initial verification certificate for a new install.',
+                description: 'Initial verification of a new install.',
                 onClick: () => onNavigate('eic'),
               },
               {
-                eyebrow: 'BS 7671',
                 title: 'Minor Works',
-                description: 'Additions and alterations to an existing circuit.',
+                description: 'Additions and alterations to a circuit.',
                 onClick: () => onNavigate('minor-works'),
               },
               {
-                eyebrow: '14 types',
                 title: 'All cert types',
                 description: 'Fire, EV, solar, BESS, lightning, PAT and more.',
                 onClick: () => onNavigate('specialist'),
@@ -847,11 +628,8 @@ const Dashboard = ({
             ]}
           />
 
-          <InspHeadlineStats number="02" label="AT A GLANCE" stats={stats} />
-
           {recentDraft && (
             <ContinueRow
-              number="03"
               reportType={recentDraft.report_type}
               clientName={recentDraft.client_name}
               address={recentDraft.installation_address}
@@ -862,18 +640,12 @@ const Dashboard = ({
           <RecoverUnsavedWork onNavigate={onNavigate} />
 
           <EditorialToolGrid
-            number={recentDraft ? '04' : '03'}
-            label="CORE"
+            label="Core"
             cards={coreTools}
             columns="three"
           />
 
-          <EditorialToolGrid
-            number={recentDraft ? '05' : '04'}
-            label="COMPLIANCE"
-            cards={complianceTools}
-            columns="three"
-          />
+          <EditorialToolGrid label="Compliance" cards={complianceTools} columns="three" />
         </div>
       </div>
 

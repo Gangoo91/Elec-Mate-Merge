@@ -3,8 +3,10 @@
  */
 
 import React, { useState, useMemo, useCallback } from 'react';
+import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
+import { useHaptic } from '@/hooks/useHaptic';
 import {
   Command,
   CommandEmpty,
@@ -21,6 +23,24 @@ import {
   getLuminairesGroupedByMake,
   searchLuminaires,
 } from '@/data/emergencyLuminaireDatabase';
+
+// Paper-form underline input — matches every other field in the cert.
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none [color-scheme:dark] touch-manipulation';
+
+/** Human labels for the stored kebab-case type — the raw value was being
+ * printed straight onto the badge ("twin-spot"). */
+const TYPE_LABELS: Record<string, string> = {
+  bulkhead: 'Bulkhead',
+  'twin-spot': 'Twin spot',
+  recessed: 'Recessed',
+  surface: 'Surface mount',
+  downlight: 'Downlight',
+  'exit-sign': 'Exit sign',
+  'exit-box': 'Exit box',
+  strip: 'Strip light',
+};
+const typeLabel = (type: string) => TYPE_LABELS[type] || type;
 
 interface LuminaireAutocompleteProps {
   value?: { make: string; model: string } | null;
@@ -40,6 +60,7 @@ const LuminaireAutocomplete: React.FC<LuminaireAutocompleteProps> = ({
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const isMobile = useIsMobile();
+  const haptic = useHaptic();
 
   const luminairesGrouped = useMemo(() => getLuminairesGroupedByMake(), []);
 
@@ -73,53 +94,67 @@ const LuminaireAutocomplete: React.FC<LuminaireAutocompleteProps> = ({
       disabled={disabled}
       onClick={() => setOpen(true)}
       className={cn(
-        'w-full h-11 rounded-lg bg-white/[0.06] border border-white/[0.08] px-3 flex items-center justify-between text-left touch-manipulation active:scale-[0.98]',
-        displayValue ? 'text-white' : 'text-white',
+        'w-full h-11 rounded-xl bg-white/[0.06] border border-white/[0.12] px-3 flex items-center justify-between gap-2 text-left text-white touch-manipulation active:scale-[0.98] disabled:opacity-50',
         className
       )}
     >
-      <span className="truncate text-sm">{displayValue || placeholder}</span>
-      <span className="text-[10px] text-white shrink-0 ml-2">DB</span>
+      <span className={cn('truncate text-sm', !displayValue && 'text-white/25 font-normal')}>
+        {displayValue || placeholder}
+      </span>
+      <ChevronDown className="h-4 w-4 shrink-0 text-white" />
     </button>
   );
 
+  /** One database row. Selected is SOLID volt — translucent volt/colour washes
+   * read brown on this surface, so the type badge is a neutral chip with plain
+   * white text rather than a per-type coloured wash. */
   const renderLuminaireItem = (luminaire: EmergencyLuminaire, forMobile = false) => {
     const isSelected = value?.make === luminaire.make && value?.model === luminaire.model;
     return (
-      <div
+      <button
         key={luminaire.id}
+        type="button"
         onClick={() => handleSelect(luminaire)}
         className={cn(
-          'rounded-lg cursor-pointer transition-colors touch-manipulation',
-          forMobile ? 'px-4 py-3' : 'px-2 py-2',
-          'hover:bg-elec-yellow/10 active:bg-elec-yellow/20',
-          isSelected && 'bg-elec-yellow/10 border border-elec-yellow/20'
+          'w-full text-left rounded-xl border transition-colors touch-manipulation active:scale-[0.99]',
+          forMobile ? 'px-3.5 py-3' : 'px-3 py-2',
+          isSelected
+            ? 'bg-elec-yellow border-elec-yellow'
+            : 'bg-white/[0.05] border-white/[0.12]'
         )}
       >
-        <div className="flex items-center justify-between">
-          <p className={cn('font-medium text-white', forMobile ? 'text-sm' : 'text-xs')}>
+        <div className="flex items-center justify-between gap-2">
+          <p
+            className={cn(
+              'font-medium truncate',
+              forMobile ? 'text-sm' : 'text-xs',
+              isSelected ? 'text-black font-semibold' : 'text-white'
+            )}
+          >
             {luminaire.model}
           </p>
           <span
             className={cn(
-              'text-[10px] font-medium px-1.5 py-0.5 rounded shrink-0',
-              luminaire.luminaireType === 'exit-sign' || luminaire.luminaireType === 'exit-box'
-                ? 'bg-green-500/15 text-green-400'
-                : luminaire.luminaireType === 'bulkhead'
-                  ? 'bg-blue-500/15 text-blue-400'
-                  : luminaire.luminaireType === 'twin-spot'
-                    ? 'bg-purple-500/15 text-purple-400'
-                    : 'bg-amber-500/15 text-amber-400'
+              'text-[11px] font-medium px-2 py-0.5 rounded-full shrink-0 border',
+              isSelected
+                ? 'border-black/25 text-black'
+                : 'border-white/[0.12] bg-white/[0.06] text-white'
             )}
           >
-            {luminaire.luminaireType}
+            {typeLabel(luminaire.luminaireType)}
           </span>
         </div>
-        <p className={cn('text-white mt-0.5', forMobile ? 'text-xs' : 'text-[10px]')}>
+        <p
+          className={cn(
+            'mt-0.5 tabular-nums',
+            forMobile ? 'text-xs' : 'text-[11px]',
+            isSelected ? 'text-black/70' : 'text-white/85'
+          )}
+        >
           {luminaire.wattage}W · {luminaire.lightOutput}lm ·{' '}
           {luminaire.ratedDuration === 180 ? '3hr' : '1hr'} · {luminaire.ipRating}
         </p>
-      </div>
+      </button>
     );
   };
 
@@ -130,32 +165,44 @@ const LuminaireAutocomplete: React.FC<LuminaireAutocompleteProps> = ({
         <SwipeableBottomSheet
           open={open}
           onOpenChange={setOpen}
-          title="Select Luminaire"
+          title="Select luminaire"
           contentClassName="p-0"
         >
-          <div className="flex flex-col max-h-[75vh]">
-            <div className="px-4 py-3 border-b border-white/[0.06] bg-background sticky top-0">
+          <div
+            className="flex flex-col max-h-[75vh]"
+            onPointerDown={(e) => {
+              if ((e.target as HTMLElement).closest('button')) haptic.light();
+            }}
+          >
+            <div className="px-4 pt-1 pb-3 border-b border-white/[0.08] bg-background sticky top-0 z-10">
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search by make or model..."
-                className="h-11 bg-white/[0.06] border-white/[0.08] text-white text-base"
+                placeholder="Search by make or model…"
+                className={inputCn}
               />
             </div>
             <div className="flex-1 overflow-y-auto">
               {Object.keys(filteredLuminaires).length === 0 ? (
                 <div className="py-12 text-center">
-                  <p className="text-sm text-white">No luminaires found</p>
-                  <p className="text-xs text-white mt-1">Try a different search</p>
+                  <p className="text-sm font-medium text-white">No luminaires found</p>
+                  <p className="text-xs text-white/85 mt-1">Try a different search</p>
                 </div>
               ) : (
-                <div className="px-2 py-2">
-                  {Object.entries(filteredLuminaires).map(([make, luminaires]) => (
-                    <div key={make} className="mb-3">
-                      <p className="px-3 py-1.5 text-[10px] font-semibold text-white uppercase tracking-wider">
-                        {make}
-                      </p>
-                      <div className="space-y-1">
+                <div className="px-4 pb-2">
+                  {Object.entries(filteredLuminaires).map(([make, luminaires], groupIndex) => (
+                    <div key={make}>
+                      {/* Make heading — rule above, plain type. The old
+                          uppercase tracked eyebrow was the superseded style. */}
+                      <div
+                        className={cn(
+                          'pt-4 pb-2',
+                          groupIndex > 0 && 'border-t border-white/[0.1] mt-2'
+                        )}
+                      >
+                        <h3 className="text-sm font-semibold text-white">{make}</h3>
+                      </div>
+                      <div className="space-y-2">
                         {luminaires.map((lum) => renderLuminaireItem(lum, true))}
                       </div>
                     </div>
@@ -163,9 +210,9 @@ const LuminaireAutocomplete: React.FC<LuminaireAutocompleteProps> = ({
                 </div>
               )}
             </div>
-            <div className="border-t border-white/[0.06] px-4 py-2.5 bg-background">
-              <p className="text-[10px] text-white text-center">
-                Selecting auto-fills specs from database
+            <div className="border-t border-white/[0.08] px-4 py-2.5 bg-background">
+              <p className="text-xs text-white/85 text-center">
+                Selecting auto-fills specs from the database
               </p>
             </div>
           </div>
@@ -220,7 +267,7 @@ const LuminaireAutocomplete: React.FC<LuminaireAutocompleteProps> = ({
           </CommandList>
         </Command>
         <div className="border-t border-white/[0.06] px-3 py-2">
-          <p className="text-[10px] text-white">Selecting auto-fills specs from database</p>
+          <p className="text-xs text-white/85">Selecting auto-fills specs from the database</p>
         </div>
       </PopoverContent>
     </Popover>

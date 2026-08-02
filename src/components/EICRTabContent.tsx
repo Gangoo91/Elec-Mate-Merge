@@ -1,114 +1,58 @@
-import React, { useState } from 'react';
-import { MobileTabsContent } from '@/components/ui/mobile-tabs';
+import React from 'react';
 import { EICRTabValue } from '@/hooks/useEICRTabs';
-import { useOrientation } from '@/hooks/useOrientation';
 import EICRDetails from './EICRDetails';
 import EICRInspectionChecklist from './EICRInspectionChecklist';
 import EICRScheduleOfTests from './EICRScheduleOfTests';
 import EICRSummary from './EICRSummary';
 import EICRInspectorDetails from './EICRInspectorDetails';
-import EICRTabNavigation from './EICRTabNavigation';
 
 interface EICRTabContentProps {
   tabValue: EICRTabValue;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onUpdate: (field: string, value: any) => void;
-  isMobile: boolean;
-  currentTab: EICRTabValue;
-  currentTabIndex: number;
-  totalTabs: number;
-  canNavigateNext: () => boolean;
-  canNavigatePrevious: () => boolean;
-  navigateNext: () => void;
-  navigatePrevious: () => void;
-  getProgressPercentage: () => number;
-  isCurrentTabComplete: () => boolean;
-  currentTabHasRequiredFields: () => boolean;
-  onToggleComplete: () => void;
   onOpenBoardScan?: () => void;
+  /** Shell-footer Generate/Email/Invoice → Issue-tab handlers (MW/EIC
+   * pattern). EICRSummary registers them here on mount. */
+  actionsRef?: React.MutableRefObject<{
+    generate: () => void;
+    email: () => void;
+    invoice: () => void;
+  } | null>;
 }
 
+/** Per-step content for the v3 EICR shell. Step navigation lives in the
+ * shared CertShellFooter — no per-tab nav renders here. */
 const EICRTabContent = ({
   tabValue,
   formData,
   onUpdate,
-  isMobile,
-  currentTab,
-  currentTabIndex,
-  totalTabs,
-  canNavigateNext,
-  canNavigatePrevious,
-  navigateNext,
-  navigatePrevious,
-  getProgressPercentage,
-  isCurrentTabComplete,
-  currentTabHasRequiredFields,
-  onToggleComplete,
   onOpenBoardScan,
+  actionsRef,
 }: EICRTabContentProps) => {
-  const [isInspectorSectionOpen, setIsInspectorSectionOpen] = useState(true);
-
-  const renderTabNavigation = () => {
-    return (
-      <EICRTabNavigation
-        currentTab={currentTab}
-        currentTabIndex={currentTabIndex}
-        totalTabs={totalTabs}
-        canNavigateNext={canNavigateNext()}
-        canNavigatePrevious={canNavigatePrevious()}
-        navigateNext={navigateNext}
-        navigatePrevious={navigatePrevious}
-        getProgressPercentage={getProgressPercentage}
-        isCurrentTabComplete={isCurrentTabComplete()}
-        currentTabHasRequiredFields={currentTabHasRequiredFields()}
-        onToggleComplete={onToggleComplete}
-      />
-    );
-  };
-
-  const renderContent = () => {
-    switch (tabValue) {
-      case 'details':
-        return <EICRDetails formData={formData} onUpdate={onUpdate} />;
-      case 'inspection':
-        return <EICRInspectionChecklist formData={formData} onUpdate={onUpdate} />;
-      case 'testing':
-        return (
+  switch (tabValue) {
+    case 'details':
+      return <EICRDetails formData={formData} onUpdate={onUpdate} />;
+    case 'inspection':
+      return <EICRInspectionChecklist formData={formData} onUpdate={onUpdate} />;
+    case 'testing':
+      return (
+        <div className="w-full max-w-none">
           <EICRScheduleOfTests
             formData={formData}
             onUpdate={onUpdate}
             onOpenBoardScan={onOpenBoardScan}
           />
-        );
-      case 'inspector':
-        return (
-          <EICRInspectorDetails
-            formData={formData}
-            onUpdate={onUpdate}
-            isOpen={isInspectorSectionOpen}
-            onToggle={() => setIsInspectorSectionOpen(!isInspectorSectionOpen)}
-          />
-        );
-      case 'certificate':
-        return <EICRSummary formData={formData} onUpdate={onUpdate} />;
-      default:
-        return null;
-    }
-  };
-
-  // Tables (testing schedule + inspection checklist) use the full page width;
-  // the form tabs centre in a comfortable wide column.
-  const fullWidth = tabValue === 'testing' || tabValue === 'inspection';
-  const containerClasses = fullWidth
-    ? 'w-full max-w-none space-y-6 overflow-x-auto'
-    : 'lg:max-w-6xl xl:max-w-7xl mx-auto space-y-6';
-
-  return (
-    <div className={containerClasses}>
-      {renderContent()}
-      {renderTabNavigation()}
-    </div>
-  );
+        </div>
+      );
+    case 'inspector':
+      return <EICRInspectorDetails formData={formData} onUpdate={onUpdate} />;
+    case 'certificate':
+      return <EICRSummary formData={formData} onUpdate={onUpdate} actionsRef={actionsRef} />;
+    default:
+      return null;
+  }
 };
 
 export default EICRTabContent;

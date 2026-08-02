@@ -74,7 +74,16 @@ export const useEmergencyLightingTabs = (formData: any) => {
           formData.annualDurationTest?.date
         );
       case 'declarations':
-        return completedSections[tabId] || (formData.testerName && formData.testerSignature);
+        // Both signatures — the tab's own Completion Summary and the generate
+        // gate already treat the responsible person as required, so the step
+        // tick must not go green on the tester's signature alone.
+        return (
+          completedSections[tabId] ||
+          (formData.testerName &&
+            formData.testerSignature &&
+            formData.responsiblePersonName &&
+            formData.responsiblePersonSignature)
+        );
       default:
         return completedSections[tabId] === true;
     }

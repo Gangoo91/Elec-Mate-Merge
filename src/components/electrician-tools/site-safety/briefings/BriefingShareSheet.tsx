@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { IOSInput } from '@/components/ui/ios-input';
+import { SafetyDocField } from '../common/SafetyDocField';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { openExternalUrl } from '@/utils/open-external-url';
@@ -324,7 +324,7 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
                 <div className="space-y-2.5">
                   <div className="flex items-center gap-2">
                     <QrCode className="h-3.5 w-3.5 text-white" />
-                    <span className="text-xs font-semibold text-white uppercase tracking-wider">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                       QR Code
                     </span>
                   </div>
@@ -353,18 +353,18 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
           <div className="space-y-2.5">
             <div className="flex items-center gap-2">
               <Mail className="h-3.5 w-3.5 text-white" />
-              <span className="text-xs font-semibold text-white uppercase tracking-wider">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Send via Email
               </span>
             </div>
             <div className="flex gap-2">
-              <IOSInput
+              <SafetyDocField
+                label="Email address"
                 type="email"
-                placeholder="Enter email address"
+                placeholder="name@company.co.uk"
                 value={emailTo}
                 onChange={(e) => setEmailTo(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleEmailSend()}
-                icon={<Mail className="h-5 w-5" />}
               />
               <Button
                 type="button"
@@ -386,7 +386,7 @@ export function BriefingShareSheet({ briefingId, briefingName, onClose }: Briefi
                 className="overflow-hidden"
               >
                 <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
-                  <p className="text-xs font-medium text-white uppercase tracking-wider mb-1.5">
+                  <p className="mb-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Signing Link
                   </p>
                   <p className="text-xs text-yellow-400/80 break-all font-mono leading-relaxed">

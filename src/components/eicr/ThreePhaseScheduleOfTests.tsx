@@ -1,8 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Input } from '@/components/ui/input';
 import {
   Table,
@@ -20,29 +17,129 @@ import {
   DrawerTitle,
   DrawerClose,
 } from '@/components/ui/drawer';
-import {
-  AlertTriangle,
-  CheckCircle,
-  Zap,
-  Info,
-  ChevronDown,
-  ChevronRight,
-  RefreshCw,
-  X,
-  Edit3,
-} from 'lucide-react';
+import { ChevronDown, ChevronRight, X } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { TestResult } from '@/types/testResult';
 import {
   calculatePhaseBalance,
   calculateNeutralCurrent,
   detectThreePhaseGroups,
-  getPhaseBalanceColor,
+  suggestRebalance,
   PhaseLoadData,
+  PhaseBalanceBand,
+  RebalanceCircuit,
   ThreePhaseCircuitGroup,
 } from '@/utils/threePhaseCalculations';
-import { PhaseBalanceIndicator } from '@/components/testing/PhaseBalanceIndicator';
-import { PhaseBalanceChart } from '@/components/charts/PhaseBalanceChart';
 import { useOrientation } from '@/hooks/useOrientation';
+
+// Recipe class constants — chrome styling only.
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+// Dark table-cell input — matches the EnhancedValidatedInput idiom used by the
+// shared board tables (transparent bg, volt focus border, no ring).
+const cellInputCn =
+  'h-8 w-full rounded border border-transparent bg-transparent px-2 text-sm text-center text-white placeholder:text-white/25 caret-elec-yellow transition-colors hover:bg-white/[0.04] focus:border-elec-yellow focus:bg-transparent focus:outline-none focus:ring-0 focus:shadow-none touch-manipulation';
+
+// Neutral chip (way / rating markers)
+const chipCn =
+  'inline-flex items-center rounded-md border border-white/[0.12] bg-white/[0.06] px-1.5 py-0.5 text-xs font-semibold text-white';
+
+// ---------------------------------------------------------------------------
+// Band presentation. Imbalance bands are guidance only (≤5% balanced ·
+// 5–15% review · >15% high) — BS 7671 sets no numeric imbalance limit, so
+// none of this wording claims compliance.
+// ---------------------------------------------------------------------------
+
+const bandWord: Record<PhaseBalanceBand, string> = {
+  balanced: 'Balanced',
+  review: 'Review',
+  high: 'High',
+};
+
+const bandText: Record<PhaseBalanceBand, string> = {
+  balanced: 'text-green-400',
+  review: 'text-amber-300',
+  high: 'text-red-400',
+};
+
+const bandBorder: Record<PhaseBalanceBand, string> = {
+  balanced: 'border-green-500/30',
+  review: 'border-amber-500/30',
+  high: 'border-red-500/30',
+};
+
+// Solid chips — no translucent washes.
+const bandChip: Record<PhaseBalanceBand, string> = {
+  balanced: 'bg-green-600 text-white',
+  review: 'bg-amber-500 text-black',
+  high: 'bg-red-600 text-white',
+};
+
+const bandTooltip: Record<PhaseBalanceBand, string> = {
+  balanced: 'Balanced — within 5% of the phase average',
+  review: 'Review — 5–15% max deviation from average (guidance)',
+  high: 'High — over 15% max deviation from average (guidance)',
+};
+
+// Recognised UK phase colours (R/Y/B for L1/L2/L3). Identity is never
+// colour-alone: every bar carries its phase label and value.
+const phaseBarCn: Record<'L1' | 'L2' | 'L3', string> = {
+  L1: 'bg-red-500',
+  L2: 'bg-elec-yellow',
+  L3: 'bg-blue-500',
+};
+
+const formatAmps = (value: number): string =>
+  (Math.round(value * 10) / 10).toString();
+
+/** "16A" when the rating parses to a positive number, "—" otherwise — never "0A" or a bare "A". */
+const formatRating = (rating: string | number | null | undefined): string => {
+  const parsed = typeof rating === 'number' ? rating : parseFloat(rating || '');
+  return Number.isFinite(parsed) && parsed > 0 ? `${formatAmps(parsed)}A` : '—';
+};
+
+/** Way-span caption: "Way 7" · contiguous "Ways 7–9" · scattered "Ways 7, 8, 12". */
+const formatWaySpan = (positions: number[]): string => {
+  const ways = [...new Set(positions)].sort((a, b) => a - b);
+  if (ways.length === 0) return '';
+  if (ways.length === 1) return `Way ${ways[0]}`;
+  const contiguous = ways.every((w, idx) => idx === 0 || w === ways[idx - 1] + 1);
+  return contiguous ? `Ways ${ways[0]}–${ways[ways.length - 1]}` : `Ways ${ways.join(', ')}`;
+};
+
+/** Board way for a row — "7.2" (3P sibling) and "7" both resolve to way 7. */
+const wayOfRow = (r: TestResult): number => parseInt(r.circuitNumber || '0') || 0;
+
+/**
+ * Phase letter for an expanded 3P sibling row: explicit assignment first,
+ * then the scanner's ".1/.2/.3" suffix convention (L1/L2/L3).
+ */
+const phaseOfRow = (r: TestResult): 'L1' | 'L2' | 'L3' | null => {
+  const explicit = r.phaseAssignment;
+  if (explicit === 'L1' || explicit === 'L2' || explicit === 'L3') return explicit;
+  const suffix = (r.circuitNumber || '').split('.')[1];
+  if (suffix === '1') return 'L1';
+  if (suffix === '2') return 'L2';
+  if (suffix === '3') return 'L3';
+  return null;
+};
+
+/** Mirrors the totals loop: explicit phase assignment, else round-robin. */
+const effectivePhase = (r: TestResult): 'L1' | 'L2' | 'L3' => {
+  const explicit = r.phaseAssignment;
+  if (explicit === 'L1' || explicit === 'L2' || explicit === 'L3') return explicit;
+  const circuitNum = parseInt(r.circuitNumber || '0');
+  const phaseIndex = (circuitNum - 1) % 3;
+  if (phaseIndex === 0) return 'L1';
+  if (phaseIndex === 1) return 'L2';
+  return 'L3';
+};
 
 interface ThreePhaseScheduleOfTestsProps {
   /** All test results from the schedule */
@@ -97,7 +194,7 @@ export const ThreePhaseScheduleOfTests: React.FC<ThreePhaseScheduleOfTestsProps>
     const threep: TestResult[] = [];
 
     testResults.forEach((r) => {
-      const pos = parseInt(r.circuitNumber || '0');
+      const pos = wayOfRow(r);
       if (r.phaseType === '3P' || threePhasePositions.has(pos)) {
         threep.push(r);
       } else {
@@ -128,17 +225,10 @@ export const ThreePhaseScheduleOfTests: React.FC<ThreePhaseScheduleOfTestsProps>
       // Prefer the explicit phase assignment from the scanner / designer.
       // Fall back to round-robin only when no assignment is present (fresh
       // hand-built schedules without scanner data).
-      const explicit = r.phaseAssignment;
-      if (explicit === 'L1') L1 += estLoad;
-      else if (explicit === 'L2') L2 += estLoad;
-      else if (explicit === 'L3') L3 += estLoad;
-      else {
-        const circuitNum = parseInt(r.circuitNumber || '0');
-        const phaseIndex = (circuitNum - 1) % 3;
-        if (phaseIndex === 0) L1 += estLoad;
-        else if (phaseIndex === 1) L2 += estLoad;
-        else L3 += estLoad;
-      }
+      const phase = effectivePhase(r);
+      if (phase === 'L1') L1 += estLoad;
+      else if (phase === 'L2') L2 += estLoad;
+      else L3 += estLoad;
     });
 
     return { L1, L2, L3 };
@@ -159,6 +249,46 @@ export const ThreePhaseScheduleOfTests: React.FC<ThreePhaseScheduleOfTestsProps>
     return calculateNeutralCurrent(totalPhaseLoads);
   }, [totalPhaseLoads]);
 
+  // Rebalancing suggestion — which single-phase circuits to move between
+  // phases. Uses the same basis as the totals above (device rating × 50%),
+  // with three-phase loads and grouped ways held fixed.
+  const rebalance = useMemo(() => {
+    if (!overallBalance || overallBalance.band === 'balanced') return null;
+
+    const groupPositions = new Set(threePhaseGroups.flatMap((g) => g.positions));
+    const movable: RebalanceCircuit[] = [];
+    const baseLoads: PhaseLoadData = { L1: 0, L2: 0, L3: 0 };
+
+    testResults.forEach((r) => {
+      if (r.phaseType === '3P') {
+        baseLoads.L1 += parseFloat(r.phaseBalanceL1 || '0') || 0;
+        baseLoads.L2 += parseFloat(r.phaseBalanceL2 || '0') || 0;
+        baseLoads.L3 += parseFloat(r.phaseBalanceL3 || '0') || 0;
+        return;
+      }
+
+      const rating = parseFloat(r.protectiveDeviceRating || '0') || 0;
+      const phase = effectivePhase(r);
+      const pos = parseInt(r.circuitNumber || '0');
+
+      // Ways inside a detected 3-pole group can't be re-phased individually —
+      // keep their load fixed on the phase the totals already assign them.
+      if (rating <= 0 || groupPositions.has(pos)) {
+        baseLoads[phase] += rating * 0.5;
+        return;
+      }
+
+      movable.push({
+        way: r.circuitNumber || '?',
+        label: r.circuitDescription || r.circuitDesignation || `Way ${r.circuitNumber || '?'}`,
+        rating,
+        phase,
+      });
+    });
+
+    return suggestRebalance(movable, { loadFactor: 0.5, baseLoads });
+  }, [testResults, threePhaseGroups, overallBalance]);
+
   // Toggle group expansion
   const toggleGroup = (groupId: string) => {
     setExpandedGroups((prev) => {
@@ -177,188 +307,221 @@ export const ThreePhaseScheduleOfTests: React.FC<ThreePhaseScheduleOfTestsProps>
 
   if (!isThreePhaseInstallation) {
     return (
-      <Card className="border-dashed border-muted-foreground/50">
-        <CardContent className="py-6 text-center text-muted-foreground">
-          <Zap className="h-8 w-8 mx-auto mb-2 opacity-50" />
-          <p>No three-phase circuits detected</p>
-          <p className="text-xs mt-1">Mark circuits as "3P" to enable three-phase analysis</p>
-        </CardContent>
-      </Card>
+      <div className={cn(cardCn, 'text-center')}>
+        <p className="text-sm font-medium text-white">No three-phase circuits detected</p>
+        <p className="!mt-1 text-[12px] text-white/80">
+          Mark circuits as "3P" to enable three-phase analysis
+        </p>
+      </div>
     );
   }
 
   return (
     <div className="space-y-4">
-      {/* Phase Balance Overview */}
-      <Card>
-        <CardHeader className="pb-2">
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Zap className="h-5 w-5 text-purple-500" />
-              Three-Phase Installation Analysis
-            </CardTitle>
-            <div className="flex items-center gap-2">
-              {overallBalance && (
-                <Badge
-                  variant="outline"
-                  className={getPhaseBalanceColor(overallBalance.imbalancePercent)}
-                >
-                  {overallBalance.isCompliant ? (
-                    <CheckCircle className="h-3 w-3 mr-1" />
-                  ) : (
-                    <AlertTriangle className="h-3 w-3 mr-1" />
-                  )}
-                  {overallBalance.imbalancePercent}% Imbalance
-                </Badge>
+      {/* Phase balance overview */}
+      <div className={cardCn}>
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <h2 className="text-[15px] font-semibold tracking-tight text-white">
+              Three-phase installation analysis
+            </h2>
+            <p className="mt-0.5 text-[12px] text-white/80">
+              Estimated from device ratings — not measured load
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowChart(!showChart)}
+            className="h-11 shrink-0 px-2 text-[13px] font-semibold text-elec-yellow transition-colors hover:text-elec-yellow/80 touch-manipulation"
+          >
+            {showChart ? 'Hide chart' : 'Show chart'}
+          </button>
+        </div>
+
+        {/* Stats grid */}
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+          <StatCard label="Total 3P circuits" value={threePhaseCircuits.length} />
+          <StatCard label="3-pole groups" value={threePhaseGroups.length} />
+          <StatCard
+            label="Est. neutral"
+            value={neutralCurrent ? `${neutralCurrent.estimatedAmps}A` : '—'}
+          />
+          <StatCard
+            label="Balance status"
+            value={overallBalance ? bandWord[overallBalance.band] : '—'}
+            valueClassName={overallBalance ? bandText[overallBalance.band] : undefined}
+          />
+        </div>
+
+        {overallBalance && (
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-sm text-white">Overall imbalance</span>
+            <span
+              className={cn(
+                'inline-flex h-6 items-center rounded-full px-2.5 text-[13px] font-semibold tabular-nums',
+                bandChip[overallBalance.band]
               )}
-              <Button variant="ghost" size="sm" onClick={() => setShowChart(!showChart)}>
-                {showChart ? 'Hide Chart' : 'Show Chart'}
-              </Button>
-            </div>
+            >
+              {overallBalance.imbalancePercent}%
+            </span>
+            <span className="text-[12px] text-white/80">max deviation from average</span>
           </div>
-        </CardHeader>
-        <CardContent>
-          {/* Stats Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-            <StatCard
-              label="Total 3P Circuits"
-              value={threePhaseCircuits.length}
-              icon={<Zap className="h-4 w-4 text-purple-500" />}
-            />
-            <StatCard
-              label="3-Pole Groups"
-              value={threePhaseGroups.length}
-              icon={<RefreshCw className="h-4 w-4 text-blue-500" />}
-            />
-            <StatCard
-              label="Est. Neutral"
-              value={neutralCurrent ? `${neutralCurrent.estimatedAmps}A` : '-'}
-              icon={<Info className="h-4 w-4 text-green-500" />}
-            />
-            <StatCard
-              label="Balance Status"
-              value={overallBalance?.isCompliant ? 'OK' : 'Check'}
-              icon={
-                overallBalance?.isCompliant ? (
-                  <CheckCircle className="h-4 w-4 text-green-500" />
-                ) : (
-                  <AlertTriangle className="h-4 w-4 text-amber-500" />
-                )
-              }
-            />
-          </div>
+        )}
 
-          {/* Phase Balance Chart */}
-          {showChart && (
-            <PhaseBalanceChart
-              loads={totalPhaseLoads}
-              title="Overall Phase Distribution"
-              className="mb-4"
-            />
-          )}
+        {/* Phase load chart */}
+        {showChart && <PhaseLoadChart loads={totalPhaseLoads} />}
 
-          {/* BS7671 Compliance Warning */}
-          {overallBalance && !overallBalance.isCompliant && (
-            <Alert variant="destructive" className="mb-4">
-              <AlertTriangle className="h-4 w-4" />
-              <AlertDescription>
-                <strong>BS7671 Warning:</strong> Phase imbalance exceeds 10%.{' '}
-                {overallBalance.recommendation}
-              </AlertDescription>
-            </Alert>
-          )}
+        {/* Guidance — single block, band-coloured border */}
+        {overallBalance && (
+          <div
+            className={cn(
+              'space-y-3 rounded-xl border bg-white/[0.05] p-4',
+              bandBorder[overallBalance.band]
+            )}
+          >
+            {overallBalance.band === 'balanced' ? (
+              <p className="text-sm text-white">
+                Phases are well balanced (within 5% of the average) — no redistribution needed.
+                Balanced loading keeps neutral current and voltage imbalance low.
+              </p>
+            ) : (
+              <>
+                <p className="text-sm text-white">
+                  Uneven phase loading raises neutral current and voltage imbalance — guidance,
+                  not a BS 7671 limit.
+                </p>
 
-          {/* Neutral Current Warning */}
-          {neutralCurrent?.warning && (
-            <Alert className="mb-4 border-amber-200 bg-amber-50 dark:bg-amber-950/20">
-              <Info className="h-4 w-4 text-amber-600" />
-              <AlertDescription className="text-amber-800 dark:text-amber-200">
-                {neutralCurrent.warning}
-              </AlertDescription>
-            </Alert>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Three-Phase Circuit Groups */}
-      {threePhaseGroups.length > 0 && (
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base">Detected 3-Pole MCB Groups</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              {threePhaseGroups.map((group) => (
-                <ThreePhaseGroupRow
-                  key={group.id}
-                  group={group}
-                  circuits={testResults.filter((r) =>
-                    group.positions.includes(parseInt(r.circuitNumber || '0'))
+                <div className="border-t border-white/[0.1] pt-3">
+                  <h3 className="text-sm font-semibold text-white">What to do</h3>
+                  {rebalance && rebalance.moves.length > 0 ? (
+                    <>
+                      <ol className="mt-2 space-y-2">
+                        {rebalance.moves.map((move, index) => (
+                          <li
+                            key={`${move.way}-${move.from}-${move.to}`}
+                            className="flex items-start gap-2.5 text-sm text-white"
+                          >
+                            <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white/[0.2] text-[11px] font-semibold tabular-nums text-white">
+                              {index + 1}
+                            </span>
+                            <span>
+                              Move Way {move.way} — {move.label} ({move.rating}A) from{' '}
+                              <span className="font-semibold">{move.from}</span> →{' '}
+                              <span className="font-semibold">{move.to}</span>
+                            </span>
+                          </li>
+                        ))}
+                      </ol>
+                      <p className="mt-3 text-sm font-medium text-white">
+                        Projected after moves:{' '}
+                        <span className="tabular-nums">
+                          {rebalance.projectedImbalancePercent}%
+                        </span>{' '}
+                        imbalance · ~
+                        <span className="tabular-nums">{rebalance.projectedNeutralAmps}A</span>{' '}
+                        neutral
+                      </p>
+                    </>
+                  ) : (
+                    <p className="mt-2 text-sm text-white">
+                      The imbalance comes from three-phase groups or fixed loads that cannot be
+                      re-phased individually — verify the true loading with clamp measurements
+                      before redistributing.
+                    </p>
                   )}
-                  isExpanded={expandedGroups.has(group.id)}
-                  onToggle={() => toggleGroup(group.id)}
-                  onUpdateResult={onUpdateResult}
+                </div>
+
+                {neutralCurrent?.warning && (
+                  <p className="text-[12px] text-white/80">{neutralCurrent.warning}</p>
+                )}
+
+                <p className="border-t border-white/[0.1] pt-3 text-[12px] text-white/80">
+                  Confirm moves are practical before rewiring — clamp readings beat estimates
+                  from device ratings.
+                </p>
+              </>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Three-phase circuit groups */}
+      {threePhaseGroups.length > 0 && (
+        <div className={cardCn}>
+          <h2 className="text-[15px] font-semibold tracking-tight text-white">
+            Detected 3-pole MCB groups
+          </h2>
+          <div className="space-y-2">
+            {threePhaseGroups.map((group) => (
+              <ThreePhaseGroupRow
+                key={group.id}
+                group={group}
+                circuits={testResults
+                  .filter((r) => group.positions.includes(wayOfRow(r)))
+                  .sort(
+                    (a, b) =>
+                      (parseFloat(a.circuitNumber || '0') || 0) -
+                      (parseFloat(b.circuitNumber || '0') || 0)
+                  )}
+                isExpanded={expandedGroups.has(group.id)}
+                onToggle={() => toggleGroup(group.id)}
+                onUpdateResult={onUpdateResult}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Individual three-phase circuits — mobile card view or desktop table */}
+      {threePhaseCircuits.length > 0 && (
+        <div className={cardCn}>
+          <h2 className="text-[15px] font-semibold tracking-tight text-white">
+            Three-phase circuit test results
+          </h2>
+          {useMobileView ? (
+            /* Mobile card view */
+            <div className="space-y-3">
+              {threePhaseCircuits.map((circuit) => (
+                <MobileThreePhaseCard
+                  key={circuit.id}
+                  circuit={circuit}
+                  onEdit={() => setEditingCircuit(circuit)}
                 />
               ))}
             </div>
-          </CardContent>
-        </Card>
+          ) : (
+            /* Desktop table view */
+            <div className="sot-table-wrapper overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow className="sot-header-labels border-0 hover:bg-transparent">
+                    <TableHead className="sot-header-cell w-16">Way</TableHead>
+                    <TableHead className="sot-header-cell !text-left">Description</TableHead>
+                    <TableHead className="sot-header-cell w-20">Rating</TableHead>
+                    <TableHead className="sot-header-cell w-24">L1 (A)</TableHead>
+                    <TableHead className="sot-header-cell w-24">L2 (A)</TableHead>
+                    <TableHead className="sot-header-cell w-24">L3 (A)</TableHead>
+                    <TableHead className="sot-header-cell w-28">Balance</TableHead>
+                    <TableHead className="sot-header-cell w-24">Rotation</TableHead>
+                    <TableHead className="sot-header-cell w-24">Zs (Ω)</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {threePhaseCircuits.map((circuit) => (
+                    <ThreePhaseCircuitRow
+                      key={circuit.id}
+                      circuit={circuit}
+                      onUpdate={onUpdateResult}
+                    />
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          )}
+        </div>
       )}
 
-      {/* Individual Three-Phase Circuits - Mobile Card View or Desktop Table */}
-      {threePhaseCircuits.length > 0 && (
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base">Three-Phase Circuit Test Results</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {useMobileView ? (
-              /* Mobile Card View */
-              <div className="space-y-3">
-                {threePhaseCircuits.map((circuit) => (
-                  <MobileThreePhaseCard
-                    key={circuit.id}
-                    circuit={circuit}
-                    onEdit={() => setEditingCircuit(circuit)}
-                  />
-                ))}
-              </div>
-            ) : (
-              /* Desktop Table View */
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="w-16">Circuit</TableHead>
-                      <TableHead>Description</TableHead>
-                      <TableHead className="w-20">Rating</TableHead>
-                      <TableHead className="w-24 bg-amber-50 dark:bg-amber-950/20">L1 (A)</TableHead>
-                      <TableHead className="w-24 bg-zinc-100 dark:bg-zinc-800/20">
-                        L2 (A)
-                      </TableHead>
-                      <TableHead className="w-24 bg-slate-50 dark:bg-slate-800/20">L3 (A)</TableHead>
-                      <TableHead className="w-28">Balance</TableHead>
-                      <TableHead className="w-24">Rotation</TableHead>
-                      <TableHead className="w-24">Zs (Ω)</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {threePhaseCircuits.map((circuit) => (
-                      <ThreePhaseCircuitRow
-                        key={circuit.id}
-                        circuit={circuit}
-                        onUpdate={onUpdateResult}
-                      />
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Mobile Edit Bottom Sheet */}
+      {/* Mobile edit bottom sheet */}
       <MobileEditDrawer
         circuit={editingCircuit}
         onClose={() => setEditingCircuit(null)}
@@ -369,21 +532,95 @@ export const ThreePhaseScheduleOfTests: React.FC<ThreePhaseScheduleOfTestsProps>
 };
 
 /**
- * Stat card for overview section
+ * Stat tile for overview section — neutral surface, white type
  */
 const StatCard: React.FC<{
   label: string;
   value: string | number;
-  icon: React.ReactNode;
-}> = ({ label, value, icon }) => (
-  <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 border">
-    <div className="p-2 rounded-md bg-background">{icon}</div>
-    <div>
-      <p className="text-xs text-muted-foreground">{label}</p>
-      <p className="font-semibold">{value}</p>
-    </div>
+  valueClassName?: string;
+}> = ({ label, value, valueClassName }) => (
+  <div className="rounded-xl border border-white/[0.12] bg-white/[0.06] p-3">
+    <p className="text-[12px] font-medium text-white">{label}</p>
+    <p className={cn('mt-0.5 text-lg font-semibold tabular-nums text-white', valueClassName)}>
+      {value}
+    </p>
   </div>
 );
+
+/**
+ * Full-width phase load chart — custom divs, no chart library.
+ * Bars carry the recognised R/Y/B phase colours with direct labels (value on
+ * the bar, phase + deviation caption below), plus a dashed average line.
+ */
+const PhaseLoadChart: React.FC<{ loads: PhaseLoadData }> = ({ loads }) => {
+  const phases = ['L1', 'L2', 'L3'] as const;
+  const average = (loads.L1 + loads.L2 + loads.L3) / 3;
+  const maxValue = Math.max(loads.L1, loads.L2, loads.L3, 1);
+  // Headroom above the tallest bar so its value label never clips
+  const scale = maxValue * 1.15;
+  const averagePct = (average / scale) * 100;
+
+  return (
+    // Centred cluster — full-width justify-around scattered the three bars
+    // with dead space between them and let the average label collide with
+    // L3's value (Andrew). Fixed bar widths + consistent gaps compose it.
+    <div className="mx-auto w-full max-w-md">
+      <div className="relative h-44 w-full">
+        {/* Dashed average line — label sits ON the line as a chip so it can
+            never collide with a bar's value label */}
+        <div
+          className="pointer-events-none absolute inset-x-0 z-10"
+          style={{ bottom: `${averagePct}%` }}
+        >
+          <div className="border-t border-dashed border-white/50" />
+          <span className="absolute right-0 top-0 -translate-y-1/2 rounded bg-[hsl(0_0%_10%)] px-1.5 py-0.5 text-[10.5px] font-medium tabular-nums text-white">
+            avg {formatAmps(average)}A
+          </span>
+        </div>
+
+        {/* Bars */}
+        <div className="flex h-full items-end justify-center gap-8 sm:gap-12">
+          {phases.map((phase) => {
+            const value = loads[phase];
+            const heightPct = (value / scale) * 100;
+            return (
+              <div
+                key={phase}
+                className="flex h-full w-16 flex-col items-center justify-end sm:w-20"
+              >
+                <span className="mb-1 text-sm font-semibold tabular-nums text-white">
+                  {formatAmps(value)}A
+                </span>
+                <div
+                  className={cn('w-full rounded-t', phaseBarCn[phase])}
+                  style={{ height: `${Math.max(heightPct, 1)}%` }}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Baseline + per-phase captions */}
+      <div className="flex justify-center gap-8 border-t border-white/[0.2] pt-2 sm:gap-12">
+        {phases.map((phase) => {
+          const value = loads[phase];
+          const deviationPct = average > 0 ? ((value - average) / average) * 100 : 0;
+          const sign = deviationPct >= 0 ? '+' : '-';
+          return (
+            <div key={phase} className="w-16 text-center sm:w-20">
+              <p className="text-[12px] font-semibold text-white">{phase}</p>
+              <p className="text-[11px] tabular-nums text-white/80">
+                {sign}
+                {Math.abs(deviationPct).toFixed(0)}% vs avg
+              </p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
 
 /**
  * Expandable row for 3-pole MCB groups
@@ -409,57 +646,94 @@ const ThreePhaseGroupRow: React.FC<{
   }, [circuits]);
 
   const hasLoads = groupLoads.L1 > 0 || groupLoads.L2 > 0 || groupLoads.L3 > 0;
+  const groupBalance = hasLoads ? calculatePhaseBalance(groupLoads) : null;
+  const groupNeutral = hasLoads ? calculateNeutralCurrent(groupLoads) : null;
+
+  const hasRating = group.rating !== null && group.rating > 0;
 
   return (
-    <div className="border rounded-lg overflow-hidden">
-      {/* Group Header */}
+    <div className="overflow-hidden rounded-xl border border-white/[0.12] bg-gradient-to-b from-white/[0.06] to-white/[0.03]">
+      {/* Group header — chevron-expand idiom */}
       <button
+        type="button"
         onClick={onToggle}
-        className="w-full flex items-center justify-between p-3 bg-purple-50/50 dark:bg-purple-950/20 hover:bg-purple-100/50 dark:hover:bg-purple-950/30 transition-colors"
+        className="flex min-h-[44px] w-full items-center justify-between gap-3 p-3 text-left transition-colors hover:bg-white/[0.04] touch-manipulation"
       >
-        <div className="flex items-center gap-3">
-          {isExpanded ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
-          <Badge variant="outline" className="bg-purple-100 text-purple-700 border-purple-200">
-            3P
-          </Badge>
-          <span className="font-medium">{group.label}</span>
-          <span className="text-sm text-muted-foreground">(Ways {group.positions.join(', ')})</span>
+        <div className="flex min-w-0 items-center gap-2.5">
+          {isExpanded ? (
+            <ChevronDown className="h-4 w-4 shrink-0 text-white" />
+          ) : (
+            <ChevronRight className="h-4 w-4 shrink-0 text-white" />
+          )}
+          <span className={chipCn}>3P</span>
+          <div className="min-w-0">
+            <span className="block truncate text-sm font-medium text-white">{group.label}</span>
+            <span className="block font-mono text-[11px] tabular-nums text-white/80">
+              {formatWaySpan(group.positions)}
+            </span>
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <Badge variant="outline">{group.rating}A</Badge>
-          {hasLoads && <PhaseBalanceIndicator loads={groupLoads} compact />}
+        <div className="flex shrink-0 items-center gap-2">
+          {hasRating && <span className={chipCn}>{group.rating}A</span>}
+          {groupBalance && (
+            <span
+              className={cn(
+                'text-sm font-semibold tabular-nums',
+                bandText[groupBalance.band]
+              )}
+            >
+              {groupBalance.imbalancePercent}%
+            </span>
+          )}
         </div>
       </button>
 
-      {/* Expanded Content */}
+      {/* Expanded content */}
       {isExpanded && (
-        <div className="p-3 border-t bg-background">
-          <div className="grid grid-cols-3 gap-4 mb-3">
+        <div className="border-t border-white/[0.1] p-3">
+          <div className="mb-3 grid gap-2 sm:grid-cols-3">
             {circuits.map((circuit, idx) => (
-              <div key={circuit.id} className="p-2 rounded bg-muted/30">
-                <div className="flex items-center gap-2 mb-1">
-                  <Badge
-                    variant="outline"
-                    className={
-                      idx === 0
-                        ? 'bg-red-50 text-red-700 border-red-200'
-                        : idx === 1
-                          ? 'bg-yellow-50 text-yellow-700 border-yellow-200'
-                          : 'bg-blue-50 text-blue-700 border-blue-200'
-                    }
-                  >
-                    {group.phases[idx]}
-                  </Badge>
-                  <span className="text-sm">Way {circuit.circuitNumber}</span>
+              <div
+                key={circuit.id}
+                className="rounded-lg border border-white/[0.1] bg-white/[0.05] p-2"
+              >
+                <div className="mb-1 flex items-center gap-2">
+                  <span className={chipCn}>{phaseOfRow(circuit) || group.phases[idx]}</span>
+                  <span className="font-mono text-sm tabular-nums text-white">
+                    Way {wayOfRow(circuit) || circuit.circuitNumber}
+                  </span>
                 </div>
-                <p className="text-xs text-muted-foreground truncate">
+                <p className="truncate text-[12px] text-white/80">
                   {circuit.circuitDescription || 'No description'}
                 </p>
               </div>
             ))}
           </div>
 
-          {hasLoads && <PhaseBalanceIndicator loads={groupLoads} showNeutral showDetails />}
+          {groupBalance && (
+            <div
+              className={cn(
+                'space-y-1 rounded-lg border bg-white/[0.05] p-3',
+                bandBorder[groupBalance.band]
+              )}
+            >
+              <div className="flex items-center justify-between text-sm">
+                <span className="font-medium text-white">Group balance</span>
+                <span
+                  className={cn('font-semibold tabular-nums', bandText[groupBalance.band])}
+                >
+                  {groupBalance.imbalancePercent}% · {bandWord[groupBalance.band]}
+                </span>
+              </div>
+              <p className="text-[12px] text-white/80">
+                Max deviation from average
+                {groupNeutral ? ` · est. neutral ${groupNeutral.estimatedAmps}A` : ''}
+              </p>
+              {groupBalance.recommendation && (
+                <p className="text-[12px] text-white/80">{groupBalance.recommendation}</p>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -482,80 +756,89 @@ const ThreePhaseCircuitRow: React.FC<{
   const hasLoads = loads.L1 > 0 || loads.L2 > 0 || loads.L3 > 0;
   const balance = hasLoads ? calculatePhaseBalance(loads) : null;
 
+  const way = wayOfRow(circuit);
+  const phase = phaseOfRow(circuit);
+
   return (
-    <TableRow>
-      <TableCell className="font-medium">
-        {circuit.circuitDesignation || circuit.circuitNumber}
+    <TableRow className="sot-row border-0">
+      {/* Stacked lead cell: way number over phase letter */}
+      <TableCell className="px-2 py-1.5 text-center align-middle">
+        <span className="block text-sm font-semibold tabular-nums text-white">
+          {way || circuit.circuitNumber || '—'}
+        </span>
+        {phase && (
+          <span className="block text-[10px] font-medium tracking-wide text-white/80">
+            {phase}
+          </span>
+        )}
       </TableCell>
-      <TableCell className="max-w-[200px] truncate">{circuit.circuitDescription}</TableCell>
-      <TableCell>{circuit.protectiveDeviceRating}A</TableCell>
-      <TableCell className="bg-amber-50/50 dark:bg-amber-950/10">
+      <TableCell className="max-w-[200px] truncate px-2 py-1 text-sm text-white">
+        {circuit.circuitDescription || '—'}
+      </TableCell>
+      <TableCell className="px-2 py-1 text-center text-sm tabular-nums text-white">
+        {formatRating(circuit.protectiveDeviceRating)}
+      </TableCell>
+      <TableCell className="p-0.5 align-middle">
         <input
           type="text"
+          inputMode="decimal"
           value={circuit.phaseBalanceL1 || ''}
           onChange={(e) => onUpdate(circuit.id, 'phaseBalanceL1', e.target.value)}
-          className="w-full h-8 px-2 text-sm bg-transparent border rounded focus:outline-none focus:ring-1 focus:ring-primary"
-          placeholder="0"
+          className={cellInputCn}
+          placeholder="—"
         />
       </TableCell>
-      <TableCell className="bg-zinc-100/50 dark:bg-zinc-800/10">
+      <TableCell className="p-0.5 align-middle">
         <input
           type="text"
+          inputMode="decimal"
           value={circuit.phaseBalanceL2 || ''}
           onChange={(e) => onUpdate(circuit.id, 'phaseBalanceL2', e.target.value)}
-          className="w-full h-8 px-2 text-sm bg-transparent border rounded focus:outline-none focus:ring-1 focus:ring-primary"
-          placeholder="0"
+          className={cellInputCn}
+          placeholder="—"
         />
       </TableCell>
-      <TableCell className="bg-slate-50/50 dark:bg-slate-800/10">
+      <TableCell className="p-0.5 align-middle">
         <input
           type="text"
+          inputMode="decimal"
           value={circuit.phaseBalanceL3 || ''}
           onChange={(e) => onUpdate(circuit.id, 'phaseBalanceL3', e.target.value)}
-          className="w-full h-8 px-2 text-sm bg-transparent border rounded focus:outline-none focus:ring-1 focus:ring-primary"
-          placeholder="0"
+          className={cellInputCn}
+          placeholder="—"
         />
       </TableCell>
-      <TableCell>
+      <TableCell className="px-2 py-1 text-center">
         {balance ? (
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Badge
-                  variant="outline"
-                  className={`cursor-help ${getPhaseBalanceColor(balance.imbalancePercent)}`}
-                >
-                  {balance.isCompliant ? (
-                    <CheckCircle className="h-3 w-3 mr-1" />
-                  ) : (
-                    <AlertTriangle className="h-3 w-3 mr-1" />
+                <span
+                  className={cn(
+                    'cursor-help text-sm font-semibold tabular-nums',
+                    bandText[balance.band]
                   )}
+                >
                   {balance.imbalancePercent}%
-                </Badge>
+                </span>
               </TooltipTrigger>
               <TooltipContent>
-                <p className="text-xs">
-                  {balance.isCompliant
-                    ? 'Within BS7671 limits (<10%)'
-                    : 'Exceeds BS7671 limit (>10%)'}
-                </p>
+                <p className="text-xs">{bandTooltip[balance.band]}</p>
                 {balance.recommendation && (
-                  <p className="text-xs text-amber-500 mt-1">{balance.recommendation}</p>
+                  <p className="mt-1 text-xs text-amber-300">{balance.recommendation}</p>
                 )}
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
         ) : (
-          <span className="text-xs text-muted-foreground">-</span>
+          <span className="text-sm text-white/80">—</span>
         )}
       </TableCell>
-      <TableCell>
-        <Badge variant="outline" className="text-xs">
-          {circuit.phaseRotation || '-'}
-        </Badge>
+      <TableCell className="px-2 py-1 text-center text-sm text-white">
+        {circuit.phaseRotation || '—'}
       </TableCell>
-      <TableCell>
-        <span className="text-sm">{circuit.zs || '-'}</span>
+      <TableCell className="px-2 py-1 text-center text-sm tabular-nums text-white">
+        {circuit.zs || '—'}
       </TableCell>
     </TableRow>
   );
@@ -579,58 +862,54 @@ const MobileThreePhaseCard: React.FC<{
   const balance = hasLoads ? calculatePhaseBalance(loads) : null;
 
   return (
-    <Card className="touch-manipulation active:scale-[0.98] transition-transform" onClick={onEdit}>
-      <CardContent className="p-4">
-        {/* Header Row */}
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <Badge variant="outline" className="bg-purple-100 text-purple-700 border-purple-200">
-              {circuit.circuitDesignation || circuit.circuitNumber}
-            </Badge>
-            <span className="text-sm font-medium truncate max-w-[150px]">
-              {circuit.circuitDescription || 'Three-Phase Circuit'}
-            </span>
-          </div>
-          <Button variant="ghost" size="icon" className="h-10 w-10">
-            <Edit3 className="h-4 w-4" />
-          </Button>
+    <button
+      type="button"
+      onClick={onEdit}
+      className="w-full rounded-xl border border-white/[0.12] bg-white/[0.05] p-4 text-left transition-transform active:scale-[0.98] touch-manipulation"
+    >
+      {/* Header row */}
+      <div className="mb-3 flex items-center justify-between gap-2">
+        <div className="flex min-w-0 items-center gap-2">
+          <span className={chipCn}>{circuit.circuitDesignation || circuit.circuitNumber}</span>
+          <span className="max-w-[150px] truncate text-sm font-medium text-white">
+            {circuit.circuitDescription || 'Three-phase circuit'}
+          </span>
         </div>
+        <span className="shrink-0 text-[13px] font-semibold text-elec-yellow">Edit</span>
+      </div>
 
-        {/* Phase Values Row */}
-        <div className="grid grid-cols-3 gap-2 mb-3">
-          <div className="p-2 rounded-lg bg-amber-50 dark:bg-amber-950/20 text-center">
-            <p className="text-xs text-amber-700 dark:text-amber-600 font-medium">L1</p>
-            <p className="text-lg font-semibold">{loads.L1 || '-'}A</p>
+      {/* Phase values row — "—" when no reading entered, never "0A" */}
+      <div className="mb-3 grid grid-cols-3 gap-2">
+        {(['L1', 'L2', 'L3'] as const).map((phase) => (
+          <div
+            key={phase}
+            className="rounded-lg border border-white/[0.1] bg-white/[0.05] p-2 text-center"
+          >
+            <p className="text-[12px] font-medium text-white">{phase}</p>
+            <p className="text-lg font-semibold tabular-nums text-white">
+              {loads[phase] > 0 ? `${formatAmps(loads[phase])}A` : '—'}
+            </p>
           </div>
-          <div className="p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800/20 text-center">
-            <p className="text-xs text-zinc-700 dark:text-zinc-400 font-medium">L2</p>
-            <p className="text-lg font-semibold">{loads.L2 || '-'}A</p>
-          </div>
-          <div className="p-2 rounded-lg bg-slate-50 dark:bg-slate-800/20 text-center">
-            <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">L3</p>
-            <p className="text-lg font-semibold">{loads.L3 || '-'}A</p>
-          </div>
-        </div>
+        ))}
+      </div>
 
-        {/* Footer Stats */}
-        <div className="flex items-center justify-between text-sm">
-          <div className="flex items-center gap-2">
-            <span className="text-muted-foreground">Rating:</span>
-            <span className="font-medium">{circuit.protectiveDeviceRating || '-'}A</span>
-          </div>
-          {balance && (
-            <Badge variant="outline" className={getPhaseBalanceColor(balance.imbalancePercent)}>
-              {balance.isCompliant ? (
-                <CheckCircle className="h-3 w-3 mr-1" />
-              ) : (
-                <AlertTriangle className="h-3 w-3 mr-1" />
-              )}
-              {balance.imbalancePercent}%
-            </Badge>
-          )}
+      {/* Footer stats */}
+      <div className="flex items-center justify-between text-sm">
+        <div className="flex items-center gap-2">
+          <span className="text-white/80">Rating:</span>
+          <span className="font-medium tabular-nums text-white">
+            {formatRating(circuit.protectiveDeviceRating)}
+          </span>
         </div>
-      </CardContent>
-    </Card>
+        {balance && (
+          <span
+            className={cn('text-sm font-semibold tabular-nums', bandText[balance.band])}
+          >
+            {balance.imbalancePercent}%
+          </span>
+        )}
+      </div>
+    </button>
   );
 };
 
@@ -683,31 +962,33 @@ const MobileEditDrawer: React.FC<{
 
   return (
     <Drawer open={!!circuit} onOpenChange={(open) => !open && onClose()}>
-      <DrawerContent className="max-h-[90vh]">
-        <DrawerHeader className="border-b">
+      <DrawerContent className="max-h-[85vh]">
+        <DrawerHeader className="border-b border-white/[0.1]">
           <div className="flex items-center justify-between">
-            <DrawerTitle className="flex items-center gap-2">
-              <Zap className="h-5 w-5 text-purple-500" />
-              {circuit?.circuitDesignation || 'Edit Circuit'}
+            <DrawerTitle className="text-base font-semibold text-white">
+              {circuit?.circuitDesignation || 'Edit circuit'}
             </DrawerTitle>
             <DrawerClose asChild>
-              <Button variant="ghost" size="icon" className="h-10 w-10">
+              <button
+                type="button"
+                className="flex h-11 w-11 items-center justify-center rounded-md text-white transition-colors hover:bg-white/[0.06] touch-manipulation"
+              >
                 <X className="h-5 w-5" />
-              </Button>
+              </button>
             </DrawerClose>
           </div>
           {circuit?.circuitDescription && (
-            <p className="text-sm text-muted-foreground">{circuit.circuitDescription}</p>
+            <p className="text-sm text-white/80">{circuit.circuitDescription}</p>
           )}
         </DrawerHeader>
 
-        <div className="p-4 space-y-4 overflow-y-auto">
-          {/* Phase Load Inputs */}
+        <div className="space-y-4 overflow-y-auto p-4">
+          {/* Phase load inputs */}
           <div className="space-y-3">
-            <h4 className="text-sm font-medium text-muted-foreground">Phase Loads (Amps)</h4>
+            <h4 className="text-sm font-semibold text-white">Phase loads (A)</h4>
             <div className="grid grid-cols-3 gap-3">
               <div>
-                <label className="text-xs font-medium text-amber-700 dark:text-amber-600">L1</label>
+                <label className={labelCn}>L1</label>
                 <Input
                   type="number"
                   inputMode="decimal"
@@ -716,13 +997,11 @@ const MobileEditDrawer: React.FC<{
                     setLocalValues((prev) => ({ ...prev, phaseBalanceL1: e.target.value }))
                   }
                   placeholder="0"
-                  className="h-12 text-lg text-center touch-manipulation bg-amber-50/50 dark:bg-amber-950/20 border-amber-200"
+                  className={cn(inputCn, 'text-center')}
                 />
               </div>
               <div>
-                <label className="text-xs font-medium text-zinc-700 dark:text-zinc-400">
-                  L2
-                </label>
+                <label className={labelCn}>L2</label>
                 <Input
                   type="number"
                   inputMode="decimal"
@@ -731,11 +1010,11 @@ const MobileEditDrawer: React.FC<{
                     setLocalValues((prev) => ({ ...prev, phaseBalanceL2: e.target.value }))
                   }
                   placeholder="0"
-                  className="h-12 text-lg text-center touch-manipulation bg-zinc-100/50 dark:bg-zinc-800/20 border-zinc-300"
+                  className={cn(inputCn, 'text-center')}
                 />
               </div>
               <div>
-                <label className="text-xs font-medium text-slate-600 dark:text-slate-400">L3</label>
+                <label className={labelCn}>L3</label>
                 <Input
                   type="number"
                   inputMode="decimal"
@@ -744,59 +1023,66 @@ const MobileEditDrawer: React.FC<{
                     setLocalValues((prev) => ({ ...prev, phaseBalanceL3: e.target.value }))
                   }
                   placeholder="0"
-                  className="h-12 text-lg text-center touch-manipulation bg-slate-50/50 dark:bg-slate-800/20 border-slate-300"
+                  className={cn(inputCn, 'text-center')}
                 />
               </div>
             </div>
           </div>
 
-          {/* Live Balance Indicator */}
+          {/* Live balance indicator */}
           {balance && (
-            <div className={`p-3 rounded-lg ${getPhaseBalanceColor(balance.imbalancePercent)}`}>
+            <div
+              className={cn('rounded-xl border bg-white/[0.05] p-3', bandBorder[balance.band])}
+            >
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">Phase Balance</span>
-                <div className="flex items-center gap-1">
-                  {balance.isCompliant ? (
-                    <CheckCircle className="h-4 w-4" />
-                  ) : (
-                    <AlertTriangle className="h-4 w-4" />
-                  )}
-                  <span className="font-semibold">{balance.imbalancePercent}%</span>
-                </div>
+                <span className="text-sm font-medium text-white">Phase balance</span>
+                <span
+                  className={cn('font-semibold tabular-nums', bandText[balance.band])}
+                >
+                  {balance.imbalancePercent}% · {bandWord[balance.band]}
+                </span>
               </div>
               {balance.recommendation && (
-                <p className="text-xs mt-1 opacity-80">{balance.recommendation}</p>
+                <p className="mt-1 text-[12px] text-white/80">{balance.recommendation}</p>
               )}
             </div>
           )}
 
-          {/* Phase Rotation */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Phase Rotation</label>
+          {/* Phase rotation */}
+          <div>
+            <label className={labelCn}>Phase rotation</label>
             <div className="grid grid-cols-2 gap-2">
-              {['✓', '✗', 'L1-L2-L3', 'N/A'].map((option) => (
-                <Button
-                  key={option}
-                  variant={localValues.phaseRotation === option ? 'default' : 'outline'}
-                  className={`h-12 touch-manipulation ${
-                    option === '✓'
-                      ? 'text-green-600 border-green-300'
-                      : option === '✗'
-                        ? 'text-red-600 border-red-300'
-                        : ''
-                  }`}
-                  onClick={() => setLocalValues((prev) => ({ ...prev, phaseRotation: option }))}
-                >
-                  {option === '✓' ? '✓ Correct' : option === '✗' ? '✗ Incorrect' : option}
-                </Button>
-              ))}
+              {['✓', '✗', 'L1-L2-L3', 'N/A'].map((option) => {
+                const selected = localValues.phaseRotation === option;
+                const selectedCn =
+                  option === '✓'
+                    ? 'bg-green-500 border-green-500 text-black font-semibold'
+                    : option === '✗'
+                      ? 'bg-red-500 border-red-500 text-white font-semibold'
+                      : 'bg-elec-yellow border-elec-yellow text-black font-semibold';
+                return (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => setLocalValues((prev) => ({ ...prev, phaseRotation: option }))}
+                    className={cn(
+                      'h-12 rounded-lg border text-sm transition-colors touch-manipulation',
+                      selected
+                        ? selectedCn
+                        : 'border-white/[0.12] bg-white/[0.06] font-medium text-white'
+                    )}
+                  >
+                    {option === '✓' ? '✓ Correct' : option === '✗' ? '✗ Incorrect' : option}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {/* Line-to-Line Voltage */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Line-to-Line Voltage</label>
-            <div className="flex gap-2">
+          {/* Line-to-line voltage */}
+          <div>
+            <label className={labelCn}>Line-to-line voltage</label>
+            <div className="flex items-end gap-2">
               <Input
                 type="number"
                 inputMode="decimal"
@@ -805,20 +1091,21 @@ const MobileEditDrawer: React.FC<{
                   setLocalValues((prev) => ({ ...prev, lineToLineVoltage: e.target.value }))
                 }
                 placeholder="400"
-                className="h-12 text-lg touch-manipulation flex-1"
+                className={cn(inputCn, 'flex-1')}
               />
-              <span className="flex items-center px-3 bg-muted rounded-md text-muted-foreground">
-                V
-              </span>
+              <span className="pb-2.5 text-sm font-medium text-white/80">V</span>
             </div>
-            <p className="text-xs text-muted-foreground">Nominal: 400V (360-440V acceptable)</p>
+            <p className="mt-1 text-[12px] text-white/80">Nominal: 400V (360-440V acceptable)</p>
           </div>
         </div>
 
-        {/* Save Button */}
-        <div className="p-4 border-t bg-background">
-          <Button onClick={handleSave} className="w-full h-12 text-base touch-manipulation">
-            Save Changes
+        {/* Save button */}
+        <div className="border-t border-white/[0.1] p-4">
+          <Button
+            onClick={handleSave}
+            className="h-12 w-full bg-elec-yellow text-base font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation"
+          >
+            Save changes
           </Button>
         </div>
       </DrawerContent>

@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { useHaptic } from '@/hooks/useHaptic';
+import { CARD_BASE, CARD_NEUTRAL, CARD_DISABLED } from '@/components/ui/card-recipe';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -113,55 +115,59 @@ const clientHandouts: DocDef[] = [
   },
 ];
 
-// Card — the shared recipe: gradient surface, volt mark, neutral badge,
-// action pinned to the base. Graphite and volt only.
+/**
+ * Doc card — the same recipe as the Inspection & Testing hub cards, imported
+ * rather than retyped so the two can't drift apart again.
+ *
+ * Two changes from the old version. The badge was floating alone in a row of
+ * its own at the top-RIGHT with the whole width empty beside it; it's now a
+ * plain eyebrow at the top-left where every other card in the app puts it.
+ * And the solid volt "Open" BUTTON is gone — one per card meant six volt
+ * blocks stacked down a phone screen, which stops volt meaning anything. The
+ * whole card is the button, and "Open" is the text affordance.
+ */
 const DocCard = ({ doc }: { doc: DocDef }) => {
   const navigate = useNavigate();
+  const haptic = useHaptic();
   const disabled = !!doc.comingSoon && !doc.href;
 
   return (
-    <div
+    <button
+      type="button"
+      disabled={disabled}
+      onClick={() => {
+        if (!doc.href) return;
+        haptic.light();
+        navigate(doc.href);
+      }}
       className={cn(
-        'group relative flex flex-col overflow-hidden rounded-2xl p-5',
-        'bg-gradient-to-b from-white/[0.07] to-white/[0.03] border border-white/[0.12]',
-        'transition-all duration-200',
-        disabled
-          ? 'opacity-50'
-          : 'hover:border-white/[0.22] hover:from-white/[0.09] hover:to-white/[0.05] hover:shadow-[0_10px_32px_rgba(0,0,0,0.35)] focus-within:border-elec-yellow/50'
+        CARD_BASE,
+        disabled ? CARD_DISABLED + ' active:scale-100' : CARD_NEUTRAL,
+        'p-3.5 sm:p-4'
       )}
     >
-      <div className="flex items-center justify-between gap-2">
-        <span className="grid h-9 w-9 place-items-center rounded-xl bg-white/[0.06] border border-white/[0.12] shrink-0">
-          <span className="h-2.5 w-2.5 rounded-full bg-elec-yellow" aria-hidden />
-        </span>
-        <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/60 border border-white/[0.16] rounded px-1.5 py-0.5 shrink-0">
-          {doc.badge}
-        </span>
-      </div>
+      <span className="min-w-0 truncate text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+        {doc.badge}
+      </span>
 
-      <h3 className="mt-4 text-[19px] font-semibold tracking-tight leading-[1.15] text-white">
+      <span className="mt-1.5 text-[15px] font-bold leading-tight tracking-tight text-white transition-colors group-hover:text-elec-yellow sm:text-[17px]">
         {doc.title}
-      </h3>
-      <p className="mt-1.5 text-[13px] leading-relaxed text-white/65 line-clamp-2">
+      </span>
+      <span className="mt-1 text-[11.5px] leading-snug text-white sm:text-[12.5px]">
         {doc.description}
-      </p>
+      </span>
 
-      <div className="mt-auto pt-5 flex items-center justify-end">
-        <button
-          type="button"
-          onClick={() => doc.href && navigate(doc.href)}
-          disabled={disabled}
-          className={cn(
-            'h-11 px-5 rounded-xl text-[13px] font-bold touch-manipulation transition-transform',
-            disabled
-              ? 'bg-white/[0.08] text-white/50'
-              : 'bg-elec-yellow text-black active:scale-[0.97] shadow-[0_4px_16px_rgba(245,184,28,0.18)]'
-          )}
-        >
-          {disabled ? 'Coming soon' : 'Open'}
-        </button>
-      </div>
-    </div>
+      <span className="flex-grow" />
+
+      <span className="mt-3 flex items-baseline justify-between gap-2 border-t border-white/[0.10] pt-2.5">
+        <span className="min-w-0 truncate text-[11px] text-white">
+          {disabled ? 'Coming soon' : ''}
+        </span>
+        {!disabled && (
+          <span className="shrink-0 text-[12px] font-bold text-elec-yellow">Open</span>
+        )}
+      </span>
+    </button>
   );
 };
 
@@ -170,9 +176,9 @@ const HubSection = ({ title, docs }: { title: string; docs: DocDef[] }) => (
   <motion.section variants={itemVariants} className="space-y-3">
     <div className="flex items-baseline gap-2.5 px-0.5">
       <h2 className="text-[15px] font-semibold tracking-tight text-white">{title}</h2>
-      <span className="text-[12px] text-white/40 tabular-nums">{docs.length}</span>
+      <span className="text-[12px] text-white tabular-nums">{docs.length}</span>
     </div>
-    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
+    <div className="grid grid-cols-2 gap-2.5 sm:gap-3 xl:grid-cols-3">
       {docs.map((doc) => (
         <DocCard key={doc.id} doc={doc} />
       ))}
@@ -207,6 +213,7 @@ const DOC_TYPE_ROUTES: Record<string, string> = {
 
 const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
   const navigate = useNavigate();
+  const haptic = useHaptic();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [user, setUser] = useState<any>(null);
 
@@ -259,7 +266,7 @@ const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
         <button
           type="button"
           onClick={onBack}
-          className="h-11 px-1 -ml-1 text-[13px] font-semibold text-white/60 touch-manipulation active:scale-[0.97]"
+          className="h-11 px-1 -ml-1 text-[13px] font-semibold text-white touch-manipulation active:scale-[0.97]"
         >
           Back
         </button>
@@ -267,7 +274,7 @@ const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
           <h1 className="text-2xl sm:text-[28px] font-bold tracking-tight text-white">
             Notices & Labels
           </h1>
-          <span className="text-[13px] text-white/50">Danger, isolation, permits and handouts</span>
+          <span className="text-[13px] text-white">Danger, isolation, permits and handouts</span>
         </div>
       </div>
 
@@ -289,58 +296,56 @@ const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
               <h2 className="text-[15px] font-semibold tracking-tight text-white">
                 Recent documents
               </h2>
-              <span className="text-[12px] text-white/40 tabular-nums">{savedDocs.length}</span>
+              <span className="text-[12px] text-white tabular-nums">{savedDocs.length}</span>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
+            <div className="grid grid-cols-2 gap-2.5 sm:gap-3 xl:grid-cols-3">
               {savedDocs.map((doc) => {
                 const typeInfo = DOC_TYPE_LABELS[doc.report_type] || { label: 'DOC' };
                 const route = DOC_TYPE_ROUTES[doc.report_type];
                 const title = doc.client_name || doc.installation_address || 'Untitled';
 
                 return (
-                  <div
+                  <button
                     key={doc.report_id}
-                    className={cn(
-                      'group relative flex flex-col overflow-hidden rounded-2xl p-4',
-                      'bg-gradient-to-b from-white/[0.07] to-white/[0.03] border border-white/[0.12]',
-                      'transition-all duration-200 hover:border-white/[0.22] hover:from-white/[0.09] hover:to-white/[0.05]'
-                    )}
+                    type="button"
+                    onClick={() => {
+                      if (!route) return;
+                      haptic.light();
+                      navigate(`/electrician/inspection-testing/${route}/${doc.report_id}`);
+                    }}
+                    className={cn(CARD_BASE, CARD_NEUTRAL, 'p-3.5 sm:p-4')}
                   >
-                    <div className="flex items-center gap-2">
-                      <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/60 border border-white/[0.16] rounded px-1.5 py-0.5 shrink-0">
+                    <span className="flex items-baseline gap-2">
+                      <span className="min-w-0 truncate text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
                         {typeInfo.label}
                       </span>
-                      <span className="ml-auto text-[11px] text-white/50 tabular-nums">
+                      <span className="ml-auto shrink-0 text-[11px] tabular-nums text-white">
                         {formatTimeAgo(doc.updated_at)}
                       </span>
-                    </div>
+                    </span>
 
-                    <h3
+                    <span
                       title={title}
-                      className="mt-2.5 text-[15px] font-semibold tracking-tight text-white truncate"
+                      className="mt-1.5 block truncate text-[15px] font-bold leading-tight tracking-tight text-white transition-colors group-hover:text-elec-yellow sm:text-[17px]"
                     >
                       {title}
-                    </h3>
-                    <p
-                      title={doc.installation_address || undefined}
-                      className="text-[12px] text-white/60 truncate mt-0.5 min-h-[18px]"
-                    >
-                      {doc.installation_address || 'No address'}
-                    </p>
-
-                    <div className="mt-3 pt-3 flex items-center justify-between gap-2 border-t border-white/[0.07]">
-                      <span className="text-[11.5px] font-semibold text-emerald-300">Issued</span>
-                      <button
-                        onClick={() =>
-                          route &&
-                          navigate(`/electrician/inspection-testing/${route}/${doc.report_id}`)
-                        }
-                        className="h-11 px-5 rounded-xl text-[13px] font-bold bg-elec-yellow text-black touch-manipulation active:scale-[0.97] transition-transform"
+                    </span>
+                    {doc.installation_address && (
+                      <span
+                        title={doc.installation_address}
+                        className="mt-1 block truncate text-[11.5px] leading-snug text-white sm:text-[12.5px]"
                       >
-                        Open
-                      </button>
-                    </div>
-                  </div>
+                        {doc.installation_address}
+                      </span>
+                    )}
+
+                    <span className="flex-grow" />
+
+                    <span className="mt-3 flex items-baseline justify-between gap-2 border-t border-white/[0.10] pt-2.5">
+                      <span className="text-[11px] font-semibold text-emerald-300">Issued</span>
+                      <span className="shrink-0 text-[12px] font-bold text-elec-yellow">Open</span>
+                    </span>
+                  </button>
                 );
               })}
             </div>

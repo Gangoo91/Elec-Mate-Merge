@@ -210,7 +210,7 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
           </TabsList>
 
           <TabsContent value="link" className="mt-4 space-y-3">
-            <FormCard eyebrow="Shareable link">
+            <FormCard bleed eyebrow="Shareable link">
               <div className="space-y-1.5">
                 <label className={fieldLabelClass}>URL</label>
                 <div className="flex gap-2">
@@ -249,7 +249,7 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
               </Field>
             </FormCard>
 
-            <FormCard eyebrow="Send via email">
+            <FormCard bleed eyebrow="Send via email">
               <div className="flex gap-2">
                 <Input
                   type="email"
@@ -267,7 +267,7 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
           </TabsContent>
 
           <TabsContent value="qr" className="mt-4">
-            <FormCard eyebrow="QR code">
+            <FormCard bleed eyebrow="QR code">
               <div className="flex flex-col items-center">
                 <div
                   ref={qrRef}
@@ -294,7 +294,7 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
           </TabsContent>
         </Tabs>
 
-        <FormCard eyebrow="What to include">
+        <FormCard bleed eyebrow="What to include">
           <p className="text-[12px] text-white flex items-center gap-2">
             <Eye className="h-4 w-4 text-elec-yellow" />
             Select details visible to recipients

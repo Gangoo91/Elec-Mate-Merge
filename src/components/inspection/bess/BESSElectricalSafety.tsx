@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { useBESSSmartForm } from '@/hooks/inspection/useBESSSmartForm';
 import { cn } from '@/lib/utils';
+import useReadingKeypad from '@/hooks/useReadingKeypad';
 
 const cardCn =
   '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
@@ -20,19 +21,51 @@ const Field = ({ label, required, children }: { label: string; required?: boolea
 );
 
 const Sub = ({ title }: { title: string }) => (
-  <div className="flex items-center gap-2 pt-2">
-    <p className="text-[13px] font-semibold text-white shrink-0">{title}</p>
-    <div className="h-px flex-1 bg-white/[0.08]" />
+  <div className="border-t border-white/[0.1] pt-4">
+    <h3 className="text-sm font-semibold text-white">{title}</h3>
   </div>
 );
 
 interface Props { formData: any; onUpdate: (field: string, value: any) => void }
+
+/** Numeric measurement inputs the keypad serves — recorded lengths, distances,
+ * energies and the electrode resistance. Ratings/selects stay native. */
+const KEYPAD_META = {
+  dcCableLength: { label: 'DC cable length', unit: 'm' },
+  earthElectrodeResistance: { label: 'Earth electrode resistance', unit: 'Ω' },
+  acCableLength: { label: 'AC cable length', unit: 'm' },
+  distanceFromCombustibles: { label: 'Distance from combustibles', unit: 'mm' },
+  energyPerEnclosure: { label: 'Energy per enclosure', unit: 'kWh' },
+  totalEnergyAtPremises: { label: 'Total energy at premises', unit: 'kWh' },
+  distanceFromOpenings: { label: 'Distance from openings', unit: 'm' },
+  distanceFromFlammables: { label: 'Distance from flammables', unit: 'm' },
+};
+const KEYPAD_SEQUENCE = [
+  'dcCableLength',
+  'earthElectrodeResistance',
+  'acCableLength',
+  'distanceFromCombustibles',
+  'energyPerEnclosure',
+  'totalEnergyAtPremises',
+  'distanceFromOpenings',
+  'distanceFromFlammables',
+];
 
 export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
   const { getPMEGuidance, getChemistryGuidance } = useBESSSmartForm();
   const inverterHasGalvanicIsolation = formData.dcEarthingMethod === 'galvanic-isolation';
   const pmeGuidance = useMemo(() => getPMEGuidance(formData.earthingArrangement, inverterHasGalvanicIsolation), [formData.earthingArrangement, inverterHasGalvanicIsolation, getPMEGuidance]);
   const chemGuidance = useMemo(() => getChemistryGuidance(formData.batteryChemistry), [formData.batteryChemistry, getChemistryGuidance]);
+
+  // Reading keypad — shared MW pattern. Values flow through the existing
+  // onUpdate path; conditional fields (electrode resistance) are skipped by
+  // the sequence when not rendered.
+  const keypad = useReadingKeypad({
+    meta: KEYPAD_META,
+    sequence: KEYPAD_SEQUENCE,
+    getValue: (field) => String(formData[field] ?? ''),
+    setValue: (field, value) => onUpdate(field, value),
+  });
 
   return (
     <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
@@ -61,7 +94,7 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
               ]}
               placeholder="mm²" triggerClassName={pickerTrigger} />
           </Field>
-          <Field label="Length (m)"><Input type="number" value={formData.dcCableLength} onChange={(e) => onUpdate('dcCableLength', e.target.value)} className={inputCn} /></Field>
+          <Field label="Length (m)"><Input value={formData.dcCableLength} onChange={(e) => onUpdate('dcCableLength', e.target.value)} className={inputCn} {...keypad.field('dcCableLength')} /></Field>
         </div>
         <Sub title="Protection" />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
@@ -198,7 +231,7 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
           </div>
         </div>
         {formData.dcEarthingMethod === 'separate-earth-electrode' && (
-          <Field label="Earth Electrode Resistance (Ω)"><Input type="number" step="0.1" value={formData.earthElectrodeResistance} onChange={(e) => onUpdate('earthElectrodeResistance', e.target.value)} className={inputCn} placeholder="e.g. 21.5" /></Field>
+          <Field label="Earth Electrode Resistance (Ω)"><Input step="0.1" value={formData.earthElectrodeResistance} onChange={(e) => onUpdate('earthElectrodeResistance', e.target.value)} className={inputCn} placeholder="e.g. 21.5" {...keypad.field('earthElectrodeResistance')} /></Field>
         )}
       </div>
 
@@ -227,7 +260,7 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
               ]}
               placeholder="mm²" triggerClassName={pickerTrigger} />
           </Field>
-          <Field label="Length (m)"><Input type="number" value={formData.acCableLength} onChange={(e) => onUpdate('acCableLength', e.target.value)} className={inputCn} /></Field>
+          <Field label="Length (m)"><Input value={formData.acCableLength} onChange={(e) => onUpdate('acCableLength', e.target.value)} className={inputCn} {...keypad.field('acCableLength')} /></Field>
         </div>
         <Sub title="Protection" />
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-4">
@@ -345,7 +378,7 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
             ))}
           </div>
         </div>
-        <Field label="Distance from Combustibles (mm)"><Input type="number" value={formData.distanceFromCombustibles} onChange={(e) => onUpdate('distanceFromCombustibles', e.target.value)} className={inputCn} placeholder="e.g. 500" /></Field>
+        <Field label="Distance from Combustibles (mm)"><Input value={formData.distanceFromCombustibles} onChange={(e) => onUpdate('distanceFromCombustibles', e.target.value)} className={inputCn} placeholder="e.g. 500" {...keypad.field('distanceFromCombustibles')} /></Field>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-4">
           <Field label="Ventilation">
             <MobileSelectPicker value={formData.ventilation} onValueChange={(v) => onUpdate('ventilation', v)}
@@ -421,14 +454,14 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
 
           <Sub title="Energy Limits" />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-            <Field label="Per Enclosure (kWh)"><Input type="number" step="0.1" value={formData.energyPerEnclosure} onChange={(e) => onUpdate('energyPerEnclosure', e.target.value)} className={inputCn} placeholder="Max 20 kWh" /></Field>
-            <Field label="Total at Premises (kWh)"><Input type="number" step="0.1" value={formData.totalEnergyAtPremises} onChange={(e) => onUpdate('totalEnergyAtPremises', e.target.value)} className={inputCn} placeholder="Max 80 kWh garage / 40 kWh other" /></Field>
+            <Field label="Per Enclosure (kWh)"><Input step="0.1" value={formData.energyPerEnclosure} onChange={(e) => onUpdate('energyPerEnclosure', e.target.value)} className={inputCn} placeholder="Max 20 kWh" {...keypad.field('energyPerEnclosure')} /></Field>
+            <Field label="Total at Premises (kWh)"><Input step="0.1" value={formData.totalEnergyAtPremises} onChange={(e) => onUpdate('totalEnergyAtPremises', e.target.value)} className={inputCn} placeholder="Max 80 kWh garage / 40 kWh other" {...keypad.field('totalEnergyAtPremises')} /></Field>
           </div>
 
           <Sub title="Distances" />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-            <Field label="From Openings (m)"><Input type="number" step="0.1" value={formData.distanceFromOpenings} onChange={(e) => onUpdate('distanceFromOpenings', e.target.value)} className={inputCn} placeholder="Min 1m (outdoor)" /></Field>
-            <Field label="From Flammables (m)"><Input type="number" step="0.1" value={formData.distanceFromFlammables} onChange={(e) => onUpdate('distanceFromFlammables', e.target.value)} className={inputCn} placeholder="Min 2m" /></Field>
+            <Field label="From Openings (m)"><Input step="0.1" value={formData.distanceFromOpenings} onChange={(e) => onUpdate('distanceFromOpenings', e.target.value)} className={inputCn} placeholder="Min 1m (outdoor)" {...keypad.field('distanceFromOpenings')} /></Field>
+            <Field label="From Flammables (m)"><Input step="0.1" value={formData.distanceFromFlammables} onChange={(e) => onUpdate('distanceFromFlammables', e.target.value)} className={inputCn} placeholder="Min 2m" {...keypad.field('distanceFromFlammables')} /></Field>
           </div>
 
           <Sub title="Enclosure" />
@@ -533,6 +566,12 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
           </div>
         )}
       </div>
+
+      {/* Scroll room so the last reading can rise clear of the keypad */}
+      {keypad.spacer}
+
+      {/* Reading keypad — coarse-pointer devices only */}
+      {keypad.element}
     </div>
   );
 }

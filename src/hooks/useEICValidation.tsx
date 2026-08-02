@@ -24,168 +24,107 @@ export interface ValidationResult {
   errors: ValidationRule[];
   warnings: ValidationRule[];
   completionPercentage: number;
+  /** Per-step completeness derived from the same checks as errors/warnings —
+   * the single source of truth for the shell's tab ticks (MW parity). */
+  tabComplete: Record<EICTabId, boolean>;
 }
 
+/** Every field the header progress ring tracks. completionPercentage divides by
+ * this list's length (mirrors useMinorWorksValidation's REQUIRED_FIELDS), so a
+ * fully complete EIC genuinely reads 100% — the ring, the missing-items sheet
+ * and the tab ticks all derive from this one list. */
+const REQUIRED_FIELDS: {
+  field: string;
+  message: string;
+  severity: 'error' | 'warning';
+  regulation?: string;
+  tab: EICTabId;
+}[] = [
+  { field: 'clientName', message: 'Client name', severity: 'error', tab: 'details' },
+  { field: 'installationAddress', message: 'Installation address', severity: 'error', tab: 'details' },
+  { field: 'installationDate', message: 'Installation date', severity: 'error', tab: 'details' },
+  { field: 'installationType', message: 'Installation type', severity: 'warning', tab: 'details' },
+  {
+    field: 'supplyVoltage',
+    message: 'Supply voltage',
+    severity: 'error',
+    regulation: 'Chapter 31',
+    tab: 'details',
+  },
+  {
+    field: 'earthingArrangement',
+    message: 'Earthing arrangement',
+    severity: 'error',
+    regulation: 'Chapter 54',
+    tab: 'details',
+  },
+  {
+    field: 'mainProtectiveDevice',
+    message: 'Main protective device',
+    severity: 'error',
+    regulation: 'Chapter 43',
+    tab: 'details',
+  },
+  { field: 'designerName', message: 'Designer name', severity: 'error', regulation: 'Part 6', tab: 'declarations' },
+  {
+    field: 'designerSignature',
+    message: 'Designer signature',
+    severity: 'error',
+    regulation: 'Part 6',
+    tab: 'declarations',
+  },
+  {
+    field: 'constructorName',
+    message: 'Constructor name',
+    severity: 'error',
+    regulation: 'Part 6',
+    tab: 'declarations',
+  },
+  {
+    field: 'constructorSignature',
+    message: 'Constructor signature',
+    severity: 'error',
+    regulation: 'Part 6',
+    tab: 'declarations',
+  },
+  {
+    field: 'inspectorName',
+    message: 'Inspector name',
+    severity: 'error',
+    regulation: 'Part 6',
+    tab: 'declarations',
+  },
+  {
+    field: 'inspectorSignature',
+    message: 'Inspector signature',
+    severity: 'error',
+    regulation: 'Part 6',
+    tab: 'declarations',
+  },
+];
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const useEICValidation = (formData: any): ValidationResult => {
   return useMemo(() => {
     const errors: ValidationRule[] = [];
     const warnings: ValidationRule[] = [];
     let completedFields = 0;
-    const totalRequiredFields = 15; // Adjust based on actual required fields
 
-    // Installation Details Validation
-    if (!formData.clientName) {
-      errors.push({
-        field: 'clientName',
-        message: 'Client name',
-        severity: 'error',
-        tab: 'details',
-      });
-    } else {
-      completedFields++;
-    }
-
-    if (!formData.installationAddress) {
-      errors.push({
-        field: 'installationAddress',
-        message: 'Installation address',
-        severity: 'error',
-        tab: 'details',
-      });
-    } else {
-      completedFields++;
-    }
-
-    if (!formData.installationDate) {
-      errors.push({
-        field: 'installationDate',
-        message: 'Installation date',
-        severity: 'error',
-        tab: 'details',
-      });
-    } else {
-      completedFields++;
-    }
-
-    if (!formData.installationType) {
-      warnings.push({
-        field: 'installationType',
-        message: 'Installation type',
-        severity: 'warning',
-        tab: 'details',
-      });
-    } else {
-      completedFields++;
-    }
-
-    // Supply & Earthing Validation
-    if (!formData.supplyVoltage) {
-      errors.push({
-        field: 'supplyVoltage',
-        message: 'Supply voltage',
-        severity: 'error',
-        regulation: 'Chapter 31',
-        tab: 'details',
-      });
-    } else {
-      completedFields++;
-    }
-
-    if (!formData.earthingArrangement) {
-      errors.push({
-        field: 'earthingArrangement',
-        message: 'Earthing arrangement',
-        severity: 'error',
-        regulation: 'Chapter 54',
-        tab: 'details',
-      });
-    } else {
-      completedFields++;
-    }
-
-    if (!formData.mainProtectiveDevice) {
-      errors.push({
-        field: 'mainProtectiveDevice',
-        message: 'Main protective device',
-        severity: 'error',
-        regulation: 'Chapter 43',
-        tab: 'details',
-      });
-    } else {
-      completedFields++;
-    }
-
-    // Declaration Validation
-    if (!formData.designerName) {
-      errors.push({
-        field: 'designerName',
-        message: 'Designer name',
-        severity: 'error',
-        regulation: 'Part 6',
-        tab: 'declarations',
-      });
-    } else {
-      completedFields++;
-    }
-
-    if (!formData.designerSignature) {
-      errors.push({
-        field: 'designerSignature',
-        message: 'Designer signature',
-        severity: 'error',
-        regulation: 'Part 6',
-        tab: 'declarations',
-      });
-    } else {
-      completedFields++;
-    }
-
-    if (!formData.constructorName) {
-      errors.push({
-        field: 'constructorName',
-        message: 'Constructor name',
-        severity: 'error',
-        regulation: 'Part 6',
-        tab: 'declarations',
-      });
-    } else {
-      completedFields++;
-    }
-
-    if (!formData.constructorSignature) {
-      errors.push({
-        field: 'constructorSignature',
-        message: 'Constructor signature',
-        severity: 'error',
-        regulation: 'Part 6',
-        tab: 'declarations',
-      });
-    } else {
-      completedFields++;
-    }
-
-    if (!formData.inspectorName) {
-      errors.push({
-        field: 'inspectorName',
-        message: 'Inspector name',
-        severity: 'error',
-        regulation: 'Part 6',
-        tab: 'declarations',
-      });
-    } else {
-      completedFields++;
-    }
-
-    if (!formData.inspectorSignature) {
-      errors.push({
-        field: 'inspectorSignature',
-        message: 'Inspector signature',
-        severity: 'error',
-        regulation: 'Part 6',
-        tab: 'declarations',
-      });
-    } else {
-      completedFields++;
+    for (const rule of REQUIRED_FIELDS) {
+      const value = formData[rule.field];
+      if (value && String(value).trim() !== '') {
+        completedFields++;
+      } else {
+        const item: ValidationRule = {
+          field: rule.field,
+          message: rule.message,
+          severity: rule.severity,
+          regulation: rule.regulation,
+          tab: rule.tab,
+        };
+        if (rule.severity === 'error') errors.push(item);
+        else warnings.push(item);
+      }
     }
 
     // Technical Validation Warnings
@@ -200,7 +139,11 @@ export const useEICValidation = (formData: any): ValidationResult => {
       });
     }
 
-    if (formData.scheduleOfTests && formData.scheduleOfTests.length === 0) {
+    // Fresh certs have no scheduleOfTests at all — warn on undefined AND empty,
+    // matching the hasInspections handling below.
+    const hasTestResults =
+      Array.isArray(formData.scheduleOfTests) && formData.scheduleOfTests.length > 0;
+    if (!hasTestResults) {
       warnings.push({
         field: 'scheduleOfTests',
         message: 'No test results recorded',
@@ -211,13 +154,17 @@ export const useEICValidation = (formData: any): ValidationResult => {
     }
 
     // inspectionItems may be a Record<string,{result,...}> (wizard path) or an array (legacy)
-    // The component stores results under 'result', not 'outcome' — check both for safety
+    // The component stores results under 'result', not 'outcome' — check both for safety.
+    // Mere presence of items is NOT enough: the schedule auto-seeds the full BS 7671
+    // list on first visit, so completeness requires an actual recorded outcome.
     const hasInspections = (() => {
       const items = formData.inspectionItems;
       if (items && !Array.isArray(items) && typeof items === 'object') {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return Object.values(items).some((i: any) => i.result || i.outcome);
       }
       if (Array.isArray(items) && items.length > 0) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return items.some((i: any) => i.result || i.outcome);
       }
       return false;
@@ -251,14 +198,26 @@ export const useEICValidation = (formData: any): ValidationResult => {
       });
     }
 
-    const completionPercentage = Math.round((completedFields / totalRequiredFields) * 100);
+    const completionPercentage = Math.round((completedFields / REQUIRED_FIELDS.length) * 100);
     const isValid = errors.length === 0;
+
+    // Tab ticks converge on the same checks the missing-items sheet renders:
+    // a step ticks exactly when the sheet has no errors left for it. Inspect and
+    // Testing tick on real recorded data; Issue ticks when the cert is ready.
+    const tabComplete: Record<EICTabId, boolean> = {
+      details: !errors.some((e) => e.tab === 'details'),
+      inspection: Boolean(hasInspections),
+      testing: hasTestResults,
+      declarations: !errors.some((e) => e.tab === 'declarations'),
+      certificate: isValid,
+    };
 
     return {
       isValid,
       errors,
       warnings,
       completionPercentage,
+      tabComplete,
     };
   }, [formData]);
 };

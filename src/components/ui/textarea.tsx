@@ -25,7 +25,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           'placeholder:text-white',
           // Focus states - elec-yellow glow
           'focus:outline-none focus:border-elec-yellow focus:ring-0',
-          'focus:shadow-[0_0_0_3px_hsl(var(--elec-yellow)/0.15)]',
+          'focus:shadow-none',
           // Caret
           'caret-elec-yellow',
           // Transitions

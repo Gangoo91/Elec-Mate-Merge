@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { ShieldCheck, Clock, Loader2, RotateCcw, PenLine, MessageSquare } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
 import SignatureInput from '@/components/signature/SignatureInput';
@@ -167,14 +167,13 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
   const status = review?.status;
 
   return (
-    <div className="space-y-3 py-4 border-t border-white/[0.08] sm:border sm:rounded-lg sm:p-4 sm:border-white/[0.08]">
-      <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
-        <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
+    <div className="-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4">
+      <h2 className="text-[15px] font-semibold tracking-tight text-white">
         Qualifying Supervisor review
-      </h3>
+      </h2>
 
       {ctx?.qs_approval_required && status !== 'approved' && (
-        <p className="text-xs text-amber-300">
+        <p className="text-[12px] text-amber-400">
           {ctx?.company_name || 'Your company'} requires QS approval before this certificate can be
           issued.
         </p>
@@ -182,24 +181,18 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
 
       {status === 'pending' && (
         <div className="space-y-3">
-          <div className="flex items-start gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2.5">
-            <Clock className="h-4 w-4 mt-0.5 shrink-0 text-amber-300" />
-            <div className="text-sm text-amber-200">
+          <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
+            <p className="text-sm text-amber-400">
               Awaiting review by {ctx?.company_name || 'your company'} — submitted{' '}
               {new Date(review!.submitted_at).toLocaleDateString('en-GB')}.
-            </div>
+            </p>
           </div>
           <Button
-            variant="outline"
             onClick={handleCancel}
             disabled={cancelMutation.isPending}
-            className="h-11 w-full sm:w-auto touch-manipulation"
+            className="h-12 w-full sm:w-auto rounded-xl border border-white/[0.12] bg-white/[0.06] text-[14px] font-medium text-white hover:bg-white/[0.1] touch-manipulation active:scale-[0.98]"
           >
-            {cancelMutation.isPending ? (
-              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-            ) : (
-              <RotateCcw className="h-4 w-4 mr-2" />
-            )}
+            {cancelMutation.isPending && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
             Withdraw from review
           </Button>
         </div>
@@ -207,41 +200,35 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
 
       {status === 'returned' && (
         <div className="space-y-3">
-          <div className="rounded-lg border border-orange-500/30 bg-orange-500/10 px-3 py-2.5 space-y-1">
-            <p className="text-sm font-medium text-orange-300">
+          <div className="rounded-xl bg-white/[0.05] px-3.5 py-3 space-y-1">
+            <p className="text-sm font-medium text-orange-400">
               Returned by {review!.reviewer_name || 'the QS'}
               {review!.reviewed_at
                 ? ` on ${new Date(review!.reviewed_at).toLocaleDateString('en-GB')}`
                 : ''}
             </p>
             {review!.review_comments && (
-              <p className="text-sm text-orange-200 whitespace-pre-wrap">
-                {review!.review_comments}
-              </p>
+              <p className="text-sm text-white/85 whitespace-pre-wrap">{review!.review_comments}</p>
             )}
           </div>
           <div className="flex flex-col sm:flex-row gap-3">
             <Button
-              variant="outline"
               onClick={() => {
                 haptic.light();
                 setCommentsOpen(true);
               }}
-              className="h-11 w-full sm:w-auto touch-manipulation"
+              className="h-12 w-full sm:w-auto rounded-xl border border-white/[0.12] bg-white/[0.06] text-[14px] font-medium text-white hover:bg-white/[0.1] touch-manipulation active:scale-[0.98]"
             >
-              <MessageSquare className="h-4 w-4 mr-2" />
               See comments
             </Button>
             <Button
               onClick={handleSubmit}
               disabled={submitMutation.isPending || isTempReportId}
               title={isTempReportId ? 'Save your certificate first' : undefined}
-              className="h-11 w-full sm:w-auto flex-1 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
+              className="h-12 w-full sm:w-auto flex-1 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black hover:bg-elec-yellow/90 disabled:bg-elec-yellow disabled:text-black disabled:opacity-100 touch-manipulation active:scale-[0.98]"
             >
-              {submitMutation.isPending ? (
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              ) : (
-                <ShieldCheck className="h-4 w-4 mr-2" />
+              {submitMutation.isPending && (
+                <Loader2 className="h-4 w-4 mr-2 animate-spin text-black" />
               )}
               Resubmit for review
             </Button>
@@ -251,25 +238,22 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
 
       {status === 'approved' && (
         <div className="space-y-3">
-          <div className="flex items-start gap-2 rounded-lg border border-green-500/30 bg-green-500/10 px-3 py-2.5">
-            <ShieldCheck className="h-4 w-4 mt-0.5 shrink-0 text-green-400" />
-            <div className="text-sm text-green-300">
+          <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
+            <p className="text-sm text-green-400">
               Approved and countersigned by {review!.reviewer_name}
               {review!.reviewed_at
                 ? ` on ${new Date(review!.reviewed_at).toLocaleDateString('en-GB')}`
                 : ''}
               . The QS signature will appear on the generated PDF.
-            </div>
+            </p>
           </div>
           <Button
-            variant="outline"
             onClick={() => {
               haptic.light();
               setCommentsOpen(true);
             }}
-            className="h-11 w-full sm:w-auto touch-manipulation"
+            className="h-12 w-full sm:w-auto rounded-xl border border-white/[0.12] bg-white/[0.06] text-[14px] font-medium text-white hover:bg-white/[0.1] touch-manipulation active:scale-[0.98]"
           >
-            <MessageSquare className="h-4 w-4 mr-2" />
             See comments
           </Button>
         </div>
@@ -279,7 +263,7 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
         <div className="space-y-3">
           {canSelfSignoff ? (
             <>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white/85">
                 As {ctx?.company_name || 'your company'}&rsquo;s Qualifying Supervisor, review and
                 countersign this certificate.
               </p>
@@ -290,50 +274,43 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
                       haptic.light();
                       setShowSignoff(true);
                     }}
-                    className="h-11 w-full sm:w-auto flex-1 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
+                    className="h-12 w-full sm:w-auto flex-1 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
                   >
-                    <PenLine className="h-4 w-4 mr-2" />
                     Review &amp; sign off as QS
                   </Button>
                   <Button
-                    variant="outline"
                     onClick={handleSubmit}
                     disabled={submitMutation.isPending}
-                    className="h-11 w-full sm:w-auto touch-manipulation"
+                    className="h-12 w-full sm:w-auto rounded-xl border border-white/[0.12] bg-white/[0.06] text-[14px] font-medium text-white hover:bg-white/[0.1] touch-manipulation active:scale-[0.98]"
                   >
                     Send to another QS
                   </Button>
                 </div>
               ) : (
-                <div className="space-y-3 rounded-lg border border-white/[0.08] p-3">
-                  <p className="text-xs text-white/60">
+                <div className="space-y-4 border-t border-white/[0.1] pt-4">
+                  <p className="text-[12px] text-white/85">
                     Sign below to countersign this certificate as Qualifying Supervisor.
                   </p>
                   <Input
                     value={signoffName}
                     onChange={(e) => setSignoffName(e.target.value)}
                     placeholder="QS name (CAPITALS)"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                    className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation"
                   />
                   <SignatureInput value={signoffSig || ''} onChange={setSignoffSig} />
                   <div className="flex flex-col sm:flex-row gap-3">
                     <Button
                       onClick={handleSelfSignoff}
                       disabled={signoffBusy}
-                      className="h-11 w-full sm:w-auto flex-1 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
+                      className="h-12 w-full sm:w-auto flex-1 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black hover:bg-elec-yellow/90 disabled:bg-elec-yellow disabled:text-black disabled:opacity-100 touch-manipulation active:scale-[0.98]"
                     >
-                      {signoffBusy ? (
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      ) : (
-                        <ShieldCheck className="h-4 w-4 mr-2" />
-                      )}
+                      {signoffBusy && <Loader2 className="h-4 w-4 mr-2 animate-spin text-black" />}
                       Sign off certificate
                     </Button>
                     <Button
-                      variant="outline"
                       onClick={() => setShowSignoff(false)}
                       disabled={signoffBusy}
-                      className="h-11 w-full sm:w-auto touch-manipulation"
+                      className="h-12 w-full sm:w-auto rounded-xl border border-white/[0.12] bg-white/[0.06] text-[14px] font-medium text-white hover:bg-white/[0.1] touch-manipulation active:scale-[0.98]"
                     >
                       Cancel
                     </Button>
@@ -343,39 +320,38 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
             </>
           ) : (
             <>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white/85">
                 Send this certificate to {ctx?.company_name || 'your company'} for Qualifying
                 Supervisor sign-off.
               </p>
               {isTempReportId && (
-                <p className="text-xs text-amber-300">Save your certificate first to send it for review.</p>
+                <p className="text-[12px] text-amber-400">
+                  Save your certificate first to send it for review.
+                </p>
               )}
               {showNote && (
                 <Textarea
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
                   placeholder="Note for the QS (optional)"
-                  className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
+                  className="textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation"
                 />
               )}
               <div className="flex flex-col sm:flex-row gap-3">
                 <Button
                   onClick={handleSubmit}
                   disabled={submitMutation.isPending}
-                  className="h-11 w-full sm:w-auto flex-1 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
+                  className="h-12 w-full sm:w-auto flex-1 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black hover:bg-elec-yellow/90 disabled:bg-elec-yellow disabled:text-black disabled:opacity-100 touch-manipulation active:scale-[0.98]"
                 >
-                  {submitMutation.isPending ? (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  ) : (
-                    <ShieldCheck className="h-4 w-4 mr-2" />
+                  {submitMutation.isPending && (
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin text-black" />
                   )}
                   Submit for QS review
                 </Button>
                 {!showNote && (
                   <Button
-                    variant="outline"
                     onClick={() => setShowNote(true)}
-                    className="h-11 w-full sm:w-auto touch-manipulation"
+                    className="h-12 w-full sm:w-auto rounded-xl border border-white/[0.12] bg-white/[0.06] text-[14px] font-medium text-white hover:bg-white/[0.1] touch-manipulation active:scale-[0.98]"
                   >
                     Add a note
                   </Button>

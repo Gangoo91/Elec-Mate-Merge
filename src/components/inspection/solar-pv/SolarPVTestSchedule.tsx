@@ -5,7 +5,7 @@
  * BS EN 62446 + BS 7671:2018+A4:2026
  */
 
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { AlertTriangle, Plus, Trash2 } from 'lucide-react';
@@ -35,6 +35,7 @@ import {
   ResultPill,
   DesignWarningBanner,
 } from './SolarPVSection';
+import useReadingKeypad, { ReadingMeta } from '@/hooks/useReadingKeypad';
 
 interface Props {
   formData: SolarPVFormData;
@@ -52,6 +53,71 @@ const TEST_EQUIPMENT_TYPES = [
   { value: 'voltage-indicator', label: 'Voltage Indicator' },
   { value: 'proving-unit', label: 'Proving Unit' },
 ];
+
+// ── Reading keypad field maps — shared MW pattern ──
+// Free-text numeric READINGS only; selects/combos/chips and design/spec fields
+// stay on their native inputs. Per-array/per-inverter fields carry the record
+// id so data-keypad-field stays unique when several cards render on one page.
+interface ReadingFieldDef {
+  prefix: string;
+  prop: string;
+  label: string;
+  unit: string;
+  inf?: boolean;
+}
+
+const ARRAY_READING_FIELDS: ReadingFieldDef[] = [
+  { prefix: 'voc', prop: 'vocMeasured', label: 'Voc — measured open circuit', unit: 'V' },
+  { prefix: 'isc', prop: 'iscMeasured', label: 'Isc — measured short circuit', unit: 'A' },
+  { prefix: 'irpos', prop: 'irPositiveToEarth', label: 'Insulation +ve to earth', unit: 'MΩ', inf: true },
+  { prefix: 'irneg', prop: 'irNegativeToEarth', label: 'Insulation −ve to earth', unit: 'MΩ', inf: true },
+  { prefix: 'irr', prop: 'irradiance', label: 'Irradiance', unit: 'W/m²' },
+  { prefix: 'amb', prop: 'ambientTemp', label: 'Ambient temperature', unit: '°C' },
+  { prefix: 'mod', prop: 'moduleTemp', label: 'Module temperature', unit: '°C' },
+];
+
+const INVERTER_READING_FIELDS: ReadingFieldDef[] = [
+  { prefix: 'dcra', prop: 'dcIsolatorRatingA', label: 'DC isolator current rating', unit: 'A' },
+  { prefix: 'dcrv', prop: 'dcIsolatorRatingV', label: 'DC isolator voltage rating', unit: 'V' },
+];
+
+const AC_READING_PROPS: Record<string, string> = {
+  ze: 'zeValue',
+  zs: 'zsValue',
+  rcdtrip: 'rcdTripTime',
+  r1r2: 'r1r2Value',
+  irac: 'insulationResistance',
+};
+
+const COMMISSIONING_READING_PROPS: Record<string, string> = {
+  power: 'initialPowerOutput',
+  genmeter: 'generationMeterReading',
+  exportmeter: 'exportMeterReading',
+};
+
+const FIXED_READING_META: Record<string, ReadingMeta> = {
+  ze: { label: 'Ze — external loop impedance', unit: 'Ω' },
+  zs: { label: 'Zs — earth fault loop', unit: 'Ω' },
+  rcdtrip: { label: 'RCD trip time', unit: 'ms' },
+  r1r2: { label: 'R1+R2 — continuity', unit: 'Ω' },
+  irac: { label: 'Insulation resistance — AC circuit', unit: 'MΩ', inf: true },
+  power: { label: 'Initial power output', unit: 'kW' },
+  genmeter: { label: 'Generation meter reading', unit: 'kWh' },
+  exportmeter: { label: 'Export meter reading', unit: 'kWh' },
+};
+
+/** Natural test order for the fixed (non-repeated) readings. */
+const FIXED_READING_SEQUENCE = ['ze', 'zs', 'rcdtrip', 'r1r2', 'irac', 'power', 'genmeter', 'exportmeter'];
+
+/** Resolve a prefixed per-record field name back to its definition + record id. */
+const matchPrefixed = (field: string, defs: ReadingFieldDef[]) => {
+  for (const def of defs) {
+    if (field.startsWith(def.prefix + '-')) {
+      return { def, id: field.slice(def.prefix.length + 1) };
+    }
+  }
+  return null;
+};
 
 const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
   const { validateTestConditions, suggestRCDType, getDesignWarnings } = useSolarPVSmartForm(formData, onUpdate);
@@ -115,6 +181,138 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
   const getArrayById = (id: string) => formData.arrays?.find((a) => a.id === id);
   const getInverterById = (id: string) => formData.inverters?.find((i) => i.id === id);
 
+  // ── Reading keypad — shared MW pattern ──
+  // One instance serves every reading on the tab. Values flow through the
+  // existing testResults update paths; getValue mirrors what each input
+  // renders (zero/empty both display as '', matching `value={x || ''}`).
+  const findArrayTest = (id: string) =>
+    (formData.testResults?.arrayTests || []).find((t: any) => t.arrayId === id);
+  const findInverterTest = (id: string) =>
+    (formData.testResults?.inverterTests || []).find((t: any) => t.inverterId === id);
+
+  const keypadMeta = useMemo(() => {
+    const meta: Record<string, ReadingMeta> = { ...FIXED_READING_META };
+    (formData.testResults?.arrayTests || []).forEach((t: any, i: number) => {
+      ARRAY_READING_FIELDS.forEach((f) => {
+        meta[`${f.prefix}-${t.arrayId}`] = {
+          label: `Array ${i + 1} — ${f.label}`,
+          unit: f.unit,
+          ...(f.inf ? { inf: true } : {}),
+        };
+      });
+    });
+    (formData.testResults?.inverterTests || []).forEach((t: any, i: number) => {
+      INVERTER_READING_FIELDS.forEach((f) => {
+        meta[`${f.prefix}-${t.inverterId}`] = { label: `Inverter ${i + 1} — ${f.label}`, unit: f.unit };
+      });
+    });
+    return meta;
+  }, [formData.testResults]);
+
+  const keypadSequence = useMemo(
+    () => [
+      ...(formData.testResults?.arrayTests || []).flatMap((t: any) =>
+        ARRAY_READING_FIELDS.map((f) => `${f.prefix}-${t.arrayId}`)
+      ),
+      ...(formData.testResults?.inverterTests || []).flatMap((t: any) =>
+        INVERTER_READING_FIELDS.map((f) => `${f.prefix}-${t.inverterId}`)
+      ),
+      ...FIXED_READING_SEQUENCE,
+    ],
+    [formData.testResults]
+  );
+
+  const keypad = useReadingKeypad({
+    meta: keypadMeta,
+    sequence: keypadSequence,
+    getValue: (field) => {
+      const a = matchPrefixed(field, ARRAY_READING_FIELDS);
+      if (a) return String((findArrayTest(a.id) as any)?.[a.def.prop] || '');
+      const inv = matchPrefixed(field, INVERTER_READING_FIELDS);
+      if (inv) return String((findInverterTest(inv.id) as any)?.[inv.def.prop] || '');
+      if (AC_READING_PROPS[field]) {
+        return String((formData.testResults?.acTests as any)?.[AC_READING_PROPS[field]] || '');
+      }
+      if (COMMISSIONING_READING_PROPS[field]) {
+        return String(
+          (formData.testResults?.commissioning as any)?.[COMMISSIONING_READING_PROPS[field]] || ''
+        );
+      }
+      return '';
+    },
+    setValue: (field, value) => {
+      const a = matchPrefixed(field, ARRAY_READING_FIELDS);
+      if (a) {
+        if (a.def.prop === 'vocMeasured' || a.def.prop === 'iscMeasured') {
+          // Mirror the typed handlers' ±10% tolerance verdict, but write the
+          // measured value and the verdict in ONE testResults update — two
+          // sequential updateArrayTest calls each derive from the same stale
+          // formData closure, so the second write would clobber the first.
+          const isVoc = a.def.prop === 'vocMeasured';
+          const measured = parseFloat(value) || 0;
+          const tests = (formData.testResults?.arrayTests || []).map((t: any) => {
+            if (t.arrayId !== a.id) return t;
+            const expected = (isVoc ? t.vocExpected : t.iscExpected) || 0;
+            const tol = expected * 0.1;
+            const within = measured >= expected - tol && measured <= expected + tol;
+            return isVoc
+              ? { ...t, vocMeasured: value, vocWithinTolerance: within }
+              : { ...t, iscMeasured: value, iscWithinTolerance: within };
+          });
+          onUpdate('testResults', { ...formData.testResults, arrayTests: tests });
+        } else {
+          updateArrayTest(a.id, a.def.prop, value);
+        }
+        return;
+      }
+      const inv = matchPrefixed(field, INVERTER_READING_FIELDS);
+      if (inv) {
+        updateInverterTest(inv.id, inv.def.prop, value);
+        return;
+      }
+      if (AC_READING_PROPS[field]) {
+        updateAcTest(AC_READING_PROPS[field], value);
+        return;
+      }
+      if (COMMISSIONING_READING_PROPS[field]) {
+        updateCommissioning(COMMISSIONING_READING_PROPS[field], value);
+      }
+    },
+    getStatus: (field, value) => {
+      // Reuses only the verdicts this file already computes — the ±10%
+      // tolerance flags, the ≥1 MΩ IR minimum and the ≤300 ms RCD pill.
+      if (!value) return null;
+      const a = matchPrefixed(field, ARRAY_READING_FIELDS);
+      if (a) {
+        const t = findArrayTest(a.id) as any;
+        if (!t) return null;
+        if (a.def.prop === 'vocMeasured' || a.def.prop === 'iscMeasured') {
+          const within = a.def.prop === 'vocMeasured' ? t.vocWithinTolerance : t.iscWithinTolerance;
+          if (within === true) return { tone: 'pass', label: 'Within ±10% of expected' };
+          if (within === false) return { tone: 'check', label: 'Outside ±10% tolerance' };
+          return null;
+        }
+        if (a.def.prop === 'irPositiveToEarth' || a.def.prop === 'irNegativeToEarth') {
+          const min = t.irMinimumRequired || 1;
+          const v = parseFloat(value);
+          if (isNaN(v)) return null;
+          if (v >= min) return { tone: 'pass', label: `Meets ${min} MΩ minimum` };
+          if (v > 0) return { tone: 'check', label: `Below ${min} MΩ minimum` };
+          return null;
+        }
+        return null;
+      }
+      if (field === 'rcdtrip') {
+        const v = parseFloat(value);
+        if (isNaN(v)) return null;
+        return v <= 300
+          ? { tone: 'pass', label: '≤300 ms' }
+          : { tone: 'check', label: 'Exceeds 300 ms' };
+      }
+      return null;
+    },
+  });
+
   // RCD suggestion
   const hasBattery = !!formData.battery?.installed;
   const rcdSuggestion = suggestRCDType(formData.systemType || 'grid-tied', hasBattery);
@@ -140,9 +338,9 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
                   const updated = (formData.testResults?.testEquipment || []).filter((_: any, i: number) => i !== idx);
                   onUpdate('testResults', { ...formData.testResults, testEquipment: updated });
                 }}
-                className="w-8 h-8 rounded-lg flex items-center justify-center border border-red-500/20 bg-red-500/10 text-red-400 touch-manipulation active:scale-90"
+                className="h-11 shrink-0 rounded-xl px-2.5 text-sm font-medium text-red-400 touch-manipulation active:scale-[0.97]"
               >
-                <Trash2 className="h-3.5 w-3.5" />
+                Remove
               </button>
             </div>
             <Field label="Type">
@@ -242,9 +440,6 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
             <div key={test.arrayId} className="space-y-4">
               {/* Array header */}
               <div className="flex items-center gap-2.5">
-                <span className="w-7 h-7 rounded-lg bg-amber-500/15 flex items-center justify-center text-xs font-bold text-amber-400">
-                  {index + 1}
-                </span>
                 <span className="text-sm font-semibold text-white">
                   {array?.panelMake || 'Array'} {array?.panelModel || index + 1}
                 </span>
@@ -263,13 +458,13 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
                   </div>
                   <div>
                     <p className="text-[10px] text-white mb-1">Measured (V)</p>
-                    <Input type="number" inputMode="decimal" step="0.1" value={test.vocMeasured || ''} onChange={(e) => {
+                    <Input inputMode="decimal" step="0.1" value={test.vocMeasured || ''} onChange={(e) => {
                       const measured = parseFloat(e.target.value) || 0;
                       const expected = test.vocExpected || 0;
                       const tol = expected * 0.1;
                       updateArrayTest(test.arrayId, 'vocMeasured', measured);
                       updateArrayTest(test.arrayId, 'vocWithinTolerance', measured >= expected - tol && measured <= expected + tol);
-                    }} className={inputSmCn} placeholder="±10% tolerance" />
+                    }} className={inputSmCn} placeholder="±10% tolerance" {...keypad.field(`voc-${test.arrayId}`)} />
                   </div>
                 </div>
               </div>
@@ -287,13 +482,13 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
                   </div>
                   <div>
                     <p className="text-[10px] text-white mb-1">Measured (A)</p>
-                    <Input type="number" inputMode="decimal" step="0.01" value={test.iscMeasured || ''} onChange={(e) => {
+                    <Input inputMode="decimal" step="0.01" value={test.iscMeasured || ''} onChange={(e) => {
                       const measured = parseFloat(e.target.value) || 0;
                       const expected = test.iscExpected || 0;
                       const tol = expected * 0.1;
                       updateArrayTest(test.arrayId, 'iscMeasured', measured);
                       updateArrayTest(test.arrayId, 'iscWithinTolerance', measured >= expected - tol && measured <= expected + tol);
-                    }} className={inputSmCn} placeholder="±10% tolerance" />
+                    }} className={inputSmCn} placeholder="±10% tolerance" {...keypad.field(`isc-${test.arrayId}`)} />
                   </div>
                 </div>
               </div>
@@ -310,11 +505,11 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
                 <div className="grid grid-cols-2 gap-2">
                   <div>
                     <p className="text-[10px] text-white mb-1">+ve to Earth (MΩ)</p>
-                    <Input type="number" inputMode="decimal" step="0.1" value={test.irPositiveToEarth || ''} onChange={(e) => updateArrayTest(test.arrayId, 'irPositiveToEarth', parseFloat(e.target.value) || 0)} className={inputSmCn} placeholder="≥1 MΩ" />
+                    <Input inputMode="decimal" step="0.1" value={test.irPositiveToEarth || ''} onChange={(e) => updateArrayTest(test.arrayId, 'irPositiveToEarth', parseFloat(e.target.value) || 0)} className={inputSmCn} placeholder="≥1 MΩ" {...keypad.field(`irpos-${test.arrayId}`)} />
                   </div>
                   <div>
                     <p className="text-[10px] text-white mb-1">-ve to Earth (MΩ)</p>
-                    <Input type="number" inputMode="decimal" step="0.1" value={test.irNegativeToEarth || ''} onChange={(e) => updateArrayTest(test.arrayId, 'irNegativeToEarth', parseFloat(e.target.value) || 0)} className={inputSmCn} placeholder="≥1 MΩ" />
+                    <Input inputMode="decimal" step="0.1" value={test.irNegativeToEarth || ''} onChange={(e) => updateArrayTest(test.arrayId, 'irNegativeToEarth', parseFloat(e.target.value) || 0)} className={inputSmCn} placeholder="≥1 MΩ" {...keypad.field(`irneg-${test.arrayId}`)} />
                   </div>
                 </div>
               </div>
@@ -325,15 +520,15 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
                 <div className="grid grid-cols-3 gap-2">
                   <div>
                     <p className="text-[10px] text-white mb-1">Irradiance</p>
-                    <Input type="number" inputMode="numeric" value={test.irradiance || ''} onChange={(e) => updateArrayTest(test.arrayId, 'irradiance', parseFloat(e.target.value) || 0)} placeholder="W/m²" className={inputSmCn} />
+                    <Input inputMode="numeric" value={test.irradiance || ''} onChange={(e) => updateArrayTest(test.arrayId, 'irradiance', parseFloat(e.target.value) || 0)} placeholder="W/m²" className={inputSmCn} {...keypad.field(`irr-${test.arrayId}`)} />
                   </div>
                   <div>
                     <p className="text-[10px] text-white mb-1">Ambient</p>
-                    <Input type="number" inputMode="decimal" step="0.5" value={test.ambientTemp || ''} onChange={(e) => updateArrayTest(test.arrayId, 'ambientTemp', parseFloat(e.target.value) || 0)} placeholder="°C" className={inputSmCn} />
+                    <Input inputMode="decimal" step="0.5" value={test.ambientTemp || ''} onChange={(e) => updateArrayTest(test.arrayId, 'ambientTemp', parseFloat(e.target.value) || 0)} placeholder="°C" className={inputSmCn} {...keypad.field(`amb-${test.arrayId}`)} />
                   </div>
                   <div>
                     <p className="text-[10px] text-white mb-1">Module</p>
-                    <Input type="number" inputMode="decimal" step="0.5" value={test.moduleTemp || ''} onChange={(e) => updateArrayTest(test.arrayId, 'moduleTemp', parseFloat(e.target.value) || 0)} placeholder="°C" className={inputSmCn} />
+                    <Input inputMode="decimal" step="0.5" value={test.moduleTemp || ''} onChange={(e) => updateArrayTest(test.arrayId, 'moduleTemp', parseFloat(e.target.value) || 0)} placeholder="°C" className={inputSmCn} {...keypad.field(`mod-${test.arrayId}`)} />
                   </div>
                 </div>
                 {test.irradiance > 0 && test.irradiance < 400 && (
@@ -391,8 +586,7 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
             <div key={test.inverterId} className="space-y-4">
               {/* Inverter header */}
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
-                  <span className="w-7 h-7 rounded-lg bg-blue-500/15 flex items-center justify-center text-xs font-bold text-blue-400">{index + 1}</span>
+                <div className="min-w-0">
                   <span className="text-sm font-semibold text-white">{inverter?.make || 'Inverter'} {inverter?.model || index + 1}</span>
                 </div>
                 <AllPassButton onClick={markAllPass} />
@@ -404,8 +598,8 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
                 <TestResultRow label="DC Isolator" value={test.dcIsolatorOperational ? 'pass' : test.dcIsolatorOperational === false ? 'fail' : ''} onChange={(v) => updateInverterTest(test.inverterId, 'dcIsolatorOperational', v === 'pass')} />
                 <Input value={test.dcIsolatorLocation || ''} onChange={(e) => updateInverterTest(test.inverterId, 'dcIsolatorLocation', e.target.value)} placeholder="DC isolator location..." className={inputSmCn} />
                 <div className="grid grid-cols-2 gap-2">
-                  <Input type="number" inputMode="decimal" value={test.dcIsolatorRatingA || ''} onChange={(e) => updateInverterTest(test.inverterId, 'dcIsolatorRatingA', parseFloat(e.target.value) || 0)} placeholder="DC isolator rating (A)" className={inputSmCn} />
-                  <Input type="number" inputMode="decimal" value={test.dcIsolatorRatingV || ''} onChange={(e) => updateInverterTest(test.inverterId, 'dcIsolatorRatingV', parseFloat(e.target.value) || 0)} placeholder="DC isolator rating (V)" className={inputSmCn} />
+                  <Input inputMode="decimal" value={test.dcIsolatorRatingA || ''} onChange={(e) => updateInverterTest(test.inverterId, 'dcIsolatorRatingA', parseFloat(e.target.value) || 0)} placeholder="DC isolator rating (A)" className={inputSmCn} {...keypad.field(`dcra-${test.inverterId}`)} />
+                  <Input inputMode="decimal" value={test.dcIsolatorRatingV || ''} onChange={(e) => updateInverterTest(test.inverterId, 'dcIsolatorRatingV', parseFloat(e.target.value) || 0)} placeholder="DC isolator rating (V)" className={inputSmCn} {...keypad.field(`dcrv-${test.inverterId}`)} />
                 </div>
                 <TestResultRow label="AC Isolator" value={test.acIsolatorOperational ? 'pass' : test.acIsolatorOperational === false ? 'fail' : ''} onChange={(v) => updateInverterTest(test.inverterId, 'acIsolatorOperational', v === 'pass')} />
                 <Input value={test.acIsolatorLocation || ''} onChange={(e) => updateInverterTest(test.inverterId, 'acIsolatorLocation', e.target.value)} placeholder="AC isolator location..." className={inputSmCn} />
@@ -465,10 +659,10 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
           </Field>
           <div className="grid grid-cols-2 gap-2">
             <Field label="Ze (Ω)">
-              <Input type="number" inputMode="decimal" step="0.01" value={formData.testResults?.acTests?.zeValue || ''} onChange={(e) => updateAcTest('zeValue', parseFloat(e.target.value) || 0)} className={inputSmCn} />
+              <Input inputMode="decimal" step="0.01" value={formData.testResults?.acTests?.zeValue || ''} onChange={(e) => updateAcTest('zeValue', parseFloat(e.target.value) || 0)} className={inputSmCn} {...keypad.field('ze')} />
             </Field>
             <Field label="Zs (Ω)">
-              <Input type="number" inputMode="decimal" step="0.01" value={formData.testResults?.acTests?.zsValue || ''} onChange={(e) => updateAcTest('zsValue', parseFloat(e.target.value) || 0)} className={inputSmCn} />
+              <Input inputMode="decimal" step="0.01" value={formData.testResults?.acTests?.zsValue || ''} onChange={(e) => updateAcTest('zsValue', parseFloat(e.target.value) || 0)} className={inputSmCn} {...keypad.field('zs')} />
             </Field>
           </div>
         </div>
@@ -500,7 +694,7 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
             </Field>
           </div>
           <Field label="Trip Time (ms)">
-            <Input type="number" inputMode="numeric" value={formData.testResults?.acTests?.rcdTripTime || ''} onChange={(e) => updateAcTest('rcdTripTime', parseInt(e.target.value) || 0)} placeholder="≤300ms" className={inputSmCn} />
+            <Input inputMode="numeric" value={formData.testResults?.acTests?.rcdTripTime || ''} onChange={(e) => updateAcTest('rcdTripTime', parseInt(e.target.value) || 0)} placeholder="≤300ms" className={inputSmCn} {...keypad.field('rcdtrip')} />
           </Field>
           <Field label="BS Standard">
             <ComboboxCell
@@ -522,10 +716,10 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
           <p className="text-xs font-medium text-white">Continuity & Insulation</p>
           <div className="grid grid-cols-2 gap-2">
             <Field label="R1+R2 (Ω)">
-              <Input type="number" inputMode="decimal" step="0.01" value={formData.testResults?.acTests?.r1r2Value || ''} onChange={(e) => updateAcTest('r1r2Value', parseFloat(e.target.value) || 0)} className={inputSmCn} />
+              <Input inputMode="decimal" step="0.01" value={formData.testResults?.acTests?.r1r2Value || ''} onChange={(e) => updateAcTest('r1r2Value', parseFloat(e.target.value) || 0)} className={inputSmCn} {...keypad.field('r1r2')} />
             </Field>
             <Field label="IR (MΩ)">
-              <Input type="number" inputMode="decimal" step="0.1" value={formData.testResults?.acTests?.insulationResistance || ''} onChange={(e) => updateAcTest('insulationResistance', parseFloat(e.target.value) || 0)} placeholder="≥1 MΩ" className={inputSmCn} />
+              <Input inputMode="decimal" step="0.1" value={formData.testResults?.acTests?.insulationResistance || ''} onChange={(e) => updateAcTest('insulationResistance', parseFloat(e.target.value) || 0)} placeholder="≥1 MΩ" className={inputSmCn} {...keypad.field('irac')} />
             </Field>
           </div>
         </div>
@@ -582,7 +776,7 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
         {/* Performance */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <Field label="Initial Power Output (kW)">
-            <Input type="number" inputMode="decimal" step="0.1" value={formData.testResults?.commissioning?.initialPowerOutput || ''} onChange={(e) => updateCommissioning('initialPowerOutput', parseFloat(e.target.value) || 0)} placeholder="Observed" className={inputCn} />
+            <Input inputMode="decimal" step="0.1" value={formData.testResults?.commissioning?.initialPowerOutput || ''} onChange={(e) => updateCommissioning('initialPowerOutput', parseFloat(e.target.value) || 0)} placeholder="Observed" className={inputCn} {...keypad.field('power')} />
           </Field>
           <Field label="Weather Conditions">
             <Input value={formData.testResults?.commissioning?.weatherConditions || ''} onChange={(e) => updateCommissioning('weatherConditions', e.target.value)} placeholder="e.g., Clear, full sun" className={inputCn} />
@@ -592,10 +786,10 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
         {/* Meter readings */}
         <div className="grid grid-cols-2 gap-3">
           <Field label="Generation Meter (kWh)">
-            <Input type="number" inputMode="decimal" step="0.1" value={formData.testResults?.commissioning?.generationMeterReading || ''} onChange={(e) => updateCommissioning('generationMeterReading', parseFloat(e.target.value) || 0)} placeholder="Initial" className={inputSmCn} />
+            <Input inputMode="decimal" step="0.1" value={formData.testResults?.commissioning?.generationMeterReading || ''} onChange={(e) => updateCommissioning('generationMeterReading', parseFloat(e.target.value) || 0)} placeholder="Initial" className={inputSmCn} {...keypad.field('genmeter')} />
           </Field>
           <Field label="Export Meter (kWh)">
-            <Input type="number" inputMode="decimal" step="0.1" value={formData.testResults?.commissioning?.exportMeterReading || ''} onChange={(e) => updateCommissioning('exportMeterReading', parseFloat(e.target.value) || 0)} placeholder="If fitted" className={inputSmCn} />
+            <Input inputMode="decimal" step="0.1" value={formData.testResults?.commissioning?.exportMeterReading || ''} onChange={(e) => updateCommissioning('exportMeterReading', parseFloat(e.target.value) || 0)} placeholder="If fitted" className={inputSmCn} {...keypad.field('exportmeter')} />
           </Field>
         </div>
 
@@ -617,6 +811,12 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
           <Textarea value={formData.testResults?.commissioning?.notes || ''} onChange={(e) => updateCommissioning('notes', e.target.value)} placeholder="Observations, issues resolved, follow-up..." className={textareaCn} />
         </Field>
       </Section>
+
+      {/* Scroll room so the last reading can rise clear of the keypad */}
+      {keypad.spacer}
+
+      {/* Reading keypad — coarse-pointer devices only */}
+      {keypad.element}
     </div>
   );
 };

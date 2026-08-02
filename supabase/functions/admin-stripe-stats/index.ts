@@ -25,6 +25,10 @@ const PRICE_TIER_MAP: Record<string, { tier: string; amount: number }> = {
   price_1TnbOj2RKw5t5RAmEIXS6oyV: { tier: 'electrician', amount: 199.99 / 12 },
   price_1TKlA12RKw5t5RAmdhZyhX1I: { tier: 'electrician', amount: 12.99 },
   price_1SqJVr2RKw5t5RAmaiTGelLN: { tier: 'electrician', amount: 9.99 },
+  // £9.99/month "Electrician Monthly win back" — the winback offer price. It was
+  // never added to any PRICE_TO_TIER map, so live subscribers on it were written
+  // to profiles as tier 'unknown', and their revenue was missing from this stat.
+  price_1TMoQE2RKw5t5RAmuFglsBof: { tier: 'electrician', amount: 9.99 },
   price_1TKlKL2RKw5t5RAmpD8FH7qp: { tier: 'electrician', amount: 129.99 / 12 },
   price_1SqJVs2RKw5t5RAmVeD2QVsb: { tier: 'electrician', amount: 99.99 / 12 },
   price_1RhteS2RKw5t5RAmzRbaTE8U: { tier: 'electrician', amount: 9.99 },

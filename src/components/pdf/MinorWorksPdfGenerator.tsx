@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Bell, Mail, Loader2, MessageCircle } from 'lucide-react';
+import { Bell, Mail, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -476,17 +476,6 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
     }
   };
 
-  // --- Save draft handler ---
-  const handleSaveDraft = () => {
-    if (onSaveDraft) {
-      onSaveDraft();
-      toast({
-        title: 'Draft Saved',
-        description: 'Your Minor Works progress has been saved successfully.',
-      });
-    }
-  };
-
   // --- Email handler ---
   const handleEmailCertificate = () => {
     if (!canGenerateCertificate) {
@@ -724,57 +713,21 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           isMobile ? '' : 'rounded-xl border border-white/10 bg-white/[0.02] p-5'
         )}
       >
-        {/* Generate button — completion state lives in the shell header ring/step ticks */}
-        <button
-          type="button"
-          onClick={handleGeneratePDF}
-          disabled={!canGenerateCertificate || isExporting}
-          className="h-12 w-full touch-manipulation bg-elec-yellow text-black font-semibold text-sm rounded-lg active:scale-[0.98] transition-transform disabled:opacity-50 flex items-center justify-center gap-2"
-        >
-          {isExporting ? 'Generating...' : 'Generate Minor Works PDF'}
-        </button>
-
-        {/* Secondary Actions */}
-        <div className={`grid ${canWhatsApp ? 'grid-cols-4' : 'grid-cols-3'} gap-1`}>
+        {/* ELE-1460 — no inline Generate/Save/Email/Share/Invoice: the sticky
+            footer carries Generate + Email + Invoice, the shell header carries
+            Save. WhatsApp share stays as the one action the footer doesn't
+            offer, styled as a single quiet secondary. */}
+        {canWhatsApp && (
           <button
             type="button"
-            onClick={handleSaveDraft}
-            className="h-12 touch-manipulation bg-white/[0.05] border border-white/[0.08] text-white rounded-lg active:scale-[0.98] flex items-center justify-center text-[10px] font-semibold"
+            onClick={handleWhatsApp}
+            disabled={!canGenerateCertificate || isSendingWhatsApp}
+            className="h-12 w-full touch-manipulation bg-white/[0.06] border border-white/[0.12] text-white rounded-xl active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2 text-[13px] font-semibold"
           >
-            Save
+            {isSendingWhatsApp && <Loader2 className="h-4 w-4 animate-spin" />}
+            Share on WhatsApp
           </button>
-          <button
-            type="button"
-            onClick={handleEmailCertificate}
-            disabled={!canGenerateCertificate}
-            className="h-12 touch-manipulation bg-white/[0.05] border border-white/[0.08] text-white rounded-lg active:scale-[0.98] disabled:opacity-50 flex items-center justify-center text-[10px] font-semibold"
-          >
-            Email
-          </button>
-          {canWhatsApp && (
-            <button
-              type="button"
-              onClick={handleWhatsApp}
-              disabled={!canGenerateCertificate || isSendingWhatsApp}
-              className="h-12 touch-manipulation bg-white/[0.05] border border-white/[0.08] text-white rounded-lg active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-1 text-[10px] font-semibold"
-            >
-              {isSendingWhatsApp ? (
-                <Loader2 className="h-3 w-3 animate-spin" />
-              ) : (
-                <MessageCircle className="h-3 w-3" />
-              )}
-              Share
-            </button>
-          )}
-          <button
-            type="button"
-            onClick={handleCreateInvoice}
-            disabled={!canGenerateCertificate}
-            className="h-12 touch-manipulation bg-white/[0.05] border border-elec-yellow/30 text-elec-yellow rounded-lg active:scale-[0.98] disabled:opacity-50 flex items-center justify-center text-[10px] font-semibold"
-          >
-            Invoice
-          </button>
-        </div>
+        )}
 
         {/* Qualifying Supervisor review (team members only) */}
         <QsReviewPanel reportId={reportId} reportType="minor-works" onBeforeSubmit={onSaveDraft} />
@@ -800,22 +753,25 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
         certificateType="Minor Works"
       />
 
-      {/* Email Dialog */}
-      <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>
-        <DialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-md overflow-hidden">
-          <DialogHeader className="text-left">
-            <DialogTitle className="flex items-center gap-2">
-              <Mail className="h-5 w-5 text-elec-yellow shrink-0" />
-              Email Minor Works Certificate
-            </DialogTitle>
-            <DialogDescription className="text-left">
+      {/* Email sheet — bottom sheet so the Send button stays clear of the keyboard */}
+      <Sheet open={showEmailDialog} onOpenChange={setShowEmailDialog}>
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden flex flex-col"
+        >
+          <SheetHeader className="text-left px-4 pt-5 pb-3 space-y-1 shrink-0">
+            <SheetTitle className="text-[17px] font-semibold tracking-tight text-white">
+              Email minor works certificate
+            </SheetTitle>
+            <SheetDescription className="text-left text-[13px] text-white/85">
               The certificate will be generated and sent as a PDF attachment.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4 py-2 min-w-0">
+            </SheetDescription>
+          </SheetHeader>
+
+          <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-4 space-y-4 min-w-0">
             <div className="space-y-2">
               <label htmlFor="email" className="text-sm font-medium text-white">
-                Recipient Email
+                Recipient email
               </label>
               <Input
                 id="email"
@@ -835,11 +791,12 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
                 className="w-full h-11 flex items-center gap-2 px-3 text-sm touch-manipulation border border-white/20 rounded-lg text-white hover:bg-white/5 active:scale-[0.98] transition-transform overflow-hidden"
               >
                 <Mail className="h-4 w-4 text-elec-yellow shrink-0" />
-                <span className="truncate">Use Client Email: {formData.clientEmail}</span>
+                <span className="truncate">Use client email: {formData.clientEmail}</span>
               </button>
             )}
           </div>
-          <div className="flex flex-col gap-3 pt-2">
+
+          <div className="shrink-0 border-t border-white/[0.1] bg-background px-4 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] flex flex-col gap-3">
             <Button
               onClick={handleSendEmail}
               disabled={isSendingEmail || !emailRecipient}
@@ -853,7 +810,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
               ) : (
                 <>
                   <Mail className="h-4 w-4 mr-2" />
-                  Send Certificate
+                  Send certificate
                 </>
               )}
             </Button>
@@ -866,8 +823,8 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
               Cancel
             </Button>
           </div>
-        </DialogContent>
-      </Dialog>
+        </SheetContent>
+      </Sheet>
 
       <CertificateGenerationDialog
         open={showGenerationDialog}

@@ -5,10 +5,17 @@
  * Uses the same TestResult[] (scheduleOfTests) and DistributionBoard[]
  * format as EICR/EIC, with boards grouped with their circuits.
  *
- * NO branding fields — intentionally omitted for Testing Only certificates.
+ * Branding is optional: pass the object from `fetchCertBranding()` and the
+ * electrician's logo, details and brand colour flow onto the PDF. Omit it and
+ * the certificate renders in its own house colour, exactly as before.
  */
 
 import { getBoardWays } from '@/types/distributionBoard';
+import { ukDate } from '@/utils/certDate';
+import type { CertBranding } from '@/utils/certBranding';
+
+/** Testing Only house colour, used until the electrician sets their own. */
+export const TESTING_ONLY_ACCENT = '#3b82f6';
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -196,7 +203,10 @@ const defaults: Record<string, any> = {
 
 // ── Main formatter ──────────────────────────────────────────────────────────
 
-export const formatTestingOnlyJson = (formData: Record<string, any>) => {
+export const formatTestingOnlyJson = (
+  formData: Record<string, any>,
+  branding?: Partial<CertBranding>,
+) => {
   const merged = { ...defaults, ...formData };
 
   const testResults = Array.isArray(merged.scheduleOfTests) ? merged.scheduleOfTests : [];
@@ -206,9 +216,22 @@ export const formatTestingOnlyJson = (formData: Record<string, any>) => {
   const circuits = testResults.map((r: any) => formatCircuit(r));
 
   return {
+    // Company branding — blank when the caller passes none, so the template's
+    // own defaults win and the certificate is unchanged.
+    companyName: str(branding?.companyName),
+    companyAddress: str(branding?.companyAddress),
+    companyPhone: str(branding?.companyPhone),
+    companyEmail: str(branding?.companyEmail),
+    companyWebsite: str(branding?.companyWebsite),
+    companyLogo: str(branding?.companyLogo),
+    companyAccentColor: str(branding?.companyAccentColor, TESTING_ONLY_ACCENT),
+    registrationScheme: str(branding?.registrationScheme),
+    registrationNumber: str(branding?.registrationNumber),
+    registrationSchemeLogo: str(branding?.registrationSchemeLogo),
+
     // Certificate header
     referenceNumber: str(merged.referenceNumber),
-    testDate: str(merged.testDate),
+    testDate: ukDate(merged.testDate),
 
     // Tester details
     testerName: str(merged.testerName),
@@ -224,7 +247,7 @@ export const formatTestingOnlyJson = (formData: Record<string, any>) => {
     mftMake: str(merged.mftMake),
     mftModel: str(merged.mftModel),
     mftSerial: str(merged.mftSerial),
-    mftCalDate: str(merged.mftCalDate),
+    mftCalDate: ukDate(merged.mftCalDate),
 
     // Loop tester
     loopMake: str(merged.loopMake),
@@ -248,7 +271,7 @@ export const formatTestingOnlyJson = (formData: Record<string, any>) => {
 
     // Signature & notes
     testerSignature: str(merged.testerSignature),
-    testerDate: str(merged.testerDate),
+    testerDate: ukDate(merged.testerDate),
     notes: str(merged.notes),
   };
 };

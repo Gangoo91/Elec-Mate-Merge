@@ -6,6 +6,7 @@
 import { EVChargingFormData } from '@/types/ev-charging';
 import type { EVChargingPayloadType } from '@/types/ev-charging-payload';
 import { createAccessTracker, reportUnmappedFields } from './reportUnmappedFields';
+import { ukDate } from '@/utils/certDate';
 
 export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVChargingPayloadType => {
   // Track which form-data keys we actually read, so reportUnmappedFields() can
@@ -30,6 +31,9 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
     }
     return defaultValue;
   };
+
+  /** Same as get(), but renders the ISO date the form stores as UK DD/MM/YYYY. */
+  const getDate = (key: string): string => ukDate(get(key));
 
   const getBool = (key: string): boolean => {
     track(key);
@@ -61,7 +65,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
     // Metadata
     metadata: {
       certificate_number: get('certificateNumber'),
-      installation_date: get('installationDate'),
+      installation_date: getDate('installationDate'),
       standard: 'BS 7671:2018+A4:2026',
       code_of_practice:
         'IET Code of Practice for Electric Vehicle Charging Equipment Installation (5th Edition)',
@@ -119,9 +123,14 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
     supply_details: {
       voltage: get('supplyVoltage'),
       phases: get('supplyPhases'),
+      // Read-tolerant: the canonical values are 'single'/'three', but the Quick
+      // Fill presets used to write the display strings 'Single Phase'/'Three
+      // Phase'. Because the old test was a strict !== 'single', a saved
+      // single-phase cert printed "Three Phase". Match on the leading word so
+      // certificates already stored with the legacy value render correctly.
       phases_display: !get('supplyPhases')
         ? ''
-        : get('supplyPhases') === 'single'
+        : /^single/i.test(String(get('supplyPhases')).trim())
           ? 'Single Phase'
           : 'Three Phase',
       earthing_arrangement: get('earthingArrangement'),
@@ -277,7 +286,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
     test_equipment: {
       model: get('testInstrumentModel'),
       serial: get('testInstrumentSerial'),
-      calibration_date: get('testInstrumentCalDate'),
+      calibration_date: getDate('testInstrumentCalDate'),
     },
 
     // DNO Notification
@@ -285,7 +294,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
       required: getBool('dnoNotified') || getBool('g98Notification') || getBool('g99Application'),
       submitted: getBool('dnoNotified'),
       submitted_display: getBool('dnoNotified') ? 'Yes' : 'No',
-      date: get('dnoNotificationDate'),
+      date: getDate('dnoNotificationDate'),
       reference: get('dnoReference'),
       g98_notification: getBool('g98Notification'),
       g98_display: getBool('g98Notification') ? 'Yes' : 'N/A',
@@ -335,7 +344,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
       scheme: get('installerScheme'),
       scheme_number: get('installerSchemeNumber'),
       signature: get('installerSignature'),
-      date: get('installerDate'),
+      date: getDate('installerDate'),
     },
 
     // Compliance
@@ -396,7 +405,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
     // Installation (flat)
     installation_address: get('installationAddress'),
     installation_type: get('installationType'),
-    installation_date: get('installationDate'),
+    installation_date: getDate('installationDate'),
 
     // Charger (flat)
     charger_make: get('chargerMake'),
@@ -451,7 +460,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
 
     // DNO (flat)
     dno_notified: getBool('dnoNotified'),
-    dno_notification_date: get('dnoNotificationDate'),
+    dno_notification_date: getDate('dnoNotificationDate'),
     dno_reference: get('dnoReference'),
     g98_notification: getBool('g98Notification'),
     g99_application: getBool('g99Application'),
@@ -472,7 +481,7 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
     installer_scheme: get('installerScheme'),
     installer_scheme_number: get('installerSchemeNumber'),
     installer_signature: get('installerSignature'),
-    installer_date: get('installerDate'),
+    installer_date: getDate('installerDate'),
 
     // Compliance (flat)
     bs7671_compliance: getBool('bs7671Compliance'),

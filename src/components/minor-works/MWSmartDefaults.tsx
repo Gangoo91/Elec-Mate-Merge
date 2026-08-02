@@ -111,7 +111,7 @@ const MWSmartDefaults: React.FC<MWSmartDefaultsProps> = ({ onApply, className })
               className="flex flex-col items-start p-3 rounded-lg bg-white/[0.08] hover:bg-white/[0.12] active:scale-[0.98] transition-all touch-manipulation text-left"
             >
               <span className="text-xs font-semibold text-white">{preset.label}</span>
-              <span className="text-[10.5px] text-white/70 mt-0.5 tabular-nums">{preset.desc}</span>
+              <span className="text-[10.5px] text-white/80 mt-0.5 tabular-nums">{preset.desc}</span>
             </button>
           ))}
         </div>

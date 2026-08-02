@@ -79,7 +79,7 @@ export function JobFinancialsSection() {
     enabled: !!openDetail?.job_id,
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('employer_invoices')
+        .rpc('employer_invoices_unified')
         .select('amount, status')
         .eq('job_id', openDetail!.job_id);
       if (error) throw error;

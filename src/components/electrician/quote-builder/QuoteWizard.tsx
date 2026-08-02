@@ -34,6 +34,21 @@ interface QuoteWizardProps {
       description: string;
       location: string;
     };
+    /** Pre-priced line items (e.g. EICR defect remedials / AI estimator output) */
+    items?: Array<{
+      id: string;
+      description: string;
+      quantity: number;
+      unit: string;
+      unitPrice: number;
+      totalPrice: number;
+      category: string;
+      subcategory?: string;
+      notes?: string;
+      hours?: number;
+      hourlyRate?: number;
+      workerType?: string;
+    }>;
     linkedCertificate?: {
       reportId: string;
       certificateType: string;
@@ -170,6 +185,11 @@ export const QuoteWizard = ({
         ...initialQuote,
         client: initialCertificateData.client,
         jobDetails: initialCertificateData.jobDetails,
+        // Defect remedials / AI estimate lines arrive pre-priced (audit P0-1)
+        ...(initialCertificateData.items &&
+          initialCertificateData.items.length > 0 && {
+            items: initialCertificateData.items as QuoteItem[],
+          }),
         ...(initialCertificateData.linkedCertificate && {
           linked_certificate_id: initialCertificateData.linkedCertificate.reportId,
           linked_certificate_type: initialCertificateData.linkedCertificate.certificateType as

@@ -47,14 +47,16 @@ const LoadTesterButton: React.FC<LoadTesterButtonProps> = ({ onLoad, className }
       onClick={handleLoad}
       disabled={showSuccess}
       className={cn(
-        'w-full h-11 rounded-lg text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all',
+        // Solid volt when idle — a translucent elec-yellow wash reads brown on
+        // the dark surface, so the selected/primary state is always solid.
+        'w-full h-11 rounded-xl text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all',
         showSuccess
-          ? 'bg-green-500 text-white'
-          : 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/30',
+          ? 'bg-green-500 border border-green-500 text-black'
+          : 'bg-elec-yellow border border-elec-yellow text-black hover:bg-elec-yellow',
         className
       )}
     >
-      {showSuccess ? 'Loaded!' : 'Load from Business Settings'}
+      {showSuccess ? 'Loaded' : 'Load from business settings'}
     </button>
   );
 };

@@ -568,7 +568,7 @@ export function SafeIsolationRecord({ onBack }: { onBack: () => void }) {
       <Sheet open={showForm} onOpenChange={setShowForm}>
         <SheetContent
           side="bottom"
-          className="h-[92vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
         >
           <NewRecordForm onSubmit={handleCreate} isSubmitting={createMutation.isPending} />
         </SheetContent>

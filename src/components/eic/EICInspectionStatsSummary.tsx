@@ -29,10 +29,10 @@ const EICInspectionStatsSummary: React.FC<EICInspectionStatsSummaryProps> = ({
       {/* Progress bar + count */}
       <div className="space-y-1.5">
         <div className="flex items-center justify-between">
-          <span className="text-[10px] text-white">{completed}/{totalItems} completed</span>
-          <span className="text-[10px] font-semibold text-elec-yellow">{progressPercent}%</span>
+          <span className="text-[12px] font-medium text-white">{completed}/{totalItems} completed</span>
+          <span className="text-[12px] font-semibold text-elec-yellow">{progressPercent}%</span>
         </div>
-        <div className="h-1.5 bg-white/[0.08] rounded-full overflow-hidden">
+        <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.08]">
           <div
             className={`h-full rounded-full transition-all duration-500 ${allDone ? 'bg-green-500' : 'bg-elec-yellow'}`}
             style={{ width: `${progressPercent}%` }}
@@ -40,20 +40,20 @@ const EICInspectionStatsSummary: React.FC<EICInspectionStatsSummaryProps> = ({
         </div>
       </div>
 
-      {/* Quick stats + Mark All OK */}
-      <div className="flex items-center gap-2">
-        <div className="flex items-center gap-3 flex-1 text-[10px]">
-          <span className="text-green-400 font-semibold">{satisfactory} ✓</span>
-          <span className="text-white">{totalItems - completed - limitation} remaining</span>
-          {limitation > 0 && <span className="text-amber-400 font-semibold">{limitation} LIM</span>}
+      {/* Quick stats + Mark all OK */}
+      <div className="flex items-center gap-3">
+        <div className="flex flex-1 flex-wrap items-center gap-x-4 gap-y-1 text-[12px] text-white">
+          <span className="font-semibold text-green-400">{satisfactory} satisfactory</span>
+          <span>{totalItems - completed} remaining</span>
+          {limitation > 0 && <span className="font-semibold text-amber-400">{limitation} LIM</span>}
         </div>
         {onMarkAllOk && completed < totalItems && (
           <button
             type="button"
             onClick={onMarkAllOk}
-            className="h-8 px-3 rounded-lg text-[10px] font-semibold bg-green-500/20 border border-green-500/30 text-green-400 touch-manipulation active:scale-[0.98]"
+            className="h-11 shrink-0 rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 text-[13px] font-medium text-white touch-manipulation active:scale-[0.98] transition-all"
           >
-            Mark All ✓
+            Mark all OK
           </button>
         )}
       </div>

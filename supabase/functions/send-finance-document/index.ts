@@ -161,20 +161,47 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Ownership: RLS on the user-scoped client enforces employer_id = caller
-    const table = type === 'quote' ? 'employer_quotes' : 'employer_invoices';
+    // Quotes and invoices both live in `quotes` — that is where the Electrical
+    // Hub builder writes, and (since 2026-08-02) where the Employer Hub writes
+    // too. `employer_quotes`/`employer_invoices` are legacy and hold no rows,
+    // so reading them made this 404 for every real document.
+    //
+    // Ownership: RLS on the user-scoped client enforces quotes.user_id = caller
+    // (or a company they co-admin, via my_employer_scope()).
     const numberCol = type === 'quote' ? 'quote_number' : 'invoice_number';
-    const { data: doc, error: docError } = await supabase
-      .from(table)
+    const { data: row, error: docError } = await supabase
+      .from('quotes')
       .select('*')
       .eq('id', documentId)
-      .single();
-    if (docError || !doc) {
+      .maybeSingle();
+    if (docError || !row) {
       return new Response(JSON.stringify({ error: 'Document not found' }), {
         status: 404,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
+
+    // Flatten the real table's jsonb shape into the fields this template reads,
+    // so the email body below is unchanged.
+    const clientData = (row.client_data ?? {}) as Record<string, unknown>;
+    const jobDetails = (row.job_details ?? {}) as Record<string, unknown>;
+    const settings = (row.settings ?? {}) as Record<string, unknown>;
+    const doc: Record<string, unknown> = {
+      ...row,
+      quote_number: row.quote_number,
+      invoice_number: row.invoice_number ?? row.quote_number,
+      // Employer templates read `value` for a quote and `amount` for an invoice.
+      value: row.total,
+      amount: row.total,
+      description: jobDetails.description ?? jobDetails.title ?? null,
+      project: jobDetails.title ?? null,
+      client: clientData.name ?? null,
+      client_email: clientData.email ?? null,
+      // CIS lives in settings on the real table, not as a column.
+      cis_amount: settings.cisEnabled
+        ? (Number(row.total) || 0) * ((Number(settings.cisRate) || 0) / 100)
+        : 0,
+    };
 
     const { data: company } = await supabase
       .from('company_profiles')

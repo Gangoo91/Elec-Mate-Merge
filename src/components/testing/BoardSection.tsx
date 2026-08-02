@@ -1,21 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useMemo, useState, useCallback, useEffect, useRef, memo } from 'react';
+import { useHaptic } from '@/hooks/useHaptic';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import {
-  ChevronDown,
-  ChevronUp,
-  ChevronDown as ChevronDownMove,
-  Plus,
-  Trash2,
-  CheckCircle,
-  AlertCircle,
-  Camera,
-  Mic,
-  Check,
-} from 'lucide-react';
+import { ChevronDown, AlertCircle, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { DistributionBoard, MAIN_BOARD_ID, isMainBoard as isMainBoardFn } from '@/types/distributionBoard';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
@@ -24,6 +14,15 @@ import {
   FieldLimitationBadge,
   isFieldMarker,
 } from '@/components/field-limitations';
+import useReadingKeypad from '@/hooks/useReadingKeypad';
+
+/* Paper-form field recipe — underline inputs on a transparent background,
+   matching MWTestingTab + the EV charging reference implementation. */
+const fieldCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const pickerTriggerCn =
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 px-1 text-base font-medium text-white [&>span]:text-white data-[placeholder]:text-white [&[data-placeholder]>span]:text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none transition-colors touch-manipulation';
 
 export interface BoardToolCallbacks {
   onScanBoard?: () => void;
@@ -146,28 +145,20 @@ function ConfirmChip({
         onToggle();
       }}
       className={cn(
-        'h-10 px-3.5 rounded-lg border flex items-center gap-2 cursor-pointer select-none touch-manipulation',
-        'transition-colors duration-150',
+        'h-11 px-4 rounded-xl border flex items-center justify-center cursor-pointer select-none touch-manipulation',
+        'text-sm transition-colors duration-150 active:scale-[0.97]',
         checked
-          ? 'bg-green-500/15 border-green-500/40 text-green-400'
-          : 'bg-white/[0.03] border-white/10 text-white hover:bg-white/[0.05]'
+          ? 'bg-green-500 border-green-500 text-black font-semibold'
+          : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
       )}
     >
-      <div
-        className={cn(
-          'w-4 h-4 rounded flex items-center justify-center flex-shrink-0 transition-colors',
-          checked ? 'bg-green-500' : 'border-2 border-white/30'
-        )}
-      >
-        {checked && <Check className="h-3 w-3 text-black" strokeWidth={3} />}
-      </div>
-      <span className="text-sm font-medium">{label}</span>
+      <span>{label}</span>
     </button>
   );
 }
 
 /**
- * N/A chip — amber, mutex with the SPD details panel.
+ * N/A chip — mutex with the SPD details panel.
  */
 function NAChip({ checked, onToggle }: { checked: boolean; onToggle: () => void }) {
   return (
@@ -179,21 +170,13 @@ function NAChip({ checked, onToggle }: { checked: boolean; onToggle: () => void 
         onToggle();
       }}
       className={cn(
-        'h-9 px-3 rounded-lg border flex items-center gap-2 cursor-pointer select-none touch-manipulation',
-        'transition-colors duration-150 text-xs font-semibold uppercase tracking-wider',
+        'h-11 px-3.5 rounded-xl border flex items-center justify-center cursor-pointer select-none touch-manipulation',
+        'text-[12px] transition-colors duration-150 active:scale-[0.97]',
         checked
-          ? 'bg-amber-500/15 border-amber-500/40 text-amber-400'
-          : 'bg-white/[0.03] border-white/10 text-white hover:bg-white/[0.05]'
+          ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
+          : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
       )}
     >
-      <div
-        className={cn(
-          'w-3.5 h-3.5 rounded flex items-center justify-center flex-shrink-0 transition-colors',
-          checked ? 'bg-amber-500' : 'border-2 border-white/30'
-        )}
-      >
-        {checked && <Check className="h-2.5 w-2.5 text-black" strokeWidth={3} />}
-      </div>
       <span>Not installed</span>
     </button>
   );
@@ -220,22 +203,14 @@ function TypeChip({
         onToggle();
       }}
       className={cn(
-        'h-10 px-4 rounded-lg border flex items-center gap-2 cursor-pointer select-none touch-manipulation',
-        'transition-colors duration-150',
+        'h-11 px-4 rounded-xl border flex items-center justify-center cursor-pointer select-none touch-manipulation',
+        'text-sm transition-colors duration-150 active:scale-[0.97]',
         checked
-          ? 'bg-elec-yellow/15 border-elec-yellow/50 text-elec-yellow'
-          : 'bg-white/[0.03] border-white/10 text-white hover:bg-white/[0.05]'
+          ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
+          : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
       )}
     >
-      <div
-        className={cn(
-          'w-4 h-4 rounded flex items-center justify-center flex-shrink-0 transition-colors',
-          checked ? 'bg-elec-yellow' : 'border-2 border-white/30'
-        )}
-      >
-        {checked && <Check className="h-3 w-3 text-black" strokeWidth={3} />}
-      </div>
-      <span className="text-sm font-semibold">{label}</span>
+      <span>{label}</span>
     </button>
   );
 }
@@ -264,6 +239,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
   earthingArrangement,
   nominalVoltage,
 }) => {
+  const haptic = useHaptic();
   const isMainBoard = isMainBoardFn(board) || board.id === MAIN_BOARD_ID;
   const canReorder = !isMobile && (onMoveUp !== undefined || onMoveDown !== undefined);
 
@@ -323,6 +299,35 @@ const BoardSection: React.FC<BoardSectionProps> = ({
   const ipfStatus: 'neutral' | 'valid' | 'warn' =
     ipfNum === null ? 'neutral' : ipfNum > 0 && ipfNum <= 25 ? 'valid' : 'warn';
 
+  // ── Reading keypad — shared MW pattern for Zdb/Ipf ──
+  // Field names are keyed per board id because several BoardSections render on
+  // one page and data-keypad-field must be unique per input. Values still flow
+  // through the existing onUpdateBoard path; the header verdict reuses the
+  // zdbStatus/ipfStatus computed above (no new compliance logic).
+  const zdbField = `zdb-${board.id}`;
+  const ipfField = `ipf-${board.id}`;
+  const keypadMeta = useMemo(
+    () => ({
+      [zdbField]: { label: 'Zdb — board loop impedance', unit: 'Ω' },
+      [ipfField]: { label: 'Ipf — prospective fault current', unit: 'kA' },
+    }),
+    [zdbField, ipfField]
+  );
+  const keypadSequence = useMemo(() => [zdbField, ipfField], [zdbField, ipfField]);
+  const keypad = useReadingKeypad({
+    meta: keypadMeta,
+    sequence: keypadSequence,
+    getValue: (field) => String((field === zdbField ? board.zdb : board.ipf) ?? ''),
+    setValue: (field, value) =>
+      onUpdateBoard(board.id, field === zdbField ? 'zdb' : 'ipf', value),
+    getStatus: (field) => {
+      const s = field === zdbField ? zdbStatus : ipfStatus;
+      if (s === 'valid') return { tone: 'pass', label: 'Within typical range' };
+      if (s === 'warn') return { tone: 'check', label: 'Outside typical range' };
+      return null;
+    },
+  });
+
   // Stop click propagation from reorder buttons so they don't toggle the collapse
   const handleMoveUp = useCallback(
     (e: React.MouseEvent) => {
@@ -343,11 +348,12 @@ const BoardSection: React.FC<BoardSectionProps> = ({
 
   return (
     <div
-      className={cn(
-        'testing-info-section overflow-hidden',
-        isMobile && 'rounded-lg',
-        !isMobile && (isMainBoard ? 'testing-info-section--main' : 'testing-info-section--sub')
-      )}
+      className="overflow-hidden rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04]"
+      // Delegated press haptic — every chip/button tap in the board panel
+      // buzzes like the MW tabs without wiring each onClick individually.
+      onPointerDown={(e) => {
+        if ((e.target as HTMLElement).closest('button')) haptic.light();
+      }}
     >
       {/* Completion bar — always visible at the very top of the card.
           Main boards use elec-yellow, sub-boards use a softer silver. */}
@@ -373,16 +379,16 @@ const BoardSection: React.FC<BoardSectionProps> = ({
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                onToggleExpanded(!isExpanded);
+                onToggleExpanded();
               }
             }}
           >
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <div className="flex flex-col items-start min-w-0 flex-1 gap-1">
-                {/* Desktop: eyebrow with Main/Sub tag in editorial style (college pattern).
-                    Mobile: keeps the compact inline pill from before. */}
+                {/* Desktop: Main/Sub label above the reference.
+                    Mobile: compact inline label beside it. */}
                 <span className={cn(
-                  'hidden lg:block text-[10px] font-medium uppercase tracking-[0.18em]',
+                  'hidden lg:block text-[12px] font-medium',
                   isMainBoard ? 'text-elec-yellow' : 'text-white'
                 )}>
                   {isMainBoard ? 'Main board' : 'Sub-board'}
@@ -391,13 +397,11 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                   <span className="text-base lg:text-lg font-semibold text-white truncate tracking-tight">
                     {board.reference || board.name}
                   </span>
-                  {/* Mobile Main/Sub pill — desktop replaced by eyebrow above */}
+                  {/* Mobile Main/Sub label — desktop replaced by the label above */}
                   <span
                     className={cn(
-                      'inline-flex lg:hidden items-center text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded shrink-0',
-                      isMainBoard
-                        ? 'bg-elec-yellow/15 border border-elec-yellow/40 text-elec-yellow'
-                        : 'bg-blue-500/15 border border-blue-500/40 text-blue-300'
+                      'inline lg:hidden text-[12px] font-medium shrink-0',
+                      isMainBoard ? 'text-elec-yellow' : 'text-white'
                     )}
                   >
                     {isMainBoard ? 'Main' : 'Sub'}
@@ -430,26 +434,21 @@ const BoardSection: React.FC<BoardSectionProps> = ({
             </div>
 
             <div className="flex items-center gap-3">
-              {/* Desktop: text-only status eyebrow, no pill (college editorial) */}
+              {/* Text-only status label — desktop and mobile */}
               <span
                 className={cn(
-                  'hidden lg:inline text-[10px] font-semibold uppercase tracking-[0.18em] shrink-0',
+                  'text-[12px] font-medium shrink-0',
                   verificationComplete ? 'text-green-400' : 'text-amber-400'
                 )}
               >
                 {verificationComplete ? 'Verified' : 'In progress'}
               </span>
 
-              {/* Mobile keeps the bare icon (unchanged) */}
-              {verificationComplete ? (
-                <CheckCircle className="h-4 w-4 text-green-400 lg:hidden" />
-              ) : (
-                <AlertCircle className="h-4 w-4 text-amber-400 lg:hidden" />
-              )}
-
-              {/* ELE-830 — reorder buttons, desktop only, stop propagation */}
+              {/* ELE-830 — reorder buttons, desktop branch only (prop-gated via
+                  canReorder, not a breakpoint class: hidden lg:flex left the
+                  768-1023px desktop branch with no reorder controls at all). */}
               {canReorder && (
-                <div className="hidden lg:flex items-center gap-1 shrink-0">
+                <div className="flex items-center gap-1 shrink-0">
                   <button
                     type="button"
                     onClick={handleMoveUp}
@@ -457,14 +456,14 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                     title="Move board up"
                     aria-label={`Move ${board.name} up`}
                     className={cn(
-                      'h-9 w-9 rounded-md flex items-center justify-center',
-                      'border border-white/10 text-white active:scale-[0.98] transition-all',
+                      'h-11 px-3 rounded-xl flex items-center justify-center text-[13px] font-semibold touch-manipulation',
+                      'border border-white/[0.12] text-white active:scale-[0.98] transition-all',
                       isFirst
                         ? 'opacity-25 cursor-not-allowed'
-                        : 'bg-white/[0.03] hover:bg-white/[0.08]'
+                        : 'bg-white/[0.06] hover:bg-white/[0.1]'
                     )}
                   >
-                    <ChevronUp className="h-4 w-4" />
+                    Move up
                   </button>
                   <button
                     type="button"
@@ -473,27 +472,21 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                     title="Move board down"
                     aria-label={`Move ${board.name} down`}
                     className={cn(
-                      'h-9 w-9 rounded-md flex items-center justify-center',
-                      'border border-white/10 text-white active:scale-[0.98] transition-all',
+                      'h-11 px-3 rounded-xl flex items-center justify-center text-[13px] font-semibold touch-manipulation',
+                      'border border-white/[0.12] text-white active:scale-[0.98] transition-all',
                       isLast
                         ? 'opacity-25 cursor-not-allowed'
-                        : 'bg-white/[0.03] hover:bg-white/[0.08]'
+                        : 'bg-white/[0.06] hover:bg-white/[0.1]'
                     )}
                   >
-                    <ChevronDownMove className="h-4 w-4" />
+                    Move down
                   </button>
                 </div>
               )}
 
-              <ChevronDown
-                className={cn(
-                  'h-5 w-5 text-white transition-transform duration-200',
-                  isExpanded && 'rotate-180'
-                )}
-              />
-
-              {/* Remove-board trash icon — sub-boards only, desktop only. Moved up
-                  from the footer so destructive action lives with the board header. */}
+              {/* Remove-board action — sub-boards only, desktop branch only
+                  (prop-gated, not hidden lg: — see reorder note). Sits before
+                  the chevron so the collapse affordance keeps the far edge. */}
               {!isMainBoard && !isMobile && (
                 <button
                   type="button"
@@ -505,28 +498,32 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                   title="Remove board"
                   aria-label={`Remove ${board.name}`}
                   className={cn(
-                    'hidden lg:flex h-9 w-9 rounded-md items-center justify-center shrink-0',
-                    'border border-white/10 bg-white/[0.03] text-white',
-                    'hover:bg-red-500/10 hover:border-red-500/30 hover:text-red-400 transition-colors'
+                    'flex h-11 px-3 rounded-xl items-center justify-center shrink-0 touch-manipulation',
+                    'text-[13px] font-semibold text-red-400 hover:bg-red-500/10 transition-colors'
                   )}
                 >
-                  <Trash2 className="h-4 w-4" />
+                  Remove
                 </button>
               )}
+
+              <ChevronDown
+                className={cn(
+                  'h-5 w-5 text-white transition-transform duration-200',
+                  isExpanded && 'rotate-180'
+                )}
+              />
             </div>
           </div>
         </CollapsibleTrigger>
 
         <CollapsibleContent>
           <div className="p-5 space-y-4 border-t border-white/10">
-            {/* 01 · SETUP — numbered editorial section with completion count */}
-            <div className="hidden lg:flex items-center gap-3 pt-1">
-              <span className="text-[11px] font-semibold tabular-nums text-elec-yellow tracking-[0.18em]">01</span>
-              <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Setup</span>
-              <span className="text-[10px] tabular-nums text-white">{setupFilled}/4</span>
-              <span className="flex-1 h-px bg-white/[0.06]" />
+            {/* Setup — recipe sub-heading with completion count */}
+            <div className="hidden lg:flex items-baseline gap-3 pt-1">
+              <h3 className="text-sm font-semibold text-white">Setup</h3>
+              <span className="text-[12px] tabular-nums text-white/60">{setupFilled}/4</span>
               {earthingArrangement?.toUpperCase() === 'TT' && (
-                <span className="text-[11px] text-amber-300/90 shrink-0">
+                <span className="ml-auto text-[11px] text-amber-300/90 shrink-0">
                   TT · Zs against circuit RCD
                 </span>
               )}
@@ -536,34 +533,34 @@ const BoardSection: React.FC<BoardSectionProps> = ({
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {/* Reference */}
               <div className="space-y-2">
-                <Label className="text-[11px] font-semibold text-white uppercase tracking-wider">
+                <Label className="text-[12px] font-medium text-white">
                   Reference
                 </Label>
                 <DebouncedInput
                   value={board.reference}
                   onChange={(value) => onUpdateBoard(board.id, 'reference', value)}
                   placeholder="e.g. Main CU"
-                  className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow/50 focus:bg-white/[0.05] rounded-lg transition-colors"
+                  className={fieldCn}
                 />
               </div>
 
               {/* Location */}
               <div className="space-y-2">
-                <Label className="text-[11px] font-semibold text-white uppercase tracking-wider">
+                <Label className="text-[12px] font-medium text-white">
                   Location
                 </Label>
                 <DebouncedInput
                   value={board.location || ''}
                   onChange={(value) => onUpdateBoard(board.id, 'location', value)}
                   placeholder="e.g. Garage, Kitchen"
-                  className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow/50 focus:bg-white/[0.05] rounded-lg transition-colors"
+                  className={fieldCn}
                 />
               </div>
 
               {/* Zdb */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between gap-2">
-                  <Label className="text-[11px] font-semibold text-white uppercase tracking-wider">
+                  <Label className="text-[12px] font-medium text-white">
                     Z<sub className="text-[9px]">DB</sub> (Ω)
                   </Label>
                   <FieldLimitationBadge
@@ -578,27 +575,31 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                     <Input
                       value={board.zdb as string}
                       disabled
-                      className="h-11 bg-white/[0.03] border-white/[0.08] text-white rounded-lg opacity-60"
+                      className={cn(fieldCn, 'opacity-60')}
                     />
                   ) : (
                     <DebouncedInput
-                      type="number"
-                      step="0.01"
+                      /* text + inputMode=decimal (MW ground truth): a number
+                         input silently blanks keypad-written partials like
+                         "0." mid-entry on touch devices. */
+                      type="text"
+                      inputMode="decimal"
                       value={board.zdb}
                       onChange={(value) => onUpdateBoard(board.id, 'zdb', value)}
                       placeholder="0.00"
-                      className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow/50 focus:bg-white/[0.05] rounded-lg pr-14 transition-colors"
+                      className={cn(fieldCn, 'pr-14')}
+                      {...keypad.field(zdbField)}
                     />
                   )}
                   {!isFieldMarker(board.zdb as string) && (
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+                    <span className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
                       {zdbStatus === 'valid' && (
                         <Check className="h-3.5 w-3.5 text-green-400" strokeWidth={3} />
                       )}
                       {zdbStatus === 'warn' && (
                         <AlertCircle className="h-3.5 w-3.5 text-amber-400" />
                       )}
-                      <span className="text-white text-sm font-medium">Ω</span>
+                      <span className="text-[12px] text-white/60">Ω</span>
                     </span>
                   )}
                 </div>
@@ -607,7 +608,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
               {/* Ipf */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between gap-2">
-                  <Label className="text-[11px] font-semibold text-white uppercase tracking-wider">
+                  <Label className="text-[12px] font-medium text-white">
                     I<sub className="text-[9px]">PF</sub> (kA)
                   </Label>
                   <FieldLimitationBadge
@@ -622,40 +623,39 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                     <Input
                       value={board.ipf as string}
                       disabled
-                      className="h-11 bg-white/[0.03] border-white/[0.08] text-white rounded-lg opacity-60"
+                      className={cn(fieldCn, 'opacity-60')}
                     />
                   ) : (
                     <DebouncedInput
-                      type="number"
-                      step="0.1"
+                      type="text"
+                      inputMode="decimal"
                       value={board.ipf}
                       onChange={(value) => onUpdateBoard(board.id, 'ipf', value)}
                       placeholder="0.0"
-                      className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow/50 focus:bg-white/[0.05] rounded-lg pr-14 transition-colors"
+                      className={cn(fieldCn, 'pr-14')}
+                      {...keypad.field(ipfField)}
                     />
                   )}
                   {!isFieldMarker(board.ipf as string) && (
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+                    <span className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
                       {ipfStatus === 'valid' && (
                         <Check className="h-3.5 w-3.5 text-green-400" strokeWidth={3} />
                       )}
                       {ipfStatus === 'warn' && (
                         <AlertCircle className="h-3.5 w-3.5 text-amber-400" />
                       )}
-                      <span className="text-white text-sm font-medium">kA</span>
+                      <span className="text-[12px] text-white/60">kA</span>
                     </span>
                   )}
                 </div>
               </div>
             </div>
 
-            {/* 02 · VERIFICATION — desktop: header + chips on a single row */}
-            <div className="hidden lg:flex items-center gap-3">
-              <span className="text-[11px] font-semibold tabular-nums text-elec-yellow tracking-[0.18em]">02</span>
-              <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Verification</span>
-              <span className="text-[10px] tabular-nums text-white">{verifChecked}/3</span>
-              <span className="flex-1 h-px bg-white/[0.06]" />
-              <div className="flex items-center gap-2 shrink-0">
+            {/* Verification — desktop: recipe sub-heading + chips on a single row */}
+            <div className="hidden lg:flex items-center gap-3 border-t border-white/[0.1] pt-4">
+              <h3 className="text-sm font-semibold text-white">Verification</h3>
+              <span className="text-[12px] tabular-nums text-white/60">{verifChecked}/3</span>
+              <div className="ml-auto flex items-center gap-2 shrink-0">
                 <ConfirmChip
                   label="Polarity"
                   checked={board.confirmedCorrectPolarity}
@@ -664,14 +664,14 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                   }
                 />
                 <ConfirmChip
-                  label="Phase Seq"
+                  label="Phase seq"
                   checked={board.confirmedPhaseSequence}
                   onToggle={() =>
                     onUpdateBoard(board.id, 'confirmedPhaseSequence', !board.confirmedPhaseSequence)
                   }
                 />
                 <ConfirmChip
-                  label="Ring Final"
+                  label="Ring final"
                   checked={!!board.ringFinalCircuitConfirmed}
                   onToggle={() =>
                     onUpdateBoard(board.id, 'ringFinalCircuitConfirmed', !board.ringFinalCircuitConfirmed)
@@ -681,7 +681,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
             </div>
 
             {/* Mobile: chips only, no editorial header */}
-            <div className="flex lg:hidden flex-wrap items-center gap-2">
+            <div className="flex lg:hidden flex-wrap items-center gap-2 border-t border-white/[0.1] pt-4">
               <ConfirmChip
                 label="Polarity"
                 checked={board.confirmedCorrectPolarity}
@@ -690,14 +690,14 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                 }
               />
               <ConfirmChip
-                label="Phase Seq"
+                label="Phase seq"
                 checked={board.confirmedPhaseSequence}
                 onToggle={() =>
                   onUpdateBoard(board.id, 'confirmedPhaseSequence', !board.confirmedPhaseSequence)
                 }
               />
               <ConfirmChip
-                label="Ring Final"
+                label="Ring final"
                 checked={!!board.ringFinalCircuitConfirmed}
                 onToggle={() =>
                   onUpdateBoard(board.id, 'ringFinalCircuitConfirmed', !board.ringFinalCircuitConfirmed)
@@ -705,15 +705,14 @@ const BoardSection: React.FC<BoardSectionProps> = ({
               />
             </div>
 
-            {/* 03 · SURGE PROTECTION — header + "Not installed" chip on one row */}
-            <div className="space-y-3">
+            {/* Surge protection — recipe sub-heading + "Not installed" chip on one row */}
+            <div className="space-y-3 border-t border-white/[0.1] pt-4">
               {/* Desktop header with inline NAChip */}
-              <div className="hidden lg:flex items-center gap-3">
-                <span className="text-[11px] font-semibold tabular-nums text-elec-yellow tracking-[0.18em]">03</span>
-                <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Surge Protection</span>
-                <span className="text-[10px] uppercase tracking-wider text-white/50">SPD</span>
-                <span className="text-[10px] tabular-nums text-white">{spdStatusText}</span>
-                <span className="flex-1 h-px bg-white/[0.06]" />
+              <div className="hidden lg:flex items-center justify-between gap-3">
+                <div className="flex items-baseline gap-3 min-w-0">
+                  <h3 className="text-sm font-semibold text-white">Surge protection</h3>
+                  <span className="text-[12px] text-white/60">SPD · {spdStatusText}</span>
+                </div>
                 <NAChip
                   checked={board.spdNA}
                   onToggle={() => {
@@ -735,8 +734,8 @@ const BoardSection: React.FC<BoardSectionProps> = ({
               {/* Mobile header with inline NAChip */}
               <div className="flex lg:hidden items-center justify-between gap-2">
                 <div className="flex items-baseline gap-2.5">
-                  <h4 className="text-sm font-semibold text-white">Surge Protection</h4>
-                  <span className="text-[10px] uppercase tracking-wider text-white font-semibold">SPD</span>
+                  <h3 className="text-sm font-semibold text-white">Surge protection</h3>
+                  <span className="text-[12px] text-white/60">SPD</span>
                 </div>
                 <NAChip
                   checked={board.spdNA}
@@ -799,7 +798,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                       formatter so existing saved certs keep their values. */}
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1.5">
-                      <Label className="text-[11px] font-semibold text-white uppercase tracking-wider">
+                      <Label className="text-[12px] font-medium text-white">
                         Location
                       </Label>
                       <MobileSelectPicker
@@ -807,12 +806,12 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                         onValueChange={(v) => onUpdateBoard(board.id, 'spdLocation', v)}
                         options={SPD_LOCATIONS}
                         placeholder="Select"
-                        title="SPD Location"
-                        triggerClassName="h-11 bg-white/[0.03] border-white/[0.08] rounded-lg text-white [&>span]:text-white data-[placeholder]:text-white [&[data-placeholder]>span]:text-white hover:bg-white/[0.05] transition-colors"
+                        title="SPD location"
+                        triggerClassName={pickerTriggerCn}
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <Label className="text-[11px] font-semibold text-white uppercase tracking-wider">
+                      <Label className="text-[12px] font-medium text-white">
                         Make
                       </Label>
                       {/* ELE-871 — Allow free text when make isn't in dropdown.
@@ -825,7 +824,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                             onUpdateBoard(board.id, { spdMake: e.target.value, spdModel: '' })
                           }
                           placeholder="Enter SPD make"
-                          className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white/40"
+                          className={fieldCn}
                         />
                       ) : (
                         <MobileSelectPicker
@@ -839,8 +838,8 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                             { value: '__custom__', label: 'Other (type your own)…' },
                           ]}
                           placeholder="Select"
-                          title="SPD Make"
-                          triggerClassName="h-11 bg-white/[0.03] border-white/[0.08] rounded-lg text-white [&>span]:text-white data-[placeholder]:text-white [&[data-placeholder]>span]:text-white hover:bg-white/[0.05] transition-colors"
+                          title="SPD make"
+                          triggerClassName={pickerTriggerCn}
                         />
                       )}
                     </div>
@@ -849,48 +848,40 @@ const BoardSection: React.FC<BoardSectionProps> = ({
               )}
             </div>
 
-            {/* 04 · CIRCUITS — desktop header with inline toolbar (replaces the
-                standalone tools-bar + orphaned "Circuits" label). */}
+            {/* Circuits — desktop header with inline toolbar (replaces the
+                standalone tools-bar + orphaned "Circuits" label). Prop-gated
+                rather than hidden lg:flex — the 768-1023px desktop branch
+                (landscape phones / portrait tablets) previously had no Add
+                circuit or tools at all. flex-wrap lets the buttons wrap on
+                narrow landscape widths. */}
             {children && !isMobile && (
-              <div className="hidden lg:flex items-center gap-3 pt-1">
-                <span className="text-[11px] font-semibold tabular-nums text-elec-yellow tracking-[0.18em]">04</span>
-                <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Circuits</span>
-                <span className="text-[10px] tabular-nums text-white">{circuitCount}</span>
-                <span className="flex-1 h-px bg-white/[0.06]" />
+              <div className="flex flex-wrap items-center gap-3 border-t border-white/[0.1] pt-4">
+                <h3 className="text-sm font-semibold text-white">Circuits</h3>
+                <span className="text-[12px] tabular-nums text-white/60">{circuitCount}</span>
                 {showTools && tools && (
-                  <div className="flex items-center gap-2 shrink-0">
+                  <div className="ml-auto flex items-center gap-2 shrink-0">
                     <Button
                       onClick={tools.onScanBoard}
-                      className="h-8 px-3 bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] text-white text-xs font-medium"
+                      className="h-11 px-3 rounded-xl border border-white/[0.12] bg-white/[0.06] hover:bg-white/[0.1] text-white text-[13px] font-semibold touch-manipulation"
                     >
-                      <Camera className="h-3.5 w-3.5 mr-1.5" />
-                      AI Scan
+                      AI scan
                     </Button>
                     <Button
                       onClick={onAddCircuit}
-                      className="h-8 px-3 bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] text-white text-xs font-medium"
+                      className="h-11 px-3 rounded-xl bg-elec-yellow text-black hover:bg-elec-yellow/90 text-[13px] font-semibold touch-manipulation"
                     >
-                      <Plus className="h-3.5 w-3.5 mr-1.5" />
-                      Add Circuit
+                      Add circuit
                     </Button>
                     <Button
                       onClick={tools.onVoiceToggle}
                       disabled={tools.voiceConnecting}
                       className={cn(
-                        'h-8 px-3 text-xs font-medium',
+                        'h-11 px-3 rounded-xl text-[13px] font-semibold touch-manipulation',
                         tools.voiceActive
-                          ? 'bg-green-500 text-white hover:bg-green-500/90'
-                          : tools.voiceConnecting
-                            ? 'bg-yellow-500 text-black animate-pulse'
-                            : 'bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] text-white'
+                          ? 'bg-green-500 text-black hover:bg-green-500/90'
+                          : 'border border-white/[0.12] bg-white/[0.06] hover:bg-white/[0.1] text-white'
                       )}
                     >
-                      <Mic
-                        className={cn(
-                          'h-3.5 w-3.5 mr-1.5',
-                          tools.voiceActive && 'animate-pulse'
-                        )}
-                      />
                       {tools.voiceActive
                         ? 'Stop'
                         : tools.voiceConnecting
@@ -902,39 +893,37 @@ const BoardSection: React.FC<BoardSectionProps> = ({
               </div>
             )}
 
-            {/* Mobile tools bar — unchanged from before */}
+            {/* Mobile tools bar — text-only buttons on the neutral recipe */}
             {isMobile && showTools && tools && (
-              <div className="py-3 border-y border-border/30 bg-background">
-                <div className="grid grid-cols-[1fr_1fr_44px] gap-2 items-center">
+              <div className="py-3 border-t border-white/10">
+                <div className="grid grid-cols-3 gap-2 items-center">
                   <Button
                     onClick={tools.onScanBoard}
-                    className="font-semibold touch-manipulation active:scale-95 h-12 rounded-xl bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                    className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] hover:bg-white/[0.1] text-white text-[13px] font-semibold touch-manipulation active:scale-95"
                   >
-                    <Camera className="h-4 w-4 mr-2" />
-                    AI Scan
+                    AI scan
                   </Button>
                   <Button
                     onClick={onAddCircuit}
-                    className="font-semibold touch-manipulation active:scale-95 h-12 rounded-xl bg-card border border-border/50 text-foreground hover:bg-card/80"
+                    className="h-11 rounded-xl bg-elec-yellow text-black hover:bg-elec-yellow/90 text-[13px] font-semibold touch-manipulation active:scale-95"
                   >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add Circuit
+                    Add circuit
                   </Button>
                   <Button
                     onClick={tools.onVoiceToggle}
                     disabled={tools.voiceConnecting}
                     className={cn(
-                      'touch-manipulation active:scale-95 h-12 w-12 rounded-xl',
+                      'h-11 rounded-xl text-[13px] font-semibold touch-manipulation active:scale-95',
                       tools.voiceActive
-                        ? 'bg-green-500 text-white'
-                        : tools.voiceConnecting
-                          ? 'bg-yellow-500 text-black animate-pulse'
-                          : 'bg-purple-600 text-white'
+                        ? 'bg-green-500 text-black'
+                        : 'border border-white/[0.12] bg-white/[0.06] hover:bg-white/[0.1] text-white'
                     )}
                   >
-                    <Mic
-                      className={cn('h-4 w-4', tools.voiceActive && 'animate-pulse')}
-                    />
+                    {tools.voiceActive
+                      ? 'Stop'
+                      : tools.voiceConnecting
+                        ? 'Connecting'
+                        : 'Voice'}
                   </Button>
                 </div>
               </div>
@@ -946,11 +935,10 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                 <Button
                   variant="outline"
                   size="sm"
-                  className="w-full h-11 border-white/20 hover:bg-white/5"
+                  className="w-full h-11 rounded-xl border-white/[0.12] bg-white/[0.06] text-white text-[13px] font-semibold hover:bg-white/[0.1] touch-manipulation"
                   onClick={onAddCircuit}
                 >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Circuit
+                  Add circuit
                 </Button>
               </div>
             )}
@@ -978,17 +966,22 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-10 text-red-400/70 hover:text-red-400 hover:bg-red-500/10 text-xs"
+                  className="h-11 px-3 text-red-400 hover:text-red-400 hover:bg-red-500/10 text-[13px] font-semibold touch-manipulation"
                   onClick={() => onRemoveBoard(board.id)}
                 >
-                  <Trash2 className="h-3.5 w-3.5 mr-1.5" />
-                  Remove Board
+                  Remove board
                 </Button>
               </div>
             )}
+
+            {/* Scroll room so the last reading can rise clear of the keypad */}
+            {keypad.spacer}
           </div>
         </CollapsibleContent>
       </Collapsible>
+
+      {/* Reading keypad — coarse-pointer devices only */}
+      {keypad.element}
     </div>
   );
 };

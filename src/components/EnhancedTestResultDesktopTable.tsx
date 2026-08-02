@@ -1,14 +1,14 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useRef } from 'react';
 import { Table, TableBody } from '@/components/ui/table';
 // Native scroll used instead of Radix ScrollArea for performance with many rows
 import { TestResult } from '@/types/testResult';
-import { Zap, BookOpen, Camera, Plus } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import EnhancedTestResultDesktopTableHeader from './EnhancedTestResultDesktopTableHeader';
 import EnhancedTestResultDesktopTableRow from './EnhancedTestResultDesktopTableRow';
 import RegulationValidationControls from './RegulationValidationControls';
 import { toast } from 'sonner';
 import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
+import { bsStandardRequiresCurve } from '@/types/protectiveDeviceTypes';
 
 interface EnhancedTestResultDesktopTableProps {
   testResults: TestResult[];
@@ -20,7 +20,15 @@ interface EnhancedTestResultDesktopTableProps {
   onMoveUp?: (id: string) => void;
   onMoveDown?: (id: string) => void;
   onAddCircuit: () => void;
-  onBulkFieldUpdate?: (field: keyof TestResult, value: string) => void;
+  /**
+   * Bulk "Fill" from the header. The table is rendered once per distribution
+   * board with ONLY that board's circuits, so it passes `circuitIds` (the ids
+   * of the circuits it is rendering) as the third argument — parents that
+   * manage the whole schedule MUST scope the update to those ids, otherwise a
+   * fill on Board 2 silently overwrites Board 1. Parents that ignore the third
+   * argument keep the previous (whole-schedule) behaviour.
+   */
+  onBulkFieldUpdate?: (field: keyof TestResult, value: string, circuitIds?: string[]) => void;
   onScanBoard?: () => void;
   earthingArrangement?: string;
 }
@@ -58,6 +66,12 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
   const [showRegulationStatus, setShowRegulationStatus] = useState(false);
   const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(new Set());
 
+  // Fill handlers read the current circuits through a ref so they can be
+  // stable (useCallback with no testResults dep) — that keeps the memoised
+  // 1200-line header from re-rendering its ~15 popovers on every keystroke.
+  const resultsRef = useRef(testResults);
+  resultsRef.current = testResults;
+
   // Create a bulk update handler that matches the mobile interface
   const handleBulkUpdate = useCallback(
     (id: string, updates: Partial<TestResult>) => {
@@ -75,99 +89,99 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
     [onBulkUpdate, onUpdate]
   );
 
-  const toggleGroupCollapse = (groupName: string) => {
-    const newCollapsed = new Set(collapsedGroups);
-    if (newCollapsed.has(groupName)) {
-      newCollapsed.delete(groupName);
-    } else {
-      newCollapsed.add(groupName);
-    }
-    setCollapsedGroups(newCollapsed);
-  };
+  const toggleGroupCollapse = useCallback((groupName: string) => {
+    setCollapsedGroups((current) => {
+      const newCollapsed = new Set(current);
+      if (newCollapsed.has(groupName)) {
+        newCollapsed.delete(groupName);
+      } else {
+        newCollapsed.add(groupName);
+      }
+      return newCollapsed;
+    });
+  }, []);
+
+  // Shared fill helper — board-scoped: passes this table's circuit ids so a
+  // whole-schedule parent can limit the write to the rendered board.
+  const fillAll = useCallback(
+    (field: keyof TestResult, value: string) => {
+      const circuits = resultsRef.current;
+      if (onBulkFieldUpdate) {
+        onBulkFieldUpdate(field, value, circuits.map((c) => c.id));
+      } else {
+        circuits.forEach((result) => {
+          onUpdate(result.id, field, value);
+        });
+      }
+    },
+    [onBulkFieldUpdate, onUpdate]
+  );
 
   // ELE-871 — accept a value so the header popover can offer Pass/Fail/N/A
-  const handleFillAllRcdTestButton = (value: string = '✓') => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('rcdTestButton', value);
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'rcdTestButton', value);
-      });
-    }
-    toast.success(`All ${testResults.length} RCD Test Button fields filled with ${value}`);
-  };
+  const handleFillAllRcdTestButton = useCallback(
+    (value: string = '✓') => {
+      fillAll('rcdTestButton', value);
+      toast.success(`All ${resultsRef.current.length} RCD Test Button fields filled with ${value}`);
+    },
+    [fillAll]
+  );
 
-  const handleFillAllAfdd = (value: string = '✓') => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('afddTest', value);
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'afddTest', value);
-      });
-    }
-    toast.success(`All ${testResults.length} AFDD fields filled with ${value}`);
-  };
+  const handleFillAllAfdd = useCallback(
+    (value: string = '✓') => {
+      fillAll('afddTest', value);
+      toast.success(`All ${resultsRef.current.length} AFDD fields filled with ${value}`);
+    },
+    [fillAll]
+  );
 
-  const handleFillAllFunctional = (value: string = '✓') => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('functionalTesting', value);
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'functionalTesting', value);
-      });
-    }
-    toast.success(`All ${testResults.length} Functional Test fields filled with ${value}`);
-  };
+  const handleFillAllFunctional = useCallback(
+    (value: string = '✓') => {
+      fillAll('functionalTesting', value);
+      toast.success(`All ${resultsRef.current.length} Functional Test fields filled with ${value}`);
+    },
+    [fillAll]
+  );
 
-  const handleFillAllRcdBsStandard = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('rcdBsStandard', value);
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'rcdBsStandard', value);
-      });
-    }
-    toast.success(`All RCD BS Standard fields filled with ${value}`);
-  };
+  const handleFillAllRcdBsStandard = useCallback(
+    (value: string) => {
+      fillAll('rcdBsStandard', value);
+      toast.success(`All RCD BS Standard fields filled with ${value}`);
+    },
+    [fillAll]
+  );
 
-  const handleFillAllRcdType = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('rcdType', value);
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'rcdType', value);
-      });
-    }
-    toast.success(`All RCD Type fields filled with ${value}`);
-  };
+  const handleFillAllRcdType = useCallback(
+    (value: string) => {
+      fillAll('rcdType', value);
+      toast.success(`All RCD Type fields filled with ${value}`);
+    },
+    [fillAll]
+  );
 
-  const handleFillAllRcdRating = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('rcdRating', value);
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'rcdRating', value);
-      });
-    }
-    toast.success(`All RCD IΔn fields filled with ${value}mA`);
-  };
+  const handleFillAllRcdRating = useCallback(
+    (value: string) => {
+      fillAll('rcdRating', value);
+      // Value is already canonical ('30mA' / 'N/A') — no unit suffix needed
+      toast.success(`All RCD IΔn fields filled with ${value}`);
+    },
+    [fillAll]
+  );
 
-  const handleFillAllRcdRatingA = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('rcdRatingA', value);
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'rcdRatingA', value);
-      });
-    }
-    toast.success(`All RCD Rating (A) fields filled with ${value}A`);
-  };
+  const handleFillAllRcdRatingA = useCallback(
+    (value: string) => {
+      fillAll('rcdRatingA', value);
+      toast.success(
+        `All RCD Rating (A) fields filled with ${value === 'N/A' ? 'N/A' : `${value}A`}`
+      );
+    },
+    [fillAll]
+  );
 
-  const handleFillAllMaxZs = () => {
+  const handleFillAllMaxZs = useCallback(() => {
     let successCount = 0;
     let skippedCount = 0;
 
-    testResults.forEach((result) => {
+    resultsRef.current.forEach((result) => {
       // Skip if Max Zs is already filled
       if (result.maxZs && result.maxZs.trim() !== '') {
         skippedCount++;
@@ -184,9 +198,8 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
         return;
       }
 
-      // For MCB/RCBO, curve is required
-      // Import the helper at the top of the file
-      const bsStandardRequiresCurve = (bs: string): boolean => bs === 'MCB' || bs === 'RCBO';
+      // For MCB/RCBO/MCCB the curve is required — shared helper matches the
+      // stored combined form 'MCB (BS EN 60898)' etc (ELE-1391).
       const needsCurve = bsStandardRequiresCurve(bsStandard);
       if (needsCurve && !curve) {
         skippedCount++;
@@ -215,133 +228,119 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
     if (successCount === 0 && skippedCount === 0) {
       toast.error('No circuits available to fill');
     }
-  };
+  }, [onUpdate]);
 
   // Insulation Resistance fill handlers
-  const handleFillAllInsulationVoltage = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('insulationTestVoltage', value);
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'insulationTestVoltage', value);
-      });
-    }
-    toast.success(`All Test Voltage fields filled with ${value}`);
-  };
+  const handleFillAllInsulationVoltage = useCallback(
+    (value: string) => {
+      fillAll('insulationTestVoltage', value);
+      toast.success(`All Test Voltage fields filled with ${value}`);
+    },
+    [fillAll]
+  );
 
-  const handleFillAllInsulationLiveNeutral = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('insulationLiveNeutral', value);
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'insulationLiveNeutral', value);
-      });
-    }
-    toast.success(`All Live-Neutral fields filled with ${value} MΩ`);
-  };
+  const handleFillAllInsulationLiveNeutral = useCallback(
+    (value: string) => {
+      fillAll('insulationLiveNeutral', value);
+      toast.success(`All Live-Neutral fields filled with ${value} MΩ`);
+    },
+    [fillAll]
+  );
 
-  const handleFillAllInsulationLiveEarth = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('insulationLiveEarth', value);
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'insulationLiveEarth', value);
-      });
-    }
-    toast.success(`All Live-Earth fields filled with ${value} MΩ`);
-  };
+  const handleFillAllInsulationLiveEarth = useCallback(
+    (value: string) => {
+      fillAll('insulationLiveEarth', value);
+      toast.success(`All Live-Earth fields filled with ${value} MΩ`);
+    },
+    [fillAll]
+  );
 
-  const handleFillAllPolarity = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('polarity', value);
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'polarity', value);
-      });
-    }
-    toast.success(`All Polarity fields filled with ${value}`);
-  };
+  const handleFillAllPolarity = useCallback(
+    (value: string) => {
+      fillAll('polarity', value);
+      toast.success(`All Polarity fields filled with ${value}`);
+    },
+    [fillAll]
+  );
 
-  const handleFillAllWiringType = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('typeOfWiring', value);
-    } else {
-      testResults.forEach((result) => { onUpdate(result.id, 'typeOfWiring', value); });
-    }
-    toast.success(`All Wiring Type fields filled with ${value}`);
-  };
+  const handleFillAllWiringType = useCallback(
+    (value: string) => {
+      fillAll('typeOfWiring', value);
+      toast.success(`All Wiring Type fields filled with ${value}`);
+    },
+    [fillAll]
+  );
 
-  const handleFillAllRefMethod = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('referenceMethod', value);
-    } else {
-      testResults.forEach((result) => { onUpdate(result.id, 'referenceMethod', value); });
-    }
-    toast.success(`All Reference Method fields filled with ${value}`);
-  };
+  const handleFillAllRefMethod = useCallback(
+    (value: string) => {
+      fillAll('referenceMethod', value);
+      toast.success(`All Reference Method fields filled with ${value}`);
+    },
+    [fillAll]
+  );
 
-  const handleFillAllKa = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('protectiveDeviceKaRating', value);
-    } else {
-      testResults.forEach((result) => { onUpdate(result.id, 'protectiveDeviceKaRating', value); });
-    }
-    toast.success(`All kA fields filled with ${value}`);
-  };
+  const handleFillAllKa = useCallback(
+    (value: string) => {
+      fillAll('protectiveDeviceKaRating', value);
+      toast.success(`All kA fields filled with ${value}`);
+    },
+    [fillAll]
+  );
 
   // ELE-1182 — quick-fill for the core protective-device fields (Craig Soper).
-  const handleFillAllBsStandard = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('bsStandard', value);
-    } else {
-      testResults.forEach((result) => { onUpdate(result.id, 'bsStandard', value); });
-    }
-    toast.success(`All BS Standard fields filled with ${value}`);
-  };
+  const handleFillAllBsStandard = useCallback(
+    (value: string) => {
+      fillAll('bsStandard', value);
+      toast.success(`All BS Standard fields filled with ${value}`);
+    },
+    [fillAll]
+  );
 
   // Tripping curve only applies to devices that have one (MCB / RCBO / MCCB);
   // fuses don't, so they're skipped.
-  const handleFillAllCurve = (value: string) => {
-    const curveApplies = (bs: string) =>
-      bs === 'MCB (BS EN 60898)' || bs === 'RCBO (BS EN 61009)' || bs === 'MCCB (BS EN 60947)';
-    let count = 0;
-    testResults.forEach((result) => {
-      if (curveApplies(result.bsStandard || '')) {
-        onUpdate(result.id, 'protectiveDeviceCurve', value);
-        count += 1;
-      }
-    });
-    toast.success(
-      count > 0
-        ? `Curve ${value} applied to ${count} MCB/RCBO circuit${count === 1 ? '' : 's'}`
-        : 'No MCB/RCBO circuits to apply a curve to'
-    );
-  };
+  const handleFillAllCurve = useCallback(
+    (value: string) => {
+      const curveApplies = (bs: string) =>
+        bs === 'MCB (BS EN 60898)' || bs === 'RCBO (BS EN 61009)' || bs === 'MCCB (BS EN 60947)';
+      let count = 0;
+      resultsRef.current.forEach((result) => {
+        if (curveApplies(result.bsStandard || '')) {
+          onUpdate(result.id, 'protectiveDeviceCurve', value);
+          count += 1;
+        }
+      });
+      toast.success(
+        count > 0
+          ? `Curve ${value} applied to ${count} MCB/RCBO circuit${count === 1 ? '' : 's'}`
+          : 'No MCB/RCBO circuits to apply a curve to'
+      );
+    },
+    [onUpdate]
+  );
 
-  const handleFillAllPhase = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('phaseType', value);
-    } else {
-      testResults.forEach((result) => { onUpdate(result.id, 'phaseType', value); });
-    }
-    toast.success(`All circuits set to ${value}`);
-  };
+  const handleFillAllPhase = useCallback(
+    (value: string) => {
+      fillAll('phaseType', value);
+      toast.success(`All circuits set to ${value}`);
+    },
+    [fillAll]
+  );
 
-  const handleFillAllAfddNA = () => handleFillAllAfdd('N/A');
+  const handleFillAllAfddNA = useCallback(() => handleFillAllAfdd('N/A'), [handleFillAllAfdd]);
 
   // ELE-871 — Smart RCD per-circuit fill based on the protective device type.
   // Saves a huge amount of clicking on certs where most circuits are MCBs (no RCD).
   // - BS EN 60898 / BS 88 / BS 3036 / BS 1361 → set all RCD detail fields to N/A
   // - BS EN 61009 (RCBO) → fill RCD details from the device data
   // - BS EN 61008 (RCD)  → same
-  const handleSmartFillRcd = () => {
+  const handleSmartFillRcd = useCallback(() => {
     if (!onBulkUpdate) {
       toast.error('Smart fill requires bulk update support');
       return;
     }
     let naCount = 0;
     let filledCount = 0;
-    testResults.forEach((result) => {
+    resultsRef.current.forEach((result) => {
       const bs = (result.bsStandard || '').toUpperCase();
       const isRcbo = bs.includes('61009');
       const isRcd = bs.includes('61008');
@@ -355,7 +354,8 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
           updates.rcdBsStandard = isRcbo ? 'BS EN 61009' : 'BS EN 61008';
         }
         if (!result.rcdType) updates.rcdType = 'AC';
-        if (!result.rcdRating) updates.rcdRating = '30';
+        // Canonical mA form — matches the cell Select vocabulary
+        if (!result.rcdRating) updates.rcdRating = '30mA';
         if (!result.rcdRatingA && result.protectiveDeviceRating) {
           updates.rcdRatingA = result.protectiveDeviceRating;
         }
@@ -381,7 +381,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
         `Smart fill: ${filledCount} RCD/RCBO filled, ${naCount} non-RCD set to N/A`
       );
     }
-  };
+  }, [onBulkUpdate]);
 
   const isEmpty = testResults.length === 0;
 
@@ -390,32 +390,71 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
       {/* Table - Full width edge-to-edge */}
       <div className="w-full">
         {isEmpty ? (
-          <div className="flex flex-col items-center justify-center py-16 px-8 border-2 border-dashed border-border/60 rounded-xl bg-gradient-to-b from-background to-muted/20">
-            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6">
-              <Zap className="h-8 w-8 text-primary" />
+          <div className="flex flex-col items-center rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.06] to-white/[0.03] px-6 py-10">
+            {/* Mini board — empty ways waiting to be filled (same CSS-board
+                visual language as the scanner intro; no icon tiles). */}
+            <div aria-hidden="true" className="mb-5 w-full max-w-[240px]">
+              <div className="rounded-xl border border-white/[0.16] bg-gradient-to-b from-white/[0.10] to-white/[0.05] p-1.5">
+                <div className="rounded-lg bg-black/40 p-1.5 shadow-[inset_0_2px_5px_rgba(0,0,0,0.5)]">
+                  <div className="flex items-stretch gap-1">
+                    <span className="flex w-7 shrink-0 flex-col items-center justify-center rounded bg-white/[0.14] py-1">
+                      <span className="block h-2.5 w-1.5 rounded-sm bg-elec-yellow" />
+                    </span>
+                    <span className="grid flex-1 grid-cols-6 gap-1">
+                      {Array.from({ length: 6 }).map((_, i) => (
+                        <span
+                          key={i}
+                          className="flex h-6 items-center justify-center rounded border border-dashed border-white/[0.14] bg-white/[0.04]"
+                        >
+                          <span className="block h-2 w-1 rounded-sm bg-white/[0.14]" />
+                        </span>
+                      ))}
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <h3 className="text-xl font-semibold text-foreground mb-2">No Circuits Yet</h3>
-            <p className="text-muted-foreground mb-8 text-center max-w-md leading-relaxed">
-              Scan your distribution board to auto-detect circuits, or add them manually one by one.
+
+            <h3 className="text-[17px] font-semibold tracking-tight text-white">No circuits yet</h3>
+            <p className="mt-1 max-w-md text-center text-[13px] leading-relaxed text-white/85">
+              Each way gets its own row on the schedule.
             </p>
-            <div className="flex gap-4">
-              {onScanBoard && (
-                <Button onClick={onScanBoard} size="lg" className="h-12 px-6">
-                  <Camera className="mr-2 h-5 w-5" />
-                  Scan Board
-                </Button>
+
+            {/* Option cards — the two ways in, each explained */}
+            <div
+              className={cn(
+                'mt-6 grid w-full max-w-xl gap-2.5',
+                onScanBoard && 'sm:grid-cols-2'
               )}
-              <Button variant="outline" size="lg" onClick={onAddCircuit} className="h-12 px-6">
-                <Plus className="mr-2 h-5 w-5" />
-                Add Manually
-              </Button>
+            >
+              {onScanBoard && (
+                <button
+                  type="button"
+                  onClick={onScanBoard}
+                  className="rounded-xl bg-elec-yellow p-4 text-left touch-manipulation transition-transform active:scale-[0.99]"
+                >
+                  <span className="block text-sm font-semibold text-black">Scan the board</span>
+                  <span className="mt-0.5 block text-[12.5px] leading-relaxed text-black/70">
+                    Photo the board — AI reads every device, rating and label into the
+                    schedule in seconds.
+                  </span>
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={onAddCircuit}
+                className="rounded-xl border border-white/[0.12] bg-white/[0.06] p-4 text-left touch-manipulation transition-transform active:scale-[0.99]"
+              >
+                <span className="block text-sm font-semibold text-white">Add manually</span>
+                <span className="mt-0.5 block text-[12.5px] leading-relaxed text-white/85">
+                  Start from a circuit preset or a blank way and build the schedule
+                  yourself.
+                </span>
+              </button>
             </div>
-            <p className="text-xs text-muted-foreground/60 mt-6">
-              Board scanning uses AI to detect circuit details from photos
-            </p>
           </div>
         ) : (
-          <div className="bg-background rounded-lg shadow-md border border-border/80 overflow-hidden">
+          <div className="sot-table-wrapper">
             <div
               className="w-full overflow-auto enhanced-table-scroll"
               style={{
@@ -456,7 +495,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
                     onFillAllAfddNA={handleFillAllAfddNA}
                   />
                   <TableBody>
-                    {testResults.map((result, index) => (
+                    {testResults.map((result) => (
                       <EnhancedTestResultDesktopTableRow
                         key={result.id}
                         result={result}
@@ -470,7 +509,6 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
                         canMoveDown={onMoveDown ? !lastOfBoardIds.has(result.id) : false}
                         showRegulationStatus={showRegulationStatus}
                         collapsedGroups={collapsedGroups}
-                        rowNumber={index + 1}
                         earthingArrangement={earthingArrangement}
                       />
                     ))}
@@ -491,10 +529,11 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
 
       {!isEmpty && (
         <div className="mt-3 flex flex-col lg:flex-row items-center justify-between gap-3 px-4 py-3 rounded-lg border border-white/10 bg-white/[0.02]">
-          <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-white/50">
-            BS 7671 Schedule of Test Results
+          <span className="text-[10px] font-semibold text-white">
+            BS 7671 Schedule of test results
           </span>
-          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[11px] text-white">
+          {/* Keyboard hints — pointer devices only, meaningless on touch */}
+          <div className="hidden flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[11px] text-white sm:flex">
             <span className="flex items-center gap-1.5">
               <kbd className="px-1.5 py-0.5 rounded border border-white/15 bg-white/[0.04] text-[10px] font-mono text-white">Tab</kbd>
               <span>navigate</span>

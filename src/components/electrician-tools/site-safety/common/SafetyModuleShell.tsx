@@ -36,8 +36,8 @@ export function SafetyMasthead({
   trailing,
 }: SafetyMastheadProps) {
   return (
-    <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06]">
-      <div className="mx-auto max-w-5xl px-4">
+    <div className="sticky top-0 z-50 border-b border-white/[0.08] bg-[hsl(0_0%_7%)]/95 backdrop-blur-sm">
+      <div className="mx-auto max-w-5xl px-4 lg:max-w-[1600px] lg:px-8 xl:max-w-[1920px] 2xl:max-w-[2240px]">
         <div className="flex items-center h-12 gap-3 sm:gap-5">
           <button
             type="button"
@@ -50,9 +50,9 @@ export function SafetyMasthead({
             {backLabel}
           </button>
           <div className="flex-1 min-w-0 flex items-baseline gap-2.5">
-            <span className="hidden sm:inline text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-              Site Safety
-            </span>
+            {/* Sentence case, not an uppercase letterspaced kicker — the
+                superseded deck style. It is a breadcrumb, not a banner. */}
+            <span className="hidden text-[12px] font-medium text-white sm:inline">Site safety</span>
             <span className="hidden sm:inline h-3 w-px bg-white/10" aria-hidden />
             <h1 className="text-[13px] sm:text-sm font-semibold text-white truncate tracking-tight">
               {moduleName}
@@ -89,7 +89,15 @@ export function SafetyModuleShell({
   className,
 }: SafetyModuleShellProps) {
   return (
-    <div className={cn('bg-elec-dark min-h-screen pb-24', className)}>
+    // `--elec-dark` is pure black (index.css:97). White text on #000 is the
+    // harshest pairing there is — it glares on a large screen and gives the
+    // card surfaces (white/[0.04]) nothing to sit against, so the whole page
+    // reads as a void with text floating in it.
+    //
+    // Site Safety uses a three-step ladder instead: page 7%, card 11%, raised
+    // 14%. Enough separation to see structure, dark enough for a van at night.
+    // Set here rather than on `--elec-dark`, which is app-wide.
+    <div className={cn('min-h-screen bg-[hsl(0_0%_7%)] pb-24', className)}>
       <SafetyMasthead
         onBack={onBack}
         backLabel={backLabel}
@@ -100,7 +108,7 @@ export function SafetyModuleShell({
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="mx-auto max-w-5xl px-4 pb-6 space-y-6 sm:space-y-8"
+        className="mx-auto max-w-5xl space-y-6 px-4 pb-6 sm:space-y-8 lg:max-w-[1600px] lg:px-8 xl:max-w-[1920px] 2xl:max-w-[2240px]"
       >
         {hero}
         {stats}

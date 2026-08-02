@@ -4,13 +4,19 @@ import { DistributionBoard } from '@/types/distributionBoard';
 interface BoardManagementProps {
   boards: DistributionBoard[];
   onAddBoard: () => void;
+  /** Optional circuit total across all boards — shown in the factual line. */
+  totalCircuits?: number;
 }
 
 /**
- * BoardManagement — section header between the hero and the board list.
- * College editorial style: eyebrow + title + factual subtitle + text-link action.
+ * BoardManagement — section header between the schedule header and the board
+ * list. Cert design language: recipe heading + factual line + text action.
  */
-const BoardManagement: React.FC<BoardManagementProps> = ({ boards, onAddBoard }) => {
+const BoardManagement: React.FC<BoardManagementProps> = ({
+  boards,
+  onAddBoard,
+  totalCircuits,
+}) => {
   const mainBoardCount = boards.filter((b) => b.order === 0).length;
   const subBoardCount = boards.filter((b) => b.order > 0).length;
 
@@ -21,25 +27,23 @@ const BoardManagement: React.FC<BoardManagementProps> = ({ boards, onAddBoard })
   if (subBoardCount > 0) {
     subtitleParts.push(`${subBoardCount} sub-${subBoardCount === 1 ? 'board' : 'boards'}`);
   }
+  if (typeof totalCircuits === 'number' && totalCircuits > 0) {
+    subtitleParts.push(`${totalCircuits} circuit${totalCircuits === 1 ? '' : 's'}`);
+  }
 
   return (
     <div className="flex items-end justify-between gap-4">
       <div className="min-w-0">
-        <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-          Boards
-        </p>
-        <h2 className="mt-1.5 text-xl sm:text-2xl lg:text-[26px] font-semibold text-white tracking-tight leading-tight">
+        <h2 className="text-[15px] font-semibold tracking-tight text-white">
           Distribution boards
         </h2>
-        <p className="mt-2 text-[12px] text-white tabular-nums">
-          {subtitleParts.join(' · ')}
-        </p>
+        <p className="mt-0.5 text-[12px] text-white/60 tabular-nums">{subtitleParts.join(' · ')}</p>
       </div>
       <button
         onClick={onAddBoard}
-        className="text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors shrink-0 touch-manipulation"
+        className="h-11 shrink-0 rounded-xl border border-white/[0.12] bg-white/[0.06] px-3 text-[12px] font-semibold text-white transition-colors hover:bg-white/[0.1] touch-manipulation active:scale-[0.97]"
       >
-        Add sub-board →
+        Add sub-board
       </button>
     </div>
   );

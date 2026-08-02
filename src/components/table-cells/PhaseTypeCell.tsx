@@ -85,37 +85,53 @@ export const PhaseTypeCell: React.FC<PhaseTypeCellProps> = ({ result, onUpdate }
         <SelectTrigger
           className={[
             'h-8 w-full text-sm bg-transparent border-0 rounded-none px-1.5 gap-1',
-            '[&_svg]:h-3 [&_svg]:w-3 hover:bg-white/[0.05]',
-            'focus:bg-elec-yellow/[0.08] focus:ring-1 focus:ring-elec-yellow/40 focus:ring-inset',
+            '[&_svg]:h-3 [&_svg]:w-3 hover:bg-white/[0.06]',
+            'focus:bg-white/[0.06] focus:ring-1 focus:ring-elec-yellow focus:ring-inset',
             value === 'L1+L2+L3' || value === 'L1' || value === 'L2' || value === 'L3'
-              ? 'text-amber-400 font-medium tabular-nums'
+              ? 'text-white font-medium tabular-nums'
               : 'text-white',
           ].join(' ')}
         >
           <SelectValue>{labelFor(value)}</SelectValue>
         </SelectTrigger>
-        <SelectContent className="bg-background border border-border rounded-md z-[9999] min-w-[160px]">
-          <SelectItem value="NA" className="text-sm">
-            <span className="font-medium text-white/55">—</span>
+        <SelectContent className="z-[9999] min-w-[220px]">
+          <SelectItem value="NA" className="group text-sm">
+            <span className="font-medium">—</span>
           </SelectItem>
-          <SelectItem value="1P" className="text-sm">
+          <SelectItem value="1P" className="group text-sm">
             <span className="font-medium">1P</span>
           </SelectItem>
-          <SelectItem value="L1" className="text-sm">
-            <span className="font-medium tabular-nums text-amber-400">L1</span>
-            <span className="ml-2 text-xs text-white/55">single-pole on L1</span>
+          <SelectItem value="L1" className="group text-sm">
+            <div>
+              <span className="font-medium tabular-nums leading-snug">L1</span>
+              <span className="text-xs text-white/60 leading-snug group-data-[state=checked]:text-black/70">
+                Single-pole on L1
+              </span>
+            </div>
           </SelectItem>
-          <SelectItem value="L2" className="text-sm">
-            <span className="font-medium tabular-nums text-amber-400">L2</span>
-            <span className="ml-2 text-xs text-white/55">single-pole on L2</span>
+          <SelectItem value="L2" className="group text-sm">
+            <div>
+              <span className="font-medium tabular-nums leading-snug">L2</span>
+              <span className="text-xs text-white/60 leading-snug group-data-[state=checked]:text-black/70">
+                Single-pole on L2
+              </span>
+            </div>
           </SelectItem>
-          <SelectItem value="L3" className="text-sm">
-            <span className="font-medium tabular-nums text-amber-400">L3</span>
-            <span className="ml-2 text-xs text-white/55">single-pole on L3</span>
+          <SelectItem value="L3" className="group text-sm">
+            <div>
+              <span className="font-medium tabular-nums leading-snug">L3</span>
+              <span className="text-xs text-white/60 leading-snug group-data-[state=checked]:text-black/70">
+                Single-pole on L3
+              </span>
+            </div>
           </SelectItem>
-          <SelectItem value="L1+L2+L3" className="text-sm">
-            <span className="font-medium tabular-nums text-amber-400">L1 · L2 · L3</span>
-            <span className="ml-2 text-xs text-white/55">three-pole</span>
+          <SelectItem value="L1+L2+L3" className="group text-sm">
+            <div>
+              <span className="font-medium tabular-nums leading-snug">L1 · L2 · L3</span>
+              <span className="text-xs text-white/60 leading-snug group-data-[state=checked]:text-black/70">
+                Three-pole
+              </span>
+            </div>
           </SelectItem>
         </SelectContent>
       </Select>

@@ -167,7 +167,7 @@ export const BriefingActionsMenu = ({
 
       {/* In-Briefing Mode — bottom sheet */}
       <Sheet open={showInBriefingMode} onOpenChange={setShowInBriefingMode}>
-        <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl overflow-hidden">
+        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
           <div className="flex flex-col h-full overflow-y-auto">
             <InBriefingMode
               briefing={briefing}

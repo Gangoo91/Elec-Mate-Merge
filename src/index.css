@@ -2281,17 +2281,6 @@ input::-webkit-caps-lock-indicator {
     border: 1px solid hsl(var(--border) / 0.4);
   }
 
-  /* Floating stats pill */
-  .eicr-stats-pill {
-    @apply fixed bottom-20 left-1/2 -translate-x-1/2 z-40;
-    @apply px-4 py-2.5 rounded-full flex items-center gap-4;
-    background: rgba(0, 0, 0, 0.92);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid hsl(47 100% 50% / 0.15);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  }
-
   /* Observation card */
   .eicr-observation-card {
     @apply relative rounded-2xl overflow-hidden p-5;
@@ -2538,235 +2527,157 @@ input::-webkit-caps-lock-indicator {
      SCHEDULE OF TESTS TABLE - Best in Class
      ============================================ */
 
-  /* Desktop Table Container */
+  /* Desktop Table Container — flat recipe surface, no gradient.
+     Two-tone scheme: header 12%, body 10% (zebra 12%). Nothing else. */
   .sot-table-wrapper {
     @apply rounded-xl overflow-hidden;
-    background: linear-gradient(180deg, hsl(0 0% 12%) 0%, hsl(0 0% 10%) 100%);
-    border: 1px solid hsl(var(--border) / 0.3);
+    background: hsl(0 0% 10%);
+    border: 1px solid hsl(0 0% 100% / 0.12);
   }
 
-  /* Table Header - Group Row */
+  /* Table Header - Group Row.
+     The table renders border-separate (needed for the sticky columns), so
+     borders on <tr> never paint — every horizontal divider is declared on the
+     CELLS instead. */
   .sot-header-group {
     @apply sticky top-0 z-30;
-    background: hsl(0 0% 15%);
-    /* Matches body row horizontal line weight — keeps every horizontal divider level */
-    border-bottom: 1px solid hsl(0 0% 100% / 0.1);
+    background: hsl(0 0% 12%);
   }
 
   .sot-header-group-cell {
     @apply text-xs font-bold text-white text-center py-2 px-2;
     /* Uniform 1px divider so group row aligns perfectly with label + body rows */
     @apply border-r border-white/10 last:border-r-0;
-    @apply transition-colors;
-  }
-
-  .sot-header-group-cell:hover {
-    background: hsl(48 100% 50% / 0.05);
-  }
-
-  /* Table Header - Column Labels Row */
-  .sot-header-labels {
-    @apply sticky top-[33px] z-30;
-    background: hsl(0 0% 12%);
-    /* Same 1px weight as group row / body rows for a level grid */
+    /* Horizontal divider lives on the cell — tr borders don't paint in the
+       separated border model. No hover tint: most group cells aren't
+       interactive; the collapse button carries its own hover. */
     border-bottom: 1px solid hsl(0 0% 100% / 0.1);
+  }
+
+  /* Table Header - Column Labels Row — pinned directly under the 40px group
+     row (TableHead h-10 + border-box border). */
+  .sot-header-labels {
+    @apply sticky top-[40px] z-30;
+    background: hsl(0 0% 12%);
   }
 
   .sot-header-cell {
     @apply text-[10px] font-semibold text-white text-center py-2 px-1.5;
     /* Uniform 1px divider — matches group row + body cells for a clean grid */
     @apply border-r border-white/10 last:border-r-0;
-    @apply uppercase tracking-wider;
+    /* Cell-level horizontal divider (border-separate — see group row note) */
+    border-bottom: 1px solid hsl(0 0% 100% / 0.1);
     @apply whitespace-nowrap;
   }
 
-  /* Unified neutral grey for all group header label cells — no coloured tints */
-  .sot-header-cell[data-group='circuit'],
-  .sot-header-cell[data-group='conductor'],
-  .sot-header-cell[data-group='protection'],
-  .sot-header-cell[data-group='rcd-details'],
-  .sot-header-cell[data-group='continuity'],
-  .sot-header-cell[data-group='insulation'],
-  .sot-header-cell[data-group='zs'],
-  .sot-header-cell[data-group='rcd-tests'],
-  .sot-header-cell[data-group='afdd'],
-  .sot-header-cell[data-group='functional'] {
+  /* Frozen left zone — the non-sticky Actions column (168px, first) scrolls
+     away under Way (left: 0, 112px) → Description (left: 112px). ELE-830
+     scroll-overlap fix: scrolling cells must pass BEHIND these columns, so
+     z-40 plus an OPAQUE background. Body sticky cells carry the SAME tone as
+     their row (base + zebra) so the frozen zone never reads as a grey band. */
+  .sot-sticky-col {
+    @apply sticky left-0 z-40;
     background: hsl(0 0% 10%);
   }
 
-  /* Sticky circuit number column (first sticky) — ELE-830 scroll-overlap fix
-     Scrolling cells must pass BEHIND this column, not through it. z-40 plus
-     an opaque background matched to the row, plus a subtle right-edge
-     shadow so the scroll boundary is visible. */
-  .sot-sticky-col {
-    @apply sticky left-0 z-40;
-    background: hsl(0 0% 13%);
-    box-shadow: 6px 0 6px -4px hsl(0 0% 0% / 0.35);
-  }
-
-  /* Match sticky bg to zebra striping so odd/even rows don't betray it */
-  .sot-row:nth-child(even) .sot-sticky-col {
-    background: hsl(0 0% 14%);
-  }
-  .sot-row:hover .sot-sticky-col {
-    background: hsl(48 100% 50% / 0.05);
-  }
-
-  /* Sticky description column (second sticky) — sits right after the
-     80px-wide circuit column. Same z-index/background rules so no scroll
-     bleed between them and the scrolling area. */
-  /* Description stuck just right of the C# column. Must match C# width (72px). */
   .sot-sticky-col-2 {
     @apply sticky z-40;
-    left: 72px;
-    background: hsl(0 0% 13%);
+    left: 112px; /* flush after the pinned Way column */
+    background: hsl(0 0% 10%);
+  }
+
+  /* Right-edge scroll shadow on the LAST frozen column ONLY — applied in JSX
+     (Description while the circuit group is expanded, Way otherwise). */
+  .sot-sticky-last {
     box-shadow: 8px 0 10px -6px hsl(0 0% 0% / 0.4);
   }
 
+  /* Match sticky bg to zebra striping so odd/even rows don't betray it.
+     No hover tint — founder call: pointing at a row must not shift colours. */
+  .sot-row:nth-child(even) .sot-sticky-col,
   .sot-row:nth-child(even) .sot-sticky-col-2 {
-    background: hsl(0 0% 14%);
-  }
-  .sot-row:hover .sot-sticky-col-2 {
-    background: hsl(48 100% 50% / 0.05);
-  }
-
-  /* Header sticky columns — opaque bg that matches the row they sit in so the
-     left edge doesn't read as a separate band. Opacity is what stops scroll
-     bleed, not tonal contrast. */
-  .sot-header-labels .sot-sticky-col,
-  .sot-header-labels .sot-sticky-col-2 {
     background: hsl(0 0% 12%);
   }
+
+  /* Header sticky columns — same single header tone as the rows they sit in */
+  .sot-header-labels .sot-sticky-col,
+  .sot-header-labels .sot-sticky-col-2,
   .sot-header-group .sot-sticky-col,
   .sot-header-group .sot-sticky-col-2 {
-    background: hsl(0 0% 15%);
+    background: hsl(0 0% 12%);
   }
 
-  /* Table Body Rows */
+  /* Table Body Rows — base tone matches the wrapper + sticky cells */
   .sot-row {
-    /* Explicit bg so odd rows sit on the same surface as the sticky column,
-       not on the card gradient — keeps the table grid tonally uniform. */
-    background: hsl(0 0% 13%);
-    /* Same weight as header horizontals for a perfectly level grid */
-    @apply border-b border-white/10;
+    background: hsl(0 0% 10%);
     contain: layout style;
   }
 
-  .sot-row:hover {
-    background: hsl(48 100% 50% / 0.03);
-  }
 
   .sot-row:nth-child(even) {
-    /* Stronger zebra — easier to track a row across a wide table */
-    background: hsl(0 0% 14%);
+    /* Zebra — easier to track a row across a wide table */
+    background: hsl(0 0% 12%);
   }
 
-  .sot-row:nth-child(even):hover {
-    background: hsl(48 100% 50% / 0.05);
+  /* Horizontal divider on the CELLS (same weight as the header horizontals) —
+     tr borders don't paint in border-separate, which the table needs for its
+     sticky columns. Last row skips it: the wrapper border closes the grid. */
+  .sot-row > td {
+    border-bottom: 1px solid hsl(0 0% 100% / 0.1);
   }
 
-  /* Table Cells */
-  .sot-cell {
-    @apply py-2 px-1.5 text-sm text-white;
-    /* Matches header row dividers — gives perfectly level vertical lines */
-    @apply border-r border-white/10 last:border-r-0;
+  .sot-row:last-child > td {
+    border-bottom: 0;
   }
 
-  .sot-cell-input {
-    @apply h-9 w-full bg-transparent border-0 text-center text-sm text-white;
-    /* Stronger active-cell highlight so keyboard navigation is obvious */
-    @apply focus:bg-elec-yellow/[0.06] focus:ring-2 focus:ring-elec-yellow/60 focus:outline-none;
-    @apply rounded;
-    transition:
-      background-color 150ms ease-out,
-      box-shadow 150ms ease-out;
-  }
-
-  .sot-cell-input::placeholder {
-    @apply text-white;
-  }
-
-  /* Circuit number cell - special styling */
-  .sot-circuit-number {
-    @apply font-mono font-bold text-elec-yellow text-center;
-  }
-
-  /* Fill All Button in Header */
-  .sot-fill-all-btn {
-    @apply h-7 w-7 p-0 rounded-full flex items-center justify-center;
-    @apply bg-transparent hover:bg-amber-400/20;
-    @apply text-amber-400 hover:text-amber-300;
-    @apply transition-all duration-150 hover:scale-110;
-  }
-
-  /* Mobile Table Styles */
-  .sot-mobile-wrapper {
-    @apply overflow-x-auto overflow-y-visible;
-    @apply -mx-2 px-2;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x proximity;
-    overscroll-behavior-x: contain;
-  }
-
-  .sot-mobile-table {
-    @apply min-w-max;
-  }
-
-  .sot-mobile-header {
-    @apply sticky top-0 z-40;
-    background: linear-gradient(180deg, hsl(0 0% 16%) 0%, hsl(0 0% 13%) 100%);
-    border-bottom: 2px solid hsl(48 100% 50% / 0.2);
-  }
-
-  .sot-mobile-header-cell {
-    @apply text-[10px] font-bold text-white/80 text-center py-3 px-2;
-    @apply border-r border-white/10 last:border-r-0;
-    @apply whitespace-nowrap min-w-[60px];
-  }
-
-  /* Mobile circuit column sticky */
-  .sot-mobile-sticky {
-    @apply sticky left-0 z-30;
-    background: hsl(0 0% 14%);
-    box-shadow: 4px 0 12px -4px hsl(0 0% 0% / 0.4);
-  }
-
-  .sot-mobile-row {
-    @apply border-b border-white/5;
-  }
-
-  .sot-mobile-row:nth-child(even) {
+  /* No hover tint — founder call: pointing at a row must not shift colours
+     (the opaque sticky Way/Description cells never joined the tint, which
+     split rows into two tones). These out-specify the ui TableRow base
+     hover:bg-muted/30. */
+  .sot-row:nth-child(odd):hover {
     background: hsl(0 0% 10%);
   }
 
-  .sot-mobile-cell {
-    @apply py-2.5 px-2 text-sm;
-    @apply border-r border-white/5 last:border-r-0;
-    @apply min-w-[60px];
+  .sot-row:nth-child(even):hover {
+    background: hsl(0 0% 12%);
   }
 
-  .sot-mobile-input {
-    @apply h-10 w-full min-w-[55px] bg-white/5 border border-white/10 rounded-lg;
-    @apply text-center text-sm text-white;
-    @apply focus:bg-white/10 focus:border-elec-yellow/50 focus:outline-none;
-    @apply touch-manipulation;
-    font-size: 16px; /* Prevent iOS zoom */
+  /* Validation tints — flat red/amber washes that hold steady on hover and
+     across zebra parity. Declared after the hover neutralisers so they win. */
+  .sot-row.sot-row-error,
+  .sot-row.sot-row-error:nth-child(odd):hover,
+  .sot-row.sot-row-error:nth-child(even):hover {
+    background: hsl(0 84% 60% / 0.1);
   }
 
-  /* Pass/Fail indicators */
-  .sot-pass {
-    @apply bg-green-500/20 text-green-400 border-green-500/30;
+  .sot-row.sot-row-warning,
+  .sot-row.sot-row-warning:nth-child(odd):hover,
+  .sot-row.sot-row-warning:nth-child(even):hover {
+    background: hsl(38 92% 50% / 0.1);
   }
 
-  .sot-fail {
-    @apply bg-red-500/20 text-red-400 border-red-500/30;
+  /* Sticky cells need the tint pre-blended into their OPAQUE background
+     (they must stay opaque for the scroll-under effect) so tinted rows read
+     as one tone edge to edge. */
+  .sot-row.sot-row-error .sot-sticky-col,
+  .sot-row.sot-row-error .sot-sticky-col-2,
+  .sot-row.sot-row-error:nth-child(even) .sot-sticky-col,
+  .sot-row.sot-row-error:nth-child(even) .sot-sticky-col-2 {
+    background: rgb(47 32 32);
+  }
+
+  .sot-row.sot-row-warning .sot-sticky-col,
+  .sot-row.sot-row-warning .sot-sticky-col-2,
+  .sot-row.sot-row-warning:nth-child(even) .sot-sticky-col,
+  .sot-row.sot-row-warning:nth-child(even) .sot-sticky-col-2 {
+    background: rgb(48 39 24);
   }
 
   /* Group collapse button — ELE-830: elec-yellow accent for scan-ability */
   .sot-collapse-btn {
     @apply inline-flex items-center justify-center gap-1 h-6 px-2 rounded;
-    /* Toned down — group headers shouldn't visually compete with data */
-    @apply text-xs font-semibold uppercase tracking-wider text-white/70 hover:text-white;
+    /* Sentence case, full white — group headers stay quiet but never grey */
+    @apply text-xs font-semibold text-white;
     /* ELE-871 — was `transition-all` which animated width/layout during the
        colSpan change on collapse, causing a duplicated/overlapping label
        artifact. Limit transition to colour properties so only hover changes
@@ -3262,4 +3173,16 @@ html.lesson-print-html body {
    the exam component rather than the URL means no exam route can be missed. */
 body.exam-active [data-apprentice-tabbar] {
   display: none;
+}
+
+/* Board-scanner intro hero — each breaker module flashes volt in sequence
+   (staggered via inline animation-delay), miming the scanner reading the
+   board module by module. Gated behind motion-safe at the call site. */
+@keyframes board-read {
+  0%, 14%, 100% {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  5%, 9% {
+    background-color: hsl(var(--elec-yellow));
+  }
 }

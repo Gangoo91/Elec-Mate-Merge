@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CARD_BASE, CARD_NEUTRAL } from '@/components/ui/card-recipe';
 import { Customer } from '@/hooks/inspection/useCustomers';
 import { cn } from '@/lib/utils';
 import { ReliabilityLevel } from '@/hooks/useCustomerPaymentStats';
@@ -79,6 +80,7 @@ export const CustomerListRow = ({
   const initials = getInitials(customer.name);
   const activity = getActivityTone(customer.lastActivityAt);
   const longPressTimer = React.useRef<number | null>(null);
+  const touchStart = React.useRef<{ x: number; y: number } | null>(null);
 
   const handleCardClick = () => {
     if (selectionMode) {
@@ -88,18 +90,43 @@ export const CustomerListRow = ({
     }
   };
 
-  const handleTouchStart = () => {
+  const cancelLongPress = () => {
+    if (longPressTimer.current) {
+      window.clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
     if (!onLongPress) return;
+    const t = e.touches[0];
+    touchStart.current = t ? { x: t.clientX, y: t.clientY } : null;
     longPressTimer.current = window.setTimeout(() => {
       onLongPress(customer.id);
       longPressTimer.current = null;
     }, 500);
   };
+
+  /**
+   * Cancel the long-press once the finger travels — without this the timer
+   * fired mid-scroll and dropped the list into selection mode, so scrolling
+   * past a card with a finger resting on it looked like you'd selected it.
+   * 10px is below the browser's own scroll threshold, so a genuine press-and-
+   * hold still registers while any drag kills it.
+   */
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!longPressTimer.current || !touchStart.current) return;
+    const t = e.touches[0];
+    if (!t) return;
+    const moved =
+      Math.abs(t.clientX - touchStart.current.x) > 10 ||
+      Math.abs(t.clientY - touchStart.current.y) > 10;
+    if (moved) cancelLongPress();
+  };
+
   const handleTouchEnd = () => {
-    if (longPressTimer.current) {
-      window.clearTimeout(longPressTimer.current);
-      longPressTimer.current = null;
-    }
+    cancelLongPress();
+    touchStart.current = null;
   };
 
   const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();
@@ -110,6 +137,7 @@ export const CustomerListRow = ({
     <div
       onClick={handleCardClick}
       onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       onTouchCancel={handleTouchEnd}
       role="button"
@@ -121,18 +149,21 @@ export const CustomerListRow = ({
         }
       }}
       className={cn(
-        // flex-col + h-full so cards in the desktop grid are equal height
-        // regardless of tags/chips — footer pins to the bottom
-        'group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4 text-left transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 active:scale-[0.995] touch-manipulation sm:p-5',
+        // The app-wide card recipe (see components/ui/card-recipe) so this
+        // matches the I&T hub, Certificates, Specialist and Notices cards.
+        // flex-col + h-full keeps desktop-grid rows equal height regardless of
+        // tags/chips — the footer pins to the bottom.
+        CARD_BASE,
+        'cursor-pointer p-3.5 sm:p-4',
         selected
-          ? 'border-elec-yellow'
+          ? 'border-elec-yellow bg-gradient-to-b from-white/[0.16] to-white/[0.08]'
           : isDuplicate
-            ? 'border-amber-500/30 hover:border-amber-500/50'
-            : 'border-white/[0.12] hover:border-white/[0.22]'
+            ? 'border-amber-500/40 bg-gradient-to-b from-white/[0.12] to-white/[0.06] hover:border-amber-500/60'
+            : CARD_NEUTRAL
       )}
     >
       {/* Top row: avatar + name + status chips */}
-      <div className="mb-4 flex items-start gap-3">
+      <div className="flex items-start gap-3">
         {/* Selection checkbox (selection mode only) */}
         {selectionMode && (
           <div
@@ -170,52 +201,36 @@ export const CustomerListRow = ({
           />
         </div>
 
-        {/* Name + sub */}
+        {/*
+          Name + contact take the FULL width. The status chips used to sit in a
+          right-hand column on this same row, which left the name roughly half
+          the card and truncated real customers to "Andrew H…" / "Andrew M…"
+          with their email cut to "founder@elec…". Chips moved to their own
+          wrapping row below — they're secondary to knowing who this is.
+        */}
         <div className="min-w-0 flex-1">
           <h3 className="truncate text-[16px] font-semibold leading-tight tracking-tight text-white sm:text-[17px]">
             {customer.name}
           </h3>
-          <p className="mt-1 truncate text-[12.5px] text-white/60">
+          <p className="mt-0.5 truncate text-[12.5px] text-white">
             {[customer.companyName, customer.phone || customer.email || customer.address]
               .filter(Boolean)
               .join(' · ') || 'No contact info'}
           </p>
-          {customer.tags && customer.tags.length > 0 && (
-            <div className="mt-2 flex flex-wrap gap-1">
-              {customer.tags.slice(0, 3).map((tag) =>
-                onTagClick ? (
-                  <button
-                    key={tag}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onTagClick(tag);
-                    }}
-                    className="inline-flex h-5 items-center rounded-full border border-white/[0.1] bg-white/[0.05] px-2 text-[10.5px] font-medium text-white/75 transition-colors hover:border-white/[0.25] hover:text-white touch-manipulation"
-                  >
-                    {tag}
-                  </button>
-                ) : (
-                  <span
-                    key={tag}
-                    className="inline-flex h-5 items-center rounded-full border border-white/[0.1] bg-white/[0.05] px-2 text-[10.5px] font-medium text-white/75"
-                  >
-                    {tag}
-                  </span>
-                )
-              )}
-              {customer.tags.length > 3 && (
-                <span className="inline-flex h-5 items-center text-[10.5px] font-medium text-white/55">
-                  +{customer.tags.length - 3}
-                </span>
-              )}
-            </div>
-          )}
         </div>
+      </div>
 
-        {/* Right side chips */}
-        <div className="flex shrink-0 flex-col items-end gap-1.5">
+      {/* Status chips — one wrapping row across the full card width. */}
+      {(hasOverdue ||
+        customer.status === 'lead' ||
+        customer.status === 'inactive' ||
+        isDuplicate ||
+        certCount > 0 ||
+        (paymentReliability && paymentReliability !== 'none') ||
+        (customer.tags && customer.tags.length > 0)) && (
+        <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
           {hasOverdue && (
-            <span className={cn(chipBase, 'border-red-500/25 bg-red-500/[0.12] text-red-400')}>
+            <span className={cn(chipBase, 'border-red-500/30 bg-red-500/[0.14] text-red-300')}>
               Overdue invoice
             </span>
           )}
@@ -224,7 +239,7 @@ export const CustomerListRow = ({
             <span className={cn(chipBase, chipNeutral)}>Inactive</span>
           )}
           {isDuplicate && (
-            <span className={cn(chipBase, 'border-amber-500/25 bg-amber-500/[0.1] text-amber-300')}>
+            <span className={cn(chipBase, 'border-amber-500/30 bg-amber-500/[0.12] text-amber-300')}>
               Possible duplicate
             </span>
           )}
@@ -238,12 +253,35 @@ export const CustomerListRow = ({
               {reliabilityChip[paymentReliability].label}
             </span>
           )}
+          {customer.tags?.slice(0, 2).map((tag) =>
+            onTagClick ? (
+              <button
+                key={tag}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onTagClick(tag);
+                }}
+                className={cn(chipBase, chipNeutral, 'touch-manipulation hover:border-white/[0.3]')}
+              >
+                {tag}
+              </button>
+            ) : (
+              <span key={tag} className={cn(chipBase, chipNeutral)}>
+                {tag}
+              </span>
+            )
+          )}
+          {customer.tags && customer.tags.length > 2 && (
+            <span className="text-[10.5px] font-medium text-white">
+              +{customer.tags.length - 2}
+            </span>
+          )}
         </div>
-      </div>
+      )}
 
       {/* Footer row: last activity + quick actions — pinned to the card base */}
       <div className="mt-auto flex items-center justify-between gap-3 border-t border-white/[0.06] pt-3">
-        <span className="text-[12px] text-white/50">
+        <span className="text-[12px] text-white">
           {formatLastActivity(customer.lastActivityAt)}
         </span>
         <div className="flex items-center gap-1.5">

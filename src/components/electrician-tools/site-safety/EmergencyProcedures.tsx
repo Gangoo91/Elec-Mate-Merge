@@ -223,9 +223,7 @@ const EmergencyProcedures = ({ onBack }: { onBack?: () => void }) => {
                               <span className="w-5 text-[11px] font-medium tabular-nums text-elec-yellow/80 shrink-0 mt-0.5">
                                 {String(i + 1).padStart(2, '0')}
                               </span>
-                              <span className="text-[13px] text-white leading-relaxed">
-                                {step}
-                              </span>
+                              <span className="text-[13px] text-white leading-relaxed">{step}</span>
                             </div>
                           ))}
                         </div>

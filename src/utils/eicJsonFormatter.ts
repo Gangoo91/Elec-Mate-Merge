@@ -9,6 +9,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { supabase } from '@/integrations/supabase/client';
+import { normalizeEICDefectCode } from '@/hooks/useEICObservations';
 import { getBoardWays } from '@/types/distributionBoard';
 import { formatDesignStandard } from '@/data/standards';
 import type { EICPayload } from '@/types/eic-payload';
@@ -206,7 +207,10 @@ async function formatObservationsWithPhotos(observations: any[], reportId: strin
     return {
       id: obs.id || '',
       description: obs.description || '',
-      defect_code: obs.defectCode || obs.defect_code || '',
+      // Legacy certs stored EICR codes (C1/C2/C3) the EIC has no chips for —
+      // normalise for the PDF the same way the UI does, so an old cert never
+      // prints an EICR code on an EIC.
+      defect_code: normalizeEICDefectCode(obs.defectCode || obs.defect_code || undefined),
       recommendation: obs.recommendation || '',
       item: obs.item || '',
       rectified: obs.rectified ?? false,

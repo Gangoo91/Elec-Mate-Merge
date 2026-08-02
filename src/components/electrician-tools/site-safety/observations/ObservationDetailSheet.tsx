@@ -76,7 +76,7 @@ export function ObservationDetailSheet({
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const [showShare, setShowShare] = useState(false);
   const updateObservation = useUpdateObservation();
-  const { data: jobs = [] } = useSparkProjects('active');
+  const { projects: jobs = [] } = useSparkProjects('active');
   const linkedJobTitle = observation?.job_id
     ? (jobs.find((j) => j.id === observation.job_id)?.title ?? 'Linked project')
     : null;
@@ -94,7 +94,7 @@ export function ObservationDetailSheet({
     <Sheet open={open} onOpenChange={(v) => !v && onClose()}>
       <SheetContent
         side="bottom"
-        className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
       >
         {observation &&
           (() => {

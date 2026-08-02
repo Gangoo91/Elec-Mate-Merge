@@ -29,7 +29,14 @@ export const migrateToMultiBoard = (formData: any): MultiboardFormData => {
     // Ensure all boards have required fields (handles boards saved before new fields were added)
     const boardsWithDefaults = formData.distributionBoards.map(
       (board: Partial<DistributionBoard> & Record<string, any>) => ({
-        // Start with defaults from createDefaultBoard pattern
+        // ELE-1435 — preserve EVERY saved field first. The old explicit rebuild
+        // silently dropped anything not listed (mainSwitchBsEn/Type/Rating/
+        // Poles, incomingDevice*, suppliedFrom, boardDetails, spdType,
+        // testInstrument*) every time the Testing tab mounted; the next board
+        // write then persisted the stripped copy — main switch details entered
+        // on the Details tab vanished from the saved cert and the PDF.
+        ...board,
+        // Then guarantee the REQUIRED fields exist for legacy boards.
         id: board.id || MAIN_BOARD_ID,
         name: board.name || 'Board',
         reference: board.reference || board.name || 'Board',

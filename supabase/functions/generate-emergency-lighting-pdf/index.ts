@@ -184,7 +184,10 @@ Deno.serve(async (req: Request) => {
       downloadUrl: completedDocument.download_url,
       authHeader: req.headers.get('Authorization'),
       certType: 'EmergencyLighting',
-      certNumber: (typeof formData !== 'undefined' && formData?.certificateNumber) || undefined,
+      // The payload is snake_case (see emergencyLightingJsonFormatter) — the
+      // old camelCase read was always undefined, so every persisted PDF lost
+      // its certificate number in the filename.
+      certNumber: formData?.certificate_number || formData?.metadata?.certificate_number || undefined,
     });
 
     // Calculate expiry (PDF Monkey URLs typically expire after 7 days)

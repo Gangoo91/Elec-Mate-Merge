@@ -2,45 +2,75 @@ import React, { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-// Button removed — using native buttons
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import {
-  Upload,
-  X,
-  Check,
-  ChevronDown,
-} from 'lucide-react';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { useInspectorProfiles, InspectorProfile } from '@/hooks/useInspectorProfiles';
 import InspectorProfileDialog from './InspectorProfileDialog';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
-import FormField from '@/components/ui/FormField';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { INSPECTOR_QUALIFICATIONS } from '@/constants/inspectorQualifications';
 import { joinQualifications, parseQualifications } from '@/utils/inspectorQualifications';
+import { useEICRForm } from './eicr/EICRFormProvider';
 
 interface EICRInspectorDetailsProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
   onUpdate: (field: string, value: string) => void;
-  isOpen?: boolean;
-  onToggle?: () => void;
 }
+
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const textareaCn =
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[80px] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const chipOn = 'bg-elec-yellow border border-elec-yellow text-black font-semibold';
+const chipOff = 'bg-white/[0.06] border border-white/[0.12] text-white font-medium';
+
+const pickerTriggerCn =
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
+
+// data-field anchor so the validation panel can scroll + flash the exact field.
+const FormField = ({
+  label,
+  required,
+  fieldName,
+  children,
+}: {
+  label: string;
+  required?: boolean;
+  fieldName?: string;
+  children: React.ReactNode;
+}) => (
+  <div data-field={fieldName}>
+    <Label className={labelCn}>
+      {label}
+      {required && ' *'}
+    </Label>
+    {children}
+  </div>
+);
 
 // Single source of truth — ELE-850 (LCL/PAA/VTCT/NOCN + neutral L3 I&T options)
 const availableQualifications = INSPECTOR_QUALIFICATIONS;
 
+const REGISTRATION_SCHEME_OPTIONS = [
+  { value: 'NICEIC', label: 'NICEIC' },
+  { value: 'NAPIT', label: 'NAPIT' },
+  { value: 'ELECSA', label: 'ELECSA' },
+  { value: 'STROMA', label: 'STROMA' },
+  { value: 'BRE', label: 'BRE' },
+  { value: 'other', label: 'Other' },
+];
+
 const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps) => {
-  const isMobile = useIsMobile();
   const haptic = useHaptic();
   const { profiles, getDefaultProfile } = useInspectorProfiles();
   const { companyProfile, loading: companyProfileLoading } = useCompanyProfile();
@@ -54,26 +84,16 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
     return profiles.length > 0 ? profiles[0] : null;
   };
   const [selectedQualifications, setSelectedQualifications] = useState<string[]>([]);
-  const [showProfileDialog, setShowProfileDialog] = useState(false);
   const [isInitialMount, setIsInitialMount] = useState(true);
 
-  // Accordion section states
-  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
-    personal: true,
-    qualifications: false,
-    registration: false,
-    insurance: false,
-    company: false,
-    branding: false,
-  });
-
-  const toggleSection = (section: string) => {
-    haptic.light();
-    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
-  };
-
-  // Load default profile on mount if fields are empty
+  // Load default profile on mount if fields are empty. NEVER while an
+  // existing report hydrates (or after it loads): a saved cert whose name
+  // happens to be blank may still hold registration/insurance/signature
+  // values — auto-fill would silently replace them with the current user's
+  // profile and autosave the damage (EIC hydration-guard parity).
+  const { isHydrating, isExistingReport } = useEICRForm();
   useEffect(() => {
+    if (isHydrating || isExistingReport) return;
     if (isInitialMount) {
       const defaultProfile = getDefaultProfile();
       const isInspectorEmpty = !formData.inspectorName && !formData.companyName;
@@ -82,7 +102,8 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
       }
       setIsInitialMount(false);
     }
-  }, [isInitialMount]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isInitialMount, isHydrating, isExistingReport]);
 
   // Parse qualifications from form data. Uses parseQualifications which
   // splits newline-delimited values (new format) and falls back to greedy
@@ -170,7 +191,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
     if (!companyProfile && !inspectorProfile) {
       haptic.warning();
       toast({
-        title: 'No Saved Settings Found',
+        title: 'No saved settings found',
         description: 'Please set up your Business Settings or Inspector Profile first.',
         variant: 'destructive',
       });
@@ -178,7 +199,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
     }
 
     haptic.success();
-    let loadedItems: string[] = [];
+    const loadedItems: string[] = [];
 
     // Load inspector personal details - Company Profile takes priority
     const inspectorName = companyProfile?.inspector_name || inspectorProfile?.name;
@@ -297,7 +318,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
     }
 
     toast({
-      title: 'Details Loaded',
+      title: 'Details loaded',
       description:
         loadedItems.length > 0
           ? `Loaded: ${loadedItems.join(', ')}`
@@ -312,414 +333,326 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
   };
 
   const validation = getValidationStatus();
+  const profilePopulated = !!(formData.inspectorName && formData.inspectorQualifications);
 
   return (
-    <div className={cn('space-y-2', '')}>
-      {/* Validation */}
-      {!validation.isValid && (
-        <div className="px-4">
-          <p className="text-[11px] text-amber-400/80">
-            Required: {validation.missingFields.map(f => f.replace('inspector', '').replace('Qualifications', 'Qualifications')).join(', ')}
+    <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+      {/* Validation notice + quick load from saved profile. Context-aware text:
+          softens to "Reload" once the key fields are already populated, matching
+          the MW/EIC pattern so the button reads as a normal action rather than
+          the only path. */}
+      {/*
+        One row, not three stacked blocks. This was a full-width button with a
+        right-aligned "Manage profiles" on its own line below it and a gap
+        between each — roughly 130px of height to offer one action and one link.
+      */}
+      <div className="space-y-2 lg:col-span-2">
+        {!validation.isValid && (
+          <p className="text-[11px] text-orange-300">
+            Required:{' '}
+            {validation.missingFields
+              .map((f) => f.replace('inspector', '').replace('Qualifications', 'Qualifications'))
+              .join(', ')}
           </p>
-        </div>
-      )}
+        )}
 
-      {/* Quick Load Button — fills the whole tab from saved profile. Context-aware text:
-          softens to "Reload" once the key fields are already populated, matching the
-          MW/EIC pattern so the button reads as a normal action rather than the only path. */}
-      {(companyProfile || getAvailableProfile()) && (() => {
-        const profilePopulated = !!(formData.inspectorName && formData.inspectorQualifications);
-        return (
-          <div className="px-4 pt-2">
+        <div className="flex items-center gap-2">
+          {(companyProfile || getAvailableProfile()) && (
             <button
               type="button"
               onClick={handleLoadFromBusinessSettings}
               disabled={companyProfileLoading}
               className={cn(
-                'w-full h-10 rounded-lg font-semibold text-xs touch-manipulation active:scale-[0.98] disabled:opacity-50',
+                'h-11 min-w-0 flex-1 rounded-xl text-sm touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50',
                 profilePopulated
-                  ? 'bg-white/[0.05] border border-white/[0.08] text-white/70'
-                  : 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                  ? chipOff
+                  : 'bg-elec-yellow border border-elec-yellow text-black font-semibold'
               )}
             >
               {profilePopulated ? 'Reload from profile' : 'Load from profile'}
             </button>
+          )}
+          <div className="shrink-0">
+            <InspectorProfileDialog onProfileSelected={handleProfileSelect} />
           </div>
-        );
-      })()}
+        </div>
+      </div>
 
-      {/* Personal Details Section */}
-      <Collapsible open={openSections.personal} onOpenChange={() => toggleSection('personal')}>
-        <CollapsibleTrigger asChild>
-          <button className="w-full flex items-center justify-between py-3 touch-manipulation active:scale-[0.98]">
-            <div className="flex-1 text-left">
-              <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-              <h3 className="text-xs font-medium text-white uppercase tracking-wider">Personal Details</h3>
-            </div>
-            <ChevronDown className={cn('h-4 w-4 text-white transition-transform ml-3 flex-shrink-0', openSections.personal && 'rotate-180')} />
-          </button>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <div className={cn('space-y-4 py-4', '')}>
-            <FormField label="Inspector Name" required>
-              <Input
-                data-field="inspectorName"
-                value={formData.inspectorName || ''}
-                onChange={(e) => onUpdate('inspectorName', e.target.value)}
-                placeholder="Full name of the inspector"
-                className="h-11 text-base touch-manipulation"
-              />
-            </FormField>
-            <FormField label="Certificate Number" hint="Auto-generated">
-              <Input
-                value={formData.certificateNumber || ''}
-                readOnly
-                className="h-11 text-base bg-muted/50 cursor-not-allowed font-mono"
-              />
-            </FormField>
-            {/* Inspector signature — the validator flags this and jumps here, so the
-                pad must live on this tab. Draw or type; it appears on the certificate. */}
-            <FormField
-              label="Inspector Signature"
-              required
-              hint="Draw or type — this signs the certificate"
-            >
-              <SignatureInput
-                value={formData.inspectorSignature || ''}
-                onChange={(value) => onUpdate('inspectorSignature', value || '')}
-                placeholder="Type or draw your signature"
-              />
-            </FormField>
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
+      {/* ── INSPECTOR ── */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">Inspector</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <FormField label="Inspector name" required fieldName="inspectorName">
+            <Input
+              data-field="inspectorName"
+              value={formData.inspectorName || ''}
+              onChange={(e) => onUpdate('inspectorName', e.target.value)}
+              placeholder="Full name of the inspector"
+              className={inputCn}
+            />
+          </FormField>
+          <FormField label="Certificate number">
+            <Input
+              value={formData.certificateNumber || ''}
+              readOnly
+              className={cn(inputCn, 'font-mono cursor-not-allowed opacity-80')}
+            />
+          </FormField>
+        </div>
+        {/* Inspector signature — the validator flags this and jumps here, so the
+            pad must live on this tab. Draw or type; it appears on the certificate. */}
+        <div data-field="inspectorSignature">
+          <SignatureInput
+            value={formData.inspectorSignature || ''}
+            onChange={(value) => onUpdate('inspectorSignature', value || '')}
+            placeholder="Type or draw your signature"
+          />
+        </div>
+      </div>
 
-      {/* Qualifications Section */}
-      <Collapsible
-        open={openSections.qualifications}
-        onOpenChange={() => toggleSection('qualifications')}
-      >
-        <CollapsibleTrigger asChild>
-          <button className="w-full flex items-center justify-between py-3 touch-manipulation active:scale-[0.98]">
-            <div className="flex-1 text-left">
-              <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-              <div className="flex items-center gap-2">
-                <h3 className="text-xs font-medium text-white uppercase tracking-wider">Qualifications</h3>
-                {selectedQualifications.length > 0 && (
-                  <span className="text-[10px] text-white">{selectedQualifications.length} selected</span>
+      {/* ── QUALIFICATIONS ── */}
+      <div className={cn(cardCn, 'lg:col-span-2')}>
+        <div className="mb-3 flex items-center justify-between gap-2">
+          <h2 className="text-[15px] font-semibold tracking-tight text-white">Qualifications</h2>
+          {selectedQualifications.length > 0 && (
+            <span className="text-[11px] font-medium text-white">
+              {selectedQualifications.length} selected
+            </span>
+          )}
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+          {availableQualifications.map((qualification) => {
+            const isSelected = selectedQualifications.includes(qualification);
+            return (
+              <button
+                key={qualification}
+                type="button"
+                onClick={() => toggleQualification(qualification)}
+                className={cn(
+                  'min-h-11 rounded-xl px-2 py-1.5 text-xs text-left transition-all touch-manipulation active:scale-[0.98]',
+                  isSelected ? chipOn : chipOff
                 )}
-              </div>
-            </div>
-            <ChevronDown className={cn('h-4 w-4 text-white transition-transform ml-3 flex-shrink-0', openSections.qualifications && 'rotate-180')} />
-          </button>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <div className="py-3">
-            <div className="grid grid-cols-2 gap-1.5">
-              {availableQualifications.map((qualification) => {
-                const isSelected = selectedQualifications.includes(qualification);
-                return (
-                  <button
-                    key={qualification}
-                    type="button"
-                    onClick={() => {
-                      haptic.light();
-                      toggleQualification(qualification);
-                    }}
-                    className={cn(
-                      'h-11 px-3 rounded-lg text-[11px] font-medium transition-all touch-manipulation',
-                      'flex items-center gap-2 text-left',
-                      'active:scale-[0.98]',
-                      isSelected
-                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                        : 'bg-white/[0.05] text-white border border-white/[0.06]'
-                    )}
-                  >
-                    <div className={cn(
-                      'w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0',
-                      isSelected ? 'bg-elec-yellow border-elec-yellow' : 'border-white/30'
-                    )}>
-                      {isSelected && <Check className="h-3 w-3 text-black" />}
-                    </div>
-                    <span className="truncate">{qualification}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
-
-      {/* Professional Registration Section */}
-      <Collapsible
-        open={openSections.registration}
-        onOpenChange={() => toggleSection('registration')}
-      >
-        <CollapsibleTrigger asChild>
-          <button className="w-full flex items-center justify-between py-3 touch-manipulation active:scale-[0.98]">
-            <div className="flex-1 text-left">
-              <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-              <h3 className="text-xs font-medium text-white uppercase tracking-wider">Professional Registration</h3>
-            </div>
-            <ChevronDown className={cn('h-4 w-4 text-white transition-transform ml-3 flex-shrink-0', openSections.registration && 'rotate-180')} />
-          </button>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <div className={cn('space-y-4 py-4', '')}>
-            <FormField label="Registration Scheme">
-              <Select
-                value={formData.registrationScheme || ''}
-                onValueChange={(value) => {
-                  haptic.light();
-                  onUpdate('registrationScheme', value);
-                }}
               >
-                <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
-                  <SelectValue placeholder="Select scheme" />
-                </SelectTrigger>
-                <SelectContent className="z-[200]" position="popper" sideOffset={4}>
-                  <SelectItem value="NICEIC">NICEIC</SelectItem>
-                  <SelectItem value="NAPIT">NAPIT</SelectItem>
-                  <SelectItem value="ELECSA">ELECSA</SelectItem>
-                  <SelectItem value="STROMA">STROMA</SelectItem>
-                  <SelectItem value="BRE">BRE</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
-            </FormField>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <FormField label="Registration Number">
-                <Input
-                  value={formData.registrationNumber || ''}
-                  onChange={(e) => onUpdate('registrationNumber', e.target.value)}
-                  placeholder="e.g., NICEIC/12345"
-                  className="h-11 text-base touch-manipulation"
-                />
-              </FormField>
-              <FormField label="Registration Expiry">
-                <Input
-                  type="date"
-                  value={formData.registrationExpiry || ''}
-                  onChange={(e) => onUpdate('registrationExpiry', e.target.value)}
-                  className="h-11 text-base touch-manipulation"
-                />
-              </FormField>
-            </div>
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
+                {qualification}
+                {isSelected ? ' ✓' : ''}
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
-      {/* Insurance Details Section */}
-      <Collapsible
-        open={openSections.insurance}
-        onOpenChange={() => toggleSection('insurance')}
-      >
-        <CollapsibleTrigger asChild>
-          <button className="w-full flex items-center justify-between py-3 touch-manipulation active:scale-[0.98]">
-            <div className="flex-1 text-left">
-              <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-              <h3 className="text-xs font-medium text-white uppercase tracking-wider">Insurance Details</h3>
-            </div>
-            <ChevronDown className={cn('h-4 w-4 text-white transition-transform ml-3 flex-shrink-0', openSections.insurance && 'rotate-180')} />
-          </button>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <div className={cn('space-y-4 py-4', '')}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <FormField label="Insurance Provider">
-                <Input
-                  value={formData.insuranceProvider || ''}
-                  onChange={(e) => onUpdate('insuranceProvider', e.target.value)}
-                  placeholder="e.g. Zurich, Hiscox"
-                  className="h-11 text-base touch-manipulation"
-                />
-              </FormField>
-              <FormField label="Policy Number">
-                <Input
-                  value={formData.insurancePolicyNumber || ''}
-                  onChange={(e) => onUpdate('insurancePolicyNumber', e.target.value)}
-                  placeholder="Policy number"
-                  className="h-11 text-base touch-manipulation"
-                />
-              </FormField>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <FormField label="Coverage Amount">
-                <Input
-                  value={formData.insuranceCoverage || ''}
-                  onChange={(e) => onUpdate('insuranceCoverage', e.target.value)}
-                  placeholder="e.g. £5,000,000"
-                  className="h-11 text-base touch-manipulation"
-                />
-              </FormField>
-              <FormField label="Expiry Date">
-                <Input
-                  type="date"
-                  value={formData.insuranceExpiry || ''}
-                  onChange={(e) => onUpdate('insuranceExpiry', e.target.value)}
-                  className="h-11 text-base touch-manipulation"
-                />
-              </FormField>
-            </div>
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
+      {/* ── PROFESSIONAL REGISTRATION ── */}
+      <div className={cardCn}>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">
+          Professional registration
+        </h2>
+        <FormField label="Registration scheme">
+          <MobileSelectPicker
+            value={formData.registrationScheme || ''}
+            onValueChange={(value) => {
+              haptic.light();
+              onUpdate('registrationScheme', value);
+            }}
+            options={REGISTRATION_SCHEME_OPTIONS}
+            placeholder="Select scheme"
+            title="Registration scheme"
+            triggerClassName={pickerTriggerCn}
+          />
+        </FormField>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <FormField label="Registration number">
+            <Input
+              value={formData.registrationNumber || ''}
+              onChange={(e) => onUpdate('registrationNumber', e.target.value)}
+              placeholder="e.g. NICEIC/12345"
+              className={inputCn}
+            />
+          </FormField>
+          <FormField label="Registration expiry">
+            <Input
+              type="date"
+              value={formData.registrationExpiry || ''}
+              onChange={(e) => onUpdate('registrationExpiry', e.target.value)}
+              className={inputCn}
+            />
+          </FormField>
+        </div>
+      </div>
 
-      {/* Company Details Section */}
-      <Collapsible open={openSections.company} onOpenChange={() => toggleSection('company')}>
-        <CollapsibleTrigger asChild>
-          <button className="w-full flex items-center justify-between py-3 touch-manipulation active:scale-[0.98]">
-            <div className="flex-1 text-left">
-              <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-              <h3 className="text-xs font-medium text-white uppercase tracking-wider">Company Details</h3>
-            </div>
-            <ChevronDown className={cn('h-4 w-4 text-white transition-transform ml-3 flex-shrink-0', openSections.company && 'rotate-180')} />
-          </button>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <div className={cn('space-y-4 py-4', '')}>
-            <FormField label="Company Name">
-              <Input
-                value={formData.companyName || ''}
-                onChange={(e) => onUpdate('companyName', e.target.value)}
-                placeholder="Your Company Name Ltd"
-                className="h-11 text-base touch-manipulation"
+      {/* ── INSURANCE ── */}
+      <div className={cardCn}>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">
+          Insurance details
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <FormField label="Insurance provider">
+            <Input
+              value={formData.insuranceProvider || ''}
+              onChange={(e) => onUpdate('insuranceProvider', e.target.value)}
+              placeholder="e.g. Zurich, Hiscox"
+              className={inputCn}
+            />
+          </FormField>
+          <FormField label="Policy number">
+            <Input
+              value={formData.insurancePolicyNumber || ''}
+              onChange={(e) => onUpdate('insurancePolicyNumber', e.target.value)}
+              placeholder="Policy number"
+              className={inputCn}
+            />
+          </FormField>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <FormField label="Coverage amount">
+            <Input
+              value={formData.insuranceCoverage || ''}
+              onChange={(e) => onUpdate('insuranceCoverage', e.target.value)}
+              placeholder="e.g. £5,000,000"
+              className={inputCn}
+            />
+          </FormField>
+          <FormField label="Expiry date">
+            <Input
+              type="date"
+              value={formData.insuranceExpiry || ''}
+              onChange={(e) => onUpdate('insuranceExpiry', e.target.value)}
+              className={inputCn}
+            />
+          </FormField>
+        </div>
+      </div>
+
+      {/* ── COMPANY DETAILS ── */}
+      <div className={cardCn}>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">
+          Company details
+        </h2>
+        <FormField label="Company name">
+          <Input
+            value={formData.companyName || ''}
+            onChange={(e) => onUpdate('companyName', e.target.value)}
+            placeholder="Your company name Ltd"
+            className={inputCn}
+          />
+        </FormField>
+        <FormField label="Company address">
+          <Textarea
+            value={formData.companyAddress || ''}
+            onChange={(e) => onUpdate('companyAddress', e.target.value)}
+            placeholder="Full company address including postcode"
+            rows={2}
+            className={cn(textareaCn, 'resize-none w-full')}
+          />
+        </FormField>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <FormField label="Company phone">
+            <Input
+              type="tel"
+              value={formData.companyPhone || ''}
+              onChange={(e) => onUpdate('companyPhone', e.target.value)}
+              placeholder="Company phone number"
+              className={inputCn}
+            />
+          </FormField>
+          <FormField label="Company email">
+            <Input
+              type="email"
+              value={formData.companyEmail || ''}
+              onChange={(e) => onUpdate('companyEmail', e.target.value)}
+              placeholder="Company email address"
+              className={inputCn}
+            />
+          </FormField>
+        </div>
+      </div>
+
+      {/* ── COMPANY BRANDING ── */}
+      <div className={cardCn}>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">
+          Company branding
+        </h2>
+
+        {/* Logo */}
+        <div>
+          <span className={labelCn}>Company logo</span>
+          {formData.companyLogo ? (
+            <div className="flex items-center gap-3 rounded-xl bg-white/[0.05] p-3">
+              <img
+                src={formData.companyLogo}
+                alt="Company logo"
+                className="w-14 h-14 object-contain rounded-lg bg-white/[0.06] p-1.5"
               />
-            </FormField>
-            <FormField label="Company Address">
-              <Textarea
-                value={formData.companyAddress || ''}
-                onChange={(e) => onUpdate('companyAddress', e.target.value)}
-                placeholder="Full company address including postcode"
-                rows={2}
-                className="touch-manipulation text-base min-h-[80px] resize-none"
-              />
-            </FormField>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <FormField label="Company Phone">
-                <Input
-                  type="tel"
-                  value={formData.companyPhone || ''}
-                  onChange={(e) => onUpdate('companyPhone', e.target.value)}
-                  placeholder="Company phone number"
-                  className="h-11 text-base touch-manipulation"
-                />
-              </FormField>
-              <FormField label="Company Email">
-                <Input
-                  type="email"
-                  value={formData.companyEmail || ''}
-                  onChange={(e) => onUpdate('companyEmail', e.target.value)}
-                  placeholder="Company email address"
-                  className="h-11 text-base touch-manipulation"
-                />
-              </FormField>
-            </div>
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
-
-      {/* Company Branding Section */}
-      <Collapsible open={openSections.branding} onOpenChange={() => toggleSection('branding')}>
-        <CollapsibleTrigger asChild>
-          <button className="w-full flex items-center justify-between py-3 touch-manipulation active:scale-[0.98]">
-            <div className="flex-1 text-left">
-              <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-              <h3 className="text-xs font-medium text-white uppercase tracking-wider">Company Branding</h3>
-            </div>
-            <ChevronDown className={cn('h-4 w-4 text-white transition-transform ml-3 flex-shrink-0', openSections.branding && 'rotate-180')} />
-          </button>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <div className={cn('space-y-4 py-4', '')}>
-            {/* Logo Upload */}
-            {/* Logo */}
-            <div className="space-y-2">
-              <label className="text-xs text-white block">Company Logo</label>
-              {formData.companyLogo ? (
-                <div className="flex items-center gap-3 p-3 rounded-lg bg-white/[0.03] border border-white/[0.06]">
-                  <img
-                    src={formData.companyLogo}
-                    alt="Company Logo"
-                    className="w-14 h-14 object-contain rounded-lg bg-white/[0.06] p-1.5"
-                  />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs text-white truncate">Logo uploaded</p>
-                    <button
-                      type="button"
-                      onClick={handleRemoveLogo}
-                      className="text-[10px] text-red-400/60 hover:text-red-400 touch-manipulation mt-0.5"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                </div>
-              ) : (
+              <div className="flex-1 min-w-0">
+                <p className="text-xs text-white truncate">Logo uploaded</p>
                 <button
                   type="button"
-                  onClick={() => document.getElementById('logo-upload')?.click()}
-                  className="w-full border border-dashed border-white/[0.10] rounded-lg p-4 text-center hover:border-elec-yellow/30 transition-colors touch-manipulation active:scale-[0.98]"
+                  onClick={handleRemoveLogo}
+                  className="min-h-8 text-xs font-medium text-red-400 touch-manipulation mt-0.5"
                 >
-                  <Upload className="h-5 w-5 text-white mx-auto mb-1.5" />
-                  <p className="text-[11px] text-white">Tap to upload logo</p>
+                  Remove
                 </button>
-              )}
+              </div>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => document.getElementById('logo-upload')?.click()}
+              className="w-full min-h-11 border border-dashed border-white/[0.15] rounded-xl p-4 text-center text-sm text-white hover:border-elec-yellow transition-colors touch-manipulation active:scale-[0.98]"
+            >
+              Tap to upload logo
+            </button>
+          )}
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleLogoUpload}
+            className="hidden"
+            id="logo-upload"
+          />
+        </div>
+
+        {/* Branding details */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <FormField label="Company tagline">
+            <Input
+              value={formData.companyTagline || ''}
+              onChange={(e) => onUpdate('companyTagline', e.target.value)}
+              placeholder="Professional electrical services"
+              className={inputCn}
+            />
+          </FormField>
+          <FormField label="Website">
+            <Input
+              value={formData.companyWebsite || ''}
+              onChange={(e) => onUpdate('companyWebsite', e.target.value)}
+              placeholder="www.company.co.uk"
+              className={inputCn}
+            />
+          </FormField>
+        </div>
+        <FormField label="Accent colour">
+          <div className="flex items-center gap-2">
+            <div className="relative w-11 h-11 rounded-lg overflow-hidden border border-white/[0.12] flex-shrink-0">
               <input
-                type="file"
-                accept="image/*"
-                onChange={handleLogoUpload}
-                className="hidden"
-                id="logo-upload"
+                type="color"
+                value={formData.companyAccentColor || '#f59e0b'}
+                onChange={(e) => onUpdate('companyAccentColor', e.target.value)}
+                className="absolute inset-0 w-full h-full cursor-pointer opacity-0"
+              />
+              <div
+                className="w-full h-full"
+                style={{ backgroundColor: formData.companyAccentColor || '#f59e0b' }}
               />
             </div>
-
-            {/* Branding Details */}
-            <div className="grid grid-cols-2 gap-3">
-              <FormField label="Company Tagline">
-                <Input
-                  value={formData.companyTagline || ''}
-                  onChange={(e) => onUpdate('companyTagline', e.target.value)}
-                  placeholder="Professional Electrical Services"
-                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
-                  style={{ fontSize: '16px' }}
-                />
-              </FormField>
-              <FormField label="Website">
-                <Input
-                  value={formData.companyWebsite || ''}
-                  onChange={(e) => onUpdate('companyWebsite', e.target.value)}
-                  placeholder="www.company.co.uk"
-                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
-                  style={{ fontSize: '16px' }}
-                />
-              </FormField>
-            </div>
-            <FormField label="Accent Colour">
-              <div className="flex items-center gap-2">
-                <div className="relative w-11 h-11 rounded-lg overflow-hidden border border-white/[0.08] flex-shrink-0">
-                  <input
-                    type="color"
-                    value={formData.companyAccentColor || '#f59e0b'}
-                    onChange={(e) => onUpdate('companyAccentColor', e.target.value)}
-                    className="absolute inset-0 w-full h-full cursor-pointer opacity-0"
-                  />
-                  <div
-                    className="w-full h-full"
-                    style={{ backgroundColor: formData.companyAccentColor || '#f59e0b' }}
-                  />
-                </div>
-                <Input
-                  value={formData.companyAccentColor || '#f59e0b'}
-                  onChange={(e) => onUpdate('companyAccentColor', e.target.value)}
-                  placeholder="#f59e0b"
-                  className="flex-1 h-11 text-base touch-manipulation font-mono bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
-                  style={{ fontSize: '16px' }}
-                />
-              </div>
-            </FormField>
+            <Input
+              value={formData.companyAccentColor || '#f59e0b'}
+              onChange={(e) => onUpdate('companyAccentColor', e.target.value)}
+              placeholder="#f59e0b"
+              className={cn(inputCn, 'flex-1 font-mono')}
+            />
           </div>
-        </CollapsibleContent>
-      </Collapsible>
+        </FormField>
+      </div>
     </div>
   );
 };

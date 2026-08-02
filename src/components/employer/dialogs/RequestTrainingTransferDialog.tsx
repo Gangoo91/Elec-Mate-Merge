@@ -121,7 +121,7 @@ export const RequestTrainingTransferDialog = ({
             </div>
           </div>
 
-          <FormCard eyebrow="Records to request">
+          <FormCard bleed eyebrow="Records to request">
             <div className="flex items-center justify-between">
               <label className={fieldLabelClass}>Select training records</label>
               <TextAction onClick={handleSelectAll}>
@@ -179,7 +179,7 @@ export const RequestTrainingTransferDialog = ({
             </p>
           </FormCard>
 
-          <FormCard eyebrow="Message">
+          <FormCard bleed eyebrow="Message">
             <Field label="Former employer email" required>
               <Input
                 type="email"

@@ -9,6 +9,7 @@
 
 import { BESSFormData, getDefaultBESSFormData } from '@/types/bess';
 import { supabase } from '@/integrations/supabase/client';
+import { ukDate } from '@/utils/certDate';
 
 const UUID_REGEX =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -134,6 +135,16 @@ export const formatBESSJson = (
     // Ensure arrays have defaults
     photos: formData.photos ?? [],
 
+    // Dates — the form stores ISO (date inputs); the PDF is a UK document.
+    // These seven are every date the BESS template renders.
+    installationDate: ukDate(formData.installationDate),
+    commissioningDate: ukDate(formData.commissioningDate),
+    dnoNotificationDate: ukDate(formData.dnoNotificationDate),
+    nextInspectionDate: ukDate(formData.nextInspectionDate),
+    testInstrumentCalDate: ukDate(formData.testInstrumentCalDate),
+    installerDate: ukDate(formData.installerDate),
+    clientDate: ukDate(formData.clientDate),
+
     // Company branding
     companyLogo: branding?.companyLogo ?? '',
     companyName: branding?.companyName ?? formData.installerCompany ?? '',
@@ -141,7 +152,9 @@ export const formatBESSJson = (
     companyPhone: branding?.companyPhone ?? '',
     companyEmail: branding?.companyEmail ?? '',
     companyTagline: branding?.companyTagline ?? '',
-    companyAccentColor: branding?.companyAccentColor ?? '#3b82f6',
+    // BESS house colour — must match the template's own default, else a user
+    // with no brand colour set gets a different cert to the design.
+    companyAccentColor: branding?.companyAccentColor ?? '#059669',
     companyWebsite: branding?.companyWebsite ?? '',
     registrationScheme: branding?.registrationScheme ?? '',
     registrationNumber: branding?.registrationNumber ?? '',

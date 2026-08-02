@@ -116,7 +116,7 @@ export const AddWorkHistoryDialog = ({
 
         <ResponsiveFormModalBody className="pb-6">
         <div className="space-y-4 py-4">
-          <FormCard eyebrow="Employment details">
+          <FormCard bleed eyebrow="Employment details">
             <Field label="Employer" required>
               <Input
                 id="employer"

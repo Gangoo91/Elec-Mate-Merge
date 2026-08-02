@@ -8,13 +8,6 @@ import {
 } from '@/components/ui/responsive-form-modal';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { useTrainingRequests } from '@/hooks/useTrainingRequests';
 import { GraduationCap, Loader2, AlertCircle, FileText } from 'lucide-react';
 import {
@@ -23,10 +16,9 @@ import {
   PrimaryButton,
   SecondaryButton,
   inputClass,
-  selectTriggerClass,
-  selectContentClass,
   textareaClass,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 
 interface Worker {
   id: string;
@@ -137,20 +129,14 @@ export function AddTrainingRequestDialog({
             </p>
           </div>
 
-          <FormCard eyebrow="Training details">
+          <FormCard bleed eyebrow="Training details">
             <Field label="Training course">
-              <Select value={trainingName} onValueChange={setTrainingName}>
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="Select training type" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {COMMON_TRAINING.map((t) => (
-                    <SelectItem key={t} value={t}>
-                      {t}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <SelectField
+        value={trainingName}
+        onValueChange={setTrainingName}
+        placeholder="Select training type"
+        options={COMMON_TRAINING.map((t) => ({ value: t, label: t }))}
+      />
             </Field>
 
             {trainingName === 'Other' && (
@@ -166,18 +152,12 @@ export function AddTrainingRequestDialog({
             )}
 
             <Field label="Training provider">
-              <Select value={provider} onValueChange={setProvider}>
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="Select provider" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {COMMON_PROVIDERS.map((p) => (
-                    <SelectItem key={p} value={p}>
-                      {p}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <SelectField
+        value={provider}
+        onValueChange={setProvider}
+        placeholder="Select provider"
+        options={COMMON_PROVIDERS.map((p) => ({ value: p, label: p }))}
+      />
             </Field>
 
             {provider === 'Other' && (

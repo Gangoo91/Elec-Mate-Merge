@@ -1,49 +1,13 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Checkbox } from '@/components/ui/checkbox';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import {
-  AlertTriangle,
-  CheckCircle,
-  XCircle,
-  FileText,
-  FileDown,
-  Check,
-  Save,
-  Copy,
-  ChevronDown,
-  ChevronUp,
-  Loader2,
-  User,
-  PenTool,
-  Mail,
-  Code,
-  Receipt,
-  Sparkles,
-} from 'lucide-react';
-import { exportCompleteEICRToPDF } from '@/utils/pdfExport';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { AlertTriangle, CheckCircle, FileDown, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 import { useToast } from '@/hooks/use-toast';
-import { useCloudSync } from '@/hooks/useCloudSync';
 import { formatEICRJson } from '@/utils/eicrJsonFormatter';
 import { supabase } from '@/integrations/supabase/client';
 import { saveCertificatePdf } from '@/utils/certificate-pdf-storage';
@@ -55,7 +19,6 @@ import { CreateCustomerDialog } from '@/components/CreateCustomerDialog';
 import { useCertificateEmail } from '@/hooks/useCertificateEmail';
 import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
 import { useCustomers } from '@/hooks/useCustomers';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useAppReview } from '@/hooks/useAppReview';
 import AppReviewPromptSheet from '@/components/AppReviewPromptSheet';
@@ -72,19 +35,78 @@ import { mapDefectsToQuoteItems } from '@/utils/defectToQuoteItems';
 import QuoteOptionsSheet from '@/components/inspection/eicr/QuoteOptionsSheet';
 import AIEstimatorSheet from '@/components/inspection/eicr/AIEstimatorSheet';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
-import { storageSetJSONSync } from '@/utils/storage';
-import { copyToClipboard } from '@/utils/clipboard';
 import QsReviewPanel from '@/components/inspection/shared/QsReviewPanel';
 import { useQsReviewStatus } from '@/hooks/useQsReview';
+import { useEICRValidation } from '@/hooks/useEICRValidation';
+
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const textareaCn =
+  'textarea-soft w-full rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const chipOn = 'bg-elec-yellow border border-elec-yellow text-black font-semibold';
+const chipOff = 'bg-white/[0.06] border border-white/[0.12] text-white font-medium';
+const chipGreen = 'bg-green-500 border border-green-500 text-black font-semibold';
+const chipRed = 'bg-red-500 border border-red-500 text-white font-semibold';
+
+const secondaryBtnCn =
+  'bg-white/[0.06] border border-white/[0.12] text-white font-medium rounded-xl touch-manipulation active:scale-[0.98] transition-all';
+
+// UK postcode from a free-text address — feeds regional pricing in the AI estimator
+const extractPostcodeFromAddress = (address: string): string | undefined => {
+  const match = address.match(/\b([A-Z]{1,2}\d{1,2}[A-Z]?\s*\d[A-Z]{2})\b/i);
+  return match ? match[1].toUpperCase().replace(/\s+/, ' ') : undefined;
+};
+
+const CollapsibleSection = ({
+  title,
+  isOpen,
+  onToggle,
+  children,
+}: {
+  title: string;
+  isOpen: boolean;
+  onToggle: () => void;
+  children: React.ReactNode;
+}) => (
+  <div className={cardCn}>
+    <button
+      type="button"
+      onClick={onToggle}
+      className="w-full min-h-11 flex items-center justify-between gap-2 text-left touch-manipulation"
+    >
+      <h2 className="text-[15px] font-semibold tracking-tight text-white">{title}</h2>
+      <span className="text-[11px] font-medium text-white">{isOpen ? 'Hide' : 'Show'}</span>
+    </button>
+    {isOpen && <div>{children}</div>}
+  </div>
+);
 
 interface EICRSummaryProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onUpdate: (field: string, value: any) => void;
+  /** Kept current with the in-tab handlers so the shell footer's
+   * Generate/Email/Invoice drive the real flows (MW/EIC pattern). */
+  actionsRef?: React.MutableRefObject<{
+    generate: () => void;
+    email: () => void;
+    invoice: () => void;
+  } | null>;
 }
 
-const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSummaryProps) => {
+const EICRSummary = ({
+  formData: propFormData,
+  onUpdate: propOnUpdate,
+  actionsRef,
+}: EICRSummaryProps) => {
   // Use formData and updateFormData from context directly to ensure we always have the latest state
   // (props can be stale due to React's reconciliation timing)
   const {
@@ -100,7 +122,6 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
 
   // Needed to give a precise error message when the QS gate blocks PDF generation.
   // 'approved' + hash mismatch = edited after approval; 'pending' = not yet reviewed.
@@ -112,16 +133,15 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     showReferralPrompt,
     handleClose: handleReferralClose,
   } = useReferralPrompt();
-  const [isJsonOpen, setIsJsonOpen] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [generationError, setGenerationError] = useState<string | null>(null);
-  const [formattedJsonPreview, setFormattedJsonPreview] = useState<string>('');
   const [showCustomerDialog, setShowCustomerDialog] = useState(false);
   const [savedReportIdForCustomer, setSavedReportIdForCustomer] = useState<string | null>(null);
   const { saveCustomer, customers } = useCustomers();
   const [showEmailDialog, setShowEmailDialog] = useState(false);
+  const [showMissingSheet, setShowMissingSheet] = useState(false);
 
   // AI Estimator state
   const [showQuoteOptions, setShowQuoteOptions] = useState(false);
@@ -134,6 +154,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   const { getDefaultSignature } = useSignatureProfiles();
 
   // Collapsible sections for mobile
+  const [standardsOpen, setStandardsOpen] = useState(false);
   const [inspectedByOpen, setInspectedByOpen] = useState(true);
   const [authorisedByOpen, setAuthorisedByOpen] = useState(false);
 
@@ -166,18 +187,6 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   const formDataRef = useRef(formData);
   useLayoutEffect(() => {
     formDataRef.current = formData;
-    // Debug: log when arrays change
-    console.log('[EICRSummary] formData updated (sync):', {
-      inspectionItemsCount: formData.inspectionItems?.length || 0,
-      scheduleOfTestsCount: formData.scheduleOfTests?.length || 0,
-      defectObservationsCount: formData.defectObservations?.length || 0,
-    });
-  }, [formData]);
-
-  // Clear JSON cache when any form data changes (not just arrays)
-  // This ensures the preview always reflects the current data
-  useEffect(() => {
-    setFormattedJsonPreview('');
   }, [formData]);
 
   // Auto-untick "No remedial action required" if any C1/C2 observations exist.
@@ -192,74 +201,15 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData.defectObservations, formData.noRemedialAction]);
 
-  // Load formatted JSON when collapsible is opened
-  const handleToggleJsonPreview = async (isOpen: boolean) => {
-    setIsJsonOpen(isOpen);
-    if (isOpen && !formattedJsonPreview) {
-      // Use ref for latest data
-      const formattedJson = await formatEICRJson(formDataRef.current, effectiveReportId);
-      setFormattedJsonPreview(JSON.stringify(formattedJson, null, 2));
-    }
-  };
-
-  const handleCopyJson = async () => {
-    // Use context's getLatestFormData() to get the absolute latest formData
-    const latestFormData = getLatestFormData();
-    console.log('[handleCopyJson] Using formData with arrays:', {
-      inspectionItemsCount: latestFormData?.inspectionItems?.length || 0,
-      scheduleOfTestsCount: latestFormData?.scheduleOfTests?.length || 0,
-      defectObservationsCount: latestFormData?.defectObservations?.length || 0,
-    });
-    const formattedJson = await formatEICRJson(latestFormData, effectiveReportId);
-    await copyToClipboard(JSON.stringify(formattedJson, null, 2));
-    toast({
-      title: 'JSON copied',
-      description: 'Structured form data copied to clipboard.',
-    });
-  };
-
-  const getOverallAssessmentColor = () => {
-    switch (formData.overallAssessment) {
-      case 'satisfactory':
-        return 'text-green-600';
-      case 'unsatisfactory':
-        return 'text-red-600';
-      default:
-        return 'text-white';
-    }
-  };
-
-  const getAssessmentIcon = () => {
-    switch (formData.overallAssessment) {
-      case 'satisfactory':
-        return <CheckCircle className="h-5 w-5 text-green-600" />;
-      case 'unsatisfactory':
-        return <XCircle className="h-5 w-5 text-red-600" />;
-      default:
-        return <AlertTriangle className="h-5 w-5 text-yellow-600" />;
-    }
-  };
-
   const handleGenerateCertificate = async () => {
-    console.log('[PDF Generation] Starting process...');
-    console.log('[PDF Generation] effectiveReportId:', effectiveReportId);
-
-    // Per-company "QS approval required before issue" gate
-    const { checkQsIssueGate, qsGateMessage } = await import('@/utils/qsGate');
-    const gate = await checkQsIssueGate(effectiveReportId);
-    if (gate.blocked) {
-      // Distinguish: already approved but cert was edited after approval (hash mismatch)
-      // vs. not yet submitted/approved at all.
-      const alreadyApproved = qsReviewStatus?.status === 'approved';
-      toast({
-        title: alreadyApproved
-          ? 'Certificate edited after QS approval'
-          : 'QS approval required',
-        description: alreadyApproved
-          ? `${gate.companyName || 'Your company'} requires QS approval and this certificate was modified after it was countersigned. Re-submit for QS review to get a fresh approval.`
-          : qsGateMessage(gate.companyName),
-        variant: 'destructive',
-      });
+    // Same protection the old disabled inline button gave — but visible: an
+    // incomplete cert opens the missing-items sheet instead of dead-ending.
+    // A QS-approved cert is complete by definition — don't gate on an
+    // in-editor completeness recompute that can transiently fail and leave
+    // an approved cert un-generatable (ELE-1183).
+    if (!isFormComplete() && qsReviewStatus?.status !== 'approved') {
+      haptic.warning();
+      setShowMissingSheet(true);
       return;
     }
 
@@ -272,8 +222,6 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       // Step 1: Force immediate sync and get the SAVED data back
       // This is critical - we use the data that was actually synced to the database,
       // not potentially stale in-memory data that may not have been saved yet
-      console.log('[PDF Generation] Step 1: Force immediate sync to database...');
-
       const {
         data: { user },
       } = await supabase.auth.getUser();
@@ -287,14 +235,11 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
 
       if (syncNowImmediate) {
         // Use the new immediate sync that returns the saved data
-        console.log('[PDF Generation] Using syncNowImmediate for guaranteed data consistency...');
         const syncResult = await syncNowImmediate();
 
         if (syncResult.success && syncResult.reportId) {
           savedReportId = syncResult.reportId;
           dataForPdf = syncResult.data; // Use the data that was actually saved
-          console.log('[PDF Generation] Report synced with ID:', savedReportId);
-          console.log('[PDF Generation] Using SYNCED data for PDF generation');
         } else {
           console.warn('[PDF Generation] Sync failed, falling back to current form data...');
           dataForPdf = getLatestFormData();
@@ -313,13 +258,28 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         dataForPdf = getLatestFormData();
       }
 
-      // Data verification logging - ensure we're using the right data
-      console.log('[PDF Generation] Data verification:', {
-        scheduleOfTestsCount: dataForPdf?.scheduleOfTests?.length || 0,
-        inspectionItemsCount: dataForPdf?.inspectionItems?.length || 0,
-        defectObservationsCount: dataForPdf?.defectObservations?.length || 0,
-        clientName: dataForPdf?.clientName,
-      });
+      // Per-company "QS approval required before issue" gate — checked AFTER
+      // the sync so the hash comparison sees what will actually be issued.
+      // (Gating before the sync let a post-approval edit slip through: the
+      // gate passed on the stale approved data, then the force-sync stamped
+      // the edited data and the PDF printed it.)
+      const { checkQsIssueGate, qsGateMessage } = await import('@/utils/qsGate');
+      const gate = await checkQsIssueGate(savedReportId);
+      if (gate.blocked) {
+        // Distinguish: already approved but cert was edited after approval
+        // (hash mismatch) vs. not yet submitted/approved at all.
+        const alreadyApproved = qsReviewStatus?.status === 'approved';
+        toast({
+          title: alreadyApproved ? 'Certificate edited after QS approval' : 'QS approval required',
+          description: alreadyApproved
+            ? `${gate.companyName || 'Your company'} requires QS approval and this certificate was modified after it was countersigned. Re-submit for QS review to get a fresh approval.`
+            : qsGateMessage(gate.companyName),
+          variant: 'destructive',
+        });
+        setShowDialog(false);
+        setIsGenerating(false);
+        return;
+      }
 
       // Step 2: Auto-resolve scheme logo if scheme is set but logo is missing or placeholder
       const schemeName = dataForPdf.registrationScheme;
@@ -340,7 +300,6 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
               reader.readAsDataURL(blob);
             });
             dataForPdf = { ...dataForPdf, registrationSchemeLogo: dataUrl };
-            console.log('[PDF Generation] Auto-resolved scheme logo for:', schemeName);
           }
         } catch (err) {
           console.warn('[PDF Generation] Failed to resolve scheme logo:', err);
@@ -348,20 +307,6 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       }
 
       // Step 3: Format the EICR data for PDF Monkey (using the SYNCED data)
-      console.log('[PDF Generation] Step 3: Formatting data for PDF generation...');
-      console.log('[EICRSummary] Raw formData keys:', Object.keys(dataForPdf));
-      console.log('[EICRSummary] Critical fields in raw formData:', {
-        clientName: dataForPdf.clientName || 'MISSING',
-        installationAddress: dataForPdf.installationAddress || 'MISSING',
-        inspectorName: dataForPdf.inspectorName || 'MISSING',
-        certificateNumber: dataForPdf.certificateNumber || 'MISSING',
-      });
-      console.log('[EICRSummary] Array counts:', {
-        scheduleOfTests: dataForPdf.scheduleOfTests?.length || 0,
-        inspectionItems: dataForPdf.inspectionItems?.length || 0,
-        defectObservations: dataForPdf.defectObservations?.length || 0,
-      });
-
       const formattedJson = await formatEICRJson(dataForPdf, savedReportId);
 
       // Save formatted payload for email/reports page reuse
@@ -370,92 +315,14 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         .update({ pdf_payload: formattedJson })
         .eq('report_id', savedReportId);
 
-      console.log(
-        '[PDF Generation] Formatted EICR JSON (first 200 chars):',
-        JSON.stringify(formattedJson).substring(0, 200)
-      );
-      console.log('[PDF Generation] Required fields check:', {
-        clientName: formattedJson.client_details?.client_name,
-        installationAddress: formattedJson.installation_details?.address,
-        inspectorName: formattedJson.inspector?.name,
-      });
-
-      // Critical debug: flat inspection keys
-      const allKeys = Object.keys(formattedJson);
-      const flatInspKeys = allKeys.filter((k) => k.startsWith('insp_'));
-      console.log('[PDF Generation] ========== FLAT KEYS DEBUG ==========');
-      console.log('[PDF Generation] Total keys in formattedJson:', allKeys.length);
-      console.log('[PDF Generation] Flat inspection keys count:', flatInspKeys.length);
-      console.log('[PDF Generation] Sample flat keys:', flatInspKeys.slice(0, 10));
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      console.log('[PDF Generation] insp_1_0_acc:', (formattedJson as any).insp_1_0_acc);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      console.log('[PDF Generation] insp_3_5_acc:', (formattedJson as any).insp_3_5_acc);
-      console.log(
-        '[PDF Generation] inspection_debug_test:',
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (formattedJson as any).inspection_debug_test
-      );
-      console.log('[PDF Generation] =================================================');
-
-      // Schedule of Tests debug logging
-      console.log('[PDF Generation] ========== SCHEDULE OF TESTS DEBUG ==========');
-      console.log(
-        '[PDF Generation] schedule_of_tests present:',
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        !!(formattedJson as any).schedule_of_tests
-      );
-      console.log(
-        '[PDF Generation] schedule_of_tests length:',
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (formattedJson as any).schedule_of_tests?.length || 0
-      );
-      console.log(
-        '[PDF Generation] boards_with_schedules present:',
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        !!(formattedJson as any).boards_with_schedules
-      );
-      console.log(
-        '[PDF Generation] boards_with_schedules length:',
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (formattedJson as any).boards_with_schedules?.length || 0
-      );
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if ((formattedJson as any).schedule_of_tests?.length > 0) {
-        console.log(
-          '[PDF Generation] First circuit keys:',
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          Object.keys((formattedJson as any).schedule_of_tests[0])
-        );
-        console.log(
-          '[PDF Generation] First circuit sample:',
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          JSON.stringify((formattedJson as any).schedule_of_tests[0]).substring(0, 500)
-        );
-      }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if ((formattedJson as any).boards_with_schedules?.length > 0) {
-        console.log(
-          '[PDF Generation] First board circuits count:',
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (formattedJson as any).boards_with_schedules[0]?.circuits?.length || 0
-        );
-      }
-      console.log('[PDF Generation] ================================================');
-
       // Step 4: Call the edge function
-      console.log('[PDF Generation] Step 4: Calling edge function generate-eicr-pdf...');
-      console.log(
-        '[PDF Generation] Sending payload with keys:',
-        Object.keys({ formData: formattedJson })
-      );
-
+      // reportId lets the edge function's background task write the permanent
+      // storage URL onto the report when persistence outlasts the response
+      // window (photo-heavy certs) — without it that fix-up is dead code and
+      // the report can be left holding a 1-hour PDFMonkey temp URL.
       const { data, error } = await supabase.functions.invoke('generate-eicr-pdf', {
-        body: { formData: formattedJson },
+        body: { formData: formattedJson, reportId: savedReportId },
       });
-
-      console.log('[PDF Generation] Edge function raw response:', JSON.stringify(data));
-      console.log('[PDF Generation] Edge function error:', error);
 
       // Check for errors - either from Supabase or from our edge function response
       if (error) {
@@ -486,8 +353,6 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       const pdfUrlFromResponse =
         data?.pdfUrl || data?.pdf_url || data?.url || data?.data?.pdfUrl || data?.downloadUrl;
 
-      console.log('[PDF Generation] Extracted PDF URL:', pdfUrlFromResponse);
-
       if (!pdfUrlFromResponse) {
         console.error(
           '[PDF Generation] Edge function succeeded but returned no PDF URL. Full response:',
@@ -495,8 +360,6 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         );
         throw new Error('Edge function succeeded but returned no PDF URL');
       }
-
-      console.log('[PDF Generation] Step 4: PDF generated successfully:', pdfUrlFromResponse);
 
       // Step 5: Save PDF to permanent Supabase Storage (PDFMonkey URLs expire after 7 days)
       let permanentUrl = pdfUrlFromResponse; // Fallback to temp URL
@@ -511,7 +374,6 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         );
         permanentUrl = storageResult.permanentUrl;
         storagePath = storageResult.storagePath;
-        console.log('[PDF Generation] PDF saved to permanent storage:', storagePath);
       } catch (storageError) {
         console.error(
           '[PDF Generation] Failed to save PDF permanently, using temp URL:',
@@ -522,12 +384,13 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
 
       setPdfUrl(permanentUrl);
 
-      // Step 6: Save PDF URL to database using the SAVED report_id
-      console.log(
-        '[PDF Generation] Step 6: Saving PDF URL to database for report_id:',
-        savedReportId
-      );
+      // Persist the PDF URL into formData — the quote/invoice senders read
+      // formData.pdfUrl for linked_certificate_pdf_url, and nothing wrote it
+      // before (audit P0-2: cert attachment silently skipped on every EICR
+      // quote/invoice email).
+      onUpdate('pdfUrl', permanentUrl);
 
+      // Step 6: Save PDF URL to database using the SAVED report_id
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const updateData: Record<string, any> = {
         pdf_url: permanentUrl,
@@ -549,8 +412,6 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
           '[PDF Generation] CRITICAL: Failed to save PDF URL to database:',
           updateError
         );
-        console.error('[PDF Generation] Update attempted for report_id:', savedReportId);
-        console.error('[PDF Generation] PDF URL that failed to save:', permanentUrl);
 
         // Still show the PDF to user, but warn them
         toast({
@@ -599,7 +460,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
 
       // Show the error to user - NO FALLBACK so we can debug
       toast({
-        title: 'PDF Generation Failed',
+        title: 'PDF generation failed',
         description: `PDF Monkey error: ${errorMessage}. Check console for details.`,
         variant: 'destructive',
         duration: 10000,
@@ -609,30 +470,20 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     }
   };
 
-  const handleSaveDraft = () => {
-    // Note: Auto-save is now handled by EICRFormProvider via useCloudSync
-    toast({
-      title: 'Saved to cloud',
-      description: 'Your EICR is automatically saved to the cloud.',
-    });
-  };
-
   // Email send handler - ensures report is saved before emailing
   const handleSendEmail = async (email: string, cc?: string[], message?: string) => {
     // First, ensure report is saved to database using sync hook
     let reportIdForEmail = effectiveReportId;
     try {
-      console.log('[Email] Syncing report before sending email...');
       const syncResult = await syncNow();
       if (!syncResult.success) {
         throw new Error('Failed to save report before emailing. Please try again.');
       }
       if (syncResult.reportId) reportIdForEmail = syncResult.reportId;
-      console.log('[Email] Report synced:', syncResult.reportId);
     } catch (saveError) {
       console.error('[Email] Failed to save report before emailing:', saveError);
       toast({
-        title: 'Save Error',
+        title: 'Save error',
         description: 'Please save your certificate before emailing. Try generating the PDF first.',
         variant: 'destructive',
       });
@@ -689,8 +540,27 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     queryClient.invalidateQueries({ queryKey: ['customers'] });
   };
 
+  // Actionable defects for quoting — C1/C2/C3/FI that are NOT already
+  // rectified, carrying the inspector's recommendation (audit P1-4: it never
+  // left the certificate before).
+  const getActionableDefects = () => {
+    return (formData.defectObservations || [])
+      .filter(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (d: any) => ['C1', 'C2', 'C3', 'FI'].includes(d.defectCode) && !d.rectified
+      )
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .map((d: any) => ({
+        code: d.defectCode,
+        description: d.description,
+        location: d.item || '',
+        circuitRef: '',
+        recommendation: d.recommendation || '',
+      }));
+  };
+
   // Navigate to quote builder with client data pre-filled
-  const handleCreateQuote = () => {
+  const handleCreateQuote = (items?: RemedialQuoteItem[]) => {
     haptic.light();
     const url = createQuoteFromCertificate({
       clientName: formData.clientName || '',
@@ -701,7 +571,8 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       certificateType: 'EICR',
       certificateReference: formData.certificateNumber || '',
       reportId: effectiveReportId || undefined,
-      pdfUrl: formData.pdfUrl || undefined,
+      pdfUrl: pdfUrl || formData.pdfUrl || undefined,
+      ...(items && items.length > 0 && { items }),
     });
     navigate(url);
   };
@@ -718,10 +589,25 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       certificateType: 'EICR',
       certificateReference: formData.certificateNumber || '',
       reportId: effectiveReportId || undefined,
-      pdfUrl: formData.pdfUrl || undefined,
+      pdfUrl: pdfUrl || formData.pdfUrl || undefined,
     });
     navigate(url);
   };
+
+  // Shell-footer handle (MW/EIC pattern) — re-registered every render so the
+  // footer always calls the freshest closures; cleared on unmount so the
+  // footer's optional chaining goes quiet instead of firing stale handlers.
+  useEffect(() => {
+    if (!actionsRef) return;
+    actionsRef.current = {
+      generate: handleGenerateCertificate,
+      email: () => setShowEmailDialog(true),
+      invoice: handleCreateInvoice,
+    };
+    return () => {
+      actionsRef.current = null;
+    };
+  });
 
   // AI Estimator handlers
   const handleAIEstimate = async () => {
@@ -729,27 +615,27 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     setShowEstimatorSheet(true);
     setEstimateResult(null);
 
-    const defects = (formData.defectObservations || [])
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .filter((d: any) => ['C1', 'C2', 'C3', 'FI'].includes(d.defectCode))
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .map((d: any) => ({
-        code: d.defectCode,
-        description: d.description,
-        location: d.item || '',
-        circuitRef: '',
-      }));
+    const defects = getActionableDefects();
 
     if (defects.length === 0) {
       toast({
         title: 'No defects found',
-        description: 'Add defect observations before estimating.',
+        description: 'Add unrectified defect observations before estimating.',
       });
       setShowEstimatorSheet(false);
       return;
     }
 
-    const result = await estimate(defects);
+    // Property context grounds the estimate (access, cable runs, board size)
+    // and the postcode drives regional pricing — previously never sent.
+    const result = await estimate(defects, {
+      propertyType: formData.propertyType || undefined,
+      numberOfBedrooms: formData.numberOfBedrooms || undefined,
+      propertyAge: formData.estimatedAge
+        ? `${formData.estimatedAge} ${formData.ageUnit || 'years'}`
+        : undefined,
+      postcode: extractPostcodeFromAddress(formData.installationAddress || ''),
+    });
     if (result) {
       setEstimateResult(result);
     } else {
@@ -777,7 +663,11 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
 
   const handleSendToQuote = () => {
     setShowQuoteOptions(false);
-    handleCreateQuote();
+    // The option card promises "observations pre-loaded as line items" — map
+    // every unrectified C1/C2/C3/FI through the static remedial table so the
+    // quote arrives populated instead of empty (audit P0-1).
+    const items = mapDefectsToQuoteItems(getActionableDefects());
+    handleCreateQuote(items);
   };
 
   const handleUpdateEstimateItem = (index: number, updates: Partial<RemedialQuoteItem>) => {
@@ -832,32 +722,31 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     if (!estimateResult) return;
     haptic.light();
 
-    const materialItems = estimateResult.items.filter((i) => i.category === 'materials');
-    const labourItems = estimateResult.items.filter((i) => i.category === 'labour');
-    const totalLabourHours = labourItems.reduce((s, i) => s + (i.labourHours || i.quantity), 0);
-    const labourRate = labourItems.length > 0 ? labourItems[0].unitPrice : 45;
+    // Carry the estimator's items through the certificate transport VERBATIM.
+    // The old path flattened them into Cost Engineer shape, which re-guessed
+    // units/categories, overwrote defect notes with "Supplier: Estimated" and
+    // collapsed all labour into one anonymous line (audit P1-3).
+    const items = estimateResult.items.map((i) => ({
+      id: i.id,
+      description: i.description,
+      quantity: i.quantity,
+      unit: i.unit,
+      unitPrice: i.unitPrice,
+      totalPrice: i.totalPrice,
+      category: i.category,
+      subcategory: i.subcategory,
+      notes: i.notes,
+      defectCode: i.defectCode,
+      defectDescription: i.defectDescription,
+      source: i.source,
+      ...(i.category === 'labour' && {
+        hours: i.labourHours ?? i.quantity,
+        hourlyRate: i.unitPrice,
+        workerType: 'Qualified Electrician',
+      }),
+    }));
 
-    const costData = {
-      materials: materialItems.map((m) => ({
-        item: m.description,
-        quantity: m.quantity,
-        unitPrice: m.unitPrice,
-        supplier: 'Estimated',
-        total: m.totalPrice,
-      })),
-      labour: {
-        hours: totalLabourHours,
-        rate: labourRate,
-        total: labourItems.reduce((s, i) => s + i.totalPrice, 0),
-      },
-      totalCost: estimateResult.summary.totalExVat,
-      valueEngineering: estimateResult.scopeOfWorks ? [estimateResult.scopeOfWorks] : undefined,
-    };
-
-    const costSessionId = `estimate-${Date.now()}`;
-    storageSetJSONSync(costSessionId, { costData });
-
-    const certUrl = createQuoteFromCertificate({
+    const url = createQuoteFromCertificate({
       clientName: formData.clientName || '',
       clientEmail: formData.clientEmail || '',
       clientPhone: formData.clientPhone || '',
@@ -866,830 +755,771 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       certificateType: 'EICR',
       certificateReference: formData.certificateNumber || '',
       reportId: effectiveReportId || undefined,
+      pdfUrl: pdfUrl || formData.pdfUrl || undefined,
+      items,
+      jobDescription: estimateResult.scopeOfWorks || undefined,
     });
-    const certSessionId = new URL(certUrl, window.location.origin).searchParams.get(
-      'certificateSessionId'
-    );
-
-    // Inject scope of works into job description so QuoteWizard picks it up
-    if (certSessionId && estimateResult.scopeOfWorks) {
-      const stored = sessionStorage.getItem(certSessionId);
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        if (parsed.certificateData?.jobDetails) {
-          parsed.certificateData.jobDetails.description = estimateResult.scopeOfWorks;
-          storageSetJSONSync(certSessionId, parsed);
-        }
-      }
-    }
-
-    navigate(
-      `/electrician/quote-builder/create?costSessionId=${costSessionId}${certSessionId ? `&certificateSessionId=${certSessionId}` : ''}`
-    );
+    navigate(url);
   };
 
-  // Gate PDF generation on the truly cert-breaking fields — sparky shouldn't
-  // hit Generate and get an empty PDF. The validation panel above the tabs
-  // already lists everything else.
-  const isFormComplete = () => {
-    if (!formData.clientName?.trim()) return false;
-    if (!formData.installationAddress?.trim()) return false;
-    if (!formData.inspectorName?.trim()) return false;
-    if (!formData.inspectorSignature?.trim()) return false;
-    if (!formData.overallAssessment) return false;
-    // C1 present → overall cannot be satisfactory
-    const hasC1 = (formData.defectObservations || []).some(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (d: any) => d.defectCode === 'C1'
-    );
-    if (hasC1 && formData.overallAssessment === 'satisfactory') return false;
-    return true;
+  // Single source of truth — the SAME hook the shell's ring, step ticks and
+  // footer gate read, so this tab can never disagree with the header about
+  // what's missing (it carries the C1 cross-checks too).
+  const eicrValidation = useEICRValidation(formData);
+  const isFormComplete = () => eicrValidation.isValid;
+
+  const STEP_LABEL: Record<string, string> = {
+    details: 'Details',
+    inspection: 'Inspect',
+    testing: 'Testing',
+    inspector: 'Sign off',
+    certificate: 'Issue',
   };
+  const missingItems = eicrValidation.errors.map((e) => ({
+    label: e.message,
+    where: STEP_LABEL[e.tab] || 'Issue',
+  }));
+  const showCompletionHint = missingItems.length > 0 && qsReviewStatus?.status !== 'approved';
+
+  // Section completion chips — same derivation as the shell's step ticks
+  // (no validation errors for that step), so a tab full of auto-seeded blank
+  // rows doesn't light up green.
+  const completionSections = (
+    [
+      ['details', 'Details'],
+      ['inspection', 'Inspect'],
+      ['testing', 'Testing'],
+      ['inspector', 'Sign off'],
+    ] as const
+  ).map(([tab, label]) => ({
+    label,
+    done: !eicrValidation.errors.some((e) => e.tab === tab),
+  }));
+
+  const c1Observations = (formData.defectObservations || []).filter(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (d: any) => d.defectCode === 'C1'
+  );
+  const c1Count = c1Observations.length;
+
+  const blockingObsCount = (formData.defectObservations || []).filter(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (d: any) => d.defectCode === 'C1' || d.defectCode === 'C2'
+  ).length;
+  const remedialBlocked = blockingObsCount > 0;
+
+  const threeStateOptions = [
+    { value: 'yes', label: 'Yes', activeClass: chipGreen },
+    { value: 'no', label: 'No', activeClass: chipRed },
+    { value: 'na', label: 'N/A', activeClass: chipOn },
+  ];
 
   return (
-    <div className={cn('space-y-6', isMobile && '-mx-4')}>
-      {/* Standards Compliance Section */}
-      <div>
-        <Collapsible defaultOpen={false}>
-          <CollapsibleTrigger className="w-full" asChild>
-            <button
-              onClick={() => haptic.light()}
-              className="w-full flex items-center justify-between py-2 px-4 touch-manipulation active:scale-[0.98]"
-            >
-              <div className="flex-1 text-left">
-                <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-                <h3 className="text-xs font-medium text-white uppercase tracking-wider">Standards Compliance</h3>
-              </div>
-              <ChevronDown className="h-4 w-4 text-white transition-transform ml-3 flex-shrink-0" />
-            </button>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className="px-4 py-3 space-y-4">
-              <div>
-                <label className="text-xs text-white block mb-1">Design Standard</label>
-                <Select
-                  value={formData.designStandard || ''}
-                  onValueChange={(value) => {
+    <div className="space-y-4">
+      {/* Standards compliance */}
+      <CollapsibleSection
+        title="Standards compliance"
+        isOpen={standardsOpen}
+        onToggle={() => {
+          haptic.light();
+          setStandardsOpen((prev) => !prev);
+        }}
+      >
+        <div className="space-y-4 pt-1">
+          <div>
+            <Label className={labelCn}>Design standard</Label>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { value: 'BS7671', label: 'BS 7671' },
+                { value: 'Other', label: 'Other' },
+              ].map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => {
                     haptic.light();
-                    onUpdate('designStandard', value);
+                    onUpdate('designStandard', opt.value);
                   }}
+                  className={cn(
+                    'h-11 rounded-xl text-sm touch-manipulation transition-all active:scale-[0.98]',
+                    formData.designStandard === opt.value ? chipOn : chipOff
+                  )}
                 >
-                  <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
-                    <SelectValue placeholder="Select" />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100]">
-                    <SelectItem value="BS7671">BS 7671</SelectItem>
-                    <SelectItem value="Other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              {/* BS 7671 + Building Regs — 3-state (Yes / No / N/A).
-                  Building Regs is often N/A on a condition report. */}
-              <div className="space-y-3">
-                <div className="space-y-1.5">
-                  <label className="text-xs text-white block">BS 7671 Compliance</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {[
-                      { value: 'yes', label: 'Yes', activeClass: 'bg-green-500/20 border-green-500/40 text-green-400' },
-                      { value: 'no', label: 'No', activeClass: 'bg-red-500/20 border-red-500/40 text-red-400' },
-                      { value: 'na', label: 'N/A', activeClass: 'bg-elec-yellow/20 border-elec-yellow/40 text-elec-yellow' },
-                    ].map((opt) => (
-                      <button
-                        key={opt.value}
-                        type="button"
-                        onClick={() => {
-                          haptic.light();
-                          onUpdate('bs7671Compliance', formData.bs7671Compliance === opt.value ? '' : opt.value);
-                        }}
-                        className={cn(
-                          'h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98] border',
-                          formData.bs7671Compliance === opt.value
-                            ? opt.activeClass
-                            : 'bg-white/[0.05] text-white border-white/[0.08]'
-                        )}
-                      >
-                        {opt.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-xs text-white block">Building Regs Compliance</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {[
-                      { value: 'yes', label: 'Yes', activeClass: 'bg-green-500/20 border-green-500/40 text-green-400' },
-                      { value: 'no', label: 'No', activeClass: 'bg-red-500/20 border-red-500/40 text-red-400' },
-                      { value: 'na', label: 'N/A', activeClass: 'bg-elec-yellow/20 border-elec-yellow/40 text-elec-yellow' },
-                    ].map((opt) => (
-                      <button
-                        key={opt.value}
-                        type="button"
-                        onClick={() => {
-                          haptic.light();
-                          onUpdate('buildingRegsCompliance', formData.buildingRegsCompliance === opt.value ? '' : opt.value);
-                        }}
-                        className={cn(
-                          'h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98] border',
-                          formData.buildingRegsCompliance === opt.value
-                            ? opt.activeClass
-                            : 'bg-white/[0.05] text-white border-white/[0.08]'
-                        )}
-                      >
-                        {opt.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
+                  {opt.label}
+                </button>
+              ))}
             </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </div>
+          </div>
 
-      {/* Overall Assessment Section - Edge to Edge */}
-      <div>
-        <Collapsible defaultOpen={true}>
-          <CollapsibleTrigger className="w-full" asChild>
-            <button
-              onClick={() => haptic.light()}
-              className="w-full flex items-center justify-between py-2 px-4 touch-manipulation active:scale-[0.98]"
-            >
-              <div className="flex-1 text-left">
-                <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-                <h3 className="text-xs font-medium text-white uppercase tracking-wider">Overall Assessment</h3>
-              </div>
-              <ChevronDown className="h-4 w-4 text-white transition-transform ml-3 flex-shrink-0" />
-            </button>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className="px-4 py-3 space-y-4">
-              {/* Single 3-way toggle writes both BS 7671 F1 + F2 fields so PDF formatter is unchanged. */}
-              <div className="space-y-2">
-                <label className="text-xs text-white block">Overall Assessment *</label>
-                <div className="grid grid-cols-3 gap-2">
-                  {[
-                    {
-                      key: 'satisfactory',
-                      label: 'Satisfactory',
-                      assessment: 'satisfactory',
-                      continuedUse: 'yes',
-                      activeClass: 'bg-green-500/20 border border-green-500/40 text-green-400',
-                      onFeedback: () => haptic.success(),
-                    },
-                    {
-                      key: 'with-restrictions',
-                      label: 'With Restrictions',
-                      assessment: 'satisfactory',
-                      continuedUse: 'yes-with-recommendations',
-                      activeClass: 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow',
-                      onFeedback: () => haptic.light(),
-                    },
-                    {
-                      key: 'not-satisfactory',
-                      label: 'Not Satisfactory',
-                      assessment: 'unsatisfactory',
-                      continuedUse: 'no',
-                      activeClass: 'bg-red-500/20 border border-red-500/40 text-red-400',
-                      onFeedback: () => haptic.warning(),
-                    },
-                  ].map((option) => {
-                    const isActive =
-                      formData.overallAssessment === option.assessment &&
-                      formData.satisfactoryForContinuedUse === option.continuedUse;
-                    return (
-                      <button
-                        key={option.key}
-                        type="button"
-                        onClick={() => {
-                          haptic.light();
-                          onUpdate('overallAssessment', option.assessment);
-                          onUpdate('satisfactoryForContinuedUse', option.continuedUse);
-                          option.onFeedback();
-                        }}
-                        className={cn(
-                          'h-11 rounded-lg text-xs font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center text-center px-2',
-                          isActive ? option.activeClass : 'bg-white/[0.05] text-white border border-white/[0.06]'
-                        )}
-                      >
-                        {option.label}
-                      </button>
+          {/* BS 7671 + Building Regs — 3-state (Yes / No / N/A).
+              Building Regs is often N/A on a condition report. */}
+          <div>
+            <Label className={labelCn}>BS 7671 compliance</Label>
+            <div className="grid grid-cols-3 gap-2">
+              {threeStateOptions.map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => {
+                    haptic.light();
+                    onUpdate(
+                      'bs7671Compliance',
+                      formData.bs7671Compliance === opt.value ? '' : opt.value
                     );
-                  })}
-                </div>
-              </div>
-
-              {/* No Remedial Action Required — disabled when any C1/C2 observations exist,
-                  because by definition those require remedial action. */}
-              {(() => {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                const obs: any[] = formData.defectObservations || [];
-                const blockingCount = obs.filter(
-                  (d) => d.defectCode === 'C1' || d.defectCode === 'C2'
-                ).length;
-                const blocked = blockingCount > 0;
-                return (
-                  <div className="space-y-1.5">
-                    <button
-                      type="button"
-                      disabled={blocked}
-                      onClick={() => {
-                        if (blocked) return;
-                        haptic.light();
-                        onUpdate('noRemedialAction', !formData.noRemedialAction);
-                      }}
-                      className={cn(
-                        'w-full h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation flex items-center justify-center gap-2',
-                        !blocked && 'active:scale-[0.98]',
-                        blocked
-                          ? 'bg-white/[0.03] border border-white/[0.06] text-white/40 cursor-not-allowed'
-                          : formData.noRemedialAction
-                            ? 'bg-green-500/20 border border-green-500/40 text-green-400'
-                            : 'bg-white/[0.05] border border-white/[0.08] text-white'
-                      )}
-                    >
-                      {formData.noRemedialAction && !blocked && <Check className="h-3.5 w-3.5" />}
-                      <span>No remedial action required</span>
-                    </button>
-                    {blocked && (
-                      <span className="text-[10px] text-amber-400 block">
-                        Blocked: {blockingCount} C1/C2 observation{blockingCount === 1 ? '' : 's'} require action
-                      </span>
-                    )}
-                  </div>
-                );
-              })()}
-
-              {/* General Condition (Section E — BS 7671:2018+A4:2026) */}
-              <div className="space-y-2">
-                <Label className="text-xs text-white">
-                  General Condition of the Installation (in terms of electrical safety)
-                </Label>
-                <textarea
-                  className="w-full p-3 border border-white/[0.06] bg-white/[0.03] rounded-lg resize-none touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow/50"
-                  style={{ fontSize: '16px' }}
-                  rows={2}
-                  placeholder="e.g., Installation is in a generally satisfactory condition for its age..."
-                  value={formData.generalCondition || ''}
-                  onChange={(e) => onUpdate('generalCondition', e.target.value)}
-                />
-              </div>
-
-              {/* Additional Comments */}
-              <div className="space-y-2">
-                <Label className="text-xs text-white">
-                  Additional Comments
-                </Label>
-                <textarea
-                  className="w-full p-3 border border-white/[0.06] bg-white/[0.03] rounded-lg resize-none touch-manipulation text-base min-h-[100px] focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow/50"
-                  style={{ fontSize: '16px' }}
-                  rows={3}
-                  placeholder="Enter any additional comments or observations..."
-                  value={formData.additionalComments || ''}
-                  onChange={(e) => onUpdate('additionalComments', e.target.value)}
-                />
-              </div>
+                  }}
+                  className={cn(
+                    'h-11 rounded-xl text-sm touch-manipulation transition-all active:scale-[0.98]',
+                    formData.bs7671Compliance === opt.value ? opt.activeClass : chipOff
+                  )}
+                >
+                  {opt.label}
+                </button>
+              ))}
             </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </div>
+          </div>
+          <div>
+            <Label className={labelCn}>Building regs compliance</Label>
+            <div className="grid grid-cols-3 gap-2">
+              {threeStateOptions.map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => {
+                    haptic.light();
+                    onUpdate(
+                      'buildingRegsCompliance',
+                      formData.buildingRegsCompliance === opt.value ? '' : opt.value
+                    );
+                  }}
+                  className={cn(
+                    'h-11 rounded-xl text-sm touch-manipulation transition-all active:scale-[0.98]',
+                    formData.buildingRegsCompliance === opt.value ? opt.activeClass : chipOff
+                  )}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
 
-      {/* Authorisation Signatures Section - Edge to Edge on Mobile */}
-      <div>
-        {/* Copy from Inspector Details - Quick Action */}
-        <div
-          className={cn(
-            'p-4 bg-blue-500/10 border-y border-blue-500/20',
-            isMobile ? '' : 'mx-4 rounded-lg border'
+      {/* Overall assessment */}
+      <div className={cardCn}>
+        <h2 className="text-[15px] font-semibold tracking-tight text-white">Overall assessment</h2>
+
+        {/* ELE-882 — explicit suggestion + Apply instead of silent auto-set.
+            Section E of the model form is strictly SATISFACTORY/UNSATISFACTORY,
+            and any C1/C2 makes it unsatisfactory (producer note 12). */}
+        {blockingObsCount > 0 &&
+          (!formData.overallAssessment || formData.overallAssessment === 'satisfactory') && (
+            <div className="flex items-center justify-between gap-3 rounded-xl border border-elec-yellow/30 bg-white/[0.05] px-3.5 py-2.5">
+              <span className="text-xs text-white">
+                {blockingObsCount} C1/C2 recorded — the report must be{' '}
+                <span className="font-semibold text-elec-yellow">Unsatisfactory</span>
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  haptic.warning();
+                  onUpdate('overallAssessment', 'unsatisfactory');
+                  onUpdate('satisfactoryForContinuedUse', 'no');
+                }}
+                className="h-11 flex-shrink-0 rounded-lg bg-elec-yellow px-4 text-[13px] font-semibold text-black touch-manipulation active:scale-[0.98] transition-all"
+              >
+                Apply
+              </button>
+            </div>
           )}
-        >
-          <Button
-            onClick={() => {
-              haptic.light();
-              const today = new Date().toISOString().split('T')[0];
-              // Inspected By
-              onUpdate('inspectedByName', formData.inspectorName);
-              onUpdate('inspectedBySignature', formData.inspectorSignature);
-              onUpdate('inspectedByForOnBehalfOf', formData.companyName);
-              onUpdate('inspectedByPosition', 'Inspector');
-              onUpdate('inspectedByAddress', formData.companyAddress);
-              onUpdate('inspectedByDate', formData.inspectionDate || today);
-              onUpdate('inspectedByCpScheme', formData.registrationScheme);
-              // Report Authorised By — same person on solo jobs (most common)
-              onUpdate('reportAuthorisedByName', formData.inspectorName);
-              onUpdate('reportAuthorisedBySignature', formData.inspectorSignature);
-              onUpdate('reportAuthorisedByForOnBehalfOf', formData.companyName);
-              onUpdate('reportAuthorisedByPosition', 'Inspector');
-              onUpdate('reportAuthorisedByAddress', formData.companyAddress);
-              onUpdate('reportAuthorisedByDate', formData.inspectionDate || today);
-              onUpdate('reportAuthorisedByMembershipNo', formData.registrationNumber);
-              haptic.success();
-              toast({
-                title: 'Details copied',
-                description: 'Inspector details copied to both signatory sections',
-              });
-            }}
-            className="w-full h-11 touch-manipulation text-sm rounded-lg bg-blue-500/20 border-blue-500/30 text-blue-300 hover:bg-blue-500/30 active:scale-[0.98]"
-            variant="outline"
-          >
-            <User className="h-4 w-4 mr-2" />
-            Copy from Inspector Details (both signatories)
-          </Button>
 
-          {/* Use saved signature — applies a stored signature to every box at once */}
-          {getDefaultSignature() && (
-            <Button
-              onClick={() => {
-                haptic.light();
-                const sig = getDefaultSignature()?.signatureData;
-                if (!sig) return;
-                // Apply to the Inspector Details signature + both signatories + both schedules
-                onUpdate('inspectorSignature', sig);
-                onUpdate('inspectedBySignature', sig);
-                onUpdate('reportAuthorisedBySignature', sig);
-                onUpdate('scheduleInspectedBySignature', sig);
-                onUpdate('scheduleTestedBySignature', sig);
-                haptic.success();
-                toast({
-                  title: 'Saved signature applied',
-                  description: 'Your saved signature has been added to every signature box on this report.',
-                });
-              }}
-              className="w-full h-11 mt-2 touch-manipulation text-sm rounded-lg bg-elec-yellow/15 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/25 active:scale-[0.98]"
-              variant="outline"
-            >
-              <PenTool className="h-4 w-4 mr-2" />
-              Use my saved signature (all boxes)
-            </Button>
+        {/* Two-state toggle (Section E) writes both BS 7671 F1 + F2 fields so the
+            PDF formatter is unchanged. Read path is tolerant of the retired
+            'yes-with-recommendations' pair — old certs still show Satisfactory. */}
+        <div>
+          <Label className={labelCn}>Overall assessment *</Label>
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              {
+                key: 'satisfactory',
+                label: 'Satisfactory',
+                assessment: 'satisfactory',
+                continuedUse: 'yes',
+                activeClass: chipGreen,
+                onFeedback: () => haptic.success(),
+              },
+              {
+                key: 'not-satisfactory',
+                label: 'Not satisfactory',
+                assessment: 'unsatisfactory',
+                continuedUse: 'no',
+                activeClass: chipRed,
+                onFeedback: () => haptic.warning(),
+              },
+            ].map((option) => {
+              const isActive = formData.overallAssessment === option.assessment;
+              return (
+                <button
+                  key={option.key}
+                  type="button"
+                  onClick={() => {
+                    haptic.light();
+                    onUpdate('overallAssessment', option.assessment);
+                    onUpdate('satisfactoryForContinuedUse', option.continuedUse);
+                    option.onFeedback();
+                  }}
+                  className={cn(
+                    'min-h-11 rounded-xl px-2 py-1.5 text-xs touch-manipulation transition-all active:scale-[0.98] flex items-center justify-center text-center',
+                    isActive ? option.activeClass : chipOff
+                  )}
+                >
+                  {option.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* No remedial action required — disabled when any C1/C2 observations exist,
+            because by definition those require remedial action. */}
+        <div>
+          <button
+            type="button"
+            disabled={remedialBlocked}
+            onClick={() => {
+              if (remedialBlocked) return;
+              haptic.light();
+              onUpdate('noRemedialAction', !formData.noRemedialAction);
+            }}
+            className={cn(
+              'w-full h-11 rounded-xl text-sm touch-manipulation transition-all',
+              !remedialBlocked && 'active:scale-[0.98]',
+              remedialBlocked
+                ? cn(chipOff, 'opacity-50 cursor-not-allowed')
+                : formData.noRemedialAction
+                  ? chipGreen
+                  : chipOff
+            )}
+          >
+            No remedial action required
+          </button>
+          {remedialBlocked && (
+            <span className="mt-1.5 block text-[12px] font-medium text-red-400">
+              Blocked: {blockingObsCount} C1/C2 observation{blockingObsCount === 1 ? '' : 's'}{' '}
+              require action
+            </span>
           )}
         </div>
 
-        {/* INSPECTED BY Section - Collapsible */}
-        <Collapsible
-          open={inspectedByOpen}
-          onOpenChange={(open) => {
+        {/* General condition (Section E — BS 7671:2018+A4:2026) */}
+        <div>
+          <Label className={labelCn}>
+            General condition of the installation (in terms of electrical safety)
+          </Label>
+          <textarea
+            className={cn(textareaCn, 'min-h-[80px] resize-none')}
+            rows={2}
+            placeholder="e.g., Installation is in a generally satisfactory condition for its age..."
+            value={formData.generalCondition || ''}
+            onChange={(e) => onUpdate('generalCondition', e.target.value)}
+          />
+        </div>
+
+        {/* Additional comments */}
+        <div>
+          <Label className={labelCn}>Additional comments</Label>
+          <textarea
+            className={cn(textareaCn, 'min-h-[100px] resize-none')}
+            rows={3}
+            placeholder="Enter any additional comments or observations..."
+            value={formData.additionalComments || ''}
+            onChange={(e) => onUpdate('additionalComments', e.target.value)}
+          />
+        </div>
+      </div>
+
+      {/* Signatures — speed tools */}
+      <div className={cardCn}>
+        <h2 className="text-[15px] font-semibold tracking-tight text-white">Signatures</h2>
+        <button
+          type="button"
+          onClick={() => {
             haptic.light();
-            setInspectedByOpen(open);
+            const today = new Date().toISOString().split('T')[0];
+            // Inspected By
+            onUpdate('inspectedByName', formData.inspectorName);
+            onUpdate('inspectedBySignature', formData.inspectorSignature);
+            onUpdate('inspectedByForOnBehalfOf', formData.companyName);
+            onUpdate('inspectedByPosition', 'Inspector');
+            onUpdate('inspectedByAddress', formData.companyAddress);
+            onUpdate('inspectedByDate', formData.inspectionDate || today);
+            onUpdate('inspectedByCpScheme', formData.registrationScheme);
+            // Report Authorised By — same person on solo jobs (most common)
+            onUpdate('reportAuthorisedByName', formData.inspectorName);
+            onUpdate('reportAuthorisedBySignature', formData.inspectorSignature);
+            onUpdate('reportAuthorisedByForOnBehalfOf', formData.companyName);
+            onUpdate('reportAuthorisedByPosition', 'Inspector');
+            onUpdate('reportAuthorisedByAddress', formData.companyAddress);
+            onUpdate('reportAuthorisedByDate', formData.inspectionDate || today);
+            onUpdate('reportAuthorisedByMembershipNo', formData.registrationNumber);
+            haptic.success();
+            toast({
+              title: 'Details copied',
+              description: 'Inspector details copied to both signatory sections',
+            });
           }}
+          className="w-full h-11 rounded-xl text-sm bg-elec-yellow border border-elec-yellow text-black font-semibold touch-manipulation active:scale-[0.98] transition-all"
         >
-          <CollapsibleTrigger className="w-full" asChild>
-            <button
-              className="w-full flex items-center justify-between py-2 px-4 touch-manipulation active:scale-[0.98]"
-            >
-              <div className="flex-1 text-left">
-                <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-                <h3 className="text-xs font-medium text-white uppercase tracking-wider">Inspected By</h3>
-              </div>
-              <ChevronDown className={cn('h-4 w-4 text-white transition-transform ml-3 flex-shrink-0', inspectedByOpen && 'rotate-180')} />
-            </button>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className="px-4 py-3 space-y-3">
-              {/* Name + Signature side by side on wider, stacked on narrow */}
-              <div className="grid grid-cols-2 gap-3 items-end">
-                <div className="space-y-1.5">
-                  <Label className="text-xs text-white">Name *</Label>
-                  <Input
-                    value={formData.inspectedByName || ''}
-                    onChange={(e) => onUpdate('inspectedByName', e.target.value.toUpperCase())}
-                    placeholder="FULL NAME"
-                    className="uppercase h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label className="text-xs text-white">Position</Label>
-                  <Input
-                    value={formData.inspectedByPosition || ''}
-                    onChange={(e) => onUpdate('inspectedByPosition', e.target.value)}
-                    placeholder="Job title"
-                    className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-                  />
-                </div>
-              </div>
+          Copy from inspector details (both signatories)
+        </button>
 
-              <div className="space-y-1.5">
-                <Label className="text-xs text-white">Signature *</Label>
-                <SignatureInput
-                  value={formData.inspectedBySignature || ''}
-                  onChange={(value) => onUpdate('inspectedBySignature', value || '')}
-                  placeholder="Signature of inspector"
-                  required={true}
-                />
-              </div>
+        {/* Use saved signature — applies a stored signature to every box at once */}
+        {getDefaultSignature() && (
+          <button
+            type="button"
+            onClick={() => {
+              haptic.light();
+              const sig = getDefaultSignature()?.signatureData;
+              if (!sig) return;
+              // Apply to the Inspector Details signature + both signatories + both schedules
+              onUpdate('inspectorSignature', sig);
+              onUpdate('inspectedBySignature', sig);
+              onUpdate('reportAuthorisedBySignature', sig);
+              onUpdate('scheduleInspectedBySignature', sig);
+              onUpdate('scheduleTestedBySignature', sig);
+              haptic.success();
+              toast({
+                title: 'Saved signature applied',
+                description:
+                  'Your saved signature has been added to every signature box on this report.',
+              });
+            }}
+            className={cn(secondaryBtnCn, 'w-full h-11 text-sm')}
+          >
+            Use my saved signature (all boxes)
+          </button>
+        )}
+      </div>
 
-              <div className="grid grid-cols-2 gap-3 items-end">
-                <div className="space-y-1.5">
-                  <Label className="text-xs text-white">For/on behalf of</Label>
-                  <Input
-                    value={formData.inspectedByForOnBehalfOf || ''}
-                    onChange={(e) => onUpdate('inspectedByForOnBehalfOf', e.target.value)}
-                    placeholder="Company name"
-                    className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label className="text-xs text-white">Address</Label>
-                  <Input
-                    value={formData.inspectedByAddress || ''}
-                    onChange={(e) => onUpdate('inspectedByAddress', e.target.value)}
-                    placeholder="Full address"
-                    className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-xs text-white">CP Scheme</Label>
-                <div className="flex items-center gap-3">
-                  <Input
-                    value={formData.inspectedByCpScheme || ''}
-                    onChange={(e) => onUpdate('inspectedByCpScheme', e.target.value)}
-                    placeholder="Competent Person Scheme"
-                    disabled={formData.inspectedByCpSchemeNA}
-                    className={cn(
-                      'flex-1 h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]',
-                      formData.inspectedByCpSchemeNA && 'opacity-50'
-                    )}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => {
-                      haptic.light();
-                      const newValue = !formData.inspectedByCpSchemeNA;
-                      onUpdate('inspectedByCpSchemeNA', newValue);
-                      if (newValue) onUpdate('inspectedByCpScheme', '');
-                    }}
-                    className={cn(
-                      'h-11 px-4 rounded-lg font-medium transition-all touch-manipulation',
-                      formData.inspectedByCpSchemeNA
-                        ? 'bg-gray-500 text-white'
-                        : 'bg-white/[0.05] text-white border border-white/[0.06]'
-                    )}
-                  >
-                    N/A
-                  </button>
-                </div>
-              </div>
-              {/* Date (A4:2026 Section G — Inspected and tested by) */}
-              <div className="space-y-1.5">
-                <Label className="text-xs text-white">Date</Label>
-                <Input
-                  type="date"
-                  value={formData.inspectedByDate || ''}
-                  onChange={(e) => onUpdate('inspectedByDate', e.target.value)}
-                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-                />
-              </div>
+      {/* Inspected by */}
+      <CollapsibleSection
+        title="Inspected by"
+        isOpen={inspectedByOpen}
+        onToggle={() => {
+          haptic.light();
+          setInspectedByOpen((prev) => !prev);
+        }}
+      >
+        <div className="space-y-4 pt-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+            <div>
+              <Label className={labelCn}>Name *</Label>
+              <Input
+                value={formData.inspectedByName || ''}
+                onChange={(e) => onUpdate('inspectedByName', e.target.value.toUpperCase())}
+                placeholder="FULL NAME"
+                className={cn(inputCn, 'uppercase')}
+              />
             </div>
-          </CollapsibleContent>
-        </Collapsible>
+            <div>
+              <Label className={labelCn}>Position</Label>
+              <Input
+                value={formData.inspectedByPosition || ''}
+                onChange={(e) => onUpdate('inspectedByPosition', e.target.value)}
+                placeholder="Job title"
+                className={inputCn}
+              />
+            </div>
+          </div>
 
-        {/* REPORT AUTHORISED BY Section - Collapsible */}
-        <Collapsible
-          open={authorisedByOpen}
-          onOpenChange={(open) => {
-            haptic.light();
-            setAuthorisedByOpen(open);
-          }}
-        >
-          <CollapsibleTrigger className="w-full" asChild>
-            <button
-              className="w-full flex items-center justify-between py-2 px-4 touch-manipulation active:scale-[0.98]"
-            >
-              <div className="flex-1 text-left">
-                <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-                <h3 className="text-xs font-medium text-white uppercase tracking-wider">Report Authorised By</h3>
-              </div>
-              <ChevronDown className={cn('h-4 w-4 text-white transition-transform ml-3 flex-shrink-0', authorisedByOpen && 'rotate-180')} />
-            </button>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className="px-4 py-3 space-y-4">
-              {/* Same as Inspected By Quick Action */}
+          <div>
+            <Label className={labelCn}>Signature *</Label>
+            <SignatureInput
+              value={formData.inspectedBySignature || ''}
+              onChange={(value) => onUpdate('inspectedBySignature', value || '')}
+              placeholder="Signature of inspector"
+              required={true}
+            />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+            <div>
+              <Label className={labelCn}>For/on behalf of</Label>
+              <Input
+                value={formData.inspectedByForOnBehalfOf || ''}
+                onChange={(e) => onUpdate('inspectedByForOnBehalfOf', e.target.value)}
+                placeholder="Company name"
+                className={inputCn}
+              />
+            </div>
+            <div>
+              <Label className={labelCn}>Address</Label>
+              <Input
+                value={formData.inspectedByAddress || ''}
+                onChange={(e) => onUpdate('inspectedByAddress', e.target.value)}
+                placeholder="Full address"
+                className={inputCn}
+              />
+            </div>
+          </div>
+
+          <div>
+            <Label className={labelCn}>CP scheme</Label>
+            <div className="flex items-end gap-3">
+              <Input
+                value={formData.inspectedByCpScheme || ''}
+                onChange={(e) => onUpdate('inspectedByCpScheme', e.target.value)}
+                placeholder="Competent person scheme"
+                disabled={formData.inspectedByCpSchemeNA}
+                className={cn(
+                  inputCn,
+                  'flex-1',
+                  formData.inspectedByCpSchemeNA && 'opacity-50'
+                )}
+              />
               <button
                 type="button"
                 onClick={() => {
                   haptic.light();
-                  const newValue = !formData.sameAsInspectedBy;
-                  onUpdate('sameAsInspectedBy', newValue);
-                  if (newValue) {
-                    onUpdate('reportAuthorisedByName', formData.inspectedByName);
-                    onUpdate('reportAuthorisedBySignature', formData.inspectedBySignature);
-                    onUpdate('reportAuthorisedByDate', new Date().toISOString().split('T')[0]);
-                    onUpdate('reportAuthorisedByForOnBehalfOf', formData.inspectedByForOnBehalfOf);
-                    onUpdate('reportAuthorisedByPosition', formData.inspectedByPosition);
-                    onUpdate('reportAuthorisedByAddress', formData.inspectedByAddress);
-                    onUpdate('reportAuthorisedByMembershipNo', formData.inspectedByCpScheme);
-                    haptic.success();
-                  }
+                  const newValue = !formData.inspectedByCpSchemeNA;
+                  onUpdate('inspectedByCpSchemeNA', newValue);
+                  if (newValue) onUpdate('inspectedByCpScheme', '');
                 }}
                 className={cn(
-                  'w-full h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2',
-                  formData.sameAsInspectedBy
-                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                  'h-11 px-4 rounded-xl text-sm touch-manipulation transition-all active:scale-[0.98]',
+                  formData.inspectedByCpSchemeNA ? chipOn : chipOff
                 )}
               >
-                {formData.sameAsInspectedBy && <Check className="h-3.5 w-3.5" />}
-                Same as Inspected By
+                N/A
               </button>
-
-              {/* Row 1: Name + Date */}
-              <div className="grid grid-cols-2 gap-3 items-end">
-                <div className="space-y-1.5">
-                  <Label className="text-xs text-white">Name *</Label>
-                  <Input
-                    value={formData.reportAuthorisedByName || ''}
-                    onChange={(e) => onUpdate('reportAuthorisedByName', e.target.value.toUpperCase())}
-                    placeholder="FULL NAME"
-                    className="uppercase h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label className="text-xs text-white">Date *</Label>
-                  <Input
-                    type="date"
-                    value={formData.reportAuthorisedByDate || ''}
-                    onChange={(e) => onUpdate('reportAuthorisedByDate', e.target.value)}
-                    className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-                  />
-                </div>
-              </div>
-
-              {/* Row 2: Signature */}
-              <div className="space-y-1.5">
-                <Label className="text-xs text-white">Signature *</Label>
-                <SignatureInput
-                  value={formData.reportAuthorisedBySignature || ''}
-                  onChange={(value) => onUpdate('reportAuthorisedBySignature', value || '')}
-                  placeholder="Signature of authorising person"
-                  required={true}
-                />
-              </div>
-
-              {/* Row 3: Company + Position */}
-              <div className="grid grid-cols-2 gap-3 items-end">
-                <div className="space-y-1.5">
-                  <Label className="text-xs text-white">For/on behalf of</Label>
-                  <Input
-                    value={formData.reportAuthorisedByForOnBehalfOf || ''}
-                    onChange={(e) => onUpdate('reportAuthorisedByForOnBehalfOf', e.target.value)}
-                    placeholder="Company name"
-                    className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label className="text-xs text-white">Position</Label>
-                  <Input
-                    value={formData.reportAuthorisedByPosition || ''}
-                    onChange={(e) => onUpdate('reportAuthorisedByPosition', e.target.value)}
-                    placeholder="Job title"
-                    className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-                  />
-                </div>
-              </div>
-
-              {/* Row 4: Address + Membership */}
-              <div className="grid grid-cols-2 gap-3 items-end">
-                <div className="space-y-1.5">
-                  <Label className="text-xs text-white">Address</Label>
-                  <Input
-                    value={formData.reportAuthorisedByAddress || ''}
-                    onChange={(e) => onUpdate('reportAuthorisedByAddress', e.target.value)}
-                    placeholder="Full address"
-                    className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label className="text-xs text-white">Membership No</Label>
-                  <Input
-                    value={formData.reportAuthorisedByMembershipNo || ''}
-                    onChange={(e) => onUpdate('reportAuthorisedByMembershipNo', e.target.value)}
-                    placeholder="Registration number"
-                    className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-                  />
-                </div>
-              </div>
             </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </div>
-
-      {/* Qualifying Supervisor review (team members only) */}
-      <div className="px-4">
-        <QsReviewPanel
-          reportId={effectiveReportId}
-          reportType="eicr"
-          onBeforeSubmit={async () => {
-            await syncNow?.();
-          }}
-        />
-      </div>
-
-      {/* Generate Certificate - Fixed Bottom Bar on Mobile */}
-      <div
-        className={cn(
-          'border-y border-white/[0.06] bg-white/[0.03]',
-          isMobile ? 'p-4' : 'p-6 mx-4 rounded-lg border'
-        )}
-      >
-        {/* Action Buttons */}
-        <div className="space-y-3 px-4">
-          <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
-
-          {/*
-            A QS-approved cert is complete by definition — don't grey on an
-            in-editor completeness recompute that can transiently fail and leave
-            an approved cert un-generatable (ELE-1183). Tapping an approved cert
-            then either generates or surfaces the 'edited after approval' toast.
-          */}
-          <Button
-            className="w-full h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-sm rounded-lg transition-all active:scale-[0.98] touch-manipulation"
-            onClick={() => {
-              haptic.light();
-              handleGenerateCertificate();
-            }}
-            disabled={
-              (!isFormComplete() && qsReviewStatus?.status !== 'approved') || isGenerating
-            }
-          >
-            {isGenerating ? 'Generating...' : 'Generate PDF'}
-          </Button>
-
-          <div className="grid grid-cols-3 gap-2">
-            <button
-              className="h-11 rounded-lg bg-white/[0.08] border border-white/[0.12] text-xs font-semibold text-white touch-manipulation active:scale-[0.98] disabled:opacity-40"
-              onClick={() => { haptic.light(); setShowEmailDialog(true); }}
-              disabled={!isFormComplete() && qsReviewStatus?.status !== 'approved'}
-            >
-              Email
-            </button>
-            <button
-              className="h-11 rounded-lg bg-white/[0.08] border border-white/[0.12] text-xs font-semibold text-white touch-manipulation active:scale-[0.98]"
-              onClick={() => { haptic.light(); setShowQuoteOptions(true); }}
-            >
-              Quote
-            </button>
-            <button
-              className="h-11 rounded-lg bg-white/[0.08] border border-white/[0.12] text-xs font-semibold text-white touch-manipulation active:scale-[0.98]"
-              onClick={handleCreateInvoice}
-            >
-              Invoice
-            </button>
           </div>
 
-          {/* Danger Notice — only when C1 observations exist */}
-          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-          {formData.defectObservations?.some((d: any) => d.defectCode === 'C1') && (() => {
-            const c1Observations =
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              formData.defectObservations?.filter((d: any) => d.defectCode === 'C1') || [];
-            const c1Count = c1Observations.length;
-            return (
+          {/* Date (A4:2026 Section G — Inspected and tested by) */}
+          <div>
+            <Label className={labelCn}>Date</Label>
+            <Input
+              type="date"
+              value={formData.inspectedByDate || ''}
+              onChange={(e) => onUpdate('inspectedByDate', e.target.value)}
+              className={inputCn}
+            />
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* Report authorised by */}
+      <CollapsibleSection
+        title="Report authorised by"
+        isOpen={authorisedByOpen}
+        onToggle={() => {
+          haptic.light();
+          setAuthorisedByOpen((prev) => !prev);
+        }}
+      >
+        <div className="space-y-4 pt-1">
+          {/* Same as Inspected By quick action */}
+          <button
+            type="button"
+            onClick={() => {
+              haptic.light();
+              const newValue = !formData.sameAsInspectedBy;
+              onUpdate('sameAsInspectedBy', newValue);
+              if (newValue) {
+                onUpdate('reportAuthorisedByName', formData.inspectedByName);
+                onUpdate('reportAuthorisedBySignature', formData.inspectedBySignature);
+                onUpdate('reportAuthorisedByDate', new Date().toISOString().split('T')[0]);
+                onUpdate('reportAuthorisedByForOnBehalfOf', formData.inspectedByForOnBehalfOf);
+                onUpdate('reportAuthorisedByPosition', formData.inspectedByPosition);
+                onUpdate('reportAuthorisedByAddress', formData.inspectedByAddress);
+                onUpdate('reportAuthorisedByMembershipNo', formData.inspectedByCpScheme);
+                haptic.success();
+              }
+            }}
+            className={cn(
+              'w-full h-11 rounded-xl text-sm touch-manipulation transition-all active:scale-[0.98]',
+              formData.sameAsInspectedBy ? chipOn : chipOff
+            )}
+          >
+            Same as inspected by
+          </button>
+
+          {/* Row 1: Name + Date */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+            <div>
+              <Label className={labelCn}>Name *</Label>
+              <Input
+                value={formData.reportAuthorisedByName || ''}
+                onChange={(e) => onUpdate('reportAuthorisedByName', e.target.value.toUpperCase())}
+                placeholder="FULL NAME"
+                className={cn(inputCn, 'uppercase')}
+              />
+            </div>
+            <div>
+              <Label className={labelCn}>Date *</Label>
+              <Input
+                type="date"
+                value={formData.reportAuthorisedByDate || ''}
+                onChange={(e) => onUpdate('reportAuthorisedByDate', e.target.value)}
+                className={inputCn}
+              />
+            </div>
+          </div>
+
+          {/* Row 2: Signature */}
+          <div>
+            <Label className={labelCn}>Signature *</Label>
+            <SignatureInput
+              value={formData.reportAuthorisedBySignature || ''}
+              onChange={(value) => onUpdate('reportAuthorisedBySignature', value || '')}
+              placeholder="Signature of authorising person"
+              required={true}
+            />
+          </div>
+
+          {/* Row 3: Company + Position */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+            <div>
+              <Label className={labelCn}>For/on behalf of</Label>
+              <Input
+                value={formData.reportAuthorisedByForOnBehalfOf || ''}
+                onChange={(e) => onUpdate('reportAuthorisedByForOnBehalfOf', e.target.value)}
+                placeholder="Company name"
+                className={inputCn}
+              />
+            </div>
+            <div>
+              <Label className={labelCn}>Position</Label>
+              <Input
+                value={formData.reportAuthorisedByPosition || ''}
+                onChange={(e) => onUpdate('reportAuthorisedByPosition', e.target.value)}
+                placeholder="Job title"
+                className={inputCn}
+              />
+            </div>
+          </div>
+
+          {/* Row 4: Address + Membership */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+            <div>
+              <Label className={labelCn}>Address</Label>
+              <Input
+                value={formData.reportAuthorisedByAddress || ''}
+                onChange={(e) => onUpdate('reportAuthorisedByAddress', e.target.value)}
+                placeholder="Full address"
+                className={inputCn}
+              />
+            </div>
+            <div>
+              <Label className={labelCn}>Membership no</Label>
+              <Input
+                value={formData.reportAuthorisedByMembershipNo || ''}
+                onChange={(e) => onUpdate('reportAuthorisedByMembershipNo', e.target.value)}
+                placeholder="Registration number"
+                className={inputCn}
+              />
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* Qualifying Supervisor review (team members only) */}
+      <QsReviewPanel
+        reportId={effectiveReportId}
+        reportType="eicr"
+        onBeforeSubmit={async () => {
+          await syncNow?.();
+        }}
+      />
+
+      {/* Certificate actions — completion state + companion tools only.
+          ELE-1460: no inline Generate/Email/Invoice duplicates — the sticky
+          shell footer is their single home. The tappable hint below explains
+          the footer gate. */}
+      <div className={cardCn}>
+        <h2 className="text-[15px] font-semibold tracking-tight text-white">
+          Certificate actions
+        </h2>
+
+        {/* Section completion — compact row */}
+        <div className="grid grid-cols-4 gap-2">
+          {completionSections.map((section) => (
+            <div
+              key={section.label}
+              className={cn(
+                'h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] flex items-center justify-center px-1 text-center text-[11px] font-semibold',
+                section.done ? 'text-green-400' : 'text-white'
+              )}
+            >
+              {section.label}
+            </div>
+          ))}
+        </div>
+
+        {/* Validation hint — inline, tappable to open the full list. Same
+            checks handleGenerateCertificate gates on, so they always agree. */}
+        {showCompletionHint && (
+          <button
+            type="button"
+            onClick={() => {
+              haptic.light();
+              setShowMissingSheet(true);
+            }}
+            className="w-full min-h-11 flex items-center text-left text-[12px] font-medium text-elec-yellow touch-manipulation"
+          >
+            {missingItems.length} item{missingItems.length === 1 ? '' : 's'} to complete before
+            generating — tap to see
+          </button>
+        )}
+
+        {/* Quote lives here (not in the footer) — remedial works from observations */}
+        <button
+          type="button"
+          onClick={() => {
+            haptic.light();
+            setShowQuoteOptions(true);
+          }}
+          className={cn(secondaryBtnCn, 'w-full h-11 text-sm')}
+        >
+          Quote remedial works
+        </button>
+
+        {/* Danger notice — only when C1 observations exist */}
+        {c1Count > 0 && (
+          <button
+            type="button"
+            className="w-full h-11 rounded-xl border border-red-500/40 bg-white/[0.06] text-sm font-semibold text-red-400 touch-manipulation active:scale-[0.98] transition-all"
+            onClick={() => {
+              navigate('/electrician/inspection-testing/danger-notice', {
+                state: {
+                  fromEicr: true,
+                  eicrCertNumber: formData.certificateNumber || '',
+                  clientName: formData.clientName || '',
+                  installationAddress: formData.installationAddress || '',
+                  clientPhone: formData.clientPhone || '',
+                  clientEmail: formData.clientEmail || '',
+                  inspectorName: formData.inspectorName || '',
+                  inspectorCompany: formData.companyName || '',
+                  inspectorPhone: formData.companyPhone || '',
+                  inspectorEmail: formData.companyEmail || '',
+                  inspectorRegistration: formData.registrationNumber || '',
+                  inspectorScheme: formData.registrationScheme || '',
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  observations: c1Observations.map((obs: any) => ({
+                    description: obs.description,
+                    item: obs.item,
+                    regulation: obs.regulation || '',
+                    recommendation: obs.recommendation,
+                    photos: obs.photos || [],
+                  })),
+                },
+              });
+            }}
+          >
+            Danger notice{c1Count > 1 ? ` (${c1Count} C1s)` : ''}
+          </button>
+        )}
+      </div>
+
+      {/* Missing-items sheet — the tappable hint's full list (EIC pattern) */}
+      <Sheet open={showMissingSheet} onOpenChange={setShowMissingSheet}>
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] p-0 bg-background border-white/[0.14] rounded-t-2xl overflow-hidden"
+        >
+          <div className="flex flex-col h-full bg-background">
+            <div className="px-4 pt-4 pb-3 border-b border-white/[0.1]">
+              <SheetTitle className="text-white text-left">
+                {missingItems.length} item{missingItems.length === 1 ? '' : 's'} to complete
+              </SheetTitle>
+            </div>
+            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+              <p className="text-[12px] text-white">Finish these then tap Generate again.</p>
+              <div className="space-y-1.5">
+                {missingItems.map((item) => (
+                  <div
+                    key={item.label}
+                    className="px-3 py-2 rounded-xl bg-white/[0.06] border border-white/[0.12]"
+                  >
+                    <span className="text-sm text-white">{item.label}</span>
+                    <span className="ml-2 text-[12px] font-semibold text-elec-yellow">
+                      {item.where}
+                    </span>
+                  </div>
+                ))}
+              </div>
               <button
-                className="w-full h-11 rounded-lg bg-red-500/15 border border-red-500/40 text-xs font-semibold text-red-400 touch-manipulation active:scale-[0.98]"
-                onClick={() => {
-                  navigate('/electrician/inspection-testing/danger-notice', {
-                    state: {
-                      fromEicr: true,
-                      eicrCertNumber: formData.certificateNumber || '',
-                      clientName: formData.clientName || '',
-                      installationAddress: formData.installationAddress || '',
-                      clientPhone: formData.clientPhone || '',
-                      clientEmail: formData.clientEmail || '',
-                      inspectorName: formData.inspectorName || '',
-                      inspectorCompany: formData.companyName || '',
-                      inspectorPhone: formData.companyPhone || '',
-                      inspectorEmail: formData.companyEmail || '',
-                      inspectorRegistration: formData.registrationNumber || '',
-                      inspectorScheme: formData.registrationScheme || '',
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      observations: c1Observations.map((obs: any) => ({
-                        description: obs.description,
-                        item: obs.item,
-                        regulation: obs.regulation || '',
-                        recommendation: obs.recommendation,
-                        photos: obs.photos || [],
-                      })),
-                    },
-                  });
+                type="button"
+                onClick={() => setShowMissingSheet(false)}
+                className={cn(secondaryBtnCn, 'w-full h-12 text-sm font-semibold')}
+              >
+                Got it
+              </button>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      {/* PDF generation sheet */}
+      <Sheet open={showDialog} onOpenChange={setShowDialog}>
+        <SheetContent side="bottom" className="bg-background border-white/[0.14] rounded-t-2xl">
+          <SheetHeader>
+            <SheetTitle className="text-white text-left">Generating EICR certificate</SheetTitle>
+          </SheetHeader>
+          {isGenerating && !pdfUrl && !generationError && (
+            <div className="flex items-center gap-3 py-4 text-white">
+              <Loader2 className="h-5 w-5 animate-spin" />
+              <span className="text-sm">Generating your professional EICR certificate...</span>
+            </div>
+          )}
+          {pdfUrl && (
+            <div className="space-y-4 py-4">
+              <div className="flex items-center gap-2 text-green-400">
+                <CheckCircle className="h-5 w-5" />
+                <span className="text-sm">Certificate generated successfully</span>
+              </div>
+              <Button
+                className="w-full h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold rounded-xl touch-manipulation"
+                onClick={async () => {
+                  if (pdfUrl) {
+                    try {
+                      const filename = `${formData.metadata?.certificate_number || formData.certificateNumber || 'certificate'}.pdf`;
+                      await openOrDownloadPdf(pdfUrl, filename);
+
+                      setShowDialog(false);
+
+                      toast({
+                        title: 'Certificate completed',
+                        description: 'Your EICR certificate has been marked as completed.',
+                      });
+                    } catch (error) {
+                      console.error('Download error:', error);
+                      toast({
+                        title: 'Download failed',
+                        description: 'Please try again or check your internet connection.',
+                        variant: 'destructive',
+                      });
+                    }
+                  }
                 }}
               >
-                Danger Notice{c1Count > 1 ? ` (${c1Count} C1s)` : ''}
-              </button>
-            );
-          })()}
-        </div>
-      </div>
-
-      {/* JSON Data Viewer - Hidden on Mobile */}
-      <div className={cn('hidden sm:block', isMobile ? 'px-4' : '')}>
-        <Collapsible open={isJsonOpen} onOpenChange={handleToggleJsonPreview}>
-          <CollapsibleTrigger className="w-full" asChild>
-            <button
-              onClick={() => haptic.light()}
-              className="w-full flex items-center justify-between py-2 px-4 touch-manipulation active:scale-[0.98]"
-            >
-              <div className="flex-1 text-left">
-                <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-white/[0.06] to-transparent mb-2" />
-                <h3 className="text-xs font-medium text-white uppercase tracking-wider">Developer Tools</h3>
-              </div>
-              <ChevronDown className={cn('h-4 w-4 text-white/20 transition-transform ml-3 flex-shrink-0', isJsonOpen && 'rotate-180')} />
-            </button>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className={cn('p-4 bg-white/[0.02]', isMobile ? '' : 'px-6')}>
-              <div className="flex justify-end mb-3">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleCopyJson}
-                  className="h-11 gap-2 border-elec-yellow/30 hover:bg-elec-yellow/10 touch-manipulation rounded-lg active:scale-[0.98]"
-                >
-                  <Copy className="h-4 w-4" />
-                  Copy JSON
-                </Button>
-              </div>
-              <div className="bg-background/50 rounded-lg border border-white/[0.06] overflow-hidden">
-                <div className="bg-white/[0.03] px-4 py-2 border-b border-white/[0.06] flex items-center justify-between">
-                  <span className="text-xs font-mono text-elec-yellow">form_data.json</span>
-                  <span className="text-xs text-white">Formatted EICR Data</span>
-                </div>
-                <div className="p-4 max-h-96 overflow-y-auto">
-                  <pre className="text-xs font-mono text-white whitespace-pre-wrap break-words leading-relaxed">
-                    {formattedJsonPreview || 'Loading...'}
-                  </pre>
-                </div>
-              </div>
+                <FileDown className="h-4 w-4 mr-2" />
+                Download certificate
+              </Button>
             </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </div>
+          )}
+          {generationError && (
+            <div className="space-y-2 py-4">
+              <div className="flex items-center gap-2 text-red-400">
+                <AlertTriangle className="h-5 w-5" />
+                <span className="text-sm">Cloud generation failed</span>
+              </div>
+              <p className="text-sm text-white">Please check your connection and try again.</p>
+            </div>
+          )}
+        </SheetContent>
+      </Sheet>
 
-      {/* PDF Generation Dialog */}
-      <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Generating EICR Certificate</DialogTitle>
-            <DialogDescription>
-              {isGenerating && !pdfUrl && !generationError && (
-                <div className="flex items-center gap-3 py-4">
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                  <span>Generating your professional EICR certificate...</span>
-                </div>
-              )}
-              {pdfUrl && (
-                <div className="space-y-4 py-4">
-                  <div className="flex items-center gap-2 text-green-600">
-                    <CheckCircle className="h-5 w-5" />
-                    <span>Certificate generated successfully!</span>
-                  </div>
-                  <Button
-                    className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                    onClick={async () => {
-                      if (pdfUrl) {
-                        try {
-                          const filename = `${formData.metadata?.certificate_number || formData.certificateNumber || 'certificate'}.pdf`;
-                          await openOrDownloadPdf(pdfUrl, filename);
-
-                          setShowDialog(false);
-
-                          toast({
-                            title: 'Certificate Completed',
-                            description: 'Your EICR certificate has been marked as completed.',
-                          });
-                        } catch (error) {
-                          console.error('Download error:', error);
-                          toast({
-                            title: 'Download Failed',
-                            description: 'Please try again or check your internet connection.',
-                            variant: 'destructive',
-                          });
-                        }
-                      }
-                    }}
-                  >
-                    <FileDown className="h-4 w-4 mr-2" />
-                    Download Certificate
-                  </Button>
-                </div>
-              )}
-              {generationError && (
-                <div className="space-y-2 py-4">
-                  <div className="flex items-center gap-2 text-red-600">
-                    <AlertTriangle className="h-5 w-5" />
-                    <span>Cloud generation failed</span>
-                  </div>
-                  <p className="text-sm text-white">
-                    Please check your connection and try again.
-                  </p>
-                </div>
-              )}
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
-
-      {/* Save Customer Dialog */}
+      {/* Save customer dialog */}
       <CreateCustomerDialog
         open={showCustomerDialog}
         onOpenChange={setShowCustomerDialog}
@@ -1702,7 +1532,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         }}
       />
 
-      {/* Email Certificate Dialog */}
+      {/* Email certificate dialog */}
       <EmailCertificateDialog
         open={showEmailDialog}
         onOpenChange={setShowEmailDialog}
@@ -1718,7 +1548,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         isLoading={isEmailSending}
       />
 
-      {/* Quote Options Sheet */}
+      {/* Quote options sheet */}
       <QuoteOptionsSheet
         open={showQuoteOptions}
         onOpenChange={setShowQuoteOptions}
@@ -1726,7 +1556,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         onSendToQuote={handleSendToQuote}
       />
 
-      {/* AI Estimator Sheet */}
+      {/* AI estimator sheet */}
       <AIEstimatorSheet
         open={showEstimatorSheet}
         onOpenChange={(open) => {

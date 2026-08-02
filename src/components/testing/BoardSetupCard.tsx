@@ -1,15 +1,15 @@
 import React from 'react';
+import { useHaptic } from '@/hooks/useHaptic';
 import { Input } from '@/components/ui/input';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
-import { ChevronDown, ChevronUp, Trash2 } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   DistributionBoard,
+  MAIN_BOARD_ID,
   isMainBoard as isMainBoardFn,
   getBoardWays,
-  BOARD_TYPES,
   BOARD_LOCATIONS,
-  BOARD_SIZES,
   BoardType,
 } from '@/types/distributionBoard';
 
@@ -135,7 +135,18 @@ const MAIN_SWITCH_RATINGS = [
 ];
 
 const inputCn =
-  'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow';
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const pickerTriggerCn =
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
+
+// rounded-xl matches the MW ground-truth chips (MWDetailsTab/MWTestingTab).
+const chipBase =
+  'h-11 rounded-xl text-[12px] font-medium transition-all touch-manipulation active:scale-[0.97]';
+const chipOn = 'bg-elec-yellow border border-elec-yellow text-black font-semibold';
+const chipOff = 'bg-white/[0.06] border border-white/[0.12] text-white';
 
 const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
   board,
@@ -156,26 +167,42 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
   const isEic = certType === 'eic';
   // ELE-830: Main-ness is position-based (order === 0), not ID-based.
   // The dual-check preserves backwards compatibility with legacy certs where
-  // the main always had id='main-cu'.
-  const isMainBoard = isMainBoardFn(board);
-  const canReorder = (onMoveUp || onMoveDown) !== undefined;
+  // the main always had id='main-cu' (matches BoardSection.tsx).
+  const isMainBoard = isMainBoardFn(board) || board.id === MAIN_BOARD_ID;
+  // Hide the reorder chevrons entirely when this is the only board — nothing
+  // to reorder, so no permanently-disabled controls.
+  const canReorder = (onMoveUp !== undefined || onMoveDown !== undefined) && !(isFirst && isLast);
+  const haptic = useHaptic();
 
   return (
-    <div className={cn('space-y-3', className)}>
+    <div
+      className={cn(
+        // EIC details tab renders inside a px-4 column whose sibling cards are
+        // full-bleed on mobile — match that treatment. Other hosts (EICR
+        // section, EICR wizard Card) keep the inset rounded card.
+        isEic
+          ? '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x'
+          : 'rounded-2xl border border-white/[0.14]',
+        'bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4',
+        className
+      )}
+      // Delegated press haptic — every chip/button tap in the board card buzzes
+      // like the MW tabs without wiring each onClick individually.
+      onPointerDown={(e) => {
+        if ((e.target as HTMLElement).closest('button')) haptic.light();
+      }}
+    >
       {/* Board Header */}
-      <div className="space-y-2">
-        <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
+      <div>
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 min-w-0 flex-1">
-            <h3 className="text-xs font-medium text-white uppercase tracking-wider truncate">
+            <h3 className="text-[15px] font-semibold tracking-tight text-white truncate">
               {board.name}
             </h3>
             <span
               className={cn(
-                'text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded shrink-0',
-                isMainBoard
-                  ? 'bg-elec-yellow/15 border border-elec-yellow/40 text-elec-yellow'
-                  : 'bg-blue-500/15 border border-blue-500/40 text-blue-300'
+                'text-[11px] font-semibold shrink-0',
+                isMainBoard ? 'text-elec-yellow' : 'text-white/85'
               )}
             >
               {isMainBoard ? 'Main board' : 'Sub-board'}
@@ -191,7 +218,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
                   disabled={isFirst}
                   aria-label={`Move ${board.name} up`}
                   className={cn(
-                    'h-11 w-11 rounded-md flex items-center justify-center touch-manipulation',
+                    'h-11 w-11 rounded-xl flex items-center justify-center touch-manipulation',
                     'border border-white/[0.08] text-white active:scale-[0.98]',
                     isFirst
                       ? 'opacity-25 cursor-not-allowed'
@@ -206,7 +233,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
                   disabled={isLast}
                   aria-label={`Move ${board.name} down`}
                   className={cn(
-                    'h-11 w-11 rounded-md flex items-center justify-center touch-manipulation',
+                    'h-11 w-11 rounded-xl flex items-center justify-center touch-manipulation',
                     'border border-white/[0.08] text-white active:scale-[0.98]',
                     isLast
                       ? 'opacity-25 cursor-not-allowed'
@@ -221,7 +248,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
               <button
                 onClick={onRemove}
                 aria-label={`Remove ${board.name}`}
-                className="h-11 px-2 text-[10px] text-red-400/70 hover:text-red-400 touch-manipulation"
+                className="h-11 px-3 rounded-xl text-[13px] font-semibold text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation"
               >
                 Remove
               </button>
@@ -230,23 +257,24 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
         </div>
       </div>
 
-      {/* Board Details — grouped card */}
-      <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] space-y-2">
-        <div className="grid grid-cols-2 gap-2 items-end">
+      {/* Board Details — flat block. Desktop gets more columns so the card
+          reads dense at 1600px instead of two ~750px-wide fields per row. */}
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-4 items-end">
           <div>
-            <label className="text-[10px] text-white block mb-1">Reference</label>
+            <label className={labelCn}>Reference</label>
             <Input value={board.reference} onChange={(e) => onUpdate('reference', e.target.value)} placeholder="Main CU" className={inputCn} />
           </div>
           <div>
-            <label className="text-[10px] text-white block mb-1">Location</label>
-            <MobileSelectPicker value={board.location || ''} onValueChange={(value) => onUpdate('location', value)} options={BOARD_LOCATIONS.map((loc) => ({ value: loc, label: loc }))} placeholder="Select" title="Location" triggerClassName="text-white" />
+            <label className={labelCn}>Location</label>
+            <MobileSelectPicker value={board.location || ''} onValueChange={(value) => onUpdate('location', value)} options={BOARD_LOCATIONS.map((loc) => ({ value: loc, label: loc }))} placeholder="Select" title="Location" triggerClassName={pickerTriggerCn} />
           </div>
         </div>
 
         {/* ELE-1388 — EIC: one free-text board line instead of Make/Model/From/Ways. */}
         {isEic && (
           <div>
-            <label className="text-[10px] text-white block mb-1">Board details</label>
+            <label className={labelCn}>Board details</label>
             <Input
               value={board.boardDetails || ''}
               onChange={(e) => onUpdate('boardDetails', e.target.value)}
@@ -261,21 +289,21 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
             template defaults), so hiding the input left users stuck with values
             they couldn't change (ELE-1244). */}
         {!isEic && (
-        <div className={cn('grid gap-2 items-end', isEicr ? 'grid-cols-2' : 'grid-cols-3')}>
+        <div className={cn('grid grid-cols-1 gap-x-6 gap-y-4 items-end lg:grid-cols-4', isEicr ? 'sm:grid-cols-2' : 'sm:grid-cols-3')}>
           <div>
-            <label className="text-[10px] text-white block mb-1">Make</label>
+            <label className={labelCn}>Make</label>
             {/* ELE-1383 — free text, not a dropdown: manufacturers vary too much
                 for a fixed list. */}
             <Input value={board.make || ''} onChange={(e) => onUpdate('make', e.target.value)} placeholder="e.g. Hager, Schneider" className={inputCn} />
           </div>
           {!isEicr && (
             <div>
-              <label className="text-[10px] text-white block mb-1">Model</label>
+              <label className={labelCn}>Model</label>
               <Input value={board.model || ''} onChange={(e) => onUpdate('model', e.target.value)} placeholder="VML110" className={inputCn} />
             </div>
           )}
           <div>
-            <label className="text-[10px] text-white block mb-1">From</label>
+            <label className={labelCn}>From</label>
             <Input value={board.suppliedFrom || ''} onChange={(e) => onUpdate('suppliedFrom', e.target.value)} placeholder={isMainBoard ? 'DNO' : 'DB'} className={inputCn} />
           </div>
         </div>
@@ -294,8 +322,10 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
             const clearedWays = { totalWays: 0, totalWaysCustom: '', ways: '' };
             return (
               <>
-                <label className="text-[10px] text-white block mb-1">Ways</label>
-                <div className="grid grid-cols-6 sm:grid-cols-9 gap-1">
+                <label className={labelCn}>Ways</label>
+                {/* Full-width grid on phones; natural-width chips on desktop so
+                    twelve options don't stretch into giant pills at 1600px. */}
+                <div className="grid grid-cols-6 gap-1 sm:flex sm:flex-wrap">
                   {[4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24].map((w) => (
                     <button
                       key={w}
@@ -303,12 +333,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
                       onClick={() =>
                         onUpdate(selectedWays === w ? clearedWays : { ...clearedWays, totalWays: w })
                       }
-                      className={cn(
-                        'h-9 rounded-md font-semibold transition-all touch-manipulation text-[10px] active:scale-[0.98]',
-                        selectedWays === w
-                          ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                          : 'bg-white/[0.05] border border-white/[0.08] text-white'
-                      )}
+                      className={cn(chipBase, 'sm:h-9 sm:w-12', selectedWays === w ? chipOn : chipOff)}
                     >
                       {w}
                     </button>
@@ -318,12 +343,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
                     onClick={() =>
                       onUpdate(selectedWays === -1 ? clearedWays : { ...clearedWays, totalWays: -1 })
                     }
-                    className={cn(
-                      'h-9 rounded-md font-semibold transition-all touch-manipulation text-[10px] active:scale-[0.98]',
-                      selectedWays === -1
-                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                        : 'bg-white/[0.05] border border-white/[0.08] text-white'
-                    )}
+                    className={cn(chipBase, 'sm:h-9 sm:w-16', selectedWays === -1 ? chipOn : chipOff)}
                   >
                     Other
                   </button>
@@ -344,22 +364,18 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
         </div>
         )}
 
-        {/* Board Type — dual select: Enclosure + Mounting */}
-        <div className="grid grid-cols-2 gap-2">
+        {/* Board Type — dual select: Enclosure + Mounting. Natural-width chips
+            on desktop (full-width halves read as giant bars at 1600px). */}
+        <div className="grid grid-cols-2 gap-x-6 gap-y-4 sm:flex sm:flex-wrap sm:gap-x-10">
           <div>
-            <label className="text-[10px] text-white block mb-1">Enclosure</label>
-            <div className="grid grid-cols-2 gap-1">
+            <label className={labelCn}>Enclosure</label>
+            <div className="grid grid-cols-2 gap-1 sm:flex">
               {[{ value: 'metal-clad', label: 'Metal' }, { value: 'plastic', label: 'Plastic' }].map((t) => (
                 <button
                   key={t.value}
                   type="button"
                   onClick={() => onUpdate('type', board.type === t.value || board.type?.startsWith(t.value) ? '' : t.value as BoardType)}
-                  className={cn(
-                    'h-9 rounded-md font-medium transition-all touch-manipulation text-[10px] active:scale-[0.98]',
-                    board.type?.includes(t.value.split('-')[0])
-                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
-                  )}
+                  className={cn(chipBase, 'sm:h-9 sm:w-24', board.type?.includes(t.value.split('-')[0]) ? chipOn : chipOff)}
                 >
                   {t.label}
                 </button>
@@ -367,8 +383,8 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
             </div>
           </div>
           <div>
-            <label className="text-[10px] text-white block mb-1">Mounting</label>
-            <div className="grid grid-cols-2 gap-1">
+            <label className={labelCn}>Mounting</label>
+            <div className="grid grid-cols-2 gap-1 sm:flex">
               {[{ value: 'flush-mount', label: 'Flush' }, { value: 'surface-mount', label: 'Surface' }].map((t) => (
                 <button
                   key={t.value}
@@ -377,12 +393,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
                     const mounting = (board as any).boardMounting === t.value ? '' : t.value;
                     onUpdate('boardMounting' as any, mounting);
                   }}
-                  className={cn(
-                    'h-9 rounded-md font-medium transition-all touch-manipulation text-[10px] active:scale-[0.98]',
-                    (board as any).boardMounting === t.value
-                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
-                  )}
+                  className={cn(chipBase, 'sm:h-9 sm:w-24', (board as any).boardMounting === t.value ? chipOn : chipOff)}
                 >
                   {t.label}
                 </button>
@@ -403,11 +414,11 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
         const hasRcdFields = isRCD || isRCBO || ['RCD', 'RCCB', 'RCBO'].includes(board.incomingDeviceType || '');
         const ratingUnit = isRCD ? 'mA' : 'A';
         return (
-          <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] space-y-2">
-            <label className="text-[10px] font-medium text-elec-yellow/80 uppercase tracking-wider">Incoming Device</label>
-            <div className={cn('grid gap-2', incomingTypeOptions ? 'grid-cols-3' : 'grid-cols-2')}>
+          <div className="border-t border-white/[0.1] pt-4 space-y-4">
+            <h3 className="text-sm font-semibold text-white">Incoming device</h3>
+            <div className={cn('grid grid-cols-1 gap-x-6 gap-y-4 lg:grid-cols-4', incomingTypeOptions ? 'sm:grid-cols-3' : 'sm:grid-cols-2')}>
               <div>
-                <label className="text-[10px] text-white block mb-1">BS EN</label>
+                <label className={labelCn}>BS EN</label>
                 <MobileSelectPicker
                   value={board.incomingDeviceBsEn || ''}
                   onValueChange={(value) => {
@@ -415,58 +426,58 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
                   }}
                   options={BS_EN_OPTIONS}
                   placeholder="Select"
-                  title="BS EN Standard"
-                  triggerClassName="text-white"
+                  title="BS EN standard"
+                  triggerClassName={pickerTriggerCn}
                 />
               </div>
               {incomingTypeOptions && (
                 <div>
-                  <label className="text-[10px] text-white block mb-1">Type</label>
+                  <label className={labelCn}>Type</label>
                   <MobileSelectPicker
                     value={board.incomingDeviceType || ''}
                     onValueChange={(value) => onUpdate('incomingDeviceType', value)}
                     options={incomingTypeOptions}
                     placeholder="Select"
-                    title="Device Type"
-                    triggerClassName="text-white"
+                    title="Device type"
+                    triggerClassName={pickerTriggerCn}
                   />
                 </div>
               )}
               <div>
-                <label className="text-[10px] text-white block mb-1">Rating ({ratingUnit})</label>
+                <label className={labelCn}>Rating ({ratingUnit})</label>
                 <MobileSelectPicker
                   value={board.incomingDeviceRating || ''}
                   onValueChange={(value) => onUpdate('incomingDeviceRating', value)}
                   options={incomingRatings.map((r) => ({ value: String(r), label: `${r}${ratingUnit}` }))}
                   placeholder="Select"
                   title={`Rating (${ratingUnit})`}
-                  triggerClassName="text-white"
+                  triggerClassName={pickerTriggerCn}
                 />
               </div>
             </div>
             {/* RCD/RCBO mA and trip time */}
             {hasRcdFields && (
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-4">
                 <div>
-                  <label className="text-[10px] text-white block mb-1">RCD mA</label>
+                  <label className={labelCn}>RCD mA</label>
                   <MobileSelectPicker
                     value={(board as any).incomingRcdMa || ''}
                     onValueChange={(value) => onUpdate('incomingRcdMa' as any, value)}
                     options={[{ value: '30', label: '30mA' }, { value: '100', label: '100mA' }, { value: '300', label: '300mA' }]}
                     placeholder="Select"
-                    title="RCD Rating (mA)"
-                    triggerClassName="text-white"
+                    title="RCD rating (mA)"
+                    triggerClassName={pickerTriggerCn}
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] text-white block mb-1">Trip Time (ms)</label>
+                  <label className={labelCn}>Trip time (ms)</label>
                   <MobileSelectPicker
                     value={(board as any).incomingRcdMs || ''}
                     onValueChange={(value) => onUpdate('incomingRcdMs' as any, value)}
                     options={[{ value: '0', label: '0ms' }, { value: '40', label: '40ms' }, { value: '150', label: '150ms' }, { value: '300', label: '300ms' }, { value: '500', label: '500ms' }]}
                     placeholder="Select"
-                    title="Trip Time (ms)"
-                    triggerClassName="text-white"
+                    title="Trip time (ms)"
+                    triggerClassName={pickerTriggerCn}
                   />
                 </div>
               </div>
@@ -488,11 +499,11 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
           ? switchRatings.map((r) => ({ value: String(r), label: `${r}${ratingUnit}` }))
           : MAIN_SWITCH_RATINGS;
         return (
-          <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] space-y-2">
-            <label className="text-[10px] font-medium text-elec-yellow/80 uppercase tracking-wider">Main Switch</label>
-            <div className="grid grid-cols-2 gap-3 items-end">
+          <div className="border-t border-white/[0.1] pt-4 space-y-4">
+            <h3 className="text-sm font-semibold text-white">Main switch</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-4 items-end">
               <div>
-                <label className="text-[10px] text-white block mb-1">BS EN</label>
+                <label className={labelCn}>BS EN</label>
                 <MobileSelectPicker
                   value={board.mainSwitchBsEn || ''}
                   onValueChange={(value) => {
@@ -500,75 +511,70 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
                   }}
                   options={BS_EN_OPTIONS}
                   placeholder="Select"
-                  title="BS EN Standard"
-                  triggerClassName="text-white"
+                  title="BS EN standard"
+                  triggerClassName={pickerTriggerCn}
                 />
               </div>
               <div>
-                <label className="text-[10px] text-white block mb-1">Type</label>
+                <label className={labelCn}>Type</label>
                 <MobileSelectPicker
                   value={board.mainSwitchType || ''}
                   onValueChange={(value) => onUpdate('mainSwitchType', value)}
                   options={typeOptions}
                   placeholder="Select"
                   title="Type"
-                  triggerClassName="text-white"
+                  triggerClassName={pickerTriggerCn}
                 />
               </div>
               <div>
-                <label className="text-[10px] text-white block mb-1">Rating ({ratingUnit})</label>
+                <label className={labelCn}>Rating ({ratingUnit})</label>
                 <MobileSelectPicker
                   value={board.mainSwitchRating || ''}
                   onValueChange={(value) => onUpdate('mainSwitchRating', value)}
                   options={ratingOptions}
                   placeholder="Select"
                   title={`Rating (${ratingUnit})`}
-                  triggerClassName="text-white"
+                  triggerClassName={pickerTriggerCn}
                 />
               </div>
             </div>
             {/* RCD/RCBO mA and trip time */}
             {hasRcdFields && (
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-4">
                 <div>
-                  <label className="text-[10px] text-white block mb-1">RCD mA</label>
+                  <label className={labelCn}>RCD mA</label>
                   <MobileSelectPicker
                     value={(board as any).mainSwitchRcdMa || ''}
                     onValueChange={(value) => onUpdate('mainSwitchRcdMa' as any, value)}
                     options={[{ value: '30', label: '30mA' }, { value: '100', label: '100mA' }, { value: '300', label: '300mA' }]}
                     placeholder="Select"
-                    title="RCD Rating (mA)"
-                    triggerClassName="text-white"
+                    title="RCD rating (mA)"
+                    triggerClassName={pickerTriggerCn}
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] text-white block mb-1">Trip Time (ms)</label>
+                  <label className={labelCn}>Trip time (ms)</label>
                   <MobileSelectPicker
                     value={(board as any).mainSwitchRcdMs || ''}
                     onValueChange={(value) => onUpdate('mainSwitchRcdMs' as any, value)}
                     options={[{ value: '0', label: '0ms' }, { value: '40', label: '40ms' }, { value: '150', label: '150ms' }, { value: '300', label: '300ms' }, { value: '500', label: '500ms' }]}
                     placeholder="Select"
-                    title="Trip Time (ms)"
-                    triggerClassName="text-white"
+                    title="Trip time (ms)"
+                    triggerClassName={pickerTriggerCn}
                   />
                 </div>
               </div>
             )}
-            {/* Poles as toggle buttons */}
+            {/* Poles as toggle buttons — natural width on desktop */}
             <div>
-              <label className="text-[10px] text-white block mb-1">Poles</label>
-              <div className="grid grid-cols-4 gap-1">
+              <label className={labelCn}>Poles</label>
+              <div className="grid grid-cols-4 gap-1 sm:flex">
                 {['SP', 'DP', 'TP', 'TPN'].map((p) => (
                   <button
                     key={p}
                     type="button"
                     onClick={() => onUpdate('mainSwitchPoles', board.mainSwitchPoles === p ? '' : p)}
-                    className={cn(
-                      'h-9 rounded-md font-semibold transition-all touch-manipulation text-[10px] active:scale-[0.98]',
-                      board.mainSwitchPoles === p
-                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                        : 'bg-white/[0.05] border border-white/[0.08] text-white'
-                    )}
+                    className={cn(chipBase, 'sm:h-9 sm:w-16', board.mainSwitchPoles === p ? chipOn : chipOff)}
                   >
                     {p}
                   </button>

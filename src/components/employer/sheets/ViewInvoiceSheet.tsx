@@ -285,7 +285,7 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
             </div>
           )}
 
-          <FormCard eyebrow="Details">
+          <FormCard bleed eyebrow="Details">
             {invoice.project && (
               <div>
                 <Eyebrow>Project</Eyebrow>
@@ -332,7 +332,7 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
           </FormCard>
 
           {lineItems.length > 0 && (
-            <FormCard eyebrow="Line items">
+            <FormCard bleed eyebrow="Line items">
               <div className="divide-y divide-white/[0.06] -mx-1">
                 {lineItems.map((item: any, idx: number) => (
                   <div
@@ -415,7 +415,7 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
           </div>
 
           {invoice.notes && (
-            <FormCard eyebrow="Payment details / notes">
+            <FormCard bleed eyebrow="Payment details / notes">
               <p className="text-sm text-white whitespace-pre-wrap">{invoice.notes}</p>
             </FormCard>
           )}

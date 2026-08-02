@@ -10,6 +10,7 @@ import {
   getDefaultLightningProtectionFormData,
   TEST_INTERVAL,
 } from '@/types/lightning-protection';
+import { ukDate } from '@/utils/certDate';
 
 interface BrandingOptions {
   companyLogo?: string;
@@ -20,7 +21,12 @@ interface BrandingOptions {
   registrationSchemeLogo?: string;
   registrationScheme?: string;
   registrationNumber?: string;
+  companyWebsite?: string;
+  companyAccentColor?: string;
 }
+
+/** Lightning protection's house colour, until the electrician sets their own. */
+export const LP_ACCENT = '#d97706';
 
 /** Form data may carry branding keys merged in at generate time. */
 type FormDataWithBranding = Partial<LightningProtectionFormData> & BrandingOptions;
@@ -95,7 +101,22 @@ export const formatLightningProtectionJson = (
     bondingTests: formData.bondingTests ?? defaults.bondingTests,
     spdChecks: formData.spdChecks ?? [],
     separationChecks: formData.separationChecks ?? [],
-    observations: formData.observations ?? [],
+    // Observations carry their own completion date, which the template prints
+    // per row — format it inside the array, not just at the top level.
+    observations: (formData.observations ?? []).map((o: Record<string, unknown>) => ({
+      ...o,
+      completionDate: ukDate(o?.completionDate),
+    })),
+
+    // Dates — the form stores ISO (date inputs); the PDF is a UK document.
+    inspectionDate: ukDate(formData.inspectionDate),
+    originalInstallDate: ukDate(formData.originalInstallDate),
+    previousCertDate: ukDate(formData.previousCertDate),
+    riskAssessmentDate: ukDate(formData.riskAssessmentDate),
+    reviewerDate: ukDate(formData.reviewerDate),
+    instrumentCalDate: ukDate(formData.instrumentCalDate),
+    inspectorDate: ukDate(formData.inspectorDate),
+    clientDate: ukDate(formData.clientDate),
     photos: formData.photos ?? [],
 
     // Company branding — prefer the branding arg, then any branding keys already
@@ -109,6 +130,9 @@ export const formatLightningProtectionJson = (
       branding?.registrationSchemeLogo ?? formData.registrationSchemeLogo ?? '',
     registrationScheme: branding?.registrationScheme ?? formData.registrationScheme ?? '',
     registrationNumber: branding?.registrationNumber ?? formData.registrationNumber ?? '',
+    companyWebsite: branding?.companyWebsite ?? formData.companyWebsite ?? '',
+    companyAccentColor:
+      branding?.companyAccentColor ?? formData.companyAccentColor ?? LP_ACCENT,
   };
 
   return payload;

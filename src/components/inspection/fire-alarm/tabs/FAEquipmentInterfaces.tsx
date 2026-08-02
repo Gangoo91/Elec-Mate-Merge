@@ -5,6 +5,7 @@
  * ComboboxCell for all type selectors
  */
 
+import { useMemo } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -12,6 +13,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
 import { InterfaceEquipment, AspiratingUnit } from '@/types/fire-alarm';
 import ComboboxCell from '@/components/table-cells/ComboboxCell';
+import useReadingKeypad, { ReadingMeta } from '@/hooks/useReadingKeypad';
 
 const cardCn =
   '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
@@ -150,6 +152,31 @@ export default function FAEquipmentInterfaces({ formData, onUpdate }: Props) {
       'aspiratingUnits',
       aspirating.map((a) => (a.id === id ? { ...a, [field]: value } : a))
     );
+
+  // ── Reading keypad — shared MW pattern for aspirating unit readings ──
+  // Field names are keyed per unit id so data-keypad-field stays unique as
+  // units are added/removed. Values flow through the EXISTING updateAspirating
+  // path; the spread only ADDS props to the reading inputs.
+  const keypadMeta = useMemo(() => {
+    const meta: Record<string, ReadingMeta> = {};
+    aspirating.forEach((unit, idx) => {
+      meta[`pipeLength-${unit.id}`] = { label: `Pipe run length — unit ${idx + 1}`, unit: 'm' };
+      meta[`transportTime-${unit.id}`] = { label: `Transport time — unit ${idx + 1}`, unit: 's' };
+    });
+    return meta;
+  }, [aspirating]);
+  const keypad = useReadingKeypad({
+    meta: keypadMeta,
+    getValue: (field) => {
+      const [key, id] = field.split(/-(.*)/s);
+      const unit = aspirating.find((a) => a.id === id);
+      return String((unit as any)?.[key] ?? '');
+    },
+    setValue: (field, value) => {
+      const [key, id] = field.split(/-(.*)/s);
+      updateAspirating(id, key, value);
+    },
+  });
 
   return (
     <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
@@ -321,6 +348,7 @@ export default function FAEquipmentInterfaces({ formData, onUpdate }: Props) {
                   value={unit.pipeLength}
                   onChange={(e) => updateAspirating(unit.id, 'pipeLength', e.target.value)}
                   className={inputCn}
+                  {...keypad.field(`pipeLength-${unit.id}`)}
                 />
               </Field>
               <Field label="Transport (s)">
@@ -328,6 +356,7 @@ export default function FAEquipmentInterfaces({ formData, onUpdate }: Props) {
                   value={unit.transportTime}
                   onChange={(e) => updateAspirating(unit.id, 'transportTime', e.target.value)}
                   className={inputCn}
+                  {...keypad.field(`transportTime-${unit.id}`)}
                 />
               </Field>
             </div>
@@ -457,6 +486,12 @@ export default function FAEquipmentInterfaces({ formData, onUpdate }: Props) {
           ))}
         </div>
       </div>
+
+      {/* Scroll room so the last reading can rise clear of the keypad */}
+      {keypad.spacer}
+
+      {/* Reading keypad — coarse-pointer devices only */}
+      {keypad.element}
     </div>
   );
 }

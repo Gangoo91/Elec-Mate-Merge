@@ -253,7 +253,7 @@ export default function PhotoDetailSheet({
       <Sheet open={open} onOpenChange={onOpenChange}>
         <SheetContent
           side="bottom"
-          className="h-[90vh] p-0 rounded-t-2xl overflow-hidden bg-elec-dark border-white/10"
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-elec-dark border-white/10"
         >
           <div className="flex flex-col h-full">
             {/* Drag handle */}

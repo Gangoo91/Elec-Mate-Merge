@@ -1,21 +1,13 @@
 import React from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { FileSearch, Shield } from 'lucide-react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface AIAnalysisConfirmDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onConfirm: () => void;
   photoUrl: string;
+  /** Passed by galleries for future context display; not rendered here yet. */
   inspectorContext: {
     classification?: string;
     itemLocation?: string;
@@ -29,46 +21,62 @@ const AIAnalysisConfirmDialog: React.FC<AIAnalysisConfirmDialogProps> = ({
   onConfirm,
   photoUrl,
 }) => {
+  const haptic = useHaptic();
+
   const handleConfirm = () => {
+    haptic.light();
     onConfirm();
     onOpenChange(false);
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-sm sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>AI Quality Assurance</DialogTitle>
-          <DialogDescription>Get a second opinion on this observation</DialogDescription>
-        </DialogHeader>
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent
+        side="bottom"
+        className="bg-background border-white/[0.14] rounded-t-2xl"
+      >
+        <SheetHeader>
+          <SheetTitle className="text-white text-left">AI quality assurance</SheetTitle>
+        </SheetHeader>
 
-        <div className="space-y-4">
-          {/* Photo Preview */}
-          <div className="relative w-full aspect-video rounded-lg overflow-hidden border-2 border-primary/20">
-            <img src={photoUrl} alt="Observation photo" className="w-full h-full object-cover" />
+        <div className="space-y-4 py-4">
+          <p className="text-[12px] text-white/85">Get a second opinion on this observation</p>
+
+          {/* Photo preview */}
+          <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-white/[0.12]">
+            <img src={photoUrl} alt="Observation photo" className="h-full w-full object-cover" />
           </div>
 
-          {/* Simple disclaimer */}
-          <Alert className="border-primary/30">
-            <Shield className="h-4 w-4" />
-            <AlertDescription className="text-xs">
-              AI provides a second opinion based on visible evidence and BS7671:2018+A4:2026
-              regulations. Final classification decision remains with the inspector.
-            </AlertDescription>
-          </Alert>
-        </div>
+          {/* Disclaimer — quiet neutral surface, no icon */}
+          <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
+            <p className="text-[12px] leading-relaxed text-white/85">
+              AI provides a second opinion based on visible evidence and BS 7671:2018+A4:2026
+              regulations. The final classification decision remains with the inspector.
+            </p>
+          </div>
 
-        <DialogFooter className="flex-row gap-2 sm:gap-2">
-          <Button variant="outline" onClick={() => onOpenChange(false)} className="flex-1">
-            Cancel
-          </Button>
-          <Button onClick={handleConfirm} className="flex-1 gap-2">
-            <FileSearch className="h-4 w-4" />
-            Analyse
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+          <div className="flex flex-row gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                haptic.light();
+                onOpenChange(false);
+              }}
+              className="h-12 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.06] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.1] touch-manipulation active:scale-[0.98]"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={handleConfirm}
+              className="h-12 flex-1 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-all hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
+            >
+              Analyse
+            </button>
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 };
 

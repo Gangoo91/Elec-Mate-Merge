@@ -1,5 +1,6 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { g98PayloadSchema } from '../_shared/g98-payload-schema.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const TEMPLATE_ID = '3C669DC3-FFCB-4A22-A8BA-A30989BFCC10';
@@ -36,9 +37,22 @@ Deno.serve(async (req: Request) => {
     const { formData, templateId } = await req.json();
     if (!formData) throw new Error('No form data');
     console.log('[generate-g98-commissioning-pdf] Ref:', formData.referenceNumber, 'DNO:', formData.dnoName);
+    // Soft-fail schema check: log and report drift, never block the PDF. The
+    // payload sent below is the RAW formData, so validation only observes —
+    // it must not become the source of what PDFMonkey renders.
+    const validation = g98PayloadSchema.safeParse(formData);
+    if (!validation.success) {
+      console.error('[generate-g98-commissioning-pdf] Schema validation failed:', JSON.stringify(validation.error.issues.slice(0, 10)));
+      await captureException(new Error('G98 payload schema drift detected'), {
+        functionName: 'generate-g98-commissioning-pdf',
+        extra: { issues: validation.error.issues.slice(0, 20) },
+        tags: { schema_drift: 'true' },
+      });
+    }
+
     const doc = await createDoc(formData, templateId);
     const completed = await waitForPDF(doc.id);
-    return new Response(JSON.stringify({ success: true, document_id: completed.id, download_url: completed.download_url, preview_url: completed.preview_url }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+    return new Response(JSON.stringify({ success: true, document_id: completed.id, pdfUrl: completed.download_url, download_url: completed.download_url, preview_url: completed.preview_url }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
   } catch (error) {
     await captureException(error, { functionName: 'generate-g98-commissioning-pdf', requestUrl: req.url, requestMethod: req.method });
     console.error('[generate-g98-commissioning-pdf] Error:', error);

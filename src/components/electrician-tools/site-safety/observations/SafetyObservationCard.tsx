@@ -311,7 +311,7 @@ export function SafetyObservationCard({ onBack }: SafetyObservationCardProps) {
       <Sheet open={showLog} onOpenChange={setShowLog}>
         <SheetContent
           side="bottom"
-          className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
         >
           <SheetShell
             eyebrow="New observation"

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface CertShellFooterProps {
   currentIndex: number;
@@ -21,7 +22,7 @@ interface CertShellFooterProps {
 
 /** Neutral footer button recipe for lastStepActions children. */
 export const certFooterNeutralButton =
-  'h-12 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.08] disabled:opacity-40 touch-manipulation active:scale-[0.98] lg:flex-none lg:px-6';
+  'h-12 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.08] disabled:opacity-40 touch-manipulation active:scale-[0.98] lg:flex-none lg:px-6 outline-none focus:outline-none focus-visible:outline-none';
 
 /** Slide the footer away while the user is typing so it never covers a field. */
 const useTypingFocus = () => {
@@ -65,18 +66,20 @@ const CertShellFooter: React.FC<CertShellFooterProps> = ({
   generateLabel = 'Generate certificate',
   lastStepActions,
 }) => {
+  const haptic = useHaptic();
   const typing = useTypingFocus();
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
+  // No spacer here — consumers carry their own bottom padding on <main>
+  // (pb-32/pb-36/pb-48), matching the MW ground truth (MWStickyFooter).
   return (
-    <>
-      <div
-        className={cn(
-          'fixed bottom-0 right-0 z-40 border-t border-white/[0.08] bg-background/95 backdrop-blur-md transition-transform duration-200',
-          typing && 'translate-y-full'
-        )}
-        style={{ left: 'var(--sidebar-width, 0px)' }}
-      >
+    <div
+      className={cn(
+        'fixed bottom-0 right-0 z-40 border-t border-white/[0.08] bg-background/95 backdrop-blur-md transition-transform duration-200',
+        typing && 'translate-y-full'
+      )}
+      style={{ left: 'var(--sidebar-width, 0px)' }}
+    >
         <div className="mx-auto flex flex-col gap-2 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 lg:max-w-[1600px] lg:flex-row lg:items-center lg:px-8">
           <span className="hidden text-[12px] tabular-nums text-white/80 lg:block">
             Step {currentIndex + 1} of {totalSteps}
@@ -86,6 +89,7 @@ const CertShellFooter: React.FC<CertShellFooterProps> = ({
               <div className="flex gap-2 lg:ml-auto">
                 <button
                   onClick={() => {
+                    haptic.light();
                     onPrevious();
                     scrollToTop();
                   }}
@@ -97,9 +101,12 @@ const CertShellFooter: React.FC<CertShellFooterProps> = ({
                 {lastStepActions}
               </div>
               <button
-                onClick={onGenerate}
+                onClick={() => {
+                  haptic.medium();
+                  onGenerate?.();
+                }}
                 disabled={!canGenerate}
-                className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-transform hover:bg-elec-yellow/90 disabled:bg-elec-yellow disabled:opacity-50 touch-manipulation active:scale-[0.99] lg:w-auto lg:px-10"
+                className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-transform hover:bg-elec-yellow/90 disabled:bg-elec-yellow disabled:opacity-50 touch-manipulation active:scale-[0.99] lg:w-auto lg:px-10 outline-none focus:outline-none focus-visible:outline-none"
               >
                 {generateLabel}
               </button>
@@ -108,6 +115,7 @@ const CertShellFooter: React.FC<CertShellFooterProps> = ({
             <div className="flex w-full gap-2 lg:ml-auto lg:w-auto">
               <button
                 onClick={() => {
+                  haptic.light();
                   onPrevious();
                   scrollToTop();
                 }}
@@ -118,21 +126,19 @@ const CertShellFooter: React.FC<CertShellFooterProps> = ({
               </button>
               <button
                 onClick={() => {
+                  haptic.medium();
                   onNext();
                   scrollToTop();
                 }}
                 disabled={!canNext}
-                className="h-12 flex-[2] rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-transform hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation active:scale-[0.99] lg:flex-none lg:px-10"
+                className="h-12 flex-[2] rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-transform hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation active:scale-[0.99] lg:flex-none lg:px-10 outline-none focus:outline-none focus-visible:outline-none"
               >
                 {nextLabels[currentIndex] || 'Continue'}
               </button>
             </div>
           )}
         </div>
-      </div>
-      {/* Spacer so the last fields clear the fixed footer */}
-      <div className="h-24" aria-hidden="true" />
-    </>
+    </div>
   );
 };
 

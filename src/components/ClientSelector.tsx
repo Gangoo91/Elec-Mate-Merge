@@ -57,14 +57,14 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
             type="button"
             onClick={handleClearSelection}
             aria-label="Clear selected client"
-            className="absolute top-3 right-3 w-8 h-8 rounded-lg bg-white/[0.06] border border-white/[0.10] flex items-center justify-center touch-manipulation active:scale-90 hover:bg-white/[0.10] transition-colors"
+            className="absolute top-2 right-2 w-11 h-11 rounded-lg bg-white/[0.06] border border-white/[0.10] flex items-center justify-center touch-manipulation active:scale-90 hover:bg-white/[0.10] transition-colors"
           >
             <X className="h-3.5 w-3.5 text-white" />
           </button>
           <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-elec-yellow mb-1.5">
             Selected
           </div>
-          <p className="font-semibold text-white text-[16px] tracking-tight pr-10">
+          <p className="font-semibold text-white text-[16px] tracking-tight pr-12">
             {selectedCustomer.name}
           </p>
           <div className="mt-2 space-y-0.5">
@@ -77,7 +77,7 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
               </p>
             )}
             {selectedCustomer.address && (
-              <p className="text-[12.5px] text-white/65 truncate">{selectedCustomer.address}</p>
+              <p className="text-[12.5px] text-white/85 truncate">{selectedCustomer.address}</p>
             )}
           </div>
         </div>
@@ -85,10 +85,10 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
         <button
           type="button"
           onClick={() => setIsSheetOpen(true)}
-          className="w-full h-12 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.10] flex items-center justify-between px-4 text-[14px] text-white/70 touch-manipulation hover:bg-white/[0.04] hover:border-white/[0.15] active:scale-[0.99] transition-all"
+          className="w-full h-12 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.10] flex items-center justify-between px-4 text-[14px] text-white touch-manipulation hover:bg-white/[0.04] hover:border-white/[0.15] active:scale-[0.99] transition-all"
         >
           <span>Search clients…</span>
-          <ChevronDown className="h-4 w-4 text-white/50" />
+          <ChevronDown className="h-4 w-4 text-white/70" />
         </button>
       )}
 
@@ -111,7 +111,7 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
                 Clients
               </span>
               {!isLoading && (
-                <span className="text-[11px] text-white/55 tabular-nums">
+                <span className="text-[11px] text-white/85 tabular-nums">
                   {resultCount} of {resultCount}
                 </span>
               )}
@@ -119,14 +119,14 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
             <SheetTitle className="text-[24px] sm:text-[28px] font-semibold tracking-tight text-white leading-tight">
               Select a client.
             </SheetTitle>
-            <p className="mt-1.5 text-[13px] text-white/70 leading-relaxed">
+            <p className="mt-1.5 text-[13px] text-white/85 leading-relaxed">
               Pick from your CRM, or close this sheet to enter details manually.
             </p>
 
             {/* Search input — editorial */}
             <div className="relative mt-4">
               <Search
-                className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/45 pointer-events-none"
+                className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/70 pointer-events-none"
                 aria-hidden
               />
               <input
@@ -134,14 +134,14 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 autoFocus={false}
-                className="w-full h-12 pl-10 pr-10 rounded-xl bg-white/[0.05] border border-white/[0.12] text-[14.5px] text-white placeholder:text-white/45 outline-none focus:border-elec-yellow/60 focus:bg-white/[0.07] focus:ring-2 focus:ring-elec-yellow/20 touch-manipulation transition-colors"
+                className="w-full h-12 pl-10 pr-12 rounded-xl bg-white/[0.05] border border-white/[0.12] text-base text-white placeholder:text-white/45 outline-none focus:border-elec-yellow focus:bg-white/[0.07] focus:ring-0 focus-visible:ring-0 touch-manipulation transition-colors"
               />
               {searchTerm && (
                 <button
                   type="button"
                   onClick={() => setSearchTerm('')}
                   aria-label="Clear search"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-lg bg-white/[0.06] border border-white/[0.10] flex items-center justify-center touch-manipulation hover:bg-white/[0.10] transition-colors"
+                  className="absolute right-1 top-1/2 -translate-y-1/2 w-11 h-11 rounded-lg bg-white/[0.06] border border-white/[0.10] flex items-center justify-center touch-manipulation hover:bg-white/[0.10] transition-colors"
                 >
                   <X className="h-3 w-3 text-white" />
                 </button>
@@ -154,14 +154,14 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
             {isLoading ? (
               <div className="flex flex-col items-center justify-center py-20">
                 <Loader2 className="h-5 w-5 animate-spin text-elec-yellow mb-3" />
-                <p className="text-[13px] text-white/70">Loading clients…</p>
+                <p className="text-[13px] text-white/85">Loading clients…</p>
               </div>
             ) : customers.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-20 px-6 text-center">
                 <p className="text-[15px] font-semibold text-white">
                   {searchTerm ? 'No matches' : 'No clients yet'}
                 </p>
-                <p className="mt-1.5 text-[13px] text-white/60 max-w-sm leading-relaxed">
+                <p className="mt-1.5 text-[13px] text-white/85 max-w-sm leading-relaxed">
                   {searchTerm
                     ? `Nothing matched "${searchTerm}". Try a different name, email or number.`
                     : 'Add your first client from the CRM section to start linking jobs.'}
@@ -211,12 +211,12 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
                             )}
                           </div>
                           {(customer.email || customer.phone) && (
-                            <p className="mt-0.5 text-[12.5px] text-white/70 truncate">
+                            <p className="mt-0.5 text-[12.5px] text-white/85 truncate">
                               {[customer.email, customer.phone].filter(Boolean).join('  ·  ')}
                             </p>
                           )}
                           {customer.address && (
-                            <p className="mt-0.5 text-[12px] text-white/50 truncate">
+                            <p className="mt-0.5 text-[12px] text-white/85 truncate">
                               {customer.address}
                             </p>
                           )}

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useMemo, useRef } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -7,6 +7,7 @@ import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { EmergencyLightingPhotos } from './EmergencyLightingPhotos';
 import { cn } from '@/lib/utils';
 import { useEmergencyLightingSmartForm } from '@/hooks/inspection/useEmergencyLightingSmartForm';
+import { useHaptic } from '@/hooks/useHaptic';
 import { BatteryConditionBadge } from './ValidationBadge';
 import type { ZoneCategory } from '@/data/emergencyLightingCompliance';
 import type {
@@ -18,6 +19,7 @@ import type {
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
+import useReadingKeypad from '@/hooks/useReadingKeypad';
 
 type Defect = EmergencyLightingFormData['defectsFound'][number];
 
@@ -100,9 +102,8 @@ const SectionHeader = ({ title }: { title: string }) => (
 );
 
 const Sub = ({ title }: { title: string }) => (
-  <div className="flex items-center gap-3 pt-2">
-    <p className="text-[13px] font-semibold text-white shrink-0">{title}</p>
-    <div className="h-px flex-1 bg-white/[0.08]" />
+  <div className="border-t border-white/[0.1] pt-4">
+    <h3 className="text-sm font-semibold text-white">{title}</h3>
   </div>
 );
 
@@ -110,8 +111,9 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
   formData,
   onUpdate,
 }) => {
-  const { calculateTestDates, suggestDefectPriority, formatDate, validateLux, getLuxRequirement } =
+  const { calculateTestDates, suggestDefectPriority, formatDate, getLuxRequirement } =
     useEmergencyLightingSmartForm();
+  const haptic = useHaptic();
 
   // Calculate next test dates when test dates change
   const monthlyTestDate = formData.monthlyFunctionalTest?.date;
@@ -350,32 +352,99 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
     [formData.luxReadings, onUpdate, getLuxRequirement]
   );
 
+  // ── Reading keypad — shared MW pattern ──
+  // Serves the annual duration reading plus every lux reading row. Lux fields
+  // are keyed per reading id (`lux-${id}`) so data-keypad-field stays unique as
+  // rows are added/removed. Values flow through the EXISTING handlers
+  // (updateAnnualTest / handleLuxValueChange); the lux verdict reuses the
+  // result already computed by handleLuxValueChange — no new compliance logic.
+  const keypadMeta = useMemo(() => {
+    const meta: Record<string, { label: string; unit: string }> = {
+      annualDuration: { label: 'Duration tested — annual test', unit: 'min' },
+    };
+    (formData.luxReadings || []).forEach((r: LuxReading, i: number) => {
+      meta[`lux-${r.id}`] = {
+        label: r.location ? `Lux reading — ${r.location}` : `Lux reading #${i + 1}`,
+        unit: 'lux',
+      };
+    });
+    return meta;
+  }, [formData.luxReadings]);
+  const keypad = useReadingKeypad({
+    meta: keypadMeta,
+    getValue: (field) =>
+      field === 'annualDuration'
+        ? String(annualTest.duration || '')
+        : String(
+            (formData.luxReadings || []).find((r: LuxReading) => `lux-${r.id}` === field)
+              ?.luxReading || ''
+          ),
+    setValue: (field, value) => {
+      if (field === 'annualDuration') {
+        updateAnnualTest('duration', parseInt(value) || 0);
+        return;
+      }
+      const reading = (formData.luxReadings || []).find(
+        (r: LuxReading) => `lux-${r.id}` === field
+      );
+      if (reading) handleLuxValueChange(reading.id, value, reading.category || '');
+    },
+    getStatus: (field) => {
+      // Duration reuses the cert's OWN existing rule (useEmergencyLightingSmartForm
+      // → validateTestResults: durationAchieved >= ratedDuration). No new limit is
+      // introduced — it compares the tested duration against the rated duration
+      // the user set on the Installation tab.
+      if (field === 'annualDuration') {
+        const tested = Number(annualTest.duration) || 0;
+        const rated = Number(formData.ratedDuration) || 0;
+        if (!tested || !rated) return null;
+        return tested >= rated
+          ? { tone: 'pass', label: `Meets ${rated} min rating` }
+          : { tone: 'check', label: `Below ${rated} min rating` };
+      }
+      const reading = (formData.luxReadings || []).find(
+        (r: LuxReading) => `lux-${r.id}` === field
+      );
+      if (!reading?.result) return null;
+      return reading.result === 'pass'
+        ? { tone: 'pass', label: reading.minRequired ? `Meets ${reading.minRequired} minimum` : 'Meets minimum' }
+        : { tone: 'check', label: reading.minRequired ? `Below ${reading.minRequired} minimum` : 'Below minimum' };
+    },
+  });
+
   const batteryConditionOptions = [
-    { value: 'good', label: 'Good - Meets rated duration' },
-    { value: 'fair', label: 'Fair - Approaching end of life' },
-    { value: 'poor', label: 'Poor - Requires replacement' },
+    { value: 'good', label: 'Good — meets rated duration' },
+    { value: 'fair', label: 'Fair — approaching end of life' },
+    { value: 'poor', label: 'Poor — requires replacement' },
   ];
 
   const zoneCategoryOptions = [
-    { value: 'escape-route', label: 'Escape Route (>=1 lux)' },
-    { value: 'open-area', label: 'Open Area (>=0.5 lux)' },
-    { value: 'high-risk', label: 'High Risk (>=15 lux)' },
+    { value: 'escape-route', label: 'Escape route (≥1 lux)' },
+    { value: 'open-area', label: 'Open area (≥0.5 lux)' },
+    { value: 'high-risk', label: 'High risk (≥15 lux)' },
   ];
 
   const priorityOptions = [
     { value: 'immediate', label: 'Immediate', color: 'red' },
-    { value: 'within-7-days', label: '7 Days', color: 'orange' },
-    { value: 'within-28-days', label: '28 Days', color: 'amber' },
+    { value: 'within-7-days', label: '7 days', color: 'orange' },
+    { value: 'within-28-days', label: '28 days', color: 'amber' },
     { value: 'recommendation', label: 'Recommend', color: 'blue' },
   ];
 
   return (
-    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
-      {/* Test Equipment */}
+    <div
+      className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4"
+      // Delegated press haptic — every chip/button tap in this tab buzzes
+      // without wiring each onClick individually.
+      onPointerDown={(e) => {
+        if ((e.target as HTMLElement).closest('button')) haptic.light();
+      }}
+    >
+      {/* Test equipment */}
       <div className={cardCn}>
-        <SectionHeader title="Test Equipment" />
+        <SectionHeader title="Test equipment" />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-          <Field label="Lux Meter Make">
+          <Field label="Lux meter make">
             <MobileSelectPicker
               value={formData.luxMeterMake || ''}
               onValueChange={(v) => onUpdate('luxMeterMake', v)}
@@ -402,14 +471,14 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
           </Field>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-          <Field label="Serial No.">
+          <Field label="Serial no.">
             <Input
               value={formData.luxMeterSerial || ''}
               onChange={(e) => onUpdate('luxMeterSerial', e.target.value)}
               className={inputCn}
             />
           </Field>
-          <Field label="Cal. Date">
+          <Field label="Cal. date">
             <Input
               type="date"
               value={formData.luxMeterCalibrationDate || ''}
@@ -422,14 +491,14 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
 
       {/* Monthly Functional Test */}
       <div className={cardCn}>
-        <SectionHeader title="Monthly Functional Test" />
+        <SectionHeader title="Monthly functional test" />
         <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
           <p className="text-xs text-white/80">
             BS 5266 — Monthly flick test: simulate mains failure, verify all luminaires illuminate
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-          <Field label="Test Date">
+          <Field label="Test date">
             <Input
               type="date"
               value={monthlyTest.date || ''}
@@ -438,7 +507,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
             />
           </Field>
           {nextTestDates && monthlyTest.date && (
-            <Field label="Next Due">
+            <Field label="Next due">
               <div className="flex h-11 items-center border-b border-white/[0.15] px-1 text-base font-medium text-white">
                 {formatDate(nextTestDates.nextMonthlyTest)}
               </div>
@@ -446,7 +515,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
           )}
         </div>
 
-        <Sub title="Functional Checks" />
+        <Sub title="Functional checks" />
 
         <div className="space-y-3">
           <Toggle
@@ -461,9 +530,9 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
           />
         </div>
 
-        <Sub title="Faults & Action" />
+        <Sub title="Faults and action" />
 
-        <Field label="Faults Found">
+        <Field label="Faults found">
           <Textarea
             placeholder="Describe any faults found during the test..."
             value={monthlyTest.faultsFound || ''}
@@ -472,7 +541,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
           />
         </Field>
 
-        <Field label="Action Taken">
+        <Field label="Action taken">
           <Textarea
             placeholder="Describe any remedial action taken..."
             value={monthlyTest.actionTaken || ''}
@@ -484,7 +553,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
 
       {/* Annual Duration Test */}
       <div className={cn(cardCn, 'lg:col-span-2')}>
-        <SectionHeader title="Annual Duration Test" />
+        <SectionHeader title="Annual duration test" />
         <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
           <p className="text-xs text-white/80">
             BS 5266 — Annual full duration test: run for rated duration (1hr or 3hr) and verify
@@ -493,7 +562,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-          <Field label="Test Date">
+          <Field label="Test date">
             <Input
               type="date"
               value={annualTest.date || ''}
@@ -501,28 +570,29 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
               className={inputCn}
             />
           </Field>
-          <Field label="Duration Tested (minutes)">
+          <Field label="Duration tested (minutes)">
             <Input
-              type="number"
+             
               min="0"
               placeholder="e.g., 180"
               value={annualTest.duration || ''}
               onChange={(e) => updateAnnualTest('duration', parseInt(e.target.value) || 0)}
               className={inputCn}
+              {...keypad.field('annualDuration')}
             />
           </Field>
         </div>
 
         {nextTestDates && annualTest.date && (
           <div className="rounded-xl bg-white/[0.05] px-3.5 py-3 text-xs text-white/80">
-            Next Annual Duration Test Due:{' '}
+            Next annual duration test due:{' '}
             <span className="font-medium text-white">
               {formatDate(nextTestDates.nextAnnualTest)}
             </span>
           </div>
         )}
 
-        <Sub title="Duration Checks" />
+        <Sub title="Duration checks" />
 
         <Toggle
           label="All luminaires operated for full rated duration"
@@ -530,7 +600,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
           onChange={(v) => updateAnnualTest('allLuminairesOperational', v)}
         />
 
-        <Sub title="Battery Condition" />
+        <Sub title="Battery condition" />
 
         <div className="space-y-2">
           <div className="flex items-center justify-between">
@@ -544,19 +614,19 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
             onValueChange={(value) => updateAnnualTest('batteryCondition', value)}
             options={batteryConditionOptions}
             placeholder="Assess battery condition"
-            title="Battery Condition"
+            title="Battery condition"
             triggerClassName={pickerTrigger}
           />
           {annualTest.batteryCondition === 'poor' && (
             <p className="text-xs font-medium text-red-400">
-              Battery replacement required - add to defects list
+              Battery replacement required — add to defects list
             </p>
           )}
         </div>
 
-        <Sub title="Faults & Action" />
+        <Sub title="Faults and action" />
 
-        <Field label="Faults Found">
+        <Field label="Faults found">
           <Textarea
             placeholder="Describe any faults found during the duration test..."
             value={annualTest.faultsFound || ''}
@@ -565,7 +635,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
           />
         </Field>
 
-        <Field label="Action Taken">
+        <Field label="Action taken">
           <Textarea
             placeholder="Describe any remedial action taken..."
             value={annualTest.actionTaken || ''}
@@ -597,11 +667,11 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
 
           return (
             <div className={cn(cardCn, 'lg:col-span-2')}>
-              <SectionHeader title="Luminaire Summary" />
+              <SectionHeader title="Luminaire summary" />
               <div className="space-y-3">
                 <div>
                   <div className="flex items-center justify-between text-xs mb-1.5">
-                    <span className="font-medium text-white">Functional Test</span>
+                    <span className="font-medium text-white">Functional test</span>
                     <span className="text-white/80">
                       {funcPass} Pass{funcFail > 0 ? `, ${funcFail} Fail` : ''}
                       {funcUntested > 0 ? `, ${funcUntested} Untested` : ''}
@@ -624,7 +694,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                 </div>
                 <div>
                   <div className="flex items-center justify-between text-xs mb-1.5">
-                    <span className="font-medium text-white">Duration Test</span>
+                    <span className="font-medium text-white">Duration test</span>
                     <span className="text-white/80">
                       {durPass} Pass{durFail > 0 ? `, ${durFail} Fail` : ''}
                       {durUntested > 0 ? `, ${durUntested} Untested` : ''}
@@ -653,7 +723,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
       {/* Individual Luminaire Results */}
       {(formData.luminaires || []).length > 0 && (
         <div className={cn(cardCn, 'lg:col-span-2')}>
-          <SectionHeader title="Individual Luminaire Results" />
+          <SectionHeader title="Individual luminaire results" />
 
           <div className="grid grid-cols-2 gap-2">
             <button
@@ -668,7 +738,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
               }}
               className="h-11 rounded-xl bg-white/[0.06] border border-white/[0.12] text-xs font-semibold text-white touch-manipulation active:scale-[0.98]"
             >
-              All Functional PASS
+              All functional PASS
             </button>
             <button
               type="button"
@@ -682,7 +752,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
               }}
               className="h-11 rounded-xl bg-white/[0.06] border border-white/[0.12] text-xs font-semibold text-white touch-manipulation active:scale-[0.98]"
             >
-              All Duration PASS
+              All duration PASS
             </button>
           </div>
 
@@ -742,11 +812,11 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
 
       {/* Lux Readings (BS EN 1838 Compliance) */}
       <div className={cn(cardCn, 'lg:col-span-2')}>
-        <SectionHeader title="Lux Readings (BS EN 1838)" />
+        <SectionHeader title="Lux readings (BS EN 1838)" />
 
         <div className="rounded-xl bg-white/[0.05] p-3.5">
           <p className="text-[13px] font-semibold text-white mb-2">
-            Minimum Illuminance Requirements
+            Minimum illuminance requirements
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
             <div className="flex items-center gap-1.5">
@@ -764,7 +834,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
             <div className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-red-500 shrink-0" />
               <span className="text-white/80">
-                High Risk: <strong className="text-white">{'≥'}15 lux</strong>
+                High risk: <strong className="text-white">{'≥'}15 lux</strong>
               </span>
             </div>
           </div>
@@ -787,6 +857,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                 <div className="flex items-center justify-between gap-3">
                   <p className="text-[13px] font-medium text-white">Reading #{index + 1}</p>
                   <button
+                    type="button"
                     onClick={() => removeLuxReading(reading.id)}
                     className="h-11 shrink-0 px-2 text-sm font-medium text-red-400 touch-manipulation"
                     aria-label="Remove lux reading"
@@ -803,7 +874,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                       className={inputCn}
                     />
                   </Field>
-                  <Field label="Zone Category">
+                  <Field label="Zone category">
                     <MobileSelectPicker
                       value={reading.category || ''}
                       onValueChange={(v) => {
@@ -814,13 +885,13 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                       }}
                       options={zoneCategoryOptions}
                       placeholder="Select"
-                      title="Zone Category"
+                      title="Zone category"
                       triggerClassName={pickerTrigger}
                     />
                   </Field>
-                  <Field label="Lux Reading">
+                  <Field label="Lux reading">
                     <Input
-                      type="number"
+                     
                       step="0.1"
                       min="0"
                       placeholder="e.g., 1.5"
@@ -833,6 +904,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                         reading.result === 'pass' && 'border-green-500',
                         reading.result === 'fail' && 'border-red-500'
                       )}
+                      {...keypad.field(`lux-${reading.id}`)}
                     />
                   </Field>
                   <Field label="Result">
@@ -860,16 +932,17 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
         )}
 
         <button
+          type="button"
           onClick={addLuxReading}
           className="w-full h-11 rounded-xl border border-dashed border-white/[0.25] flex items-center justify-center text-sm font-medium text-white touch-manipulation active:scale-[0.98]"
         >
-          Add Lux Reading
+          Add lux reading
         </button>
       </div>
 
       {/* Defects Found */}
       <div className={cn(cardCn, 'lg:col-span-2')}>
-        <SectionHeader title="Defects & Observations" />
+        <SectionHeader title="Defects and observations" />
 
         {(formData.defectsFound || []).map(
           (defect: EmergencyLightingFormData['defectsFound'][number], defectIndex: number) => (
@@ -877,6 +950,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
               <div className="flex items-center justify-between gap-3">
                 <p className="text-[13px] font-medium text-white">Defect #{defectIndex + 1}</p>
                 <button
+                  type="button"
                   onClick={() => removeDefect(defect.id)}
                   className="h-11 shrink-0 px-2 text-sm font-medium text-red-400 touch-manipulation"
                   aria-label="Remove defect"
@@ -930,7 +1004,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                       type="button"
                       onClick={() => updateDefect(defect.id, 'priority', priority.value)}
                       className={cn(
-                        'h-11 px-3.5 rounded-xl text-xs font-semibold touch-manipulation transition-all flex items-center gap-1.5 active:scale-[0.98]',
+                        'h-11 px-3.5 rounded-xl text-xs font-semibold touch-manipulation transition-all active:scale-[0.98]',
                         defect.priority === priority.value
                           ? priority.color === 'red'
                             ? 'bg-red-500 border border-red-500 text-white'
@@ -939,25 +1013,9 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                               : priority.color === 'amber'
                                 ? 'bg-amber-500 border border-amber-500 text-black'
                                 : 'bg-blue-500 border border-blue-500 text-white'
-                          : 'bg-white/[0.06] text-white border border-white/[0.12]'
+                          : 'bg-white/[0.06] border border-white/[0.12] text-white'
                       )}
                     >
-                      <span
-                        className={cn(
-                          'w-1.5 h-1.5 rounded-full shrink-0',
-                          defect.priority === priority.value
-                            ? priority.color === 'red' || priority.color === 'blue'
-                              ? 'bg-white/60'
-                              : 'bg-black/40'
-                            : priority.color === 'red'
-                              ? 'bg-red-500'
-                              : priority.color === 'orange'
-                                ? 'bg-orange-500'
-                                : priority.color === 'amber'
-                                  ? 'bg-amber-500'
-                                  : 'bg-blue-500'
-                        )}
-                      />
                       {priority.label}
                     </button>
                   ))}
@@ -966,7 +1024,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
                 {(formData.luminaires || []).length > 0 && (
-                  <Field label="Link to Luminaire">
+                  <Field label="Link to luminaire">
                     <MobileSelectPicker
                       value={defect.luminaireId || 'general'}
                       onValueChange={(v) =>
@@ -980,7 +1038,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                         })),
                       ]}
                       placeholder="General"
-                      title="Link to Luminaire"
+                      title="Link to luminaire"
                       triggerClassName={pickerTrigger}
                     />
                   </Field>
@@ -988,22 +1046,40 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
 
                 <div>
                   <Label className={labelCn}>Rectified on site</Label>
+                  {/* "No" is not a failure — an outstanding defect is neutral,
+                      so it takes the neutral chip rather than solid red. */}
                   <div className="flex gap-2">
                     {[true, false].map((v) => (
                       <button
                         key={String(v)}
                         type="button"
                         onClick={() => updateDefect(defect.id, 'rectified', v)}
-                        className={verdictCn(defect.rectified === v, v ? 'pass' : 'fail')}
+                        className={verdictCn(defect.rectified === v, v ? 'pass' : 'neutral')}
                       >
                         {v ? 'Yes' : 'No'}
                       </button>
                     ))}
                   </div>
                 </div>
+
+                {/* Rectification date — the payload has always carried
+                    defects[].rectification_date but nothing on the form could
+                    fill it, so a rectified defect reached the PDF undated. */}
+                {defect.rectified && (
+                  <Field label="Rectified on">
+                    <Input
+                      type="date"
+                      value={defect.rectificationDate || ''}
+                      onChange={(e) =>
+                        updateDefect(defect.id, 'rectificationDate', e.target.value)
+                      }
+                      className={inputCn}
+                    />
+                  </Field>
+                )}
               </div>
 
-              <Sub title="Photo Evidence" />
+              <Sub title="Photo evidence" />
               {defect.photoUrl ? (
                 <div className="relative">
                   <img
@@ -1012,6 +1088,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                     className="w-full h-32 object-cover rounded-xl"
                   />
                   <button
+                    type="button"
                     onClick={() => removeDefectPhoto(defect.id)}
                     className="absolute top-2 right-2 h-9 rounded-lg bg-black/70 px-3 text-xs font-medium text-white touch-manipulation"
                   >
@@ -1034,6 +1111,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                     className="hidden"
                   />
                   <button
+                    type="button"
                     onClick={() => defectPhotoInputRefs.current[defect.id]?.click()}
                     disabled={uploadingDefectId === defect.id}
                     className="w-full h-11 rounded-xl border border-dashed border-white/[0.25] flex items-center justify-center text-sm font-medium text-white touch-manipulation active:scale-[0.98] disabled:opacity-50"
@@ -1044,7 +1122,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                         Uploading...
                       </>
                     ) : (
-                      'Add Photo'
+                      'Add photo'
                     )}
                   </button>
                 </div>
@@ -1054,16 +1132,17 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
         )}
 
         <button
+          type="button"
           onClick={addDefect}
           className="w-full h-11 rounded-xl border border-dashed border-white/[0.25] flex items-center justify-center text-sm font-medium text-white touch-manipulation active:scale-[0.98]"
         >
-          Add Defect
+          Add defect
         </button>
       </div>
 
       {/* Photo Evidence */}
       <div className={cn(cardCn, 'lg:col-span-2')}>
-        <SectionHeader title="Photo Evidence" />
+        <SectionHeader title="Photo evidence" />
         <p className="text-xs text-white/80">
           Upload photos of luminaires, exit signs, defects, and the overall installation for
           documentation.
@@ -1081,6 +1160,12 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
           certificateId={formData.certificateNumber}
         />
       </div>
+
+      {/* Scroll room so the last reading can rise clear of the keypad */}
+      {keypad.spacer}
+
+      {/* Reading keypad — coarse-pointer devices only */}
+      {keypad.element}
     </div>
   );
 };

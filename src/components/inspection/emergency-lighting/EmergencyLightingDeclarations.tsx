@@ -8,6 +8,7 @@ import SignatureInput from '@/components/signature/SignatureInput';
 import LoadTesterButton from './LoadTesterButton';
 import { OverdueBadge } from './ValidationBadge';
 import { useEmergencyLightingSmartForm } from '@/hooks/inspection/useEmergencyLightingSmartForm';
+import { useHaptic } from '@/hooks/useHaptic';
 import type { EmergencyLightingFormData, Luminaire, LuxReading } from '@/types/emergency-lighting';
 
 // Section card — the only box on the page
@@ -58,6 +59,7 @@ interface Props {
 
 const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) => {
   const { calculateTestDates } = useEmergencyLightingSmartForm();
+  const haptic = useHaptic();
 
   const handleLoadTesterDetails = (details: {
     testerName: string;
@@ -126,10 +128,17 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
   ]);
 
   return (
-    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
-      {/* Tester Declaration */}
+    <div
+      className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4"
+      // Delegated press haptic — every chip/button tap in this tab buzzes
+      // without wiring each onClick individually.
+      onPointerDown={(e) => {
+        if ((e.target as HTMLElement).closest('button')) haptic.light();
+      }}
+    >
+      {/* Tester declaration */}
       <div className={cn(cardCn, 'lg:col-span-2')}>
-        <SectionHeader title="Tester Declaration" />
+        <SectionHeader title="Tester declaration" />
         <LoadTesterButton
           onLoad={handleLoadTesterDetails}
           className="h-11 rounded-xl bg-elec-yellow border-elec-yellow text-black text-sm font-semibold hover:bg-elec-yellow"
@@ -176,7 +185,7 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
           </Field>
         </div>
         <SignatureInput
-          label="Tester Signature *"
+          label="Tester signature *"
           value={formData.testerSignature}
           onChange={(sig) => onUpdate('testerSignature', sig)}
           placeholder="Draw or type signature"
@@ -186,7 +195,7 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
 
       {/* Client Representative */}
       <div className={cn(cardCn, 'lg:col-span-2')}>
-        <SectionHeader title="Client Representative" />
+        <SectionHeader title="Client representative" />
         <div className="rounded-xl bg-white/[0.05] p-3.5">
           <p className="text-xs text-white/80 leading-relaxed">
             The responsible person at the premises acknowledges receipt of the test results per BS
@@ -220,7 +229,7 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
           />
         </Field>
         <SignatureInput
-          label="Responsible Person Signature *"
+          label="Responsible person signature *"
           value={formData.responsiblePersonSignature}
           onChange={(sig) => onUpdate('responsiblePersonSignature', sig)}
           placeholder="Draw or type signature"
@@ -230,9 +239,9 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
 
       {/* Service Schedule */}
       <div className={cardCn}>
-        <SectionHeader title="Service Schedule" />
+        <SectionHeader title="Service schedule" />
         <div className="rounded-xl bg-white/[0.05] p-3.5 space-y-1">
-          <p className="text-[12px] font-semibold text-white">BS 5266 Test Schedule</p>
+          <p className="text-[12px] font-semibold text-white">BS 5266 test schedule</p>
           <p className="text-xs text-white/80">
             Daily — visual inspection | Monthly — flick test | Annually — full duration test |
             3-yearly — full inspection
@@ -241,7 +250,7 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <Label className="text-[12px] font-medium text-white">Next Monthly Due</Label>
+              <Label className="text-[12px] font-medium text-white">Next monthly due</Label>
               {testDates.monthlyOverdue && (
                 <OverdueBadge
                   daysOverdue={Math.abs(testDates.daysUntilMonthly)}
@@ -261,7 +270,7 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
           </div>
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <Label className="text-[12px] font-medium text-white">Next Annual Due</Label>
+              <Label className="text-[12px] font-medium text-white">Next annual due</Label>
               {testDates.annualOverdue && (
                 <OverdueBadge daysOverdue={Math.abs(testDates.daysUntilAnnual)} testType="annual" />
               )}
@@ -277,7 +286,7 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
             )}
           </div>
         </div>
-        <Field label="Next 3-Yearly Inspection Due">
+        <Field label="Next 3-yearly inspection due">
           <Input
             type="date"
             value={formData.nextThreeYearlyInspectionDue || ''}
@@ -297,7 +306,7 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
 
       {/* Overall Result */}
       <div className={cardCn}>
-        <SectionHeader title="Overall Result" />
+        <SectionHeader title="Overall result" />
         <Field label="Result">
           <MobileSelectPicker
             value={formData.overallResult || ''}
@@ -310,7 +319,7 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
             triggerClassName={pickerTrigger}
           />
         </Field>
-        <Field label="Additional Notes">
+        <Field label="Additional notes">
           <Textarea
             value={formData.additionalNotes || ''}
             onChange={(e) => onUpdate('additionalNotes', e.target.value)}
@@ -322,23 +331,23 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
 
       {/* Completion Summary */}
       <div className={cn(cardCn, 'lg:col-span-2')}>
-        <SectionHeader title="Completion Summary" />
+        <SectionHeader title="Completion summary" />
         <div className="space-y-2 text-xs">
           {[
             {
-              label: 'Installation Details',
+              label: 'Installation details',
               ok: !!(formData.clientName && formData.premisesAddress),
             },
             {
-              label: 'Luminaire Schedule',
+              label: 'Luminaire schedule',
               value: `${(formData.luminaires || []).length} luminaires`,
             },
             {
-              label: 'Tester Declaration',
+              label: 'Tester declaration',
               ok: !!(formData.testerName && formData.testerSignature),
             },
             {
-              label: 'Client Representative',
+              label: 'Client representative',
               ok: !!(formData.responsiblePersonName && formData.responsiblePersonSignature),
             },
           ].map(({ label, ok, value }) => (
@@ -363,7 +372,7 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
             ).length;
             return (
               <div className="flex items-center justify-between">
-                <span className="text-white">Test Results</span>
+                <span className="text-white">Test results</span>
                 <span
                   className={cn(
                     'font-medium',
@@ -383,7 +392,7 @@ const EmergencyLightingDeclarations: React.FC<Props> = ({ formData, onUpdate }) 
             const failed = readings.filter((r: LuxReading) => r.result === 'fail').length;
             return (
               <div className="flex items-center justify-between">
-                <span className="text-white">Lux Readings</span>
+                <span className="text-white">Lux readings</span>
                 <span
                   className={cn(
                     'font-medium',

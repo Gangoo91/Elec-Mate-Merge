@@ -4,6 +4,7 @@ import { Label } from '@/components/ui/label';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { cn } from '@/lib/utils';
 import { useEmergencyLightingSmartForm } from '@/hooks/inspection/useEmergencyLightingSmartForm';
+import { useHaptic } from '@/hooks/useHaptic';
 import LuminaireAutocomplete from './LuminaireAutocomplete';
 import BulkLuminaireActions from './BulkLuminaireActions';
 import { AutoFilledBadge } from './ValidationBadge';
@@ -40,6 +41,7 @@ const Field = ({ label, children }: { label: string; children: React.ReactNode }
 
 const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
   const { applyLuminaireDefaults } = useEmergencyLightingSmartForm();
+  const haptic = useHaptic();
 
   const createEmptyLuminaire = () => ({
     id: `lum-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
@@ -168,11 +170,18 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
   const luminaires = formData.luminaires || [];
 
   return (
-    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+    <div
+      className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4"
+      // Delegated press haptic — every chip/button tap in this tab buzzes
+      // without wiring each onClick individually.
+      onPointerDown={(e) => {
+        if ((e.target as HTMLElement).closest('button')) haptic.light();
+      }}
+    >
       <div className={cn(cardCn, 'lg:col-span-2')}>
         <div className="mb-3 flex items-center justify-between gap-3">
           <h2 className="text-[15px] font-semibold tracking-tight text-white">
-            Luminaire Schedule
+            Luminaire schedule
           </h2>
           <span className="text-[13px] font-semibold text-elec-yellow">{luminaires.length}</span>
         </div>
@@ -187,10 +196,11 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
               Search the database to auto-fill specs, or add manually
             </p>
             <button
+              type="button"
               onClick={addLuminaire}
               className="mt-4 h-11 px-6 rounded-xl bg-elec-yellow text-black text-sm font-semibold touch-manipulation active:scale-[0.98]"
             >
-              Add First Luminaire
+              Add first luminaire
             </button>
           </div>
         ) : (
@@ -209,6 +219,7 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
                     {luminaire.autoFilled && <AutoFilledBadge />}
                   </div>
                   <button
+                    type="button"
                     onClick={() => removeLuminaire(luminaire.id)}
                     className="h-11 shrink-0 px-2 text-sm font-medium text-red-400 touch-manipulation"
                   >
@@ -247,13 +258,13 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
                       }
                       options={[
                         { value: 'bulkhead', label: 'Bulkhead' },
-                        { value: 'twin-spot', label: 'Twin Spot' },
+                        { value: 'twin-spot', label: 'Twin spot' },
                         { value: 'recessed', label: 'Recessed' },
-                        { value: 'surface', label: 'Surface Mount' },
+                        { value: 'surface', label: 'Surface mount' },
                         { value: 'downlight', label: 'Downlight' },
-                        { value: 'exit-sign', label: 'Exit Sign' },
-                        { value: 'exit-box', label: 'Exit Box' },
-                        { value: 'strip', label: 'Strip Light' },
+                        { value: 'exit-sign', label: 'Exit sign' },
+                        { value: 'exit-box', label: 'Exit box' },
+                        { value: 'strip', label: 'Strip light' },
                       ]}
                       placeholder="Select..."
                       triggerClassName={pickerTrigger}
@@ -300,9 +311,9 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
                         })
                       }
                       options={[
-                        { value: 'escape-route', label: 'Escape Route' },
-                        { value: 'open-area', label: 'Open Area' },
-                        { value: 'high-risk', label: 'High Risk' },
+                        { value: 'escape-route', label: 'Escape route' },
+                        { value: 'open-area', label: 'Open area' },
+                        { value: 'high-risk', label: 'High risk' },
                         { value: 'standby', label: 'Standby' },
                       ]}
                       placeholder="Select..."
@@ -336,8 +347,8 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
                         })
                       }
                       options={[
-                        { value: '60', label: '1 Hour (60 min)' },
-                        { value: '180', label: '3 Hours (180 min)' },
+                        { value: '60', label: '1 hour (60 min)' },
+                        { value: '180', label: '3 hours (180 min)' },
                       ]}
                       placeholder="Select..."
                       triggerClassName={pickerTrigger}
@@ -365,7 +376,7 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
                   </Field>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-                  <Field label="Install Date">
+                  <Field label="Install date">
                     <Input
                       type="date"
                       value={luminaire.installDate || ''}
@@ -391,10 +402,11 @@ const EmergencyLightingLuminaireSchedule: React.FC<Props> = ({ formData, onUpdat
 
         {/* Add buttons */}
         <button
+          type="button"
           onClick={addLuminaire}
           className="w-full h-11 rounded-xl border border-dashed border-white/[0.25] flex items-center justify-center text-sm font-medium text-white touch-manipulation active:scale-[0.98]"
         >
-          Add Luminaire
+          Add luminaire
         </button>
 
         <BulkLuminaireActions

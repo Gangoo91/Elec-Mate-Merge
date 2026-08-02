@@ -548,10 +548,42 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Check for linked certificate PDF (when invoice was created from EICR/EIC/Minor Works)
-    if (invoice.linked_certificate_pdf_url) {
+    // Fallback: invoices raised before the certificate PDF existed (or before
+    // the sender-side pdfUrl fix) carry linked_certificate_id but a NULL
+    // pdf_url — resolve the current PDF from the report itself instead of
+    // silently skipping the attachment.
+    let linkedCertPdfUrl: string | null = invoice.linked_certificate_pdf_url || null;
+    if (!linkedCertPdfUrl && invoice.linked_certificate_id) {
+      try {
+        const linkId = String(invoice.linked_certificate_id);
+        let { data: certReport } = await supabaseClient
+          .from('reports')
+          .select('pdf_url')
+          .eq('report_id', linkId)
+          .maybeSingle();
+        if (
+          !certReport &&
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(linkId)
+        ) {
+          ({ data: certReport } = await supabaseClient
+            .from('reports')
+            .select('pdf_url')
+            .eq('id', linkId)
+            .maybeSingle());
+        }
+        if (certReport?.pdf_url) {
+          linkedCertPdfUrl = certReport.pdf_url;
+          console.log('🔗 Certificate PDF resolved via linked_certificate_id fallback');
+        }
+      } catch (lookupError) {
+        console.warn('Certificate PDF fallback lookup failed (non-fatal):', lookupError);
+      }
+    }
+
+    if (linkedCertPdfUrl) {
       console.log('🔗 Linked certificate found, downloading certificate PDF...');
       try {
-        const certPdfResponse = await fetch(invoice.linked_certificate_pdf_url);
+        const certPdfResponse = await fetch(linkedCertPdfUrl);
         if (certPdfResponse.ok) {
           const certPdfArrayBuffer = await certPdfResponse.arrayBuffer();
           // Safer base64 encoding for large files

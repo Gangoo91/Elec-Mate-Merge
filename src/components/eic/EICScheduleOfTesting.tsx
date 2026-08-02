@@ -1,41 +1,21 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { cn } from '@/lib/utils';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
-import { SPD_MAKES, getSpdModelsForMake, SPD_LOCATIONS, SPD_RATED_KA } from '@/constants/spdData';
+import { SPD_MAKES, SPD_LOCATIONS } from '@/constants/spdData';
 import { Button } from '@/components/ui/button';
 import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from '@/components/ui/dropdown-menu';
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import {
-  Plus,
-  BarChart3,
-  Zap,
-  Camera,
-  Grid,
-  Shield,
-  X,
-  PenTool,
-  FileText,
-  Wrench,
-  ClipboardList,
-  ClipboardCheck,
-  Wand2,
-  Sparkles,
-  MoreVertical,
-  Layout,
-  Table,
-  Trash2,
-  Pen,
-  ChevronDown,
-  TestTube,
-  Mic,
-  Check,
-  CheckCircle,
-} from 'lucide-react';
+import { X, ChevronDown, Check, AlertCircle } from 'lucide-react';
+import useReadingKeypad from '@/hooks/useReadingKeypad';
 import { TestResult } from '@/types/testResult';
 import {
   DistributionBoard,
@@ -55,16 +35,11 @@ import { moveCircuitUp, moveCircuitDown } from '@/utils/circuitReorder';
 import BoardSection, { BoardToolCallbacks } from '../testing/BoardSection';
 import BoardManagement from '../testing/BoardManagement';
 import EnhancedTestResultDesktopTable from '../EnhancedTestResultDesktopTable';
-import MobileOptimizedTestTable from '../mobile/MobileOptimizedTestTable';
 import { MobileHorizontalScrollTable } from '../mobile/MobileHorizontalScrollTable';
-import { CircuitList } from '../testing/ScheduleOfTests/CircuitList';
 import MobileSmartAutoFill from '../mobile/MobileSmartAutoFill';
 import QuickRcdPresets from '../QuickRcdPresets';
-import QuickFillRcdPanel from '../QuickFillRcdPanel';
-import QuickFillIrPanel from '../QuickFillIrPanel';
 import TestInstrumentInfo from '../TestInstrumentInfo';
 import TestMethodInfo from '../TestMethodInfo';
-import SectionTitle from '@/components/ui/SectionTitle';
 import TestAnalytics from '../TestAnalytics';
 import SmartAutoFillPromptDialog from '../SmartAutoFillPromptDialog';
 
@@ -78,9 +53,7 @@ import { useInlineVoice } from '@/hooks/useInlineVoice';
 import { toast } from 'sonner';
 import { twinAndEarthCpcFor, normaliseCableSize } from '@/utils/twinAndEarth';
 import { calculatePointsServed } from '@/types/autoFillTypes';
-import { getTableViewPreference, setTableViewPreference } from '@/utils/mobileTableUtils';
 import {
-  getMaxZsFromDeviceDetails,
   getMaxZsWithRcd,
   applyScheduleAutoCalc,
   recalcAutoZsForZRefChange,
@@ -162,6 +135,131 @@ const DebouncedInput = React.memo(
 
 DebouncedInput.displayName = 'DebouncedInput';
 
+// Recipe form-control classes (visual only — see design system)
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const selectTriggerCn =
+  'h-11 rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
+
+/**
+ * MobileBoardMeasurements — Zdb/Ipf readings for one board on the phone
+ * breakpoint, wired to the shared reading keypad (the MW ground-truth pattern
+ * the desktop BoardSection already follows). One instance per board keeps the
+ * data-keypad-field names unique; verdict ranges mirror BoardSection so both
+ * breakpoints agree on pass/check.
+ */
+const MobileBoardMeasurements: React.FC<{
+  board: DistributionBoard;
+  earthingArrangement?: string;
+  onUpdateBoard: (
+    boardId: string,
+    field: keyof DistributionBoard | Record<string, unknown>,
+    value?: unknown
+  ) => void;
+}> = ({ board, earthingArrangement, onUpdateBoard }) => {
+  const parseNum = (v: string | number | undefined | null): number | null => {
+    if (v === '' || v === null || v === undefined) return null;
+    const n = typeof v === 'number' ? v : parseFloat(v);
+    return isNaN(n) ? null : n;
+  };
+  const zdbNum = parseNum(board.zdb);
+  const zdbStatus: 'neutral' | 'valid' | 'warn' =
+    zdbNum === null
+      ? 'neutral'
+      : (() => {
+          const ea = (earthingArrangement || '').toUpperCase();
+          if (ea === 'TT') return zdbNum > 0 && zdbNum <= 200 ? 'valid' : 'warn';
+          return zdbNum > 0 && zdbNum <= 0.8 ? 'valid' : 'warn';
+        })();
+  const ipfNum = parseNum(board.ipf);
+  const ipfStatus: 'neutral' | 'valid' | 'warn' =
+    ipfNum === null ? 'neutral' : ipfNum > 0 && ipfNum <= 25 ? 'valid' : 'warn';
+
+  const zdbField = `zdb-${board.id}`;
+  const ipfField = `ipf-${board.id}`;
+  const keypadMeta = useMemo(
+    () => ({
+      [zdbField]: { label: 'Zdb — board loop impedance', unit: 'Ω' },
+      [ipfField]: { label: 'Ipf — prospective fault current', unit: 'kA' },
+    }),
+    [zdbField, ipfField]
+  );
+  const keypadSequence = useMemo(() => [zdbField, ipfField], [zdbField, ipfField]);
+  const keypad = useReadingKeypad({
+    meta: keypadMeta,
+    sequence: keypadSequence,
+    getValue: (field) => String((field === zdbField ? board.zdb : board.ipf) ?? ''),
+    setValue: (field, value) =>
+      onUpdateBoard(board.id, field === zdbField ? 'zdb' : 'ipf', value),
+    getStatus: (field) => {
+      const s = field === zdbField ? zdbStatus : ipfStatus;
+      if (s === 'valid') return { tone: 'pass', label: 'Within typical range' };
+      if (s === 'warn') return { tone: 'check', label: 'Outside typical range' };
+      return null;
+    },
+  });
+
+  return (
+    <>
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <label className="text-[12px] font-medium text-white mb-1 block">
+            Z<sub>DB</sub> (Ω)
+          </label>
+          <div className="relative">
+            <DebouncedInput
+              type="text"
+              inputMode="decimal"
+              value={board.zdb || ''}
+              onChange={(value) => onUpdateBoard(board.id, 'zdb', value)}
+              placeholder="0.00"
+              className={cn(inputCn, 'pr-12')}
+              style={{ fontSize: '16px' }}
+              {...keypad.field(zdbField)}
+            />
+            <span className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1.5 pointer-events-none">
+              {zdbStatus === 'valid' && (
+                <Check className="h-3.5 w-3.5 text-green-400" strokeWidth={3} />
+              )}
+              {zdbStatus === 'warn' && <AlertCircle className="h-3.5 w-3.5 text-amber-400" />}
+              <span className="text-xs text-white">Ω</span>
+            </span>
+          </div>
+        </div>
+        <div>
+          <label className="text-[12px] font-medium text-white mb-1 block">
+            I<sub>PF</sub> (kA)
+          </label>
+          <div className="relative">
+            <DebouncedInput
+              type="text"
+              inputMode="decimal"
+              value={board.ipf || ''}
+              onChange={(value) => onUpdateBoard(board.id, 'ipf', value)}
+              placeholder="0.0"
+              className={cn(inputCn, 'pr-12')}
+              style={{ fontSize: '16px' }}
+              {...keypad.field(ipfField)}
+            />
+            <span className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1.5 pointer-events-none">
+              {ipfStatus === 'valid' && (
+                <Check className="h-3.5 w-3.5 text-green-400" strokeWidth={3} />
+              )}
+              {ipfStatus === 'warn' && <AlertCircle className="h-3.5 w-3.5 text-amber-400" />}
+              <span className="text-xs text-white">kA</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      {/* Scroll room so the readings can rise clear of the keypad */}
+      {keypad.spacer}
+      {/* Reading keypad — coarse-pointer devices only */}
+      {keypad.element}
+    </>
+  );
+};
+
 const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, onUpdate }) => {
   const [testResults, setTestResults] = useState<TestResult[]>([]);
   const [distributionBoards, setDistributionBoards] = useState<DistributionBoard[]>([]);
@@ -174,19 +272,13 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   const [showTestResultsScan, setShowTestResultsScan] = useState(false);
   const [extractedTestResults, setExtractedTestResults] = useState<any>(null);
   const [showTestResultsReview, setShowTestResultsReview] = useState(false);
-  const [mobileViewType, setMobileViewType] = useState<'table' | 'card'>('table');
   const [showScribbleDialog, setShowScribbleDialog] = useState(false);
   const [showSmartAutoFillDialog, setShowSmartAutoFillDialog] = useState(false);
   const [showRcdPresetsDialog, setShowRcdPresetsDialog] = useState(false);
   const [showBulkInfillDialog, setShowBulkInfillDialog] = useState(false);
-  const [showQuickFillPanel, setShowQuickFillPanel] = useState(false);
-  const [lastDeleted, setLastDeleted] = useState<{ circuit: TestResult; index: number } | null>(
-    null
-  );
-  const [activeToolPanel, setActiveToolPanel] = useState<'ai' | 'smart' | null>(null);
+  const [showClearAllConfirm, setShowClearAllConfirm] = useState(false);
   const [selectedCircuitIndex, setSelectedCircuitIndex] = useState(0);
   const [activeBoardId, setActiveBoardId] = useState<string | null>(null);
-  const [infoSectionsOpen, setInfoSectionsOpen] = useState({ instruments: true, method: true });
   const orientation = useOrientation();
 
   // Voice tool call handler - connects ElevenLabs agent to component state
@@ -714,20 +806,19 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
               return `Circuit ${circuitNum} is already at position ${toPosition}`;
             }
 
+            // Same numbering policy as delete_circuit: preserve original circuit
+            // numbers — reorder only, never renumber, so re-test references the
+            // user wrote on physical boards stay aligned.
             setTestResults((prev) => {
               const updated = [...prev];
               const [movedCircuit] = updated.splice(fromIdx, 1);
               updated.splice(toIdx, 0, movedCircuit);
-              return updated.map((circuit, i) => ({
-                ...circuit,
-                circuitNumber: (i + 1).toString(),
-                circuitDesignation: `C${i + 1}`,
-              }));
+              return updated;
             });
 
             setSelectedCircuitIndex(toIdx);
-            toast.success(`Moved circuit to position ${toPosition}, renumbered all circuits`);
-            return `Moved circuit ${circuitNum} to position ${toPosition}`;
+            toast.success(`Moved circuit to position ${toPosition}; numbers kept as-is`);
+            return `Moved circuit ${circuitNum} to position ${toPosition}; numbers kept as-is`;
           }
 
           case 'complete': {
@@ -1080,23 +1171,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     };
   }, [testResults]);
 
-  // Load mobile view preference
-  useEffect(() => {
-    const loadViewPref = async () => {
-      const pref = await getTableViewPreference();
-      setMobileViewType(pref);
-    };
-    loadViewPref();
-  }, []);
-
   // Use mobile optimized view on mobile devices in portrait mode
   const useMobileView = orientation.isMobile && !orientation.isLandscape;
-
-  const toggleMobileView = async () => {
-    const newView = mobileViewType === 'table' ? 'card' : 'table';
-    setMobileViewType(newView);
-    await setTableViewPreference(newView);
-  };
 
   // Initialize boards and test results from form data
   useEffect(() => {
@@ -1139,7 +1215,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       // Initial result with basic defaults for EIC - assigned to main board
       const initialResult: TestResult = {
         id: '1',
-        circuitDesignation: 'C1',
+        circuitDesignation: 'Way 1',
         circuitNumber: '1',
         circuitDescription: '',
         circuitType: '',
@@ -1205,10 +1281,21 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   // Current board for adding circuits (defaults to main)
   const [currentBoardId, setCurrentBoardId] = useState<string>(MAIN_BOARD_ID);
 
+  // Add-circuit entry point: opens the preset sheet (SmartAutoFillPromptDialog)
+  // scoped to the board the tap came from. Every Add-circuit control routes
+  // through here — board tool bar, empty state, per-board footer, BoardSection
+  // and the desktop table — so the presets are never unreachable. Picking a
+  // preset creates the circuit on THAT board; "Add blank" falls through to
+  // addCircuitToBoard exactly as those buttons did before.
   const addTestResult = (boardId?: string) => {
-    const targetBoardId = boardId || currentBoardId;
+    // Resolve to a real board id so the created circuit files under the right
+    // board (per-board numbering, same policy as addCircuitToBoard).
+    const targetBoardId =
+      boardId || (currentBoardId === MAIN_BOARD_ID
+        ? getMainBoard(distributionBoards)?.id || MAIN_BOARD_ID
+        : currentBoardId);
     setCurrentBoardId(targetBoardId);
-    const nextCircuitNumber = (testResults.length + 1).toString();
+    const nextCircuitNumber = (getCircuitsForBoard(testResults, targetBoardId).length + 1).toString();
     setNewCircuitNumber(nextCircuitNumber);
     setShowAutoFillPrompt(true);
   };
@@ -1387,10 +1474,16 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   };
 
   const handleAcceptTestResults = (selectedCircuits: any[]) => {
+    // Scan-test-results opened from a sub-board's tools sets activeBoardId —
+    // circuits must land on THAT board, not fall through to the Main CU
+    // (getCircuitsForBoard treats a missing boardId as main).
+    const targetBoardId = activeBoardId || getMainBoard(distributionBoards)?.id || MAIN_BOARD_ID;
+    const existingBoardCount = getCircuitsForBoard(testResults, targetBoardId).length;
+
     // Transform extracted test results to TestResult format
     const transformedResults = selectedCircuits.map((circuit, index) => {
-      const nextId = (testResults.length + index + 1).toString();
-      const nextCircuitNum = (testResults.length + index + 1).toString();
+      const nextId = crypto.randomUUID();
+      const nextCircuitNum = (existingBoardCount + index + 1).toString();
 
       // Derive combined BS Standard (e.g., "MCB (BS EN 60898)")
       const incomingType: string = circuit.protective_device?.type || '';
@@ -1412,7 +1505,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       return {
         id: nextId,
         circuitNumber: circuit.circuit_reference || nextCircuitNum,
-        circuitDesignation: circuit.circuit_reference || `C${nextCircuitNum}`,
+        circuitDesignation: circuit.circuit_reference || `Way ${nextCircuitNum}`,
         circuitDescription: circuit.circuit_description || '',
         circuitType: circuit.circuit_type || '',
         type: circuit.circuit_type || '',
@@ -1457,6 +1550,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         rcdBsStandard: '',
         rcdType: '',
         rcdRatingA: '',
+        boardId: targetBoardId,
       };
     });
 
@@ -1466,6 +1560,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     onUpdate('scheduleOfTests', updatedResults);
     setShowTestResultsReview(false);
     setExtractedTestResults(null);
+    setActiveBoardId(null);
     toast.success(`Added ${transformedResults.length} circuit(s) from test results scan`);
   };
 
@@ -1758,7 +1853,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         id: `test-${Date.now()}-${Math.random()}`,
         circuitNumber: circuitNumber,
         circuitDescription: circuitDesc,
-        circuitDesignation: `C${circuitNumber}`,
+        circuitDesignation: `Way ${circuitNumber}`,
         circuitType: circuitType,
         type: circuitType,
         referenceMethod: circuit.referenceMethod,
@@ -1832,7 +1927,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   ) => {
     const baseResult: TestResult = {
       id: Date.now().toString(),
-      circuitDesignation: `C${newCircuitNumber}`,
+      circuitDesignation: `Way ${newCircuitNumber}`,
       circuitNumber: newCircuitNumber,
       circuitDescription: '',
       circuitType: '',
@@ -1877,6 +1972,9 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       rcdRatingA: '',
       phaseType: '1P',
       autoFilled: useAutoFill,
+      // File under the board the add was initiated for (set by addTestResult) —
+      // without this the circuit always fell through to the Main CU.
+      boardId: currentBoardId,
     };
 
     // Apply auto-fill suggestions if provided
@@ -1904,26 +2002,18 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     }
   };
 
-  const undoDelete = useCallback(() => {
-    if (!lastDeleted) return;
-
-    setTestResults((prev) => {
-      const updatedResults = [...prev];
-      updatedResults.splice(lastDeleted.index, 0, lastDeleted.circuit);
-      onUpdate('scheduleOfTests', updatedResults);
-      return updatedResults;
-    });
-
-    setLastDeleted(null);
-    toast.success('Circuit restored');
-  }, [lastDeleted, onUpdate]);
+  // ⚠️ React updater functions run during the RENDER phase — calling onUpdate
+  // (the provider's setState) or toast inside them fires "Cannot update a
+  // component while rendering a different component". Side effects are
+  // deferred with queueMicrotask so they run after the update commits, while
+  // the functional updater keeps rapid successive calls stale-safe.
 
   // ELE-857 — reorder circuits up/down within their board
   const reorderTestResultUp = useCallback(
     (id: string) => {
       setTestResults((prev) => {
         const next = moveCircuitUp(prev, id);
-        onUpdate('scheduleOfTests', next);
+        queueMicrotask(() => onUpdate('scheduleOfTests', next));
         return next;
       });
     },
@@ -1934,7 +2024,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     (id: string) => {
       setTestResults((prev) => {
         const next = moveCircuitDown(prev, id);
-        onUpdate('scheduleOfTests', next);
+        queueMicrotask(() => onUpdate('scheduleOfTests', next));
         return next;
       });
     },
@@ -1948,25 +2038,25 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         if (index === -1) return prev;
 
         const deletedCircuit = prev[index];
-        setLastDeleted({ circuit: deletedCircuit, index });
-
         const updatedResults = prev.filter((result) => result.id !== id);
-        onUpdate('scheduleOfTests', updatedResults);
 
-        toast.success('Circuit deleted', {
-          description: `Circuit ${deletedCircuit.circuitNumber || deletedCircuit.circuitDesignation} removed`,
-          action: {
-            label: 'Undo',
-            onClick: () => {
-              setTestResults((current) => {
-                const restored = [...current];
-                restored.splice(index, 0, deletedCircuit);
-                onUpdate('scheduleOfTests', restored);
-                return restored;
-              });
-              setLastDeleted(null);
+        queueMicrotask(() => {
+          onUpdate('scheduleOfTests', updatedResults);
+
+          toast.success('Circuit deleted', {
+            description: `Circuit ${deletedCircuit.circuitNumber || deletedCircuit.circuitDesignation} removed`,
+            action: {
+              label: 'Undo',
+              onClick: () => {
+                setTestResults((current) => {
+                  const restored = [...current];
+                  restored.splice(index, 0, deletedCircuit);
+                  queueMicrotask(() => onUpdate('scheduleOfTests', restored));
+                  return restored;
+                });
+              },
             },
-          },
+          });
         });
 
         return updatedResults;
@@ -1975,19 +2065,21 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     [onUpdate]
   );
 
+  // Confirmed via the AlertDialog below (house pattern) — never window.confirm.
   const removeAllTestResults = () => {
-    if (
-      window.confirm(
-        'Are you sure you want to remove all test results? This action cannot be undone.'
-      )
-    ) {
-      setTestResults([]);
-      onUpdate('scheduleOfTests', []);
-    }
+    setTestResults([]);
+    onUpdate('scheduleOfTests', []);
+    setShowClearAllConfirm(false);
+    toast.success('All test results cleared');
   };
 
-  // Bulk infill handler
+  // Bulk infill handler — presented per-board (createBoardTools sets
+  // activeBoardId), so only fill circuits on THAT board; other boards'
+  // circuits must never be overwritten from another board's tools.
   const handleBulkInfill = (value: string, mode: 'all' | 'empty') => {
+    const scopedBoardId = activeBoardId;
+    const isInScope = (result: TestResult) =>
+      !scopedBoardId || (result.boardId || MAIN_BOARD_ID) === scopedBoardId;
     const fillableFields: (keyof TestResult)[] = [
       'typeOfWiring',
       'referenceMethod',
@@ -2025,6 +2117,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
 
     // Build updated results in a single pass
     const updatedResults = testResults.map((result) => {
+      if (!isInScope(result)) return result;
       let updatedResult = { ...result };
       let hasChanges = false;
 
@@ -2053,6 +2146,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
 
     toast.success(`Filled ${updatedCount} fields with "${value}"`);
     setShowBulkInfillDialog(false);
+    setActiveBoardId(null);
   };
 
   const updateTestResult = useCallback(
@@ -2141,7 +2235,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           }
           return result;
         });
-        onUpdate('scheduleOfTests', updatedResults);
+        queueMicrotask(() => onUpdate('scheduleOfTests', updatedResults));
         return updatedResults;
       });
     },
@@ -2178,67 +2272,45 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           }
           return result;
         });
-        onUpdate('scheduleOfTests', updatedResults);
+        queueMicrotask(() => onUpdate('scheduleOfTests', updatedResults));
         return updatedResults;
       });
     },
     [onUpdate]
   );
 
-  // Bulk field update - sets a single field to the same value for all test results
-  const handleBulkFieldUpdate = (field: keyof TestResult, value: string) => {
-    const updatedResults = testResults.map((result) => ({
-      ...result,
-      [field]: value,
-      // Clear autoFilled flag when user makes bulk changes
-      autoFilled: result.autoFilled ? false : result.autoFilled,
-    }));
-    setTestResults(updatedResults);
-    onUpdate('scheduleOfTests', updatedResults);
-  };
+  // Per-board wrapper for the tables' "Fill all" actions — each board's table
+  // gets a closure scoped to its own circuits, so a fill never bleeds across
+  // boards. (Backwards-compatible with the (field, value) prop contract.)
+  const makeBoardBulkFieldUpdate = useCallback(
+    (boardId: string) => (field: keyof TestResult, value: string) => {
+      const updatedResults = testResults.map((result) => {
+        if ((result.boardId || MAIN_BOARD_ID) !== boardId) return result;
+        return {
+          ...result,
+          [field]: value,
+          autoFilled: result.autoFilled ? false : result.autoFilled,
+        };
+      });
+      setTestResults(updatedResults);
+      onUpdate('scheduleOfTests', updatedResults);
+    },
+    [testResults, onUpdate]
+  );
 
-  // Quick Fill RCD handlers
-  const handleFillAllRcdBsStandard = (value: string) => {
-    handleBulkFieldUpdate('rcdBsStandard', value);
-  };
-
-  const handleFillAllRcdType = (value: string) => {
-    handleBulkFieldUpdate('rcdType', value);
-  };
-
-  const handleFillAllRcdRating = (value: string) => {
-    handleBulkFieldUpdate('rcdRating', value);
-  };
-
-  const handleFillAllRcdRatingA = (value: string) => {
-    handleBulkFieldUpdate('rcdRatingA', value);
-  };
-
-  // Quick Fill IR handlers
-  const handleFillAllInsulationVoltage = (value: string) => {
-    handleBulkFieldUpdate('insulationTestVoltage', value);
-  };
-
-  const handleFillAllInsulationLiveNeutral = (value: string) => {
-    handleBulkFieldUpdate('insulationLiveNeutral', value);
-  };
-
-  const handleFillAllInsulationLiveEarth = (value: string) => {
-    handleBulkFieldUpdate('insulationLiveEarth', value);
-  };
-
+  // No pb on the tab root — EICForm's <main> already carries the sticky footer
+  // clearance (pb-32 sm:pb-24).
   return (
-    <div className="pb-20 lg:pb-4">
+    <div>
       {/* MOBILE FULL-WIDTH LAYOUT - Clean Edge-to-Edge Design (EICR Pattern) */}
       {useMobileView ? (
         <div className="min-h-screen bg-white/[0.03] -mx-4">
           {/* Voice Status Indicator - Shows at top when active */}
           {voiceActive && (
-            <div className="p-4 bg-green-500/20 border-b border-green-500/30">
+            <div className="p-4 bg-white/[0.05] border-b border-white/[0.14]">
               <div className="flex items-center justify-center gap-2">
-                <Mic className="h-4 w-4 text-green-400 animate-pulse" />
                 <span className="text-sm text-green-400 font-medium">
-                  Voice Active - Say "Add circuit" or test values
+                  Voice active — say "Add circuit" or test values
                 </span>
               </div>
             </div>
@@ -2246,7 +2318,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
 
           {/* Distribution Boards - Edge to Edge */}
           <div className="pb-4">
-            {distributionBoards
+            {/* Copy before sorting — .sort() in place mutates React state during render */}
+            {[...distributionBoards]
               .sort((a, b) => a.order - b.order)
               .map((board) => {
                 const boardCircuits = getCircuitsForBoard(testResults, board.id);
@@ -2267,27 +2340,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                     {/* Board Header */}
                     <CollapsibleTrigger className="w-full" asChild>
                       <button className="w-full flex items-center gap-2.5 p-3 text-left touch-manipulation active:scale-[0.98] transition-all">
-                        {/* Board badge */}
-                        <span
-                          className={cn(
-                            'w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0',
-                            isComplete
-                              ? 'bg-green-500/15 text-green-400'
-                              : boardProgressPercent > 0
-                                ? 'bg-elec-yellow/15 text-elec-yellow'
-                                : 'bg-white/[0.06] text-white'
-                          )}
-                        >
-                          {isComplete ? (
-                            <CheckCircle className="h-3.5 w-3.5" />
-                          ) : board.id === MAIN_BOARD_ID || board.order === 0 ? (
-                            'M'
-                          ) : (
-                            'S'
-                          )}
-                        </span>
-
-                        {/* Board Info */}
+                        {/* Board name + role — plain type carries the hierarchy */}
                         <div className="flex-1 min-w-0">
                           <h3
                             className={cn(
@@ -2297,20 +2350,34 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                           >
                             {board.name}
                           </h3>
+                          <p
+                            className={cn(
+                              'text-[11px] leading-tight',
+                              board.id === MAIN_BOARD_ID || board.order === 0
+                                ? 'text-elec-yellow'
+                                : 'text-white'
+                            )}
+                          >
+                            {board.id === MAIN_BOARD_ID || board.order === 0
+                              ? 'Main board'
+                              : 'Sub-board'}
+                          </p>
                         </div>
 
-                        {/* Progress pill */}
+                        {/* Progress — readable, quiet */}
                         <span
                           className={cn(
-                            'text-[10px] font-bold px-2 py-0.5 rounded flex-shrink-0',
+                            'text-[11px] font-medium tabular-nums flex-shrink-0',
                             isComplete
-                              ? 'bg-green-500/15 text-green-400'
+                              ? 'text-green-400'
                               : boardProgressPercent > 0
-                                ? 'bg-white/[0.06] text-elec-yellow'
-                                : 'bg-white/[0.04] text-white'
+                                ? 'text-elec-yellow'
+                                : 'text-white'
                           )}
                         >
-                          {boardCircuits.length} · {boardProgressPercent}%
+                          {isComplete
+                            ? 'Complete'
+                            : `${boardCircuits.length} circuit${boardCircuits.length === 1 ? '' : 's'} · ${boardProgressPercent}%`}
                         </span>
 
                         {/* Chevron */}
@@ -2326,87 +2393,51 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                     <CollapsibleContent>
                       {/* Board Details */}
                       <div className="p-4 border-b border-white/[0.06] space-y-4">
-                        <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
-                        <p className="text-xs font-medium text-white uppercase tracking-wider">
-                          Board Details
+                        <p className="text-[13px] font-semibold text-white">
+                          Board details
                         </p>
                         {/* Board Reference & Location */}
                         <div className="grid grid-cols-2 gap-3">
                           <div>
-                            <label className="text-xs text-white block mb-1">Reference</label>
+                            <label className="text-[12px] font-medium text-white mb-1 block">Reference</label>
                             <DebouncedInput
                               type="text"
                               value={board.reference || ''}
                               onChange={(value) => handleUpdateBoard(board.id, 'reference', value)}
                               placeholder={board.name}
-                              className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow focus:outline-none touch-manipulation"
+                              className={inputCn}
                               style={{ fontSize: '16px' }}
                             />
                           </div>
                           <div>
-                            <label className="text-xs text-white block mb-1">Location</label>
+                            <label className="text-[12px] font-medium text-white mb-1 block">Location</label>
                             <DebouncedInput
                               type="text"
                               value={board.location || ''}
                               onChange={(value) => handleUpdateBoard(board.id, 'location', value)}
                               placeholder="e.g., Garage"
-                              className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow focus:outline-none touch-manipulation"
+                              className={inputCn}
                               style={{ fontSize: '16px' }}
                             />
                           </div>
                         </div>
 
-                        {/* Measurements */}
-                        <p className="text-xs font-medium text-white uppercase tracking-wider">
+                        {/* Measurements — shared reading keypad + verdicts (parity
+                            with the desktop BoardSection) */}
+                        <p className="text-[13px] font-semibold text-white">
                           Measurements
                         </p>
-                        <div className="grid grid-cols-2 gap-3">
-                          <div>
-                            <label className="text-xs text-white block mb-1">
-                              Z<sub>DB</sub> (Ω)
-                            </label>
-                            <div className="relative">
-                              <DebouncedInput
-                                type="text"
-                                inputMode="decimal"
-                                value={board.zdb || ''}
-                                onChange={(value) => handleUpdateBoard(board.id, 'zdb', value)}
-                                placeholder="0.00"
-                                className="w-full h-11 px-3 pr-8 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow focus:outline-none touch-manipulation"
-                                style={{ fontSize: '16px' }}
-                              />
-                              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white">
-                                Ω
-                              </span>
-                            </div>
-                          </div>
-                          <div>
-                            <label className="text-xs text-white block mb-1">
-                              I<sub>PF</sub> (kA)
-                            </label>
-                            <div className="relative">
-                              <DebouncedInput
-                                type="text"
-                                inputMode="decimal"
-                                value={board.ipf || ''}
-                                onChange={(value) => handleUpdateBoard(board.id, 'ipf', value)}
-                                placeholder="0.0"
-                                className="w-full h-11 px-3 pr-8 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow focus:outline-none touch-manipulation"
-                                style={{ fontSize: '16px' }}
-                              />
-                              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white">
-                                kA
-                              </span>
-                            </div>
-                          </div>
-                        </div>
+                        <MobileBoardMeasurements
+                          board={board}
+                          earthingArrangement={formData.earthingArrangement as string | undefined}
+                          onUpdateBoard={handleUpdateBoard}
+                        />
 
                         {/* Verification */}
                         <div className="space-y-2">
-                          <p className="text-xs font-medium text-white uppercase tracking-wider">
+                          <p className="text-[13px] font-semibold text-white">
                             Verification
                           </p>
-                          <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
                           <div className="grid grid-cols-2 gap-2 relative z-10">
                             {/* Polarity */}
                             <button
@@ -2421,24 +2452,12 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                                 );
                               }}
                               className={cn(
-                                'w-full h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer select-none',
+                                'w-full h-11 rounded-xl text-sm font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer select-none',
                                 board.confirmedCorrectPolarity
-                                  ? 'bg-green-500/20 border border-green-500/30 text-green-400'
-                                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                                  ? 'bg-green-500 border border-green-500 text-black font-semibold'
+                                  : 'bg-white/[0.06] border border-white/[0.12] text-white'
                               )}
                             >
-                              <div
-                                className={cn(
-                                  'w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none',
-                                  board.confirmedCorrectPolarity
-                                    ? 'bg-green-500 border-green-500'
-                                    : 'border-white/40'
-                                )}
-                              >
-                                {board.confirmedCorrectPolarity && (
-                                  <Check className="h-3 w-3 text-white" />
-                                )}
-                              </div>
                               <span className="pointer-events-none">Polarity</span>
                             </button>
                             {/* Phase Seq */}
@@ -2454,25 +2473,35 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                                 );
                               }}
                               className={cn(
-                                'w-full h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer select-none',
+                                'w-full h-11 rounded-xl text-sm font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer select-none',
                                 board.confirmedPhaseSequence
-                                  ? 'bg-green-500/20 border border-green-500/30 text-green-400'
-                                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                                  ? 'bg-green-500 border border-green-500 text-black font-semibold'
+                                  : 'bg-white/[0.06] border border-white/[0.12] text-white'
                               )}
                             >
-                              <div
-                                className={cn(
-                                  'w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none',
-                                  board.confirmedPhaseSequence
-                                    ? 'bg-green-500 border-green-500'
-                                    : 'border-white/40'
-                                )}
-                              >
-                                {board.confirmedPhaseSequence && (
-                                  <Check className="h-3 w-3 text-white" />
-                                )}
-                              </div>
-                              <span className="pointer-events-none">Phase Seq</span>
+                              <span className="pointer-events-none">Phase seq</span>
+                            </button>
+                            {/* Ring final — A4:2026 'Ring final circuit: Confirmed';
+                                parity with the desktop BoardSection chip */}
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                handleUpdateBoard(
+                                  board.id,
+                                  'ringFinalCircuitConfirmed',
+                                  !board.ringFinalCircuitConfirmed
+                                );
+                              }}
+                              className={cn(
+                                'col-span-2 w-full h-11 rounded-xl text-sm font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer select-none',
+                                board.ringFinalCircuitConfirmed
+                                  ? 'bg-green-500 border border-green-500 text-black font-semibold'
+                                  : 'bg-white/[0.06] border border-white/[0.12] text-white'
+                              )}
+                            >
+                              <span className="pointer-events-none">Ring final</span>
                             </button>
                             {/* SPD OK */}
                             <button
@@ -2490,25 +2519,13 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                               }}
                               disabled={board.spdNA}
                               className={cn(
-                                'w-full h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer select-none',
+                                'w-full h-11 rounded-xl text-sm font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer select-none',
                                 board.spdOperationalStatus && !board.spdNA
-                                  ? 'bg-green-500/20 border border-green-500/30 text-green-400'
-                                  : 'bg-white/[0.05] border border-white/[0.08] text-white',
+                                  ? 'bg-green-500 border border-green-500 text-black font-semibold'
+                                  : 'bg-white/[0.06] border border-white/[0.12] text-white',
                                 board.spdNA && 'opacity-30 cursor-not-allowed'
                               )}
                             >
-                              <div
-                                className={cn(
-                                  'w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none',
-                                  board.spdOperationalStatus && !board.spdNA
-                                    ? 'bg-green-500 border-green-500'
-                                    : 'border-white/40'
-                                )}
-                              >
-                                {board.spdOperationalStatus && !board.spdNA && (
-                                  <Check className="h-3 w-3 text-white" />
-                                )}
-                              </div>
                               <span className="pointer-events-none">SPD OK</span>
                             </button>
                             {/* SPD N/A */}
@@ -2518,28 +2535,27 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                                 e.preventDefault();
                                 e.stopPropagation();
                                 const newValue = !board.spdNA;
+                                // Parity with desktop NAChip — N/A also clears the
+                                // Type ticks so stale T1/T2/T3 can't reach the PDF
                                 handleUpdateBoard(board.id, {
                                   spdNA: newValue,
-                                  ...(newValue ? { spdOperationalStatus: false } : {}),
+                                  ...(newValue
+                                    ? {
+                                        spdOperationalStatus: false,
+                                        spdT1: false,
+                                        spdT2: false,
+                                        spdT3: false,
+                                      }
+                                    : {}),
                                 });
                               }}
                               className={cn(
-                                'w-full h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer select-none',
+                                'w-full h-11 rounded-xl text-sm font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer select-none',
                                 board.spdNA
-                                  ? 'bg-elec-yellow/20 border border-elec-yellow/30 text-elec-yellow'
-                                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                                  ? 'bg-elec-yellow border border-elec-yellow text-black font-semibold'
+                                  : 'bg-white/[0.06] border border-white/[0.12] text-white'
                               )}
                             >
-                              <div
-                                className={cn(
-                                  'w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none',
-                                  board.spdNA
-                                    ? 'bg-elec-yellow border-elec-yellow'
-                                    : 'border-white/40'
-                                )}
-                              >
-                                {board.spdNA && <Check className="h-3 w-3 text-black" />}
-                              </div>
                               <span className="pointer-events-none">SPD N/A</span>
                             </button>
                           </div>
@@ -2547,7 +2563,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                           {/* SPD Type -- show when SPD is applicable */}
                           {!board.spdNA && (
                             <div className="space-y-2 mt-1">
-                              <p className="text-xs text-white">SPD Type Installed</p>
+                              <p className="text-[12px] font-medium text-white">SPD type installed</p>
                               <div className="grid grid-cols-3 gap-2">
                                 {(['spdT1', 'spdT2', 'spdT3'] as const).map((field, i) => {
                                   const label = `Type ${i + 1}`;
@@ -2562,10 +2578,10 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                                         handleUpdateBoard(board.id, field, !isActive);
                                       }}
                                       className={cn(
-                                        'w-full h-10 rounded-lg text-xs font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-1.5 cursor-pointer select-none',
+                                        'w-full h-11 rounded-xl text-xs font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-1.5 cursor-pointer select-none',
                                         isActive
-                                          ? 'bg-elec-yellow/20 border border-elec-yellow/30 text-elec-yellow'
-                                          : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                                          ? 'bg-elec-yellow border border-elec-yellow text-black'
+                                          : 'bg-white/[0.06] border border-white/[0.12] text-white'
                                       )}
                                     >
                                       {label}
@@ -2574,48 +2590,55 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                                 })}
                               </div>
 
-                              {/* SPD Details — bottom sheet pickers */}
+                              {/* SPD details — Make + Location only, matching the
+                                  redesigned desktop panel (Model + Rated kA removed
+                                  per ELE-1161; stored values on old certs are kept
+                                  in the data model). Make supports free text per
+                                  ELE-871. */}
                               <div className="grid grid-cols-2 gap-2 mt-2">
                                 <div>
-                                  <label className="text-[10px] text-white block mb-1">SPD Make</label>
-                                  <MobileSelectPicker
-                                    value={(board as any).spdMake || ''}
-                                    onValueChange={(v) => handleUpdateBoard(board.id, 'spdMake' as any, v)}
-                                    options={SPD_MAKES}
-                                    placeholder="Select make"
-                                    title="SPD Make"
-                                  />
+                                  <label className="text-[12px] font-medium text-white mb-1 block">SPD make</label>
+                                  {board.spdMake &&
+                                  !SPD_MAKES.some((o) => o.value === board.spdMake) ? (
+                                    <DebouncedInput
+                                      type="text"
+                                      value={board.spdMake}
+                                      onChange={(v) =>
+                                        handleUpdateBoard(board.id, { spdMake: v, spdModel: '' })
+                                      }
+                                      placeholder="Enter SPD make"
+                                      className={inputCn}
+                                      style={{ fontSize: '16px' }}
+                                    />
+                                  ) : (
+                                    <MobileSelectPicker
+                                      value={board.spdMake || ''}
+                                      onValueChange={(v) => {
+                                        const next = v === '__custom__' ? 'Custom' : v;
+                                        handleUpdateBoard(board.id, {
+                                          spdMake: next,
+                                          spdModel: '',
+                                        });
+                                      }}
+                                      options={[
+                                        ...SPD_MAKES,
+                                        { value: '__custom__', label: 'Other (type your own)…' },
+                                      ]}
+                                      placeholder="Select make"
+                                      title="SPD make"
+                                      triggerClassName={selectTriggerCn}
+                                    />
+                                  )}
                                 </div>
                                 <div>
-                                  <label className="text-[10px] text-white block mb-1">SPD Model</label>
+                                  <label className="text-[12px] font-medium text-white mb-1 block">SPD location</label>
                                   <MobileSelectPicker
-                                    value={(board as any).spdModel || ''}
-                                    onValueChange={(v) => handleUpdateBoard(board.id, 'spdModel' as any, v)}
-                                    options={getSpdModelsForMake((board as any).spdMake || '')}
-                                    placeholder="Select model"
-                                    title="SPD Model"
-                                  />
-                                </div>
-                              </div>
-                              <div className="grid grid-cols-2 gap-2 mt-2">
-                                <div>
-                                  <label className="text-[10px] text-white block mb-1">SPD Location</label>
-                                  <MobileSelectPicker
-                                    value={(board as any).spdLocation || ''}
-                                    onValueChange={(v) => handleUpdateBoard(board.id, 'spdLocation' as any, v)}
+                                    value={board.spdLocation || ''}
+                                    onValueChange={(v) => handleUpdateBoard(board.id, 'spdLocation', v)}
                                     options={SPD_LOCATIONS}
                                     placeholder="Select location"
-                                    title="SPD Location"
-                                  />
-                                </div>
-                                <div>
-                                  <label className="text-[10px] text-white block mb-1">Rated kA</label>
-                                  <MobileSelectPicker
-                                    value={(board as any).spdRatedCurrentKa || ''}
-                                    onValueChange={(v) => handleUpdateBoard(board.id, 'spdRatedCurrentKa' as any, v)}
-                                    options={SPD_RATED_KA}
-                                    placeholder="Select kA"
-                                    title="Rated kA"
+                                    title="SPD location"
+                                    triggerClassName={selectTriggerCn}
                                   />
                                 </div>
                               </div>
@@ -2624,94 +2647,74 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                         </div>
                       </div>
 
-                      {/* Tools Bar */}
-                      <div className="grid grid-cols-3 gap-2 px-4 py-3 bg-background border-y border-white/[0.06]">
-                        {/* AI Scan */}
+                      {/* Tools Bar — Add circuit is the primary; labels say what
+                          they do (founder call: no cryptic AI/Add/Speak) */}
+                      <div className="grid grid-cols-3 gap-2 px-4 py-3 bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-y border-white/[0.14]">
                         <Button
-                          className="h-11 rounded-xl bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98] text-xs"
+                          className="h-11 rounded-xl bg-white/[0.06] border border-white/[0.12] text-white font-semibold hover:bg-white/[0.10] touch-manipulation active:scale-[0.98] text-[12px]"
                           onClick={() => {
                             setActiveBoardId(board.id);
                             setShowPhotoCapture(true);
                           }}
                         >
-                          <Camera className="h-4 w-4 mr-1.5" />
-                          AI
+                          AI scan
                         </Button>
-                        {/* Add Circuit */}
                         <Button
-                          className="h-11 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white font-semibold hover:bg-white/[0.10] touch-manipulation active:scale-[0.98] text-xs"
-                          onClick={() => addCircuitToBoard(board.id)}
+                          className="h-11 rounded-xl bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98] text-[12px]"
+                          onClick={() => addTestResult(board.id)}
                         >
-                          <Plus className="h-4 w-4 mr-1.5" />
-                          Add
+                          Add circuit
                         </Button>
-                        {/* Speak */}
                         <Button
                           className={cn(
-                            'h-11 rounded-xl font-semibold touch-manipulation active:scale-[0.98] text-xs',
+                            'h-11 rounded-xl font-semibold touch-manipulation active:scale-[0.98] text-[12px]',
                             voiceActive
-                              ? 'bg-green-500 text-white'
+                              ? 'bg-green-500 text-black'
                               : voiceConnecting
-                                ? 'bg-yellow-500 text-black animate-pulse'
-                                : 'bg-purple-600 text-white'
+                                ? 'bg-white/[0.06] border border-white/[0.12] text-white'
+                                : 'bg-white/[0.06] border border-white/[0.12] text-white hover:bg-white/[0.10]'
                           )}
                           onClick={toggleVoice}
                           disabled={voiceConnecting}
                         >
-                          <Mic className={cn('h-4 w-4 mr-1.5', voiceActive && 'animate-pulse')} />
-                          {voiceActive ? 'Live' : 'Speak'}
+                          {voiceActive ? 'Voice live' : voiceConnecting ? 'Connecting…' : 'Voice'}
                         </Button>
                       </div>
 
                       {/* Circuit Table */}
-                      <div className="bg-background">
+                      <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                         {boardCircuits.length === 0 ? (
                           <div className="p-6 text-center space-y-3">
                             <p className="text-xs text-white">
-                              No circuits -- tap Add Circuit or AI Scan
+                              No circuits — tap Add circuit or AI scan
                             </p>
                             <Button
-                              onClick={() => addCircuitToBoard(board.id)}
-                              className="h-11 bg-elec-yellow text-black font-medium hover:bg-elec-yellow/90 touch-manipulation"
+                              onClick={() => addTestResult(board.id)}
+                              className="h-11 bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation"
                             >
-                              <Plus className="h-4 w-4 mr-2" />
-                              Add First Circuit
+                              Add first circuit
                             </Button>
                           </div>
-                        ) : mobileViewType === 'table' ? (
+                        ) : (
                           <MobileHorizontalScrollTable
                             testResults={boardCircuits}
                             onUpdate={updateTestResult}
                             onRemove={removeTestResult}
                             onBulkUpdate={handleBulkUpdate}
-                            onBulkFieldUpdate={handleBulkFieldUpdate}
+                            onBulkFieldUpdate={makeBoardBulkFieldUpdate(board.id)}
                             onMoveUp={reorderTestResultUp}
                             onMoveDown={reorderTestResultDown}
                           />
-                        ) : (
-                          <div className="p-4">
-                            <CircuitList
-                              circuits={boardCircuits}
-                              onUpdate={updateTestResult}
-                              onRemove={removeTestResult}
-                              onBulkUpdate={handleBulkUpdate}
-                              onMoveUp={reorderTestResultUp}
-                              onMoveDown={reorderTestResultDown}
-                              viewMode="card"
-                              className="px-0"
-                            />
-                          </div>
                         )}
 
                         {/* Add Circuit to This Board */}
                         {boardCircuits.length > 0 && (
                           <div className="px-4 py-3 border-t border-white/[0.06]">
                             <button
-                              onClick={() => addCircuitToBoard(board.id)}
-                              className="w-full h-10 rounded-lg border border-dashed border-white/[0.10] text-[11px] font-medium text-white hover:bg-white/[0.03] touch-manipulation active:scale-[0.98] flex items-center justify-center gap-1.5"
+                              onClick={() => addTestResult(board.id)}
+                              className="w-full h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] text-sm font-medium text-white hover:bg-white/[0.10] touch-manipulation active:scale-[0.98] flex items-center justify-center"
                             >
-                              <Plus className="h-3.5 w-3.5" />
-                              Add Circuit
+                              Add circuit
                             </button>
                           </div>
                         )}
@@ -2722,9 +2725,9 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                         <div className="px-4 py-2 border-t border-white/[0.06] flex justify-end">
                           <button
                             onClick={() => handleRemoveBoard(board.id)}
-                            className="text-[10px] text-red-400/50 hover:text-red-400 touch-manipulation"
+                            className="h-11 px-2 text-[12px] font-medium text-red-400 hover:text-red-300 touch-manipulation"
                           >
-                            Remove Board
+                            Remove board
                           </button>
                         </div>
                       )}
@@ -2738,83 +2741,55 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
               <Button
                 onClick={handleAddBoard}
                 variant="outline"
-                className="w-full h-12 border-dashed border-white/20 text-white hover:bg-white/5 touch-manipulation"
+                className="w-full h-12 border-white/[0.12] bg-white/[0.06] text-white hover:bg-white/[0.10] touch-manipulation"
               >
-                <Plus className="h-4 w-4 mr-2" />
-                Add Distribution Board
+                Add distribution board
               </Button>
             </div>
 
-            {/* View Toggle */}
-            <div className="px-4 pb-2 flex items-center justify-center">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={toggleMobileView}
-                className="h-9 text-xs gap-1.5 text-white hover:text-white"
-              >
-                {mobileViewType === 'table' ? (
-                  <Layout className="h-3.5 w-3.5" />
-                ) : (
-                  <Table className="h-3.5 w-3.5" />
-                )}
-                Switch to {mobileViewType === 'table' ? 'Card' : 'Table'} View
-              </Button>
-            </div>
           </div>
         </div>
       ) : (
         /* DESKTOP LAYOUT - Premium Professional Dashboard */
-        <div className="w-full space-y-6 py-6">
-          {/* Hero — college editorial pattern (matches EICR) */}
-          <div className="space-y-6">
-            <div className="flex items-end justify-between gap-4 flex-wrap">
+        <div className="w-full space-y-4">
+          {/* Section header */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between gap-4 flex-wrap">
               <div className="min-w-0 flex-1">
-                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                  Schedule of Tests
-                </p>
-                <h1 className="mt-1.5 text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.05]">
-                  BS 7671 A4:2026 circuit testing
-                </h1>
-                <p className="mt-3 text-[13px] sm:text-sm text-white max-w-2xl leading-relaxed">
-                  Capture verification, continuity, insulation and loop measurements for every
-                  circuit on every board — aligned with the A4:2026 model schedule of test results.
+                <h2 className="text-[15px] font-semibold tracking-tight text-white">
+                  Schedule of testing
+                </h2>
+                <p className="mt-1 text-[12px] text-white">
+                  Verification, continuity, insulation and loop results for every circuit — BS 7671
+                  A4:2026.
                 </p>
               </div>
               {testResults.length > 0 && (
                 <button
-                  onClick={removeAllTestResults}
-                  className="text-[12px] font-medium text-red-400/90 hover:text-red-300 transition-colors shrink-0 touch-manipulation"
+                  onClick={() => setShowClearAllConfirm(true)}
+                  className="h-11 px-3 text-[12px] font-medium text-red-400 hover:text-red-300 transition-colors shrink-0 touch-manipulation"
                 >
-                  Clear all →
+                  Clear all
                 </button>
               )}
             </div>
 
-            {/* 4-cell hairline stat strip */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
+            {/* Stat cards */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
               {[
                 { value: testResults.length, label: 'Circuits', toneClass: 'text-white' },
                 { value: completedCount, label: 'Complete', toneClass: 'text-green-400' },
                 { value: pendingCount, label: 'Pending', toneClass: 'text-amber-400' },
                 { value: `${progressPercent}%`, label: 'Progress', toneClass: 'text-elec-yellow' },
-              ].map((s, i) => (
+              ].map((s) => (
                 <div
                   key={s.label}
-                  className="bg-[hsl(0_0%_12%)] px-5 py-6 sm:px-6 sm:py-7 lg:px-7 lg:py-8 flex flex-col items-start"
+                  className="rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4"
                 >
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-                    {String(i + 1).padStart(2, '0')} · {s.label}
-                  </span>
-                  <span
-                    className={cn(
-                      'mt-3 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none',
-                      'text-4xl sm:text-5xl lg:text-6xl',
-                      s.toneClass
-                    )}
-                  >
+                  <p className="text-[12px] font-medium text-white">{s.label}</p>
+                  <p className={cn('mt-1 text-2xl font-semibold tabular-nums', s.toneClass)}>
                     {s.value}
-                  </span>
+                  </p>
                 </div>
               ))}
             </div>
@@ -2824,7 +2799,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
               <div className="flex items-center gap-4">
                 <div className="flex-1 h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-elec-yellow to-amber-400 transition-[width] duration-500"
+                    className="h-full rounded-full bg-elec-yellow transition-[width] duration-500"
                     style={{ width: `${Math.max(2, progressPercent)}%` }}
                   />
                 </div>
@@ -2834,54 +2809,55 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
               </div>
             )}
 
-            {/* Toolbar — keep icons on buttons since user said keep tools bar as-is */}
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3 pt-4 border-t border-white/[0.06]">
+            {/* Toolbar */}
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 pt-4 border-t border-white/[0.1]">
               <Button
-                onClick={() => setShowPhotoCapture(true)}
+                onClick={() => {
+                  // Toolbar scan targets the main board — clear any board id a
+                  // prior sub-board tool left behind so circuits don't land there.
+                  setActiveBoardId(null);
+                  setShowPhotoCapture(true);
+                }}
                 variant="outline"
-                className="h-10 sm:h-11 bg-white/5 border-white/20 hover:bg-white/10 text-white"
+                className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] text-white text-[13px] font-semibold hover:bg-white/[0.10] hover:text-white touch-manipulation"
               >
-                <Camera className="h-4 w-4 mr-2" />
-                AI Board Scan
+                AI board scan
               </Button>
 
               <Button
                 onClick={toggleVoice}
                 disabled={voiceConnecting}
                 variant="outline"
-                className={`h-10 sm:h-11 ${
+                className={cn(
+                  'h-11 rounded-xl text-[13px] font-semibold touch-manipulation',
                   voiceActive
-                    ? 'bg-green-600 hover:bg-green-700 border-green-400/30 text-white'
+                    ? 'bg-green-500 hover:bg-green-500/90 border-green-500 text-black hover:text-black'
                     : voiceConnecting
-                      ? 'bg-yellow-600 animate-pulse border-yellow-400/30 text-white'
-                      : 'bg-white/5 border-white/20 hover:bg-white/10 text-white'
-                }`}
+                      ? 'border-white/[0.12] bg-white/[0.06] text-white'
+                      : 'border-white/[0.12] bg-white/[0.06] text-white hover:bg-white/[0.10] hover:text-white'
+                )}
               >
-                <Mic className={`h-4 w-4 mr-2 ${voiceActive ? 'animate-pulse' : ''}`} />
                 {voiceActive
-                  ? 'Tap to Stop'
+                  ? 'Tap to stop'
                   : voiceConnecting
                     ? 'Connecting...'
-                    : 'Voice Assistant'}
+                    : 'Voice assistant'}
               </Button>
 
               <Button
-                onClick={addTestResult}
-                variant="outline"
-                className="h-10 sm:h-11 bg-white/5 border-white/20 hover:bg-white/10 text-white"
+                onClick={() => addTestResult()}
+                className="h-11 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 touch-manipulation"
               >
-                <Plus className="h-4 w-4 mr-2" />
-                Add Circuit
+                Add circuit
               </Button>
 
               <div className="flex-1 min-w-0" />
 
               <Button
                 onClick={() => setShowAnalytics(!showAnalytics)}
-                variant="ghost"
-                className="h-10 sm:h-11 text-white hover:text-white hover:bg-white/10"
+                variant="outline"
+                className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] text-white text-[13px] font-semibold hover:bg-white/[0.10] hover:text-white touch-manipulation"
               >
-                <BarChart3 className="h-4 w-4 mr-2" />
                 Analytics
               </Button>
             </div>
@@ -2889,7 +2865,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
 
           {/* Analytics Section */}
           {showAnalytics && testResults.length > 0 && (
-            <div className="testing-table-container p-4">
+            <div className="rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4">
               <TestAnalytics testResults={testResults} />
             </div>
           )}
@@ -2915,7 +2891,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                     onToggleExpanded={() => toggleBoardExpanded(board.id)}
                     onUpdateBoard={handleUpdateBoard}
                     onRemoveBoard={handleRemoveBoard}
-                    onAddCircuit={() => addCircuitToBoard(board.id)}
+                    onAddCircuit={() => addTestResult(board.id)}
                     circuitCount={boardCircuits.length}
                     completedCount={
                       boardCircuits.filter(
@@ -2940,8 +2916,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                       onBulkUpdate={handleBulkUpdate}
                       onMoveUp={reorderTestResultUp}
                       onMoveDown={reorderTestResultDown}
-                      onAddCircuit={() => addCircuitToBoard(board.id)}
-                      onBulkFieldUpdate={handleBulkFieldUpdate}
+                      onAddCircuit={() => addTestResult(board.id)}
+                      onBulkFieldUpdate={makeBoardBulkFieldUpdate(board.id)}
                       earthingArrangement={formData.earthingArrangement as string | undefined}
                     />
                   </BoardSection>
@@ -2955,36 +2931,32 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       {/* SHARED INFO SECTIONS - Responsive Layout */}
       {useMobileView ? (
         /* Mobile: Full-width sections */
-        <div className="-mx-4 pb-24 mt-4 space-y-0 border-t border-white/[0.06]">
+        <div className="-mx-4 mt-4 space-y-0 border-t border-white/[0.06]">
           {/* Test Instruments */}
           <div className="px-4 py-5">
-            <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-3" />
-            <h3 className="text-xs font-medium text-white uppercase tracking-wider mb-4">Test Instruments</h3>
+            <h3 className="mb-4 text-[15px] font-semibold tracking-tight text-white">Test instruments</h3>
             <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
           </div>
 
           {/* Test Method & Notes */}
           <div className="px-4 py-5">
-            <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-3" />
-            <h3 className="text-xs font-medium text-white uppercase tracking-wider mb-4">Test Method & Notes</h3>
+            <h3 className="mb-4 text-[15px] font-semibold tracking-tight text-white">Test method & notes</h3>
             <TestMethodInfo formData={formData} onUpdate={onUpdate} />
           </div>
         </div>
       ) : (
         /* Desktop: Horizontal Card Grid */
         <div className="grid grid-cols-2 gap-4 mt-6">
-          <div className="testing-info-section p-4">
-            <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
-              <Wrench className="h-4 w-4 text-elec-yellow" />
-              Test Instruments
+          <div className="rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5">
+            <h3 className="mb-4 text-[15px] font-semibold tracking-tight text-white">
+              Test instruments
             </h3>
             <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
           </div>
 
-          <div className="testing-info-section p-4">
-            <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
-              <FileText className="h-4 w-4 text-elec-yellow" />
-              Test Method & Notes
+          <div className="rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5">
+            <h3 className="mb-4 text-[15px] font-semibold tracking-tight text-white">
+              Test method & notes
             </h3>
             <TestMethodInfo formData={formData} onUpdate={onUpdate} />
           </div>
@@ -2992,35 +2964,6 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       )}
 
       {/* Quick Fill RCD Panel Dialog */}
-      {showQuickFillPanel && (
-        <div className="fixed inset-0 z-50 bg-white/[0.03] backdrop-blur-sm flex flex-col">
-          <div className="flex items-center justify-between p-4 border-b">
-            <h2 className="text-lg font-semibold">Quick Fill RCD Details</h2>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setShowQuickFillPanel(false)}
-              className="h-9 w-9 p-0"
-            >
-              <X className="h-5 w-5" />
-            </Button>
-          </div>
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            <QuickFillRcdPanel
-              onFillAllRcdBsStandard={handleFillAllRcdBsStandard}
-              onFillAllRcdType={handleFillAllRcdType}
-              onFillAllRcdRating={handleFillAllRcdRating}
-              onFillAllRcdRatingA={handleFillAllRcdRatingA}
-            />
-            <QuickFillIrPanel
-              onFillAllInsulationVoltage={handleFillAllInsulationVoltage}
-              onFillAllInsulationLiveNeutral={handleFillAllInsulationLiveNeutral}
-              onFillAllInsulationLiveEarth={handleFillAllInsulationLiveEarth}
-            />
-          </div>
-        </div>
-      )}
-
       {/* Dialogs - Render outside conditional blocks */}
 
       {/* AI Board Scanner - Unified Overlay */}
@@ -3034,29 +2977,44 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
             handleAIAnalysisComplete(data);
             setShowPhotoCapture(false);
           }}
-          title="Scan Distribution Board"
+          title="Scan distribution board"
         />
       )}
 
-      {/* Test Results Photo Capture - Tool Sheet Pattern */}
+      {/* Test Results Photo Capture - Tool Sheet Pattern.
+          Closing abandons the flow — clear activeBoardId so a later toolbar
+          scan doesn't inherit this board. */}
       {showTestResultsScan && (
         <>
-          <div className="tool-sheet-overlay" onClick={() => setShowTestResultsScan(false)} />
+          <div
+            className="tool-sheet-overlay"
+            onClick={() => {
+              setShowTestResultsScan(false);
+              setActiveBoardId(null);
+            }}
+          />
           <div className="tool-sheet-container">
             <div className="tool-sheet-handle md:hidden" />
             <div className="tool-sheet-header">
-              <div className="tool-sheet-title">
-                <Camera className="h-5 w-5 text-elec-yellow" />
-                Scan Test Results
-              </div>
-              <Button variant="ghost" size="icon" onClick={() => setShowTestResultsScan(false)}>
+              <div className="tool-sheet-title">Scan test results</div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => {
+                  setShowTestResultsScan(false);
+                  setActiveBoardId(null);
+                }}
+              >
                 <X className="h-5 w-5" />
               </Button>
             </div>
             <div className="tool-sheet-content">
               <TestResultsPhotoCapture
                 onAnalysisComplete={handleTestResultsAnalysisComplete}
-                onClose={() => setShowTestResultsScan(false)}
+                onClose={() => {
+                  setShowTestResultsScan(false);
+                  setActiveBoardId(null);
+                }}
                 renderContentOnly={true}
               />
             </div>
@@ -3073,6 +3031,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           onClose={() => {
             setShowTestResultsReview(false);
             setExtractedTestResults(null);
+            setActiveBoardId(null);
           }}
           extractedData={extractedTestResults}
           onAccept={handleAcceptTestResults}
@@ -3083,13 +3042,25 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       {showScribbleDialog && (
         <ScribbleToTableDialog
           onCircuitsAdded={(newCircuits) => {
-            const updatedResults = [...testResults, ...newCircuits];
+            // Scribble opened from a board's tools targets THAT board — tag the
+            // new circuits so they don't fall through to the Main CU.
+            const targetBoardId =
+              activeBoardId || getMainBoard(distributionBoards)?.id || MAIN_BOARD_ID;
+            const withBoard = newCircuits.map((c: TestResult) => ({
+              ...c,
+              boardId: c.boardId || targetBoardId,
+            }));
+            const updatedResults = [...testResults, ...withBoard];
             setTestResults(updatedResults);
             onUpdate('scheduleOfTests', updatedResults);
             setShowScribbleDialog(false);
-            toast.success(`Added ${newCircuits.length} circuit(s) from text`);
+            setActiveBoardId(null);
+            toast.success(`Added ${withBoard.length} circuit(s) from text`);
           }}
-          onClose={() => setShowScribbleDialog(false)}
+          onClose={() => {
+            setShowScribbleDialog(false);
+            setActiveBoardId(null);
+          }}
         />
       )}
 
@@ -3100,22 +3071,38 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         onUseAutoFill={(circuitType, suggestions) =>
           handleCreateCircuit(true, circuitType, suggestions)
         }
-        onSkip={() => handleCreateCircuit(false)}
+        onSkip={() => {
+          // Blank path = exactly what Add circuit did before the preset sheet:
+          // a BS 7671 'other' default row on the board the tap came from
+          // (currentBoardId is set by addTestResult).
+          setShowAutoFillPrompt(false);
+          addCircuitToBoard(currentBoardId);
+        }}
         circuitNumber={newCircuitNumber}
       />
 
       {/* Smart Auto-Fill Dialog - Tool Sheet Pattern */}
       {showSmartAutoFillDialog && (
         <>
-          <div className="tool-sheet-overlay" onClick={() => setShowSmartAutoFillDialog(false)} />
+          <div
+            className="tool-sheet-overlay"
+            onClick={() => {
+              setShowSmartAutoFillDialog(false);
+              setActiveBoardId(null);
+            }}
+          />
           <div className="tool-sheet-container">
             <div className="tool-sheet-handle md:hidden" />
             <div className="tool-sheet-header">
-              <div className="tool-sheet-title">
-                <Zap className="h-5 w-5 text-elec-yellow" />
-                Smart Circuit Auto-Fill
-              </div>
-              <Button variant="ghost" size="icon" onClick={() => setShowSmartAutoFillDialog(false)}>
+              <div className="tool-sheet-title">Smart circuit auto-fill</div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => {
+                  setShowSmartAutoFillDialog(false);
+                  setActiveBoardId(null);
+                }}
+              >
                 <X className="h-5 w-5" />
               </Button>
             </div>
@@ -3129,15 +3116,25 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       {/* RCD Presets Dialog - Tool Sheet Pattern */}
       {showRcdPresetsDialog && (
         <>
-          <div className="tool-sheet-overlay" onClick={() => setShowRcdPresetsDialog(false)} />
+          <div
+            className="tool-sheet-overlay"
+            onClick={() => {
+              setShowRcdPresetsDialog(false);
+              setActiveBoardId(null);
+            }}
+          />
           <div className="tool-sheet-container">
             <div className="tool-sheet-handle md:hidden" />
             <div className="tool-sheet-header">
-              <div className="tool-sheet-title">
-                <Shield className="h-5 w-5 text-elec-yellow" />
-                Quick RCD Presets
-              </div>
-              <Button variant="ghost" size="icon" onClick={() => setShowRcdPresetsDialog(false)}>
+              <div className="tool-sheet-title">Quick RCD presets</div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => {
+                  setShowRcdPresetsDialog(false);
+                  setActiveBoardId(null);
+                }}
+              >
                 <X className="h-5 w-5" />
               </Button>
             </div>
@@ -3164,8 +3161,9 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                   setTestResults(updatedResults);
                   onUpdate('scheduleOfTests', updatedResults);
                   setShowRcdPresetsDialog(false);
+                  setActiveBoardId(null);
 
-                  toast.success(`✓ ${preset.label} Applied`, {
+                  toast.success(`${preset.label} preset applied`, {
                     description: `RCD details set for ${circuitIds.length} circuit${circuitIds.length > 1 ? 's' : ''}`,
                     duration: 2000,
                   });
@@ -3176,13 +3174,37 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         </>
       )}
 
-      {/* Bulk Infill Dialog */}
+      {/* Bulk Infill Dialog — scoped to the board whose tools opened it */}
       <BulkInfillDialog
         open={showBulkInfillDialog}
-        onOpenChange={setShowBulkInfillDialog}
-        testResults={testResults}
+        onOpenChange={(open) => {
+          setShowBulkInfillDialog(open);
+          if (!open) setActiveBoardId(null);
+        }}
+        testResults={
+          activeBoardId ? getCircuitsForBoard(testResults, activeBoardId) : testResults
+        }
         onApply={handleBulkInfill}
       />
+
+      {/* Clear all confirmation — house AlertDialog, not window.confirm */}
+      <AlertDialog open={showClearAllConfirm} onOpenChange={setShowClearAllConfirm}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Remove all test results?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Every circuit on every board will be removed from the schedule of testing. This
+              cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={removeAllTestResults}>
+              Yes, remove all
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
+import { fireAlarmTemplateId } from '@/utils/fireAlarmPdfRouting';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import CertShellHeader from '@/components/inspection/shared/CertShellHeader';
@@ -256,7 +257,7 @@ const {
           .eq('report_id', savedReportId);
       const { data: fn, error: fnErr } = await supabase.functions.invoke(
         'generate-fire-alarm-pdf',
-        { body: { formData: pdfData, templateId: '24C2EA56-CDC8-4777-AD17-7B1764AC0C2D' } }
+        { body: { formData: pdfData, templateId: fireAlarmTemplateId('fire-alarm-inspection') } }
       );
       if (fnErr) throw new Error(fnErr.message);
       if (!fn?.success || !fn?.pdfUrl) throw new Error(fn?.error || 'No PDF URL');
@@ -338,7 +339,17 @@ const {
       }
       const { data: result, error: fnErr } = await supabase.functions.invoke(
         'send-certificate-resend',
-        { body: { reportId: savedReportId, recipientEmail, cc, customMessage, formattedData } }
+        {
+          body: {
+            reportId: savedReportId,
+            recipientEmail,
+            cc,
+            customMessage,
+            formattedData,
+            // Shares generate-fire-alarm-pdf, whose default template is G2.
+            templateId: fireAlarmTemplateId('fire-alarm-inspection'),
+          },
+        }
       );
       if (fnErr) throw new Error(fnErr.message || 'Failed to send certificate email');
       if (!result?.success)
@@ -478,7 +489,7 @@ const {
         isGenerating={isGenerating}
         pdfUrl={generatedPdfUrl}
         pdfFilename={pdfFilename}
-        error={generationError}
+        errorMessage={generationError}
         documentLabel="Certificate"
       />
     </div>

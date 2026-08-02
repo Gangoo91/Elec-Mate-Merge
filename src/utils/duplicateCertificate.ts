@@ -90,9 +90,11 @@ const IDENTITY_FIELDS_TO_STRIP = [
   'acceptanceStatus',
   'clientSignature',
   'clientSignatureDate',
-  // Defects/observations + client-specific scope — specific to that property
-  'defectObservations',
-  'observations',
+  // Observations deliberately CARRY (ELE-1439): the primary duplicate
+  // workflow is re-issuing a Satisfactory EICR for the SAME property after
+  // remedial work — the codes/comments are the record of what was found and
+  // rectified. They're editable/removable on the new cert. (Block-of-flats
+  // users delete them in one tap per card.)
   // Who the inspection scope was agreed with — the previous client's name; must
   // not carry into a new cert (ELE-1160). extentOfInspection is deliberately
   // kept: it's generic BS 7671 boilerplate reused across the block-of-flats flow.

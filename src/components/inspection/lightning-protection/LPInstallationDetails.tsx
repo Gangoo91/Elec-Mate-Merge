@@ -5,6 +5,7 @@ import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { cn } from '@/lib/utils';
 import { useLightningProtectionSmartForm } from '@/hooks/inspection/useLightningProtectionSmartForm';
 import { MESH_SIZE } from '@/types/lightning-protection';
+import useReadingKeypad from '@/hooks/useReadingKeypad';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -24,9 +25,8 @@ const SectionHeader = ({ title }: { title: string }) => (
 );
 
 const Sub = ({ title }: { title: string }) => (
-  <div className="flex items-center gap-2 pt-2">
-    <p className="text-[12px] font-semibold text-white shrink-0">{title}</p>
-    <div className="h-px flex-1 bg-white/[0.08]" />
+  <div className="border-t border-white/[0.1] pt-4">
+    <h3 className="text-sm font-semibold text-white">{title}</h3>
   </div>
 );
 
@@ -64,10 +64,35 @@ const Toggle = ({ label, field, value, onUpdate }: { label: string; field: strin
 
 interface Props { formData: any; onUpdate: (field: string, value: any) => void }
 
+/** Numeric reading/measurement inputs the keypad serves — counter readings and
+ * recorded dimensions. Counts, sizes and selects stay native. */
+const KEYPAD_META = {
+  strikeCounterReading: { label: 'Strike counter — current reading', unit: 'strikes' },
+  strikeCounterPreviousReading: { label: 'Strike counter — previous reading', unit: 'strikes' },
+  downConductorSpacing: { label: 'Down conductor spacing', unit: 'm' },
+  electrodeDepth: { label: 'Earth electrode depth', unit: 'm' },
+};
+
 export default function LPInstallationDetails({ formData, onUpdate }: Props) {
   const { validateDownConductorSpacing } = useLightningProtectionSmartForm();
   const spacingValidation = useMemo(() => validateDownConductorSpacing(formData.downConductorSpacing, formData.lpsClass), [formData.downConductorSpacing, formData.lpsClass, validateDownConductorSpacing]);
   const requiredMesh = formData.lpsClass ? MESH_SIZE[formData.lpsClass] : '';
+
+  // Reading keypad — shared MW pattern. Values flow through the existing
+  // onUpdate path; the spacing verdict reuses the spacingValidation the file
+  // already computes for its banner (no new limits). DOM-order advance.
+  const keypad = useReadingKeypad({
+    meta: KEYPAD_META,
+    getValue: (field) => String(formData[field] ?? ''),
+    setValue: (field, value) => onUpdate(field, value),
+    getStatus: (field) => {
+      if (field !== 'downConductorSpacing' || !spacingValidation.message) return null;
+      return {
+        tone: spacingValidation.valid ? 'pass' : 'check',
+        label: spacingValidation.message,
+      };
+    },
+  });
 
   const updateBonding = (key: string, value: any) => {
     onUpdate('servicesBonded', { ...formData.servicesBonded, [key]: value });
@@ -117,8 +142,8 @@ export default function LPInstallationDetails({ formData, onUpdate }: Props) {
         <Toggle label="Lightning strike counter fitted" field="strikeCounterFitted" value={formData.strikeCounterFitted} onUpdate={onUpdate} />
         {formData.strikeCounterFitted && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-            <Field label="Current reading"><Input type="number" value={formData.strikeCounterReading} onChange={(e) => onUpdate('strikeCounterReading', e.target.value)} className={inputCn} placeholder="e.g. 12" /></Field>
-            <Field label="Previous reading"><Input type="number" value={formData.strikeCounterPreviousReading} onChange={(e) => onUpdate('strikeCounterPreviousReading', e.target.value)} className={inputCn} placeholder="From last cert" /></Field>
+            <Field label="Current reading"><Input value={formData.strikeCounterReading} onChange={(e) => onUpdate('strikeCounterReading', e.target.value)} className={inputCn} placeholder="e.g. 12" {...keypad.field('strikeCounterReading')} /></Field>
+            <Field label="Previous reading"><Input value={formData.strikeCounterPreviousReading} onChange={(e) => onUpdate('strikeCounterPreviousReading', e.target.value)} className={inputCn} placeholder="From last cert" {...keypad.field('strikeCounterPreviousReading')} /></Field>
           </div>
         )}
       </div>
@@ -188,7 +213,7 @@ export default function LPInstallationDetails({ formData, onUpdate }: Props) {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Number of down conductors"><Input type="number" value={formData.numberOfDownConductors} onChange={(e) => onUpdate('numberOfDownConductors', e.target.value)} className={inputCn} /></Field>
-          <Field label="Spacing (m)"><Input type="number" step="0.1" value={formData.downConductorSpacing} onChange={(e) => onUpdate('downConductorSpacing', e.target.value)} className={inputCn} /></Field>
+          <Field label="Spacing (m)"><Input step="0.1" value={formData.downConductorSpacing} onChange={(e) => onUpdate('downConductorSpacing', e.target.value)} className={inputCn} {...keypad.field('downConductorSpacing')} /></Field>
         </div>
         {spacingValidation.message && (
           <div className={cn('rounded-xl border bg-white/[0.05] px-3.5 py-3', spacingValidation.valid ? 'border-green-500/40' : 'border-red-500/40')}>
@@ -202,7 +227,7 @@ export default function LPInstallationDetails({ formData, onUpdate }: Props) {
         <SectionHeader title="Earth termination" />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="No. of electrodes"><Input type="number" value={formData.numberOfElectrodes} onChange={(e) => onUpdate('numberOfElectrodes', e.target.value)} className={inputCn} /></Field>
-          <Field label="Depth (m)"><Input type="number" step="0.1" value={formData.electrodeDepth} onChange={(e) => onUpdate('electrodeDepth', e.target.value)} className={inputCn} placeholder="e.g. 2.4" /></Field>
+          <Field label="Depth (m)"><Input step="0.1" value={formData.electrodeDepth} onChange={(e) => onUpdate('electrodeDepth', e.target.value)} className={inputCn} placeholder="e.g. 2.4" {...keypad.field('electrodeDepth')} /></Field>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Type">
@@ -279,6 +304,12 @@ export default function LPInstallationDetails({ formData, onUpdate }: Props) {
           </div>
         ))}
       </div>
+
+      {/* Scroll room so the last reading can rise clear of the keypad */}
+      {keypad.spacer}
+
+      {/* Reading keypad — coarse-pointer devices only */}
+      {keypad.element}
     </div>
   );
 }

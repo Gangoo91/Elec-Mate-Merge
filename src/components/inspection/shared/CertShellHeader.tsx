@@ -18,6 +18,8 @@ interface CertShellHeaderProps {
   onManualSave?: () => void;
   syncStatus?: SyncStatus;
   progressPercent: number;
+  /** Tap the progress ring to see what's still missing (cert renders its own sheet). */
+  onProgressTap?: () => void;
   steps: CertShellStep[];
   currentTab: string;
   onTabChange: (tab: string) => void;
@@ -56,6 +58,7 @@ const CertShellHeader: React.FC<CertShellHeaderProps> = ({
   onManualSave,
   syncStatus,
   progressPercent,
+  onProgressTap,
   steps,
   currentTab,
   onTabChange,
@@ -76,7 +79,7 @@ const CertShellHeader: React.FC<CertShellHeaderProps> = ({
         <div className="flex items-center gap-3 px-4 pt-3 lg:px-8">
           <button
             onClick={onBack}
-            className="h-11 px-1 -ml-1 text-[13px] font-semibold text-white/85 touch-manipulation active:scale-[0.97]"
+            className="h-11 px-3 -ml-3 text-[13px] font-semibold text-white/85 touch-manipulation active:scale-[0.97] outline-none focus:outline-none focus-visible:outline-none"
           >
             Back
           </button>
@@ -95,16 +98,21 @@ const CertShellHeader: React.FC<CertShellHeaderProps> = ({
             disabled={isSaving || syncStatus?.cloud === 'syncing'}
             aria-label={`Save now — currently ${save.word.toLowerCase()}`}
             className={cn(
-              'h-11 px-1 text-[11.5px] font-semibold touch-manipulation active:scale-[0.97] disabled:opacity-60',
+              'h-11 px-3 text-[11.5px] font-semibold touch-manipulation active:scale-[0.97] disabled:opacity-60 outline-none focus:outline-none focus-visible:outline-none',
               save.tone
             )}
           >
             {save.word}
           </button>
-          <div
-            role="img"
-            aria-label={`Certificate ${progressPercent}% complete`}
-            className="relative h-9 w-9 shrink-0"
+          <button
+            type="button"
+            onClick={() => {
+              haptic.light();
+              onProgressTap?.();
+            }}
+            disabled={!onProgressTap}
+            aria-label={`Certificate ${progressPercent}% complete${onProgressTap ? " — tap to see what's missing" : ''}`}
+            className="relative -m-1 grid h-11 w-11 shrink-0 place-items-center touch-manipulation active:scale-[0.95] transition-transform outline-none focus:outline-none focus-visible:outline-none"
           >
             <svg width="36" height="36" className="-rotate-90" aria-hidden="true">
               <circle cx="18" cy="18" r={RING_R} fill="none" strokeWidth="3.4" className="stroke-white/[0.14]" />
@@ -126,7 +134,7 @@ const CertShellHeader: React.FC<CertShellHeaderProps> = ({
             >
               {progressPercent}%
             </span>
-          </div>
+          </button>
         </div>
 
         {/* Full-width step tabs — equal columns, volt underline on current,
@@ -146,7 +154,10 @@ const CertShellHeader: React.FC<CertShellHeaderProps> = ({
                 }}
                 aria-current={isActive ? 'step' : undefined}
                 className={cn(
-                  'relative flex-1 h-11 text-[13px] lg:text-sm font-semibold touch-manipulation transition-colors',
+                  // No focus ring/outline — the browser's blue ring fought the
+                  // volt underline (Andrew). The underline + aria-current carry
+                  // the active state; keyboard users still get the underline.
+                  'relative flex-1 h-11 text-[13px] lg:text-sm font-semibold touch-manipulation transition-colors outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0',
                   isActive ? 'text-white' : isDone ? 'text-elec-yellow/90' : 'text-white/85'
                 )}
               >

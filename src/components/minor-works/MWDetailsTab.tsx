@@ -177,11 +177,11 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
               <p className="text-[15px] font-semibold text-white truncate">
                 {(formData.clientName as string) || ''}
               </p>
-              <p className="text-sm text-white/85 truncate">
+              <p className="text-sm text-white truncate">
                 {(formData.propertyAddress as string) || ''}
               </p>
               {(formData.clientPhone || formData.clientEmail) && (
-                <p className="text-sm text-white/85 truncate">
+                <p className="text-sm text-white truncate">
                   {[formData.clientPhone, formData.clientEmail].filter(Boolean).join(' · ')}
                 </p>
               )}
@@ -459,7 +459,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
                 None
               </button>
             </div>
-            <span className="text-[11px] text-white/85 mt-1 block whitespace-nowrap overflow-hidden text-ellipsis">Reg 120.3, 133.1.2, 133.1.3, 133.5</span>
+            <span className="text-[11px] text-white mt-1 block whitespace-nowrap overflow-hidden text-ellipsis">Reg 120.3, 133.1.2, 133.1.3, 133.5</span>
           </FormField>
           <FormField label="Exceptions">
             <div className="flex gap-2">
@@ -480,7 +480,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
                 None
               </button>
             </div>
-            <span className="text-[11px] text-white/85 mt-1 block whitespace-nowrap overflow-hidden text-ellipsis">Reg 411.3.3</span>
+            <span className="text-[11px] text-white mt-1 block whitespace-nowrap overflow-hidden text-ellipsis">Reg 411.3.3</span>
           </FormField>
         </div>
 
@@ -590,7 +590,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
                   <span
                     className={cn(
                       'text-[10px] leading-none text-center',
-                      isActive ? 'text-black/70' : 'text-white/85'
+                      isActive ? 'text-black/70' : 'text-white'
                     )}
                   >
                     {preset.sub}

@@ -18,13 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from '@/components/ui/dialog';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 
 import {
   PageHero,
@@ -1142,19 +1136,27 @@ export const NearMissReporting: React.FC<{ onBack?: () => void }> = ({ onBack })
         </div>
       )}
 
-      <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
-        <DialogContent className="sm:max-w-[360px]">
-          <DialogHeader className="text-center pb-2">
-            <DialogTitle className="text-xl text-foreground">Report submitted</DialogTitle>
-            <DialogDescription className="text-base">
-              Your near miss has been recorded successfully.
-            </DialogDescription>
-          </DialogHeader>
-          <PrimaryButton fullWidth onClick={() => setShowSuccessDialog(false)}>
-            Done
-          </PrimaryButton>
-        </DialogContent>
-      </Dialog>
+      {/* Bottom sheet, not a centred dialog. The confirmation carries a button
+          the user has to press, and a centred modal puts it out of thumb reach
+          on a phone — which is where a near miss actually gets reported. */}
+      <Sheet open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+        <SheetContent
+          side="bottom"
+          className="h-auto rounded-t-2xl border-white/[0.08] p-0 pb-[max(1rem,env(safe-area-inset-bottom))]"
+        >
+          <div className="space-y-4 px-4 pt-6">
+            <div>
+              <h2 className="text-[19px] font-semibold tracking-tight text-white">
+                Report submitted
+              </h2>
+              <p className="mt-1 text-[14px] text-white">Your near miss has been recorded.</p>
+            </div>
+            <PrimaryButton fullWidth onClick={() => setShowSuccessDialog(false)}>
+              Done
+            </PrimaryButton>
+          </div>
+        </SheetContent>
+      </Sheet>
 
       <DeleteConfirmSheet
         open={!!deleteTarget}

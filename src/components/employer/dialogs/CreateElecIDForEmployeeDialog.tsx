@@ -125,7 +125,7 @@ export function CreateElecIDForEmployeeDialog({
 
         <ResponsiveFormModalBody className="pb-6">
           <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-          <FormCard eyebrow="ID profile">
+          <FormCard bleed eyebrow="ID profile">
             <Field label="ECS card type">
               <Select
                 value={formData.ecsCardType}

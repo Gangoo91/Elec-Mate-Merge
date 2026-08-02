@@ -33,6 +33,11 @@ import {
 } from '@/components/ui/alert-dialog';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
+import {
+  isFireAlarmReportType,
+  fireAlarmTemplateId,
+  formatFireAlarmPayload,
+} from '@/utils/fireAlarmPdfRouting';
 
 interface ReportPdfViewerProps {
   reportId: string;
@@ -358,6 +363,10 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
         templateId = credentials.eicTemplateId;
       } else if (reportType === 'eicr') {
         templateId = credentials.eicrTemplateId;
+      } else if (isFireAlarmReportType(reportType)) {
+        // Each fire alarm cert has its OWN PDFMonkey template. Without this the
+        // re-render sent a G1/G3/G6/G7 payload to the G2 template.
+        templateId = fireAlarmTemplateId(reportType);
       }
 
       // Use pre-formatted PDF payload if available, otherwise format on-the-fly
@@ -376,9 +385,12 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
         } else if (reportType === 'pat-testing' || reportType === 'pat testing') {
           const { formatPATTestingJson } = await import('@/utils/patTestingJsonFormatter');
           dataForPdf = formatPATTestingJson(reportData.data);
-        } else if (reportType === 'fire-alarm' || reportType === 'fire alarm') {
-          const { formatFireAlarmJson } = await import('@/utils/fireAlarmJsonFormatter');
-          dataForPdf = formatFireAlarmJson(reportData.data);
+        } else if (isFireAlarmReportType(reportType)) {
+          // All FIVE fire alarm certs, each via its own formatter. This used to
+          // match only the base 'fire-alarm' type, so G1/G3/G6/G7 fell through
+          // and sent raw camelCase form data to a snake_case Liquid template.
+          const formatted = await formatFireAlarmPayload(reportType, reportData.data);
+          if (formatted) dataForPdf = formatted;
         } else if (reportType === 'emergency-lighting' || reportType === 'emergency lighting') {
           const { formatEmergencyLightingJson } = await import('@/utils/emergencyLightingJsonFormatter');
           dataForPdf = formatEmergencyLightingJson(reportData.data);

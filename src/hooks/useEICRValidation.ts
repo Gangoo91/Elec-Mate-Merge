@@ -10,14 +10,6 @@ export interface EICRValidationRule {
   tab: EICRTabId;
 }
 
-export const EICR_TAB_LABEL: Record<EICRTabId, string> = {
-  details: 'Details',
-  inspection: 'Inspection',
-  testing: 'Testing',
-  inspector: 'Inspector',
-  certificate: 'Certificate',
-};
-
 export interface EICRValidationResult {
   isValid: boolean;
   errors: EICRValidationRule[];
@@ -50,7 +42,10 @@ export const useEICRValidation = (formData: any): EICRValidationResult => {
     if (!formData.earthingArrangement) {
       errors.push({ field: 'earthingArrangement', message: 'Earthing arrangement', severity: 'error', tab: 'details' });
     }
-    if (!formData.mainProtectiveDevice) {
+    // A recorded limitation (LIM chip) is a legitimate answer — the meter
+    // cupboard may be sealed. The chip clears the device field and stamps
+    // mainProtectiveDeviceLimit instead, so accept either as "filled".
+    if (!formData.mainProtectiveDevice && formData.mainProtectiveDeviceLimit !== 'LIM') {
       errors.push({ field: 'mainProtectiveDevice', message: 'Main protective device', severity: 'error', tab: 'details' });
     }
     // Bonding compliance — warn if missing, not block
@@ -177,13 +172,22 @@ export const useEICRValidation = (formData: any): EICRValidationResult => {
       }
     });
 
-    // C1 outcomes also force an "unsatisfactory" overall assessment
-    if (c1Items.length > 0 && formData.overallAssessment === 'satisfactory') {
+    // C1 OR C2 anywhere (checklist outcomes or manually-added observations)
+    // forces an "unsatisfactory" overall assessment — mandatory per BS 7671
+    // Appendix 6 (FI and C3 are advisory and do not affect the assessment).
+    const observationC1C2 = observations.filter(
+      (o) => o.defectCode === 'C1' || o.defectCode === 'C2'
+    );
+    const blockingCount = c1Items.length + c2Items.length + observationC1C2.filter(
+      (o) => !o.inspectionItemId
+    ).length;
+    if (blockingCount > 0 && formData.overallAssessment === 'satisfactory') {
       errors.push({
         field: 'overallAssessment',
-        message: `${c1Items.length} C1 item${c1Items.length === 1 ? '' : 's'} present — overall cannot be Satisfactory`,
+        message: `${blockingCount} C1/C2 item${blockingCount === 1 ? '' : 's'} recorded — overall assessment must be Unsatisfactory`,
         severity: 'error',
         tab: 'certificate',
+        regulation: 'BS 7671 Appendix 6 — C1 or C2 requires an unsatisfactory report',
       });
     }
 
@@ -208,6 +212,8 @@ export const useEICRValidation = (formData: any): EICRValidationResult => {
       'overallAssessment',
     ];
     let filled = REQUIRED.filter((f) => {
+      // LIM chip clears the device but records the limitation marker — counts as filled.
+      if (f === 'mainProtectiveDevice' && formData.mainProtectiveDeviceLimit === 'LIM') return true;
       const v = formData[f];
       return v !== undefined && v !== '' && v !== false && v !== null;
     }).length;

@@ -175,7 +175,7 @@ function AnimatedValue({ value }: { value: ReactNode }) {
 export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div
-      className={cn('text-[10px] font-medium uppercase tracking-[0.18em] text-white/55', className)}
+      className={cn('text-[10px] font-medium uppercase tracking-[0.18em] text-white', className)}
     >
       {children}
     </div>
@@ -244,7 +244,7 @@ export function Divider({ label, className }: { label?: string; className?: stri
     <div className={cn('flex items-center gap-3 pt-2', className)}>
       <div className="h-px flex-1 bg-white/[0.06]" />
       {label && (
-        <span className="text-[10px] text-white/50 font-semibold uppercase tracking-[0.2em]">
+        <span className="text-[10px] text-white font-semibold uppercase tracking-[0.2em]">
           {label}
         </span>
       )}
@@ -307,7 +307,7 @@ export function PageHero({
             {live && (
               <span className="inline-flex items-center gap-1.5">
                 <PulseDot tone={live.tone ?? 'green'} />
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   {live.label ?? 'Live'}
                 </span>
               </span>
@@ -317,7 +317,7 @@ export function PageHero({
             {title}
           </h1>
           {description && (
-            <p className="mt-3 text-[13.5px] sm:text-[15px] text-white/60 max-w-2xl leading-relaxed">
+            <p className="mt-3 text-[13.5px] sm:text-[15px] text-white max-w-2xl leading-relaxed">
               {description}
             </p>
           )}
@@ -414,7 +414,7 @@ export function HeroNumber({
           <div className="text-[40px] sm:text-6xl lg:text-7xl font-semibold text-white tracking-tight leading-none tabular-nums">
             <AnimatedValue value={value} />
           </div>
-          {caption && <div className="mt-2 text-[13px] text-white/60">{caption}</div>}
+          {caption && <div className="mt-2 text-[13px] text-white">{caption}</div>}
         </div>
         {columns && columns.length > 0 && (
           <div
@@ -434,7 +434,7 @@ export function HeroNumber({
                 >
                   <AnimatedValue value={col.value} />
                 </div>
-                <div className="mt-2 text-[10px] text-white/50 uppercase tracking-[0.14em] font-medium">
+                <div className="mt-2 text-[10px] text-white uppercase tracking-[0.14em] font-medium">
                   {col.label}
                 </div>
               </div>
@@ -446,7 +446,7 @@ export function HeroNumber({
             {legend.map((entry, i) => (
               <div key={`${entry.label}-${i}`} className="flex items-center gap-1.5">
                 <Dot tone={entry.tone ?? 'yellow'} />
-                <span className="text-[11px] text-white/60">{entry.label}</span>
+                <span className="text-[11px] text-white">{entry.label}</span>
                 <span
                   className={cn(
                     'text-[11px] font-semibold tabular-nums',
@@ -551,7 +551,7 @@ export function StatStrip({ stats, columns = 4, numbered = false, className }: S
             >
               <AnimatedValue value={stat.value} />
             </span>
-            {stat.sub && <span className="mt-2.5 text-[11px] text-white/45">{stat.sub}</span>}
+            {stat.sub && <span className="mt-2.5 text-[11px] text-white">{stat.sub}</span>}
             {stat.onClick && (
               <span className="mt-2 text-[11px] font-medium text-elec-yellow/0 group-hover:text-elec-yellow/90 transition-colors">
                 Open →
@@ -613,7 +613,7 @@ export function AlertRow({ title, subtitle, trailing, tone = 'orange', onClick }
       <Dot tone={tone} className="relative" />
       <div className="relative flex-1 min-w-0">
         <div className="text-sm sm:text-[15px] font-semibold text-white truncate">{title}</div>
-        {subtitle && <div className="mt-0.5 text-[12px] text-white/60 truncate">{subtitle}</div>}
+        {subtitle && <div className="mt-0.5 text-[12px] text-white truncate">{subtitle}</div>}
       </div>
       {trailing && <div className="shrink-0">{trailing}</div>}
       <Arrow className="shrink-0" />
@@ -740,7 +740,7 @@ export function ListRow({
       {lead && <div className="shrink-0">{lead}</div>}
       <div className="flex-1 min-w-0">
         <div className="text-[14px] font-medium text-white truncate">{title}</div>
-        {subtitle && <div className="mt-0.5 text-[11.5px] text-white/55 truncate">{subtitle}</div>}
+        {subtitle && <div className="mt-0.5 text-[11.5px] text-white truncate">{subtitle}</div>}
       </div>
       {trailing && <div className="shrink-0 flex items-center gap-2">{trailing}</div>}
       {onClick && (
@@ -917,13 +917,13 @@ export function HubCard({
         {title}
       </h3>
       {description && (
-        <p className="relative mt-2 text-[12.5px] leading-relaxed text-white/60 max-w-[34ch]">
+        <p className="relative mt-2 text-[12.5px] leading-relaxed text-white max-w-[34ch]">
           {description}
         </p>
       )}
       <div className="flex-grow" />
       <div className="relative mt-5 flex items-center justify-between pt-3.5 border-t border-white/[0.06]">
-        <span className="text-[11px] text-white/45 truncate">{meta ?? ''}</span>
+        <span className="text-[11px] text-white truncate">{meta ?? ''}</span>
         <span className="inline-flex items-center gap-1 text-[13px] font-medium text-elec-yellow/90 group-hover:text-elec-yellow transition-colors shrink-0 ml-3">
           {cta}
           <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -1031,7 +1031,7 @@ export function EmptyState({
     >
       <div className="text-base font-medium text-white">{title}</div>
       {description && (
-        <p className="mt-2 text-[12.5px] text-white/55 max-w-md mx-auto leading-relaxed">
+        <p className="mt-2 text-[12.5px] text-white max-w-md mx-auto leading-relaxed">
           {description}
         </p>
       )}
@@ -1334,7 +1334,7 @@ export function MetricTile({ label, value, sub, tone, accent, trend, onClick }: 
           </span>
         )}
       </div>
-      {sub && <span className="mt-2.5 text-[11px] text-white/45">{sub}</span>}
+      {sub && <span className="mt-2.5 text-[11px] text-white">{sub}</span>}
     </>
   );
 
@@ -1387,7 +1387,7 @@ export function QuickActionTile({ label, sub, tone = 'yellow', onClick }: QuickA
       <div aria-hidden className={cn('absolute inset-0 pointer-events-none', toneWash[tone])} />
       <div className="relative">
         <div className="text-[14px] font-semibold text-white">{label}</div>
-        {sub && <div className="mt-0.5 text-[11.5px] text-white/55">{sub}</div>}
+        {sub && <div className="mt-0.5 text-[11.5px] text-white">{sub}</div>}
       </div>
       <span
         className={cn(
@@ -1448,22 +1448,32 @@ export function HubLanding({
 }
 
 /* ────────────────────────────────────────────────────────
-   Form field class constants (match college aesthetic)
+   Form field classes — re-exported from the shared kit.
+
+   These were a boxed style of their own (h-12, filled background, rounded-xl,
+   2px focus ring). The app's form language is the underline used by the
+   specialist certificates, so rather than maintain a second dialect these now
+   alias @/components/forms/fieldStyles. Every form importing inputClass /
+   selectTriggerClass / textareaClass picks up the cert language automatically.
+
+   Do NOT reintroduce local variants here — add to the shared kit instead.
    ──────────────────────────────────────────────────────── */
 
-export const inputClass =
-  'h-12 w-full px-3.5 bg-white/[0.05] border border-white/[0.10] rounded-xl text-white text-base placeholder:text-white/40 focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 transition-colors touch-manipulation';
-
-export const selectTriggerClass =
-  'h-12 px-3.5 bg-white/[0.05] border border-white/[0.10] rounded-xl text-white text-base focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 transition-colors touch-manipulation data-[state=open]:border-elec-yellow';
+export {
+  inputCn as inputClass,
+  selectTriggerCn as selectTriggerClass,
+  textareaCn as textareaClass,
+} from '@/components/forms/fieldStyles';
 
 export const selectContentClass =
   'z-[100] max-w-[calc(100vw-2rem)] bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white';
 
-export const textareaClass =
-  'w-full px-3.5 py-3 bg-white/[0.05] border border-white/[0.10] rounded-xl text-white text-base placeholder:text-white/40 focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 transition-colors touch-manipulation resize-none';
-
-export const fieldLabelClass = 'text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block';
+/** Field label. Matches the certificate forms exactly (see
+ *  @/components/forms/fieldStyles). Was
+ *  `text-[11px] uppercase tracking-wider text-white/65` — low-opacity white
+ *  renders as grey, which the UI rules forbid, and the uppercase micro-caps
+ *  did not match the cert language the hub is moving to. */
+export const fieldLabelClass = 'text-[12px] font-medium text-white mb-1 block';
 
 export const checkboxClass =
   'h-5 w-5 rounded border border-white/[0.15] bg-[hsl(0_0%_9%)] data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black touch-manipulation';
@@ -1494,7 +1504,7 @@ export function Field({
         </label>
       )}
       {children}
-      {hint && <p className="text-[11px] text-white/50 leading-snug">{hint}</p>}
+      {hint && <p className="text-[11px] text-white leading-snug">{hint}</p>}
     </div>
   );
 }
@@ -1508,16 +1518,30 @@ export function FormCard({
   index,
   children,
   className,
+  bleed = false,
 }: {
   eyebrow?: string;
   index?: number;
   children: ReactNode;
   className?: string;
+  /**
+   * Run the card edge-to-edge on mobile, as the certificate forms do.
+   * OPT-IN rather than default: the bleed is `-mx-4`, which only lines up when
+   * the scroll container pads by exactly 4. Employer sheets currently pad by
+   * 4 OR 5 depending on the form, so switching every one of the 73 call sites
+   * at once would misalign the p-5 ones. Set it per form once the parent
+   * padding has been checked.
+   */
+  bleed?: boolean;
 }) {
   return (
     <div
       className={cn(
-        'rounded-2xl border border-white/[0.10] bg-gradient-to-b from-white/[0.06] to-white/[0.03] shadow-[0_8px_24px_rgba(0,0,0,0.35)] p-4 sm:p-5 space-y-3.5',
+        // Surface matched to the certificate cards (from-white/[0.08] to-white/[0.04]).
+        'border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4',
+        bleed
+          ? '-mx-4 rounded-none border-y sm:mx-0 sm:rounded-2xl sm:border-x'
+          : 'rounded-2xl border',
         className
       )}
     >
@@ -1528,7 +1552,7 @@ export function FormCard({
               {String(index).padStart(2, '0')}
             </span>
           )}
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             {typeof index === 'number' ? '· ' : ''}{eyebrow}
           </span>
         </div>
@@ -1579,7 +1603,7 @@ export function OptionTile({
       <span className="leading-tight">
         {label}
         {sublabel && (
-          <span className={cn('block text-[11px] mt-0.5', selected ? 'text-elec-yellow/70' : 'text-white/45')}>
+          <span className={cn('block text-[11px] mt-0.5', selected ? 'text-elec-yellow/70' : 'text-white')}>
             {sublabel}
           </span>
         )}
@@ -1724,7 +1748,7 @@ export function SheetShell({
       <div className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
         {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
         <div className="mt-1 text-[20px] font-semibold text-white leading-tight">{title}</div>
-        {description && <div className="mt-1.5 text-[12.5px] text-white/60">{description}</div>}
+        {description && <div className="mt-1.5 text-[12.5px] text-white">{description}</div>}
       </div>
       <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">{children}</div>
       {footer && (
@@ -1837,10 +1861,10 @@ export function ComplianceRing({
         </text>
       </svg>
       <div className="flex flex-col items-start">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           {label}
         </span>
-        <span className="text-[12px] text-white/70">{clamped}% healthy</span>
+        <span className="text-[12px] text-white">{clamped}% healthy</span>
       </div>
     </div>
   );

@@ -1,30 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useHaptic } from '@/hooks/useHaptic';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-import { AlertTriangle, Check } from 'lucide-react';
-import InputWithValidation from './InputWithValidation';
 import { cn } from '@/lib/utils';
+import useReadingKeypad from '@/hooks/useReadingKeypad';
+
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const chipBase =
+  'h-11 rounded-xl border text-xs transition-all touch-manipulation active:scale-[0.98]';
+
+// Every service the bonding chips can represent. Kept in ONE place so the
+// chip-set parser and the free-text 'Other' classifier can never disagree —
+// they previously did ('lightning' was missing from the Other classifier), so
+// a saved 'Lightning Protection' lit the Lightning chip AND filled the Other
+// input, then printed twice on the certificate after the next edit.
+const KNOWN_SERVICES = [
+  'water',
+  'gas',
+  'oil',
+  'structural steel',
+  'steel',
+  'lightning',
+  'telecom',
+];
+
+/** Free-text bonding entries that are NOT one of the known service chips. */
+const parseOtherBondingParts = (value: string = ''): string[] =>
+  value
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .filter((part) => !KNOWN_SERVICES.some((service) => part.toLowerCase().includes(service)));
+const chipOn = 'bg-elec-yellow border-elec-yellow text-black font-semibold';
+const chipOff = 'bg-white/[0.06] border-white/[0.12] text-white font-medium';
+const chipGreenOn = 'bg-green-500 border-green-500 text-black font-semibold';
 
 const SectionTitle = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const FormField = ({ label, required, hint, children }: { label: string; required?: boolean; hint?: string; children: React.ReactNode }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">{label}{required && ' *'}</Label>
+    <Label className="text-[12px] font-medium text-white mb-1 block">{label}{required && ' *'}</Label>
     {children}
-    {hint && <span className="text-[10px] text-white block mt-1">{hint}</span>}
+    {hint && <span className="text-[11px] text-white block mt-1">{hint}</span>}
   </div>
 );
 
@@ -46,6 +70,22 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
     formData.earthElectrodeType === 'na' ||
     formData.earthElectrodeType === 'pme';
 
+  // Reading keypad — shared MW pattern for the two free-number inputs on this
+  // step. Maximum demand's unit follows the existing A/kVA chip selection;
+  // values flow through the existing onUpdate path.
+  const keypad = useReadingKeypad({
+    meta: {
+      earthElectrodeResistance: { label: 'RA — earth electrode resistance', unit: 'Ω' },
+      maximumDemand: {
+        label: 'Maximum demand — load',
+        unit: formData.maximumDemandUnit === 'kva' ? 'kVA' : 'A',
+      },
+    },
+    sequence: ['earthElectrodeResistance', 'maximumDemand'],
+    getValue: (field) => String(formData[field] ?? ''),
+    setValue: (field, value) => onUpdate(field, value),
+  });
+
   // Parse existing main bonding locations into checkboxes
   const parseMainBondingLocations = (value: string = ''): Set<string> => {
     const normalized = value.toLowerCase().trim();
@@ -65,33 +105,30 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
   const [bondingLocations, setBondingLocations] = useState<Set<string>>(() =>
     parseMainBondingLocations(formData.mainBondingLocations)
   );
-  const [otherBonding, setOtherBonding] = useState<string>(() => {
-    const value = formData.mainBondingLocations || '';
-    const knownServices = ['water', 'gas', 'oil', 'structural steel', 'steel', 'telecom'];
-    const parts = value
-      .split(',')
-      .map((s: string) => s.trim())
-      .filter((s: string) => s);
-    const otherParts = parts.filter(
-      (part: string) => !knownServices.some((service) => part.toLowerCase().includes(service))
-    );
-    return otherParts.join(', ');
-  });
-  const [otherChecked, setOtherChecked] = useState<boolean>(() => {
-    const value = formData.mainBondingLocations || '';
-    const knownServices = ['water', 'gas', 'oil', 'structural steel', 'steel', 'telecom'];
-    const parts = value
-      .split(',')
-      .map((s: string) => s.trim())
-      .filter((s: string) => s);
-    return parts.some(
-      (part: string) => !knownServices.some((service) => part.toLowerCase().includes(service))
-    );
-  });
+  const [otherBonding, setOtherBonding] = useState<string>(() =>
+    parseOtherBondingParts(formData.mainBondingLocations).join(', ')
+  );
+  const [otherChecked, setOtherChecked] = useState<boolean>(
+    () => parseOtherBondingParts(formData.mainBondingLocations).length > 0
+  );
 
-  // Sync state when formData changes externally
+  // The last string THIS section wrote — used to tell our own writes echoing
+  // back through formData apart from genuinely external changes (async
+  // localStorage/cloud hydration, board imports).
+  const lastWrittenRef = useRef<string | null>(null);
+
+  // Sync ALL local state when formData changes externally. The tab mounts
+  // before the provider's async hydration lands, so a reopened cert arrives
+  // AFTER the useState initialisers ran — without this full re-sync the
+  // 'Other' chip stayed off and the next chip tap silently rewrote
+  // mainBondingLocations without the saved free-text entry.
   useEffect(() => {
-    setBondingLocations(parseMainBondingLocations(formData.mainBondingLocations));
+    const value: string = formData.mainBondingLocations || '';
+    if (value === lastWrittenRef.current) return; // our own write — local state already ahead
+    setBondingLocations(parseMainBondingLocations(value));
+    const otherParts = parseOtherBondingParts(value);
+    setOtherBonding(otherParts.join(', '));
+    setOtherChecked(otherParts.length > 0);
   }, [formData.mainBondingLocations]);
 
   const handleBondingLocationChange = (service: string, checked: boolean) => {
@@ -127,16 +164,31 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
       parts.push(other.trim());
     }
 
-    onUpdate('mainBondingLocations', parts.join(', '));
+    const joined = parts.join(', ');
+    lastWrittenRef.current = joined;
+    onUpdate('mainBondingLocations', joined);
   };
 
+
+  const haptic = useHaptic();
   return (
-    <div className="space-y-4">
+    <div
+      // lg:contents — on desktop each card becomes its own grid item of the
+      // parent 2-col grid (the MW per-card layout), so a short neighbouring
+      // section no longer leaves a section-tall blank band. Events still
+      // bubble through display:contents, so the delegated haptic keeps working.
+      className="space-y-4 lg:space-y-0 lg:contents"
+      // Delegated press haptic — every chip/button tap in this section buzzes
+      // like the MW tabs without wiring each onClick individually.
+      onPointerDown={(e) => {
+        if ((e.target as HTMLElement).closest('button')) haptic.light();
+      }}
+    >
       {/* Earth Electrode */}
-      <SectionTitle title="Earth Electrode" />
-      <div className="space-y-3">
-        <FormField label="Electrode Type">
-          <div className="grid grid-cols-3 gap-1">
+      <section className={cardCn}>
+        <SectionTitle title="Earth electrode" />
+        <FormField label="Electrode type">
+          <div className="grid grid-cols-3 gap-2">
             {[
               { value: 'rod', label: 'Rod' },
               { value: 'plate', label: 'Plate' },
@@ -154,10 +206,8 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                   if (newVal === 'na') onUpdate('earthElectrodeResistance', '');
                 }}
                 className={cn(
-                  'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-                  formData.earthElectrodeType === opt.value
-                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                  chipBase,
+                  formData.earthElectrodeType === opt.value ? chipOn : chipOff
                 )}
               >
                 {opt.label}
@@ -167,7 +217,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
         </FormField>
 
         {!isElectrodeAbsent && (
-          <div className="grid grid-cols-2 gap-3 items-end">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
             <FormField label="Resistance (Ω)">
               <Input
                 type="text"
@@ -175,7 +225,8 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                 value={formData.earthElectrodeResistance || ''}
                 onChange={(e) => onUpdate('earthElectrodeResistance', e.target.value)}
                 placeholder="e.g., 0.5"
-                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                className={inputCn}
+                {...keypad.field('earthElectrodeResistance')}
               />
             </FormField>
             <FormField label="Location">
@@ -183,60 +234,56 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                 value={formData.earthElectrodeLocation || ''}
                 onChange={(e) => onUpdate('earthElectrodeLocation', e.target.value)}
                 placeholder="e.g., Garden adjacent to building"
-                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                className={inputCn}
               />
             </FormField>
           </div>
         )}
-      </div>
-
+      </section>
 
       {/* Means of Earthing */}
-      <SectionTitle title="Means of Earthing" />
-
-      <FormField label="Means of Earthing" required>
-        <div className="grid grid-cols-2 gap-2 items-end mt-1.5">
-          <button
-            type="button"
-            className={cn(
-              'h-11 rounded-lg text-xs font-medium touch-manipulation transition-all',
-              formData.meansOfEarthing === 'distributor'
-                ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                : 'bg-white/[0.05] border border-white/[0.08] text-white'
-            )}
-            onClick={() =>
-              onUpdate(
-                'meansOfEarthing',
-                formData.meansOfEarthing === 'distributor' ? '' : 'distributor'
-              )
-            }
-          >
-            Distributor's facility
-          </button>
-          <button
-            type="button"
-            className={cn(
-              'h-11 rounded-lg text-xs font-medium touch-manipulation transition-all',
-              formData.meansOfEarthing === 'electrode'
-                ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                : 'bg-white/[0.05] border border-white/[0.08] text-white'
-            )}
-            onClick={() =>
-              onUpdate(
-                'meansOfEarthing',
-                formData.meansOfEarthing === 'electrode' ? '' : 'electrode'
-              )
-            }
-          >
-            Installation earth electrode
-          </button>
-        </div>
-      </FormField>
+      <section className={cardCn}>
+        <SectionTitle title="Means of earthing" />
+        <FormField label="Means of earthing" required>
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              className={cn(
+                chipBase,
+                formData.meansOfEarthing === 'distributor' ? chipOn : chipOff
+              )}
+              onClick={() =>
+                onUpdate(
+                  'meansOfEarthing',
+                  formData.meansOfEarthing === 'distributor' ? '' : 'distributor'
+                )
+              }
+            >
+              Distributor's facility
+            </button>
+            <button
+              type="button"
+              className={cn(
+                chipBase,
+                formData.meansOfEarthing === 'electrode' ? chipOn : chipOff
+              )}
+              onClick={() =>
+                onUpdate(
+                  'meansOfEarthing',
+                  formData.meansOfEarthing === 'electrode' ? '' : 'electrode'
+                )
+              }
+            >
+              Installation earth electrode
+            </button>
+          </div>
+        </FormField>
+      </section>
 
       {/* Maximum Demand */}
-      <SectionTitle title="Maximum Demand" />
-      <div className="space-y-2">
-        <div className="grid grid-cols-3 gap-2 items-end">
+      <section className={cardCn}>
+        <SectionTitle title="Maximum demand" />
+        <div className="grid grid-cols-3 gap-x-3 sm:gap-x-6 gap-y-4 items-end">
           <div className="col-span-2">
             <FormField label="Load">
               <Input
@@ -245,12 +292,13 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                 value={formData.maximumDemand || ''}
                 onChange={(e) => onUpdate('maximumDemand', e.target.value)}
                 placeholder="e.g., 60"
-                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                className={inputCn}
+                {...keypad.field('maximumDemand')}
               />
             </FormField>
           </div>
           <FormField label="Unit">
-            <div className="grid grid-cols-2 gap-1">
+            <div className="grid grid-cols-2 gap-2">
               {[
                 { value: 'amps', label: 'A' },
                 { value: 'kva', label: 'kVA' },
@@ -260,10 +308,8 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                   type="button"
                   onClick={() => onUpdate('maximumDemandUnit', opt.value)}
                   className={cn(
-                    'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-                    (formData.maximumDemandUnit || 'amps') === opt.value
-                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                    chipBase,
+                    (formData.maximumDemandUnit || 'amps') === opt.value ? chipOn : chipOff
                   )}
                 >
                   {opt.label}
@@ -272,186 +318,184 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
             </div>
           </FormField>
         </div>
-      </div>
+      </section>
 
       {/* Main Protective Conductors */}
-      <SectionTitle title="Main Protective Conductors" />
+      <section className={cardCn}>
+        <SectionTitle title="Main protective conductors" />
 
-      {/* Earthing Conductor */}
-      <div className="space-y-2">
-        <Label className="text-white text-xs font-medium block">Earthing Conductor</Label>
-        <div className="grid grid-cols-3 gap-1">
-          {['Copper', 'Aluminium', 'Steel'].map((mat) => (
-            <button
-              key={mat}
-              type="button"
-              onClick={() => onUpdate('earthingConductorMaterial', formData.earthingConductorMaterial === mat.toLowerCase() ? '' : mat.toLowerCase())}
-              className={cn(
-                'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-                formData.earthingConductorMaterial === mat.toLowerCase()
-                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
-              )}
-            >
-              {mat}
-            </button>
-          ))}
+        {/* Earthing Conductor */}
+        <div className="space-y-2">
+          <Label className="text-[12px] font-medium text-white mb-1 block">Earthing conductor</Label>
+          <div className="grid grid-cols-3 gap-2">
+            {['Copper', 'Aluminium', 'Steel'].map((mat) => (
+              <button
+                key={mat}
+                type="button"
+                onClick={() => onUpdate('earthingConductorMaterial', formData.earthingConductorMaterial === mat.toLowerCase() ? '' : mat.toLowerCase())}
+                className={cn(
+                  chipBase,
+                  formData.earthingConductorMaterial === mat.toLowerCase() ? chipOn : chipOff
+                )}
+              >
+                {mat}
+              </button>
+            ))}
+          </div>
+          <div className="grid grid-cols-6 gap-1.5">
+            {['6', '10', '16', '25', '35', '50'].map((size) => (
+              <button
+                key={size}
+                type="button"
+                onClick={() => onUpdate('earthingConductorCsa', formData.earthingConductorCsa === size ? '' : size)}
+                className={cn(
+                  'h-11 rounded-xl border text-[11px] transition-all touch-manipulation active:scale-[0.98]',
+                  formData.earthingConductorCsa === size ? chipOn : chipOff
+                )}
+              >
+                {size}mm²
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={() => onUpdate('earthingConductorVerified', !formData.earthingConductorVerified)}
+            className={cn(
+              'w-full h-11 rounded-xl border text-xs transition-all touch-manipulation active:scale-[0.98]',
+              formData.earthingConductorVerified ? chipGreenOn : chipOff
+            )}
+          >
+            Connection / continuity verified
+          </button>
         </div>
-        <div className="grid grid-cols-6 gap-1">
-          {['6', '10', '16', '25', '35', '50'].map((size) => (
-            <button
-              key={size}
-              type="button"
-              onClick={() => onUpdate('earthingConductorCsa', formData.earthingConductorCsa === size ? '' : size)}
-              className={cn(
-                'h-10 rounded-lg font-medium transition-all touch-manipulation text-[10px] active:scale-[0.98]',
-                formData.earthingConductorCsa === size
-                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
-              )}
-            >
-              {size}mm²
-            </button>
-          ))}
-        </div>
-        <button
-          type="button"
-          onClick={() => onUpdate('earthingConductorVerified', !formData.earthingConductorVerified)}
-          className={cn(
-            'w-full h-9 rounded-lg font-medium transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1.5',
-            formData.earthingConductorVerified
-              ? 'bg-green-500/20 border border-green-500/40 text-green-400'
-              : 'bg-white/[0.05] border border-white/[0.08] text-white'
-          )}
-        >
-          {formData.earthingConductorVerified && <Check className="h-3 w-3" />}
-          Connection / Continuity Verified
-        </button>
-      </div>
 
-      {/* Main Protective Bonding Conductors */}
-      <div className="space-y-2">
-        <Label className="text-white text-xs font-medium block">Main Protective Bonding Conductors</Label>
-        <div className="grid grid-cols-3 gap-1">
-          {['Copper', 'Aluminium', 'Steel'].map((mat) => (
-            <button
-              key={mat}
-              type="button"
-              onClick={() => onUpdate('mainBondingMaterial', formData.mainBondingMaterial === mat.toLowerCase() ? '' : mat.toLowerCase())}
-              className={cn(
-                'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-                formData.mainBondingMaterial === mat.toLowerCase()
-                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
-              )}
-            >
-              {mat}
-            </button>
-          ))}
+        {/* Main Protective Bonding Conductors */}
+        <div className="border-t border-white/[0.1] pt-4 space-y-2">
+          <Label className="text-[12px] font-medium text-white mb-1 block">Main protective bonding conductors</Label>
+          <div className="grid grid-cols-3 gap-2">
+            {['Copper', 'Aluminium', 'Steel'].map((mat) => (
+              <button
+                key={mat}
+                type="button"
+                onClick={() => onUpdate('mainBondingMaterial', formData.mainBondingMaterial === mat.toLowerCase() ? '' : mat.toLowerCase())}
+                className={cn(
+                  chipBase,
+                  formData.mainBondingMaterial === mat.toLowerCase() ? chipOn : chipOff
+                )}
+              >
+                {mat}
+              </button>
+            ))}
+          </div>
+          <div className="grid grid-cols-6 gap-1.5">
+            {['6mm', '10mm', '16mm', '25mm', '35mm', '50mm'].map((size) => (
+              <button
+                key={size}
+                type="button"
+                onClick={() => onUpdate('mainBondingSize', formData.mainBondingSize === size ? '' : size)}
+                className={cn(
+                  'h-11 rounded-xl border text-[11px] transition-all touch-manipulation active:scale-[0.98]',
+                  formData.mainBondingSize === size ? chipOn : chipOff
+                )}
+              >
+                {size}²
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={() => onUpdate('mainBondingVerified', !formData.mainBondingVerified)}
+            className={cn(
+              'w-full h-11 rounded-xl border text-xs transition-all touch-manipulation active:scale-[0.98]',
+              formData.mainBondingVerified ? chipGreenOn : chipOff
+            )}
+          >
+            Connection / continuity verified
+          </button>
         </div>
-        <div className="grid grid-cols-6 gap-1">
-          {['6mm', '10mm', '16mm', '25mm', '35mm', '50mm'].map((size) => (
-            <button
-              key={size}
-              type="button"
-              onClick={() => onUpdate('mainBondingSize', formData.mainBondingSize === size ? '' : size)}
-              className={cn(
-                'h-10 rounded-lg font-medium transition-all touch-manipulation text-[10px] active:scale-[0.98]',
-                formData.mainBondingSize === size
-                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
-              )}
-            >
-              {size}²
-            </button>
-          ))}
-        </div>
-        <button
-          type="button"
-          onClick={() => onUpdate('mainBondingVerified', !formData.mainBondingVerified)}
-          className={cn(
-            'w-full h-9 rounded-lg font-medium transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1.5',
-            formData.mainBondingVerified
-              ? 'bg-green-500/20 border border-green-500/40 text-green-400'
-              : 'bg-white/[0.05] border border-white/[0.08] text-white'
-          )}
-        >
-          {formData.mainBondingVerified && <Check className="h-3 w-3" />}
-          Connection / Continuity Verified
-        </button>
-      </div>
+      </section>
 
       {/* Bonding Connections */}
-      <SectionTitle title="Bonding Connections To" />
+      <section className={cardCn}>
+        <SectionTitle title="Bonding connections to" />
 
-      {/* Common combos — one tap for typical UK domestic */}
-      <div className="grid grid-cols-2 gap-1.5 mb-2">
-        {[
-          { keys: ['water', 'gas'], label: 'Water + Gas' },
-          { keys: ['water', 'gas', 'oil'], label: 'Water + Gas + Oil' },
-        ].map(({ keys, label }) => (
-          <button
-            key={label}
-            type="button"
-            onClick={() => {
-              const newLocs = new Set<string>(keys);
-              setBondingLocations(newLocs);
-              updateMainBondingLocations(newLocs, otherChecked ? otherBonding : '');
-            }}
-            className={cn(
-              'h-9 rounded-lg font-medium text-[10px] touch-manipulation active:scale-[0.98]',
-              'bg-elec-yellow/10 border border-elec-yellow/30 text-elec-yellow'
-            )}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
+        {/* Common combos — one tap for typical UK domestic. Lit when the
+            current selection is exactly that combo (MW presets reflect state). */}
+        <div className="grid grid-cols-2 gap-2">
+          {[
+            { keys: ['water', 'gas'], label: 'Water + gas' },
+            { keys: ['water', 'gas', 'oil'], label: 'Water + gas + oil' },
+          ].map(({ keys, label }) => {
+            const isActive =
+              !otherChecked &&
+              bondingLocations.size === keys.length &&
+              keys.every((k) => bondingLocations.has(k));
+            return (
+              <button
+                key={label}
+                type="button"
+                onClick={() => {
+                  const newLocs = new Set<string>(keys);
+                  setBondingLocations(newLocs);
+                  updateMainBondingLocations(newLocs, otherChecked ? otherBonding : '');
+                }}
+                className={cn(chipBase, isActive ? chipOn : chipOff)}
+              >
+                {label}
+              </button>
+            );
+          })}
+        </div>
 
-      <div className="grid grid-cols-3 gap-1">
-        {[
-          { key: 'water', label: 'Water' },
-          { key: 'gas', label: 'Gas' },
-          { key: 'oil', label: 'Oil' },
-          { key: 'structural-steel', label: 'Steel' },
-          { key: 'lightning', label: 'Lightning' },
-          { key: 'other', label: 'Other' },
-        ].map(({ key, label }) => (
-          <button
-            key={key}
-            type="button"
-            onClick={() => {
-              if (key === 'other') {
-                const newVal = !otherChecked;
-                setOtherChecked(newVal);
-                if (!newVal) { setOtherBonding(''); updateMainBondingLocations(bondingLocations, ''); }
-              } else {
-                handleBondingLocationChange(key, !bondingLocations.has(key));
-              }
-            }}
-            className={cn(
-              'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1',
-              (key === 'other' ? otherChecked : bondingLocations.has(key))
-                ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                : 'bg-white/[0.05] border border-white/[0.08] text-white'
-            )}
-          >
-            {(key === 'other' ? otherChecked : bondingLocations.has(key)) && <Check className="h-3 w-3" />}
-            {label}
-          </button>
-        ))}
-      </div>
+        <div className="grid grid-cols-3 gap-2">
+          {[
+            { key: 'water', label: 'Water' },
+            { key: 'gas', label: 'Gas' },
+            { key: 'oil', label: 'Oil' },
+            { key: 'structural-steel', label: 'Steel' },
+            { key: 'lightning', label: 'Lightning' },
+            { key: 'telecoms', label: 'Telecoms' },
+            { key: 'other', label: 'Other' },
+          ].map(({ key, label }) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => {
+                if (key === 'other') {
+                  const newVal = !otherChecked;
+                  setOtherChecked(newVal);
+                  if (!newVal) { setOtherBonding(''); updateMainBondingLocations(bondingLocations, ''); }
+                } else {
+                  handleBondingLocationChange(key, !bondingLocations.has(key));
+                }
+              }}
+              className={cn(
+                chipBase,
+                (key === 'other' ? otherChecked : bondingLocations.has(key)) ? chipOn : chipOff
+              )}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
 
-      {otherChecked && (
-        <FormField label="Specify Other">
-          <Input
-            value={otherBonding}
-            onChange={(e) => handleOtherBondingChange(e.target.value)}
-            placeholder="e.g., Central heating pipework"
-            className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-          />
-        </FormField>
-      )}
+        {otherChecked && (
+          <FormField label="Specify other">
+            <Input
+              value={otherBonding}
+              onChange={(e) => handleOtherBondingChange(e.target.value)}
+              placeholder="e.g., Central heating pipework"
+              className={inputCn}
+            />
+          </FormField>
+        )}
+      </section>
+
+      {/* Scroll room so the last reading can rise clear of the keypad */}
+      {keypad.spacer}
+
+      {/* Reading keypad — coarse-pointer devices only */}
+      {keypad.element}
     </div>
   );
 };

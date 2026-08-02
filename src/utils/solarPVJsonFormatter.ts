@@ -694,6 +694,9 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
     // SITE ACCESS & SAFETY
     // ============================================
     site_access_notes: get('siteAccessNotes'),
+    // MIS 3002 App C — Model Handover Document
+    installation_description: get('installationDescription'),
+    circuits_tested: get('circuitsTested'),
     safe_isolation_verified: getBool('safeIsolationVerified'),
     asbestos_check_required: getBool('asbestosCheckRequired'),
     asbestos_check_completed: getBool('asbestosCheckCompleted'),
@@ -808,6 +811,12 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
     overall_satisfactory: getBool('overallSatisfactory'),
     overall_assessment_display: getBool('overallSatisfactory') ? 'SATISFACTORY' : 'UNSATISFACTORY',
     overall_assessment_class: getBool('overallSatisfactory') ? 'pass' : 'fail',
+    // The control is a genuine tri-state — true, false, or never touched — and
+    // getBool() collapses the last two. The template needs to tell them apart:
+    // an explicit verdict from the electrician must win, and only an untouched
+    // field may fall back to inferring the result from the defect count.
+    overall_assessment_set:
+      formData.overallSatisfactory === true || formData.overallSatisfactory === false,
 
     // ============================================
     // CUSTOMER / RESPONSIBLE PERSON

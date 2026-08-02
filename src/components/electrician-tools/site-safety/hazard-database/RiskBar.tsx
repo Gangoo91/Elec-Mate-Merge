@@ -33,6 +33,7 @@ const RISK_PILL: Record<Tone, string> = {
   yellow: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25',
   cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/25',
   indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/25',
+  grey: 'bg-white/[0.06] text-white border-white/[0.12]',
 };
 
 // Small uppercase risk pill — matches the Site Safety status-pill pattern.

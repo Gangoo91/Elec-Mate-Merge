@@ -1,16 +1,11 @@
 import React from 'react';
-import { Plus, AlertTriangle, Info } from 'lucide-react';
 import EICDefectObservationsList from './EICDefectObservationsList';
-import { EICObservation } from '@/hooks/useEICObservations';
+import { EICObservation, normalizeEICDefectCode } from '@/hooks/useEICObservations';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
 
-const SectionTitle = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
-);
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
 interface EICObservationsSectionProps {
   observations: EICObservation[];
@@ -32,10 +27,14 @@ const EICObservationsSection: React.FC<EICObservationsSectionProps> = ({
   className,
 }) => {
   const haptic = useHaptic();
+  // Counts go through normalizeEICDefectCode so legacy EICR codes (C1/C2/C3)
+  // on older certs are counted as defects instead of vanishing from the header.
   const unsatisfactoryCount = observations.filter(
-    (obs) => obs.defectCode === 'unsatisfactory'
+    (obs) => normalizeEICDefectCode(obs.defectCode) === 'unsatisfactory'
   ).length;
-  const limitationsCount = observations.filter((obs) => obs.defectCode === 'limitation').length;
+  const limitationsCount = observations.filter(
+    (obs) => normalizeEICDefectCode(obs.defectCode) === 'limitation'
+  ).length;
 
   const handleAddObservation = () => {
     haptic.light();
@@ -43,37 +42,37 @@ const EICObservationsSection: React.FC<EICObservationsSectionProps> = ({
   };
 
   return (
-    <div className={cn('space-y-3', className)} id="eic-observations-section">
-      <SectionTitle title="Observations & Limitations" />
+    <section className={cn(cardCn, className)} id="eic-observations-section">
+      <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">
+        Observations and limitations
+      </h2>
 
-      <div className="flex items-center gap-2 flex-wrap">
-        {unsatisfactoryCount > 0 && (
-          <span className="flex items-center gap-1 px-2 py-1 bg-red-500/10 text-red-400 border border-red-500/20 text-xs font-medium rounded-full">
-            <AlertTriangle className="w-3 h-3" />
-            {unsatisfactoryCount} defects
-          </span>
-        )}
-        {limitationsCount > 0 && (
-          <span className="flex items-center gap-1 px-2 py-1 bg-purple-500/10 text-purple-400 border border-purple-500/20 text-xs font-medium rounded-full">
-            <Info className="w-3 h-3" />
-            {limitationsCount} LIM
-          </span>
-        )}
-      </div>
+      {(unsatisfactoryCount > 0 || limitationsCount > 0) && (
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+          {unsatisfactoryCount > 0 && (
+            <span className="text-[12px] font-semibold text-red-400">
+              {unsatisfactoryCount} defects
+            </span>
+          )}
+          {limitationsCount > 0 && (
+            <span className="text-[12px] font-semibold text-amber-400">
+              {limitationsCount} LIM
+            </span>
+          )}
+        </div>
+      )}
 
       <button
         onClick={handleAddObservation}
-        className="w-full h-11 rounded-lg font-medium text-sm bg-white/[0.05] border border-white/[0.08] text-white flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98]"
+        className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-all touch-manipulation active:scale-[0.98] hover:bg-elec-yellow/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 sm:w-auto sm:px-8"
       >
-        <Plus className="w-4 h-4" />
-        Add Observation
+        Add observation
       </button>
 
       {observations.length > 0 && (
         <EICDefectObservationsList
           observations={observations}
           reportId={reportId}
-          onAddObservation={handleAddObservation}
           onUpdateObservation={onUpdateObservation}
           onRemoveObservation={onRemoveObservation}
           onSyncToInspectionItem={onSyncToInspectionItem}
@@ -81,11 +80,11 @@ const EICObservationsSection: React.FC<EICObservationsSectionProps> = ({
       )}
 
       {observations.length === 0 && (
-        <div className="text-center py-6 text-white">
-          <p className="text-xs">No observations recorded</p>
+        <div className="py-6 text-center">
+          <p className="text-[13px] text-white">No observations recorded</p>
         </div>
       )}
-    </div>
+    </section>
   );
 };
 

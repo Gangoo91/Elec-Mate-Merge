@@ -44,7 +44,7 @@ const CircuitDetailsCellsComponent: React.FC<CircuitDetailsCellsProps> = ({
         onChange={(value) => onUpdate(result.id, 'circuitDescription', value)}
         onCommit={handleDescriptionCommit}
         placeholder="e.g. Kitchen Ring, Upstairs Lighting (type 'spare' to N/A all)"
-        className="h-8 text-sm px-0 w-full bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
+        className="h-8 text-sm px-0 w-full bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow focus:shadow-none hover:bg-white/[0.04] focus:bg-transparent"
         disabled={!!result.sourceCircuitId}
       />
     </TableCell>

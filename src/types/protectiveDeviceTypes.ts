@@ -52,6 +52,9 @@ export const rcdBsStandardOptions = [
   { value: 'N/A', label: 'N/A' },
   { value: 'RCD (BS EN 61008)', label: 'RCD (BS EN 61008)' },
   { value: 'RCBO (BS EN 61009)', label: 'RCBO (BS EN 61009)' },
+  // Socket-outlet / portable RCDs — the header bulk-fill offers this, so the
+  // per-cell picker must be able to produce and re-select the same value
+  { value: 'RCD (BS 7288)', label: 'RCD (BS 7288)' },
   { value: 'Type F (BS EN 62423)', label: 'Type F (BS EN 62423)' },
   { value: 'RCCB (BS EN 60947-2)', label: 'RCCB (BS EN 60947-2)' },
   { value: 'Other', label: 'Other' },
@@ -109,7 +112,8 @@ export const bsStandardRequiresCurve = (bsStandard: string): boolean =>
   /MCB|RCBO|MCCB|60898|61009|60947/i.test(bsStandard || '');
 
 // Protective device options with Zs limits for validation
-// BS 7671 Table 41.3 - MCBs to BS EN 60898 and RCBOs to BS EN 61009 (0.4s disconnection)
+// BS 7671 Table 41.3 - MCBs to BS EN 60898 and RCBOs to BS EN 61009. The values
+// satisfy both the 0.4 s and the 5 s disconnection time (Reg 411.4.202).
 export const protectiveDeviceOptions = [
   // Type B MCBs - Table 41.3(a)
   { value: 'B6', label: 'MCB B6', zsLimit: 7.28 },

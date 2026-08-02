@@ -107,18 +107,18 @@ const MWReadingKeypad: React.FC<MWReadingKeypadProps> = ({
       {/* Reading header — label, live value, verdict */}
       <div className="flex items-center gap-3 pb-2">
         <div className="flex-1 min-w-0">
-          <p className="text-[11px] font-semibold text-white/60 truncate">{label}</p>
+          <p className="text-[11px] font-semibold text-white truncate">{label}</p>
           <p className="text-lg font-bold text-white tabular-nums leading-tight">
             {value === '' ? (
-              <span className="text-white/40 text-sm font-medium">Enter reading</span>
+              <span className="text-white text-sm font-medium">Enter reading</span>
             ) : (
               <>
                 {value}
-                <span className="text-[13px] text-white/60 font-semibold ml-1">{unit}</span>
+                <span className="text-[13px] text-white font-semibold ml-1">{unit}</span>
               </>
             )}
           </p>
-          {hint && !status && <p className="text-[10px] text-white/50 truncate">{hint}</p>}
+          {hint && !status && <p className="text-[10px] text-white truncate">{hint}</p>}
           {status && (
             <p
               className={cn(
@@ -148,7 +148,7 @@ const MWReadingKeypad: React.FC<MWReadingKeypadProps> = ({
             haptic.light();
             onClose();
           }}
-          className="shrink-0 h-11 px-2 text-[12px] font-semibold text-white/60 touch-manipulation active:scale-[0.97]"
+          className="shrink-0 h-11 px-2 text-[12px] font-semibold text-white touch-manipulation active:scale-[0.97]"
         >
           Done
         </button>

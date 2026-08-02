@@ -7,14 +7,18 @@
  */
 
 import { supabase } from '@/integrations/supabase/client';
+import type { CertBranding } from '@/utils/certBranding';
+import { ukDate } from '@/utils/certDate';
 
-interface BrandingOptions {
-  companyLogo?: string;
-  companyName?: string;
-  companyAddress?: string;
-  companyPhone?: string;
-  companyEmail?: string;
-}
+/**
+ * Branding the caller resolves via `fetchCertBranding()`. Partial because a
+ * caller may still hand over a hand-rolled subset, and because branding is
+ * decorative — a missing field must never block a certificate.
+ */
+type BrandingOptions = Partial<CertBranding>;
+
+/** G98's house colour, used until the electrician sets their own in Settings. */
+export const G98_ACCENT = '#ea580c';
 
 const UUID_REGEX =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -151,6 +155,9 @@ const getDefaultG98Data = (): Record<string, any> => ({
   companyAddress: '',
   companyPhone: '',
   companyEmail: '',
+  companyWebsite: '',
+  companyAccentColor: G98_ACCENT,
+  registrationSchemeLogo: '',
 });
 
 /**
@@ -185,12 +192,24 @@ export const formatG98Json = (
     // section added before these render on the PDF)
     photos: formData.photos ?? [],
 
+    // Dates — the form stores ISO (date inputs); the PDF is a UK document.
+    // These four are every date the G98 template renders.
+    commissioningDate: ukDate(formData.commissioningDate ?? defaults.commissioningDate),
+    notificationDate: ukDate(formData.notificationDate ?? defaults.notificationDate),
+    installerDate: ukDate(formData.installerDate ?? defaults.installerDate),
+    customerDate: ukDate(formData.customerDate ?? defaults.customerDate),
+
     // Branding overrides
     ...(branding?.companyLogo && { companyLogo: branding.companyLogo }),
     ...(branding?.companyName && { companyName: branding.companyName }),
     ...(branding?.companyAddress && { companyAddress: branding.companyAddress }),
     ...(branding?.companyPhone && { companyPhone: branding.companyPhone }),
     ...(branding?.companyEmail && { companyEmail: branding.companyEmail }),
+    ...(branding?.companyWebsite && { companyWebsite: branding.companyWebsite }),
+    ...(branding?.companyAccentColor && { companyAccentColor: branding.companyAccentColor }),
+    ...(branding?.registrationSchemeLogo && {
+      registrationSchemeLogo: branding.registrationSchemeLogo,
+    }),
   };
 
   return payload;

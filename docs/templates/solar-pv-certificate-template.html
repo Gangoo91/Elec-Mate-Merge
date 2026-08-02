@@ -1078,12 +1078,34 @@
             {{ installation_address }}, {{ installation_postcode }}
           </div>
         </div>
+        {% if installation_description %}
+        <div class="form-row">
+          <div class="form-label">Description of Installation</div>
+          <div class="form-value" colspan="3">{{ installation_description }}</div>
+        </div>
+        {% endif %}
+        {% if circuits_tested %}
+        <div class="form-row">
+          <div class="form-label">Circuits Tested</div>
+          <div class="form-value" colspan="3">{{ circuits_tested }}</div>
+        </div>
+        {% endif %}        {% if site_access_notes %}
+        <div class="form-row">
+          <div class="form-label">Site Access Notes</div>
+          <div class="form-value" colspan="3">{{ site_access_notes }}</div>
+        </div>
+        {% endif %}
       </div>
       <div class="inline-form" style="margin-top: 2px">
         <div class="inline-group">
           <span class="inline-label">Property Type:</span>
           <span class="inline-value">{{ property_type_display }}</span>
         </div>
+        {% if property_age %}<div class="inline-group"><span class="inline-label">Property Age:</span><span class="inline-value">{{ property_age }}</span></div>{% endif %}
+        {% if roof_age %}<div class="inline-group"><span class="inline-label">Roof Age:</span><span class="inline-value">{{ roof_age }}</span></div>{% endif %}
+        {% if design_reference %}<div class="inline-group"><span class="inline-label">Design Ref:</span><span class="inline-value">{{ design_reference }}</span></div>{% endif %}
+        {% if previous_installation_ref %}<div class="inline-group"><span class="inline-label">Previous Installation:</span><span class="inline-value">{{ previous_installation_ref }}</span></div>{% endif %}
+        {% if safe_isolation_verified %}<div class="inline-group"><span class="inline-label">Safe Isolation:</span><span class="inline-value">Verified</span></div>{% endif %}
         <div class="inline-group">
           <span class="inline-label">Ownership:</span>
           <span class="inline-value">{{ ownership_type }}</span>
@@ -1176,6 +1198,20 @@
                     %}<span class="status-badge warning">No</span>{% endif %}
                   </div>
                 </div>
+                <!-- Module rated values at STC — the datasheet figures the
+                     measured Voc/Isc in Section J are judged against. -->
+                {% if array.voc_rated or array.isc_rated %}
+                <div class="form-row">
+                  <div class="form-label">Module Voc / Isc</div>
+                  <div class="form-value">{{ array.voc_rated }}V / {{ array.isc_rated }}A</div>
+                </div>
+                {% endif %}
+                {% if array.vmp_rated or array.imp_rated %}
+                <div class="form-row">
+                  <div class="form-label">Module Vmp / Imp</div>
+                  <div class="form-value">{{ array.vmp_rated }}V / {{ array.imp_rated }}A</div>
+                </div>
+                {% endif %}
               </div>
             </div>
             <div class="col">
@@ -1204,10 +1240,27 @@
                   <div class="form-label">String Isc</div>
                   <div class="form-value">{{ array.string_isc }}A</div>
                 </div>
+                {% if array.string_vmp or array.string_imp %}
+                <div class="form-row">
+                  <div class="form-label">String Vmp / Imp</div>
+                  <div class="form-value">{{ array.string_vmp }}V / {{ array.string_imp }}A</div>
+                </div>
+                {% endif %}
                 <div class="form-row">
                   <div class="form-label">Mounting</div>
                   <div class="form-value">{{ array.mounting_type_display }}</div>
                 </div>
+                <!-- String configuration — recorded on the array tab but never
+                     printed, so the schedule gave no way to check the string
+                     Voc/Isc above against the panel count. -->
+                {% if array.panels_per_string or array.strings_in_parallel %}
+                <div class="form-row">
+                  <div class="form-label">String Config</div>
+                  <div class="form-value">
+                    {{ array.panels_per_string }} per string{% if array.strings_in_parallel %} &times; {{ array.strings_in_parallel }} parallel{% endif %}
+                  </div>
+                </div>
+                {% endif %}
               </div>
             </div>
           </div>
@@ -1259,6 +1312,15 @@
                   <div class="form-label">Type</div>
                   <div class="form-value">{{ inverter.type_display }}</div>
                 </div>
+                <!-- DC and AC ratings — recorded per inverter but never printed,
+                     so the schedule showed one "rated power" with no way to see
+                     the array-to-inverter sizing. -->
+                {% if inverter.rated_power_dc or inverter.rated_power_ac %}
+                <div class="form-row">
+                  <div class="form-label">Rated DC / AC</div>
+                  <div class="form-value">{{ inverter.rated_power_dc }} / {{ inverter.rated_power_ac }} kW</div>
+                </div>
+                {% endif %}
               </div>
             </div>
             <div class="col">
@@ -1271,6 +1333,18 @@
                   <div class="form-label">Phases</div>
                   <div class="form-value">{{ inverter.phases_display }}</div>
                 </div>
+                {% if inverter.mppt_voltage_range %}
+                <div class="form-row">
+                  <div class="form-label">MPPT Range</div>
+                  <div class="form-value">{{ inverter.mppt_voltage_range }}</div>
+                </div>
+                {% endif %}
+                {% if inverter.max_input_voltage or inverter.max_input_current %}
+                <div class="form-row">
+                  <div class="form-label">Max Input</div>
+                  <div class="form-value">{{ inverter.max_input_voltage }}V / {{ inverter.max_input_current }}A</div>
+                </div>
+                {% endif %}
               </div>
             </div>
             <div class="col">
@@ -1286,6 +1360,18 @@
                     %}<span class="status-badge warning">No</span>{% endif %}
                   </div>
                 </div>
+                {% if inverter.efficiency %}
+                <div class="form-row">
+                  <div class="form-label">Efficiency</div>
+                  <div class="form-value">{{ inverter.efficiency }}%</div>
+                </div>
+                {% endif %}
+                {% if inverter.firmware_version %}
+                <div class="form-row">
+                  <div class="form-label">Firmware</div>
+                  <div class="form-value">{{ inverter.firmware_version }}</div>
+                </div>
+                {% endif %}
               </div>
             </div>
           </div>
@@ -1525,27 +1611,45 @@
     <!-- SECTION J: DC ARRAY TESTS -->
     <div class="section">
       <div class="section-title">Section J: DC Array Test Results (BS EN IEC 62446-1)</div>
+      <!-- Measured values are shown against expected, with the verdict, because
+           a Voc or Isc reading means nothing on its own — 62446-1 asks for the
+           comparison. Test conditions follow underneath for the same reason. -->
       <table class="test-table">
         <thead>
           <tr>
-            <th style="width: 22%">Array</th>
-            <th style="width: 13%">Voc (V)</th>
-            <th style="width: 13%">Isc (A)</th>
-            <th style="width: 13%">IR Pos/Neg (MΩ)</th>
-            <th style="width: 13%">Polarity</th>
-            <th style="width: 13%">Continuity</th>
+            <th style="width: 16%">Array</th>
+            <th style="width: 15%">Voc meas / exp (V)</th>
+            <th style="width: 8%">Voc</th>
+            <th style="width: 15%">Isc meas / exp (A)</th>
+            <th style="width: 8%">Isc</th>
+            <th style="width: 17%">IR +ve / &minus;ve (MΩ)</th>
+            <th style="width: 7%">IR</th>
+            <th style="width: 7%">Pol.</th>
+            <th style="width: 7%">Cont.</th>
           </tr>
         </thead>
         <tbody>
           {% for test in array_tests %}
           <tr>
             <td>{{ test.array_name }}</td>
-            <td>{{ test.voc_measured }}</td>
-            <td>{{ test.isc_measured }}</td>
-            <td>{{ test.insulation_resistance }}{% if test.ir_test_voltage %} @{{ test.ir_test_voltage }}V{% endif %}</td>
+            <td>{{ test.voc_measured }}{% if test.voc_expected %} / {{ test.voc_expected }}{% endif %}</td>
+            <td class="result-{{ test.voc_class }}">{{ test.voc_result }}</td>
+            <td>{{ test.isc_measured }}{% if test.isc_expected %} / {{ test.isc_expected }}{% endif %}</td>
+            <td class="result-{{ test.isc_class }}">{{ test.isc_result }}</td>
+            <td>
+              {% if test.ir_positive_to_earth or test.ir_negative_to_earth %}{{ test.ir_positive_to_earth }} / {{ test.ir_negative_to_earth }}{% else %}{{ test.insulation_resistance }}{% endif %}{% if test.ir_test_voltage %} @{{ test.ir_test_voltage }}V{% endif %}{% if test.ir_minimum_required %} <span style="color: #64748b">(min {{ test.ir_minimum_required }})</span>{% endif %}
+            </td>
+            <td class="result-{{ test.ir_class }}">{{ test.ir_result }}</td>
             <td class="result-{{ test.polarity_class }}">{{ test.polarity_result }}</td>
             <td class="result-{{ test.continuity_class }}">{{ test.continuity_result }}</td>
           </tr>
+          {% if test.irradiance or test.ambient_temp or test.module_temp %}
+          <tr>
+            <td colspan="9" style="font-size: 6.5px; color: #64748b; background: #fafbfc">
+              Test conditions &mdash;{% if test.irradiance %} irradiance {{ test.irradiance }} W/m²{% endif %}{% if test.ambient_temp %} &middot; ambient {{ test.ambient_temp }} °C{% endif %}{% if test.module_temp %} &middot; module {{ test.module_temp }} °C{% endif %}
+            </td>
+          </tr>
+          {% endif %}
           {% endfor %}
         </tbody>
       </table>
@@ -1588,8 +1692,30 @@
               >{% endif %}
             </td>
             <td class="result-{{ test.ac_isolator_class }}">{{ test.ac_isolator_result }}</td>
-            <td class="result-{{ test.anti_islanding_class }}">{{ test.anti_islanding_result }}</td>
+            <td class="result-{{ test.anti_islanding_class }}">
+              {{ test.anti_islanding_result }}{% if test.anti_islanding_method %}<br /><span
+                style="font-size: 6.5px; color: #475569; font-weight: 400"
+                >{{ test.anti_islanding_method }}</span
+              >{% endif %}
+            </td>
             <td class="result-{{ test.protection_class }}">{{ test.protection_result }}</td>
+          </tr>
+          <!-- The remaining commissioning checks are recorded per inverter but
+               had no column; a second row keeps the table readable on A4. -->
+          <tr>
+            <td colspan="5" style="font-size: 6.5px; background: #fafbfc">
+              <span style="color: #64748b">Overvoltage:</span>
+              <span class="result-{{ test.overvoltage_class }}">{{ test.overvoltage_result | default: '—' }}</span>
+              &nbsp;&middot;&nbsp;<span style="color: #64748b">Power on:</span>
+              <span class="result-{{ test.power_on_class }}">{{ test.power_on_result | default: '—' }}</span>
+              &nbsp;&middot;&nbsp;<span style="color: #64748b">Grid sync:</span>
+              <span class="result-{{ test.grid_sync_class }}">{{ test.grid_sync_result | default: '—' }}</span>
+              &nbsp;&middot;&nbsp;<span style="color: #64748b">Comms:</span>
+              <span class="result-{{ test.comms_class }}">{{ test.comms_result | default: '—' }}</span>
+              &nbsp;&middot;&nbsp;<span style="color: #64748b">Display:</span>
+              <span class="result-{{ test.display_class }}">{{ test.display_result | default: '—' }}</span>
+              {% if test.dc_isolator_location or test.ac_isolator_location %}<br /><span style="color: #64748b">Isolator locations &mdash; DC:</span> {{ test.dc_isolator_location | default: '—' }} &nbsp;<span style="color: #64748b">AC:</span> {{ test.ac_isolator_location | default: '—' }}{% endif %}
+            </td>
           </tr>
           {% endfor %}
         </tbody>
@@ -1610,6 +1736,18 @@
               <div class="form-label">Ze Value</div>
               <div class="form-value">{{ ac_tests.ze_value }} Ω</div>
             </div>
+            {% if ac_tests.protection_device_type %}
+            <div class="form-row">
+              <div class="form-label">Protection Device</div>
+              <div class="form-value">{{ ac_tests.protection_device_type }}{% if ac_tests.rcd_bs_standard %} &middot; {{ ac_tests.rcd_bs_standard }}{% endif %}</div>
+            </div>
+            {% endif %}
+            {% if ac_tests.bidirectional_device_installed %}
+            <div class="form-row">
+              <div class="form-label">Bidirectional Device</div>
+              <div class="form-value">{{ ac_tests.bidirectional_device_type }} &middot; {{ ac_tests.bidirectional_device_make }} {{ ac_tests.bidirectional_device_model }}</div>
+            </div>
+            {% endif %}
             <div class="form-row">
               <div class="form-label">Zs Value</div>
               <div class="form-value">{{ ac_tests.zs_value }} Ω</div>
@@ -1719,7 +1857,42 @@
                 >{% else %}<span class="status-badge fail">Not Provided</span>{% endif %}
               </div>
             </div>
+            <div class="form-row">
+              <div class="form-label">Meter Readings</div>
+              <div class="form-value">
+                {% if commissioning.export_meter_reading %}Export {{ commissioning.export_meter_reading }} kWh{% endif %}{% if commissioning.initial_power_output %} &middot; Initial output {{ commissioning.initial_power_output }}{% endif %}
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-label">Test Conditions</div>
+              <div class="form-value">{{ commissioning.weather_conditions }}</div>
+            </div>
           </div>
+        </div>
+      </div>
+      <!-- What the electrician explained at handover. Recorded on the test
+           schedule tab and printed nowhere, so the certificate carried no
+           evidence the customer was briefed. -->
+      <div class="handover-grid" style="margin-top: 4px">
+        <div class="handover-item">
+          <span class="checkbox-box {% if commissioning.shutdown_procedure_explained %}checked{% endif %}">{% if commissioning.shutdown_procedure_explained %}&#10003;{% endif %}</span>
+          <label>Shutdown Procedure Explained</label>
+        </div>
+        <div class="handover-item">
+          <span class="checkbox-box {% if commissioning.system_performance_explained %}checked{% endif %}">{% if commissioning.system_performance_explained %}&#10003;{% endif %}</span>
+          <label>System Performance Explained</label>
+        </div>
+        <div class="handover-item">
+          <span class="checkbox-box {% if commissioning.maintenance_requirements_explained %}checked{% endif %}">{% if commissioning.maintenance_requirements_explained %}&#10003;{% endif %}</span>
+          <label>Maintenance Requirements Explained</label>
+        </div>
+        <div class="handover-item">
+          <span class="checkbox-box {% if commissioning.warranty_details_explained %}checked{% endif %}">{% if commissioning.warranty_details_explained %}&#10003;{% endif %}</span>
+          <label>Warranty Details Explained</label>
+        </div>
+        <div class="handover-item">
+          <span class="checkbox-box {% if commissioning.emergency_contact_provided %}checked{% endif %}">{% if commissioning.emergency_contact_provided %}&#10003;{% endif %}</span>
+          <label>Emergency Contact Provided</label>
         </div>
       </div>
     </div>
@@ -1789,7 +1962,37 @@
           >
           <label>Emergency Shutdown Explained</label>
         </div>
-      </div>
+              <div class="handover-item">
+          <span class="checkbox-box {% if handover.emergency_shutdown_explained %}checked{% endif %}"
+            >{% if handover.emergency_shutdown_explained %}&#10003;{% endif %}</span
+          >
+          <label>Emergency Shutdown Explained</label>
+        </div>
+        <div class="handover-item">
+          <span class="checkbox-box {% if handover.system_design_provided %}checked{% endif %}"
+            >{% if handover.system_design_provided %}&#10003;{% endif %}</span
+          >
+          <label>System Design Provided</label>
+        </div>
+        <div class="handover-item">
+          <span class="checkbox-box {% if handover.g98g99_confirmation_provided %}checked{% endif %}"
+            >{% if handover.g98g99_confirmation_provided %}&#10003;{% endif %}</span
+          >
+          <label>G98/G99 Confirmation Provided</label>
+        </div>
+        <div class="handover-item">
+          <span class="checkbox-box {% if handover.performance_estimate_provided %}checked{% endif %}"
+            >{% if handover.performance_estimate_provided %}&#10003;{% endif %}</span
+          >
+          <label>Performance Estimate Provided</label>
+        </div>
+        <div class="handover-item">
+          <span class="checkbox-box {% if handover.dno_notification_copy_provided %}checked{% endif %}"
+            >{% if handover.dno_notification_copy_provided %}&#10003;{% endif %}</span
+          >
+          <label>DNO Notification Copy Provided</label>
+        </div>
+</div>
     </div>
 
     <!-- SECTION P: DECLARATION -->
@@ -1843,6 +2046,24 @@
               <span class="sig-field-label">MCS Number</span>
               <span class="sig-field-value">{{ installer_mcs_number }}</span>
             </div>
+            {% if installer_phone or installer_email %}
+            <div class="sig-field">
+              <span class="sig-field-label">Contact</span>
+              <span class="sig-field-value">{{ installer_phone }}{% if installer_email %} &middot; {{ installer_email }}{% endif %}</span>
+            </div>
+            {% endif %}
+            {% if installer_address %}
+            <div class="sig-field">
+              <span class="sig-field-label">Address</span>
+              <span class="sig-field-value">{{ installer_address }}</span>
+            </div>
+            {% endif %}
+            {% if registration_scheme or registration_number %}
+            <div class="sig-field">
+              <span class="sig-field-label">Scheme</span>
+              <span class="sig-field-value">{{ registration_scheme }}{% if registration_number %} &middot; {{ registration_number }}{% endif %}</span>
+            </div>
+            {% endif %}
             <div class="sig-field">
               <span class="sig-field-label">Date</span>
               <span class="sig-field-value">{{ installer_date }}</span>
@@ -1887,40 +2108,81 @@
           </div>
         </div>
         {% endif %}
+        {% if has_customer_signature %}
+        <!-- Customer acceptance — the form collects this on the declarations tab
+             and it previously never reached the PDF, so a signed handover
+             printed with no record of the customer accepting the system. -->
+        <div class="signature-box">
+          <div class="signature-box-header">Customer Acceptance</div>
+          <div class="signature-box-body">
+            <div class="sig-field">
+              <span class="sig-field-label">Name</span>
+              <span class="sig-field-value">{{ customer_name }}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Position</span>
+              <span class="sig-field-value">{{ customer_position }}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Date</span>
+              <span class="sig-field-value">{{ customer_date }}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Signature</span>
+              <span class="sig-field-value signature">
+                <img src="{{ customer_signature }}" />
+              </span>
+            </div>
+          </div>
+        </div>
+        {% endif %}
       </div>
     </div>
 
     <!-- SECTION R: OVERALL ASSESSMENT -->
     <div class="section avoid-break">
       <div class="section-title">Section R: Overall Assessment</div>
+      {% if next_service_due %}
+      <div class="inline-form" style="margin-bottom: 3px">
+        <div class="inline-group"><span class="inline-label">Next Service Due:</span><span class="inline-value">{{ next_service_due }}</span></div>
+      </div>
+      {% endif %}
+      <!-- The electrician's own verdict is the source of truth. Only when the
+           control was never touched does this fall back to inferring the result
+           from the defect count, which is what it always used to do — so a
+           system marked satisfactory despite minor observations, or marked
+           unsatisfactory for a reason not logged as a defect, now prints what
+           the electrician actually chose. -->
+      <!-- The electrician's own verdict is the source of truth. Only when the
+           control was never touched does this fall back to inferring the result
+           from the defect count, which is what it always used to do — so a
+           system marked satisfactory despite minor observations, or marked
+           unsatisfactory for a reason never logged as a defect, now prints what
+           the electrician actually chose. -->
+      {% assign is_satisfactory = false %}
+      {% if overall_assessment_set %}
+        {% if overall_satisfactory %}{% assign is_satisfactory = true %}{% endif %}
+      {% else %}
+        {% if no_defects or defects.size == 0 %}{% assign is_satisfactory = true %}{% endif %}
+      {% endif %}
       <div class="assessment-box">
         <span class="assessment-label">System Assessment:</span>
         <div class="assessment-options">
-          <div
-            class="assessment-option {% if no_defects or defects.size == 0 %}pass-selected{% endif %}"
-          >
+          <div class="assessment-option {% if is_satisfactory %}pass-selected{% endif %}">
             <span
-              class="checkbox-box {% if no_defects or defects.size == 0 %}checked{% endif %}"
-              style="{% if no_defects or defects.size == 0 %}background: #fff; color: #22c55e;{% endif %}"
-              >{% if no_defects or defects.size == 0 %}&#10003;{% endif %}</span
+              class="checkbox-box {% if is_satisfactory %}checked{% endif %}"
+              style="{% if is_satisfactory %}background: #fff; color: #22c55e;{% endif %}"
+              >{% if is_satisfactory %}&#10003;{% endif %}</span
             >
-            <span
-              class="option-label {% unless no_defects or defects.size == 0 %}pass-label{% endunless %}"
-              >SATISFACTORY</span
-            >
+            <span class="option-label {% if is_satisfactory %}pass-label{% endif %}">SATISFACTORY</span>
           </div>
-          <div
-            class="assessment-option {% if has_defects and defects.size > 0 %}fail-selected{% endif %}"
-          >
+          <div class="assessment-option {% if is_satisfactory == false %}fail-selected{% endif %}">
             <span
-              class="checkbox-box {% if has_defects and defects.size > 0 %}checked{% endif %}"
-              style="{% if has_defects and defects.size > 0 %}background: #fff; color: #dc2626;{% endif %}"
-              >{% if has_defects and defects.size > 0 %}&#10003;{% endif %}</span
+              class="checkbox-box {% if is_satisfactory == false %}checked{% endif %}"
+              style="{% if is_satisfactory == false %}background: #fff; color: #dc2626;{% endif %}"
+              >{% if is_satisfactory == false %}&#10003;{% endif %}</span
             >
-            <span
-              class="option-label {% unless has_defects and defects.size > 0 %}fail-label{% endunless %}"
-              >UNSATISFACTORY</span
-            >
+            <span class="option-label {% if is_satisfactory == false %}fail-label{% endif %}">UNSATISFACTORY</span>
           </div>
         </div>
       </div>

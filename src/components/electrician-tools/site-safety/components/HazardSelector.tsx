@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { Shield, Search, Plus, AlertTriangle } from 'lucide-react';
 import { useRAMS } from '../rams/RAMSContext';
@@ -101,14 +101,16 @@ const HazardSelector: React.FC<HazardSelectorProps> = ({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Shield className="h-5 w-5" />
-            Select Hazard from Database
-          </DialogTitle>
-        </DialogHeader>
+    /* Bottom sheet, not a centred dialog. This is a picker — the exact case
+       the design system names ("Sheets: forms, tools, AI features, scanners") —
+       and a centred 4xl modal is unreachable one-handed on a phone, which is
+       where a method statement gets written. */
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent side="bottom" className="h-[85vh] overflow-y-auto rounded-t-2xl p-4">
+        <div className="mb-4">
+          <h2 className="text-[17px] font-semibold tracking-tight text-white">Select a hazard</h2>
+          <p className="mt-0.5 text-[13px] text-white">From the hazard database</p>
+        </div>
 
         <div className="space-y-4">
           {/* Search and Filter */}
@@ -207,8 +209,8 @@ const HazardSelector: React.FC<HazardSelectorProps> = ({
             </div>
           )}
         </div>
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 };
 

@@ -1,22 +1,40 @@
 import React, { Suspense, useState, useCallback, useEffect } from 'react';
 import { EICRFormProvider, useEICRForm } from './eicr/EICRFormProvider';
+import { useEICRTabs, EICRTabValue } from '@/hooks/useEICRTabs';
+import { useEICRValidation } from '@/hooks/useEICRValidation';
+import { useQsReviewStatus } from '@/hooks/useQsReview';
+import { useCertPrefill } from '@/hooks/useCertPrefill';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
 import { draftStorage } from '@/utils/draftStorage';
-import EICRFormHeader from './eicr/EICRFormHeader';
-import EICRFormContent from './eicr/EICRFormContent';
+import CertShellHeader, { type CertShellStep } from './inspection/shared/CertShellHeader';
+import CertShellFooter, { certFooterNeutralButton } from './inspection/shared/CertShellFooter';
+import type { SyncStatus } from '@/hooks/useReportSync';
 import CertLockBar from './inspection/CertLockBar';
 import DuplicatedFromBanner from './certificates/DuplicatedFromBanner';
-import { cn } from '@/lib/utils';
 import LastCertSuggestionCard from './certificates/LastCertSuggestionCard';
-import EICRValidationPanel from './EICRValidationPanel';
-import { useCertPrefill } from '@/hooks/useCertPrefill';
+import EICRTabContent from './EICRTabContent';
+import StartNewEICRDialog from './StartNewEICRDialog';
 import { BoardScannerOverlay } from './testing/BoardScannerOverlay';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { cn } from '@/lib/utils';
 import { pickCableSize, getCpcForLive, BS_STANDARD_MAP } from '@/utils/circuitDefaults';
-import { getMaxZsFromDeviceDetails, getMaxZsWithRcd } from '@/utils/zsCalculations';
+import { getMaxZsWithRcd } from '@/utils/zsCalculations';
 
-// Tab value type
-type TabValue = 'details' | 'inspection' | 'testing' | 'inspector' | 'certificate';
-const TAB_ORDER: TabValue[] = ['details', 'inspection', 'testing', 'inspector', 'certificate'];
+// v3 cert shell — five steps across the top, matching the MW/EIC pattern.
+const EICR_STEPS: CertShellStep[] = [
+  { id: 'details', label: 'Details' },
+  { id: 'inspection', label: 'Inspect' },
+  { id: 'testing', label: 'Testing' },
+  { id: 'inspector', label: 'Sign off' },
+  { id: 'certificate', label: 'Issue' },
+];
+
+const NEXT_LABELS = [
+  'Continue to Inspect',
+  'Continue to Testing',
+  'Continue to Sign off',
+  'Continue to Issue',
+];
 
 const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
   const {
@@ -25,14 +43,11 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
     currentReportId,
     showStartNewDialog,
     setShowStartNewDialog,
-    handleStartNew,
+    handleManualSave,
     confirmStartNew,
     confirmDuplicate,
-    handleLoadSavePoint,
-    handleManualSave,
     syncState,
     isOnline,
-    isAuthenticated,
     isLoadingReport,
     isLocked,
     lockedAt,
@@ -42,36 +57,97 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
     databaseId,
     hasVersions,
     openReport,
+    onTabChange,
   } = useEICRForm();
 
   // Board scan state
   const [showBoardScan, setShowBoardScan] = useState(false);
 
-  // Lifted tab state - controlled from header
-  const [currentTab, setCurrentTab] = useState<TabValue>('details');
-  const currentTabIndex = TAB_ORDER.indexOf(currentTab);
+  // Tabs hook — navigation state only; completeness comes from useEICRValidation
+  const {
+    currentTab,
+    setCurrentTab,
+    currentTabIndex,
+    totalTabs,
+    canNavigateNext,
+    canNavigatePrevious,
+    navigateNext,
+    navigatePrevious,
+  } = useEICRTabs();
 
-  // Handle tab change from header clicks
-  const handleTabChange = useCallback((index: number) => {
-    if (index >= 0 && index < TAB_ORDER.length) {
-      setCurrentTab(TAB_ORDER[index]);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  }, []);
+  // Field-based progress + per-field missing list (tab metadata included) —
+  // the header ring renders it; tapping the ring opens the missing-items sheet.
+  const eicrValidation = useEICRValidation(formData);
+  const [showMissingSheet, setShowMissingSheet] = useState(false);
+  // A QS-approved cert is complete by definition — don't let an in-editor
+  // completeness recompute leave an approved cert un-generatable (ELE-1183).
+  // EICRSummary's generate handler still runs the QS content-hash gate.
+  const { data: qsReviewStatus } = useQsReviewStatus(currentReportId || undefined);
+  const canGenerate = eicrValidation.isValid || qsReviewStatus?.status === 'approved';
 
-  // Handle tab change from SmartTabs
-  const handleTabValueChange = useCallback((value: string) => {
-    setCurrentTab(value as TabValue);
-  }, []);
+  // The shell footer's Generate/Email/Invoice call into the Issue tab's real
+  // handlers (MW/EIC pattern) — EICRSummary registers them on mount.
+  const pdfActionsRef = React.useRef<{
+    generate: () => void;
+    email: () => void;
+    invoice: () => void;
+  } | null>(null);
+
+  // Slide direction for the step transition — back navigation slides the other way.
+  const prevTabIndexRef = React.useRef(currentTabIndex);
+  const isNavigatingBack = currentTabIndex < prevTabIndexRef.current;
+  React.useEffect(() => {
+    prevTabIndexRef.current = currentTabIndex;
+  }, [currentTabIndex]);
+
+  // Every route into a step behaves identically — header tabs and footer nav
+  // both flush the sync hook and land at the top of the step.
+  const handleTabChange = useCallback(
+    (tab: string) => {
+      // Instant, and BEFORE the step swaps.
+      //
+      // `behavior: 'smooth'` here fought the step's own slide-in: the keyed
+      // content was replaced at once, the 260ms translateX played, and the
+      // window animated its scroll separately over a longer duration — two
+      // motions at different speeds, which reads as a jolt. Worse when the new
+      // step is shorter, because the browser clamps the scroll instantly first
+      // and then smooth-scrolls the remainder.
+      //
+      // The explicit `behavior` beats the global `scroll-behavior: smooth` in
+      // index.css, so this really is instant. Scrolling first means the new
+      // step mounts already at the top and only the slide animates.
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      onTabChange?.();
+      setCurrentTab(tab as EICRTabValue);
+    },
+    // setCurrentTab is stable enough for this usage; the hook recreates it per
+    // render but it only wraps setState + the provider callback.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [onTabChange]
+  );
+
+  // The provider speaks the old useCloudSync string status; the shell header
+  // reads useReportSync's { cloud } shape. 'queued' covers unsaved/pending
+  // states → neutral 'Save' word; only a genuine 'synced' shows 'Saved'.
+  const shellSyncStatus = {
+    cloud: !isOnline
+      ? 'offline'
+      : syncState?.status === 'queued'
+        ? 'unsaved'
+        : syncState?.status || 'unsaved',
+  } as SyncStatus;
 
   // Last-cert prompt — soft suggestion to copy supply / earthing / BS amendment
-  // from the user's most recent EICR at the same address.
+  // from the user's most recent EICR at the same address. User applies on tap.
   const prefillAddress =
-    (formData.installationAddress as string) ||
-    (formData.clientAddress as string) ||
-    '';
-  const { suggestion: lastCertSuggestion, dismiss: dismissLastCert, buildPatch } =
-    useCertPrefill(prefillAddress, 'eicr', { excludeReportId: currentReportId || undefined });
+    (formData.installationAddress as string) || (formData.clientAddress as string) || '';
+  const {
+    suggestion: lastCertSuggestion,
+    dismiss: dismissLastCert,
+    buildPatch,
+  } = useCertPrefill(prefillAddress, 'eicr', {
+    excludeReportId: currentReportId || undefined,
+  });
 
   const handleApplyLastCert = () => {
     const patch = buildPatch();
@@ -82,6 +158,7 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
   // Handle board scan completion - populate circuits
   // BoardPhotoCapture returns: { circuits, board, metadata, warnings, decisions }
   const handleBoardScanComplete = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (data: { board: any; circuits: any[]; metadata?: any; warnings?: string[] }) => {
       // Convert detected circuits to test results format matching TestResult type
       // BoardPhotoCapture already transforms circuits to: { position, label, device, rating, curve, ... }
@@ -89,9 +166,7 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
         // Accept both legacy `device: 'MCB'` (string) and new
         // `device: { category: 'MCB', ... }` (object) shapes.
         const deviceCategory: string =
-          (typeof circuit.device === 'string'
-            ? circuit.device
-            : circuit.device?.category) || 'MCB';
+          (typeof circuit.device === 'string' ? circuit.device : circuit.device?.category) || 'MCB';
         const ratingAmps =
           circuit.rating ??
           (typeof circuit.device === 'object' ? circuit.device?.rating_amps : null) ??
@@ -217,6 +292,7 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
       // Stay on testing tab after scan completes
       setCurrentTab('testing');
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [formData.scheduleOfTests, updateFormData]
   );
 
@@ -224,15 +300,16 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
   // Also attempt cloud sync and warn user if data hasn't synced
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      // Locked certs are immutable — writing a draft here only produces a
+      // misleading "recovered unsaved changes" toast on reopen.
+      if (isLocked) return;
       // CRITICAL: Save current form data to localStorage immediately
       // This is synchronous and fast - ensures data is never lost
       if (formData && currentReportId) {
         draftStorage.saveDraft('eicr', currentReportId, formData);
-        console.log('[EICR] Saved draft on beforeunload');
       } else if (formData && (formData.clientName || formData.installationAddress)) {
         // For new reports, save to 'new' key
         draftStorage.saveDraft('eicr', null, formData);
-        console.log('[EICR] Saved new draft on beforeunload');
       }
 
       // Check if we have unsynced changes to the cloud
@@ -256,30 +333,30 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
     };
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  }, [formData, currentReportId, syncState.status, syncState.queuedChanges]);
+  }, [formData, currentReportId, syncState.status, syncState.queuedChanges, isLocked]);
+
+  // Step ticks derive from useEICRValidation so the header ticks, the progress
+  // ring and the missing-items sheet can never disagree. Legacy certs saved
+  // with a manual completedSections flag still tick (read-path tolerance).
+  const legacyCompleted = (formData.completedSections || {}) as Record<string, boolean>;
+  const completedTabs: Record<string, boolean> = Object.fromEntries(
+    EICR_STEPS.map((step) => [
+      step.id,
+      legacyCompleted[step.id] === true ||
+        !eicrValidation.errors.some((e) => e.tab === step.id),
+    ])
+  );
 
   if (isLoadingReport) {
     return (
       <div className="flex items-center justify-center p-8 min-h-[400px]">
         <div className="text-center space-y-3">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
-          <p className="text-muted-foreground">Loading report data...</p>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-elec-yellow mx-auto"></div>
+          <p className="text-white">Loading report data...</p>
         </div>
       </div>
     );
   }
-
-  // Calculate section completion for progress
-  const completedSections = new Set<number>();
-  if (formData.clientName && formData.installationAddress) completedSections.add(0);
-  if (formData.inspectionItems?.some((item: any) => item.outcome && item.outcome !== ''))
-    completedSections.add(1);
-  // Tests tab is complete only if circuits have actual test data filled in
-  const hasCompletedTests = formData.scheduleOfTests?.some(
-    (test: any) => test.zs || test.polarity || test.insulationResistance || test.insulationLiveEarth
-  );
-  if (hasCompletedTests) completedSections.add(2);
-  if (formData.inspectorName && formData.inspectorSignature) completedSections.add(3);
 
   // If board scan is open, render full-screen scanner overlay
   if (showBoardScan) {
@@ -287,49 +364,37 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
       <BoardScannerOverlay
         onAnalysisComplete={handleBoardScanComplete}
         onClose={() => setShowBoardScan(false)}
-        title="Scan Distribution Board"
+        title="Scan distribution board"
       />
     );
   }
 
+  const certNumber = formData.certificateNumber as string | undefined;
+
   return (
-    <div className="bg-background min-h-screen">
-      {/* Header — fire alarm pattern */}
-      <div className="bg-background">
-        <div className="px-2 py-2.5">
-          <EICRFormHeader
-            onBack={onBack}
-            currentReportId={currentReportId}
-            hasUnsavedChanges={syncState.status === 'syncing' || syncState.queuedChanges > 0}
-            isSaving={syncState.status === 'syncing'}
-            lastSaveTime={syncState.lastSyncTime}
-            onStartNew={handleStartNew}
-            onManualSave={handleManualSave}
-            formData={formData}
-            syncStatus={syncState.status}
-            lastSyncTime={syncState.lastSyncTime}
-            isOnline={isOnline}
-            isAuthenticated={isAuthenticated}
-            currentTab={currentTabIndex}
-            completedSections={completedSections}
-            onOpenBoardScan={() => setShowBoardScan(true)}
-            onTabChange={handleTabChange}
-          />
-        </div>
-        <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
-      </div>
+    <div className="bg-background min-h-screen prevent-shortcuts">
+      {/* v3 shell header — back · title/cert no · save word · progress ring · step tabs */}
+      <CertShellHeader
+        onBack={onBack}
+        title="EICR"
+        subtitle={certNumber ? `${certNumber} · BS 7671` : null}
+        isSaving={syncState.status === 'syncing'}
+        onManualSave={handleManualSave}
+        syncStatus={shellSyncStatus}
+        progressPercent={eicrValidation.completionPercentage}
+        onProgressTap={() => setShowMissingSheet(true)}
+        steps={EICR_STEPS}
+        currentTab={currentTab}
+        onTabChange={handleTabChange}
+        completedTabs={completedTabs}
+      />
 
       {/* ELE-1037 — lock / version bar (Issue & lock, read-only, Amend) */}
       <CertLockBar
         isLocked={isLocked}
         lockedAt={lockedAt}
         editVersion={editVersion}
-        canIssue={
-          !isLocked &&
-          !!currentReportId &&
-          !!formData.inspectorName &&
-          !!formData.inspectorSignature
-        }
+        canIssue={!isLocked && !!currentReportId && canGenerate}
         onLock={lockReport}
         onAmend={amendReport}
         databaseId={databaseId}
@@ -347,7 +412,7 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
 
       {/* Last cert at this address — soft suggestion to copy supply/earthing data forward */}
       {!isLocked && lastCertSuggestion && (
-        <div className="px-4 pt-3">
+        <div className="px-4 pt-3 lg:px-8">
           <LastCertSuggestionCard
             suggestion={lastCertSuggestion}
             onApply={handleApplyLastCert}
@@ -356,42 +421,173 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
         </div>
       )}
 
-      {/* Main Content — always full-width; the single-column tabs (Details /
-          Inspector / Certificate) centre themselves at the content level, so
-          the Testing & Inspection tables reliably get the full width. */}
-      <main className="py-4 pb-48 sm:px-4 sm:pb-8">
-        {/* Validation panel — always visible, tap a row to jump to that tab */}
-        <div className="px-4 mb-3 sm:px-0">
-          <EICRValidationPanel
-            formData={formData}
-            onJumpToTab={(tab) => setCurrentTab(tab)}
-            isLastTab={currentTabIndex === TAB_ORDER.length - 1}
-          />
-        </div>
-        {/* When the certificate is locked the form body is read-only — autosave
-            is already gated off in the provider; this stops on-screen edits. */}
+      {/* Main content — counters Layout px-3 on mobile (-mx-3) then re-applies
+          px-4 so the tab interiors' -mx-4 cards land truly edge-to-edge.
+          Same arithmetic as MinorWorksForm/EICForm. Read-only when locked. */}
+      <main
+        className={cn(
+          '-mx-3 px-4 py-4 sm:mx-auto sm:px-4 lg:px-8',
+          // Issue carries the two-row footer (Back/Email/Invoice + Generate
+          // stacked on mobile) — needs extra clearance.
+          currentTab === 'certificate' ? 'pb-48 sm:pb-40 lg:pb-28' : 'pb-32 sm:pb-24',
+          isLocked && 'pointer-events-none select-none opacity-95'
+        )}
+        aria-disabled={isLocked || undefined}
+      >
+        {/* Current step — keyed so each change replays the lateral slide. */}
         <div
-          className={cn(isLocked && 'pointer-events-none select-none opacity-95')}
-          aria-disabled={isLocked || undefined}
+          key={currentTab}
+          className={cn(
+            'lg:max-w-[1600px]',
+            isNavigatingBack ? 'motion-safe:animate-mw-step-back' : 'motion-safe:animate-mw-step-in'
+          )}
         >
-          <EICRFormContent
+          <EICRTabContent
+            tabValue={currentTab}
             formData={formData}
             onUpdate={updateFormData}
-            hasDraft={false}
-            draftTimestamp={0}
-            onLoadDraft={() => {}}
-            onStartNewFromDraft={() => {}}
-            hasUnsavedChanges={syncState.status === 'syncing' || syncState.queuedChanges > 0}
-            showStartNewDialog={showStartNewDialog}
-            onCloseStartNewDialog={() => setShowStartNewDialog(false)}
-            onConfirmStartNew={confirmStartNew}
-            onConfirmDuplicate={confirmDuplicate}
             onOpenBoardScan={() => setShowBoardScan(true)}
-            currentTab={currentTab}
-            onTabChange={handleTabValueChange}
+            actionsRef={pdfActionsRef}
           />
         </div>
       </main>
+
+      {/* v3 shell footer — single sticky step bar replaces per-tab inline nav */}
+      {!isLocked && (
+        <CertShellFooter
+          currentIndex={currentTabIndex}
+          totalSteps={totalTabs}
+          canPrevious={canNavigatePrevious()}
+          canNext={canNavigateNext()}
+          onPrevious={() => {
+      // Instant, and BEFORE the step swaps.
+      //
+      // `behavior: 'smooth'` here fought the step's own slide-in: the keyed
+      // content was replaced at once, the 260ms translateX played, and the
+      // window animated its scroll separately over a longer duration — two
+      // motions at different speeds, which reads as a jolt. Worse when the new
+      // step is shorter, because the browser clamps the scroll instantly first
+      // and then smooth-scrolls the remainder.
+      //
+      // The explicit `behavior` beats the global `scroll-behavior: smooth` in
+      // index.css, so this really is instant. Scrolling first means the new
+      // step mounts already at the top and only the slide animates.
+      window.scrollTo({ top: 0, behavior: 'auto' });
+            navigatePrevious();
+            onTabChange?.();
+          }}
+          onNext={() => {
+      // Instant, and BEFORE the step swaps.
+      //
+      // `behavior: 'smooth'` here fought the step's own slide-in: the keyed
+      // content was replaced at once, the 260ms translateX played, and the
+      // window animated its scroll separately over a longer duration — two
+      // motions at different speeds, which reads as a jolt. Worse when the new
+      // step is shorter, because the browser clamps the scroll instantly first
+      // and then smooth-scrolls the remainder.
+      //
+      // The explicit `behavior` beats the global `scroll-behavior: smooth` in
+      // index.css, so this really is instant. Scrolling first means the new
+      // step mounts already at the top and only the slide animates.
+      window.scrollTo({ top: 0, behavior: 'auto' });
+            navigateNext();
+            onTabChange?.();
+          }}
+          nextLabels={NEXT_LABELS}
+          isLastStep={currentTab === 'certificate'}
+          onGenerate={() => pdfActionsRef.current?.generate()}
+          canGenerate={canGenerate}
+          generateLabel="Generate certificate"
+          lastStepActions={
+            <>
+              {/* ELE-1460 — Email + Invoice live here, not duplicated inside
+                  the Issue tab. Handlers registered by EICRSummary. */}
+              <button
+                type="button"
+                onClick={() => pdfActionsRef.current?.email()}
+                disabled={!canGenerate}
+                className={certFooterNeutralButton}
+              >
+                Email
+              </button>
+              <button
+                type="button"
+                onClick={() => pdfActionsRef.current?.invoice()}
+                disabled={!canGenerate}
+                className={certFooterNeutralButton}
+              >
+                Invoice
+              </button>
+            </>
+          }
+        />
+      )}
+
+      <StartNewEICRDialog
+        isOpen={showStartNewDialog}
+        onClose={() => setShowStartNewDialog(false)}
+        onConfirm={confirmStartNew}
+        onDuplicate={confirmDuplicate}
+        hasUnsavedChanges={syncState.status === 'syncing' || syncState.queuedChanges > 0}
+      />
+
+      {/* Tap-the-ring — what's still missing, grouped by step, jump straight there */}
+      <Sheet open={showMissingSheet} onOpenChange={setShowMissingSheet}>
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] rounded-t-2xl border-white/[0.1] p-0 overflow-hidden"
+        >
+          <div className="flex h-full flex-col bg-background">
+            <div className="border-b border-white/[0.08] px-4 pb-3 pt-4">
+              <h2 className="text-base font-bold text-white">
+                {eicrValidation.errors.length === 0 ? 'Ready to issue' : 'Still to complete'}
+              </h2>
+              <p className="text-[12px] text-white/60 tabular-nums">
+                {eicrValidation.completionPercentage}% complete
+                {eicrValidation.errors.length > 0 &&
+                  ` · ${eicrValidation.errors.length} required ${
+                    eicrValidation.errors.length === 1 ? 'field' : 'fields'
+                  } remaining`}
+              </p>
+            </div>
+            <div className="flex-1 space-y-5 overflow-y-auto px-4 py-4">
+              {eicrValidation.errors.length === 0 ? (
+                <p className="text-sm text-white/85">
+                  Everything required is filled in. Head to Issue to generate the report.
+                </p>
+              ) : (
+                EICR_STEPS.map((step) => {
+                  const items = eicrValidation.errors.filter((e) => e.tab === step.id);
+                  if (items.length === 0) return null;
+                  return (
+                    <div key={step.id}>
+                      <h3 className="mb-2 text-[13px] font-semibold text-white">{step.label}</h3>
+                      <div className="space-y-1.5">
+                        {items.map((item) => (
+                          <button
+                            key={item.field}
+                            type="button"
+                            onClick={() => {
+                              setShowMissingSheet(false);
+                              handleTabChange(step.id);
+                            }}
+                            className="flex h-11 w-full items-center justify-between rounded-xl border border-white/[0.1] bg-white/[0.04] px-3.5 text-left text-sm font-medium text-white touch-manipulation transition-transform active:scale-[0.99]"
+                          >
+                            <span className="truncate">{item.message}</span>
+                            <span className="ml-3 shrink-0 text-[11.5px] font-semibold text-elec-yellow">
+                              Go
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };

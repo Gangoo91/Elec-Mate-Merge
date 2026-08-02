@@ -1,7 +1,7 @@
 /**
  * BESSCertificate.tsx
  * Battery Energy Storage System Commissioning Certificate
- * IET CoP for EESS + MCS MIS 3002 + BS 7671:2018+A3:2024
+ * IET CoP for EESS + MCS MIS 3012:2025 (battery/EESS) + BS 7671:2018+A4:2026
  *
  * Features:
  * - 8-layer auto-save via useReportSync

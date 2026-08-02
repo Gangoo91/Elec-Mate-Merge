@@ -620,6 +620,7 @@ const PRICE_TO_TIER: Record<string, string> = {
   price_1TnbOj2RKw5t5RAmEIXS6oyV: 'electrician_yearly', // £199.99/year (current — Jun 2026, new customers)
   price_1TKlA12RKw5t5RAmdhZyhX1I: 'electrician', // £12.99/month (prior — keep for existing subs)
   price_1SqJVr2RKw5t5RAmaiTGelLN: 'electrician', // £9.99/month (legacy — keep for existing subs)
+  price_1TMoQE2RKw5t5RAmuFglsBof: 'electrician', // £9.99/month ("Electrician Monthly win back" — winback offer price; unmapped until Aug 2026, which wrote tier 'unknown' onto paying customers)
   price_1TKlKL2RKw5t5RAmpD8FH7qp: 'electrician_yearly', // £129.99/year (prior — keep for existing subs)
   price_1SqJVs2RKw5t5RAmVeD2QVsb: 'electrician_yearly', // £99.99/year (legacy — keep for existing subs)
 
@@ -1004,6 +1005,32 @@ serve(async (req) => {
               customerId,
               email: orphanEmail,
             });
+
+            // ELE-1461: "manual review" with nobody told is not review — it is a
+            // silent hole. This branch means somebody has PAID and cannot be
+            // matched to an account, so they are billed and get nothing. It
+            // happened to a real customer who checked out with a different
+            // address to the one on his account: `check-subscription`'s
+            // self-heal only reconciles when `customer_email ILIKE user.email`,
+            // so it could never fire for him, and the only trace was this
+            // info-level log. Alert loudly instead — every minute here is a
+            // paying customer locked out.
+            await captureMessage(
+              'stripe-webhook: paid subscription could not be matched to an account',
+              'error',
+              {
+                customerId,
+                subscriptionId: subscription.id,
+                customerEmail: orphanEmail,
+                customerName: orphanName,
+                priceId: orphanPriceId,
+                tier: orphanPriceId ? PRICE_TO_TIER[orphanPriceId] || 'unknown' : null,
+                eventType: event.type,
+                // Resolve by pointing profiles.stripe_customer_id at this
+                // customer, then set orphaned_stripe_subscriptions.resolved.
+                action: 'link profiles.stripe_customer_id then mark orphan resolved',
+              }
+            );
           } catch (orphanErr) {
             logger.warn('Failed to store orphaned subscription (non-fatal)', {
               error: (orphanErr as Error)?.message,

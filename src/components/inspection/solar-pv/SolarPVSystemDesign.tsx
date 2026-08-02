@@ -149,32 +149,33 @@ const SolarPVSystemDesign: React.FC<Props> = ({ formData, onUpdate }) => {
         {formData.arrays?.map((array, index) => (
           <div key={array.id} className="space-y-4">
             {/* Array header — clean inline */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <span className="w-7 h-7 rounded-lg bg-amber-500/15 flex items-center justify-center text-xs font-bold text-amber-400">
-                  {array.arrayNumber}
-                </span>
-                <div>
-                  <span className="text-sm font-semibold text-white">Array {array.arrayNumber}</span>
-                  {array.arrayCapacity > 0 && (
-                    <span className="text-xs text-amber-400 ml-2">{array.arrayCapacity.toFixed(2)} kWp</span>
-                  )}
-                </div>
+            <div className="flex items-center justify-between gap-3">
+              <div className="min-w-0">
+                <span className="text-sm font-semibold text-white">Array {array.arrayNumber}</span>
+                {array.arrayCapacity > 0 && (
+                  <span className="ml-2 text-xs text-white/85 tabular-nums">
+                    {array.arrayCapacity.toFixed(2)} kWp
+                  </span>
+                )}
               </div>
-              <div className="flex items-center gap-2">
+              {/* Text-first actions on 44px targets. The old icon wells were
+                  36px (below the touch minimum) and used translucent amber/red
+                  washes, which read brown on this surface. */}
+              <div className="flex shrink-0 items-center gap-1">
                 <button
+                  type="button"
                   onClick={() => duplicateArray(index)}
-                  title="Duplicate array"
-                  className="w-9 h-9 rounded-xl flex items-center justify-center border border-amber-500/20 bg-amber-500/10 text-amber-400 touch-manipulation active:scale-90"
+                  className="h-11 rounded-xl px-2.5 text-sm font-medium text-white touch-manipulation active:scale-[0.97]"
                 >
-                  <Copy className="h-4 w-4" />
+                  Duplicate
                 </button>
                 {formData.arrays.length > 1 && (
                   <button
+                    type="button"
                     onClick={() => removeArray(index)}
-                    className="w-9 h-9 rounded-xl flex items-center justify-center border border-red-500/20 bg-red-500/10 text-red-400 touch-manipulation active:scale-90"
+                    className="h-11 rounded-xl px-2.5 text-sm font-medium text-red-400 touch-manipulation active:scale-[0.97]"
                   >
-                    <Trash2 className="h-4 w-4" />
+                    Remove
                   </button>
                 )}
               </div>
@@ -448,24 +449,22 @@ const SolarPVSystemDesign: React.FC<Props> = ({ formData, onUpdate }) => {
         {formData.inverters?.map((inverter, index) => (
           <div key={inverter.id} className="space-y-4">
             {/* Inverter header — clean inline */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <span className="w-7 h-7 rounded-lg bg-blue-500/15 flex items-center justify-center text-xs font-bold text-blue-400">
-                  {index + 1}
-                </span>
-                <div>
-                  <span className="text-sm font-semibold text-white">Inverter {index + 1}</span>
-                  {inverter.ratedPowerAc > 0 && (
-                    <span className="text-xs text-blue-400 ml-2">{inverter.ratedPowerAc} kW</span>
-                  )}
-                </div>
+            <div className="flex items-center justify-between gap-3">
+              <div className="min-w-0">
+                <span className="text-sm font-semibold text-white">Inverter {index + 1}</span>
+                {inverter.ratedPowerAc > 0 && (
+                  <span className="ml-2 text-xs text-white/85 tabular-nums">
+                    {inverter.ratedPowerAc} kW
+                  </span>
+                )}
               </div>
               {formData.inverters.length > 1 && (
                 <button
+                  type="button"
                   onClick={() => removeInverter(index)}
-                  className="w-9 h-9 rounded-xl flex items-center justify-center border border-red-500/20 bg-red-500/10 text-red-400 touch-manipulation active:scale-90"
+                  className="h-11 shrink-0 rounded-xl px-2.5 text-sm font-medium text-red-400 touch-manipulation active:scale-[0.97]"
                 >
-                  <Trash2 className="h-4 w-4" />
+                  Remove
                 </button>
               )}
             </div>

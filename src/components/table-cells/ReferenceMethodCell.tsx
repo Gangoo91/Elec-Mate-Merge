@@ -22,7 +22,7 @@ export const ReferenceMethodCell: React.FC<ReferenceMethodCellProps> = ({ result
         value={result.referenceMethod || ''}
         onValueChange={(value) => onUpdate(result.id, 'referenceMethod', value)}
       >
-        <SelectTrigger className="h-8 text-sm px-2 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
+        <SelectTrigger className="h-8 text-sm px-2 bg-transparent border-0 rounded-md hover:bg-white/[0.04] focus:bg-transparent focus:ring-1 focus:ring-inset focus:ring-elec-yellow focus:shadow-none">
           <SelectValue placeholder="—" />
         </SelectTrigger>
         <SelectContent className="max-h-60 w-[320px] bg-background border border-border rounded-md z-[9999]">

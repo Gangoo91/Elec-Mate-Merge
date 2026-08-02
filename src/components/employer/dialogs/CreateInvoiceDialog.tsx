@@ -2,13 +2,6 @@ import { useState, useEffect } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { IOSStepIndicator } from '@/components/ui/ios-step-indicator';
@@ -40,12 +33,11 @@ import {
   PrimaryButton,
   SecondaryButton,
   inputClass,
-  selectTriggerClass,
-  selectContentClass,
   textareaClass,
   fieldLabelClass,
   Eyebrow,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 
 interface LineItem {
   id: string;
@@ -449,7 +441,7 @@ export function CreateInvoiceDialog({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
-        className="h-[95vh] p-0 rounded-t-3xl bg-[hsl(0_0%_8%)] border-white/[0.08]"
+        className="h-[85vh] p-0 rounded-t-3xl bg-[hsl(0_0%_8%)] border-white/[0.08]"
       >
         <div className="flex flex-col h-full">
           {/* Drag indicator */}
@@ -514,7 +506,7 @@ export function CreateInvoiceDialog({
                     </div>
                   )}
 
-                  <FormCard eyebrow="Client details">
+                  <FormCard bleed eyebrow="Client details">
                     <Field label="Client name" required>
                       <Input
                         placeholder="Enter client name"
@@ -557,35 +549,23 @@ export function CreateInvoiceDialog({
                     </Field>
                     <FormGrid cols={2}>
                       <Field label="Payment terms">
-                        <Select value={paymentTerms} onValueChange={setPaymentTerms}>
-                          <SelectTrigger className={selectTriggerClass}>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className={selectContentClass}>
-                            <SelectItem value="0">Due on Receipt</SelectItem>
-                            <SelectItem value="7">Net 7</SelectItem>
-                            <SelectItem value="14">Net 14</SelectItem>
-                            <SelectItem value="30">Net 30</SelectItem>
-                            <SelectItem value="60">Net 60</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <SelectField
+        value={paymentTerms}
+        onValueChange={setPaymentTerms}
+        options={[{ value: '0', label: 'Due on Receipt' }, { value: '7', label: 'Net 7' }, { value: '14', label: 'Net 14' }, { value: '30', label: 'Net 30' }, { value: '60', label: 'Net 60' }]}
+      />
                       </Field>
                       <Field label="VAT rate">
-                        <Select value={vatRate} onValueChange={setVatRate}>
-                          <SelectTrigger className={selectTriggerClass}>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className={selectContentClass}>
-                            <SelectItem value="0">0% (Exempt)</SelectItem>
-                            <SelectItem value="5">5% (Reduced)</SelectItem>
-                            <SelectItem value="20">20% (Standard)</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <SelectField
+        value={vatRate}
+        onValueChange={setVatRate}
+        options={[{ value: '0', label: '0% (Exempt)' }, { value: '5', label: '5% (Reduced)' }, { value: '20', label: '20% (Standard)' }]}
+      />
                       </Field>
                     </FormGrid>
                   </FormCard>
 
-                  <FormCard eyebrow="VAT & CIS">
+                  <FormCard bleed eyebrow="VAT & CIS">
                     <div className="flex items-center justify-between gap-3 min-h-[44px]">
                       <div className="flex-1 min-w-0">
                         <p className="text-[13.5px] font-medium text-white">
@@ -656,7 +636,7 @@ export function CreateInvoiceDialog({
                     </button>
                   )}
                   {lineItems.length > 0 && (
-                    <FormCard eyebrow="Line items added">
+                    <FormCard bleed eyebrow="Line items added">
                       <div className="space-y-2">
                         {lineItems.map((item) => (
                           <div
@@ -692,7 +672,7 @@ export function CreateInvoiceDialog({
                                         [item.id]: String(val),
                                       }));
                                     }}
-                                    className={cn(inputClass, 'w-20 h-10 text-center')}
+                                    className={cn(inputClass, 'w-20 text-center')}
                                   />
                                   <span className="text-[11.5px] text-white">{item.unit}</span>
                                   <span className="text-[11.5px] text-white">
@@ -740,22 +720,11 @@ export function CreateInvoiceDialog({
                         />
                       </Field>
                       <Field label="Unit">
-                        <Select
-                          value={newItem.unit}
-                          onValueChange={(v) => setNewItem({ ...newItem, unit: v })}
-                        >
-                          <SelectTrigger className={selectTriggerClass}>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className={selectContentClass}>
-                            <SelectItem value="each">each</SelectItem>
-                            <SelectItem value="m">m</SelectItem>
-                            <SelectItem value="m²">m²</SelectItem>
-                            <SelectItem value="hour">hour</SelectItem>
-                            <SelectItem value="day">day</SelectItem>
-                            <SelectItem value="job">job</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <SelectField
+        value={newItem.unit}
+        onValueChange={(v) => setNewItem({ ...newItem, unit: v })}
+        options={[{ value: 'each', label: 'each' }, { value: 'm', label: 'm' }, { value: 'm²', label: 'm²' }, { value: 'hour', label: 'hour' }, { value: 'day', label: 'day' }, { value: 'job', label: 'job' }]}
+      />
                       </Field>
                       <Field label="Price £">
                         <Input
@@ -890,7 +859,7 @@ export function CreateInvoiceDialog({
                     />
                   </Field>
 
-                  <FormCard eyebrow="Line items">
+                  <FormCard bleed eyebrow="Line items">
                     <div className="space-y-2">
                       {lineItems.map((item, idx) => (
                         <div

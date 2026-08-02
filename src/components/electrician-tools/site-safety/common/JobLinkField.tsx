@@ -35,7 +35,7 @@ export function JobLinkField({
 }: JobLinkFieldProps) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState('');
-  const { data: jobs = [], isLoading } = useSparkProjects('active');
+  const { projects: jobs = [], isLoading } = useSparkProjects('active');
 
   const filtered = jobs.filter(
     (j) =>

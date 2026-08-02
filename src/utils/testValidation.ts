@@ -1,8 +1,11 @@
 import { TestResult } from '@/types/testResult';
 import { protectiveDeviceOptions } from '@/types/protectiveDeviceTypes';
+import { ZS_TEMP_FACTOR_GN3 } from '@/data/zsLimits';
 
 // BS 7671 limits and validation rules
-// Table 41.3 - MCBs to BS EN 60898 and RCBOs to BS EN 61009 (0.4s disconnection)
+// Table 41.3 - MCBs to BS EN 60898 and RCBOs to BS EN 61009. The table's values
+// satisfy BOTH the 0.4 s (Reg 411.3.2.2) and 5 s (Reg 411.3.2.3) disconnection
+// times — see Reg 411.4.202.
 export const BS7671_LIMITS = {
   // Maximum Zs values for different protective devices (Ω)
   ZS_LIMITS: {
@@ -257,14 +260,22 @@ const validatePolarity = (value: string): ValidationResult => {
   return { isValid: false, level: 'warning', message: 'Polarity result unclear - use ✓ or ✗' };
 };
 
-// Map RCD rating → maximum Zs per BS 7671 Reg 411.5.3 (Uo / IΔn, using 50V Lt)
-// These are the strict 50V touch-voltage limits; RCDs that operate <= 300ms are
-// allowed the higher Uo-based ceilings, but we use the safer 50V values here.
-const TT_ZS_LIMITS_BY_RCD_MA: Record<number, number> = {
+// BS 7671 Table 41.5 — maximum Zs where an RCD provides FAULT protection
+// (Reg 411.5.3: Ra × IΔn ≤ 50 V). Verified against Table 41.5.
+const RCD_ZS_LIMITS_BY_MA: Record<number, number> = {
   30: 1667,   // 50 / 0.030
   100: 500,   // 50 / 0.100
   300: 167,   // 50 / 0.300
   500: 100,   // 50 / 0.500
+};
+
+// A standalone RCD (BS EN 61008) has no overcurrent characteristic of its own,
+// so Table 41.5 is the only limit available for it. An RCBO (BS EN 61009) does
+// have one — Table 41.3 governs there, exactly as it does for a plain MCB.
+const isStandaloneRcdDevice = (device?: string): boolean => {
+  const s = String(device || '');
+  if (/rcbo|61009/i.test(s)) return false;
+  return /\brcd\b|61008/i.test(s);
 };
 
 const parseRcdRatingMa = (rcd: string | undefined | null): number | null => {
@@ -305,9 +316,9 @@ const validateZs = (
   // hasn't entered the RCD rating yet on a TT install.
   if (isTTArrangement(earthingArrangement)) {
     const rcdMa = parseRcdRatingMa(rcdRating);
-    const ttMaxZs = rcdMa && TT_ZS_LIMITS_BY_RCD_MA[rcdMa]
-      ? TT_ZS_LIMITS_BY_RCD_MA[rcdMa]
-      : TT_ZS_LIMITS_BY_RCD_MA[30];
+    const ttMaxZs = rcdMa && RCD_ZS_LIMITS_BY_MA[rcdMa]
+      ? RCD_ZS_LIMITS_BY_MA[rcdMa]
+      : RCD_ZS_LIMITS_BY_MA[30];
 
     if (numValue <= ttMaxZs) {
       return {
@@ -327,28 +338,16 @@ const validateZs = (
     };
   }
 
-  // ELE — RCD-protected circuits on TN systems (RCBO, downstream RCD, or
-  // whole-board RCD) use the RCD limit (UL/IΔn), not the MCB/fuse table.
-  // Per BS 7671 Reg 411.5.3 / Reg 415.1.1. This fixes the "Max Zs too high"
-  // false alarm on RCBO-protected circuits.
-  const rcdMa = parseRcdRatingMa(rcdRating);
-  if (rcdMa && TT_ZS_LIMITS_BY_RCD_MA[rcdMa]) {
-    const rcdMaxZs = TT_ZS_LIMITS_BY_RCD_MA[rcdMa];
-    if (numValue <= rcdMaxZs) {
-      return {
-        isValid: true,
-        level: 'pass',
-        message: `Zs OK — RCD-protected (${rcdMa}mA RCD, limit ${rcdMaxZs}Ω per Reg 411.5.3)`,
-      };
-    }
-    return {
-      isValid: false,
-      level: 'fail',
-      message: `Zs ${numValue}Ω exceeds RCD limit for ${rcdMa}mA RCD (${rcdMaxZs}Ω, Reg 411.5.3)`,
-    };
-  }
-
-  // TN systems without RCD: Find the protective device in our options
+  // TN systems: automatic disconnection is provided by the device's OWN
+  // overcurrent element, so BS 7671 Table 41.3 (Reg 411.4.202) governs — an RCD
+  // on a TN circuit is ADDITIONAL protection (Reg 411.3.3), not the thing
+  // clearing the fault. Check the overcurrent table FIRST.
+  //
+  // Previously the RCD rating was tested first, so any circuit with an RCD
+  // rating entered — i.e. every RCBO circuit and every circuit on an RCD board —
+  // was validated against 50/IΔn (1667 Ω for a 30 mA device) and a B32 RCBO
+  // reading 5.0 Ω passed. Same bug, same fix as `getMaxZsWithRcd` in
+  // src/utils/zsCalculations.ts.
   const deviceOption = protectiveDeviceOptions.find((option) => option.value === protectiveDevice);
 
   if (deviceOption) {
@@ -361,19 +360,44 @@ const validateZs = (
       };
     }
 
-    // Warning if approaching limit (within 10%)
-    if (numValue > deviceOption.zsLimit * 0.9) {
+    // Table 41.3 values assume the conductors are at their maximum operating
+    // temperature (NOTE 2 to Tables 41.2–41.4). A Zs measured cold has to clear
+    // the table value with margin — GN3's rule of thumb is 80% of the tabulated
+    // figure. Between 80% and 100% we warn rather than fail: it is a guidance
+    // convention, not a BS 7671 limit.
+    const siteLimit = Math.round(deviceOption.zsLimit * ZS_TEMP_FACTOR_GN3 * 100) / 100;
+    if (numValue > siteLimit) {
       return {
         isValid: false,
         level: 'warning',
-        message: `Zs approaching BS 7671 limit for ${deviceOption.label} (${deviceOption.zsLimit}Ω)`,
+        message: `Zs ${numValue}Ω exceeds the 80% site limit for ${deviceOption.label} (${siteLimit}Ω of ${deviceOption.zsLimit}Ω) — GN3 80% rule of thumb for a cold-measured Zs. Apply temperature correction to confirm.`,
       };
     }
 
     return {
       isValid: true,
       level: 'pass',
-      message: `Zs compliant with BS 7671 for ${deviceOption.label} (limit: ${deviceOption.zsLimit}Ω)`,
+      message: `Zs compliant with BS 7671 for ${deviceOption.label} (limit: ${deviceOption.zsLimit}Ω, 80% site limit ${siteLimit}Ω)`,
+    };
+  }
+
+  // No overcurrent characteristic recognised. Table 41.5 (50/IΔn) applies only
+  // where the RCD itself provides fault protection — a standalone BS EN 61008
+  // RCD. Never for an RCBO or an MCB sitting under a board RCD.
+  const rcdMa = parseRcdRatingMa(rcdRating);
+  if (isStandaloneRcdDevice(protectiveDevice) && rcdMa && RCD_ZS_LIMITS_BY_MA[rcdMa]) {
+    const rcdMaxZs = RCD_ZS_LIMITS_BY_MA[rcdMa];
+    if (numValue <= rcdMaxZs) {
+      return {
+        isValid: true,
+        level: 'pass',
+        message: `Zs OK — ${rcdMa}mA RCD provides fault protection (limit ${rcdMaxZs}Ω, Table 41.5 / Reg 411.5.3)`,
+      };
+    }
+    return {
+      isValid: false,
+      level: 'fail',
+      message: `Zs ${numValue}Ω exceeds the Table 41.5 limit for a ${rcdMa}mA RCD (${rcdMaxZs}Ω, Reg 411.5.3)`,
     };
   }
 
@@ -575,8 +599,11 @@ export const validatePhaseRotation = (value: string): ValidationResult => {
 };
 
 /**
- * Validates phase balance per BS7671 guidance
- * Imbalance should be <10% for optimal operation
+ * Advisory check on phase balance — max deviation from the three-phase
+ * average ÷ average × 100 (NEMA/IEC convention). Guidance bands only:
+ * ≤5% balanced · 5–15% review · >15% high. Balanced distribution reduces
+ * neutral current and voltage imbalance; there is no numeric imbalance
+ * limit in BS 7671.
  */
 export const validatePhaseBalance = (
   L1: number | string,
@@ -598,44 +625,35 @@ export const validatePhaseBalance = (
   }
 
   const values = [l1, l2, l3];
-  const max = Math.max(...values);
-  const min = Math.min(...values);
   const average = (l1 + l2 + l3) / 3;
 
   if (average === 0) {
     return { isValid: true, level: 'pass', message: 'No load - phase balance N/A' };
   }
 
-  const imbalancePercent = ((max - min) / average) * 100;
+  const maxDeviation = Math.max(...values.map((v) => Math.abs(v - average)));
+  const imbalancePercent = (maxDeviation / average) * 100;
 
   if (imbalancePercent > 15) {
     return {
-      isValid: false,
-      level: 'fail',
-      message: `Critical phase imbalance (${imbalancePercent.toFixed(1)}%) - redistribute loads urgently`,
-    };
-  }
-
-  if (imbalancePercent > 10) {
-    return {
-      isValid: false,
+      isValid: true,
       level: 'warning',
-      message: `Phase imbalance exceeds 10% (${imbalancePercent.toFixed(1)}%) - consider redistributing loads`,
+      message: `High phase imbalance (${imbalancePercent.toFixed(1)}% max deviation from average) - moving single-phase loads from the heaviest to the lightest phase would cut neutral current`,
     };
   }
 
   if (imbalancePercent > 5) {
     return {
       isValid: true,
-      level: 'pass',
-      message: `Minor imbalance (${imbalancePercent.toFixed(1)}%) - acceptable but could be optimized`,
+      level: 'warning',
+      message: `Phase imbalance ${imbalancePercent.toFixed(1)}% (max deviation from average) - worth reviewing load distribution when convenient`,
     };
   }
 
   return {
     isValid: true,
     level: 'pass',
-    message: `Excellent phase balance (${imbalancePercent.toFixed(1)}% imbalance)`,
+    message: `Phases well balanced (${imbalancePercent.toFixed(1)}% max deviation from average)`,
   };
 };
 

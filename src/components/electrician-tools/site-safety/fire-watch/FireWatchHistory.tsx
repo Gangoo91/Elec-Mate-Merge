@@ -95,7 +95,7 @@ function RecordRow({
   const [expanded, setExpanded] = useState(false);
   const [showShare, setShowShare] = useState(false);
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
-  const { data: jobs = [] } = useSparkProjects('active');
+  const { projects: jobs = [] } = useSparkProjects('active');
   const linkedJobTitle = record.job_id
     ? (jobs.find((j) => j.id === record.job_id)?.title ?? null)
     : null;

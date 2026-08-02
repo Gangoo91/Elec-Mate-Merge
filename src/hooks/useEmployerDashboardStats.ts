@@ -149,11 +149,13 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
           .eq('employer_id', uid),
 
         // Invoices for revenue calculation (paid this year)
+        // No employer_id filter: employer_invoices_unified() is already scoped
+        // by my_employer_scope(). Filtering on the caller's own uid as well
+        // would return nothing for a co-admin, whose rows carry the OWNER's id.
         supabase
-          .from('employer_invoices')
+          .rpc('employer_invoices_unified')
           .select('id, amount, status, paid_date')
           .eq('status', 'Paid')
-          .eq('employer_id', uid)
           .gte('paid_date', `${now.getFullYear()}-01-01`),
       ]);
 

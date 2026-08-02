@@ -1,13 +1,18 @@
 import React from 'react';
+import { useHaptic } from '@/hooks/useHaptic';
 import { Label } from '@/components/ui/label';
-import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const SectionTitle = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const chipOn = 'bg-elec-yellow border border-elec-yellow text-black font-semibold';
+const chipOff = 'bg-white/[0.06] border border-white/[0.12] text-white font-medium';
+
+const SectionHeading = ({ title }: { title: string }) => (
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 interface StandardsComplianceSectionProps {
@@ -19,19 +24,27 @@ const StandardsComplianceSection: React.FC<StandardsComplianceSectionProps> = ({
   formData,
   onUpdate,
 }) => {
+  const haptic = useHaptic();
   return (
-    <div className="space-y-4">
-      <SectionTitle title="Standards and Compliance" />
+    <div
+      className={cardCn}
+      // Delegated press haptic — same pattern as the Supply / Electrical /
+      // Earthing sections so every chip in the tab buzzes consistently.
+      onPointerDown={(e) => {
+        if ((e.target as HTMLElement).closest('button')) haptic.light();
+      }}
+    >
+      <SectionHeading title="Standards and compliance" />
 
-      <div className="space-y-3">
+      <div className="space-y-4">
         <div>
-          <Label className="text-white text-xs mb-1.5 block">Design Standard</Label>
+          <Label className={labelCn}>Design standard</Label>
           {/* ELE-1390 — BS 7671:2018+A4:2026 is the current amendment, so new
               certs default to A4. A3 is kept as a selectable legacy value: a cert
               designed/certified under A3 must still state A3, so existing certs
               (stored as 'BS7671') keep showing A3 and aren't retrospectively
               relabelled. */}
-          <div className="grid grid-cols-3 gap-1">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             {[
               { value: 'BS7671-A4', label: 'BS 7671:2018+A4' },
               { value: 'BS7671', label: 'BS 7671:2018+A3' },
@@ -42,13 +55,10 @@ const StandardsComplianceSection: React.FC<StandardsComplianceSectionProps> = ({
                 type="button"
                 onClick={() => onUpdate('designStandard', opt.value)}
                 className={cn(
-                  'h-10 rounded-lg font-semibold transition-all touch-manipulation text-[11px] active:scale-[0.98] flex items-center justify-center gap-1',
-                  (formData.designStandard || 'BS7671-A4') === opt.value
-                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                  'h-11 rounded-xl text-sm transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center',
+                  (formData.designStandard || 'BS7671-A4') === opt.value ? chipOn : chipOff
                 )}
               >
-                {(formData.designStandard || 'BS7671-A4') === opt.value && <Check className="h-3 w-3" />}
                 {opt.label}
               </button>
             ))}
@@ -56,8 +66,8 @@ const StandardsComplianceSection: React.FC<StandardsComplianceSectionProps> = ({
         </div>
 
         <div>
-          <Label className="text-white text-xs mb-1.5 block">Part P Compliance</Label>
-          <div className="grid grid-cols-3 gap-1">
+          <Label className={labelCn}>Part P compliance</Label>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             {[
               { value: 'compliant', label: 'Compliant' },
               { value: 'notApplicable', label: 'N/A' },
@@ -68,13 +78,10 @@ const StandardsComplianceSection: React.FC<StandardsComplianceSectionProps> = ({
                 type="button"
                 onClick={() => onUpdate('partPCompliance', (formData.partPCompliance as string) === opt.value ? '' : opt.value)}
                 className={cn(
-                  'h-10 rounded-lg font-semibold transition-all touch-manipulation text-[11px] active:scale-[0.98] flex items-center justify-center gap-1',
-                  (formData.partPCompliance as string) === opt.value
-                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                  'h-11 rounded-xl text-sm transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center',
+                  (formData.partPCompliance as string) === opt.value ? chipOn : chipOff
                 )}
               >
-                {(formData.partPCompliance as string) === opt.value && <Check className="h-3 w-3" />}
                 {opt.label}
               </button>
             ))}

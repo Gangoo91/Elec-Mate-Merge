@@ -1,22 +1,11 @@
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import {
-  AlertTriangle,
-  Plus,
-  FileText,
-  XCircle,
-  AlertCircle,
-  CheckCircle,
-  ChevronDown,
-} from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import DefectObservationsList from './DefectObservationsList';
-import PDFExportProgress from './PDFExportProgress';
-import { exportObservationsToPDF, exportCompleteEICRToPDF } from '@/utils/pdfExport';
-import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
+
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
 interface DefectObservation {
   id: string;
@@ -38,10 +27,40 @@ interface DefectObservationsSectionProps {
     value: any
   ) => void;
   onRemoveObservation: (id: string) => void;
-  formData?: any;
-  onUpdateFormData?: (data: any) => void;
+  certificateContext?: {
+    certificateNumber?: string;
+    certificateType?: 'eicr' | 'eic';
+    installationAddress?: string;
+    clientName?: string;
+    clientPhone?: string;
+    clientEmail?: string;
+    inspectorName?: string;
+    companyName?: string;
+    companyPhone?: string;
+    companyEmail?: string;
+    registrationScheme?: string;
+    registrationNumber?: string;
+  };
   defaultOpen?: boolean;
 }
+
+const Chevron = ({ open }: { open: boolean }) => (
+  <svg
+    viewBox="0 0 24 24"
+    className={cn(
+      'h-4 w-4 shrink-0 text-white transition-transform duration-200',
+      open && 'rotate-180'
+    )}
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="m6 9 6 6 6-6" />
+  </svg>
+);
 
 const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObservationsSectionProps>(
   (
@@ -51,61 +70,13 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
       onAddObservation,
       onUpdateObservation,
       onRemoveObservation,
-      formData,
-      onUpdateFormData,
+      certificateContext,
       defaultOpen = true,
     },
     ref
   ) => {
-    const { toast } = useToast();
-    const isMobile = useIsMobile();
     const haptic = useHaptic();
     const [isOpen, setIsOpen] = useState(defaultOpen);
-    const [pdfExportState, setPdfExportState] = useState({
-      isExporting: false,
-      exportType: null as 'observations' | 'complete' | null,
-      progress: 0,
-      status: 'preparing' as 'preparing' | 'generating' | 'complete' | 'error',
-    });
-
-    const handleExportObservationsPDF = async () => {
-      setPdfExportState({
-        isExporting: true,
-        exportType: 'observations',
-        progress: 0,
-        status: 'preparing',
-      });
-
-      try {
-        setPdfExportState((prev) => ({ ...prev, progress: 25, status: 'preparing' }));
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        setPdfExportState((prev) => ({ ...prev, progress: 50, status: 'generating' }));
-        await exportObservationsToPDF(defectObservations, formData || {});
-        setPdfExportState((prev) => ({ ...prev, progress: 100, status: 'complete' }));
-
-        toast({
-          title: 'Professional PDF exported',
-          description: 'Your observations have been exported as a professional EICR document.',
-        });
-      } catch (error) {
-        console.error('PDF export error:', error);
-        setPdfExportState((prev) => ({ ...prev, status: 'error' }));
-        toast({
-          title: 'Export failed',
-          description: 'Failed to export observations PDF. Please try again.',
-          variant: 'destructive',
-        });
-      }
-    };
-
-    const handleClosePDFDialog = () => {
-      setPdfExportState({
-        isExporting: false,
-        exportType: null,
-        progress: 0,
-        status: 'preparing',
-      });
-    };
 
     const handleAddObservation = () => {
       haptic.light();
@@ -116,141 +87,124 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
     const c1Count = defectObservations.filter((obs) => obs.defectCode === 'C1').length;
     const c2Count = defectObservations.filter((obs) => obs.defectCode === 'C2').length;
     const c3Count = defectObservations.filter((obs) => obs.defectCode === 'C3').length;
+    const fiCount = defectObservations.filter((obs) => obs.defectCode === 'FI').length;
     const rectifiedCount = defectObservations.filter((obs) => obs.rectified).length;
     const totalCount = defectObservations.length;
 
-    // Determine severity for header styling
-    const hasCritical = c1Count > 0;
-    const hasPotentiallyDangerous = c2Count > 0;
+    // Bulk-rectify — serves the satisfactory-after-remedial duplicate flow where
+    // every coded defect from the original report has since been put right.
+    const codeableObs = defectObservations.filter(
+      (obs) => obs.defectCode === 'C1' || obs.defectCode === 'C2' || obs.defectCode === 'C3'
+    );
+    const unrectifiedCodeable = codeableObs.filter((obs) => !obs.rectified);
+    const showMarkAllRectified = codeableObs.length >= 2 && unrectifiedCodeable.length > 0;
+
+    const handleMarkAllRectified = () => {
+      haptic.success();
+      unrectifiedCodeable.forEach((obs) => {
+        onUpdateObservation(obs.id, 'rectified', true);
+      });
+    };
 
     return (
-      <div ref={ref} className={cn(isMobile && '-mx-4')}>
-        <Collapsible
-          open={isOpen}
-          onOpenChange={(open) => {
-            haptic.light();
-            setIsOpen(open);
-          }}
-        >
-          {/* Header — gradient line pattern */}
-          <CollapsibleTrigger className="w-full" asChild>
-            <button className="w-full flex items-center gap-2.5 p-3 text-left touch-manipulation active:scale-[0.98] transition-all">
-              <div className="flex-1 min-w-0">
-                <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-                <h2 className="text-xs font-medium text-white uppercase tracking-wider">
-                  Observations & Defects
-                  {totalCount > 0 && <span className="text-white ml-2 normal-case">({totalCount})</span>}
-                </h2>
-              </div>
-              {/* Stats Badges */}
-              {totalCount > 0 && (
-                <div className="flex items-center gap-1 flex-shrink-0">
-                  {c1Count > 0 && <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-red-500/20 text-red-400">{c1Count}</span>}
-                  {c2Count > 0 && <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-orange-500/20 text-orange-400">{c2Count}</span>}
-                  {c3Count > 0 && <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-yellow-500/20 text-yellow-400">{c3Count}</span>}
-                </div>
-              )}
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white transition-transform duration-200 flex-shrink-0',
-                  isOpen && 'rotate-180'
-                )}
-              />
-            </button>
-          </CollapsibleTrigger>
-
-          <CollapsibleContent>
-            {/* Stats Row */}
-            {totalCount > 0 && (
-              <div
-                className={cn(
-                  'flex flex-wrap items-center gap-2 p-3 bg-white/[0.02] border-b border-white/[0.06]',
-                  isMobile ? 'px-4' : ''
-                )}
+      <div ref={ref}>
+        <section className={cardCn}>
+          <Collapsible
+            open={isOpen}
+            onOpenChange={(open) => {
+              haptic.light();
+              setIsOpen(open);
+            }}
+          >
+            <CollapsibleTrigger asChild>
+              <button
+                type="button"
+                className="flex w-full items-center justify-between gap-3 text-left touch-manipulation"
               >
-                {c1Count > 0 && (
-                  <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-red-500/15 border border-red-500/30">
-                    <XCircle className="h-3.5 w-3.5 text-red-400" />
-                    <span className="text-xs font-medium text-red-400">{c1Count} C1</span>
-                  </div>
-                )}
-                {c2Count > 0 && (
-                  <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-orange-500/15 border border-orange-500/30">
-                    <AlertTriangle className="h-3.5 w-3.5 text-orange-400" />
-                    <span className="text-xs font-medium text-orange-400">{c2Count} C2</span>
-                  </div>
-                )}
-                {c3Count > 0 && (
-                  <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-yellow-500/15 border border-yellow-500/30">
-                    <AlertCircle className="h-3.5 w-3.5 text-yellow-400" />
-                    <span className="text-xs font-medium text-yellow-400">{c3Count} C3</span>
-                  </div>
+                <h2 className="text-[15px] font-semibold tracking-tight text-white">
+                  Observations and defects
+                  {totalCount > 0 && (
+                    <span className="ml-2 font-medium text-white/80">({totalCount})</span>
+                  )}
+                </h2>
+                <div className="flex items-center gap-3">
+                  {totalCount > 0 && (
+                    <span className="flex items-center gap-x-3 text-[12px]">
+                      {c1Count > 0 && (
+                        <span className="font-semibold text-red-400">{c1Count} C1</span>
+                      )}
+                      {c2Count > 0 && (
+                        <span className="font-semibold text-orange-400">{c2Count} C2</span>
+                      )}
+                      {c3Count > 0 && (
+                        <span className="font-semibold text-yellow-400">{c3Count} C3</span>
+                      )}
+                      {fiCount > 0 && (
+                        <span className="font-semibold text-blue-400">{fiCount} FI</span>
+                      )}
+                    </span>
+                  )}
+                  <Chevron open={isOpen} />
+                </div>
+              </button>
+            </CollapsibleTrigger>
+
+            <CollapsibleContent>
+              <div className="mt-4 space-y-4">
+                {/* One contextual note line — the header chips already carry the
+                    counts, so no separate summary banner repeating them. */}
+                {(c1Count > 0 || c2Count > 0) && (
+                  <p className="text-xs leading-relaxed text-red-300">
+                    C1/C2 observations affect the overall assessment — immediate or
+                    urgent remedial action is required.
+                  </p>
                 )}
                 {rectifiedCount > 0 && (
-                  <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-green-500/15 border border-green-500/30">
-                    <CheckCircle className="h-3.5 w-3.5 text-green-400" />
-                    <span className="text-xs font-medium text-green-400">
-                      {rectifiedCount} Rectified
-                    </span>
-                  </div>
+                  <span className="block text-[12px] font-semibold text-green-400">
+                    {rectifiedCount} rectified
+                  </span>
                 )}
-              </div>
-            )}
 
-            {/* Content */}
-            <div className={cn('bg-white/[0.02]', isMobile ? 'p-4' : 'p-4')}>
-              {totalCount === 0 ? (
-                <div className="py-6 space-y-3">
-                  <p className="text-xs text-white text-center">
-                    Auto-created when items are marked C1, C2 or C3
-                  </p>
+                {/* Bulk rectify — quiet secondary; one tap marks every unrectified
+                    C1/C2/C3 as rectified (satisfactory-after-remedial flow). */}
+                {showMarkAllRectified && (
                   <button
-                    onClick={handleAddObservation}
-                    className="w-full h-11 rounded-xl border-2 border-dashed border-white/[0.1] flex items-center justify-center gap-2 text-sm font-medium text-white/50 touch-manipulation active:scale-[0.98]"
+                    type="button"
+                    onClick={handleMarkAllRectified}
+                    className="h-11 w-full rounded-xl border border-white/[0.12] bg-white/[0.06] text-sm font-medium text-white transition-all touch-manipulation active:scale-[0.98] sm:w-auto sm:px-6"
                   >
-                    <Plus className="h-4 w-4" />
-                    Add Manual Observation
+                    Mark all rectified
                   </button>
-                </div>
-              ) : (
-                <>
+                )}
+
+                {totalCount === 0 && (
+                  <p className="text-[13px] text-white">
+                    Observations are auto-created when items are marked C1, C2, C3 or FI.
+                  </p>
+                )}
+
+                <button
+                  type="button"
+                  onClick={handleAddObservation}
+                  className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-all touch-manipulation active:scale-[0.98] hover:bg-elec-yellow/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 sm:w-auto sm:px-8"
+                >
+                  Add observation
+                </button>
+
+                {totalCount > 0 && (
                   <DefectObservationsList
                     defectObservations={defectObservations}
                     reportId={reportId}
                     onAddObservation={handleAddObservation}
                     onUpdateObservation={onUpdateObservation}
                     onRemoveObservation={onRemoveObservation}
+                    certificateContext={certificateContext}
                   />
-
-                  {/* Add Another Button */}
-                  <Button
-                    onClick={handleAddObservation}
-                    variant="outline"
-                    className="w-full h-11 mt-4 border-dashed border-white/20 text-white rounded-xl
-                               hover:bg-white/5 hover:text-white touch-manipulation"
-                  >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add Another Observation
-                  </Button>
-                </>
-              )}
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
-
-        <PDFExportProgress
-          isOpen={pdfExportState.isExporting}
-          onClose={handleClosePDFDialog}
-          exportType={pdfExportState.exportType}
-          progress={pdfExportState.progress}
-          status={pdfExportState.status}
-          formData={formData}
-          onEmailClick={() => {
-            handleClosePDFDialog();
-            const emailButton = document.querySelector('[data-email-eicr]') as HTMLButtonElement;
-            if (emailButton) emailButton.click();
-          }}
-        />
+                )}
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+        </section>
       </div>
     );
   }

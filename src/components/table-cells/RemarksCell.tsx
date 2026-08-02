@@ -28,7 +28,7 @@ const RemarksCellComponent: React.FC<RemarksCellProps> = ({ result, onUpdate }) 
         <Input
           value={result.notes || ''}
           onChange={(e) => onUpdate(result.id, 'notes', e.target.value)}
-          className="h-8 text-sm px-0 pr-10 border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30 bg-transparent flex-1"
+          className="h-8 text-sm pl-3 pr-10 border-0 rounded-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow focus:shadow-none hover:bg-white/[0.04] focus:bg-transparent bg-transparent flex-1"
           placeholder="Remarks"
         />
         {result.notes && (

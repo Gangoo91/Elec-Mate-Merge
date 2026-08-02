@@ -11,6 +11,12 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
+import useReadingKeypad from '@/hooks/useReadingKeypad';
+
+/** Numeric commissioning readings the keypad serves — free-number inputs only. */
+const KEYPAD_META = {
+  batteryVoltage: { label: 'Battery voltage — standby supply', unit: 'V' },
+};
 
 const cardCn =
   '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
@@ -119,6 +125,14 @@ export default function FAG3CommissioningTests({ formData, onUpdate }: Props) {
     onUpdate('powerTests', { ...pw, [field]: value });
   const updateFaultTest = (field: string, value: string) =>
     onUpdate('faultTests', { ...ft, [field]: value });
+
+  // Reading keypad — shared MW pattern. Values flow through the existing
+  // updatePowerTest path; the spread only ADDS props to the reading input.
+  const keypad = useReadingKeypad({
+    meta: KEYPAD_META,
+    getValue: () => String(pw.batteryVoltage ?? ''),
+    setValue: (_field, value) => updatePowerTest('batteryVoltage', value),
+  });
 
   // Test summary
   const testSummary = useMemo(() => {
@@ -266,6 +280,7 @@ export default function FAG3CommissioningTests({ formData, onUpdate }: Props) {
               inputMode="decimal"
               className={inputCn}
               placeholder="e.g. 27.6"
+              {...keypad.field('batteryVoltage')}
             />
           </div>
           <TestResultRow
@@ -535,6 +550,12 @@ export default function FAG3CommissioningTests({ formData, onUpdate }: Props) {
           />
         </div>
       </div>
+
+      {/* Scroll room so the last reading can rise clear of the keypad */}
+      {keypad.spacer}
+
+      {/* Reading keypad — coarse-pointer devices only */}
+      {keypad.element}
     </div>
   );
 }

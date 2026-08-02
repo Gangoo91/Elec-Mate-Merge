@@ -1,5 +1,4 @@
 import React from 'react';
-import { Zap } from 'lucide-react';
 import { bs7671InspectionSections } from '@/data/bs7671ChecklistData';
 import InspectionStatsSummary from './InspectionStatsSummary';
 import InspectionChecklistCard from './InspectionChecklistCard';
@@ -8,6 +7,18 @@ import DefectObservationsSection from './DefectObservationsSection';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { supabase } from '@/integrations/supabase/client';
 import { useEICRForm } from './eicr/EICRFormProvider';
+import { useHaptic } from '@/hooks/useHaptic';
+import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
+import { useSignatureProfiles } from '@/hooks/useSignatureProfiles';
+import { toast } from 'sonner';
+
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
 
 interface InspectionItem {
   id: string;
@@ -50,6 +61,37 @@ const EICRInspectionChecklist = ({
   onNavigateToObservations,
 }: EICRInspectionChecklistProps) => {
   const { databaseId, effectiveReportId } = useEICRForm();
+  const haptic = useHaptic();
+
+  // "Use my details" — one-tap fill of the Inspected by attestation from the
+  // saved inspector profile / default signature. Deliberate tap, never an
+  // auto-effect: certs must not sign themselves.
+  const { profiles: inspectorProfiles, getDefaultProfile } = useInspectorProfiles();
+  const { signatures: savedSignatures, getDefaultSignature } = useSignatureProfiles();
+  const handlePrefillInspectedBy = () => {
+    // Source chain: this cert's Sign off name → default profile → any profile.
+    const profile = getDefaultProfile() || inspectorProfiles[0] || null;
+    const name = (formData.inspectorName || profile?.name || '').toUpperCase();
+    const signature =
+      getDefaultSignature()?.signatureData ||
+      savedSignatures[0]?.signatureData ||
+      profile?.signatureData ||
+      formData.inspectorSignature ||
+      '';
+    onUpdate('scheduleInspectedByDate', new Date().toISOString().split('T')[0]);
+    if (name) onUpdate('scheduleInspectedByName', name);
+    if (signature) onUpdate('scheduleInspectedBySignature', signature);
+    if (name || signature) {
+      haptic.success();
+    } else {
+      // Never a dead tap — say exactly where the details come from.
+      haptic.warning();
+      toast.info('No saved details yet', {
+        description:
+          'Add your name on the Sign off step, or save an inspector profile — then this fills in one tap.',
+      });
+    }
+  };
   const [expandedSections, setExpandedSections] = React.useState<Record<string, boolean>>({});
   const observationsRef = React.useRef<HTMLDivElement>(null);
 
@@ -165,7 +207,6 @@ const EICRInspectionChecklist = ({
 
     const items = getInspectionItems();
     const itemIndex = items.findIndex((item) => item.id === id);
-    console.log(`[EICRInspectionChecklist] Item index:`, itemIndex);
 
     if (itemIndex === -1) {
       console.warn(
@@ -179,7 +220,6 @@ const EICRInspectionChecklist = ({
     }
 
     const currentItem = items[itemIndex];
-    console.log(`[EICRInspectionChecklist] Current item before update:`, currentItem);
 
     // Create updated items array with atomic updates
     const updatedItems = [...items];
@@ -191,9 +231,6 @@ const EICRInspectionChecklist = ({
     }
 
     updatedItems[itemIndex] = { ...currentItem, ...updates };
-
-    const updatedItem = updatedItems[itemIndex];
-    console.log(`[EICRInspectionChecklist] Updated item:`, updatedItem);
 
     // Update the form data with all changes at once
     scrollSafeUpdate('inspectionItems', updatedItems);
@@ -216,17 +253,13 @@ const EICRInspectionChecklist = ({
   };
 
   const autoCreateObservation = async (inspectionItem: InspectionItem) => {
-    console.log(`[EICRInspectionChecklist] autoCreateObservation called for:`, inspectionItem);
-
     const existingObservations = getDefectObservations();
-    console.log(`[EICRInspectionChecklist] Existing observations:`, existingObservations);
 
-    // Don't create observations for N/A, satisfactory, or other non-defect outcomes
-    if (!['C1', 'C2', 'C3'].includes(inspectionItem.outcome)) {
-      console.log(
-        `[EICRInspectionChecklist] Skipping observation creation for outcome: ${inspectionItem.outcome}`
-      );
-
+    // Don't create observations for N/A, satisfactory, or other non-defect outcomes.
+    // FI included — an FI item needs an observation describing what to investigate
+    // (BS 7671 A4:2026 Appendix 6; FI remains advisory and does not force an
+    // unsatisfactory report).
+    if (!['C1', 'C2', 'C3', 'FI'].includes(inspectionItem.outcome)) {
       // If there's an existing observation linked to this item, remove it
       const linkedObservation = existingObservations.find(
         (obs) => obs.inspectionItemId === inspectionItem.id
@@ -259,7 +292,7 @@ const EICRInspectionChecklist = ({
         obs.id === existingObservation.id
           ? {
               ...obs,
-              defectCode: inspectionItem.outcome as 'C1' | 'C2' | 'C3',
+              defectCode: inspectionItem.outcome as 'C1' | 'C2' | 'C3' | 'FI',
               item: inspectionItem.item,
               description: description, // Update description with notes
             }
@@ -271,7 +304,7 @@ const EICRInspectionChecklist = ({
       const newObservation: DefectObservation = {
         id: observationId,
         item: inspectionItem.item,
-        defectCode: inspectionItem.outcome as 'C1' | 'C2' | 'C3',
+        defectCode: inspectionItem.outcome as 'C1' | 'C2' | 'C3' | 'FI',
         description: description,
         recommendation: 'Investigate and rectify as required to comply with BS 7671',
         rectified: false,
@@ -293,8 +326,6 @@ const EICRInspectionChecklist = ({
 
         if (error) {
           console.error('Error linking photos to observation:', error);
-        } else {
-          console.log(`[EICRInspectionChecklist] Linked photos to observation ${observationId}`);
         }
       } catch (error) {
         console.error('Error linking photos:', error);
@@ -356,8 +387,6 @@ const EICRInspectionChecklist = ({
   };
 
   const bulkMarkSatisfactory = (sectionId: string) => {
-    console.log(`[EICRInspectionChecklist] bulkMarkSatisfactory called for section:`, sectionId);
-
     const items = getInspectionItems();
     const section = bs7671InspectionSections.find((s) => s.id === sectionId);
 
@@ -378,16 +407,37 @@ const EICRInspectionChecklist = ({
       return item;
     });
 
-    const sectionItemsCount = section.items.length;
-    console.log(
-      `[EICRInspectionChecklist] Bulk marking ${sectionItemsCount} items as satisfactory in section ${section.title}`
-    );
     scrollSafeUpdate('inspectionItems', updatedItems);
   };
 
-  const bulkClearSection = (sectionId: string) => {
-    console.log(`[EICRInspectionChecklist] bulkClearSection called for section:`, sectionId);
+  // Global bulk action — fills ONLY items with no outcome yet. Never touches
+  // C1/C2/C3/FI/N-A/LIM/N-V/satisfactory already recorded, so it is
+  // non-destructive and needs no confirmation. Same atomic write path as the
+  // per-section bulk (scrollSafeUpdate keeps the ELE-875 ref in sync).
+  const markAllRemainingSatisfactory = () => {
+    const items = getInspectionItems();
+    const remaining = items.filter((item) => !item.outcome).length;
+    if (remaining === 0) return;
 
+    const updatedItems = items.map((item) =>
+      !item.outcome
+        ? {
+            ...item,
+            outcome: 'satisfactory' as const,
+            inspected: true,
+          }
+        : item
+    );
+
+    scrollSafeUpdate('inspectionItems', updatedItems);
+    haptic.success();
+    toast.success(
+      `${remaining} ${remaining === 1 ? 'item' : 'items'} marked satisfactory`,
+      { description: 'Existing outcomes were left untouched.' }
+    );
+  };
+
+  const bulkClearSection = (sectionId: string) => {
     const items = getInspectionItems();
     const section = bs7671InspectionSections.find((s) => s.id === sectionId);
 
@@ -409,10 +459,6 @@ const EICRInspectionChecklist = ({
       return item;
     });
 
-    const sectionItemsCount = section.items.length;
-    console.log(
-      `[EICRInspectionChecklist] Bulk clearing ${sectionItemsCount} items in section ${section.title}`
-    );
     scrollSafeUpdate('inspectionItems', updatedItems);
   };
 
@@ -426,13 +472,6 @@ const EICRInspectionChecklist = ({
 
     if (currentCount !== expectedCount) {
       const initialItems = getInspectionItems();
-      console.log(
-        `[EICRInspectionChecklist] Initializing inspection items (expected: ${expectedCount}, current: ${currentCount}):`,
-        {
-          totalItems: initialItems.length,
-          sampleItems: initialItems.slice(0, 3),
-        }
-      );
       scrollSafeUpdate('inspectionItems', initialItems);
     }
   }, []);
@@ -440,105 +479,100 @@ const EICRInspectionChecklist = ({
   const inspectionItems = getInspectionItems();
   const defectObservations = getDefectObservations();
 
-  console.log(`[EICRInspectionChecklist] Rendering with inspection items:`, {
-    itemsCount: inspectionItems.length,
-    firstFewItems: inspectionItems.slice(0, 3),
-    formDataItemsCount: formData.inspectionItems?.length || 0,
-    timestamp: new Date().toISOString(),
-  });
-
   // Calculate overall progress
   const totalItems = inspectionItems.length;
   const completedItems = inspectionItems.filter(i => i.outcome && i.outcome !== '').length;
   const c1Count = inspectionItems.filter(i => i.outcome === 'C1').length;
   const c2Count = inspectionItems.filter(i => i.outcome === 'C2').length;
   const c3Count = inspectionItems.filter(i => i.outcome === 'C3').length;
+  const fiCount = inspectionItems.filter(i => i.outcome === 'FI').length;
   const progressPercent = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
 
   // Quick mark mode
   const [quickMarkMode, setQuickMarkMode] = React.useState(false);
 
-  // Auto-scroll to next incomplete section when one completes
-  React.useEffect(() => {
-    if (!inspectionItems.length) return;
-    for (const section of bs7671InspectionSections) {
-      const sectionItems = section.items;
-      const allDone = sectionItems.every(si => {
-        const item = inspectionItems.find(i => i.id === si.id);
-        return item?.outcome && item.outcome !== '';
-      });
-      if (!allDone && !expandedSections[section.id]) {
-        // Found first incomplete section — if previous section just completed, open this one
-        const prevIdx = bs7671InspectionSections.indexOf(section) - 1;
-        if (prevIdx >= 0) {
-          const prevSection = bs7671InspectionSections[prevIdx];
-          const prevAllDone = prevSection.items.every(si => {
-            const item = inspectionItems.find(i => i.id === si.id);
-            return item?.outcome && item.outcome !== '';
-          });
-          // Don't auto-collapse or auto-scroll — user might want to tweak individual items after bulk action
-        }
-        break;
-      }
-    }
-  }, [completedItems]);
-
   return (
     <div className="space-y-4 sm:space-y-6 pb-24 lg:pb-6">
-      {/* Inspection dashboard header */}
-      <div className="rounded-2xl border border-white/[0.08] bg-gradient-to-br from-elec-yellow/[0.05] via-white/[0.02] to-transparent p-4 sm:p-5 space-y-4">
-        {/* Big progress + bar */}
-        <div className="flex items-center gap-4">
-          <div className="flex items-baseline gap-1 flex-shrink-0">
-            <span className={`text-3xl sm:text-4xl font-bold tabular-nums leading-none ${progressPercent === 100 ? 'text-green-400' : 'text-white'}`}>
-              {progressPercent}
+      {/* Inspection progress header */}
+      <section className={cardCn}>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">
+          Schedule of inspections
+        </h2>
+
+        {/* Progress bar + count */}
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between">
+            <span className="text-[12px] font-medium text-white">
+              {completedItems}/{totalItems} completed
             </span>
-            <span className="text-lg font-semibold text-white/40">%</span>
+            <span
+              className={`text-[12px] font-semibold tabular-nums ${progressPercent === 100 ? 'text-green-400' : 'text-elec-yellow'}`}
+            >
+              {progressPercent}%
+            </span>
           </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center justify-between mb-1.5">
-              <span className="text-xs font-medium text-white/60 uppercase tracking-wider">Inspection progress</span>
-              <span className="text-xs font-semibold text-white/70 tabular-nums">{completedItems}/{totalItems} items</span>
-            </div>
-            <div className="h-2 rounded-full bg-white/[0.07] overflow-hidden">
-              <div
-                className={`h-full rounded-full transition-all duration-500 ${progressPercent === 100 ? 'bg-green-500' : 'bg-gradient-to-r from-elec-yellow to-amber-400'}`}
-                style={{ width: `${progressPercent}%` }}
-              />
-            </div>
+          <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.08]">
+            <div
+              className={`h-full rounded-full transition-all duration-500 ${progressPercent === 100 ? 'bg-green-500' : 'bg-elec-yellow'}`}
+              style={{ width: `${progressPercent}%` }}
+            />
           </div>
         </div>
 
-        {/* Defect stats + Quick Mark toggle */}
-        <div className="flex items-center justify-between gap-3 flex-wrap">
-          <div className="flex items-center gap-2">
+        {/* Defect stats + quick mark toggle */}
+        <div className="flex items-center gap-3">
+          <div className="flex flex-1 flex-wrap items-center gap-1.5 text-[11px]">
             {c1Count > 0 && (
-              <span className="inline-flex items-center text-[11px] font-bold bg-red-500/15 text-red-400 border border-red-500/30 px-2.5 py-1 rounded-lg">{c1Count} C1</span>
+              <span className="rounded-md bg-red-600 px-2 py-0.5 font-bold text-white tabular-nums">
+                {c1Count} C1
+              </span>
             )}
             {c2Count > 0 && (
-              <span className="inline-flex items-center text-[11px] font-bold bg-orange-500/15 text-orange-400 border border-orange-500/30 px-2.5 py-1 rounded-lg">{c2Count} C2</span>
+              <span className="rounded-md bg-orange-500 px-2 py-0.5 font-bold text-black tabular-nums">
+                {c2Count} C2
+              </span>
             )}
             {c3Count > 0 && (
-              <span className="inline-flex items-center text-[11px] font-bold bg-yellow-500/15 text-yellow-400 border border-yellow-500/30 px-2.5 py-1 rounded-lg">{c3Count} C3</span>
+              <span className="rounded-md bg-elec-yellow px-2 py-0.5 font-bold text-black tabular-nums">
+                {c3Count} C3
+              </span>
             )}
-            {c1Count === 0 && c2Count === 0 && c3Count === 0 && (
-              <span className="text-[11px] text-white/40">No defects recorded yet</span>
+            {fiCount > 0 && (
+              <span className="rounded-md bg-blue-500 px-2 py-0.5 font-bold text-white tabular-nums">
+                {fiCount} FI
+              </span>
+            )}
+            {c1Count === 0 && c2Count === 0 && c3Count === 0 && fiCount === 0 && (
+              <span className="text-[12px] text-white/80">No defects recorded yet</span>
             )}
           </div>
           <button
             type="button"
-            onClick={() => setQuickMarkMode(!quickMarkMode)}
-            className={`h-9 px-4 rounded-xl text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all flex items-center gap-2 ${
+            onClick={() => {
+              haptic.light();
+              setQuickMarkMode(!quickMarkMode);
+            }}
+            className={`h-11 shrink-0 rounded-xl px-4 text-[13px] transition-all touch-manipulation active:scale-[0.98] ${
               quickMarkMode
-                ? 'bg-green-500/15 border border-green-500/40 text-green-400'
-                : 'bg-white/[0.05] border border-white/[0.1] text-white/80 hover:bg-white/[0.08]'
+                ? 'bg-elec-yellow border border-elec-yellow text-black font-semibold'
+                : 'bg-white/[0.06] border border-white/[0.12] text-white font-medium'
             }`}
           >
-            <Zap className="h-3.5 w-3.5" />
-            {quickMarkMode ? 'Quick Mark ON — tap = OK' : 'Quick Mark Mode'}
+            {quickMarkMode ? 'Quick mark on — tap = OK' : 'Quick mark'}
           </button>
         </div>
-      </div>
+
+        {/* Global fill — blank items only, never overwrites recorded outcomes */}
+        {totalItems > 0 && completedItems < totalItems && (
+          <button
+            type="button"
+            onClick={markAllRemainingSatisfactory}
+            className="h-11 w-full rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 text-[13px] font-medium text-white transition-all touch-manipulation active:scale-[0.98]"
+          >
+            Mark all remaining satisfactory
+          </button>
+        )}
+      </section>
 
       {/* Checklist Sections */}
       <div className="space-y-1">
@@ -564,49 +598,61 @@ const EICRInspectionChecklist = ({
         onAddObservation={addDefectObservation}
         onUpdateObservation={updateDefectObservation}
         onRemoveObservation={removeDefectObservation}
+        certificateContext={{
+          certificateType: 'eicr',
+          certificateNumber: formData.certificateNumber || '',
+          clientName: formData.clientName || '',
+          installationAddress: formData.installationAddress || formData.clientAddress || '',
+        }}
       />
 
-      {/* Inspected By sign-off (A4:2026 — Schedule of Inspections) */}
-      <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-4">
-        <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-3" />
-        <h3 className="text-xs font-medium text-white uppercase tracking-wider mb-4">Inspected By</h3>
-        <div className="space-y-3">
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="text-white text-xs mb-1.5 block">Name (Capitals)</label>
-              <input
-                type="text"
-                value={formData.scheduleInspectedByName || ''}
-                onChange={(e) => onUpdate('scheduleInspectedByName', e.target.value.toUpperCase())}
-                placeholder="FULL NAME"
-                className="w-full h-11 px-3 rounded-lg text-base touch-manipulation bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow"
-              />
-            </div>
-            <div>
-              <label className="text-white text-xs mb-1.5 block">Date</label>
-              <input
-                type="date"
-                value={formData.scheduleInspectedByDate || ''}
-                onChange={(e) => onUpdate('scheduleInspectedByDate', e.target.value)}
-                className="w-full h-11 px-3 rounded-lg text-base touch-manipulation bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow"
-              />
-            </div>
+      {/* Inspected by sign-off (A4:2026 — Schedule of Inspections) */}
+      <section className={cardCn}>
+        <div className="mb-3 flex items-center justify-between gap-2">
+          <h2 className="text-[15px] font-semibold tracking-tight text-white">Inspected by</h2>
+          <button
+            type="button"
+            onClick={handlePrefillInspectedBy}
+            className="h-9 shrink-0 rounded-lg border border-white/[0.12] bg-white/[0.06] px-3 text-[12px] font-medium text-white transition-transform touch-manipulation active:scale-[0.97]"
+          >
+            Use my details
+          </button>
+        </div>
+        <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
+          <div>
+            <label className={labelCn}>Name (capitals)</label>
+            <input
+              type="text"
+              value={formData.scheduleInspectedByName || ''}
+              onChange={(e) => onUpdate('scheduleInspectedByName', e.target.value.toUpperCase())}
+              placeholder="FULL NAME"
+              className={inputCn}
+            />
           </div>
           <div>
-            <label className="text-white text-xs mb-1.5 block">Signature</label>
-            <SignatureInput
-              value={formData.scheduleInspectedBySignature || ''}
-              onChange={(signature) => onUpdate('scheduleInspectedBySignature', signature)}
-              placeholder="Draw, type or use a saved signature"
+            <label className={labelCn}>Date</label>
+            <input
+              type="date"
+              value={formData.scheduleInspectedByDate || ''}
+              onChange={(e) => onUpdate('scheduleInspectedByDate', e.target.value)}
+              className={inputCn}
             />
           </div>
         </div>
-      </div>
+        <div>
+          <label className={labelCn}>Signature</label>
+          <SignatureInput
+            value={formData.scheduleInspectedBySignature || ''}
+            onChange={(signature) => onUpdate('scheduleInspectedBySignature', signature)}
+            placeholder="Draw, type or use a saved signature"
+          />
+        </div>
+      </section>
 
       {/* Reference Guide — at bottom for reference, not workflow */}
       <DefectCodesReference />
 
-      {/* Floating Stats Pill (mobile) */}
+      {/* Desktop inline inspection summary */}
       <InspectionStatsSummary inspectionItems={inspectionItems} />
     </div>
   );

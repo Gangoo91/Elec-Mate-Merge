@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { getActingEmployerId } from '@/lib/actingEmployer';
 
 // Helper to send push notification (fire and forget)
 const sendPushNotification = async (
@@ -210,12 +211,79 @@ export async function getQuotes(): Promise<Quote[]> {
   );
 }
 
+/**
+ * Create a quote.
+ *
+ * Writes to `quotes` for the same reasons as createInvoice: `employer_quotes`
+ * is invisible to the Electrical Hub and is a dead-end record (no public_token,
+ * pdf_url, acceptance/signature, reminders or payment link).
+ *
+ * This is the PROGRAMMATIC path — used by the AI quote generator and by
+ * duplicate/variation actions. Interactive quote building should use the shared
+ * `QuoteWizard`, which already writes here natively.
+ */
 export async function createQuote(
   quote: Omit<Quote, 'id' | 'created_at' | 'updated_at'>
 ): Promise<Quote> {
-  const { data, error } = await supabase.from('employer_quotes').insert(quote).select().single();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error('Not authenticated');
+  const ownerId = (await getActingEmployerId(user.id)) ?? user.id;
+
+  const q = quote as Quote & {
+    client_email?: string | null;
+    client_phone?: string | null;
+    client_address?: string | null;
+    vat_rate?: number;
+    reverse_charge?: boolean;
+    cis_enabled?: boolean;
+    cis_rate?: number;
+  };
+
+  // expiry_date is NOT NULL on quotes. Honour valid_until, else 30 days.
+  const expiry =
+    q.valid_until ?? new Date(Date.now() + 30 * 86_400_000).toISOString();
+
+  const { data, error } = await supabase
+    .from('quotes')
+    .insert({
+      user_id: ownerId,
+      quote_number: q.quote_number,
+      client_data: {
+        name: q.client,
+        email: q.client_email ?? null,
+        phone: q.client_phone ?? null,
+        address: q.client_address ?? null,
+      },
+      items: q.line_items ?? [],
+      settings: {
+        vatRate: q.vat_rate ?? 20,
+        vatRegistered: (q.vat_rate ?? 0) > 0,
+        reverseCharge: q.reverse_charge ?? false,
+        cisEnabled: q.cis_enabled ?? false,
+        ...(q.cis_enabled ? { cisRate: q.cis_rate ?? 20 } : {}),
+      },
+      subtotal: q.subtotal ?? 0,
+      vat_amount: q.vat_amount ?? 0,
+      total: q.value ?? 0,
+      // Employer Hub statuses are title-case; the real table stores lowercase.
+      status: (q.status || 'Draft').toLowerCase(),
+      expiry_date: expiry,
+      notes: q.notes ?? null,
+      job_details: q.job_title ? { title: q.job_title } : {},
+    })
+    .select()
+    .single();
   if (error) throw error;
-  return data;
+
+  return {
+    ...(quote as Quote),
+    id: (data as { id: string }).id,
+    created_at: (data as { created_at: string }).created_at,
+    updated_at: (data as { updated_at: string }).updated_at,
+    source: 'electrical_hub',
+  } as Quote;
 }
 
 export async function updateQuote(id: string, updates: Partial<Quote>): Promise<Quote> {
@@ -295,16 +363,92 @@ export async function getInvoices(): Promise<Invoice[]> {
   );
 }
 
+/**
+ * Raise an invoice.
+ *
+ * Writes to `quotes` — the table the Electrical Hub invoice builder uses — not
+ * to `employer_invoices`. Two reasons, and the second is the important one:
+ *
+ * 1. `employer_invoices` is invisible to the Electrical Hub. An invoice raised
+ *    in the office would never appear on the owner's own invoice list, so the
+ *    two halves of a business kept separate books.
+ * 2. `employer_invoices` is a dead-end record. It has no public_token, no
+ *    pdf_url, no stripe_payment_link_url, no acceptance/signature, no reminder
+ *    tracking and no partial payments — 17 capabilities the real table has.
+ *    An invoice raised there literally cannot be sent, paid online or chased.
+ *
+ * Field mapping: the hub's flat shape folds into the real table's jsonb
+ * columns. CIS/VAT/reverse-charge live in `settings` exactly as the Electrical
+ * Hub writes them (cisEnabled/cisRate/reverseCharge/vatRate), so nothing is
+ * lost. `invoice_raised` is what makes the row an invoice rather than a quote.
+ */
 export async function createInvoice(
   invoice: Omit<Invoice, 'id' | 'created_at' | 'updated_at'>
 ): Promise<Invoice> {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error('Not authenticated');
+  const ownerId = (await getActingEmployerId(user.id)) ?? user.id;
+
+  const inv = invoice as Invoice & {
+    client_email?: string | null;
+    client_phone?: string | null;
+    client_id?: string | null;
+    vat_rate?: number;
+    reverse_charge?: boolean;
+    cis_enabled?: boolean;
+    cis_rate?: number;
+  };
+
+  const now = new Date().toISOString();
   const { data, error } = await supabase
-    .from('employer_invoices')
-    .insert(invoice)
+    .from('quotes')
+    .insert({
+      user_id: ownerId,
+      // quote_number is NOT NULL and unique per user — reuse the invoice number.
+      quote_number: inv.invoice_number,
+      invoice_number: inv.invoice_number,
+      invoice_raised: true,
+      invoice_status: (inv.status || 'Draft').toLowerCase(),
+      invoice_date: now,
+      invoice_due_date: inv.due_date ?? null,
+      invoice_notes: inv.notes ?? null,
+      client_data: {
+        name: inv.client,
+        email: inv.client_email ?? null,
+        phone: inv.client_phone ?? null,
+        ...(inv.client_id ? { customerId: inv.client_id } : {}),
+      },
+      items: inv.line_items ?? [],
+      settings: {
+        vatRate: inv.vat_rate ?? 20,
+        vatRegistered: (inv.vat_rate ?? 0) > 0,
+        reverseCharge: inv.reverse_charge ?? false,
+        cisEnabled: inv.cis_enabled ?? false,
+        ...(inv.cis_enabled ? { cisRate: inv.cis_rate ?? 20 } : {}),
+      },
+      subtotal: inv.subtotal ?? 0,
+      vat_amount: inv.vat_amount ?? 0,
+      total: inv.amount ?? 0,
+      status: 'approved', // an invoice is a won quote
+      // NOT NULL on quotes; an invoice has no quote expiry, so mirror the due date.
+      expiry_date: inv.due_date ?? now,
+      job_details: inv.project ? { title: inv.project } : {},
+      customer_id: inv.client_id ?? null,
+    })
     .select()
     .single();
   if (error) throw error;
-  return data;
+
+  // Return the hub's shape so callers are unchanged.
+  return {
+    ...(invoice as Invoice),
+    id: (data as { id: string }).id,
+    created_at: (data as { created_at: string }).created_at,
+    updated_at: (data as { updated_at: string }).updated_at,
+    source: 'electrical_hub',
+  } as Invoice;
 }
 
 export async function updateInvoice(id: string, updates: Partial<Invoice>): Promise<Invoice> {
@@ -367,26 +511,51 @@ export async function sendInvoice(
   id: string,
   recipientEmail?: string
 ): Promise<{ portalUrl: string; accessToken: string }> {
-  // First get the invoice to get client details
-  const { data: invoice, error: invoiceError } = await supabase
-    .from('employer_invoices')
-    .select('*')
+  // Read from `quotes` — every invoice the hub shows is now a row there
+  // (created by the wizard, the Electrical Hub, or createInvoice above).
+  // This previously read `employer_invoices`, so Chase failed on EVERY invoice
+  // in the list: the id belongs to `quotes` and matched nothing.
+  const { data: row, error: invoiceError } = await supabase
+    .from('quotes')
+    .select('id, client_data, invoice_number, quote_number, total')
     .eq('id', id)
-    .single();
+    .maybeSingle();
 
   if (invoiceError) throw invoiceError;
+  if (!row) throw new Error('Invoice not found.');
+
+  const clientData = (row.client_data ?? {}) as {
+    name?: string;
+    email?: string;
+  };
+  const invoice = {
+    client: clientData.name ?? 'Client',
+    client_email: clientData.email ?? null,
+  };
 
   // A real email address is required — the client NAME is not one
   const targetEmail = recipientEmail?.trim() || invoice.client_email?.trim();
   if (!targetEmail || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(targetEmail)) {
     throw new Error('NEEDS_CLIENT_EMAIL');
   }
-  // Remember it for next time
+  // Remember the address on the row itself (client_data is the source of truth).
   if (recipientEmail && recipientEmail !== invoice.client_email) {
-    await supabase.from('employer_invoices').update({ client_email: targetEmail }).eq('id', id);
+    await supabase
+      .from('quotes')
+      .update({ client_data: { ...clientData, email: targetEmail } })
+      .eq('id', id);
   }
 
-  // Generate the invoice link
+  // ⚠️ KNOWN GAP — the send chain still points at the dead employer stack.
+  // `generate-invoice-link`, `send-finance-document` and `generate-invoice-pdf`
+  // all read `employer_quotes`/`employer_invoices`, which nothing writes to any
+  // more. Until those three edge functions are repointed at `quotes` AND
+  // redeployed, Chase cannot complete for a bridged invoice.
+  //
+  // Deliberately NOT swapped to `create-invoice-payment-link` (which does read
+  // `quotes`): it 400s with `stripe_not_connected` unless the employer has
+  // completed Stripe Connect onboarding, and there are currently zero connected
+  // accounts — that would trade a broken path for a differently broken one.
   const { data, error } = await supabase.functions.invoke('generate-invoice-link', {
     body: { invoiceId: id, baseUrl: window.location.origin, clientEmail: targetEmail },
   });
@@ -412,8 +581,14 @@ export async function sendInvoice(
     );
   }
 
-  // Update invoice status to Sent/Pending
-  await updateInvoice(id, { status: 'Pending' });
+  // Stamp the row itself. NOT via updateInvoice() — that writes
+  // `employer_invoices`, which would match nothing for a `quotes` id and throw
+  // AFTER the client had already been emailed. Mirrors what the Electrical Hub
+  // send flow records, so both surfaces show the same lifecycle.
+  await supabase
+    .from('quotes')
+    .update({ invoice_status: 'sent', invoice_sent_at: new Date().toISOString() })
+    .eq('id', id);
 
   return data;
 }

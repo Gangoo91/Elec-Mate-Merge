@@ -1,5 +1,6 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { testingOnlyPayloadSchema } from '../_shared/testing-only-payload-schema.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const TEMPLATE_ID = 'B8CA4903-F839-42D1-87D1-B40BFFF4593C';
@@ -36,6 +37,19 @@ Deno.serve(async (req: Request) => {
     const { formData, templateId } = await req.json();
     if (!formData) throw new Error('No form data');
     console.log('[generate-testing-only-pdf] Ref:', formData.referenceNumber, 'Circuits:', formData.circuits?.length, 'Tester:', formData.testerName);
+    // Soft-fail schema check: log and report drift, never block the PDF. The
+    // payload sent below is the RAW formData, so validation only observes —
+    // it must not become the source of what PDFMonkey renders.
+    const validation = testingOnlyPayloadSchema.safeParse(formData);
+    if (!validation.success) {
+      console.error('[generate-testing-only-pdf] Schema validation failed:', JSON.stringify(validation.error.issues.slice(0, 10)));
+      await captureException(new Error('Testing only payload schema drift detected'), {
+        functionName: 'generate-testing-only-pdf',
+        extra: { issues: validation.error.issues.slice(0, 20) },
+        tags: { schema_drift: 'true' },
+      });
+    }
+
     const doc = await createDoc(formData, templateId);
     const completed = await waitForPDF(doc.id);
     return new Response(JSON.stringify({ success: true, document_id: completed.id, pdfUrl: completed.download_url, download_url: completed.download_url, preview_url: completed.preview_url }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });

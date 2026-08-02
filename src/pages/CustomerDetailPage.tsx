@@ -131,35 +131,45 @@ function EditablePill({
   }
 
   const display = value ?? placeholder;
-  const truncated =
-    truncate && display.length > truncate ? `${display.slice(0, truncate)}…` : display;
 
+  /*
+    Full-width row, not a small inline pill. Three pills floating in a wide
+    card left most of the width empty and read as disabled inputs — the grey
+    "Add email" especially. A row gives the value room, gives the label a
+    home, and makes the whole thing a 44px target.
+  */
   return (
-    <div className="group inline-flex h-9 items-center rounded-lg border border-white/[0.1] bg-white/[0.04] transition-colors hover:border-white/[0.25] hover:bg-white/[0.07]">
+    <div className="flex min-h-11 items-center gap-3 border-t border-white/[0.10] px-1 first:border-t-0">
+      <span className="w-[52px] shrink-0 text-[10px] font-semibold uppercase tracking-[0.14em] text-white">
+        {LABELS[fieldKey] ?? fieldKey}
+      </span>
       {value && href ? (
-        <a href={href} className="flex h-full items-center px-2.5 text-[12.5px] text-white">
-          {truncated}
+        <a
+          href={href}
+          className="min-w-0 flex-1 truncate py-2.5 text-[13px] text-white hover:text-elec-yellow"
+        >
+          {display}
         </a>
       ) : (
-        <span
-          className={cn(
-            'flex h-full items-center px-2.5 text-[12.5px]',
-            value ? 'text-white' : 'text-white/45'
-          )}
-        >
-          {truncated}
-        </span>
+        <span className="min-w-0 flex-1 truncate py-2.5 text-[13px] text-white">{display}</span>
       )}
       <button
         onClick={() => setEditing(true)}
-        className="flex h-full items-center rounded-r-lg px-2 text-[11.5px] font-medium text-white/45 transition-colors hover:text-elec-yellow touch-manipulation"
+        className="-mr-1 flex h-11 shrink-0 items-center px-1 text-[12px] font-bold text-elec-yellow transition-colors touch-manipulation [-webkit-tap-highlight-color:transparent] active:scale-[0.97]"
         aria-label={`Edit ${fieldKey}`}
       >
-        Edit
+        {value ? 'Edit' : 'Add'}
       </button>
     </div>
   );
 }
+
+const LABELS: Record<string, string> = {
+  name: 'Name',
+  email: 'Email',
+  phone: 'Phone',
+  address: 'Address',
+};
 
 // Computed "next action" suggestion from customer state.
 function computeNextAction(
@@ -302,7 +312,7 @@ export default function CustomerDetailPage() {
       <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-3">
           <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
-          <p className="text-sm text-white/65">Loading customer…</p>
+          <p className="text-sm text-white">Loading customer…</p>
         </div>
       </div>
     );
@@ -314,7 +324,7 @@ export default function CustomerDetailPage() {
         <div className="px-4 pt-3">
           <button
             onClick={backToList}
-            className="h-11 pr-2 text-[13px] font-semibold text-white/70 transition-colors hover:text-white touch-manipulation"
+            className="h-11 pr-2 text-[13px] font-semibold text-white transition-colors hover:text-white touch-manipulation"
           >
             Back
           </button>
@@ -322,7 +332,7 @@ export default function CustomerDetailPage() {
         <div className="flex flex-col items-center justify-center px-4 py-20">
           <div className="max-w-sm rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_12%)] p-8 text-center">
             <p className="mb-2 text-lg font-semibold text-white">Customer not found</p>
-            <p className="mb-5 text-sm text-white/65">This customer may have been deleted.</p>
+            <p className="mb-5 text-sm text-white">This customer may have been deleted.</p>
             <Button
               onClick={() => navigate('/customers', { replace: true })}
               className="h-11 w-full rounded-xl bg-elec-yellow font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
@@ -347,14 +357,14 @@ export default function CustomerDetailPage() {
         <div className="mx-auto flex h-11 items-center gap-2 lg:max-w-[1600px]">
           <button
             onClick={backToList}
-            className="h-11 pr-2 text-[13px] font-semibold text-white/70 transition-colors hover:text-white touch-manipulation"
+            className="h-11 pr-2 text-[13px] font-semibold text-white transition-colors hover:text-white touch-manipulation"
           >
             Back
           </button>
           <div className="ml-auto flex items-center gap-1">
             <button
               onClick={() => setShowEditDialog(true)}
-              className="h-11 px-2.5 text-[13px] font-semibold text-white/70 transition-colors hover:text-white touch-manipulation"
+              className="h-11 px-2.5 text-[13px] font-semibold text-white transition-colors hover:text-white touch-manipulation"
             >
               Edit
             </button>
@@ -376,18 +386,18 @@ export default function CustomerDetailPage() {
       >
         {/* Hero */}
         <motion.div variants={itemVariants}>
-          <div className="relative overflow-hidden rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-5 sm:p-7">
+          <div className="relative overflow-hidden rounded-2xl border border-white/[0.18] bg-gradient-to-b from-white/[0.12] to-white/[0.06] p-4 sm:p-5">
             <div className="flex items-start gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/[0.1] bg-white/[0.06] sm:h-14 sm:w-14">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/[0.16] bg-white/[0.10] sm:h-14 sm:w-14">
                 <span className="text-[14px] font-semibold text-white sm:text-[15px]">
                   {getInitials(customer.name)}
                 </span>
               </div>
               <div className="min-w-0 flex-1">
-                <h2 className="text-[26px] font-bold leading-tight tracking-tight text-white sm:text-[32px]">
+                <h2 className="text-[22px] font-bold leading-tight tracking-tight text-white sm:text-[28px]">
                   {customer.name}
                 </h2>
-                <p className="mt-1 text-[13px] text-white/50">Customer since {memberSince}</p>
+                <p className="mt-0.5 text-[12.5px] text-white">Customer since {memberSince}</p>
               </div>
             </div>
 
@@ -397,7 +407,7 @@ export default function CustomerDetailPage() {
                 {customer.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="inline-flex h-6 items-center rounded-full border border-white/[0.1] bg-white/[0.06] px-2.5 text-[11px] font-medium text-white/75"
+                    className="inline-flex h-7 items-center rounded-full border border-white/[0.16] bg-white/[0.08] px-2.5 text-[11px] font-medium text-white"
                   >
                     {tag}
                   </span>
@@ -405,12 +415,12 @@ export default function CustomerDetailPage() {
               </div>
             )}
 
-            {/* Contact pills — inline editable */}
-            <div className="mt-5 flex flex-wrap gap-2">
+            {/* Contact rows — inline editable */}
+            <div className="mt-4 rounded-xl border border-white/[0.12] bg-white/[0.04] px-3">
               <EditablePill
                 value={customer.email}
                 href={customer.email ? `mailto:${customer.email}` : undefined}
-                placeholder="Add email"
+                placeholder="Not set"
                 fieldKey="email"
                 type="email"
                 truncate={32}
@@ -419,7 +429,7 @@ export default function CustomerDetailPage() {
               <EditablePill
                 value={customer.phone}
                 href={customer.phone ? `tel:${customer.phone}` : undefined}
-                placeholder="Add phone"
+                placeholder="Not set"
                 fieldKey="phone"
                 type="tel"
                 onSave={handleInlineSave}
@@ -431,7 +441,7 @@ export default function CustomerDetailPage() {
                     ? `https://www.google.com/maps/search/${encodeURIComponent(customer.address)}`
                     : undefined
                 }
-                placeholder="Add address"
+                placeholder="Not set"
                 fieldKey="address"
                 truncate={40}
                 onSave={handleInlineSave}
@@ -458,7 +468,7 @@ export default function CustomerDetailPage() {
                 >
                   {nextAction.label}
                 </div>
-                <div className="mt-0.5 text-[12.5px] text-white/65">{nextAction.sub}</div>
+                <div className="mt-0.5 text-[12.5px] text-white">{nextAction.sub}</div>
               </div>
               <div className="flex items-center gap-2 sm:shrink-0">
                 {customer.phone && (
@@ -501,7 +511,7 @@ export default function CustomerDetailPage() {
                     ? `Looks like the same person as "${duplicateMatches[0].name}"`
                     : `${duplicateMatches.length} other customers share this contact`}
                 </div>
-                <div className="mt-0.5 text-[12px] text-white/65">
+                <div className="mt-0.5 text-[12px] text-white">
                   Matched on{' '}
                   {Array.from(new Set(duplicateMatches.flatMap((m) => m.matchOn))).join(' & ')}.
                   Merge to combine certificates, projects, invoices and history.
@@ -521,7 +531,7 @@ export default function CustomerDetailPage() {
                   </button>
                 ))}
                 {duplicateMatches.length > 3 && (
-                  <span className="text-[12px] text-white/55">
+                  <span className="text-[12px] text-white">
                     +{duplicateMatches.length - 3} more
                   </span>
                 )}
@@ -530,31 +540,44 @@ export default function CustomerDetailPage() {
           </motion.div>
         )}
 
-        {/* KPI cards */}
-        <motion.div variants={itemVariants} className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        {/*
+          One compact strip, not a 2×2 grid of large cards (~230px of phone
+          screen, mostly showing zeroes on a new customer). Kept rather than
+          deleted like the hub's stat board, because unlike that one these
+          numbers are the customer's actual record and appear nowhere else —
+          only Properties is repeated, on its tab.
+        */}
+        <motion.div
+          variants={itemVariants}
+          className="grid grid-cols-4 gap-[1px] overflow-hidden rounded-2xl border border-white/[0.18] bg-white/[0.14]"
+        >
           {[
-            { label: 'Certificates', value: String(certCount), volt: false },
+            { label: 'Certs', value: String(certCount), volt: false },
             { label: 'Properties', value: String(customer.propertyCount || 0), volt: false },
             { label: 'Quotes', value: String(stats.quoteCount), volt: false },
             {
-              label: 'Lifetime value',
+              label: 'Lifetime',
               value: stats.totalInvoiced > 0 ? formatGBP(stats.totalInvoiced) : '£0',
-              volt: true,
+              volt: stats.totalInvoiced > 0,
             },
           ].map((s) => (
             <div
               key={s.label}
-              className="rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4"
+              className="bg-gradient-to-b from-white/[0.12] to-white/[0.06] px-2 py-3 text-center"
             >
               <div
                 className={cn(
-                  'text-2xl font-bold tabular-nums tracking-tight',
+                  'truncate text-[17px] font-bold tabular-nums tracking-tight sm:text-[19px]',
                   s.volt ? 'text-elec-yellow' : 'text-white'
                 )}
               >
                 {s.value}
               </div>
-              <div className="mt-0.5 text-[12px] text-white/55">{s.label}</div>
+              {/* 9px, no letter-spacing: "PROPERTIES" clipped to "PROPER…" in
+                  a quarter of a 390px row at 10px + tracking. */}
+              <div className="mt-0.5 truncate text-[9px] font-semibold uppercase tracking-normal text-white sm:text-[10px] sm:tracking-[0.1em]">
+                {s.label}
+              </div>
             </div>
           ))}
         </motion.div>
@@ -598,9 +621,9 @@ export default function CustomerDetailPage() {
                 className="group flex h-full flex-col rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4 text-left transition-all hover:border-white/[0.22] active:scale-[0.99] touch-manipulation sm:p-5"
               >
                 <div className="text-[15px] font-semibold tracking-tight text-white">{a.title}</div>
-                <p className="mt-1 text-[12.5px] leading-relaxed text-white/60">{a.description}</p>
+                <p className="mt-1 text-[12.5px] leading-relaxed text-white">{a.description}</p>
                 <div className="mt-auto flex items-center justify-between pt-3">
-                  <span className="text-[11.5px] text-white/45">{a.meta}</span>
+                  <span className="text-[11.5px] text-white">{a.meta}</span>
                   <span className="text-[12.5px] font-semibold text-elec-yellow">Open</span>
                 </div>
               </button>
@@ -665,7 +688,7 @@ export default function CustomerDetailPage() {
               <div className="mt-1 text-[16px] font-semibold leading-tight tracking-tight text-white sm:text-[17px]">
                 Ask Mate to handle the admin
               </div>
-              <div className="mt-1 text-[12.5px] text-white/60">
+              <div className="mt-1 text-[12.5px] text-white">
                 Draft a chase email, create a follow-up snag, schedule a re-test reminder — in plain
                 English.
               </div>
@@ -692,7 +715,7 @@ export default function CustomerDetailPage() {
             <div className="flex items-baseline justify-between gap-3">
               <h3 className="text-[15px] font-semibold tracking-tight text-white">
                 Projects
-                <span className="ml-2 text-[13px] font-medium text-white/45 tabular-nums">
+                <span className="ml-2 text-[13px] font-medium text-white tabular-nums">
                   {projects.length}
                 </span>
               </h3>
@@ -724,7 +747,7 @@ export default function CustomerDetailPage() {
                       <div className="truncate text-[14.5px] font-medium text-white">
                         {p.title}
                       </div>
-                      <div className="mt-0.5 truncate text-[12px] text-white/55">
+                      <div className="mt-0.5 truncate text-[12px] text-white">
                         {[
                           p.status.replace(/_/g, ' '),
                           p.location,
@@ -737,7 +760,7 @@ export default function CustomerDetailPage() {
                       </div>
                     </div>
                     {p.estimatedValue !== null && p.estimatedValue > 0 && (
-                      <span className="shrink-0 text-[12.5px] font-medium tabular-nums text-white/80">
+                      <span className="shrink-0 text-[12.5px] font-medium tabular-nums text-white">
                         {formatGBP(p.estimatedValue)}
                       </span>
                     )}
@@ -749,7 +772,7 @@ export default function CustomerDetailPage() {
               })}
             </div>
             {projects.length > 5 && (
-              <p className="text-[12px] text-white/55">
+              <p className="text-[12px] text-white">
                 Showing 5 of {projects.length} — view all in the projects hub.
               </p>
             )}
@@ -825,7 +848,7 @@ export default function CustomerDetailPage() {
             <AlertDialogTitle className="text-base font-bold text-white">
               Merge customers?
             </AlertDialogTitle>
-            <AlertDialogDescription className="text-sm text-white/65">
+            <AlertDialogDescription className="text-sm text-white">
               Move every certificate, quote, invoice, project, contact, reminder and activity from{' '}
               <span className="font-medium text-white">&ldquo;{customer.name}&rdquo;</span> into{' '}
               <span className="font-medium text-white">
@@ -856,7 +879,7 @@ export default function CustomerDetailPage() {
             <AlertDialogTitle className="text-base font-bold text-white">
               Delete customer?
             </AlertDialogTitle>
-            <AlertDialogDescription className="text-sm text-white/65">
+            <AlertDialogDescription className="text-sm text-white">
               This will permanently remove &ldquo;{customer.name}&rdquo; and cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>

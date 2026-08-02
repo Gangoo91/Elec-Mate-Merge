@@ -65,6 +65,7 @@ const STATUS_CLASS: Record<Tone, string> = {
   purple: 'border-purple-500/30 bg-purple-500/[0.08] text-purple-400',
   cyan: 'border-cyan-500/30 bg-cyan-500/[0.08] text-cyan-400',
   indigo: 'border-indigo-500/30 bg-indigo-500/[0.08] text-indigo-400',
+  grey: 'border-white/[0.12] bg-white/[0.06] text-white',
 };
 
 export function ChecklistForm({

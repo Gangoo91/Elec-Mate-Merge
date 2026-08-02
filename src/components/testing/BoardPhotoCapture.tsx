@@ -1,43 +1,21 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Camera, X } from 'lucide-react';
 import { toast } from 'sonner';
-import { supabase } from '@/integrations/supabase/client';
-import { v4 as uuidv4 } from 'uuid';
-
-type AnalysisStage = 'idle' | 'uploading' | 'detecting' | 'reading' | 'verifying' | 'complete';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface BoardPhotoCaptureProps {
-  onAnalysisComplete: (data: any) => void;
-  onClose: () => void;
-  renderContentOnly?: boolean; // When true, skip Card wrapper (used when parent provides container)
-  /** Callback for progress updates during analysis - includes photo URL on first call */
-  onProgressUpdate?: (
-    stage: AnalysisStage,
-    progress: number,
-    circuitsFound?: number,
-    photoUrl?: string
-  ) => void;
   /**
-   * When set, the capture step skips the in-built (legacy `board-read-enhanced`)
-   * analysis and instead hands the captured image URLs to the parent. The
-   * parent then runs its own streaming flow via `BoardScannerStream`.
+   * Hands the captured image URLs to the parent, which runs the streaming
+   * analysis via `BoardScannerStream`. (The legacy in-component
+   * `board-read-enhanced` flow was removed — this component is capture-only.)
    */
-  onPhotosReady?: (imageUrls: string[]) => void;
+  onPhotosReady: (imageUrls: string[]) => void;
 }
 
-export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
-  onAnalysisComplete,
-  onClose,
-  renderContentOnly = false,
-  onProgressUpdate,
-  onPhotosReady,
-}) => {
+export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({ onPhotosReady }) => {
+  const haptic = useHaptic();
   const [capturedImages, setCapturedImages] = useState<
-    Array<{ url: string; status: 'compressing' | 'ready' }>
+    Array<{ url: string; status: 'compressing' | 'ready'; quality?: 'ok' | 'blurry' }>
   >([]);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
@@ -67,93 +45,91 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
     return 2.0; // 2MB max per image - balance of quality and speed
   };
 
-  /**
-   * Auto-save photo for training data pipeline
-   * Runs in background after successful analysis - doesn't block UI
-   */
-  const autoSaveForTraining = async (
-    photoDataUrl: string,
-    analysisResult: any,
-    scanSessionId: string
-  ) => {
-    try {
-      // Convert data URL to blob
-      const response = await fetch(photoDataUrl);
-      const blob = await response.blob();
-
-      // Upload to training folder
-      const fileName = `training/auto/${scanSessionId}.jpg`;
-      const { error: uploadError } = await supabase.storage
-        .from('board-reference-images')
-        .upload(fileName, blob, {
-          contentType: 'image/jpeg',
-          upsert: false,
-        });
-
-      if (uploadError) {
-        console.log('Training photo upload skipped:', uploadError.message);
-        return; // Don't throw - this is background, non-critical
-      }
-
-      // Get public URL
-      const {
-        data: { publicUrl },
-      } = supabase.storage.from('board-reference-images').getPublicUrl(fileName);
-
-      // Determine image characteristics from analysis
-      const hasLowConfidence = analysisResult.circuits?.some(
-        (c: any) => c.confidence === 'low' || c.conf === 'low'
-      );
-      const circuitCount = analysisResult.circuits?.length || 0;
-      const brand = analysisResult.brand || analysisResult.board?.brand || 'Unknown';
-
-      // Insert metadata for training pipeline
-      await supabase.from('board_reference_images').insert({
-        manufacturer: brand,
-        model_series: analysisResult.model || null,
-        image_type: hasLowConfidence ? 'in_situ_dirty' : 'in_situ_clean',
-        image_url: publicUrl,
-        source_type: 'user_contributed',
-        description: `Auto-captured: ${brand} board, ${circuitCount} circuits detected`,
-        device_types_shown: [
-          ...new Set(
-            analysisResult.circuits?.map((c: any) => c.device?.category || c.device || 'MCB') || []
-          ),
-        ],
-        ratings_visible: [
-          ...new Set(
-            analysisResult.circuits
-              ?.map((c: any) => c.device?.rating_amps || c.rating)
-              .filter(Boolean)
-              .map((r: number) => `${r}A`) || []
-          ),
-        ],
-        lighting_conditions: hasLowConfidence ? 'moderate' : 'good',
-        verified: false, // Needs human verification
-        metadata: {
-          scan_session_id: scanSessionId,
-          auto_captured: true,
-          circuit_count: circuitCount,
-          low_confidence_circuits: hasLowConfidence,
-          captured_at: new Date().toISOString(),
-        },
-      });
-
-      console.log(`Training photo auto-saved: ${scanSessionId}`);
-    } catch (error) {
-      // Silent fail - training capture is non-critical
-      console.log('Training auto-save skipped:', error);
-    }
-  };
-
   // Utility to calculate base64 image size in MB
   const getDataUrlSizeMB = (dataUrl: string): number => {
     const base64 = dataUrl.split(',')[1];
     return (base64.length * 0.75) / (1024 * 1024);
   };
 
-  // Compress image inline with optimized settings for better AI accuracy
-  const compressImage = async (dataUrl: string, maxSizeMB: number): Promise<string> => {
+  // ── Quality gate ──────────────────────────────────────────────────────
+  // Cheap canvas checks run on the already-decoded image during compression.
+  // Advisory only — a flagged photo is kept (field conditions vary) but gets
+  // a visible "May be too blurry" badge so the user can retake if they want.
+  const MIN_LONG_EDGE_PX = 800;
+  // Conservative, deliberately LOW threshold for the gradient-energy
+  // (Laplacian-variance approximation) score — only genuinely blurry shots
+  // should fall under it. Sharp board photos score well into the hundreds.
+  const SHARPNESS_THRESHOLD = 12;
+
+  /**
+   * Gradient-energy sharpness score on a downsampled 200px centre crop:
+   * grayscale, then the mean of squared differences between each pixel and
+   * its right + down neighbours. Blurry images score low.
+   * Returns Infinity when measurement is impossible so we never false-flag.
+   */
+  const measureSharpness = (img: HTMLImageElement): number => {
+    try {
+      const SIZE = 200;
+      const canvas = document.createElement('canvas');
+      canvas.width = SIZE;
+      canvas.height = SIZE;
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
+      if (!ctx) return Number.POSITIVE_INFINITY;
+
+      // Centre crop — half the frame each way, where the board usually sits.
+      const srcW = Math.max(1, Math.floor(img.naturalWidth / 2));
+      const srcH = Math.max(1, Math.floor(img.naturalHeight / 2));
+      const sx = Math.floor((img.naturalWidth - srcW) / 2);
+      const sy = Math.floor((img.naturalHeight - srcH) / 2);
+      ctx.drawImage(img, sx, sy, srcW, srcH, 0, 0, SIZE, SIZE);
+
+      const { data } = ctx.getImageData(0, 0, SIZE, SIZE);
+      const gray = new Float32Array(SIZE * SIZE);
+      for (let i = 0; i < SIZE * SIZE; i++) {
+        const o = i * 4;
+        gray[i] = 0.299 * data[o] + 0.587 * data[o + 1] + 0.114 * data[o + 2];
+      }
+
+      let sum = 0;
+      let count = 0;
+      for (let y = 0; y < SIZE - 1; y++) {
+        for (let x = 0; x < SIZE - 1; x++) {
+          const i = y * SIZE + x;
+          const dRight = gray[i + 1] - gray[i];
+          const dDown = gray[i + SIZE] - gray[i];
+          sum += dRight * dRight + dDown * dDown;
+          count += 2;
+        }
+      }
+      return count > 0 ? sum / count : Number.POSITIVE_INFINITY;
+    } catch {
+      return Number.POSITIVE_INFINITY;
+    }
+  };
+
+  /** True when the photo should carry the "May be too blurry" flag. */
+  const assessQuality = (img: HTMLImageElement): boolean => {
+    const longEdge = Math.max(img.naturalWidth, img.naturalHeight);
+    if (longEdge < MIN_LONG_EDGE_PX) return true;
+    return measureSharpness(img) < SHARPNESS_THRESHOLD;
+  };
+
+  const flagBlurryPhoto = (count = 1) => {
+    haptic.warning();
+    toast.warning(
+      count > 1
+        ? `${count} photos look blurry or low-res — retake with the board filling the frame`
+        : 'Photo looks blurry or low-res — retake with the board filling the frame',
+      { duration: 5000 }
+    );
+  };
+
+  // Compress image inline with optimized settings for better AI accuracy.
+  // Also runs the quality gate on the decoded image and reports the flag.
+  const compressImage = async (
+    dataUrl: string,
+    maxSizeMB: number
+  ): Promise<{ url: string; blurry: boolean }> => {
     return new Promise((resolve, reject) => {
       // Timeout to prevent hanging on corrupt images
       const timeout = setTimeout(() => {
@@ -211,7 +187,10 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
             return;
           }
 
-          resolve(compressed);
+          // Quality gate — advisory flag, never a hard block.
+          const blurry = assessQuality(img);
+
+          resolve({ url: compressed, blurry });
         } catch (err) {
           // Canvas operations can fail on memory-constrained devices
           console.error('Canvas compression error:', err);
@@ -233,86 +212,11 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
     });
   };
 
-  const checkPhotoQuality = async (
-    dataUrl: string
-  ): Promise<{
-    ok: boolean;
-    issue?: string;
-    autofix?: string;
-  }> => {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return resolve({ ok: true });
-
-        const sampleSize = 200;
-        canvas.width = sampleSize;
-        canvas.height = sampleSize;
-
-        const x = Math.max(0, (img.width - sampleSize) / 2);
-        const y = Math.max(0, (img.height - sampleSize) / 2);
-        ctx.drawImage(img, x, y, sampleSize, sampleSize, 0, 0, sampleSize, sampleSize);
-
-        const imageData = ctx.getImageData(0, 0, sampleSize, sampleSize);
-        let totalBrightness = 0;
-        let totalContrast = 0;
-        const pixels = imageData.data;
-
-        for (let i = 0; i < pixels.length; i += 4) {
-          const r = pixels[i];
-          const g = pixels[i + 1];
-          const b = pixels[i + 2];
-          const brightness = (r + g + b) / 3;
-          totalBrightness += brightness;
-
-          if (i > 0) {
-            const prevBrightness = (pixels[i - 4] + pixels[i - 3] + pixels[i - 2]) / 3;
-            totalContrast += Math.abs(brightness - prevBrightness);
-          }
-        }
-
-        const avgBrightness = totalBrightness / (sampleSize * sampleSize);
-        const avgContrast = totalContrast / (sampleSize * sampleSize);
-
-        if (avgBrightness < 40) {
-          resolve({
-            ok: false,
-            issue: '📷 Photo too dark - circuit labels may be unreadable',
-            autofix: 'Try: Turn on room lights or use torch/flash',
-          });
-        } else if (avgBrightness > 230) {
-          resolve({
-            ok: false,
-            issue: '📷 Photo overexposed - details washed out',
-            autofix: 'Try: Reduce lighting or avoid direct glare on board',
-          });
-        } else if (avgContrast < 5) {
-          resolve({
-            ok: false,
-            issue: '📷 Photo appears blurry or out of focus',
-            autofix: 'Try: Hold phone steady, tap screen to focus on MCB labels',
-          });
-        } else if (avgBrightness < 80) {
-          resolve({
-            ok: true,
-            autofix: '💡 Photo slightly dark - AI will try to enhance contrast',
-          });
-        } else {
-          resolve({ ok: true });
-        }
-      };
-      img.onerror = () => resolve({ ok: true });
-      img.src = dataUrl;
-    });
-  };
-
   const startCamera = async () => {
     try {
       // First check if camera API is supported
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        toast.error('Camera not supported on this browser. Please use "Upload Photos" instead.', {
+        toast.error('Camera not supported on this browser. Please use "Upload photos" instead.', {
           duration: 6000,
         });
         return;
@@ -331,7 +235,9 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
       if (videoRef.current) {
         videoRef.current.srcObject = mediaStream;
       }
-    } catch (error: any) {
+    } catch (caught) {
+      // getUserMedia rejects with a DOMException — name drives the guidance.
+      const error = caught as DOMException;
       // Provide specific guidance based on error type
       if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
         toast.error(
@@ -339,7 +245,7 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
           { duration: 7000 }
         );
       } else if (error.name === 'NotFoundError' || error.name === 'DevicesNotFoundError') {
-        toast.error('No camera found on this device. Please use "Upload Photos" instead.', {
+        toast.error('No camera found on this device. Please use "Upload photos" instead.', {
           duration: 6000,
         });
       } else if (error.name === 'NotReadableError' || error.name === 'TrackStartError') {
@@ -354,17 +260,17 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
         toast.loading('Trying alternative camera settings...', { id: 'fallback' });
         tryFallbackCamera();
       } else if (error.name === 'NotSupportedError') {
-        toast.error('Camera API not supported. Please use "Upload Photos" instead.', {
+        toast.error('Camera API not supported. Please use "Upload photos" instead.', {
           duration: 6000,
         });
       } else if (error.name === 'SecurityError') {
         toast.error(
-          'Camera access blocked for security reasons. Please ensure you\'re using HTTPS and try "Upload Photos" instead.',
+          'Camera access blocked for security reasons. Please ensure you\'re using HTTPS and try "Upload photos" instead.',
           { duration: 7000 }
         );
       } else {
         toast.error(
-          `Could not access camera: ${error.message}. Please use "Upload Photos" instead.`,
+          `Could not access camera: ${error.message}. Please use "Upload photos" instead.`,
           { duration: 6000 }
         );
       }
@@ -385,10 +291,10 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
         videoRef.current.srcObject = mediaStream;
       }
       toast.success('Camera started with basic settings');
-    } catch (error: any) {
+    } catch {
       toast.dismiss('fallback');
       toast.error(
-        'Could not access camera even with basic settings. Please use "Upload Photos" instead.',
+        'Could not access camera even with basic settings. Please use "Upload photos" instead.',
         { duration: 6000 }
       );
     }
@@ -419,12 +325,15 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
         // Compress in background
         const targetMB = calculateTargetSizePerPhoto(capturedImages.length + 1);
         compressImage(originalDataUrl, targetMB)
-          .then((compressed) => {
+          .then(({ url: compressed, blurry }) => {
             setCapturedImages((prev) =>
               prev.map((img) =>
-                img.url === originalDataUrl ? { url: compressed, status: 'ready' } : img
+                img.url === originalDataUrl
+                  ? { url: compressed, status: 'ready', quality: blurry ? 'blurry' : 'ok' }
+                  : img
               )
             );
+            if (blurry) flagBlurryPhoto();
           })
           .catch((error) => {
             console.error('Camera photo compression failed:', error);
@@ -476,11 +385,16 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
       Promise.all(
         loadedFiles.map(({ dataUrl }) =>
           compressImage(dataUrl, targetMB)
-            .then((compressed) => ({ original: dataUrl, compressed, failed: false }))
+            .then(({ url: compressed, blurry }) => ({
+              original: dataUrl,
+              compressed,
+              blurry,
+              failed: false,
+            }))
             .catch((error) => {
               console.error('File compression failed:', error);
               // Return original as fallback instead of null
-              return { original: dataUrl, compressed: dataUrl, failed: true };
+              return { original: dataUrl, compressed: dataUrl, blurry: false, failed: true };
             })
         )
       ).then((results) => {
@@ -491,10 +405,19 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
           );
         }
 
+        const blurryCount = results.filter((r) => r?.blurry).length;
+        if (blurryCount > 0) flagBlurryPhoto(blurryCount);
+
         setCapturedImages((prev) =>
           prev.map((img) => {
             const result = results.find((r) => r?.original === img.url);
-            return result ? { url: result.compressed, status: 'ready' as const } : img;
+            return result
+              ? {
+                  url: result.compressed,
+                  status: 'ready' as const,
+                  quality: result.blurry ? ('blurry' as const) : ('ok' as const),
+                }
+              : img;
           })
         );
       });
@@ -528,248 +451,13 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
       return;
     }
 
-    // New streaming flow — hand image URLs to the parent and let it run the
-    // SSE pipeline through `BoardScannerStream`. Skip the legacy single-shot
-    // edge function entirely.
-    if (onPhotosReady) {
-      const firstPhotoUrl = capturedImages[0]?.url || null;
-      onProgressUpdate?.('uploading', 100, undefined, firstPhotoUrl || undefined);
-      onPhotosReady(capturedImages.map((img) => img.url));
-      return;
-    }
-
-    setIsAnalyzing(true);
-
-    // Notify parent of progress start - include first photo URL for display during analysis
-    const firstPhotoUrl = capturedImages[0]?.url || null;
-    onProgressUpdate?.('uploading', 5, undefined, firstPhotoUrl || undefined);
-
-    const stage2Timer = setTimeout(() => {
-      onProgressUpdate?.('uploading', 15);
-    }, 1000);
-
-    const stage3Timer = setTimeout(() => {
-      onProgressUpdate?.('detecting', 30);
-    }, 3000);
-
-    const stage4Timer = setTimeout(() => {
-      onProgressUpdate?.('reading', 50);
-    }, 6000);
-
-    const stage5Timer = setTimeout(() => {
-      onProgressUpdate?.('verifying', 75);
-    }, 9000);
-
-    const timeoutId = setTimeout(() => {
-      toast.warning(
-        'This is taking longer than usual — three-phase boards can take up to a minute. Please wait or try again with better lighting.',
-        {
-          id: 'timeout-warning',
-        }
-      );
-    }, 60000);
-
-    // Hard timeout to prevent infinite hangs - 2 minutes for complex 3-phase boards
-    const ANALYSIS_TIMEOUT_MS = 200000; // 200s - 3-phase boards with retry need extra time
-
-    try {
-      const hints = {
-        main_switch_side: 'right',
-      };
-
-      // Create a timeout promise that rejects after 2 minutes
-      const timeoutPromise = new Promise<never>((_, reject) => {
-        setTimeout(
-          () =>
-            reject(
-              new Error(
-                'Analysis timed out. Large boards may need multiple photos - try scanning sections separately.'
-              )
-            ),
-          ANALYSIS_TIMEOUT_MS
-        );
-      });
-
-      // Race between the actual call and the timeout
-      const { data, error: invokeError } = (await Promise.race([
-        supabase.functions.invoke('board-read-enhanced', {
-          body: { images: capturedImages.map((img) => img.url), hints },
-        }),
-        timeoutPromise,
-      ])) as { data: any; error: any };
-
-      clearTimeout(stage2Timer);
-      clearTimeout(stage3Timer);
-      clearTimeout(stage4Timer);
-      clearTimeout(stage5Timer);
-      clearTimeout(timeoutId);
-      toast.dismiss('timeout-warning');
-
-      if (invokeError) {
-        // Friendly error messages instead of raw API errors
-        const msg = invokeError.message?.toLowerCase() || '';
-        if (msg.includes('non-2xx') || msg.includes('503') || msg.includes('timeout') || msg.includes('timed out')) {
-          throw new Error('Sorry, there was a hiccup analysing your board. Please try again — three-phase boards can take a bit longer.');
-        }
-        throw new Error(invokeError.message || 'Sorry, something went wrong. Please try again.');
-      }
-
-      // Display warnings if present
-      if (data?.warnings && data.warnings.length > 0) {
-        console.warn('Analysis warnings:', data.warnings);
-        data.warnings.forEach((warning: string) => {
-          toast.warning(warning, { duration: 2000, closeButton: true });
-        });
-      }
-
-      if (data?.error) {
-        toast.error(data.error);
-        // Still process partial results if available
-        if (data.circuits && data.circuits.length > 0) {
-          toast.warning(`Partial results: ${data.circuits.length} circuits detected`);
-          onAnalysisComplete(data);
-        }
-        return;
-      }
-
-      if (data.circuits && data.circuits.length > 0) {
-        // Notify parent of completion with circuit count
-        onProgressUpdate?.('complete', 100, data.circuits.length);
-
-        // Auto-save photo for training pipeline (background, non-blocking)
-        const scanSessionId = uuidv4();
-        if (capturedImages.length > 0) {
-          autoSaveForTraining(capturedImages[0].url, data, scanSessionId);
-        }
-
-        const photoText = capturedImages.length > 1 ? `${capturedImages.length} photos` : 'image';
-
-        // Check for circuit count mismatch
-        if (data.metadata?.boardSize && data.circuits?.length) {
-          const expected = data.metadata.boardSize;
-          const detected = data.circuits.length;
-
-          if (detected < expected * 0.9) {
-            toast.warning(
-              `Circuit count warning: Expected ${expected} ways but detected ${detected}. Please review carefully and consider re-capturing if circuits are missing.`,
-              { duration: 6000 }
-            );
-          }
-        }
-
-        // Transform backend response to frontend format with safe defaults and unique keys
-        const transformedCircuits = (data.circuits as any[])
-          .map((circuit: any, i: number) => {
-            const rawIndex = Number.isFinite(circuit?.index) ? Number(circuit.index) : null;
-            const position = rawIndex && rawIndex > 0 ? rawIndex : i + 1;
-            const confRaw = (circuit?.conf ?? circuit?.confidence ?? '').toString().toLowerCase();
-            const confidence: 'high' | 'medium' | 'low' = confRaw.startsWith('h')
-              ? 'high'
-              : confRaw.startsWith('m')
-                ? 'medium'
-                : 'low';
-
-            // Pictogram handling - use pictograms as fallback labels
-            const pictograms = circuit?.pictograms || [];
-            let displayLabel = circuit?.label_text ?? circuit?.label ?? '';
-
-            // If label is blank/unclear but pictogram exists, use pictogram type as label
-            if (
-              (!displayLabel || displayLabel.toLowerCase().includes('unlabelled')) &&
-              pictograms.length > 0
-            ) {
-              const primaryPictogram = pictograms[0].type;
-              // Convert pictogram enum to readable label (e.g., "COOKER_OVEN" → "Cooker Oven")
-              displayLabel = primaryPictogram
-                .replace(/_/g, ' ')
-                .toLowerCase()
-                .replace(/\b\w/g, (char: string) => char.toUpperCase());
-            }
-
-            return {
-              id: `${position}-${i}-${Date.now()}`,
-              position,
-              label: displayLabel,
-              pictograms,
-              device: circuit?.device?.category ?? circuit?.device?.type ?? 'MCB',
-              curve: circuit?.device?.curve ?? null,
-              rating: circuit?.device?.rating_amps ?? circuit?.device?.rating ?? null,
-              liveConductorSize: circuit?.live_conductor_size_mm2
-                ? `${circuit.live_conductor_size_mm2}mm²`
-                : null,
-              cpcSize: circuit?.cpc_size_mm2 ? `${circuit.cpc_size_mm2}mm²` : null,
-              kaRating: circuit?.device?.breaking_capacity_kA
-                ? `${circuit.device.breaking_capacity_kA}kA`
-                : null,
-              confidence,
-              evidence: circuit?.evidence,
-              notes: circuit?.notes ?? '',
-              phase: circuit?.phase ?? '1P',
-              phases: circuit?.phases ?? null,
-              wayNumber: circuit?.way_number ?? null,
-              phaseDesignation: circuit?.phase_designation ?? null,
-              boardSide: circuit?.board_side ?? null,
-            };
-          })
-          .sort((a, b) => a.position - b.position);
-
-        const resolvedWays =
-          data?.estimated_total_ways ?? data?.metadata?.boardSize ?? transformedCircuits.length;
-
-        const transformedBoard = {
-          make: data?.brand || 'Unknown',
-          model: data?.model || data?.brand || 'Unknown',
-          mainSwitch: data?.main_switch_rating ? `${data.main_switch_rating}A` : 'Unknown',
-          spd:
-            data?.spd_status === 'green_ok'
-              ? 'OK'
-              : data?.spd_status === 'red_replace'
-                ? 'Replace'
-                : data?.spd_status === 'yellow_check'
-                  ? 'Check'
-                  : 'Unknown',
-          totalWays: data?.total_ways || resolvedWays,
-          waysPerSide: data?.ways_per_side || null,
-          evidence: data?.evidence,
-          boardLayout: data?.board_layout ?? '1P',
-          waysPerCircuit: data?.ways_per_circuit ?? 1,
-        };
-
-        const transformedData = {
-          circuits: transformedCircuits,
-          board: transformedBoard,
-          metadata: { ...data?.metadata, boardSize: resolvedWays, scanSessionId },
-          warnings: data?.warnings,
-          decisions: data?.decisions,
-          photoUrl: capturedImages[0]?.url || null, // Pass photo for training
-        };
-
-        toast.success(`Found ${data.circuits.length} circuits`);
-        onAnalysisComplete(transformedData);
-      } else {
-        toast.error(
-          'AI could not detect any circuits. Please try another angle or ensure the board is clearly visible and well-lit.'
-        );
-      }
-    } catch (error) {
-      clearTimeout(stage2Timer);
-      clearTimeout(stage3Timer);
-      clearTimeout(stage4Timer);
-      clearTimeout(stage5Timer);
-      clearTimeout(timeoutId);
-      const rawMsg = error instanceof Error ? error.message : String(error);
-      // Show friendly message, not raw API errors
-      const errorMessage = rawMsg.includes('non-2xx') || rawMsg.includes('503') || rawMsg.includes('abort')
-        ? 'Sorry, there was a hiccup. Please try again.'
-        : rawMsg;
-      toast.error(errorMessage);
-    } finally {
-      toast.dismiss('timeout-warning');
-      setIsAnalyzing(false);
-    }
+    // Hand image URLs to the parent, which runs the SSE pipeline through
+    // `BoardScannerStream`.
+    onPhotosReady(capturedImages.map((img) => img.url));
   };
 
-  // Content that's shared between both render modes
+  // Capture content — the parent (BoardScannerOverlay) provides the sheet
+  // container and header.
   const content = (
     <>
       {/* Hidden file input - always mounted for reliable mobile access */}
@@ -784,125 +472,132 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
         key="file-input"
       />
 
-      {/* Only show internal header when NOT renderContentOnly (parent provides header) */}
-      {!renderContentOnly && (
-        <div className="flex items-center justify-between">
-          <h3 className="text-sm md:text-lg font-semibold flex items-center gap-1.5 md:gap-2">
-            <Camera className="h-4 w-4 md:h-5 md:w-5 text-elec-blue" />
-            Scan Electrical Board
-          </h3>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={onClose}
-            className="min-h-[44px] min-w-[44px] md:h-9 md:w-9 active:scale-95 transition-all touch-manipulation"
-          >
-            <X className="h-4 w-4 md:h-5 md:w-5" />
-          </Button>
-        </div>
-      )}
-
       {capturedImages.length === 0 && !showCamera && (
-        <div className="flex flex-col">
-          {/* Editorial intro paragraph — replaces the icon hero + checkmark list */}
-          <p className="text-[15px] sm:text-[16px] text-white/65 leading-relaxed max-w-[58ch]">
-            Snap the board and the scanner streams every circuit it can see — labels, ratings, RCBOs, three-phase, the lot. Edit anything you need to before sending it through to the schedule.
+        <div className="flex flex-1 flex-col justify-between gap-6 outline-none">
+          {/* Intro — one line of guidance under the sheet header */}
+          <p className="text-[14px] sm:text-[15px] text-white/85 leading-relaxed max-w-[58ch]">
+            Snap the board and the scanner streams every circuit it can see — labels, ratings,
+            RCBOs, three-phase, the lot. Edit anything before it goes through to the schedule.
           </p>
 
-          {/* What it reads — three numbered rows in editorial language, no icons */}
-          <ul className="mt-8 border-t border-white/[0.06]">
-            {[
-              { n: '01', t: 'Circuit labels', s: 'Reads handwritten and printed legends, expands UK abbreviations.' },
-              { n: '02', t: 'Devices', s: 'MCB, RCBO, RCD, AFDD, MCCB, isolators — by I∆n marking and model code.' },
-              { n: '03', t: 'Board structure', s: 'Brand, model, layout, main switch, surge protection, three-phase.' },
-            ].map(({ n, t, s }) => (
-              <li
-                key={n}
-                className="border-b border-white/[0.06] py-4 sm:py-5 flex items-baseline gap-4 sm:gap-6"
-              >
-                <span className="flex-shrink-0 w-8 sm:w-10 text-[18px] sm:text-[20px] font-light text-elec-yellow/70 tabular-nums leading-tight">
-                  {n}
-                </span>
-                <div className="flex-1 min-w-0">
-                  <div className="text-[15px] sm:text-[16px] font-semibold text-white leading-snug">
-                    {t}
-                  </div>
-                  <p className="mt-1 text-[13px] sm:text-[14px] text-white/55 leading-relaxed max-w-[55ch]">
-                    {s}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
+          {/* Visual hero — stylised distribution board inside a volt viewfinder */}
+          <div className="flex flex-col items-center">
+            <div aria-hidden="true" className="relative w-full max-w-sm px-4 py-4">
+              {/* Viewfinder corner brackets */}
+              <span className="absolute left-0 top-0 h-5 w-5 rounded-tl border-l-2 border-t-2 border-elec-yellow/70 motion-safe:animate-pulse" />
+              <span className="absolute right-0 top-0 h-5 w-5 rounded-tr border-r-2 border-t-2 border-elec-yellow/70 motion-safe:animate-pulse" />
+              <span className="absolute bottom-0 left-0 h-5 w-5 rounded-bl border-b-2 border-l-2 border-elec-yellow/70 motion-safe:animate-pulse" />
+              <span className="absolute bottom-0 right-0 h-5 w-5 rounded-br border-b-2 border-r-2 border-elec-yellow/70 motion-safe:animate-pulse" />
 
-          {/* Reading direction note — editorial, no callout box */}
-          <div className="mt-6 pt-5 border-t border-white/[0.06]">
-            <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-elec-yellow">
-              Tip
+              {/* Board — enclosure with a recessed DIN rail, a proper main
+                  switch, a 3P block, and breakers that flash volt in sequence
+                  (board-read keyframe) — the scanner reading module by module. */}
+              <div className="rounded-2xl border border-white/[0.2] bg-gradient-to-b from-white/[0.12] to-white/[0.06] p-2 shadow-inner sm:p-2.5">
+                {/* DIN recess */}
+                <div className="rounded-xl bg-black/40 p-2 shadow-[inset_0_2px_6px_rgba(0,0,0,0.5)] sm:p-2.5">
+                  <div className="flex items-stretch gap-1.5">
+                    {/* Main switch — double module, volt lever ON */}
+                    <div className="flex w-11 shrink-0 flex-col items-center justify-between rounded-md border border-white/[0.08] bg-white/[0.16] px-1.5 py-1.5">
+                      <span className="block h-1 w-full rounded-sm bg-white/[0.35]" />
+                      <span className="block h-3.5 w-2 rounded-sm bg-elec-yellow" />
+                      <span className="block h-1 w-full rounded-sm bg-white/[0.2]" />
+                    </div>
+                    {/* Breaker modules — top row leads with a 3P triple */}
+                    <div className="grid flex-1 grid-cols-8 gap-1">
+                      {/* 3P block spanning three ways */}
+                      <span className="col-span-3 flex h-8 items-center justify-center gap-1.5 rounded-md border border-white/[0.08] bg-white/[0.12]">
+                        {[0, 1, 2].map((p) => (
+                          <span key={p} className="block h-3 w-1.5 rounded-sm bg-white/[0.4]" />
+                        ))}
+                      </span>
+                      {Array.from({ length: 13 }).map((_, i) => (
+                        <span
+                          key={i}
+                          style={{ animationDelay: `${(i + 1) * 0.28}s` }}
+                          className="flex h-8 items-center justify-center rounded-md border border-white/[0.08] bg-white/[0.10] motion-safe:animate-[board-read_5s_ease-in-out_infinite]"
+                        >
+                          <span className="block h-3 w-1.5 rounded-sm bg-white/[0.4]" />
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                {/* Circuit legend — the handwritten strip under the breakers */}
+                <div className="mt-2 flex items-center gap-1.5 rounded-lg bg-white/[0.10] px-2.5 py-2">
+                  <span className="h-1.5 w-1/4 rounded-full bg-white/[0.3]" />
+                  <span className="h-1.5 w-1/6 rounded-full bg-white/[0.22]" />
+                  <span className="h-1.5 w-1/5 rounded-full bg-white/[0.3]" />
+                  <span className="h-1.5 w-1/6 rounded-full bg-white/[0.22]" />
+                  <span className="h-1.5 flex-1 rounded-full bg-white/[0.16]" />
+                </div>
+              </div>
             </div>
-            <p className="mt-1.5 text-[13px] sm:text-[14px] text-white/65 leading-relaxed max-w-[55ch]">
-              The scanner reads circuits left to right. If your main switch is on the right, tap <span className="text-white font-medium">Reverse</span> after the scan completes.
+            <p className="mt-1 text-center text-[12px] text-white/85">
+              Frame the whole unit, legend included
             </p>
           </div>
 
-          {/* CTAs — editorial yellow rectangles, no icons */}
-          <div className="mt-10 space-y-3">
+          {/* What it reads + tip */}
+          <div>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+              {[
+                { t: 'Circuit labels', s: 'Reads handwritten and printed legends, expands UK abbreviations.' },
+                { t: 'Devices', s: 'MCB, RCBO, RCD, AFDD, MCCB, isolators — by I∆n marking and model code.' },
+                { t: 'Board structure', s: 'Brand, model, layout, main switch, surge protection, three-phase.' },
+              ].map(({ t, s }) => (
+                <div
+                  key={t}
+                  className="rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4"
+                >
+                  <p className="text-[13px] font-semibold text-white leading-snug">{t}</p>
+                  <p className="mt-1 text-[12px] text-white/85 leading-relaxed">{s}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Reading direction note */}
+            <p className="mt-4 text-[12px] text-white/85 leading-relaxed max-w-[58ch]">
+              <span className="font-semibold text-white">Tip:</span> the scanner reads circuits
+              left to right. If your main switch is on the right, tap{' '}
+              <span className="font-medium text-white">Reverse</span> after the scan completes.
+            </p>
+          </div>
+
+          {/* CTAs — anchored at the bottom, equal-height row */}
+          <div className="flex flex-col gap-3 pb-[env(safe-area-inset-bottom)] sm:flex-row">
             {(() => {
               const isCoarsePointer =
                 typeof window !== 'undefined' &&
                 window.matchMedia &&
                 window.matchMedia('(pointer: coarse)').matches;
 
-              const primaryCamera = (
-                <button
-                  onClick={startCamera}
-                  className="w-full h-12 rounded-xl text-[14px] font-semibold tracking-tight bg-elec-yellow text-black hover:bg-elec-yellow/90 active:bg-elec-yellow/80 transition-colors touch-manipulation shadow-[0_8px_30px_-8px_rgba(252,196,25,0.45)]"
-                >
-                  Use camera →
-                </button>
-              );
-
               const primaryUpload = (
                 <button
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
+                    haptic.medium();
                     fileInputRef.current?.click();
                   }}
-                  className="w-full h-12 rounded-xl text-[14px] font-semibold tracking-tight bg-elec-yellow text-black hover:bg-elec-yellow/90 active:bg-elec-yellow/80 transition-colors touch-manipulation shadow-[0_8px_30px_-8px_rgba(252,196,25,0.45)]"
+                  className="h-12 w-full sm:flex-[2] rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
                 >
-                  Upload photos →
+                  Upload photos
                 </button>
               );
 
               const secondaryCamera = (
                 <button
-                  onClick={startCamera}
-                  className="w-full h-11 text-[12px] uppercase tracking-[0.18em] font-semibold text-white/65 hover:text-white touch-manipulation transition-colors"
-                >
-                  Use webcam
-                </button>
-              );
-
-              const secondaryUpload = (
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    fileInputRef.current?.click();
+                  onClick={() => {
+                    haptic.light();
+                    startCamera();
                   }}
-                  className="w-full h-11 text-[12px] uppercase tracking-[0.18em] font-semibold text-white/65 hover:text-white touch-manipulation transition-colors"
+                  className="h-12 w-full sm:flex-1 rounded-xl border border-white/[0.14] bg-white/[0.06] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.1] touch-manipulation active:scale-[0.98]"
                 >
-                  Upload from gallery
+                  {isCoarsePointer ? 'Take photo' : 'Use webcam'}
                 </button>
               );
 
-              return isCoarsePointer ? (
-                <>
-                  {primaryCamera}
-                  {secondaryUpload}
-                </>
-              ) : (
+              return (
                 <>
                   {primaryUpload}
                   {secondaryCamera}
@@ -915,37 +610,43 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
 
       {showCamera && (
         <div>
-          <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-elec-yellow">
-            Live
-          </div>
-          <h3 className="mt-2 text-[20px] sm:text-[24px] leading-tight font-semibold text-white tracking-tight">
-            Frame the whole board.
+          <h3 className="text-[15px] font-semibold tracking-tight text-white">
+            Frame the whole board
           </h3>
+          <p className="mt-0.5 text-[12px] text-white/85">Live camera</p>
 
-          <div className="mt-6 relative rounded-xl overflow-hidden border border-white/[0.08] bg-black">
+          <div className="mt-6 relative rounded-xl overflow-hidden border border-white/[0.14] bg-black">
             <video
               ref={videoRef}
               autoPlay
               playsInline
               className="w-full aspect-video object-cover"
             />
-            {/* Editorial frame guide */}
-            <div className="pointer-events-none absolute inset-6 border border-white/15 rounded-lg" />
+            {/* Viewfinder corner brackets — matches the intro hero */}
+            <div className="pointer-events-none absolute inset-6">
+              <span className="absolute left-0 top-0 h-5 w-5 rounded-tl border-l-2 border-t-2 border-elec-yellow/70" />
+              <span className="absolute right-0 top-0 h-5 w-5 rounded-tr border-r-2 border-t-2 border-elec-yellow/70" />
+              <span className="absolute bottom-0 left-0 h-5 w-5 rounded-bl border-b-2 border-l-2 border-elec-yellow/70" />
+              <span className="absolute bottom-0 right-0 h-5 w-5 rounded-br border-b-2 border-r-2 border-elec-yellow/70" />
+            </div>
           </div>
 
           <div className="mt-8 flex items-center justify-between gap-4">
             <button
               type="button"
               onClick={stopCamera}
-              className="text-[12px] uppercase tracking-[0.18em] font-semibold text-white/65 hover:text-white transition-colors touch-manipulation"
+              className="h-12 rounded-xl border border-white/[0.14] bg-white/[0.06] px-5 text-[14px] font-medium text-white transition-colors hover:bg-white/[0.1] touch-manipulation active:scale-[0.98]"
             >
               Cancel
             </button>
             <button
-              onClick={capturePhoto}
-              className="h-12 px-6 rounded-xl text-[14px] font-semibold tracking-tight bg-elec-yellow text-black hover:bg-elec-yellow/90 active:bg-elec-yellow/80 transition-colors touch-manipulation shadow-[0_8px_30px_-8px_rgba(252,196,25,0.45)]"
+              onClick={() => {
+                haptic.medium();
+                capturePhoto();
+              }}
+              className="h-12 px-8 rounded-xl text-[15px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors touch-manipulation active:scale-[0.98]"
             >
-              Capture →
+              Capture
             </button>
           </div>
         </div>
@@ -953,18 +654,18 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
 
       {capturedImages.length > 0 && (
         <div>
-          <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-elec-yellow">
-            {capturedImages.length} photo{capturedImages.length > 1 ? 's' : ''} ready
-          </div>
-          <h3 className="mt-2 text-[20px] sm:text-[24px] leading-tight font-semibold text-white tracking-tight">
-            Review your shots, then scan.
+          <h3 className="text-[15px] font-semibold tracking-tight text-white">
+            Review your shots, then scan
           </h3>
+          <p className="mt-0.5 text-[12px] text-white/85 tabular-nums">
+            {capturedImages.length} photo{capturedImages.length > 1 ? 's' : ''} ready
+          </p>
 
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[45vh] overflow-y-auto pr-1">
             {capturedImages.map((img, idx) => (
               <div
                 key={idx}
-                className="relative group rounded-xl overflow-hidden border border-white/[0.08] bg-white/[0.02]"
+                className="relative group rounded-xl overflow-hidden border border-white/[0.14] bg-white/[0.04]"
               >
                 <img
                   src={img.url}
@@ -973,15 +674,21 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
                 />
                 {img.status === 'compressing' && (
                   <div className="absolute inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center">
-                    <span className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-white/85">
-                      Compressing
-                    </span>
+                    <span className="text-[12px] font-semibold text-white">Compressing…</span>
                   </div>
+                )}
+                {img.status === 'ready' && img.quality === 'blurry' && (
+                  <span className="absolute bottom-2 left-2 rounded-md border border-orange-500/40 bg-black/70 px-2 py-1 text-[11px] font-semibold text-orange-300 backdrop-blur-sm">
+                    May be too blurry
+                  </span>
                 )}
                 <button
                   type="button"
-                  onClick={() => removeImage(idx)}
-                  className="absolute top-2 right-2 h-7 px-2.5 rounded-md text-[10.5px] uppercase tracking-[0.18em] font-semibold bg-black/55 text-white/85 hover:bg-black/75 hover:text-white backdrop-blur-sm transition-colors touch-manipulation"
+                  onClick={() => {
+                    haptic.light();
+                    removeImage(idx);
+                  }}
+                  className="absolute top-2 right-2 h-11 px-4 rounded-lg text-[12px] font-semibold bg-black/60 text-white hover:bg-black/80 backdrop-blur-sm transition-colors touch-manipulation active:scale-[0.98]"
                 >
                   Remove
                 </button>
@@ -990,61 +697,44 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
           </div>
 
           <div className="mt-8 space-y-3">
-            {!isAnalyzing ? (
-              <>
-                <button
-                  onClick={analyzeImages}
-                  className="w-full h-12 rounded-xl text-[14px] font-semibold tracking-tight bg-elec-yellow text-black hover:bg-elec-yellow/90 active:bg-elec-yellow/80 transition-colors touch-manipulation shadow-[0_8px_30px_-8px_rgba(252,196,25,0.45)]"
-                >
-                  Scan {capturedImages.length} photo{capturedImages.length > 1 ? 's' : ''} →
-                </button>
-                <div className="flex items-center justify-center gap-6 pt-1">
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      fileInputRef.current?.click();
-                    }}
-                    className="text-[12px] uppercase tracking-[0.18em] font-semibold text-white/65 hover:text-white transition-colors touch-manipulation"
-                  >
-                    Add more
-                  </button>
-                  <span className="text-white/15">·</span>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setCapturedImages([]);
-                      setShowCamera(false);
-                    }}
-                    className="text-[12px] uppercase tracking-[0.18em] font-semibold text-white/65 hover:text-white transition-colors touch-manipulation"
-                  >
-                    Clear all
-                  </button>
-                </div>
-              </>
-            ) : (
+            <button
+              onClick={() => {
+                haptic.medium();
+                analyzeImages();
+              }}
+              className="w-full h-12 rounded-xl text-[15px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors touch-manipulation active:scale-[0.98]"
+            >
+              Scan {capturedImages.length} photo{capturedImages.length > 1 ? 's' : ''}
+            </button>
+            <div className="flex items-center justify-center gap-6 pt-1">
               <button
-                disabled
-                className="w-full h-12 rounded-xl text-[14px] font-semibold tracking-tight bg-white/[0.04] text-white/55 cursor-not-allowed"
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  fileInputRef.current?.click();
+                }}
+                className="h-11 px-3 text-[13px] font-semibold text-white hover:text-elec-yellow transition-colors touch-manipulation"
               >
-                Reading {capturedImages.length} photo{capturedImages.length > 1 ? 's' : ''}…
+                Add more
               </button>
-            )}
+              <span className="text-white/15">·</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setCapturedImages([]);
+                  setShowCamera(false);
+                }}
+                className="h-11 px-3 text-[13px] font-semibold text-white hover:text-elec-yellow transition-colors touch-manipulation"
+              >
+                Clear all
+              </button>
+            </div>
           </div>
         </div>
       )}
     </>
   );
 
-  // Return with or without Card wrapper based on renderContentOnly prop
-  if (renderContentOnly) {
-    return <div className="space-y-3 md:space-y-4">{content}</div>;
-  }
-
-  return (
-    <Card className="border-2 border-elec-blue w-full max-w-2xl">
-      <CardContent className="p-3 md:p-6 space-y-3 md:space-y-4">{content}</CardContent>
-    </Card>
-  );
+  return <div className="flex min-h-full flex-1 flex-col outline-none">{content}</div>;
 };

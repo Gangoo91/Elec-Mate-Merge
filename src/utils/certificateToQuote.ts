@@ -26,6 +26,27 @@ function extractPostcode(address: string): { address: string; postcode: string }
   return { address: address.trim(), postcode: '' };
 }
 
+/** Line item carried from a certificate into the quote/invoice builders.
+ * Matches the QuoteItem shape both wizards consume; extra traceability
+ * fields (defectCode etc.) ride along harmlessly in the items JSON. */
+export interface CertificateLineItem {
+  id: string;
+  description: string;
+  quantity: number;
+  unit: string;
+  unitPrice: number;
+  totalPrice: number;
+  category: string;
+  subcategory?: string;
+  notes?: string;
+  hours?: number;
+  hourlyRate?: number;
+  workerType?: string;
+  defectCode?: string;
+  defectDescription?: string;
+  source?: string;
+}
+
 export interface CertificateClientData {
   clientName: string;
   clientEmail?: string;
@@ -47,6 +68,10 @@ export interface CertificateClientData {
   reportId?: string;
   pdfUrl?: string;
   pdfStoragePath?: string;
+  /** Pre-priced line items (e.g. EICR defect remedials) — pre-loaded into the builder */
+  items?: CertificateLineItem[];
+  /** Overrides the default job description (e.g. AI estimator scope of works) */
+  jobDescription?: string;
 }
 
 interface QuoteClientData {
@@ -62,6 +87,8 @@ interface QuoteClientData {
     description: string;
     location: string;
   };
+  /** Pre-priced line items the builder pre-loads */
+  items?: CertificateLineItem[];
   // Certificate link for attachment
   linkedCertificate?: {
     reportId: string;
@@ -101,10 +128,16 @@ export function createQuoteFromCertificate(data: CertificateClientData): string 
       title: data.certificateReference
         ? `Remedial Works - ${data.certificateReference}`
         : `Remedial Works - ${data.certificateType}`,
-      description: `Remedial work following ${data.certificateType} inspection`,
+      description:
+        data.jobDescription || `Remedial work following ${data.certificateType} inspection`,
       location: fullAddress,
     },
   };
+
+  // Pre-loaded line items (e.g. defect remedials) — receiver maps these into the wizard
+  if (data.items && data.items.length > 0) {
+    quoteData.items = data.items;
+  }
 
   // Add certificate link if reportId is available
   if (data.reportId) {
@@ -151,10 +184,34 @@ export function createInvoiceFromCertificate(data: CertificateClientData): strin
       title: data.certificateReference
         ? `${data.certificateType} - ${data.certificateReference}`
         : `${data.certificateType} Certificate`,
-      description: `${data.certificateType} inspection and certification`,
+      description: data.jobDescription || `${data.certificateType} inspection and certification`,
       location: fullAddress,
     },
   };
+
+  // Pre-loaded line items. When the certificate provides none, seed the
+  // inspection/certification fee as an unpriced line — the invoice previously
+  // arrived with ZERO items and the fee had no home (audit P1-5). The
+  // electrician sets the price in the Items step before sending.
+  invoiceData.items =
+    data.items && data.items.length > 0
+      ? data.items
+      : [
+          {
+            id:
+              typeof crypto !== 'undefined' && crypto.randomUUID
+                ? crypto.randomUUID()
+                : `cert-item-${Date.now()}`,
+            description: data.certificateReference
+              ? `${data.certificateType} inspection and certification — ${data.certificateReference}`
+              : `${data.certificateType} inspection and certification`,
+            quantity: 1,
+            unit: 'each',
+            unitPrice: 0,
+            totalPrice: 0,
+            category: 'labour',
+          },
+        ];
 
   // Add certificate link if reportId is available
   if (data.reportId) {

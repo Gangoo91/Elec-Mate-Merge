@@ -7,13 +7,6 @@ import {
   ResponsiveFormModalBody,
 } from '@/components/ui/responsive-form-modal';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { toast } from 'sonner';
 import { Clock, Plus, Loader2 } from 'lucide-react';
 import { useEmployees } from '@/hooks/useEmployees';
@@ -27,9 +20,8 @@ import {
   PrimaryButton,
   SecondaryButton,
   inputClass,
-  selectTriggerClass,
-  selectContentClass,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 
 interface ManualTimeEntryDialogProps {
   trigger?: ReactNode;
@@ -200,40 +192,22 @@ export function ManualTimeEntryDialog({
         </ResponsiveFormModalHeader>
         <ResponsiveFormModalBody>
           <form id="time-entry-form" onSubmit={handleSubmit} className="space-y-4">
-          <FormCard eyebrow="Entry">
+          <FormCard bleed eyebrow="Entry">
             <Field label="Employee" required>
-              <Select
-                value={formData.employeeId}
-                onValueChange={(val) => setFormData((prev) => ({ ...prev, employeeId: val }))}
-              >
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="Select employee..." />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {activeEmployees.map((emp) => (
-                    <SelectItem key={emp.id} value={emp.id}>
-                      {emp.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <SelectField
+        value={formData.employeeId}
+        onValueChange={(val) => setFormData((prev) => ({ ...prev, employeeId: val }))}
+        placeholder="Select employee..."
+        options={activeEmployees.map((emp) => ({ value: emp.id, label: emp.name }))}
+      />
             </Field>
             <Field label="Job" required>
-              <Select
-                value={formData.jobId}
-                onValueChange={(val) => setFormData((prev) => ({ ...prev, jobId: val }))}
-              >
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="Select job..." />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {activeJobs.map((job) => (
-                    <SelectItem key={job.id} value={job.id}>
-                      {job.title}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <SelectField
+        value={formData.jobId}
+        onValueChange={(val) => setFormData((prev) => ({ ...prev, jobId: val }))}
+        placeholder="Select job..."
+        options={activeJobs.map((job) => ({ value: job.id, label: job.title }))}
+      />
             </Field>
             <Field label="Date" required>
               <Input
@@ -261,21 +235,11 @@ export function ManualTimeEntryDialog({
                 />
               </Field>
               <Field label="Break (mins)">
-                <Select
-                  value={formData.breakMins}
-                  onValueChange={(val) => setFormData((prev) => ({ ...prev, breakMins: val }))}
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    <SelectItem value="0">0</SelectItem>
-                    <SelectItem value="15">15</SelectItem>
-                    <SelectItem value="30">30</SelectItem>
-                    <SelectItem value="45">45</SelectItem>
-                    <SelectItem value="60">60</SelectItem>
-                  </SelectContent>
-                </Select>
+                <SelectField
+        value={formData.breakMins}
+        onValueChange={(val) => setFormData((prev) => ({ ...prev, breakMins: val }))}
+        options={[{ value: '0', label: '0' }, { value: '15', label: '15' }, { value: '30', label: '30' }, { value: '45', label: '45' }, { value: '60', label: '60' }]}
+      />
               </Field>
             </FormGrid>
           </FormCard>

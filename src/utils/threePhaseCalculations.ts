@@ -1,11 +1,17 @@
 /**
- * Three-Phase Electrical Calculations for BS7671 Compliance
+ * Three-phase electrical calculations
  *
  * Provides utilities for:
- * - Phase balance calculations
- * - Neutral current estimation
- * - BS7671 compliance validation
+ * - Phase balance calculations (max deviation from average — NEMA/IEC convention)
+ * - Neutral current estimation (vector sum)
+ * - Voltage tolerance checks
  * - Three-phase circuit grouping
+ * - Rebalancing suggestions (which circuits to move between phases)
+ *
+ * Note on imbalance: BS 7671 does not prescribe a numeric phase-imbalance
+ * limit. Balanced load distribution is good design practice — it reduces
+ * neutral current and voltage imbalance — so the bands used here are
+ * guidance only, never presented as regulatory limits.
  */
 
 // ============================================================================
@@ -27,9 +33,23 @@ export interface PhaseVoltageData {
   L1_L3?: number;
 }
 
+/**
+ * Guidance band for phase imbalance (max deviation from average):
+ * ≤5% balanced · 5–15% review · >15% high. Advisory only — not a
+ * regulatory limit.
+ */
+export type PhaseBalanceBand = 'balanced' | 'review' | 'high';
+
 export interface PhaseBalanceResult {
+  /** Max deviation from the three-phase average, as % of the average */
   imbalancePercent: number;
-  isCompliant: boolean; // BS7671 requires <10% imbalance typically
+  /** Guidance band: ≤5% balanced · 5–15% review · >15% high */
+  band: PhaseBalanceBand;
+  /**
+   * @deprecated Legacy convenience flag (true when band !== 'high').
+   * Carries no regulatory meaning — use `band` instead.
+   */
+  isCompliant: boolean;
   highestPhase: 'L1' | 'L2' | 'L3';
   lowestPhase: 'L1' | 'L2' | 'L3';
   recommendation?: string;
@@ -54,9 +74,11 @@ export interface VoltageComplianceResult {
 
 export interface ThreePhaseCircuitGroup {
   id: string;
+  /** Distinct board ways the group spans (deduped, ascending) */
   positions: number[];
   label: string;
-  rating: number;
+  /** Device rating in amps — null when unknown (never 0-as-unknown) */
+  rating: number | null;
   deviceType: string;
   phases: ['L1', 'L2', 'L3'];
 }
@@ -65,11 +87,22 @@ export interface ThreePhaseCircuitGroup {
 // PHASE BALANCE CALCULATIONS
 // ============================================================================
 
+/** Band thresholds (guidance only): ≤5% balanced · 5–15% review · >15% high */
+export function phaseBalanceBand(imbalancePercent: number): PhaseBalanceBand {
+  if (imbalancePercent <= 5) return 'balanced';
+  if (imbalancePercent <= 15) return 'review';
+  return 'high';
+}
+
 /**
- * Calculates phase balance percentage per BS7671
- * Imbalance should typically be <10% for optimal operation
+ * Calculates phase imbalance using the NEMA/IEC convention:
+ * max deviation from the three-phase average ÷ average × 100.
  *
- * Formula: ((Max - Min) / Average) × 100
+ * Example: 24A / 40A / 24A → average 29.33A, max deviation 10.67A → 36.4%.
+ *
+ * Balanced distribution is good practice (it reduces neutral current and
+ * voltage imbalance) but the bands returned are guidance, not a BS 7671
+ * requirement — no numeric imbalance limit exists in the regulations.
  */
 export function calculatePhaseBalance(loads: PhaseLoadData): PhaseBalanceResult {
   const { L1, L2, L3 } = loads;
@@ -84,30 +117,32 @@ export function calculatePhaseBalance(loads: PhaseLoadData): PhaseBalanceResult 
   if (average === 0) {
     return {
       imbalancePercent: 0,
+      band: 'balanced',
       isCompliant: true,
       highestPhase: 'L1',
       lowestPhase: 'L1',
     };
   }
 
-  const imbalancePercent = ((max - min) / average) * 100;
+  const maxDeviation = Math.max(...values.map((v) => Math.abs(v - average)));
+  const imbalancePercent = (maxDeviation / average) * 100;
   const maxIndex = values.indexOf(max);
   const minIndex = values.indexOf(min);
+  const band = phaseBalanceBand(imbalancePercent);
 
   const result: PhaseBalanceResult = {
     imbalancePercent: Math.round(imbalancePercent * 10) / 10,
-    isCompliant: imbalancePercent <= 10,
+    band,
+    isCompliant: band !== 'high',
     highestPhase: labels[maxIndex],
     lowestPhase: labels[minIndex],
   };
 
-  // Add recommendations for imbalanced systems
-  if (imbalancePercent > 15) {
-    result.recommendation = `Critical imbalance (${result.imbalancePercent}%). Redistribute loads from ${result.highestPhase} to ${result.lowestPhase}. May cause neutral overload.`;
-  } else if (imbalancePercent > 10) {
-    result.recommendation = `High imbalance (${result.imbalancePercent}%). Consider redistributing single-phase loads for better balance.`;
-  } else if (imbalancePercent > 5) {
-    result.recommendation = `Minor imbalance (${result.imbalancePercent}%). Acceptable but could be optimized.`;
+  // Advisory recommendations — guidance wording only, no regulatory claims
+  if (band === 'high') {
+    result.recommendation = `High imbalance (${result.imbalancePercent}% max deviation from average). Moving single-phase loads from ${result.highestPhase} to ${result.lowestPhase} would cut neutral current and voltage imbalance.`;
+  } else if (band === 'review') {
+    result.recommendation = `Imbalance of ${result.imbalancePercent}% (max deviation from average). Worth reviewing — moving a load from ${result.highestPhase} to ${result.lowestPhase} would improve balance.`;
   }
 
   return result;
@@ -142,6 +177,137 @@ export function calculateNeutralCurrent(loads: PhaseLoadData): NeutralCurrentRes
   }
 
   return result;
+}
+
+// ============================================================================
+// REBALANCING SUGGESTIONS
+// ============================================================================
+
+export interface RebalanceCircuit {
+  /** Board way / position of the circuit */
+  way: number | string;
+  label: string;
+  /** Protective device rating in amps (null = unknown, circuit is skipped) */
+  rating: number | null;
+  /** Phase the circuit currently sits on */
+  phase: 'L1' | 'L2' | 'L3';
+}
+
+export interface RebalanceMove {
+  way: number | string;
+  label: string;
+  rating: number;
+  from: 'L1' | 'L2' | 'L3';
+  to: 'L1' | 'L2' | 'L3';
+}
+
+export interface RebalanceSuggestion {
+  moves: RebalanceMove[];
+  /** Imbalance (max deviation from average, %) after all suggested moves */
+  projectedImbalancePercent: number;
+  /** Estimated neutral current (A) after all suggested moves */
+  projectedNeutralAmps: number;
+}
+
+const PHASE_KEYS: ('L1' | 'L2' | 'L3')[] = ['L1', 'L2', 'L3'];
+
+/**
+ * Greedily proposes up to three single-phase circuit moves from the heaviest
+ * phase to the lightest to improve balance. Each step picks the movable
+ * circuit whose estimated load is closest to half the current
+ * heaviest–lightest gap (the ideal transfer), recomputes the totals, and
+ * stops early if no move would improve the imbalance.
+ *
+ * Estimated loads come from device ratings (`rating × loadFactor`), so
+ * projections are estimates, not measurements. `baseLoads` carries any
+ * per-phase load that is fixed (three-phase groups, circuits that cannot be
+ * moved) so projections line up with the displayed totals.
+ *
+ * Guidance only — proposed moves must be confirmed as practical on site.
+ */
+export function suggestRebalance(
+  circuits: RebalanceCircuit[],
+  options?: { loadFactor?: number; baseLoads?: PhaseLoadData }
+): RebalanceSuggestion {
+  const loadFactor = options?.loadFactor ?? 0.5;
+  const base = options?.baseLoads ?? { L1: 0, L2: 0, L3: 0 };
+
+  // Movable circuits need a usable rating
+  const movable = circuits
+    .filter((c) => c.rating !== null && Number.isFinite(c.rating) && (c.rating as number) > 0)
+    .map((c) => ({ ...c, rating: c.rating as number, load: (c.rating as number) * loadFactor }));
+
+  // Working totals: fixed base + movable circuit loads
+  const totals: PhaseLoadData = { L1: base.L1, L2: base.L2, L3: base.L3 };
+  movable.forEach((c) => {
+    totals[c.phase] += c.load;
+  });
+
+  const imbalanceOf = (t: PhaseLoadData): number => {
+    const avg = (t.L1 + t.L2 + t.L3) / 3;
+    if (avg === 0) return 0;
+    const maxDev = Math.max(...PHASE_KEYS.map((k) => Math.abs(t[k] - avg)));
+    return (maxDev / avg) * 100;
+  };
+
+  const moves: RebalanceMove[] = [];
+  const moved = new Set<number>(); // indices into `movable` already proposed
+
+  for (let step = 0; step < 3; step++) {
+    const currentImbalance = imbalanceOf(totals);
+    if (currentImbalance <= 5) break; // already balanced — stop
+
+    // Identify heaviest and lightest phases on current totals
+    let heaviest: 'L1' | 'L2' | 'L3' = 'L1';
+    let lightest: 'L1' | 'L2' | 'L3' = 'L1';
+    PHASE_KEYS.forEach((k) => {
+      if (totals[k] > totals[heaviest]) heaviest = k;
+      if (totals[k] < totals[lightest]) lightest = k;
+    });
+    if (heaviest === lightest) break;
+
+    const gap = totals[heaviest] - totals[lightest];
+    const idealTransfer = gap / 2;
+
+    // Candidates: single-phase circuits currently on the heaviest phase
+    let bestIdx = -1;
+    let bestDistance = Infinity;
+    movable.forEach((c, idx) => {
+      if (moved.has(idx) || c.phase !== heaviest) return;
+      const distance = Math.abs(c.load - idealTransfer);
+      if (distance < bestDistance) {
+        bestDistance = distance;
+        bestIdx = idx;
+      }
+    });
+    if (bestIdx === -1) break; // nothing movable on the heaviest phase
+
+    const candidate = movable[bestIdx];
+
+    // Simulate the move — skip (and stop) if it would not improve balance
+    const trial: PhaseLoadData = { ...totals };
+    trial[heaviest] -= candidate.load;
+    trial[lightest] += candidate.load;
+    if (imbalanceOf(trial) >= currentImbalance) break;
+
+    totals[heaviest] = trial[heaviest];
+    totals[lightest] = trial[lightest];
+    moved.add(bestIdx);
+    candidate.phase = lightest;
+    moves.push({
+      way: candidate.way,
+      label: candidate.label,
+      rating: candidate.rating,
+      from: heaviest,
+      to: lightest,
+    });
+  }
+
+  return {
+    moves,
+    projectedImbalancePercent: Math.round(imbalanceOf(totals) * 10) / 10,
+    projectedNeutralAmps: calculateNeutralCurrent(totals).estimatedAmps,
+  };
 }
 
 /**
@@ -212,8 +378,19 @@ export function validateVoltageCompliance(voltages: PhaseVoltageData): VoltageCo
 // ============================================================================
 
 /**
- * Detects three-phase circuit groups from circuit list
- * Looks for adjacent circuits with same rating that could be 3-pole MCBs
+ * Detects three-phase circuit groups from circuit list.
+ *
+ * Two sources of truth, in priority order:
+ *
+ * 1. Explicit `phase: '3P'` rows. The board scanner expands a 3-pole circuit
+ *    into THREE sibling rows (circuitNumber "7.1"/"7.2"/"7.3", one per line
+ *    conductor) which all parse to the SAME way number — so explicit rows are
+ *    grouped by way, never by adjacency. One way = one group; positions are
+ *    the distinct ways (deduped) that carry 3P rows.
+ *
+ * 2. Heuristic on the remaining single-phase rows: three ADJACENT ways with
+ *    the same rating (≥20A) are likely a 3-pole interlocked MCB — that group
+ *    genuinely spans three distinct ways (e.g. 7, 8, 9).
  */
 export function detectThreePhaseGroups(
   circuits: Array<{
@@ -225,32 +402,43 @@ export function detectThreePhaseGroups(
   }>
 ): ThreePhaseCircuitGroup[] {
   const groups: ThreePhaseCircuitGroup[] = [];
-
-  // Sort by position
   const sorted = [...circuits].sort((a, b) => a.position - b.position);
 
-  let i = 0;
-  while (i < sorted.length - 2) {
-    const c1 = sorted[i];
-    const c2 = sorted[i + 1];
-    const c3 = sorted[i + 2];
-
-    // Check if already marked as 3P
-    if (c1.phase === '3P' || c2.phase === '3P' || c3.phase === '3P') {
-      // This is a three-phase group
-      groups.push({
-        id: `3p-${c1.position}`,
-        positions: [c1.position, c2.position, c3.position],
-        label: c1.label || `Three-Phase Circuit`,
-        rating: c1.rating || 0,
-        deviceType: c1.device,
-        phases: ['L1', 'L2', 'L3'],
-      });
-      i += 3;
-      continue;
+  // ── Pass 1: explicit 3P rows, grouped by way ──
+  const explicitByWay = new Map<number, typeof sorted>();
+  const remaining: typeof sorted = [];
+  sorted.forEach((c) => {
+    if (c.phase === '3P') {
+      const rows = explicitByWay.get(c.position);
+      if (rows) rows.push(c);
+      else explicitByWay.set(c.position, [c]);
+    } else {
+      remaining.push(c);
     }
+  });
 
-    // Check if three consecutive circuits have same rating (potential 3P interlocked)
+  explicitByWay.forEach((rows, way) => {
+    // Prefer the first row that actually carries data for label/rating —
+    // sibling phase rows share device details, but be defensive about gaps.
+    const labelled = rows.find((r) => r.label) ?? rows[0];
+    const rated = rows.find((r) => r.rating !== null && Number.isFinite(r.rating) && r.rating > 0);
+    groups.push({
+      id: `3p-way-${way}`,
+      positions: [way],
+      label: labelled.label || 'Three-phase circuit',
+      rating: rated ? (rated.rating as number) : null,
+      deviceType: rows.find((r) => r.device)?.device || '',
+      phases: ['L1', 'L2', 'L3'],
+    });
+  });
+
+  // ── Pass 2: infer 3-pole interlocked MCBs from adjacent same-rating ways ──
+  let i = 0;
+  while (i < remaining.length - 2) {
+    const c1 = remaining[i];
+    const c2 = remaining[i + 1];
+    const c3 = remaining[i + 2];
+
     if (
       c1.rating !== null &&
       c1.rating === c2.rating &&
@@ -259,18 +447,15 @@ export function detectThreePhaseGroups(
       c1.position + 1 === c2.position &&
       c2.position + 1 === c3.position
     ) {
-      // Likely a 3-pole MCB for three-phase load
-      const label = inferThreePhaseLabel(c1.label, c1.rating);
-
       groups.push({
         id: `3p-${c1.position}`,
-        positions: [c1.position, c2.position, c3.position],
-        label,
+        // Adjacent by construction, so already distinct — dedupe defensively
+        positions: [...new Set([c1.position, c2.position, c3.position])],
+        label: inferThreePhaseLabel(c1.label, c1.rating),
         rating: c1.rating,
         deviceType: c1.device,
         phases: ['L1', 'L2', 'L3'],
       });
-
       i += 3;
       continue;
     }
@@ -278,7 +463,7 @@ export function detectThreePhaseGroups(
     i++;
   }
 
-  return groups;
+  return groups.sort((a, b) => a.positions[0] - b.positions[0]);
 }
 
 /**
@@ -292,13 +477,13 @@ function inferThreePhaseLabel(existingLabel: string, rating: number): string {
     return 'Cooker (3P)';
   }
   if (label.includes('shower') || label.includes('instant')) {
-    return 'Electric Shower (3P)';
+    return 'Electric shower (3P)';
   }
   if (label.includes('ev') || label.includes('charger') || label.includes('vehicle')) {
-    return 'EV Charger (3P)';
+    return 'EV charger (3P)';
   }
   if (label.includes('motor') || label.includes('pump')) {
-    return 'Motor/Pump (3P)';
+    return 'Motor/pump (3P)';
   }
   if (label.includes('hvac') || label.includes('ac') || label.includes('air')) {
     return 'HVAC (3P)';
@@ -309,13 +494,13 @@ function inferThreePhaseLabel(existingLabel: string, rating: number): string {
 
   // Infer by rating
   if (rating >= 32 && rating <= 50) {
-    return 'Three-Phase Load (likely Cooker/EV)';
+    return 'Three-phase load (likely cooker/EV)';
   }
   if (rating >= 63) {
-    return 'Three-Phase Submain/Heavy Load';
+    return 'Three-phase submain/heavy load';
   }
 
-  return existingLabel || 'Three-Phase Circuit';
+  return existingLabel || 'Three-phase circuit';
 }
 
 // ============================================================================
@@ -327,16 +512,17 @@ function inferThreePhaseLabel(existingLabel: string, rating: number): string {
  */
 export function formatPhaseBalance(loads: PhaseLoadData): string {
   const result = calculatePhaseBalance(loads);
-  const status = result.isCompliant ? '✓' : '⚠';
+  const status = result.band === 'high' ? '⚠' : '✓';
   return `${status} ${result.imbalancePercent}% (L1:${loads.L1}A L2:${loads.L2}A L3:${loads.L3}A)`;
 }
 
 /**
- * Gets color class for phase balance indicator
+ * Gets color class for phase balance indicator.
+ * Bands (guidance): ≤5% balanced · 5–15% review · >15% high.
  */
 export function getPhaseBalanceColor(imbalancePercent: number): string {
   if (imbalancePercent <= 5) return 'text-green-600 bg-green-50';
-  if (imbalancePercent <= 10) return 'text-yellow-600 bg-yellow-50';
+  if (imbalancePercent <= 15) return 'text-yellow-600 bg-yellow-50';
   return 'text-red-600 bg-red-50';
 }
 

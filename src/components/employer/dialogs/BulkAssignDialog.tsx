@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
-import { useIsMobile } from '@/hooks/use-mobile';
 import type { Employee } from '@/services/employeeService';
 import { useCreateJobAssignment } from '@/hooks/useJobAssignments';
 import { useJobs } from '@/hooks/useJobs';
@@ -31,7 +30,6 @@ export function BulkAssignDialog({
   onComplete,
   selectedEmployees,
 }: BulkAssignDialogProps) {
-  const isMobile = useIsMobile();
   const createAssignment = useCreateJobAssignment();
   const { data: jobs = [] } = useJobs();
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
@@ -92,22 +90,18 @@ export function BulkAssignDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        className={cn(
-          'bg-[hsl(0_0%_8%)] border-white/[0.08]',
-          isMobile
-            ? 'max-w-[95vw] h-[90vh] p-0 flex flex-col'
-            : 'sm:max-w-lg max-h-[85vh] p-0 flex flex-col'
-        )}
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.08]"
       >
         <div className="flex-shrink-0 p-4 pb-0">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-white">
+          <SheetHeader>
+            <SheetTitle className="flex items-center gap-2 text-white">
               <Users className="h-5 w-5 text-elec-yellow" />
               Bulk Assign to Job
-            </DialogTitle>
-          </DialogHeader>
+            </SheetTitle>
+          </SheetHeader>
 
           <div className="flex items-center gap-3 p-3 bg-white/[0.04] border border-white/[0.08] rounded-xl mt-4">
             <div className="flex -space-x-2">
@@ -225,7 +219,7 @@ export function BulkAssignDialog({
             </PrimaryButton>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 }

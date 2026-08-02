@@ -127,7 +127,7 @@ ${hazard.bs7671References?.length ? `\nBS7671 REFERENCES: ${hazard.bs7671Referen
     <Sheet open={open} onOpenChange={(o) => !o && onClose()}>
       <SheetContent
         side="bottom"
-        className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
       >
         <SheetShell
           eyebrow={categoryLabel}

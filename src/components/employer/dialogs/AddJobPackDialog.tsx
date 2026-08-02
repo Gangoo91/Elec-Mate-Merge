@@ -644,6 +644,7 @@ export function AddJobPackDialog({
                 <Field label="Estimated value (£)">
                   <Input
                     type="number"
+                            inputMode="decimal"
                     value={formData.estimatedValue}
                     onChange={(e) =>
                       setFormData((prev) => ({ ...prev, estimatedValue: e.target.value }))
@@ -884,7 +885,7 @@ export function AddJobPackDialog({
             </Button>
           )}
         </DrawerTrigger>
-        <DrawerContent className="h-[90vh] flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.08]">
+        <DrawerContent className="h-[85vh] flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.08]">
           <DrawerHeader className="py-3 px-5 border-b border-white/[0.06] shrink-0">
             <DrawerTitle>{header}</DrawerTitle>
           </DrawerHeader>

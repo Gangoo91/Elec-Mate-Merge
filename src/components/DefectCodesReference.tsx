@@ -1,147 +1,78 @@
 import React from 'react';
-import {
-  AlertTriangle,
-  CheckCircle,
-  XCircle,
-  FileText,
-  Minus,
-  Info,
-  ChevronDown,
-} from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
+
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
 const defectCodes = [
   {
     code: 'C1',
-    label: 'Danger Present',
-    description: 'Immediate action required - risk of injury',
-    severity: 'high',
-    color: 'red',
+    label: 'Danger present',
+    description: 'Risk of injury. Immediate remedial action is necessary',
+    badge: 'bg-red-600 text-white',
   },
   {
     code: 'C2',
-    label: 'Potentially Dangerous',
-    description: 'Urgent remedial action required',
-    severity: 'medium',
-    color: 'orange',
+    label: 'Potentially dangerous',
+    description: 'Urgent remedial action is necessary',
+    badge: 'bg-orange-500 text-white',
   },
   {
     code: 'C3',
-    label: 'Improvement Recommended',
-    description: 'Does not comply with current regs',
-    severity: 'low',
-    color: 'yellow',
+    label: 'Improvement recommended',
+    description: 'Advisory only — does not affect the overall assessment',
+    badge: 'bg-yellow-500 text-black',
   },
   {
     code: 'FI',
-    label: 'Further Investigation',
-    description: 'Further investigation required',
-    severity: 'info',
-    color: 'blue',
+    label: 'Further investigation',
+    description: 'Further investigation is advised',
+    badge: 'bg-blue-600 text-white',
   },
   {
     code: 'N/A',
-    label: 'Not Applicable',
+    label: 'Not applicable',
     description: 'Not applicable to this installation',
-    severity: 'neutral',
-    color: 'gray',
+    badge: 'bg-white/[0.15] text-white',
   },
   {
     code: 'LIM',
     label: 'Limitation',
     description: 'Limitation noted during inspection',
-    severity: 'limitation',
-    color: 'purple',
+    badge: 'bg-purple-600 text-white',
   },
 ];
 
-const getSeverityIcon = (severity: string) => {
-  switch (severity) {
-    case 'high':
-      return XCircle;
-    case 'medium':
-      return AlertTriangle;
-    case 'low':
-      return CheckCircle;
-    case 'info':
-      return FileText;
-    case 'neutral':
-      return Minus;
-    case 'limitation':
-      return Info;
-    default:
-      return FileText;
-  }
-};
-
-const getColorClasses = (color: string) => {
-  switch (color) {
-    case 'red':
-      return {
-        bg: 'bg-red-500/15',
-        border: 'border-red-500/30',
-        text: 'text-red-400',
-        icon: 'text-red-500',
-      };
-    case 'orange':
-      return {
-        bg: 'bg-orange-500/15',
-        border: 'border-orange-500/30',
-        text: 'text-orange-400',
-        icon: 'text-orange-500',
-      };
-    case 'yellow':
-      return {
-        bg: 'bg-yellow-500/15',
-        border: 'border-yellow-500/30',
-        text: 'text-yellow-400',
-        icon: 'text-yellow-500',
-      };
-    case 'blue':
-      return {
-        bg: 'bg-blue-500/15',
-        border: 'border-blue-500/30',
-        text: 'text-blue-400',
-        icon: 'text-blue-500',
-      };
-    case 'gray':
-      return {
-        bg: 'bg-white/5',
-        border: 'border-white/10',
-        text: 'text-white',
-        icon: 'text-white',
-      };
-    case 'purple':
-      return {
-        bg: 'bg-purple-500/15',
-        border: 'border-purple-500/30',
-        text: 'text-purple-400',
-        icon: 'text-purple-500',
-      };
-    default:
-      return {
-        bg: 'bg-white/5',
-        border: 'border-white/10',
-        text: 'text-white',
-        icon: 'text-white',
-      };
-  }
-};
+const Chevron = ({ open }: { open: boolean }) => (
+  <svg
+    viewBox="0 0 24 24"
+    className={cn(
+      'h-4 w-4 shrink-0 text-white transition-transform duration-200',
+      open && 'rotate-180'
+    )}
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="m6 9 6 6 6-6" />
+  </svg>
+);
 
 interface DefectCodesReferenceProps {
   defaultOpen?: boolean;
 }
 
 const DefectCodesReference = ({ defaultOpen = false }: DefectCodesReferenceProps) => {
-  const isMobile = useIsMobile();
   const haptic = useHaptic();
   const [isOpen, setIsOpen] = React.useState(defaultOpen);
 
   return (
-    <div className={cn(isMobile && '-mx-4')}>
+    <section className={cardCn}>
       <Collapsible
         open={isOpen}
         onOpenChange={(open) => {
@@ -149,56 +80,40 @@ const DefectCodesReference = ({ defaultOpen = false }: DefectCodesReferenceProps
           setIsOpen(open);
         }}
       >
-        {/* Header — gradient line pattern */}
-        <CollapsibleTrigger className="w-full" asChild>
-          <button className="w-full flex items-center gap-2.5 p-3 text-left touch-manipulation active:scale-[0.98] transition-all">
-            <div className="flex-1 min-w-0">
-              <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-              <h2 className="text-xs font-medium text-white uppercase tracking-wider">Defect Classification</h2>
-            </div>
-            <ChevronDown
-              className={cn(
-                'h-4 w-4 text-white/30 transition-transform duration-200 flex-shrink-0',
-                isOpen && 'rotate-180'
-              )}
-            />
+        <CollapsibleTrigger asChild>
+          <button
+            type="button"
+            className="flex w-full items-center justify-between gap-3 text-left touch-manipulation"
+          >
+            <h2 className="text-[15px] font-semibold tracking-tight text-white">
+              Defect classification
+            </h2>
+            <Chevron open={isOpen} />
           </button>
         </CollapsibleTrigger>
 
         <CollapsibleContent>
-          <div className={cn('space-y-2 bg-white/[0.02]', isMobile ? 'p-4' : 'p-4')}>
-            {defectCodes.map((code) => {
-              const Icon = getSeverityIcon(code.severity);
-              const colors = getColorClasses(code.color);
-
-              return (
-                <div
-                  key={code.code}
+          <div className="mt-4 space-y-3">
+            {defectCodes.map((code) => (
+              <div key={code.code} className="flex items-center gap-3">
+                <span
                   className={cn(
-                    'flex items-center gap-3 p-3 rounded-xl border transition-colors touch-manipulation',
-                    colors.bg,
-                    colors.border
+                    'flex h-7 w-12 shrink-0 items-center justify-center rounded-lg text-[12px] font-bold',
+                    code.badge
                   )}
                 >
-                  {/* Code */}
-                  <span className={cn('flex-shrink-0 w-10 text-center text-sm font-bold', colors.text)}>
-                    {code.code}
-                  </span>
-
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <span className="text-sm text-white font-medium">{code.label}</span>
-                    <p className="text-[10px] text-white mt-0.5 line-clamp-1">
-                      {code.description}
-                    </p>
-                  </div>
+                  {code.code}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <span className="text-sm font-medium text-white">{code.label}</span>
+                  <p className="text-[12px] leading-snug text-white/80">{code.description}</p>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         </CollapsibleContent>
       </Collapsible>
-    </div>
+    </section>
   );
 };
 

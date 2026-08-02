@@ -25,6 +25,7 @@ import {
 } from '@/types/pat-testing';
 import PATLocationPicker from './PATLocationPicker';
 import { SerialNumberScannerSheet } from '@/components/inspection/fire-alarm/SerialNumberScannerSheet';
+import useReadingKeypad from '@/hooks/useReadingKeypad';
 
 /* ─── Shared style tokens ─── */
 const inputCn =
@@ -44,6 +45,20 @@ const neutralCn = 'bg-white/[0.06] border border-white/[0.12] text-white font-me
 const SectionHeader = ({ title }: { title: string }) => (
   <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
+
+/** Numeric electrical test readings the keypad serves — free-number inputs
+ * only. The RECORDED Pass/Fail stays the manual buttons' job; getStatus only
+ * shows live guidance against the IET limit already stored on the appliance
+ * (see the keypad wiring below). Load test carries no limit, so it shows none.
+ * The explicit sequence keeps Next inside the sheet (earth continuity is
+ * skipped automatically when Class II/III hides it). */
+const KEYPAD_META = {
+  earthContinuity: { label: 'Earth continuity', unit: 'Ω' },
+  insulationResistance: { label: 'Insulation resistance', unit: 'MΩ', inf: true },
+  loadTest: { label: 'Load test', unit: 'kVA' },
+  leakageCurrent: { label: 'Leakage current', unit: 'mA' },
+};
+const KEYPAD_SEQUENCE = ['earthContinuity', 'insulationResistance', 'loadTest', 'leakageCurrent'];
 
 interface PATTestSheetProps {
   open: boolean;
@@ -171,6 +186,47 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
     },
     [appliance, onUpdateAppliance]
   );
+
+  // Reading keypad — shared MW pattern. Values flow through the existing
+  // updateElectricalNested path; the spread only adds keypad props, the
+  // original value/onChange stay untouched.
+  const keypad = useReadingKeypad({
+    meta: KEYPAD_META,
+    sequence: KEYPAD_SEQUENCE,
+    getValue: (field) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const test = (appliance.electricalTests as any)[field];
+      return String(test?.reading ?? '');
+    },
+    setValue: (field, value) => updateElectricalNested(field, 'reading', value),
+    // Guidance only — reuses the IET limit ALREADY stored on this appliance
+    // (electricalTests.<test>.limit, seeded from getDefaultAppliance). No limit
+    // is invented here, and the recorded Pass/Fail stays the manual buttons'
+    // job; this just tells the tester whether the number they typed is inside
+    // the limit the certificate already carries.
+    getStatus: (field, value) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const test = (appliance.electricalTests as any)[field];
+      const limit = parseFloat(test?.limit ?? '');
+      if (!value || isNaN(limit)) return null;
+      // Insulation resistance is a MINIMUM; >999 is off-scale high = pass.
+      if (field === 'insulationResistance') {
+        if (value === '>999') return { tone: 'pass', label: `At or above ${limit} MΩ minimum` };
+        const reading = parseFloat(value);
+        if (isNaN(reading)) return null;
+        return reading >= limit
+          ? { tone: 'pass', label: `At or above ${limit} MΩ minimum` }
+          : { tone: 'check', label: `Below ${limit} MΩ minimum` };
+      }
+      // Earth continuity and leakage current are MAXIMA.
+      const reading = parseFloat(value);
+      if (isNaN(reading)) return null;
+      const unit = KEYPAD_META[field as keyof typeof KEYPAD_META]?.unit ?? '';
+      return reading <= limit
+        ? { tone: 'pass', label: `Within ${limit} ${unit} limit` }
+        : { tone: 'check', label: `Above ${limit} ${unit} limit` };
+    },
+  });
 
   // Auto-calculate overall result from individual results
   const calculateOverallResult = (): 'pass' | 'fail' | '' => {
@@ -698,6 +754,7 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                             }
                             className={inputCn}
                             inputMode="decimal"
+                            {...keypad.field('earthContinuity')}
                           />
                         </div>
                         <span className="flex h-11 items-center px-1 text-sm text-white/80">
@@ -738,6 +795,7 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                             }
                             className={inputCn}
                             inputMode="decimal"
+                            {...keypad.field('insulationResistance')}
                           />
                         </div>
                         <span className="flex h-11 items-center px-1 text-sm text-white/80">
@@ -765,6 +823,7 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                             }
                             className={inputCn}
                             inputMode="decimal"
+                            {...keypad.field('loadTest')}
                           />
                         </div>
                         <span className="flex h-11 items-center px-1 text-sm text-white/80">
@@ -794,6 +853,7 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                             }
                             className={inputCn}
                             inputMode="decimal"
+                            {...keypad.field('leakageCurrent')}
                           />
                         </div>
                         <span className="flex h-11 items-center px-1 text-sm text-white/80">
@@ -952,6 +1012,8 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                     Reset
                   </button>
                 </div>
+
+                {keypad.spacer}
               </div>
             </div>
 
@@ -999,6 +1061,8 @@ const PATTestSheet: React.FC<PATTestSheetProps> = ({
                 </button>
               )}
             </div>
+
+            {keypad.element}
           </div>
         </SheetContent>
 

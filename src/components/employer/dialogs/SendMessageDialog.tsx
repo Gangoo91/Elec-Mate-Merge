@@ -1,15 +1,7 @@
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { useIsMobile } from '@/hooks/use-mobile';
 import type { Employee } from '@/services/employeeService';
 import { createCommunication } from '@/services/communicationService';
 import { useQueryClient } from '@tanstack/react-query';
@@ -25,10 +17,9 @@ import {
   SecondaryButton,
   inputClass,
   textareaClass,
-  selectTriggerClass,
-  selectContentClass,
   fieldLabelClass,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 
 const MESSAGE_TYPES = [
   { id: 'general', label: 'General Message' },
@@ -53,7 +44,6 @@ interface SendMessageDialogProps {
 }
 
 export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageDialogProps) {
-  const isMobile = useIsMobile();
   const queryClient = useQueryClient();
   const { data: jobs = [] } = useJobs();
   const [messageType, setMessageType] = useState('general');
@@ -114,20 +104,17 @@ export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageD
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        className={
-          isMobile
-            ? 'max-w-[95vw] max-h-[92vh] p-5 flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.08] overflow-y-auto'
-            : 'sm:max-w-lg p-6 flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.08] max-h-[90vh] overflow-y-auto'
-        }
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-5 rounded-t-2xl flex flex-col overflow-y-auto bg-[hsl(0_0%_8%)] border-white/[0.08]"
       >
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-white">
+        <SheetHeader>
+          <SheetTitle className="flex items-center gap-2 text-white">
             <MessageSquare className="h-5 w-5 text-elec-yellow" />
             Send message
-          </DialogTitle>
-        </DialogHeader>
+          </SheetTitle>
+        </SheetHeader>
 
         <div className="flex items-center gap-3 p-3 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl">
           <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-[13px] font-semibold text-white flex-shrink-0">
@@ -143,34 +130,21 @@ export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageD
         <FormCard eyebrow="Message">
           <FormGrid cols={messageType === 'job' ? 2 : 1}>
             <Field label="Message type">
-              <Select value={messageType} onValueChange={setMessageType}>
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {MESSAGE_TYPES.map((type) => (
-                    <SelectItem key={type.id} value={type.id}>
-                      {type.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <SelectField
+        value={messageType}
+        onValueChange={setMessageType}
+        options={MESSAGE_TYPES.map((type) => ({ value: type.id, label: type.label }))}
+      />
             </Field>
 
             {messageType === 'job' && (
               <Field label="Related job">
-                <Select value={selectedJobId} onValueChange={setSelectedJobId}>
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue placeholder="Select job..." />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    {activeJobs.map((job) => (
-                      <SelectItem key={job.id} value={job.id}>
-                        {job.title}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <SelectField
+        value={selectedJobId}
+        onValueChange={setSelectedJobId}
+        placeholder="Select job..."
+        options={activeJobs.map((job) => ({ value: job.id, label: job.title }))}
+      />
               </Field>
             )}
           </FormGrid>
@@ -224,7 +198,7 @@ export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageD
             Send message
           </PrimaryButton>
         </div>
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 }

@@ -67,7 +67,7 @@ export function useBusinessMetrics() {
 
       // Fetch invoices for revenue calculation
       const { data: invoices, error: invoicesError } = await supabase
-        .from('employer_invoices')
+        .rpc('employer_invoices_unified')
         .select('amount, status, paid_date, created_at');
 
       if (invoicesError) throw invoicesError;
@@ -245,7 +245,7 @@ export function useInvoiceSummaries() {
     queryKey: ['invoice-summaries'],
     queryFn: async (): Promise<InvoiceSummary[]> => {
       const { data, error } = await supabase
-        .from('employer_invoices')
+        .rpc('employer_invoices_unified')
         .select('id, invoice_number, client, project, amount, status, due_date, paid_date')
         .order('created_at', { ascending: false });
 
@@ -289,7 +289,7 @@ export function useMonthlyRevenue() {
       const sixMonthsAgo = subMonths(now, 6);
 
       const { data: invoices, error } = await supabase
-        .from('employer_invoices')
+        .rpc('employer_invoices_unified')
         .select('amount, paid_date')
         .eq('status', 'Paid')
         .gte('paid_date', sixMonthsAgo.toISOString().split('T')[0]);
@@ -488,7 +488,7 @@ export function usePaymentSummary() {
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
       const { data: invoices, error } = await supabase
-        .from('employer_invoices')
+        .rpc('employer_invoices_unified')
         .select('amount, status, paid_date, due_date');
 
       if (error) throw error;

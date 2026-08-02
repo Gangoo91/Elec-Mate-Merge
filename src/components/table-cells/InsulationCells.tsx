@@ -40,7 +40,7 @@ const InsulationCellsComponent: React.FC<InsulationCellsProps> = ({
           value={result.insulationTestVoltage || ''}
           onValueChange={(value) => onUpdate(result.id, 'insulationTestVoltage', value)}
         >
-          <SelectTrigger className="h-8 text-sm px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
+          <SelectTrigger className="h-8 text-sm px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-white/[0.04] focus:bg-transparent focus:ring-1 focus:ring-inset focus:ring-elec-yellow focus:shadow-none">
             <SelectValue placeholder="—" />
           </SelectTrigger>
           <SelectContent className="bg-background border border-border rounded-md z-[9999] min-w-[160px]">
@@ -63,7 +63,7 @@ const InsulationCellsComponent: React.FC<InsulationCellsProps> = ({
           <EnhancedValidatedInput
             value={liveLiveValue}
             onChange={(value) => onUpdate(result.id, 'insulationLiveNeutral', value)}
-            className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
+            className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow focus:shadow-none hover:bg-white/[0.04] focus:bg-transparent"
             validation={validation.insulationLiveNeutral}
             placeholder="—"
           />
@@ -85,7 +85,7 @@ const InsulationCellsComponent: React.FC<InsulationCellsProps> = ({
           <EnhancedValidatedInput
             value={liveEarthValue}
             onChange={(value) => onUpdate(result.id, 'insulationLiveEarth', value)}
-            className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
+            className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow focus:shadow-none hover:bg-white/[0.04] focus:bg-transparent"
             validation={validation.insulationLiveEarth}
             placeholder="—"
           />

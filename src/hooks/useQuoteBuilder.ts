@@ -177,6 +177,13 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
         status: 'draft',
         notes: quote.notes || null,
         site_visit_id: quote.site_visit_id || null,
+        // Keep the certificate link on autosaved drafts — without these a
+        // draft resumed from the DB before final save lost the cert link
+        // permanently (final saveQuote writes them, autosave didn't).
+        linked_certificate_id: quote.linked_certificate_id || null,
+        linked_certificate_type: quote.linked_certificate_type || null,
+        linked_certificate_reference: quote.linked_certificate_reference || null,
+        linked_certificate_pdf_url: quote.linked_certificate_pdf_url || null,
         updated_at: new Date().toISOString(),
       };
 

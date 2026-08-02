@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { reportCloud, type CloudReport, type ReportType } from '@/utils/reportCloud';
+import type { TestResult } from '@/types/testResult';
 
 /**
  * Fields copied forward from a previous cert at the same installation address.
- * Per cert type — keeps the copy targeted (no schedule of tests, no signatures,
- * no client/personal data — only supply + earthing + BS amendment that's
- * truly per-property).
+ * Per cert type — keeps the copy targeted (no signatures, no client/personal
+ * data — only supply + earthing + property particulars that are truly
+ * per-property). EICR additionally offers a circuit skeleton (schedule of
+ * tests with every reading stripped) as a separate, opt-in action.
  */
 const LAST_CERT_FIELDS: Record<ReportType, string[]> = {
   eic: [
@@ -34,6 +36,22 @@ const LAST_CERT_FIELDS: Record<ReportType, string[]> = {
     'bsAmendment',
     'mainProtectiveDevice',
     'mainSwitchRating',
+    // Property particulars — stable across periodic re-inspections
+    'propertyType',
+    'numberOfBedrooms',
+    'estimatedAge',
+    'ageUnit',
+    'description',
+    // Earthing & bonding conductors — material/CSA/locations are property facts
+    'mainEarthingConductorType',
+    'mainEarthingConductorSize',
+    'mainEarthingConductorSizeCustom',
+    'mainBondingConductorType',
+    'mainBondingSize',
+    'mainBondingSizeCustom',
+    'mainBondingLocations',
+    // Distribution boards — make/location/ways/main switch are property facts
+    'distributionBoards',
   ],
   'minor-works': [
     'supplyVoltage',
@@ -77,6 +95,11 @@ export interface LastCertSuggestion {
   date: string;
   certType: ReportType;
   fields: Record<string, unknown>;
+  /**
+   * EICR only — the previous cert's schedule of tests, offered as an opt-in
+   * circuit skeleton (structure kept, readings stripped on apply).
+   */
+  scheduleOfTests?: TestResult[];
 }
 
 export interface UseCertPrefillResult {
@@ -84,9 +107,74 @@ export interface UseCertPrefillResult {
   isLoading: boolean;
   /** Returns the field patch the caller should merge into form state. */
   buildPatch: () => Record<string, unknown>;
+  /**
+   * EICR only — returns the previous cert's schedule of tests with every
+   * reading/test-outcome field stripped and fresh row ids. Structure survives:
+   * descriptions, device BS/type/rating, cable sizes, wiring type, reference
+   * method, maxZs, board association. Empty array when nothing to copy.
+   */
+  buildCircuitSkeleton: () => TestResult[];
   /** Hides the prompt until the user navigates away + back. */
   dismiss: () => void;
 }
+
+/**
+ * Reading / per-visit test-outcome fields blanked when copying a circuit
+ * skeleton forward. Everything NOT listed here is circuit structure and
+ * survives the copy.
+ */
+const CIRCUIT_READING_FIELDS: (keyof TestResult)[] = [
+  // Continuity
+  'r1r2',
+  'r2',
+  'ringContinuityLive',
+  'ringContinuityNeutral',
+  'ringR1',
+  'ringRn',
+  'ringR2',
+  // Insulation resistance
+  'insulationTestVoltage',
+  'insulationLiveNeutral',
+  'insulationLiveEarth',
+  'insulationResistance',
+  'insulationNeutralEarth',
+  // Polarity / loop impedance
+  'polarity',
+  'zs',
+  // RCD tests
+  'rcdOneX',
+  'rcdHalfX',
+  'rcdFiveX',
+  'rcdTestButton',
+  'afddTest',
+  // Prospective fault current
+  'pfc',
+  'pfcLiveNeutral',
+  'pfcLiveEarth',
+  // Functional / three-phase measurements
+  'functionalTesting',
+  'phaseRotation',
+  'phaseBalanceL1',
+  'phaseBalanceL2',
+  'phaseBalanceL3',
+  'lineToLineVoltage',
+  // Per-visit remarks
+  'notes',
+];
+
+/** Strip readings from a copied schedule row and give it a fresh id. */
+const toCircuitSkeleton = (row: TestResult, index: number): TestResult => {
+  const clone = structuredClone(row);
+  for (const key of CIRCUIT_READING_FIELDS) {
+    if (clone[key] !== undefined) {
+      // All reading fields are string-typed on TestResult.
+      (clone as Record<string, unknown>)[key] = '';
+    }
+  }
+  clone.id = `circuit-${Date.now()}-${index}-${Math.random().toString(36).slice(2, 8)}`;
+  clone.autoFilled = false;
+  return clone;
+};
 
 /**
  * useCertPrefill — looks up the user's most recent completed cert at the same
@@ -141,10 +229,19 @@ export function useCertPrefill(
         const fields: Record<string, unknown> = {};
         for (const key of relevantKeys) {
           const v = (cert.data as Record<string, unknown>)[key];
-          if (v !== undefined && v !== null && v !== '') {
-            fields[key] = v;
-          }
+          if (v === undefined || v === null || v === '') continue;
+          if (Array.isArray(v) && v.length === 0) continue;
+          fields[key] = v;
         }
+
+        // EICR — carry the previous schedule of tests so the form can offer a
+        // circuit-skeleton copy (readings stripped on apply, never here).
+        const prevSchedule =
+          certType === 'eicr' ? (cert.data as Record<string, unknown>).scheduleOfTests : undefined;
+        const scheduleOfTests =
+          Array.isArray(prevSchedule) && prevSchedule.length > 0
+            ? (prevSchedule as TestResult[])
+            : undefined;
 
         if (Object.keys(fields).length === 0) {
           setSuggestion(null);
@@ -157,6 +254,7 @@ export function useCertPrefill(
           date: cert.inspection_date || cert.updated_at,
           certType: cert.report_type,
           fields,
+          scheduleOfTests,
         });
       } catch (error) {
         console.warn('[useCertPrefill] lookup failed:', error);
@@ -174,7 +272,10 @@ export function useCertPrefill(
   return {
     suggestion,
     isLoading,
-    buildPatch: () => suggestion?.fields || {},
+    // Deep-clone so array/object fields (e.g. distributionBoards) never share
+    // references between the suggestion state and the live form state.
+    buildPatch: () => (suggestion?.fields ? structuredClone(suggestion.fields) : {}),
+    buildCircuitSkeleton: () => (suggestion?.scheduleOfTests || []).map(toCircuitSkeleton),
     dismiss: () => setDismissed(true),
   };
 }

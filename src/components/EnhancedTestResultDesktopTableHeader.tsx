@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { ChevronDown, ChevronRight, CheckCircle, Calculator } from 'lucide-react';
+import { ChevronDown, ChevronRight } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { wiringTypeOptions } from '@/types/wiringTypes';
+import { referenceMethodOptions, cableSizeOptions } from '@/types/cableTypes';
 
 interface EnhancedTestResultDesktopTableHeaderProps {
   showRegulationStatus?: boolean;
@@ -23,6 +25,9 @@ interface EnhancedTestResultDesktopTableHeaderProps {
   onFillAllFunctional?: (value: string) => void;
   onFillAllWiringType?: (value: string) => void;
   onFillAllRefMethod?: (value: string) => void;
+  // P2.3 — conductor-size bulk fill (same option source as the row cells)
+  onFillAllLiveSize?: (value: string) => void;
+  onFillAllCpcSize?: (value: string) => void;
   onFillAllKa?: (value: string) => void;
   onFillAllBsStandard?: (value: string) => void;
   onFillAllCurve?: (value: string) => void;
@@ -50,6 +55,8 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
   onFillAllFunctional,
   onFillAllWiringType,
   onFillAllRefMethod,
+  onFillAllLiveSize,
+  onFillAllCpcSize,
   onFillAllKa,
   onFillAllBsStandard,
   onFillAllCurve,
@@ -72,35 +79,47 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
     <TableHeader>
       {/* Group Headers Row */}
       <TableRow className="sot-header-group hover:bg-transparent">
-        {/* Circuit Number & Phase — single-column groups; label row below carries the name,
-            so the group row cell stays empty for a clean top-left corner. */}
+        {/* Actions — first column, NOT sticky (founder call): it scrolls away
+            under the pinned Way column. Outside every group colSpan. */}
+        <TableHead
+          colSpan={1}
+          className="sot-header-group-cell w-[210px] min-w-[210px] max-w-[210px]"
+        />
+        {/* Way + Description — always-visible sticky pair; label row below
+            carries the names, so these group-row cells stay empty. Description
+            is the last frozen column (edge shadow). */}
         <TableHead
           colSpan={1}
           className="sot-header-group-cell sot-sticky-col w-[112px] min-w-[112px] max-w-[112px]"
         />
         <TableHead
           colSpan={1}
-          className="sot-header-group-cell w-16 min-w-[60px] max-w-[60px]"
+          className="sot-header-group-cell sot-sticky-col-2 sot-sticky-last min-w-[244px] max-w-[244px]"
+        />
+        {/* Phase — single column (width matches the 78px label/body cells) */}
+        <TableHead
+          colSpan={1}
+          className="sot-header-group-cell w-20 min-w-[78px] max-w-[78px]"
         />
 
-        <TableHead colSpan={isGroupCollapsed('circuit') ? 1 : 4} className="sot-header-group-cell">
+        <TableHead colSpan={isGroupCollapsed('circuit') ? 1 : 3} className="sot-header-group-cell">
           <button
             onClick={() => onToggleGroup('circuit')}
-            className="sot-collapse-btn w-full justify-center"
+            className="sot-collapse-btn w-full justify-center text-[11px]"
           >
             {isGroupCollapsed('circuit') ? (
               <ChevronRight className="h-3 w-3" />
             ) : (
               <ChevronDown className="h-3 w-3" />
             )}
-            Circuit Details
+            Circuit details
           </button>
         </TableHead>
 
         <TableHead colSpan={isGroupCollapsed('conductor') ? 1 : 2} className="sot-header-group-cell">
           <button
             onClick={() => onToggleGroup('conductor')}
-            className="sot-collapse-btn w-full justify-center"
+            className="sot-collapse-btn w-full justify-center text-[11px]"
           >
             {isGroupCollapsed('conductor') ? (
               <ChevronRight className="h-3 w-3" />
@@ -114,42 +133,42 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
         <TableHead colSpan={isGroupCollapsed('protection') ? 1 : 5} className="sot-header-group-cell">
           <button
             onClick={() => onToggleGroup('protection')}
-            className="sot-collapse-btn w-full justify-center"
+            className="sot-collapse-btn w-full justify-center text-[11px]"
           >
             {isGroupCollapsed('protection') ? (
               <ChevronRight className="h-3 w-3" />
             ) : (
               <ChevronDown className="h-3 w-3" />
             )}
-            Protective Device
+            Protective device
           </button>
         </TableHead>
 
         <TableHead colSpan={isGroupCollapsed('rcdDetails') ? 1 : 4} className="sot-header-group-cell">
           <button
             onClick={() => onToggleGroup('rcdDetails')}
-            className="sot-collapse-btn w-full justify-center"
+            className="sot-collapse-btn w-full justify-center text-[11px]"
           >
             {isGroupCollapsed('rcdDetails') ? (
               <ChevronRight className="h-3 w-3" />
             ) : (
               <ChevronDown className="h-3 w-3" />
             )}
-            RCD Details
+            RCD details
           </button>
         </TableHead>
 
         <TableHead colSpan={isGroupCollapsed('continuity') ? 1 : 5} className="sot-header-group-cell">
           <button
             onClick={() => onToggleGroup('continuity')}
-            className="sot-collapse-btn w-full justify-center"
+            className="sot-collapse-btn w-full justify-center text-[11px]"
           >
             {collapsedGroups.has('continuity') ? (
               <ChevronRight className="h-3 w-3" />
             ) : (
               <ChevronDown className="h-3 w-3" />
             )}
-            Continuity Tests
+            Continuity tests
           </button>
         </TableHead>
 
@@ -159,7 +178,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           <button
             key={isGroupCollapsed('insulation') ? 'insulation-collapsed' : 'insulation-expanded'}
             onClick={() => onToggleGroup('insulation')}
-            className="sot-collapse-btn w-full justify-center"
+            className="sot-collapse-btn w-full justify-center text-[11px]"
           >
             {isGroupCollapsed('insulation') ? (
               <ChevronRight className="h-3 w-3" />
@@ -173,7 +192,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
         <TableHead colSpan={isGroupCollapsed('zs') ? 1 : 2} className="sot-header-group-cell">
           <button
             onClick={() => onToggleGroup('zs')}
-            className="sot-collapse-btn w-full justify-center"
+            className="sot-collapse-btn w-full justify-center text-[11px]"
           >
             {isGroupCollapsed('zs') ? (
               <ChevronRight className="h-3 w-3" />
@@ -187,71 +206,73 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
         <TableHead colSpan={isGroupCollapsed('rcd') ? 1 : 2} className="sot-header-group-cell">
           <button
             onClick={() => onToggleGroup('rcd')}
-            className="sot-collapse-btn w-full justify-center"
+            className="sot-collapse-btn w-full justify-center text-[11px]"
           >
             {isGroupCollapsed('rcd') ? (
               <ChevronRight className="h-3 w-3" />
             ) : (
               <ChevronDown className="h-3 w-3" />
             )}
-            RCD Tests
+            RCD tests
           </button>
         </TableHead>
 
-        <TableHead colSpan={1} className="sot-header-group-cell">
-          <button
-            onClick={() => onToggleGroup('afdd')}
-            className="sot-collapse-btn w-full justify-center"
-          >
-            {isGroupCollapsed('afdd') ? (
-              <ChevronRight className="h-3 w-3" />
-            ) : (
-              <ChevronDown className="h-3 w-3" />
-            )}
-            AFDD
-          </button>
+        {/* AFDD + Func — single-column groups, so collapsing does nothing:
+            plain banners, no dead chevron buttons. */}
+        <TableHead colSpan={1} className="sot-header-group-cell text-[11px] font-semibold text-white">
+          AFDD
         </TableHead>
 
-        <TableHead colSpan={1} className="sot-header-group-cell">
-          <button
-            onClick={() => onToggleGroup('functional')}
-            className="sot-collapse-btn w-full justify-center"
-          >
-            {isGroupCollapsed('functional') ? (
-              <ChevronRight className="h-3 w-3" />
-            ) : (
-              <ChevronDown className="h-3 w-3" />
-            )}
-            Func
-          </button>
+        <TableHead colSpan={1} className="sot-header-group-cell text-[11px] font-semibold text-white">
+          Func
         </TableHead>
 
-        <TableHead className="sot-header-group-cell">Notes</TableHead>
+        {/* Notes — the label row below carries the name */}
+        <TableHead className="sot-header-group-cell" />
+
+        {/* Keeps the group row's cell count level with the label row when the
+            BS 7671 column is shown */}
+        {showRegulationStatus && <TableHead className="sot-header-group-cell" />}
       </TableRow>
 
       {/* Individual Column Headers Row */}
       <TableRow className="sot-header-labels hover:bg-transparent">
-        {/* Circuit Number - Always visible */}
+        {/* Actions — first column, NOT sticky (founder call): scrolls away
+            under the pinned Way column. */}
+        <TableHead className="sot-header-cell text-[10.5px] font-semibold text-white w-[210px] min-w-[210px] max-w-[210px] text-center">
+          Actions
+        </TableHead>
+
+        {/* Circuit Number — sticky at left:0 */}
         <TableHead
-          className="sot-header-cell sot-sticky-col w-[112px] min-w-[112px] max-w-[112px]"
+          className="sot-header-cell text-[10.5px] font-semibold text-white sot-sticky-col w-[112px] min-w-[112px] max-w-[112px]"
           data-group="circuit"
         >
           Way
         </TableHead>
 
+        {/* Description — always visible, sticky flush after Way (founder call:
+            sits before 1P/3P), last frozen column */}
+        <TableHead
+          className="sot-header-cell text-[10.5px] font-semibold text-white sot-sticky-col-2 sot-sticky-last min-w-[244px] max-w-[244px]"
+          data-group="circuit"
+        >
+          Description
+        </TableHead>
+
         {/* Phase - Always visible */}
-        <TableHead className="sot-header-cell w-20 min-w-[78px] max-w-[78px]" data-group="phase">
+        <TableHead className="sot-header-cell text-[10.5px] font-semibold text-white w-20 min-w-[78px] max-w-[78px]" data-group="phase">
           <div className="flex items-center justify-center gap-1.5">
             <span>1P/3P</span>
             {onFillAllPhase && (
               <Popover>
                 <PopoverTrigger asChild>
-                  <button className="sot-fill-all-btn" title="Quick fill all"><CheckCircle className="h-5 w-5" /></button>
+                  <button className="text-[9.5px] font-bold text-elec-yellow touch-manipulation" title="Quick fill all">Fill</button>
                 </PopoverTrigger>
-                <PopoverContent className="w-32 p-2 z-[9999] bg-background border border-white/10" align="center">
+                <PopoverContent className="w-32 p-2 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="center">
                   <p className="text-[10px] text-white mb-2 font-semibold">Fill all phase</p>
                   {['1P', '3P'].map((v) => (
-                    <Button key={v} variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllPhase(v)}>{v}</Button>
+                    <Button key={v} variant="ghost" size="sm" className="w-full justify-start text-xs h-8 font-medium text-white hover:bg-elec-yellow hover:text-black" onClick={() => onFillAllPhase(v)}>{v}</Button>
                   ))}
                 </PopoverContent>
               </Popover>
@@ -262,42 +283,38 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
         {/* Circuit Details */}
         {!isGroupCollapsed('circuit') && (
           <>
-            <TableHead
-              className="sot-header-cell sot-sticky-col-2 min-w-[244px] max-w-[244px]"
-              data-group="circuit"
-            >
-              Description
-            </TableHead>
-            <TableHead className="sot-header-cell min-w-[140px] max-w-[140px]" data-group="circuit">
+            <TableHead className="sot-header-cell text-[10.5px] font-semibold text-white min-w-[140px] max-w-[140px]" data-group="circuit">
               <div className="flex items-center justify-center gap-2">
-                <span>Wiring Type</span>
+                <span>Wiring type</span>
                 {onFillAllWiringType && (
                   <Popover>
                     <PopoverTrigger asChild>
-                      <button className="sot-fill-all-btn" title="Quick fill all"><CheckCircle className="h-5 w-5" /></button>
+                      <button className="text-[9.5px] font-bold text-elec-yellow touch-manipulation" title="Quick fill all">Fill</button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-48 p-2 z-[9999] bg-background border border-white/10" align="center">
+                    <PopoverContent className="w-72 max-h-80 overflow-y-auto p-2 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="center">
                       <p className="text-[10px] text-white mb-2 font-semibold">Fill all wiring type</p>
-                      {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'].map((v) => (
-                        <Button key={v} variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllWiringType(v)}>Type {v}</Button>
+                      {/* P2.3 — same option source as the row cells (TypeOfWiringCell) */}
+                      {wiringTypeOptions.map((o) => (
+                        <Button key={o.value} variant="ghost" size="sm" className="w-full justify-start text-left text-xs h-auto min-h-8 py-1.5 whitespace-normal font-medium text-white hover:bg-elec-yellow hover:text-black" onClick={() => onFillAllWiringType(o.value)}>{o.label}</Button>
                       ))}
                     </PopoverContent>
                   </Popover>
                 )}
               </div>
             </TableHead>
-            <TableHead className="sot-header-cell min-w-[90px] max-w-[90px]" data-group="circuit">
+            <TableHead className="sot-header-cell text-[10.5px] font-semibold text-white min-w-[100px] max-w-[100px]" data-group="circuit">
               <div className="flex items-center justify-center gap-2">
-                <span>Ref Method</span>
+                <span>Ref method</span>
                 {onFillAllRefMethod && (
                   <Popover>
                     <PopoverTrigger asChild>
-                      <button className="sot-fill-all-btn" title="Quick fill all"><CheckCircle className="h-5 w-5" /></button>
+                      <button className="text-[9.5px] font-bold text-elec-yellow touch-manipulation" title="Quick fill all">Fill</button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-48 p-2 z-[9999] bg-background border border-white/10" align="center">
+                    <PopoverContent className="w-72 max-h-80 overflow-y-auto p-2 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="center">
                       <p className="text-[10px] text-white mb-2 font-semibold">Fill all ref method</p>
-                      {['A', 'B', 'C', 'D', 'E', 'F', 'G'].map((v) => (
-                        <Button key={v} variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllRefMethod(v)}>Method {v}</Button>
+                      {/* P2.3 — same option source as the row cells (RefMethodCell) */}
+                      {referenceMethodOptions.map((o) => (
+                        <Button key={o.value} variant="ghost" size="sm" className="w-full justify-start text-left text-xs h-auto min-h-8 py-1.5 whitespace-normal font-medium text-white hover:bg-elec-yellow hover:text-black" onClick={() => onFillAllRefMethod(o.value)}>{o.label}</Button>
                       ))}
                     </PopoverContent>
                   </Popover>
@@ -305,7 +322,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               </div>
             </TableHead>
             <TableHead
-              className="sot-header-cell w-16 min-w-[64px] max-w-[64px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-16 min-w-[64px] max-w-[64px]"
               data-group="circuit"
             >
               Points
@@ -313,29 +330,68 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </>
         )}
 
+        {/* Collapsed groups keep ONE narrow column (the group row banner has
+            colSpan 1) — every row renders a placeholder cell for it so header
+            and body columns stay aligned in both states. */}
+        {isGroupCollapsed('circuit') && <TableHead className="sot-header-cell" data-group="circuit" />}
+
         {/* Conductor Details */}
         {!isGroupCollapsed('conductor') && (
           <>
             <TableHead
-              className="sot-header-cell w-24 min-w-[90px] max-w-[90px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-24 min-w-[90px] max-w-[90px]"
               data-group="conductor"
             >
-              Live mm²
+              <div className="flex items-center justify-center gap-2">
+                <span>Live mm²</span>
+                {onFillAllLiveSize && (
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button className="text-[9.5px] font-bold text-elec-yellow touch-manipulation" title="Quick fill all">Fill</button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-36 max-h-80 overflow-y-auto p-2 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="center">
+                      <p className="text-[10px] text-white mb-2 font-semibold">Fill all live mm²</p>
+                      {/* P2.3 — same option source as the row cells (ConductorCells) */}
+                      {cableSizeOptions.map((o) => (
+                        <Button key={o.value} variant="ghost" size="sm" className="w-full justify-start text-xs h-8 font-medium text-white hover:bg-elec-yellow hover:text-black" onClick={() => onFillAllLiveSize(o.value)}>{o.label}</Button>
+                      ))}
+                    </PopoverContent>
+                  </Popover>
+                )}
+              </div>
             </TableHead>
             <TableHead
-              className="sot-header-cell w-24 min-w-[90px] max-w-[90px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-24 min-w-[90px] max-w-[90px]"
               data-group="conductor"
             >
-              CPC mm²
+              <div className="flex items-center justify-center gap-2">
+                <span>CPC mm²</span>
+                {onFillAllCpcSize && (
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button className="text-[9.5px] font-bold text-elec-yellow touch-manipulation" title="Quick fill all">Fill</button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-36 max-h-80 overflow-y-auto p-2 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="center">
+                      <p className="text-[10px] text-white mb-2 font-semibold">Fill all CPC mm²</p>
+                      {/* P2.3 — same option source as the row cells (ConductorCells) */}
+                      {cableSizeOptions.map((o) => (
+                        <Button key={o.value} variant="ghost" size="sm" className="w-full justify-start text-xs h-8 font-medium text-white hover:bg-elec-yellow hover:text-black" onClick={() => onFillAllCpcSize(o.value)}>{o.label}</Button>
+                      ))}
+                    </PopoverContent>
+                  </Popover>
+                )}
+              </div>
             </TableHead>
           </>
         )}
+
+        {isGroupCollapsed('conductor') && <TableHead className="sot-header-cell" data-group="conductor" />}
 
         {/* Protective Device */}
         {!isGroupCollapsed('protection') && (
           <>
             <TableHead
-              className="sot-header-cell w-40 min-w-[160px] max-w-[160px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-40 min-w-[160px] max-w-[160px]"
               data-group="protection"
             >
               <div className="flex items-center justify-center gap-2">
@@ -343,12 +399,12 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                 {onFillAllBsStandard && (
                   <Popover>
                     <PopoverTrigger asChild>
-                      <button className="sot-fill-all-btn" title="Quick fill all"><CheckCircle className="h-5 w-5" /></button>
+                      <button className="text-[9.5px] font-bold text-elec-yellow touch-manipulation" title="Quick fill all">Fill</button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-56 p-2 z-[9999] bg-background border border-white/10" align="center">
-                      <p className="text-[10px] text-white mb-2 font-semibold">Fill all BS Standard</p>
+                    <PopoverContent className="w-56 p-2 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="center">
+                      <p className="text-[10px] text-white mb-2 font-semibold">Fill all BS standard</p>
                       {['MCB (BS EN 60898)', 'RCBO (BS EN 61009)', 'Fuse (BS 88)', 'Fuse (BS 1361)', 'Fuse (BS 3036)', 'MCCB (BS EN 60947)'].map((v) => (
-                        <Button key={v} variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllBsStandard(v)}>{v}</Button>
+                        <Button key={v} variant="ghost" size="sm" className="w-full justify-start text-xs h-8 font-medium text-white hover:bg-elec-yellow hover:text-black" onClick={() => onFillAllBsStandard(v)}>{v}</Button>
                       ))}
                     </PopoverContent>
                   </Popover>
@@ -356,7 +412,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               </div>
             </TableHead>
             <TableHead
-              className="sot-header-cell w-20 min-w-[75px] max-w-[75px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-28 min-w-[100px] max-w-[100px]"
               data-group="protection"
             >
               <div className="flex items-center justify-center gap-2">
@@ -364,12 +420,12 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                 {onFillAllCurve && (
                   <Popover>
                     <PopoverTrigger asChild>
-                      <button className="sot-fill-all-btn" title="Quick fill all (MCB/RCBO only)"><CheckCircle className="h-5 w-5" /></button>
+                      <button className="text-[9.5px] font-bold text-elec-yellow touch-manipulation" title="Quick fill all (MCB/RCBO only)">Fill</button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-40 p-2 z-[9999] bg-background border border-white/10" align="center">
+                    <PopoverContent className="w-40 p-2 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="center">
                       <p className="text-[10px] text-white mb-2 font-semibold">Fill all curve (MCB/RCBO)</p>
                       {['B', 'C', 'D'].map((v) => (
-                        <Button key={v} variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllCurve(v)}>Curve {v}</Button>
+                        <Button key={v} variant="ghost" size="sm" className="w-full justify-start text-xs h-8 font-medium text-white hover:bg-elec-yellow hover:text-black" onClick={() => onFillAllCurve(v)}>Curve {v}</Button>
                       ))}
                     </PopoverContent>
                   </Popover>
@@ -377,13 +433,13 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               </div>
             </TableHead>
             <TableHead
-              className="sot-header-cell w-20 min-w-[75px] max-w-[75px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-28 min-w-[95px] max-w-[95px]"
               data-group="protection"
             >
               Rating A
             </TableHead>
             <TableHead
-              className="sot-header-cell w-20 min-w-[75px] max-w-[75px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-28 min-w-[100px] max-w-[100px]"
               data-group="protection"
             >
               <div className="flex items-center justify-center gap-2">
@@ -391,12 +447,12 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                 {onFillAllKa && (
                   <Popover>
                     <PopoverTrigger asChild>
-                      <button className="sot-fill-all-btn" title="Quick fill all"><CheckCircle className="h-5 w-5" /></button>
+                      <button className="text-[9.5px] font-bold text-elec-yellow touch-manipulation" title="Quick fill all">Fill</button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-40 p-2 z-[9999] bg-background border border-white/10" align="center">
+                    <PopoverContent className="w-40 p-2 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="center">
                       <p className="text-[10px] text-white mb-2 font-semibold">Fill all kA</p>
                       {['3', '6', '10', '16', '25'].map((v) => (
-                        <Button key={v} variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllKa(v)}>{v} kA</Button>
+                        <Button key={v} variant="ghost" size="sm" className="w-full justify-start text-xs h-8 font-medium text-white hover:bg-elec-yellow hover:text-black" onClick={() => onFillAllKa(v)}>{v} kA</Button>
                       ))}
                     </PopoverContent>
                   </Popover>
@@ -404,7 +460,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               </div>
             </TableHead>
             <TableHead
-              className="sot-header-cell w-32 min-w-[132px] max-w-[132px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-32 min-w-[132px] max-w-[132px]"
               data-group="protection"
             >
               <div className="flex items-center justify-center gap-2">
@@ -413,34 +469,33 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                   <Popover>
                     <PopoverTrigger asChild>
                       <button
-                        className="h-5 w-5 p-0 flex items-center justify-center rounded-full hover:bg-elec-yellow/20 text-elec-yellow hover:text-elec-yellow/80 transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-elec-yellow/50"
+                        className="text-[9.5px] font-bold text-elec-yellow touch-manipulation"
                         title="Auto-fill all Max Zs values"
                       >
-                        <Calculator className="h-4 w-4" />
+                        Auto
                       </button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-64 p-3 bg-background border-border" align="start">
+                    <PopoverContent className="w-64 p-3 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="start">
                       <div className="space-y-3">
-                        <div className="text-xs text-foreground">
-                          <div className="font-semibold mb-1">Maximum Permitted Zs</div>
-                          <div className="text-[10px] text-muted-foreground">
+                        <div className="text-xs text-white">
+                          <div className="font-semibold mb-1 text-white">Maximum permitted Zs</div>
+                          <div className="text-[10px] text-white">
                             Values from BS 7671 Tables 41.2, 41.3, 41.4. These are the maximum
                             permitted values - the tables already account for Cmin (0.95).
                           </div>
                         </div>
-                        <div className="pt-2 border-t border-border">
+                        <div className="pt-2 border-t border-white/10">
                           <Button
                             size="sm"
                             variant="outline"
-                            className="w-full text-xs h-8"
+                            className="w-full text-xs h-8 bg-elec-yellow border-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 hover:text-black"
                             onClick={() => {
                               onFillAllMaxZs();
                             }}
                           >
-                            <Calculator className="h-3 w-3 mr-2" />
-                            Auto-Fill All Max Zs
+                            Auto-fill all Max Zs
                           </Button>
-                          <div className="text-[10px] text-muted-foreground mt-2">
+                          <div className="text-[10px] text-white mt-2">
                             Automatically calculates Max Zs based on BS Standard, Curve, and Rating
                             for each circuit
                           </div>
@@ -454,11 +509,13 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </>
         )}
 
+        {isGroupCollapsed('protection') && <TableHead className="sot-header-cell" data-group="protection" />}
+
         {/* RCD Details */}
         {!isGroupCollapsed('rcdDetails') && (
           <>
             <TableHead
-              className="sot-header-cell w-24 min-w-[85px] max-w-[85px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-40 min-w-[140px] max-w-[140px]"
               data-group="rcd-details"
             >
               <div className="flex items-center justify-center gap-2">
@@ -466,18 +523,18 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                 {onFillAllRcdBsStandard && (
                   <Popover open={rcdBsPopoverOpen} onOpenChange={setRcdBsPopoverOpen}>
                     <PopoverTrigger asChild>
-                      <button className="sot-fill-all-btn" title="Quick fill all RCD BS Standards">
-                        <CheckCircle className="h-5 w-5 text-amber-400" />
+                      <button className="text-[9.5px] font-bold text-elec-yellow touch-manipulation" title="Quick fill all RCD BS Standards">
+                        Fill
                       </button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
+                    <PopoverContent className="w-48 p-3 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="start">
                       <div className="space-y-1">
                         <button
                           onClick={() => {
                             onFillAllRcdBsStandard('RCD (BS EN 61008)');
                             setRcdBsPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           BS EN 61008
                         </button>
@@ -486,7 +543,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdBsStandard('RCBO (BS EN 61009)');
                             setRcdBsPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           BS EN 61009
                         </button>
@@ -495,7 +552,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdBsStandard('RCD (BS 7288)');
                             setRcdBsPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           BS 7288
                         </button>
@@ -505,7 +562,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdBsStandard('N/A');
                             setRcdBsPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           N/A
                         </button>
@@ -516,9 +573,9 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                               onSmartFillRcd();
                               setRcdBsPopoverOpen(false);
                             }}
-                            className="w-full text-left px-3 py-2 text-sm rounded-md bg-elec-yellow/10 border border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20 transition-colors mt-1"
+                            className="w-full text-left px-3 py-2 text-xs font-semibold rounded-md bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors touch-manipulation mt-1"
                           >
-                            ⚡ Smart fill (auto by device)
+                            Smart fill (auto by device)
                           </button>
                         )}
                       </div>
@@ -528,7 +585,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               </div>
             </TableHead>
             <TableHead
-              className="sot-header-cell w-16 min-w-[60px] max-w-[60px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-28 min-w-[105px] max-w-[105px]"
               data-group="rcd-details"
             >
               <div className="flex items-center justify-center gap-2">
@@ -536,18 +593,18 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                 {onFillAllRcdType && (
                   <Popover open={rcdTypePopoverOpen} onOpenChange={setRcdTypePopoverOpen}>
                     <PopoverTrigger asChild>
-                      <button className="sot-fill-all-btn" title="Quick fill all RCD Types">
-                        <CheckCircle className="h-5 w-5 text-amber-400" />
+                      <button className="text-[9.5px] font-bold text-elec-yellow touch-manipulation" title="Quick fill all RCD Types">
+                        Fill
                       </button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
+                    <PopoverContent className="w-48 p-3 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="start">
                       <div className="space-y-1">
                         <button
                           onClick={() => {
                             onFillAllRcdType('AC');
                             setRcdTypePopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           AC
                         </button>
@@ -556,7 +613,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdType('A');
                             setRcdTypePopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           A
                         </button>
@@ -565,7 +622,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdType('F');
                             setRcdTypePopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           F
                         </button>
@@ -574,7 +631,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdType('B');
                             setRcdTypePopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           B
                         </button>
@@ -583,7 +640,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdType('B+');
                             setRcdTypePopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           B+
                         </button>
@@ -593,7 +650,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdType('N/A');
                             setRcdTypePopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           N/A
                         </button>
@@ -604,7 +661,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               </div>
             </TableHead>
             <TableHead
-              className="sot-header-cell w-16 min-w-[60px] max-w-[60px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-28 min-w-[100px] max-w-[100px]"
               data-group="rcd-details"
             >
               <div className="flex items-center justify-center gap-2">
@@ -612,18 +669,18 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                 {onFillAllRcdRating && (
                   <Popover open={rcdRatingPopoverOpen} onOpenChange={setRcdRatingPopoverOpen}>
                     <PopoverTrigger asChild>
-                      <button className="sot-fill-all-btn" title="Quick fill all RCD IΔn ratings">
-                        <CheckCircle className="h-5 w-5 text-amber-400" />
+                      <button className="text-[9.5px] font-bold text-elec-yellow touch-manipulation" title="Quick fill all RCD IΔn ratings">
+                        Fill
                       </button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
+                    <PopoverContent className="w-48 p-3 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="start">
                       <div className="space-y-1">
                         <button
                           onClick={() => {
                             onFillAllRcdRating('10mA');
                             setRcdRatingPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           10mA
                         </button>
@@ -632,7 +689,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdRating('30mA');
                             setRcdRatingPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           30mA
                         </button>
@@ -641,7 +698,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdRating('100mA');
                             setRcdRatingPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           100mA
                         </button>
@@ -650,7 +707,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdRating('300mA');
                             setRcdRatingPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           300mA
                         </button>
@@ -659,7 +716,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdRating('500mA');
                             setRcdRatingPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           500mA
                         </button>
@@ -669,7 +726,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdRating('N/A');
                             setRcdRatingPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           N/A
                         </button>
@@ -680,7 +737,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               </div>
             </TableHead>
             <TableHead
-              className="sot-header-cell w-16 min-w-[60px] max-w-[60px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-20 min-w-[75px] max-w-[75px]"
               data-group="rcd-details"
             >
               <div className="flex items-center justify-center gap-2">
@@ -689,20 +746,20 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                   <Popover open={rcdRatingAPopoverOpen} onOpenChange={setRcdRatingAPopoverOpen}>
                     <PopoverTrigger asChild>
                       <button
-                        className="sot-fill-all-btn"
+                        className="text-[9.5px] font-bold text-elec-yellow touch-manipulation"
                         title="Quick fill all RCD current ratings"
                       >
-                        <CheckCircle className="h-5 w-5 text-amber-400" />
+                        Fill
                       </button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
+                    <PopoverContent className="w-48 p-3 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="start">
                       <div className="space-y-1">
                         <button
                           onClick={() => {
                             onFillAllRcdRatingA('16');
                             setRcdRatingAPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           16A
                         </button>
@@ -711,7 +768,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdRatingA('25');
                             setRcdRatingAPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           25A
                         </button>
@@ -720,7 +777,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdRatingA('32');
                             setRcdRatingAPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           32A
                         </button>
@@ -729,7 +786,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdRatingA('40');
                             setRcdRatingAPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           40A
                         </button>
@@ -738,7 +795,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdRatingA('50');
                             setRcdRatingAPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           50A
                         </button>
@@ -747,7 +804,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdRatingA('63');
                             setRcdRatingAPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           63A
                         </button>
@@ -756,7 +813,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdRatingA('80');
                             setRcdRatingAPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           80A
                         </button>
@@ -765,7 +822,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdRatingA('100');
                             setRcdRatingAPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           100A
                         </button>
@@ -774,7 +831,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdRatingA('125');
                             setRcdRatingAPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           125A
                         </button>
@@ -784,7 +841,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllRcdRatingA('N/A');
                             setRcdRatingAPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           N/A
                         </button>
@@ -797,35 +854,37 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </>
         )}
 
+        {isGroupCollapsed('rcdDetails') && <TableHead className="sot-header-cell" data-group="rcd-details" />}
+
         {/* Continuity Tests */}
         {!isGroupCollapsed('continuity') && (
           <>
             <TableHead
-              className="sot-header-cell w-16 min-w-[60px] max-w-[60px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-20 min-w-[75px] max-w-[75px]"
               data-group="continuity"
             >
               r₁
             </TableHead>
             <TableHead
-              className="sot-header-cell w-16 min-w-[60px] max-w-[60px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-20 min-w-[75px] max-w-[75px]"
               data-group="continuity"
             >
               rₙ
             </TableHead>
             <TableHead
-              className="sot-header-cell w-16 min-w-[60px] max-w-[60px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-20 min-w-[75px] max-w-[75px]"
               data-group="continuity"
             >
               r₂
             </TableHead>
             <TableHead
-              className="sot-header-cell w-32 min-w-[132px] max-w-[132px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-32 min-w-[132px] max-w-[132px]"
               data-group="continuity"
             >
               R₁+R₂
             </TableHead>
             <TableHead
-              className="sot-header-cell w-16 min-w-[60px] max-w-[60px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-20 min-w-[75px] max-w-[75px]"
               data-group="continuity"
             >
               R₂
@@ -833,11 +892,13 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </>
         )}
 
+        {isGroupCollapsed('continuity') && <TableHead className="sot-header-cell" data-group="continuity" />}
+
         {/* Insulation Tests */}
         {!isGroupCollapsed('insulation') && (
           <>
             <TableHead
-              className="sot-header-cell w-28 min-w-[104px] max-w-[104px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-28 min-w-[104px] max-w-[104px]"
               data-group="insulation"
             >
               <div className="flex items-center justify-center gap-2">
@@ -845,18 +906,18 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                 {onFillAllInsulationVoltage && (
                   <Popover open={irVoltagePopoverOpen} onOpenChange={setIrVoltagePopoverOpen}>
                     <PopoverTrigger asChild>
-                      <button className="sot-fill-all-btn" title="Quick fill all Test Voltages">
-                        <CheckCircle className="h-5 w-5 text-amber-400" />
+                      <button className="text-[9.5px] font-bold text-elec-yellow touch-manipulation" title="Quick fill all Test Voltages">
+                        Fill
                       </button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
+                    <PopoverContent className="w-48 p-3 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="start">
                       <div className="space-y-1">
                         <button
                           onClick={() => {
                             onFillAllInsulationVoltage('250V');
                             setIrVoltagePopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           250V
                         </button>
@@ -865,7 +926,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllInsulationVoltage('500V');
                             setIrVoltagePopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           500V
                         </button>
@@ -874,7 +935,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllInsulationVoltage('1000V');
                             setIrVoltagePopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           1000V
                         </button>
@@ -885,7 +946,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               </div>
             </TableHead>
             <TableHead
-              className="sot-header-cell w-28 min-w-[104px] max-w-[104px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-28 min-w-[104px] max-w-[104px]"
               data-group="insulation"
             >
               <div className="flex items-center justify-center gap-2">
@@ -897,20 +958,20 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                   >
                     <PopoverTrigger asChild>
                       <button
-                        className="sot-fill-all-btn"
+                        className="text-[9.5px] font-bold text-elec-yellow touch-manipulation"
                         title="Quick fill all Live-Neutral readings"
                       >
-                        <CheckCircle className="h-5 w-5 text-amber-400" />
+                        Fill
                       </button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
+                    <PopoverContent className="w-48 p-3 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="start">
                       <div className="space-y-1">
                         <button
                           onClick={() => {
                             onFillAllInsulationLiveNeutral('>200');
                             setIrLiveNeutralPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           &gt;200 MΩ
                         </button>
@@ -919,7 +980,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllInsulationLiveNeutral('>999');
                             setIrLiveNeutralPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           &gt;999 MΩ
                         </button>
@@ -928,7 +989,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllInsulationLiveNeutral('N/A');
                             setIrLiveNeutralPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           N/A
                         </button>
@@ -937,7 +998,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllInsulationLiveNeutral('LIM');
                             setIrLiveNeutralPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           LIM
                         </button>
@@ -948,7 +1009,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               </div>
             </TableHead>
             <TableHead
-              className="sot-header-cell w-28 min-w-[104px] max-w-[104px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-28 min-w-[104px] max-w-[104px]"
               data-group="insulation"
             >
               <div className="flex items-center justify-center gap-2">
@@ -957,20 +1018,20 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                   <Popover open={irLiveEarthPopoverOpen} onOpenChange={setIrLiveEarthPopoverOpen}>
                     <PopoverTrigger asChild>
                       <button
-                        className="sot-fill-all-btn"
+                        className="text-[9.5px] font-bold text-elec-yellow touch-manipulation"
                         title="Quick fill all Live-Earth readings"
                       >
-                        <CheckCircle className="h-5 w-5 text-amber-400" />
+                        Fill
                       </button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
+                    <PopoverContent className="w-48 p-3 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="start">
                       <div className="space-y-1">
                         <button
                           onClick={() => {
                             onFillAllInsulationLiveEarth('>200');
                             setIrLiveEarthPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           &gt;200 MΩ
                         </button>
@@ -979,7 +1040,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllInsulationLiveEarth('>999');
                             setIrLiveEarthPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           &gt;999 MΩ
                         </button>
@@ -988,7 +1049,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllInsulationLiveEarth('N/A');
                             setIrLiveEarthPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           N/A
                         </button>
@@ -997,7 +1058,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllInsulationLiveEarth('LIM');
                             setIrLiveEarthPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           LIM
                         </button>
@@ -1010,27 +1071,29 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </>
         )}
 
+        {isGroupCollapsed('insulation') && <TableHead className="sot-header-cell" data-group="insulation" />}
+
         {/* Zs (Ω) Tests */}
         {!isGroupCollapsed('zs') && (
           <>
-            <TableHead className="sot-header-cell w-20 min-w-[70px] max-w-[70px]" data-group="zs">
+            <TableHead className="sot-header-cell text-[10.5px] font-semibold text-white w-28 min-w-[100px] max-w-[100px]" data-group="zs">
               <div className="flex items-center justify-center gap-2">
                 <span>Pol</span>
                 {onFillAllPolarity && (
                   <Popover open={polarityPopoverOpen} onOpenChange={setPolarityPopoverOpen}>
                     <PopoverTrigger asChild>
-                      <button className="sot-fill-all-btn" title="Quick fill all Polarity">
-                        <CheckCircle className="h-5 w-5 text-amber-400" />
+                      <button className="text-[9.5px] font-bold text-elec-yellow touch-manipulation" title="Quick fill all Polarity">
+                        Fill
                       </button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
+                    <PopoverContent className="w-48 p-3 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="start">
                       <div className="space-y-1">
                         <button
                           onClick={() => {
                             onFillAllPolarity('Correct');
                             setPolarityPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           Correct
                         </button>
@@ -1039,7 +1102,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllPolarity('Incorrect');
                             setPolarityPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           Incorrect
                         </button>
@@ -1048,7 +1111,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                             onFillAllPolarity('N/A');
                             setPolarityPopoverOpen(false);
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          className="w-full text-left px-3 py-2 text-xs font-medium rounded-md text-white hover:bg-elec-yellow hover:text-black transition-colors touch-manipulation"
                         >
                           N/A
                         </button>
@@ -1058,23 +1121,25 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                 )}
               </div>
             </TableHead>
-            <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="zs">
+            <TableHead className="sot-header-cell text-[10.5px] font-semibold text-white w-24 min-w-[85px] max-w-[85px]" data-group="zs">
               Zs
             </TableHead>
           </>
         )}
 
+        {isGroupCollapsed('zs') && <TableHead className="sot-header-cell" data-group="zs" />}
+
         {/* RCD Tests */}
         {!isGroupCollapsed('rcd') && (
           <>
             <TableHead
-              className="sot-header-cell w-16 min-w-[60px] max-w-[60px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-24 min-w-[90px] max-w-[90px]"
               data-group="rcd-tests"
             >
               ms
             </TableHead>
             <TableHead
-              className="sot-header-cell w-16 min-w-[60px] max-w-[60px]"
+              className="sot-header-cell text-[10.5px] font-semibold text-white w-28 min-w-[100px] max-w-[100px]"
               data-group="rcd-tests"
             >
               <div className="flex items-center justify-center gap-2">
@@ -1083,13 +1148,13 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                 {onFillAllRcdTestButton && (
                   <Popover>
                     <PopoverTrigger asChild>
-                      <button className="sot-fill-all-btn" title="Quick fill all"><CheckCircle className="h-5 w-5" /></button>
+                      <button className="text-[9.5px] font-bold text-elec-yellow touch-manipulation" title="Quick fill all">Fill</button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-36 p-2 z-[9999] bg-background border border-white/10" align="center">
-                      <p className="text-[10px] text-white mb-2 font-semibold">Fill all RCD Btn</p>
-                      <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllRcdTestButton('✓')}>All Pass</Button>
-                      <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllRcdTestButton('✗')}>All Fail</Button>
-                      <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllRcdTestButton('N/A')}>All N/A</Button>
+                    <PopoverContent className="w-36 p-2 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="center">
+                      <p className="text-[10px] text-white mb-2 font-semibold">Fill all RCD btn</p>
+                      <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 font-medium text-white hover:bg-elec-yellow hover:text-black" onClick={() => onFillAllRcdTestButton('✓')}>All pass</Button>
+                      <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 font-medium text-white hover:bg-elec-yellow hover:text-black" onClick={() => onFillAllRcdTestButton('✗')}>All fail</Button>
+                      <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 font-medium text-white hover:bg-elec-yellow hover:text-black" onClick={() => onFillAllRcdTestButton('N/A')}>All N/A</Button>
                     </PopoverContent>
                   </Popover>
                 )}
@@ -1098,66 +1163,65 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </>
         )}
 
-        {/* AFDD Test — ELE-871 Sat / Unsat / N/A menu */}
-        {!isGroupCollapsed('afdd') && (
-          <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="afdd">
-            <div className="flex items-center justify-center gap-2">
-              <span>Test</span>
-              {onFillAllAfdd && (
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <button className="sot-fill-all-btn" title="Quick fill all"><CheckCircle className="h-5 w-5" /></button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-40 p-2 z-[9999] bg-background border border-white/10" align="center">
-                    <p className="text-[10px] text-white mb-2 font-semibold">Fill all AFDD</p>
-                    <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllAfdd('✓')}>All Satisfactory</Button>
-                    <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllAfdd('✗')}>All Unsatisfactory</Button>
-                    <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllAfdd('N/A')}>All N/A</Button>
-                  </PopoverContent>
-                </Popover>
-              )}
-            </div>
-          </TableHead>
-        )}
+        {isGroupCollapsed('rcd') && <TableHead className="sot-header-cell" data-group="rcd-tests" />}
 
-        {/* Functional — ELE-871 Sat / Unsat / N/A menu */}
-        {!isGroupCollapsed('functional') && (
-          <TableHead
-            className="sot-header-cell w-16 min-w-[70px] max-w-[70px]"
-            data-group="functional"
-          >
-            <div className="flex items-center justify-center gap-2">
-              <span>Func</span>
-              {onFillAllFunctional && (
+        {/* AFDD Test — ELE-871 Sat / Unsat / N/A menu */}
+        <TableHead className="sot-header-cell text-[10.5px] font-semibold text-white w-16 min-w-[60px] max-w-[60px]" data-group="afdd">
+          <div className="flex items-center justify-center gap-2">
+            <span>Test</span>
+            {onFillAllAfdd && (
                 <Popover>
                   <PopoverTrigger asChild>
-                    <button className="sot-fill-all-btn" title="Quick fill all"><CheckCircle className="h-5 w-5" /></button>
+                    <button className="text-[9.5px] font-bold text-elec-yellow touch-manipulation" title="Quick fill all">Fill</button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-40 p-2 z-[9999] bg-background border border-white/10" align="center">
-                    <p className="text-[10px] text-white mb-2 font-semibold">Fill all Functional</p>
-                    <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllFunctional('✓')}>All Satisfactory</Button>
-                    <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllFunctional('✗')}>All Unsatisfactory</Button>
-                    <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllFunctional('N/A')}>All N/A</Button>
+                  <PopoverContent className="w-40 p-2 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="center">
+                    <p className="text-[10px] text-white mb-2 font-semibold">Fill all AFDD</p>
+                    <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 font-medium text-white hover:bg-elec-yellow hover:text-black" onClick={() => onFillAllAfdd('✓')}>All satisfactory</Button>
+                    <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 font-medium text-white hover:bg-elec-yellow hover:text-black" onClick={() => onFillAllAfdd('✗')}>All unsatisfactory</Button>
+                    <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 font-medium text-white hover:bg-elec-yellow hover:text-black" onClick={() => onFillAllAfdd('N/A')}>All N/A</Button>
                   </PopoverContent>
                 </Popover>
               )}
-            </div>
-          </TableHead>
-        )}
+          </div>
+        </TableHead>
+
+        {/* Functional — ELE-871 Sat / Unsat / N/A menu. Group banner above says
+            'Func', so this label mirrors AFDD's 'Test' (no stacked duplicate). */}
+        <TableHead
+          className="sot-header-cell text-[10.5px] font-semibold text-white w-16 min-w-[70px] max-w-[70px]"
+          data-group="functional"
+        >
+          <div className="flex items-center justify-center gap-2">
+            <span>Test</span>
+            {onFillAllFunctional && (
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <button className="text-[9.5px] font-bold text-elec-yellow touch-manipulation" title="Quick fill all">Fill</button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-40 p-2 z-[9999] rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.14] shadow-[0_16px_40px_rgba(0,0,0,0.55)]" align="center">
+                    <p className="text-[10px] text-white mb-2 font-semibold">Fill all functional</p>
+                    <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 font-medium text-white hover:bg-elec-yellow hover:text-black" onClick={() => onFillAllFunctional('✓')}>All satisfactory</Button>
+                    <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 font-medium text-white hover:bg-elec-yellow hover:text-black" onClick={() => onFillAllFunctional('✗')}>All unsatisfactory</Button>
+                    <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 font-medium text-white hover:bg-elec-yellow hover:text-black" onClick={() => onFillAllFunctional('N/A')}>All N/A</Button>
+                  </PopoverContent>
+                </Popover>
+              )}
+          </div>
+        </TableHead>
 
         {/* Remarks Column */}
-        <TableHead className="sot-header-cell min-w-[80px]">Notes</TableHead>
+        <TableHead className="sot-header-cell text-[10.5px] font-semibold text-white min-w-[80px]">Notes</TableHead>
 
         {/* Regulation Status Column */}
         {showRegulationStatus && (
-          <TableHead className="sot-header-cell min-w-[80px]">BS 7671</TableHead>
+          <TableHead className="sot-header-cell text-[10.5px] font-semibold text-white min-w-[80px]">BS 7671</TableHead>
         )}
-
-        {/* Actions Column — ELE-857 widened from 60→210 to fit ↑ ↓ Spare Del */}
-        <TableHead className="sot-header-cell min-w-[210px] w-[210px] text-center">Actions</TableHead>
       </TableRow>
     </TableHeader>
   );
 };
 
-export default EnhancedTestResultDesktopTableHeader;
+// Memoised — the parent keeps every fill handler referentially stable
+// (useCallback + resultsRef), so the ~15-popover header no longer re-renders
+// on every keystroke in the grid.
+export default React.memo(EnhancedTestResultDesktopTableHeader);

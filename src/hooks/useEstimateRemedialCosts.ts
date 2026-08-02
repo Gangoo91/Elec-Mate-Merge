@@ -22,6 +22,15 @@ export interface EstimateResult {
   scopeOfWorks?: string;
 }
 
+/** Property/site context that grounds the estimate (all optional) */
+export interface EstimateContext {
+  propertyType?: string;
+  numberOfBedrooms?: string;
+  propertyAge?: string;
+  postcode?: string;
+  labourRate?: number;
+}
+
 export function useEstimateRemedialCosts() {
   const [isEstimating, setIsEstimating] = useState(false);
   const [progressStep, setProgressStep] = useState<
@@ -32,7 +41,10 @@ export function useEstimateRemedialCosts() {
   const abortRef = useRef<AbortController | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const estimate = async (defects: DefectObservation[]): Promise<EstimateResult | null> => {
+  const estimate = async (
+    defects: DefectObservation[],
+    context?: EstimateContext
+  ): Promise<EstimateResult | null> => {
     // Cancel any previous request
     if (abortRef.current) abortRef.current.abort();
     abortRef.current = new AbortController();
@@ -62,7 +74,13 @@ export function useEstimateRemedialCosts() {
             description: d.description,
             location: d.location,
             circuitRef: d.circuitRef,
+            recommendation: d.recommendation,
           })),
+          ...(context?.propertyType && { propertyType: context.propertyType }),
+          ...(context?.numberOfBedrooms && { numberOfBedrooms: context.numberOfBedrooms }),
+          ...(context?.propertyAge && { propertyAge: context.propertyAge }),
+          ...(context?.postcode && { postcode: context.postcode }),
+          ...(context?.labourRate && { labourRate: context.labourRate }),
         },
         headers: { Authorization: `Bearer ${session.access_token}` },
       });

@@ -2,13 +2,6 @@ import { useState, useEffect } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Copy, Loader2 } from 'lucide-react';
 import { useCreateJob } from '@/hooks/useJobs';
 import { useJobChecklist, useAddChecklistItem } from '@/hooks/useJobChecklists';
@@ -23,11 +16,10 @@ import {
   SecondaryButton,
   SuccessCheckmark,
   inputClass,
-  selectTriggerClass,
-  selectContentClass,
   checkboxClass,
   fieldLabelClass,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 
 interface CopyJobSheetProps {
   job: Job | null;
@@ -178,18 +170,11 @@ export function CopyJobSheet({ job, open, onOpenChange }: CopyJobSheetProps) {
                 />
               </Field>
               <Field label="Target stage">
-                <Select value={targetStage} onValueChange={setTargetStage}>
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    {stages.map((stage) => (
-                      <SelectItem key={stage.id} value={stage.id}>
-                        {stage.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <SelectField
+        value={targetStage}
+        onValueChange={setTargetStage}
+        options={stages.map((stage) => ({ value: stage.id, label: stage.label }))}
+      />
               </Field>
             </FormCard>
 

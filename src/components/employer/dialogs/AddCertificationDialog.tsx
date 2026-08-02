@@ -31,6 +31,7 @@ import {
   selectTriggerClass,
   selectContentClass,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 
 const CERT_TYPES = [
   '18th Edition Wiring Regulations',
@@ -210,7 +211,7 @@ export function AddCertificationDialog({
         </ResponsiveFormModalHeader>
         <ResponsiveFormModalBody className="pb-6">
           <form id="certification-form" onSubmit={handleSubmit} className="space-y-4">
-          <FormCard eyebrow="Certification details">
+          <FormCard bleed eyebrow="Certification details">
             <Field label="Employee" required>
               <Select
                 value={formData.employeeId}
@@ -232,40 +233,22 @@ export function AddCertificationDialog({
             </Field>
 
             <Field label="Certification type" required>
-              <Select
-                value={formData.name}
-                onValueChange={(val) => setFormData((prev) => ({ ...prev, name: val }))}
-              >
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="Select certification..." />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {CERT_TYPES.map((cert) => (
-                    <SelectItem key={cert} value={cert}>
-                      {cert}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <SelectField
+        value={formData.name}
+        onValueChange={(val) => setFormData((prev) => ({ ...prev, name: val }))}
+        placeholder="Select certification..."
+        options={CERT_TYPES.map((cert) => ({ value: cert, label: cert }))}
+      />
             </Field>
 
             <FormGrid cols={2}>
               <Field label="Issuing body" required>
-                <Select
-                  value={formData.issuer}
-                  onValueChange={(val) => setFormData((prev) => ({ ...prev, issuer: val }))}
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue placeholder="Select issuer..." />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    {ISSUERS.map((issuer) => (
-                      <SelectItem key={issuer} value={issuer}>
-                        {issuer}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <SelectField
+        value={formData.issuer}
+        onValueChange={(val) => setFormData((prev) => ({ ...prev, issuer: val }))}
+        placeholder="Select issuer..."
+        options={ISSUERS.map((issuer) => ({ value: issuer, label: issuer }))}
+      />
               </Field>
               <Field label="Certificate number">
                 <Input

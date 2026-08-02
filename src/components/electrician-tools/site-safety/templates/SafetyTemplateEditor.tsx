@@ -345,7 +345,7 @@ export function SafetyTemplateEditor({
     const fieldKey = (f: { id?: string; key?: string }) => f.id ?? f.key ?? '';
     return (
       <Sheet open={open} onOpenChange={handleClose}>
-        <SheetContent side="bottom" className="h-[92vh] p-0 rounded-t-2xl overflow-hidden">
+        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
           <div className="flex flex-col h-full bg-background">
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
@@ -452,7 +452,7 @@ export function SafetyTemplateEditor({
 
   return (
     <Sheet open={open} onOpenChange={handleClose}>
-      <SheetContent side="bottom" className="h-[92vh] p-0 rounded-t-2xl overflow-hidden">
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">

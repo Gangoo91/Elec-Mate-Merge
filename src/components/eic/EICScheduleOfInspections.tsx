@@ -14,6 +14,9 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
 interface EICScheduleOfInspectionsProps {
   formData: any;
   onUpdate: (field: string, value: any) => void;
@@ -98,17 +101,22 @@ const EICScheduleOfInspections: React.FC<EICScheduleOfInspectionsProps> = ({
   }, []);
 
   return (
-    <div className="space-y-3">
-      <EICInspectionStatsSummary
-        inspectionItems={inspectionItems}
-        onMarkAllOk={handleMarkAllOk}
-      />
-      <EICInspectionChecklistCard
-        inspectionItems={inspectionItems}
-        onUpdateItem={updateInspectionItem}
-        onAutoCreateObservation={onAutoCreateObservation}
-        onNavigateToObservations={onNavigateToObservations}
-      />
+    <div className="space-y-4">
+      <section className={cardCn}>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">
+          Schedule of inspections
+        </h2>
+        <EICInspectionStatsSummary
+          inspectionItems={inspectionItems}
+          onMarkAllOk={handleMarkAllOk}
+        />
+        <EICInspectionChecklistCard
+          inspectionItems={inspectionItems}
+          onUpdateItem={updateInspectionItem}
+          onAutoCreateObservation={onAutoCreateObservation}
+          onNavigateToObservations={onNavigateToObservations}
+        />
+      </section>
 
       <AlertDialog open={showMarkAllConfirm} onOpenChange={setShowMarkAllConfirm}>
         <AlertDialogContent>

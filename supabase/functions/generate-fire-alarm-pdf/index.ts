@@ -112,16 +112,30 @@ Deno.serve(async (req: Request) => {
     console.log('[generate-fire-alarm-pdf] Creating PDF document');
     console.log('[generate-fire-alarm-pdf] Form data keys:', Object.keys(formData));
 
-    // Validate payload against schema (soft-fail: log but don't block)
-    const validation = fireAlarmPayloadSchema.safeParse(formData);
-    if (!validation.success) {
-      console.error('[generate-fire-alarm-pdf] Schema validation failed:',
-        JSON.stringify(validation.error.issues.slice(0, 10)));
-      await captureException(new Error('Fire Alarm payload schema drift detected'), {
-        functionName: 'generate-fire-alarm-pdf',
-        extra: { issues: validation.error.issues.slice(0, 20) },
-        tags: { schema_drift: 'true' },
-      });
+    // Validate payload against schema (soft-fail: log but don't block).
+    //
+    // fire-alarm-payload-schema describes the G2 payload ONLY (it validates
+    // formatFireAlarmJson output). All five fire alarm certs share this
+    // function, and the four sub-types (G1 design, G3 commissioning, G6
+    // inspection, G7 modification) have legitimately different payload shapes —
+    // so running the G2 schema over them raised a schema_drift alert on EVERY
+    // generation, burying the real drift this check exists to catch.
+    //
+    // A sub-type is identified by supplying its own templateId; the G2 payload
+    // is the one that uses this function's default template.
+    if (!templateId || templateId === TEMPLATE_ID) {
+      const validation = fireAlarmPayloadSchema.safeParse(formData);
+      if (!validation.success) {
+        console.error('[generate-fire-alarm-pdf] Schema validation failed:',
+          JSON.stringify(validation.error.issues.slice(0, 10)));
+        await captureException(new Error('Fire Alarm payload schema drift detected'), {
+          functionName: 'generate-fire-alarm-pdf',
+          extra: { issues: validation.error.issues.slice(0, 20) },
+          tags: { schema_drift: 'true' },
+        });
+      }
+    } else {
+      console.log('[generate-fire-alarm-pdf] Sub-type payload, G2 schema not applicable:', templateId);
     }
 
     // Log key sections for debugging

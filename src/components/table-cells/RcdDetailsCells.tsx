@@ -10,6 +10,7 @@ import { TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
 import { rcdTypeOptions } from '@/types/wiringTypes';
 import { rcdBsStandardOptions } from '@/types/protectiveDeviceTypes';
+import { normaliseRcdRating } from '@/utils/rcdRating';
 import ValidatedInput from '../ValidatedInput';
 import ComboboxCell from './ComboboxCell';
 
@@ -71,12 +72,14 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({
 
       {/* Column 15: IΔn (mA) — keep as Select (only 6 standard values) */}
       <TableCell className="p-0 h-8 align-middle w-28 min-w-[100px] max-w-[100px]">
+        {/* normaliseRcdRating: certs filled on mobile before 2026-08 stored
+            bare '30' — map to '30mA' on read so the Select doesn't go blank */}
         <Select
           name={`rcdRating-${result.id}`}
-          value={result.rcdRating || ''}
+          value={normaliseRcdRating(result.rcdRating)}
           onValueChange={handleRcdRatingChange}
         >
-          <SelectTrigger className="h-8 text-sm px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
+          <SelectTrigger className="h-8 text-sm px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-white/[0.04] focus:bg-transparent focus:ring-1 focus:ring-inset focus:ring-elec-yellow focus:shadow-none">
             <SelectValue placeholder="—" />
           </SelectTrigger>
           <SelectContent
@@ -112,7 +115,7 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({
         <ValidatedInput
           value={result.rcdRatingA || ''}
           onChange={(value) => onUpdate(result.id, 'rcdRatingA', value)}
-          className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
+          className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow focus:shadow-none hover:bg-white/[0.04] focus:bg-transparent"
           placeholder="—"
         />
       </TableCell>

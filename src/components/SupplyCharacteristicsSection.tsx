@@ -1,21 +1,11 @@
-import React, { useMemo, useCallback } from 'react';
+import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import FormSelectSheet from '@/components/ui/form-select-sheet';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Info, Plug, Check } from 'lucide-react';
 import { useEICRSmartForm } from '@/hooks/inspection/useEICRSmartForm';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
+import useReadingKeypad from '@/hooks/useReadingKeypad';
 import {
   FieldLimitationBadge,
   FieldNotesInput,
@@ -34,6 +24,8 @@ const SUPPLY_SECTION_FIELDS = [
   'prospectiveFaultCurrent',
   'supplyPolarityConfirmed',
   'otherSourcesOfSupply',
+  'otherSourcesOfSupplyPresent',
+  'dcConductorConfig',
   'mainProtectiveDevice',
   'mainProtectiveDeviceCustom',
   'mainProtectiveDeviceLimit',
@@ -66,11 +58,24 @@ interface SupplyCharacteristicsSectionProps {
   onUpdate: (field: string, value: string) => void;
 }
 
-const SectionTitle = ({ title }: { icon?: any; title: string; color?: string; isMobile?: boolean }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const sheetTriggerCn =
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 hover:border-white/[0.3]';
+
+const chipBase = 'h-11 rounded-xl text-xs transition-all touch-manipulation active:scale-[0.98]';
+const chipOn = 'bg-elec-yellow border border-elec-yellow text-black font-semibold';
+const chipOff = 'bg-white/[0.06] border border-white/[0.12] text-white font-medium';
+const chipPass = 'bg-green-500 border border-green-500 text-black font-semibold';
+
+const SectionHeading = ({ title }: { title: string }) => (
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const FormField = ({
@@ -87,17 +92,34 @@ const FormField = ({
   children: React.ReactNode;
 }) => (
   <div>
-    <div className="flex items-center justify-between gap-2 mb-1.5">
-      <Label className="text-white text-xs">
+    {/* h-8 clears the N/A / LIM badges and keeps every field on one baseline. */}
+    <div className="mb-2 flex h-8 items-center justify-between gap-2">
+      <Label className={cn(labelCn, 'mb-0')}>
         {label}
         {required && ' *'}
       </Label>
       {trailing}
     </div>
     {children}
-    {hint && <span className="text-xs text-white block mt-1">{hint}</span>}
+    {hint && <span className="text-[11px] text-white/85 block mt-1">{hint}</span>}
   </div>
 );
+
+/** Numeric supply readings the keypad serves — free-number inputs only.
+ * Voltage is chips and the device ratings are nameplate values, so they
+ * stay keypad-free. */
+const KEYPAD_META = {
+  supplyFrequency: { label: 'Frequency — supply', unit: 'Hz' },
+  externalZe: { label: 'Ze — external loop impedance', unit: 'Ω' },
+  prospectiveFaultCurrent: { label: 'Ipf — prospective fault current', unit: 'kA' },
+  rcdMeasuredTime: { label: 'RCD — measured operating time', unit: 'ms' },
+};
+const KEYPAD_SEQUENCE = [
+  'supplyFrequency',
+  'externalZe',
+  'prospectiveFaultCurrent',
+  'rcdMeasuredTime',
+];
 
 /**
  * SupplyCharacteristicsSection - Best-in-class mobile form for supply & earthing details
@@ -109,10 +131,31 @@ const SupplyCharacteristicsSectionInner = ({
   formData,
   onUpdate,
 }: SupplyCharacteristicsSectionProps) => {
-  const isMobile = useIsMobile();
   const haptic = useHaptic();
-  const { getWarningsForField, suggestions } = useEICRSmartForm(formData, onUpdate);
+  const { suggestions } = useEICRSmartForm(formData, onUpdate);
   const ipfSuggestion = suggestions.find((s) => s.field === 'prospectiveFaultCurrent');
+
+  // The smart-form hook emits the Ze-derived Ipf as an integer amps string
+  // below 1000 A and a one-decimal kA string above — the Ipf field records
+  // kA, so normalise the amps branch before offering it as a one-tap apply.
+  const ipfSuggestionKa = ipfSuggestion
+    ? ipfSuggestion.value.includes('.')
+      ? ipfSuggestion.value
+      : String(parseFloat((Number(ipfSuggestion.value) / 1000).toFixed(2)))
+    : '';
+
+  // Reading keypad — shared MW pattern. Values flow through the existing
+  // onUpdate path; getValue mirrors what each input renders (frequency
+  // defaults to '50' exactly like its value prop).
+  const keypad = useReadingKeypad({
+    meta: KEYPAD_META,
+    sequence: KEYPAD_SEQUENCE,
+    getValue: (field) =>
+      field === 'supplyFrequency'
+        ? String(formData.supplyFrequency || '50')
+        : String(formData[field] ?? ''),
+    setValue: (field, value) => onUpdate(field, value),
+  });
 
   // Auto-set common voltage based on phases
   const handlePhasesChange = (value: string) => {
@@ -251,18 +294,6 @@ const SupplyCharacteristicsSectionInner = ({
     formData.mainProtectiveDeviceCustom === 'true' ||
     (formData.mainProtectiveDevice && !knownDeviceValues.includes(formData.mainProtectiveDevice));
 
-  // Common DNO options (including Northern Ireland)
-  const dnoOptions = [
-    'UK Power Networks',
-    'Western Power Distribution',
-    'Scottish Power Energy Networks',
-    'Northern Powergrid',
-    'Electricity North West',
-    'SSE Networks (SSEN)',
-    'National Grid Electricity Distribution',
-    'NIE Networks (Northern Ireland)',
-  ];
-
   // Earthing arrangement options
   const earthingOptions = [
     { value: 'TN-C', label: 'TN-C' },
@@ -274,308 +305,301 @@ const SupplyCharacteristicsSectionInner = ({
   ];
 
   return (
-    <div className={cn('space-y-6', '')}>
-      {/* Supply Details Section */}
-      <div>
-        <SectionTitle icon={Plug} title="Supply Details" color="yellow" isMobile={isMobile} />
-        <div className="space-y-3 py-3">
-          {/* Row 1: Phases + Voltage */}
-          <div className="grid grid-cols-2 gap-3 items-end">
-            <FormField label="Phases *">
-              <div className="grid grid-cols-3 gap-2">
-                {[
-                  { value: '1', label: 'Single' },
-                  { value: '2', label: 'Two' },
-                  { value: '3', label: 'Three' },
-                ].map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => handlePhasesChange(option.value)}
-                    className={cn(
-                      'h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98]',
-                      formData.phases === option.value
-                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
-                    )}
-                  >
-                    {option.label}
-                  </button>
-                ))}
-              </div>
-            </FormField>
-            <FormField label="Voltage *">
-              <div className="grid grid-cols-3 gap-1.5">
-                {[
-                  { value: '230', label: '230V' },
-                  { value: '400', label: '400V' },
-                  { value: '230/400', label: 'Both' },
-                ].map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => {
-                      haptic.light();
-                      onUpdate('supplyVoltage', formData.supplyVoltage === option.value ? '' : option.value);
-                    }}
-                    className={cn(
-                      'h-11 rounded-lg font-semibold transition-all touch-manipulation text-[11px] active:scale-[0.98]',
-                      formData.supplyVoltage === option.value
-                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
-                    )}
-                  >
-                    {option.label}
-                  </button>
-                ))}
-              </div>
-            </FormField>
-          </div>
+    <div className="space-y-4 lg:grid lg:grid-cols-2 lg:gap-x-6 lg:gap-y-4 lg:space-y-0">
+      {/* Supply details */}
+      <div className={cardCn}>
+        <SectionHeading title="Supply details" />
 
-          {/* Row 2: AC/DC + Wires + Hz */}
-          <div className="grid grid-cols-3 gap-2">
-            <FormField label="AC/DC">
-              <div className="grid grid-cols-2 gap-1">
-                {[
-                  { value: 'ac', label: 'AC' },
-                  { value: 'dc', label: 'DC' },
-                ].map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => {
-                      haptic.light();
-                      onUpdate('supplyAcDc', formData.supplyAcDc === option.value ? '' : option.value);
-                    }}
-                    className={cn(
-                      'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-                      (formData.supplyAcDc || 'ac') === option.value
-                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
-                    )}
-                  >
-                    {option.label}
-                  </button>
-                ))}
-              </div>
-            </FormField>
-            <FormField label="Wires">
-              <FormSelectSheet
-                value={formData.supplyAcDc === 'dc' ? (formData.dcConductorConfig || '') : (formData.conductorConfiguration || '')}
-                onValueChange={(value) => {
-                  if (formData.supplyAcDc === 'dc') {
-                    onUpdate('dcConductorConfig', value);
+        {/* Phases + Voltage */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <FormField label="Phases" required>
+            <div className="grid grid-cols-3 gap-2">
+              {[
+                { value: '1', label: 'Single' },
+                { value: '2', label: 'Two' },
+                { value: '3', label: 'Three' },
+              ].map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => handlePhasesChange(option.value)}
+                  className={cn(chipBase, formData.phases === option.value ? chipOn : chipOff)}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          </FormField>
+          <FormField label="Voltage" required>
+            <div className="grid grid-cols-3 gap-2">
+              {[
+                { value: '230', label: '230V' },
+                { value: '400', label: '400V' },
+                { value: '230/400', label: 'Both' },
+              ].map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => {
+                    haptic.light();
+                    onUpdate('supplyVoltage', formData.supplyVoltage === option.value ? '' : option.value);
+                  }}
+                  className={cn(
+                    chipBase,
+                    formData.supplyVoltage === option.value ? chipOn : chipOff
+                  )}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          </FormField>
+        </div>
+
+        {/* AC/DC + Wires + Hz */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-4">
+          <FormField label="AC/DC">
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { value: 'ac', label: 'AC' },
+                { value: 'dc', label: 'DC' },
+              ].map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => {
+                    haptic.light();
+                    onUpdate('supplyAcDc', formData.supplyAcDc === option.value ? '' : option.value);
+                  }}
+                  className={cn(
+                    chipBase,
+                    (formData.supplyAcDc || 'ac') === option.value ? chipOn : chipOff
+                  )}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          </FormField>
+          <FormField label="Wires">
+            <FormSelectSheet
+              value={formData.supplyAcDc === 'dc' ? (formData.dcConductorConfig || '') : (formData.conductorConfiguration || '')}
+              onValueChange={(value) => {
+                if (formData.supplyAcDc === 'dc') {
+                  onUpdate('dcConductorConfig', value);
+                } else {
+                  onUpdate('conductorConfiguration', value);
+                }
+              }}
+              label={formData.supplyAcDc === 'dc' ? 'DC conductor configuration' : 'Conductor configuration'}
+              placeholder="—"
+              className={sheetTriggerCn}
+              options={
+                formData.supplyAcDc === 'dc'
+                  ? [
+                      { value: 'dc-2-wire', label: 'DC 2-wire' },
+                      { value: 'dc-3-wire', label: 'DC 3-wire' },
+                      { value: 'dc-other', label: 'DC Other' },
+                    ]
+                  : [
+                      { value: '2-wire', label: '2-wire', description: '1-phase, 2-wire' },
+                      { value: '3-wire', label: '3-wire', description: '2-phase or 3-phase, 3-wire' },
+                      { value: '4-wire', label: '4-wire', description: '3-phase, 4-wire' },
+                    ]
+              }
+            />
+          </FormField>
+          <FormField
+            label="Hz"
+            trailing={
+              <FieldLimitationBadge
+                compact
+                value={formData.supplyFrequency || ''}
+                markers={['LIM', 'N/A']}
+                onChange={(v) => onUpdate('supplyFrequency', v)}
+              />
+            }
+          >
+            <Input
+              type="text"
+              inputMode="decimal"
+              value={isFieldMarker(formData.supplyFrequency) ? formData.supplyFrequency : (formData.supplyFrequency || '50')}
+              onChange={(e) => onUpdate('supplyFrequency', e.target.value)}
+              placeholder="50"
+              disabled={isFieldMarker(formData.supplyFrequency)}
+              className={cn(inputCn, isFieldMarker(formData.supplyFrequency) && 'opacity-60')}
+              {...keypad.field('supplyFrequency')}
+            />
+            <FieldNotesInput
+              parentValue={formData.supplyFrequency || ''}
+              value={formData.supplyFrequencyNotes || ''}
+              onChange={(v) => onUpdate('supplyFrequencyNotes', v)}
+              placeholder="Reason"
+            />
+          </FormField>
+        </div>
+
+        {/* Ze + Ipf */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <FormField
+            label="External Ze (Ω)"
+            trailing={
+              <FieldLimitationBadge
+                compact
+                value={formData.externalZe || ''}
+                markers={['LIM']}
+                onChange={(v) => onUpdate('externalZe', v)}
+              />
+            }
+          >
+            {isFieldMarker(formData.externalZe) ? (
+              <Input value={formData.externalZe} disabled className={cn(inputCn, 'opacity-60')} />
+            ) : (
+              <Input
+                type="text"
+                inputMode="decimal"
+                value={formData.externalZe || ''}
+                onChange={(e) => onUpdate('externalZe', e.target.value)}
+                placeholder="0.35"
+                className={inputCn}
+                {...keypad.field('externalZe')}
+              />
+            )}
+            <FieldNotesInput
+              parentValue={formData.externalZe || ''}
+              value={formData.externalZeNotes || ''}
+              onChange={(v) => onUpdate('externalZeNotes', v)}
+              placeholder="Reason (e.g. meter room locked)"
+            />
+          </FormField>
+          <FormField
+            label="Ipf at origin (kA)"
+            trailing={
+              <FieldLimitationBadge
+                compact
+                value={formData.prospectiveFaultCurrent || ''}
+                markers={['LIM']}
+                onChange={(v) => onUpdate('prospectiveFaultCurrent', v)}
+              />
+            }
+          >
+            {isFieldMarker(formData.prospectiveFaultCurrent) ? (
+              <Input
+                value={formData.prospectiveFaultCurrent}
+                disabled
+                className={cn(inputCn, 'opacity-60')}
+              />
+            ) : (
+              <Input
+                type="text"
+                inputMode="decimal"
+                value={formData.prospectiveFaultCurrent || ''}
+                onChange={(e) => onUpdate('prospectiveFaultCurrent', e.target.value)}
+                placeholder={ipfSuggestion ? `~${ipfSuggestionKa}` : '16'}
+                className={inputCn}
+                {...keypad.field('prospectiveFaultCurrent')}
+              />
+            )}
+            {/* One-tap apply for the Ze-derived estimate — never written silently */}
+            {ipfSuggestion && !formData.prospectiveFaultCurrent && (
+              <button
+                type="button"
+                onClick={() => {
+                  haptic.light();
+                  onUpdate('prospectiveFaultCurrent', ipfSuggestionKa);
+                }}
+                className="mt-2 inline-flex h-11 items-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 text-xs font-medium text-white transition-all touch-manipulation active:scale-[0.98]"
+              >
+                <span>≈ {ipfSuggestionKa} kA from Ze</span>
+                <span className="font-semibold text-elec-yellow">Apply</span>
+              </button>
+            )}
+            <FieldNotesInput
+              parentValue={formData.prospectiveFaultCurrent || ''}
+              value={formData.prospectiveFaultCurrentNotes || ''}
+              onChange={(v) => onUpdate('prospectiveFaultCurrentNotes', v)}
+              placeholder="Reason (e.g. not measurable from here)"
+            />
+          </FormField>
+        </div>
+
+        {/* Polarity + Other sources */}
+        <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+          <FormField label="Polarity">
+            <button
+              type="button"
+              onClick={() => {
+                haptic.light();
+                onUpdate('supplyPolarityConfirmed', formData.supplyPolarityConfirmed === 'true' ? 'false' : 'true');
+              }}
+              className={cn(
+                chipBase,
+                'w-full flex items-center justify-center',
+                formData.supplyPolarityConfirmed === 'true' ? chipPass : chipOff
+              )}
+            >
+              Confirmed
+            </button>
+          </FormField>
+          {/* A4:2026 — Other sources of supply tick-box */}
+          <FormField
+            label="Other sources"
+            trailing={
+              <FieldLimitationBadge
+                compact
+                value={formData.otherSourcesOfSupplyPresent === 'N/A' ? 'N/A' : ''}
+                markers={['N/A']}
+                onChange={(v) => {
+                  if (v === 'N/A') {
+                    onUpdate('otherSourcesOfSupplyPresent', 'N/A');
+                    onUpdate('otherSourcesOfSupply', '');
                   } else {
-                    onUpdate('conductorConfiguration', value);
+                    onUpdate('otherSourcesOfSupplyPresent', 'false');
                   }
                 }}
-                label={formData.supplyAcDc === 'dc' ? 'DC Conductor Configuration' : 'Conductor Configuration'}
-                placeholder="—"
-                options={
-                  formData.supplyAcDc === 'dc'
-                    ? [
-                        { value: 'dc-2-wire', label: 'DC 2-wire' },
-                        { value: 'dc-3-wire', label: 'DC 3-wire' },
-                        { value: 'dc-other', label: 'DC Other' },
-                      ]
-                    : [
-                        { value: '2-wire', label: '2-wire', description: '1-phase, 2-wire' },
-                        { value: '3-wire', label: '3-wire', description: '2-phase or 3-phase, 3-wire' },
-                        { value: '4-wire', label: '4-wire', description: '3-phase, 4-wire' },
-                      ]
-                }
               />
-            </FormField>
-            <FormField
-              label="Hz"
-              trailing={
-                <FieldLimitationBadge
-                  compact
-                  value={formData.supplyFrequency || ''}
-                  markers={['LIM', 'N/A']}
-                  onChange={(v) => onUpdate('supplyFrequency', v)}
-                />
-              }
-            >
-              <Input
-                value={isFieldMarker(formData.supplyFrequency) ? formData.supplyFrequency : (formData.supplyFrequency || '50')}
-                onChange={(e) => onUpdate('supplyFrequency', e.target.value)}
-                placeholder="50"
-                disabled={isFieldMarker(formData.supplyFrequency)}
-                className={cn(
-                  'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]',
-                  isFieldMarker(formData.supplyFrequency) && 'opacity-60'
-                )}
-              />
-              <FieldNotesInput
-                parentValue={formData.supplyFrequency || ''}
-                value={formData.supplyFrequencyNotes || ''}
-                onChange={(v) => onUpdate('supplyFrequencyNotes', v)}
-                placeholder="Reason"
-              />
-            </FormField>
-          </div>
-
-          {/* Row 3: Ze + Ipf */}
-          <div className="grid grid-cols-2 gap-3 items-end">
-            <FormField
-              label="External Ze (Ω)"
-              trailing={
-                <FieldLimitationBadge
-                  compact
-                  value={formData.externalZe || ''}
-                  markers={['LIM']}
-                  onChange={(v) => onUpdate('externalZe', v)}
-                />
-              }
-            >
-              {isFieldMarker(formData.externalZe) ? (
-                <Input
-                  value={formData.externalZe}
-                  disabled
-                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
-                />
-              ) : (
-                <Input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={formData.externalZe || ''}
-                  onChange={(e) => onUpdate('externalZe', e.target.value)}
-                  placeholder="0.35"
-                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-                  inputMode="decimal"
-                />
+            }
+          >
+            <button
+              type="button"
+              disabled={formData.otherSourcesOfSupplyPresent === 'N/A'}
+              onClick={() => {
+                haptic.light();
+                onUpdate('otherSourcesOfSupplyPresent', formData.otherSourcesOfSupplyPresent === 'true' ? 'false' : 'true');
+              }}
+              className={cn(
+                chipBase,
+                'w-full flex items-center justify-center',
+                formData.otherSourcesOfSupplyPresent === 'true' ? chipOn : chipOff,
+                formData.otherSourcesOfSupplyPresent === 'N/A' && 'opacity-40'
               )}
-              <FieldNotesInput
-                parentValue={formData.externalZe || ''}
-                value={formData.externalZeNotes || ''}
-                onChange={(v) => onUpdate('externalZeNotes', v)}
-                placeholder="Reason (e.g. meter room locked)"
-              />
-            </FormField>
-            <FormField
-              label="Ipf at Origin (kA)"
-              trailing={
-                <FieldLimitationBadge
-                  compact
-                  value={formData.prospectiveFaultCurrent || ''}
-                  markers={['LIM']}
-                  onChange={(v) => onUpdate('prospectiveFaultCurrent', v)}
-                />
-              }
             >
-              {isFieldMarker(formData.prospectiveFaultCurrent) ? (
-                <Input
-                  value={formData.prospectiveFaultCurrent}
-                  disabled
-                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
-                />
-              ) : (
-                <Input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={formData.prospectiveFaultCurrent || ''}
-                  onChange={(e) => onUpdate('prospectiveFaultCurrent', e.target.value)}
-                  placeholder={ipfSuggestion ? `~${ipfSuggestion.value}` : '16'}
-                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-                  inputMode="decimal"
-                />
-              )}
-              <FieldNotesInput
-                parentValue={formData.prospectiveFaultCurrent || ''}
-                value={formData.prospectiveFaultCurrentNotes || ''}
-                onChange={(v) => onUpdate('prospectiveFaultCurrentNotes', v)}
-                placeholder="Reason (e.g. not measurable from here)"
-              />
-            </FormField>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3 items-end">
-            <FormField label="Polarity">
-              <button
-                type="button"
-                onClick={() => {
-                  haptic.light();
-                  onUpdate('supplyPolarityConfirmed', formData.supplyPolarityConfirmed === 'true' ? 'false' : 'true');
-                }}
-                className={cn(
-                  'w-full h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98] flex items-center justify-center gap-2',
-                  formData.supplyPolarityConfirmed === 'true'
-                    ? 'bg-green-500/20 border border-green-500/40 text-green-400'
-                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
-                )}
-              >
-                {formData.supplyPolarityConfirmed === 'true' && <Check className="h-3.5 w-3.5" />}
-                Confirmed
-              </button>
-            </FormField>
-            {/* A4:2026 — Other sources of supply tick-box */}
-            <FormField
-              label="Other Sources"
-              trailing={
-                <FieldLimitationBadge
-                  compact
-                  value={formData.otherSourcesOfSupplyPresent === 'N/A' ? 'N/A' : ''}
-                  markers={['N/A']}
-                  onChange={(v) => {
-                    if (v === 'N/A') {
-                      onUpdate('otherSourcesOfSupplyPresent', 'N/A');
-                      onUpdate('otherSourcesOfSupply', '');
-                    } else {
-                      onUpdate('otherSourcesOfSupplyPresent', 'false');
-                    }
-                  }}
-                />
-              }
-            >
-              <button
-                type="button"
-                disabled={formData.otherSourcesOfSupplyPresent === 'N/A'}
-                onClick={() => {
-                  haptic.light();
-                  onUpdate('otherSourcesOfSupplyPresent', formData.otherSourcesOfSupplyPresent === 'true' ? 'false' : 'true');
-                }}
-                className={cn(
-                  'w-full h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98] flex items-center justify-center gap-2',
-                  formData.otherSourcesOfSupplyPresent === 'true'
-                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                    : 'bg-white/[0.05] border border-white/[0.08] text-white',
-                  formData.otherSourcesOfSupplyPresent === 'N/A' && 'opacity-40'
-                )}
-              >
-                {formData.otherSourcesOfSupplyPresent === 'true' && <Check className="h-3.5 w-3.5" />}
-                {formData.otherSourcesOfSupplyPresent === 'N/A' ? 'N/A' : 'Present'}
-              </button>
-              <FieldNotesInput
-                parentValue={formData.otherSourcesOfSupplyPresent === 'N/A' ? 'N/A' : ''}
-                value={formData.otherSourcesOfSupplyNotes || ''}
-                onChange={(v) => onUpdate('otherSourcesOfSupplyNotes', v)}
-                placeholder="Reason (e.g. cabin-only install, no secondary source)"
-              />
-            </FormField>
-          </div>
-          {formData.otherSourcesOfSupplyPresent === 'true' && (
-            <FormField label="Other Sources — details (continuation sheet)">
-              <Input
-                value={formData.otherSourcesOfSupply || ''}
-                onChange={(e) => onUpdate('otherSourcesOfSupply', e.target.value)}
-                placeholder="Solar PV, generator, battery storage..."
-                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-              />
-            </FormField>
-          )}
+              {formData.otherSourcesOfSupplyPresent === 'N/A' ? 'N/A' : 'Present'}
+            </button>
+            <FieldNotesInput
+              parentValue={formData.otherSourcesOfSupplyPresent === 'N/A' ? 'N/A' : ''}
+              value={formData.otherSourcesOfSupplyNotes || ''}
+              onChange={(v) => onUpdate('otherSourcesOfSupplyNotes', v)}
+              placeholder="Reason (e.g. cabin-only install, no secondary source)"
+            />
+          </FormField>
         </div>
+        {formData.otherSourcesOfSupplyPresent === 'true' && (
+          <FormField label="Other sources — details (continuation sheet)">
+            <Input
+              value={formData.otherSourcesOfSupply || ''}
+              onChange={(e) => onUpdate('otherSourcesOfSupply', e.target.value)}
+              placeholder="Solar PV, generator, battery storage..."
+              className={inputCn}
+            />
+          </FormField>
+        )}
       </div>
 
-      {/* Main Protective Device Section */}
-      <div>
-        <div className="flex items-center justify-between gap-3 border-b border-white/[0.06] pb-1 mb-3">
-          <div>
-            <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-            <h2 className="text-xs font-medium text-white uppercase tracking-wider">Main Protective Device</h2>
-          </div>
+      {/* Main protective device */}
+      <div className={cardCn}>
+        <div className="mb-3 flex items-center justify-between gap-2">
+          <h2 className="text-[15px] font-semibold tracking-tight text-white">Main protective device</h2>
           <div className="flex items-center gap-1.5 shrink-0">
             <button
               type="button"
@@ -594,10 +618,8 @@ const SupplyCharacteristicsSectionInner = ({
                 }
               }}
               className={cn(
-                'h-8 px-3 rounded-lg text-[10px] font-semibold touch-manipulation transition-colors active:scale-[0.98]',
-                mpdLimit === 'LIM'
-                  ? 'bg-orange-500/20 border border-orange-500/40 text-orange-400'
-                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                'h-11 px-4 rounded-xl text-xs touch-manipulation transition-all active:scale-[0.98]',
+                mpdLimit === 'LIM' ? chipOn : chipOff
               )}
             >
               LIM
@@ -620,434 +642,428 @@ const SupplyCharacteristicsSectionInner = ({
                 }
               }}
               className={cn(
-                'h-8 px-3 rounded-lg text-[10px] font-semibold touch-manipulation transition-colors active:scale-[0.98]',
-                mpdLimit === 'N/A'
-                  ? 'bg-zinc-500/20 border border-zinc-500/40 text-zinc-300'
-                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                'h-11 px-4 rounded-xl text-xs touch-manipulation transition-all active:scale-[0.98]',
+                mpdLimit === 'N/A' ? chipOn : chipOff
               )}
             >
               N/A
             </button>
           </div>
         </div>
-        <div className="space-y-3 py-3">
-          <FormField label="Device *">
+        <FormField label="Device" required>
+          <FormSelectSheet
+            value={showCustomProtectiveDevice ? 'other' : formData.mainProtectiveDevice || ''}
+            onValueChange={handleMainProtectiveDeviceChange}
+            disabled={mpdLimit === 'LIM'}
+            label="Main protective device"
+            placeholder="Select device"
+            allowCustom
+            customLabel="Other (specify)"
+            options={mainProtectiveDeviceOptions}
+            className={cn(sheetTriggerCn, mpdLimit === 'LIM' && 'opacity-40')}
+          />
+        </FormField>
+
+        {/* BS 88 Fuse sub-type (gG, gM, aM, Type 2/3/4) */}
+        {formData.mainProtectiveDevice === 'BS 88 HRC Fuse' && (
+          <FormField label="Fuse type">
             <FormSelectSheet
-              value={showCustomProtectiveDevice ? 'other' : formData.mainProtectiveDevice || ''}
-              onValueChange={handleMainProtectiveDeviceChange}
-              disabled={mpdLimit === 'LIM'}
-              label="Main Protective Device"
-              placeholder="Select device"
-              allowCustom
-              customLabel="Other (specify)"
-              options={mainProtectiveDeviceOptions}
-              className={cn(mpdLimit === 'LIM' && 'opacity-40')}
+              value={formData.fuseSubType || ''}
+              onValueChange={(value) => {
+                haptic.light();
+                onUpdate('fuseSubType', value);
+              }}
+              label="Fuse type"
+              placeholder="Select fuse type"
+              className={sheetTriggerCn}
+              options={[
+                { value: 'gG', label: 'gG — General Purpose', group: 'Application' },
+                { value: 'gM', label: 'gM — Motor Circuit', group: 'Application' },
+                { value: 'aM', label: 'aM — Motor Starter', group: 'Application' },
+                { value: 'Type 2', label: 'Type 2', group: 'Utilisation Category' },
+                { value: 'Type 3', label: 'Type 3', group: 'Utilisation Category' },
+                { value: 'Type 4', label: 'Type 4', group: 'Utilisation Category' },
+              ]}
             />
           </FormField>
+        )}
 
-          {/* BS 88 Fuse sub-type (gG, gM, aM, Type 2/3/4) */}
-          {formData.mainProtectiveDevice === 'BS 88 HRC Fuse' && (
-            <FormField label="Fuse Type">
+        {showCustomProtectiveDevice && (
+          <FormField label="Custom device">
+            <Input
+              value={formData.mainProtectiveDevice || ''}
+              onChange={(e) => onUpdate('mainProtectiveDevice', e.target.value)}
+              placeholder="e.g. 125A BS 88 Fuse"
+              disabled={mpdLimit === 'LIM'}
+              className={cn(inputCn, mpdLimit === 'LIM' && 'opacity-40')}
+            />
+          </FormField>
+        )}
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-4">
+          <FormField
+            label="kA"
+            trailing={
+              <FieldLimitationBadge
+                compact
+                value={formData.breakingCapacity || ''}
+                markers={['LIM']}
+                onChange={(v) => onUpdate('breakingCapacity', v)}
+              />
+            }
+          >
+            {isFieldMarker(formData.breakingCapacity) ? (
+              <Input
+                value={formData.breakingCapacity}
+                disabled
+                className={cn(inputCn, 'opacity-60')}
+              />
+            ) : currentBreakingCapacities.length > 0 ? (
               <FormSelectSheet
-                value={formData.fuseSubType || ''}
+                value={formData.breakingCapacity || ''}
                 onValueChange={(value) => {
                   haptic.light();
-                  onUpdate('fuseSubType', value);
+                  if (value === '__custom__') { onUpdate('breakingCapacity', '__custom__'); }
+                  else { onUpdate('breakingCapacity', value); }
                 }}
-                label="Fuse Type"
-                placeholder="Select fuse type"
-                options={[
-                  { value: 'gG', label: 'gG — General Purpose', group: 'Application' },
-                  { value: 'gM', label: 'gM — Motor Circuit', group: 'Application' },
-                  { value: 'aM', label: 'aM — Motor Starter', group: 'Application' },
-                  { value: 'Type 2', label: 'Type 2', group: 'Utilisation Category' },
-                  { value: 'Type 3', label: 'Type 3', group: 'Utilisation Category' },
-                  { value: 'Type 4', label: 'Type 4', group: 'Utilisation Category' },
-                ]}
-              />
-            </FormField>
-          )}
-
-          {showCustomProtectiveDevice && (
-            <FormField label="Custom Device">
-              <Input
-                value={formData.mainProtectiveDevice || ''}
-                onChange={(e) => onUpdate('mainProtectiveDevice', e.target.value)}
-                placeholder="e.g. 125A BS 88 Fuse"
                 disabled={mpdLimit === 'LIM'}
-                className={cn('h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]', mpdLimit === 'LIM' && 'opacity-40')}
+                label="Breaking capacity (kA)"
+                placeholder="Select kA"
+                allowCustom
+                customLabel="Other (specify)"
+                options={currentBreakingCapacities.map((kA) => ({ value: kA, label: `${kA} kA` }))}
+                className={cn(sheetTriggerCn, mpdLimit === 'LIM' && 'opacity-40')}
               />
-            </FormField>
-          )}
-
-          <div className="grid grid-cols-3 gap-2">
-            <FormField
-              label="kA"
-              trailing={
-                <FieldLimitationBadge
-                  compact
-                  value={formData.breakingCapacity || ''}
-                  markers={['LIM']}
-                  onChange={(v) => onUpdate('breakingCapacity', v)}
-                />
-              }
-            >
-              {isFieldMarker(formData.breakingCapacity) ? (
-                <Input
-                  value={formData.breakingCapacity}
-                  disabled
-                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
-                />
-              ) : currentBreakingCapacities.length > 0 ? (
-                <FormSelectSheet
-                  value={formData.breakingCapacity || ''}
-                  onValueChange={(value) => {
-                    haptic.light();
-                    if (value === '__custom__') { onUpdate('breakingCapacity', '__custom__'); }
-                    else { onUpdate('breakingCapacity', value); }
-                  }}
-                  disabled={mpdLimit === 'LIM'}
-                  label="Breaking Capacity (kA)"
-                  placeholder="Select kA"
-                  allowCustom
-                  customLabel="Other (specify)"
-                  options={currentBreakingCapacities.map((kA) => ({ value: kA, label: `${kA} kA` }))}
-                  className={cn(mpdLimit === 'LIM' && 'opacity-40')}
-                />
-              ) : (
-                <Input
-                  value={formData.breakingCapacity || ''}
-                  onChange={(e) => onUpdate('breakingCapacity', e.target.value)}
-                  placeholder={
-                    currentBreakingCapacities.length === 0 && formData.mainProtectiveDevice
-                      ? 'N/A'
-                      : 'e.g., 6'
-                  }
-                  type="number"
-                  min="0"
-                  step="0.1"
-                  disabled={mpdLimit === 'LIM'}
-                  className={cn('h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]', mpdLimit === 'LIM' && 'opacity-40')}
-                />
-              )}
-            </FormField>
-            <FormField
-              label="Fuse (A)"
-              trailing={
-                <FieldLimitationBadge
-                  compact
-                  value={formData.fuseDeviceRating || ''}
-                  markers={['N/A']}
-                  onChange={(v) => onUpdate('fuseDeviceRating', v)}
-                />
-              }
-            >
+            ) : (
               <Input
-                type={isFieldMarker(formData.fuseDeviceRating) ? 'text' : 'number'}
-                min="0"
-                value={formData.fuseDeviceRating || ''}
-                onChange={(e) => onUpdate('fuseDeviceRating', e.target.value)}
-                placeholder="100"
-                disabled={mpdLimit === 'LIM' || isFieldMarker(formData.fuseDeviceRating)}
-                className={cn('h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]', (mpdLimit === 'LIM' || isFieldMarker(formData.fuseDeviceRating)) && 'opacity-40')}
-                inputMode="numeric"
-              />
-            </FormField>
-            <FormField
-              label="Volts (V)"
-              trailing={
-                <FieldLimitationBadge
-                  compact
-                  value={formData.mainSwitchVoltageRating || ''}
-                  markers={['N/A']}
-                  onChange={(v) => onUpdate('mainSwitchVoltageRating', v)}
-                />
-              }
-            >
-              <Input
-                type={isFieldMarker(formData.mainSwitchVoltageRating) ? 'text' : 'number'}
-                min="0"
-                value={formData.mainSwitchVoltageRating || ''}
-                onChange={(e) => onUpdate('mainSwitchVoltageRating', e.target.value)}
-                placeholder="230"
-                disabled={mpdLimit === 'LIM' || isFieldMarker(formData.mainSwitchVoltageRating)}
-                className={cn('h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]', (mpdLimit === 'LIM' || isFieldMarker(formData.mainSwitchVoltageRating)) && 'opacity-40')}
-                inputMode="numeric"
-              />
-            </FormField>
-          </div>
-
-          {/* Custom kA input when "Other (specify)" selected */}
-          {formData.breakingCapacity === '__custom__' && (
-            <FormField label="Custom Breaking Capacity (kA)">
-              <Input
-                value={formData.breakingCapacityCustom || ''}
-                onChange={(e) => onUpdate('breakingCapacityCustom', e.target.value)}
-                placeholder="e.g. 100"
+                value={formData.breakingCapacity || ''}
+                onChange={(e) => onUpdate('breakingCapacity', e.target.value)}
+                placeholder={
+                  currentBreakingCapacities.length === 0 && formData.mainProtectiveDevice
+                    ? 'N/A'
+                    : 'e.g., 6'
+                }
                 type="number"
                 min="0"
                 step="0.1"
-                className="h-11 text-base touch-manipulation"
+                disabled={mpdLimit === 'LIM'}
+                className={cn(inputCn, mpdLimit === 'LIM' && 'opacity-40')}
               />
-            </FormField>
+            )}
+          </FormField>
+          <FormField
+            label="Fuse (A)"
+            trailing={
+              <FieldLimitationBadge
+                compact
+                value={formData.fuseDeviceRating || ''}
+                markers={['N/A']}
+                onChange={(v) => onUpdate('fuseDeviceRating', v)}
+              />
+            }
+          >
+            <Input
+              type={isFieldMarker(formData.fuseDeviceRating) ? 'text' : 'number'}
+              min="0"
+              value={formData.fuseDeviceRating || ''}
+              onChange={(e) => onUpdate('fuseDeviceRating', e.target.value)}
+              placeholder="100"
+              disabled={mpdLimit === 'LIM' || isFieldMarker(formData.fuseDeviceRating)}
+              className={cn(inputCn, (mpdLimit === 'LIM' || isFieldMarker(formData.fuseDeviceRating)) && 'opacity-40')}
+              inputMode="numeric"
+            />
+          </FormField>
+          <FormField
+            label="Volts (V)"
+            trailing={
+              <FieldLimitationBadge
+                compact
+                value={formData.mainSwitchVoltageRating || ''}
+                markers={['N/A']}
+                onChange={(v) => onUpdate('mainSwitchVoltageRating', v)}
+              />
+            }
+          >
+            <Input
+              type={isFieldMarker(formData.mainSwitchVoltageRating) ? 'text' : 'number'}
+              min="0"
+              value={formData.mainSwitchVoltageRating || ''}
+              onChange={(e) => onUpdate('mainSwitchVoltageRating', e.target.value)}
+              placeholder="230"
+              disabled={mpdLimit === 'LIM' || isFieldMarker(formData.mainSwitchVoltageRating)}
+              className={cn(inputCn, (mpdLimit === 'LIM' || isFieldMarker(formData.mainSwitchVoltageRating)) && 'opacity-40')}
+              inputMode="numeric"
+            />
+          </FormField>
+        </div>
+
+        {/* Custom kA input when "Other (specify)" selected */}
+        {formData.breakingCapacity === '__custom__' && (
+          <FormField label="Custom breaking capacity (kA)">
+            <Input
+              value={formData.breakingCapacityCustom || ''}
+              onChange={(e) => onUpdate('breakingCapacityCustom', e.target.value)}
+              placeholder="e.g. 100"
+              type="number"
+              min="0"
+              step="0.1"
+              className={inputCn}
+            />
+          </FormField>
+        )}
+      </div>
+
+      {/* Earthing system */}
+      <div className={cardCn}>
+        <SectionHeading title="Earthing system" />
+        <FormField
+          label="Earthing arrangement"
+          required
+          trailing={
+            <FieldLimitationBadge
+              compact
+              value={formData.earthingArrangement || ''}
+              markers={['LIM', 'N/A']}
+              onChange={(v) => onUpdate('earthingArrangement', v)}
+            />
+          }
+        >
+          {isFieldMarker(formData.earthingArrangement) ? (
+            <Input
+              value={formData.earthingArrangement}
+              disabled
+              className={cn(inputCn, 'opacity-60')}
+            />
+          ) : (
+            <div className="grid grid-cols-3 gap-2">
+              {earthingOptions.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => {
+                    haptic.light();
+                    onUpdate('earthingArrangement', formData.earthingArrangement === option.value ? '' : option.value);
+                  }}
+                  className={cn(
+                    chipBase,
+                    'px-1 text-[11px]',
+                    formData.earthingArrangement === option.value ? chipOn : chipOff
+                  )}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
           )}
-        </div>
-      </div>
-
-      {/* Earthing System Section */}
-      <div>
-        <SectionTitle title="Earthing System" />
-        <div className="space-y-3 py-3">
-          <FormField
-            label="Earthing Arrangement"
-            required
-            trailing={
-              <FieldLimitationBadge
-                compact
-                value={formData.earthingArrangement || ''}
-                markers={['LIM', 'N/A']}
-                onChange={(v) => onUpdate('earthingArrangement', v)}
-              />
-            }
-          >
-            {isFieldMarker(formData.earthingArrangement) ? (
-              <Input
-                value={formData.earthingArrangement}
-                disabled
-                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
-              />
-            ) : (
-              <div className="grid grid-cols-3 gap-2">
-                {earthingOptions.map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => {
-                      haptic.light();
-                      onUpdate('earthingArrangement', formData.earthingArrangement === option.value ? '' : option.value);
-                    }}
-                    className={cn(
-                      'h-11 rounded-lg px-1 font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-                      formData.earthingArrangement === option.value
-                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
-                    )}
-                  >
-                    {option.label}
-                  </button>
-                ))}
-              </div>
-            )}
-            <FieldNotesInput
-              parentValue={formData.earthingArrangement || ''}
-              value={formData.earthingArrangementNotes || ''}
-              onChange={(v) => onUpdate('earthingArrangementNotes', v)}
-              placeholder="Reason (e.g. meter room locked — could not confirm)"
-            />
-          </FormField>
-          <FormField
-            label="Electrode Type"
-            trailing={
-              <FieldLimitationBadge
-                compact
-                value={formData.earthElectrodeType || ''}
-                markers={['LIM']}
-                onChange={(v) => onUpdate('earthElectrodeType', v)}
-              />
-            }
-          >
-            {isFieldMarker(formData.earthElectrodeType) ? (
-              <Input
-                value={formData.earthElectrodeType}
-                disabled
-                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
-              />
-            ) : (
-            <FormSelectSheet
+          <FieldNotesInput
+            parentValue={formData.earthingArrangement || ''}
+            value={formData.earthingArrangementNotes || ''}
+            onChange={(v) => onUpdate('earthingArrangementNotes', v)}
+            placeholder="Reason (e.g. meter room locked — could not confirm)"
+          />
+        </FormField>
+        <FormField
+          label="Electrode type"
+          trailing={
+            <FieldLimitationBadge
+              compact
               value={formData.earthElectrodeType || ''}
-              onValueChange={(value) => {
-                haptic.light();
-                onUpdate('earthElectrodeType', value);
-              }}
-              label="Earth Electrode Type"
-              placeholder="Select"
-              allowCustom
-              customLabel="Other"
-              options={[
-                { value: 'rod', label: 'Rod' },
-                { value: 'tape', label: 'Tape' },
-                { value: 'plate', label: 'Plate' },
-                { value: 'structural', label: 'Steel' },
-                { value: 'n/a', label: 'N/A' },
-              ]}
+              markers={['LIM']}
+              onChange={(v) => onUpdate('earthElectrodeType', v)}
             />
-            )}
-            <FieldNotesInput
-              parentValue={formData.earthElectrodeType || ''}
-              value={formData.earthElectrodeTypeNotes || ''}
-              onChange={(v) => onUpdate('earthElectrodeTypeNotes', v)}
-              placeholder="Reason"
+          }
+        >
+          {isFieldMarker(formData.earthElectrodeType) ? (
+            <Input
+              value={formData.earthElectrodeType}
+              disabled
+              className={cn(inputCn, 'opacity-60')}
             />
-          </FormField>
-        </div>
+          ) : (
+          <FormSelectSheet
+            value={formData.earthElectrodeType || ''}
+            onValueChange={(value) => {
+              haptic.light();
+              onUpdate('earthElectrodeType', value);
+            }}
+            label="Earth electrode type"
+            placeholder="Select"
+            allowCustom
+            customLabel="Other"
+            className={sheetTriggerCn}
+            options={[
+              { value: 'rod', label: 'Rod' },
+              { value: 'tape', label: 'Tape' },
+              { value: 'plate', label: 'Plate' },
+              { value: 'structural', label: 'Steel' },
+              { value: 'n/a', label: 'N/A' },
+            ]}
+          />
+          )}
+          <FieldNotesInput
+            parentValue={formData.earthElectrodeType || ''}
+            value={formData.earthElectrodeTypeNotes || ''}
+            onChange={(v) => onUpdate('earthElectrodeTypeNotes', v)}
+            placeholder="Reason"
+          />
+        </FormField>
       </div>
 
-      {/* RCD Protection Section */}
-      <div>
-        <SectionTitle title="RCD Protection" />
-        <div className="space-y-3 py-3">
-          {/* Row 1: RCD Switch + Rating */}
-          <div className="grid grid-cols-3 gap-2">
-            <FormField label="RCD Main">
-              <div className="grid grid-cols-2 gap-1.5">
-                {[
-                  { value: 'yes', label: 'Yes' },
-                  { value: 'no', label: 'No' },
-                ].map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => {
-                      haptic.light();
-                      const newValue = formData.rcdMainSwitch === option.value ? '' : option.value;
-                      onUpdate('rcdMainSwitch', newValue);
-                      // ELE-1246 — clear ALL RCD detail fields when the main switch
-                      // isn't an RCD, not just the rating: stale type/time values
-                      // were surviving in formData and printing on the PDF.
-                      if (newValue !== 'yes') {
-                        onUpdate('rcdRating', '');
-                        onUpdate('rcdType', '');
-                        onUpdate('rcdTimeDelay', '');
-                        onUpdate('rcdMeasuredTime', '');
-                        onUpdate('rcdBreakingCapacity', '');
-                      }
-                    }}
-                    className={cn(
-                      'h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98]',
-                      formData.rcdMainSwitch === option.value
-                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
-                    )}
-                  >
-                    {option.label}
-                  </button>
-                ))}
-              </div>
-            </FormField>
-            {showRCDFields && (
-              <div className="col-span-2">
-                <FormField label="Rating (mA) *">
-                  <div className="grid grid-cols-4 gap-2">
-                    {['30', '100', '300', '500'].map((rating) => (
-                      <button
-                        key={rating}
-                        type="button"
-                        onClick={() => {
-                          haptic.light();
-                          onUpdate('rcdRating', formData.rcdRating === `${rating}mA` ? '' : `${rating}mA`);
-                        }}
-                        className={cn(
-                          'h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98]',
-                          formData.rcdRating === `${rating}mA`
-                            ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                            : 'bg-white/[0.05] text-white border border-white/[0.08]'
-                        )}
-                      >
-                        {rating}
-                      </button>
-                    ))}
-                  </div>
-                </FormField>
-              </div>
-            )}
-          </div>
-
-          {/* Row 2: Type */}
+      {/* RCD protection */}
+      <div className={cardCn}>
+        <SectionHeading title="RCD protection" />
+        {/* Row 1: RCD main + rating */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-4">
+          <FormField label="RCD main">
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { value: 'yes', label: 'Yes' },
+                { value: 'no', label: 'No' },
+              ].map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => {
+                    haptic.light();
+                    const newValue = formData.rcdMainSwitch === option.value ? '' : option.value;
+                    onUpdate('rcdMainSwitch', newValue);
+                    // ELE-1246 — clear ALL RCD detail fields when the main switch
+                    // isn't an RCD, not just the rating: stale type/time values
+                    // were surviving in formData and printing on the PDF.
+                    if (newValue !== 'yes') {
+                      onUpdate('rcdRating', '');
+                      onUpdate('rcdType', '');
+                      onUpdate('rcdTimeDelay', '');
+                      onUpdate('rcdMeasuredTime', '');
+                      onUpdate('rcdBreakingCapacity', '');
+                    }
+                  }}
+                  className={cn(
+                    chipBase,
+                    formData.rcdMainSwitch === option.value ? chipOn : chipOff
+                  )}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          </FormField>
           {showRCDFields && (
-            <FormField label="RCD Type *">
-              <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
-                  {['AC', 'A', 'A-APR', 'F', 'EV', 'B', 'B+', 'S'].map((type) => (
+            <div className="sm:col-span-2">
+              <FormField label="Rating (mA)" required>
+                <div className="grid grid-cols-4 gap-2">
+                  {['30', '100', '300', '500'].map((rating) => (
                     <button
-                      key={type}
+                      key={rating}
                       type="button"
                       onClick={() => {
                         haptic.light();
-                        onUpdate('rcdType', formData.rcdType === `Type ${type}` ? '' : `Type ${type}`);
+                        onUpdate('rcdRating', formData.rcdRating === `${rating}mA` ? '' : `${rating}mA`);
                       }}
                       className={cn(
-                        'h-11 rounded-lg font-semibold transition-all touch-manipulation text-[10px] active:scale-[0.98]',
-                        formData.rcdType === `Type ${type}`
-                          ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                          : 'bg-white/[0.05] text-white border border-white/[0.08]'
+                        chipBase,
+                        formData.rcdRating === `${rating}mA` ? chipOn : chipOff
                       )}
                     >
-                      {type}
+                      {rating}
                     </button>
                   ))}
                 </div>
-            </FormField>
-          )}
-
-          {/* Row 3: Delay + Measured */}
-          {showRCDFields && (
-            <div className="grid grid-cols-2 gap-3 items-end">
-              <FormField label="Time Delay (ms)">
-                <FormSelectSheet
-                  value={formData.rcdTimeDelay || ''}
-                  onValueChange={(value) => {
-                    haptic.light();
-                    onUpdate('rcdTimeDelay', value);
-                  }}
-                  label="RCD Time Delay"
-                  placeholder="Select"
-                  options={[
-                    { value: '0', label: '0ms (Instantaneous)' },
-                    { value: '40', label: '40ms' },
-                    { value: '150', label: '150ms' },
-                    { value: '200', label: '200ms' },
-                    { value: '300', label: '300ms' },
-                    { value: '500', label: '500ms' },
-                  ]}
-                />
-              </FormField>
-              <FormField label="Measured (ms)">
-                <Input
-                  type="number"
-                  min="0"
-                  step="1"
-                  value={formData.rcdMeasuredTime || ''}
-                  onChange={(e) => onUpdate('rcdMeasuredTime', e.target.value)}
-                  placeholder="18"
-                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-                  inputMode="numeric"
-                />
               </FormField>
             </div>
           )}
+        </div>
 
-          {/* Row 4: RCD Breaking Capacity (A4:2026 Section J) */}
-          {showRCDFields && (
-            <FormField label="RCD Breaking Capacity (kA)">
-              <Input
-                type="number"
-                min="0"
-                step="0.1"
-                value={formData.rcdBreakingCapacity || ''}
-                onChange={(e) => onUpdate('rcdBreakingCapacity', e.target.value)}
-                placeholder="e.g., 6"
-                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-                inputMode="decimal"
+        {/* Row 2: Type */}
+        {showRCDFields && (
+          <FormField label="RCD type" required>
+            <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
+              {['AC', 'A', 'A-APR', 'F', 'EV', 'B', 'B+', 'S'].map((type) => (
+                <button
+                  key={type}
+                  type="button"
+                  onClick={() => {
+                    haptic.light();
+                    onUpdate('rcdType', formData.rcdType === `Type ${type}` ? '' : `Type ${type}`);
+                  }}
+                  className={cn(
+                    chipBase,
+                    'px-1 text-[11px]',
+                    formData.rcdType === `Type ${type}` ? chipOn : chipOff
+                  )}
+                >
+                  {type}
+                </button>
+              ))}
+            </div>
+          </FormField>
+        )}
+
+        {/* Row 3: Delay + Measured */}
+        {showRCDFields && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+            <FormField label="Time delay (ms)">
+              <FormSelectSheet
+                value={formData.rcdTimeDelay || ''}
+                onValueChange={(value) => {
+                  haptic.light();
+                  onUpdate('rcdTimeDelay', value);
+                }}
+                label="RCD time delay"
+                placeholder="Select"
+                className={sheetTriggerCn}
+                options={[
+                  { value: '0', label: '0ms (Instantaneous)' },
+                  { value: '40', label: '40ms' },
+                  { value: '150', label: '150ms' },
+                  { value: '200', label: '200ms' },
+                  { value: '300', label: '300ms' },
+                  { value: '500', label: '500ms' },
+                ]}
               />
             </FormField>
-          )}
+            <FormField label="Measured (ms)">
+              <Input
+                type="text"
+                inputMode="numeric"
+                value={formData.rcdMeasuredTime || ''}
+                onChange={(e) => onUpdate('rcdMeasuredTime', e.target.value)}
+                placeholder="18"
+                className={inputCn}
+                {...keypad.field('rcdMeasuredTime')}
+              />
+            </FormField>
+          </div>
+        )}
 
-          {formData.rcdMainSwitch === 'no' && (
-            <p className="text-[11px] text-amber-400/80">
-              Consider circuit-level RCD protection for BS 7671 compliance
-            </p>
-          )}
-        </div>
+        {/* Row 4: RCD breaking capacity (A4:2026 Section J) */}
+        {showRCDFields && (
+          <FormField label="RCD breaking capacity (kA)">
+            <Input
+              type="number"
+              min="0"
+              step="0.1"
+              value={formData.rcdBreakingCapacity || ''}
+              onChange={(e) => onUpdate('rcdBreakingCapacity', e.target.value)}
+              placeholder="e.g., 6"
+              className={inputCn}
+              inputMode="decimal"
+            />
+          </FormField>
+        )}
+
+        {formData.rcdMainSwitch === 'no' && (
+          <p className="text-[11px] text-elec-yellow">
+            Consider circuit-level RCD protection for BS 7671 compliance
+          </p>
+        )}
       </div>
+
+      {/* Scroll room so the last reading can rise clear of the keypad */}
+      {keypad.spacer}
+
+      {/* Reading keypad — coarse-pointer devices only */}
+      {keypad.element}
     </div>
   );
 };

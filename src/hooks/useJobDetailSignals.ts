@@ -55,7 +55,7 @@ export function useJobDetailSignals(jobId: string | null | undefined) {
           .select('id, title, severity, status')
           .eq('job_id', jobId),
         supabase
-          .from('employer_invoices')
+          .rpc('employer_invoices_unified')
           .select('id, invoice_number, amount, due_date, status')
           .eq('job_id', jobId),
         supabase.from('employer_job_assignments').select('employee_id, status').eq('job_id', jobId),

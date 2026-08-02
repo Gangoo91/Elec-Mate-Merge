@@ -28,7 +28,7 @@ const RadioGroupItem = React.forwardRef<
         'bg-input',
         // Focus states
         'focus:outline-none focus:border-elec-yellow',
-        'focus:shadow-[0_0_0_3px_hsl(var(--elec-yellow)/0.15)]',
+        'focus:shadow-none',
         // Checked state
         'data-[state=checked]:border-elec-yellow data-[state=checked]:bg-elec-yellow/10',
         // Transitions

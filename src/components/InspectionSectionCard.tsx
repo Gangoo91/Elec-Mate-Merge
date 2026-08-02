@@ -1,13 +1,6 @@
 import React from 'react';
-import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Button } from '@/components/ui/button';
-import { ChevronDown, ChevronUp, CheckCheck, RotateCcw } from 'lucide-react';
 import { InspectionSection } from '@/data/bs7671ChecklistData';
 import EnhancedInspectionSectionCard from './inspection/EnhancedInspectionSectionCard';
-import InspectionItemRow from './InspectionItemRow';
-import InspectionItemCard from './InspectionItemCard';
-import InspectionSectionProgress from './InspectionSectionProgress';
 
 interface InspectionItem {
   id: string;
@@ -20,6 +13,7 @@ interface InspectionItem {
     | 'C1'
     | 'C2'
     | 'C3'
+    | 'FI'
     | 'not-applicable'
     | 'not-verified'
     | 'limitation'
@@ -52,45 +46,6 @@ const InspectionSectionCard = ({
   onBulkClearSection,
   quickMarkMode,
 }: InspectionSectionCardProps) => {
-  const handleOutcomeChange = (itemId: string, outcome: InspectionItem['outcome']) => {
-    const currentInspectionItem = inspectionItems.find((item) => item.id === itemId);
-
-    if (!currentInspectionItem) {
-      return;
-    }
-
-    try {
-      // Save scroll position before state update to prevent scroll jump
-      const scrollY = window.scrollY;
-
-      const updatedItem: InspectionItem = {
-        ...currentInspectionItem,
-        outcome,
-        inspected: outcome !== '' && outcome !== 'not-applicable',
-      };
-
-      const allItems = inspectionItems.map((item) => (item.id === itemId ? updatedItem : item));
-      onUpdateItem('__BULK_UPDATE__', '__BULK_UPDATE__', allItems);
-
-      if (onAutoCreateObservation) {
-        onAutoCreateObservation(updatedItem);
-      }
-
-      // Restore scroll after both re-renders complete
-      const restoreScroll = () => window.scrollTo(0, scrollY);
-      requestAnimationFrame(restoreScroll);
-      setTimeout(restoreScroll, 50);
-      setTimeout(restoreScroll, 150);
-    } catch (error) {
-      console.error(`[InspectionSectionCard] Error in handleOutcomeChange:`, error);
-    }
-  };
-
-  console.log(
-    `[InspectionSectionCard] Rendering section ${section.id} with ${inspectionItems.length} items`
-  );
-
-  // Use enhanced component for better UX
   return (
     <EnhancedInspectionSectionCard
       section={section}
@@ -104,135 +59,6 @@ const InspectionSectionCard = ({
       onBulkClearSection={onBulkClearSection}
       quickMarkMode={quickMarkMode}
     />
-  );
-
-  // Fallback to original implementation if needed
-  return (
-    <Collapsible open={isExpanded} onOpenChange={onToggle}>
-      <div className="bg-background/50 hover:bg-background/80 border border-border/50 rounded-lg transition-colors">
-        <CollapsibleTrigger className="w-full">
-          <div className="p-3 sm:p-4 md:p-6">
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="text-left flex-1 min-w-0">
-                  <h4 className="font-semibold text-base sm:text-lg text-primary leading-tight break-words">
-                    Section {section.sectionNumber}: {section.title}
-                  </h4>
-                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed break-words">
-                    {section.description}
-                  </p>
-                </div>
-                <div className="flex items-center justify-between sm:justify-end gap-3 flex-shrink-0">
-                  <InspectionSectionProgress
-                    sectionItems={section.items}
-                    inspectionItems={inspectionItems}
-                  />
-                  {isExpanded ? (
-                    <ChevronUp className="h-4 w-4 flex-shrink-0" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4 flex-shrink-0" />
-                  )}
-                </div>
-              </div>
-
-              {/* Bulk Action Buttons */}
-              {isExpanded && (onBulkMarkSatisfactory || onBulkClearSection) && (
-                <div
-                  className="flex flex-wrap gap-3 pt-3 border-t border-border/30"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {onBulkMarkSatisfactory && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        onBulkMarkSatisfactory(section.id);
-                      }}
-                      className="h-9 px-4 text-sm bg-green-50/80 border-green-200 text-green-700 hover:bg-green-100 dark:bg-green-950/20 dark:border-green-800 dark:text-green-400"
-                    >
-                      <CheckCheck className="h-4 w-4 mr-2" />
-                      Mark All Satisfactory
-                    </Button>
-                  )}
-                  {onBulkClearSection && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        onBulkClearSection(section.id);
-                      }}
-                      className="h-9 px-4 text-sm"
-                    >
-                      <RotateCcw className="h-4 w-4 mr-2" />
-                      Clear All
-                    </Button>
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <div className="px-2 sm:px-4 md:px-6 pb-3 sm:pb-4 md:pb-6">
-            {/* Desktop Table View */}
-            <div className="hidden md:block">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-8">✓</TableHead>
-                    <TableHead>Item</TableHead>
-                    <TableHead className="w-20">Clause</TableHead>
-                    <TableHead className="w-48">Outcome</TableHead>
-                    <TableHead>Notes</TableHead>
-                    <TableHead className="w-32">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {section.items.map((sectionItem) => {
-                    const inspectionItem = inspectionItems.find(
-                      (item) => item.id === sectionItem.id
-                    );
-
-                    return (
-                      <InspectionItemRow
-                        key={sectionItem.id}
-                        sectionItem={sectionItem}
-                        inspectionItem={inspectionItem}
-                        onUpdateItem={onUpdateItem}
-                        onOutcomeChange={handleOutcomeChange}
-                        onNavigateToObservations={onNavigateToObservations}
-                      />
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </div>
-
-            {/* Mobile Card View */}
-            <div className="md:hidden space-y-2">
-              {section.items.map((sectionItem) => {
-                const inspectionItem = inspectionItems.find((item) => item.id === sectionItem.id);
-
-                return (
-                  <InspectionItemCard
-                    key={sectionItem.id}
-                    sectionItem={sectionItem}
-                    inspectionItem={inspectionItem}
-                    onUpdateItem={onUpdateItem}
-                    onOutcomeChange={handleOutcomeChange}
-                    onNavigateToObservations={onNavigateToObservations}
-                  />
-                );
-              })}
-            </div>
-          </div>
-        </CollapsibleContent>
-      </div>
-    </Collapsible>
   );
 };
 

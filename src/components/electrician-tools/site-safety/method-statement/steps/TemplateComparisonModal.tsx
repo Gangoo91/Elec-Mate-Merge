@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogClose,
-} from '@/components/ui/dialog';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -54,25 +48,33 @@ const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = ({
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-6xl w-full h-[90vh] flex flex-col p-0 gap-0 bg-elec-card border-elec-yellow/20">
-        <DialogHeader className="p-6 pb-4 border-b border-elec-yellow/20 flex-shrink-0">
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex-1 min-w-0">
-              <DialogTitle className="text-xl font-semibold text-elec-yellow flex items-center gap-2 mb-2">
-                <GitCompare className="h-5 w-5 flex-shrink-0" />
-                Template Comparison
-              </DialogTitle>
-              <p className="text-white text-sm">
-                Compare up to {templates.length} templates side by side to choose the best fit for
-                your project
+    /* Bottom sheet rather than a centred 6xl dialog. The comparison grid already
+       collapses to a single column below `lg`, so on a phone it stacks — which
+       is the only way three templates were ever going to be readable there. */
+    <Sheet open={isOpen} onOpenChange={onClose}>
+      <SheetContent
+        side="bottom"
+        className="flex h-[85vh] flex-col gap-0 rounded-t-2xl border-white/[0.08] p-0"
+      >
+        <div className="flex-shrink-0 border-b border-white/[0.1] p-4">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0 flex-1">
+              <h2 className="text-[19px] font-semibold tracking-tight text-white">
+                Compare templates
+              </h2>
+              <p className="mt-1 text-[13px] text-white">
+                Up to {templates.length} side by side, to pick the best fit for the job.
               </p>
             </div>
-            <DialogClose className="text-white hover:text-foreground transition-colors">
-              <X className="h-5 w-5" />
-            </DialogClose>
+            <button
+              type="button"
+              onClick={onClose}
+              className="-mr-1 h-11 shrink-0 touch-manipulation text-[15px] font-medium text-white"
+            >
+              Close
+            </button>
           </div>
-        </DialogHeader>
+        </div>
 
         <ScrollArea className="flex-1 p-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -257,8 +259,8 @@ const TemplateComparisonModal: React.FC<TemplateComparisonModalProps> = ({
             </Button>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 };
 

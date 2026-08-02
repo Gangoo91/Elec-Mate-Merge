@@ -1,12 +1,21 @@
 import React from 'react';
-import { TableCell, TableRow } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { Eye, Check } from 'lucide-react';
 import { InspectionItem as BaseInspectionItem } from '@/data/bs7671ChecklistData';
 import EnhancedInspectionOutcomeSelect from './EnhancedInspectionOutcomeSelect';
 import { cn } from '@/lib/utils';
+
+// Left-edge accent per outcome — status at a glance without a tinted wash
+const outcomeBorderL: Record<string, string> = {
+  satisfactory: 'border-l-green-500',
+  C1: 'border-l-red-600',
+  C2: 'border-l-orange-500',
+  C3: 'border-l-elec-yellow',
+  FI: 'border-l-blue-500',
+  'not-applicable': 'border-l-white/[0.2]',
+  'not-verified': 'border-l-white/[0.2]',
+  limitation: 'border-l-amber-500',
+};
 
 interface InspectionItem {
   id: string;
@@ -19,6 +28,7 @@ interface InspectionItem {
     | 'C1'
     | 'C2'
     | 'C3'
+    | 'FI'
     | 'not-applicable'
     | 'not-verified'
     | 'limitation'
@@ -43,13 +53,16 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
 }) => {
   const [localNotes, setLocalNotes] = React.useState(inspectionItem?.notes || '');
   const [debounceTimer, setDebounceTimer] = React.useState<NodeJS.Timeout | null>(null);
+  // Notes live behind a toggle so 66 items stay scannable; a saved note keeps
+  // its editor open (incl. async hydration — the effect below re-syncs).
+  const [showNotes, setShowNotes] = React.useState(!!inspectionItem?.notes);
 
   const currentOutcome = inspectionItem?.outcome || '';
-  const isCompleted = currentOutcome !== '';
 
   // Sync local notes when inspection item changes
   React.useEffect(() => {
     setLocalNotes(inspectionItem?.notes || '');
+    if (inspectionItem?.notes) setShowNotes(true);
   }, [inspectionItem?.notes]);
 
   // Handle notes input with debouncing
@@ -76,54 +89,32 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
     };
   }, [debounceTimer]);
 
-  // Colour-coded left edge + subtle tint per outcome — status at a glance
-  const getRowAccent = () => {
-    switch (currentOutcome) {
-      case 'satisfactory':
-        return 'border-l-green-500/80 bg-green-500/[0.035]';
-      case 'C1':
-        return 'border-l-red-500 bg-red-500/[0.07]';
-      case 'C2':
-        return 'border-l-orange-500 bg-orange-500/[0.06]';
-      case 'C3':
-        return 'border-l-yellow-500 bg-yellow-500/[0.045]';
-      case 'not-verified':
-        return 'border-l-slate-400/70';
-      case 'limitation':
-        return 'border-l-amber-400/70';
-      case 'not-applicable':
-        return 'border-l-white/20';
-      default:
-        return 'border-l-transparent';
-    }
-  };
-
   const isCriticalOutcome = ['C1', 'C2', 'C3'].includes(currentOutcome);
 
   return (
-    <TableRow
+    <div
       className={cn(
-        'group transition-colors duration-200 border-b border-white/[0.04] border-l-[3px] hover:bg-white/[0.035]',
-        getRowAccent()
+        'p-3 sm:py-2.5 border-l-4 bg-white/[0.05] border border-white/[0.1] rounded-xl touch-manipulation',
+        outcomeBorderL[currentOutcome] || 'border-l-transparent'
       )}
     >
-      {/* Item Number + Title + Clause */}
-      <TableCell className="py-3.5 pl-4 text-left">
+      {/* One dense line — text left, fixed-width chips + quiet actions right */}
+      <div className="flex items-center gap-3">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <div className="space-y-1 text-left">
-                <p className="text-sm text-white leading-relaxed text-left">
-                  <span className="text-elec-yellow font-mono font-semibold mr-2">
-                    {sectionItem.number}
-                  </span>
-                  {sectionItem.item}
-                </p>
-                {sectionItem.clause && (
-                  <span className="inline-block text-[10px] text-white/55 font-mono bg-white/[0.05] border border-white/[0.07] rounded px-1.5 py-0.5">
-                    {sectionItem.clause}
-                  </span>
-                )}
+              <div className="flex flex-1 items-start gap-2 min-w-0 text-left">
+                <span className="mt-0.5 w-9 shrink-0 text-center font-mono text-[11px] font-bold text-elec-yellow">
+                  {sectionItem.number}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="text-[13px] leading-snug text-white">{sectionItem.item}</p>
+                  {sectionItem.clause && (
+                    <span className="font-mono text-[11px] text-white/80">
+                      {sectionItem.clause}
+                    </span>
+                  )}
+                </div>
               </div>
             </TooltipTrigger>
             {sectionItem.description && (
@@ -133,52 +124,49 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
             )}
           </Tooltip>
         </TooltipProvider>
-      </TableCell>
 
-      {/* Outcome Chips - Compact mode */}
-      <TableCell className="w-[440px] py-4">
-        <EnhancedInspectionOutcomeSelect
-          itemId={sectionItem.id}
-          currentOutcome={currentOutcome}
-          onOutcomeChange={onOutcomeChange}
-          compact={true}
-        />
-      </TableCell>
-
-      {/* Notes */}
-      <TableCell className="py-4">
-        <Input
-          placeholder="Add notes..."
-          value={localNotes}
-          onChange={(e) => handleNotesChange(e.target.value)}
-          className="text-sm h-9 bg-white/5 border-white/10 focus:border-elec-yellow/50
-                     placeholder:text-white"
-        />
-      </TableCell>
-
-      {/* Actions */}
-      <TableCell className="w-24 text-center py-4">
-        <div className="flex items-center justify-center gap-1">
+        <div className="flex shrink-0 items-center gap-1.5">
+          <EnhancedInspectionOutcomeSelect
+            itemId={sectionItem.id}
+            currentOutcome={currentOutcome}
+            onOutcomeChange={onOutcomeChange}
+            compact={true}
+          />
           {isCriticalOutcome && onNavigateToObservations && (
-            <Button
-              variant="ghost"
-              size="icon"
+            <button
+              type="button"
               onClick={onNavigateToObservations}
-              className={cn(
-                'h-8 w-8',
-                currentOutcome === 'C1' && 'text-red-400 hover:text-red-300 hover:bg-red-500/10',
-                currentOutcome === 'C2' &&
-                  'text-orange-400 hover:text-orange-300 hover:bg-orange-500/10',
-                currentOutcome === 'C3' &&
-                  'text-yellow-400 hover:text-yellow-300 hover:bg-yellow-500/10'
-              )}
+              className="h-9 shrink-0 rounded-lg px-2 text-[12px] font-semibold text-white transition-all touch-manipulation active:scale-[0.97]"
             >
-              <Eye className="h-4 w-4" />
-            </Button>
+              Obs
+            </button>
           )}
+          <button
+            type="button"
+            onClick={() => setShowNotes((v) => !v)}
+            aria-expanded={showNotes}
+            className={cn(
+              'h-9 shrink-0 rounded-lg px-2 text-[12px] font-semibold transition-all touch-manipulation active:scale-[0.97]',
+              showNotes || localNotes ? 'text-elec-yellow' : 'text-white'
+            )}
+          >
+            Note
+          </button>
         </div>
-      </TableCell>
-    </TableRow>
+      </div>
+
+      {/* Notes — collapsed behind the toggle; open rows keep the soft area */}
+      {showNotes && (
+        <div className="mt-2 pl-11">
+          <Textarea
+            placeholder="Notes (optional)…"
+            value={localNotes}
+            onChange={(e) => handleNotesChange(e.target.value)}
+            className="textarea-soft min-h-[44px] resize-none rounded-xl border-0 bg-white/[0.05] px-3 py-2.5 text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none touch-manipulation"
+          />
+        </div>
+      )}
+    </div>
   );
 };
 

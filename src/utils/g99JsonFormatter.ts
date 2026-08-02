@@ -8,14 +8,14 @@
 
 import { G99FormData, getDefaultG99FormData } from '@/types/g99-commissioning';
 import { supabase } from '@/integrations/supabase/client';
+import type { CertBranding } from '@/utils/certBranding';
+import { ukDate } from '@/utils/certDate';
 
-interface BrandingOptions {
-  companyLogo?: string;
-  companyName?: string;
-  companyAddress?: string;
-  companyPhone?: string;
-  companyEmail?: string;
-}
+/** Branding the caller resolves via `fetchCertBranding()` — see certBranding.ts. */
+type BrandingOptions = Partial<CertBranding>;
+
+/** G99's house colour, used until the electrician sets their own in Settings. */
+export const G99_ACCENT = '#dc2626';
 
 const UUID_REGEX =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -101,12 +101,27 @@ export const formatG99Json = (
     // section added before these render on the PDF)
     photos: formData.photos ?? [],
 
+    // Dates — the form stores ISO (date inputs); the PDF is a UK document.
+    // These seven are every date the G99 template renders.
+    commissioningDate: ukDate(formData.commissioningDate),
+    proposedCommissioningDate: ukDate(formData.proposedCommissioningDate),
+    applicationDate: ukDate(formData.applicationDate),
+    dnoApprovalDate: ukDate(formData.dnoApprovalDate),
+    dnoWitnessDate: ukDate(formData.dnoWitnessDate),
+    installerDate: ukDate(formData.installerDate),
+    customerDate: ukDate(formData.customerDate),
+
     // Branding overrides
     ...(branding?.companyLogo && { companyLogo: branding.companyLogo }),
     ...(branding?.companyName && { companyName: branding.companyName }),
     ...(branding?.companyAddress && { companyAddress: branding.companyAddress }),
     ...(branding?.companyPhone && { companyPhone: branding.companyPhone }),
     ...(branding?.companyEmail && { companyEmail: branding.companyEmail }),
+    ...(branding?.companyWebsite && { companyWebsite: branding.companyWebsite }),
+    companyAccentColor: branding?.companyAccentColor || G99_ACCENT,
+    ...(branding?.registrationSchemeLogo && {
+      registrationSchemeLogo: branding.registrationSchemeLogo,
+    }),
   };
 
   return payload;

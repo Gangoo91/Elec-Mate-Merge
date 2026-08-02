@@ -71,7 +71,7 @@ export interface MonthlyFinancials {
 // Fetch invoices for cash flow analysis
 async function fetchInvoices() {
   const { data, error } = await supabase
-    .from('employer_invoices')
+    .rpc('employer_invoices_unified')
     .select('id, invoice_number, client, amount, status, due_date, paid_date, job_id, created_at')
     .order('created_at', { ascending: false });
 

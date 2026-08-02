@@ -159,7 +159,7 @@ export const EnhancedValidatedInput: React.FC<EnhancedValidatedInputProps> = ({
         onBlur={handleBlur}
         placeholder={placeholder}
         disabled={disabled}
-        className={`overflow-hidden text-ellipsis bg-transparent !text-foreground hover:bg-muted/20 focus:bg-muted/30 placeholder:!text-muted-foreground/50 border-transparent focus:border-elec-yellow/50 disabled:bg-transparent disabled:!text-muted-foreground/50 ${getValidationBorder()} ${className} !pr-7 focus:ring-1 focus:ring-elec-yellow/30 focus:ring-offset-0`}
+        className={`overflow-hidden text-ellipsis bg-transparent !text-foreground hover:bg-white/[0.04] focus:bg-transparent placeholder:!text-muted-foreground/50 border-transparent focus:border-elec-yellow disabled:bg-transparent disabled:!text-muted-foreground/50 ${getValidationBorder()} ${className} !pr-7 focus:ring-0 focus:shadow-none focus:ring-offset-0`}
       />
       {getValidationIcon()}
     </div>

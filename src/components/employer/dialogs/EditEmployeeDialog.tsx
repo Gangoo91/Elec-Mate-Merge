@@ -38,6 +38,7 @@ import {
   selectContentClass,
   fieldLabelClass,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 
 type TeamRole = 'QS' | 'Supervisor' | 'Operative' | 'Apprentice' | 'Project Manager';
 
@@ -334,7 +335,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                 )}
               </div>
 
-              <FormCard eyebrow="Personal information">
+              <FormCard bleed eyebrow="Personal information">
                 <Field label="Full name" required>
                   <Input
                     value={formData.name}
@@ -365,7 +366,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                 </FormGrid>
               </FormCard>
 
-              <FormCard eyebrow="Emergency contact">
+              <FormCard bleed eyebrow="Emergency contact">
                 <FormGrid>
                   <Field label="Contact name">
                     <Input
@@ -402,65 +403,38 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                 </FormGrid>
               </FormCard>
 
-              <FormCard eyebrow="Employment">
+              <FormCard bleed eyebrow="Employment">
                 <Field label="Job role" required>
-                  <Select
-                    value={formData.role}
-                    onValueChange={(val) => setFormData((prev) => ({ ...prev, role: val }))}
-                  >
-                    <SelectTrigger className={selectTriggerClass}>
-                      <SelectValue placeholder="Select role..." />
-                    </SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      {JOB_ROLES.map((role) => (
-                        <SelectItem key={role} value={role}>
-                          {role}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <SelectField
+        value={formData.role}
+        onValueChange={(val) => setFormData((prev) => ({ ...prev, role: val }))}
+        placeholder="Select role..."
+        options={JOB_ROLES.map((role) => ({ value: role, label: role }))}
+      />
                 </Field>
                 <FormGrid cols={2}>
                   <Field label="Team role" required>
-                    <Select
-                      value={formData.team_role}
-                      onValueChange={(val) =>
+                    <SelectField
+        value={formData.team_role}
+        onValueChange={(val) =>
                         setFormData((prev) => ({ ...prev, team_role: val as TeamRole }))
                       }
-                    >
-                      <SelectTrigger className={selectTriggerClass}>
-                        <SelectValue placeholder="Select..." />
-                      </SelectTrigger>
-                      <SelectContent className={selectContentClass}>
-                        {TEAM_ROLES.map((role) => (
-                          <SelectItem key={role} value={role}>
-                            {role}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+        placeholder="Select..."
+        options={TEAM_ROLES.map((role) => ({ value: role, label: role }))}
+      />
                   </Field>
                   <Field label="Status">
-                    <Select
-                      value={formData.status}
-                      onValueChange={(val) => setFormData((prev) => ({ ...prev, status: val }))}
-                    >
-                      <SelectTrigger className={selectTriggerClass}>
-                        <SelectValue placeholder="Select..." />
-                      </SelectTrigger>
-                      <SelectContent className={selectContentClass}>
-                        {STATUSES.map((status) => (
-                          <SelectItem key={status} value={status}>
-                            {status}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <SelectField
+        value={formData.status}
+        onValueChange={(val) => setFormData((prev) => ({ ...prev, status: val }))}
+        placeholder="Select..."
+        options={STATUSES.map((status) => ({ value: status, label: status }))}
+      />
                   </Field>
                 </FormGrid>
               </FormCard>
 
-              <FormCard eyebrow="Pay information">
+              <FormCard bleed eyebrow="Pay information">
                 <RadioGroup
                   value={formData.payType}
                   onValueChange={(val) =>

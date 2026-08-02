@@ -49,9 +49,10 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(
           'font-sans font-[450] tracking-[0.005em] leading-[1.5] text-left',
           // Placeholder
           'placeholder:text-white',
-          // Focus states - elec-yellow glow
-          'focus:outline-none focus:border-elec-yellow focus:ring-0',
-          'focus:shadow-[0_0_0_3px_hsl(var(--elec-yellow)/0.15)]',
+          // Focus — clean volt border, NO translucent glow (the 3px volt/0.15
+          // halo read as a muddy brown wash on focused fields; founder call
+          // 2026-08-01: focus must not shift the field's colour)
+          'focus:outline-none focus:border-elec-yellow focus:ring-0 focus:shadow-none',
           // Caret
           'caret-elec-yellow',
           // Transitions

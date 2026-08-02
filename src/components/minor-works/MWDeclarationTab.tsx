@@ -92,7 +92,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
   const profilePopulated = !!(formData.electricianName && formData.position);
 
   return (
-    <div className="px-4 sm:px-0 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+    <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
       {/* Electrician details */}
       <div className={cn(cardCn, 'lg:col-span-2')}>
         <SectionTitle title="Electrician details" />
@@ -229,7 +229,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
       <div className={cardCn}>
         <SectionTitle title="Compliance" />
 
-        <p className="text-[13px] leading-relaxed text-white/85">
+        <p className="text-[13px] leading-relaxed text-white">
           I CERTIFY that the work covered by this certificate does not impair the safety of the existing
           installation and has been designed, constructed, inspected and tested in accordance with
           BS 7671:2018+A4:2026.

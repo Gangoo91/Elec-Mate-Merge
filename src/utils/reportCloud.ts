@@ -85,6 +85,188 @@ export interface ReportsResponse {
 // report per session — the RPC also dedupes server-side (6h) as a backstop.
 const qsEditNotified = new Set<string>();
 
+type ReportStatus = 'auto-draft' | 'draft' | 'in-progress' | 'completed';
+
+/**
+ * The library columns (My Certificates, dashboard, customer tabs) read
+ * reports.inspection_date and reports.inspector_name. The old chains only knew
+ * the EIC/EICR/Minor-Works key names, so every specialist certificate wrote
+ * NULL to both and showed as an undated, unattributed row. These chains keep
+ * the original keys FIRST — existing behaviour is unchanged — and fall back to
+ * the specialist certs' own key names.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const reportInspectionDate = (data: Record<string, any>): string | null =>
+  data.inspectionDate ||
+  data.workDate ||
+  data.dateOfInspection ||
+  data.testDate ||            // emergency lighting, PAT, testing-only
+  data.commissioningDate ||   // BESS, fire alarm, heat pump
+  data.installationDate ||    // EV charging, smoke/CO
+  data.designerDate ||        // fire alarm G1
+  data.modificationDate ||    // fire alarm G7
+  data.notificationDate ||    // G98 / G99
+  null;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const reportInspectorName = (data: Record<string, any>): string | null =>
+  data.inspectorName ||
+  data.contractorName ||
+  data.testerName ||          // emergency lighting, PAT, testing-only, lightning
+  data.installerName ||       // G98/G99, BESS, fire alarm, smoke/CO
+  data.engineerName ||
+  data.commissionerName ||    // fire alarm G3
+  data.designerName ||        // fire alarm G1
+  null;
+
+/**
+ * reportId prefix -> report type. Extracted from updateReport so
+ * updateReportWithVersionCheck can derive the same value: that function never
+ * had `reportType` in scope, which is why the per-type completion rules could
+ * not live there.
+ */
+const reportTypeFromId = (reportId: string): string => {
+  const lc = reportId.toLowerCase();
+  return lc.startsWith('fire-alarm-modification')
+    ? 'fire-alarm-modification'
+    : lc.startsWith('fire-alarm-inspection')
+      ? 'fire-alarm-inspection'
+      : lc.startsWith('fire-alarm-commissioning')
+        ? 'fire-alarm-commissioning'
+        : lc.startsWith('fire-alarm-design')
+          ? 'fire-alarm-design'
+          : lc.startsWith('fire-alarm')
+            ? 'fire-alarm'
+            : lc.startsWith('emergency-lighting')
+              ? 'emergency-lighting'
+              : lc.startsWith('ev-charging')
+                ? 'ev-charging'
+                : lc.startsWith('bess')
+                  ? 'bess'
+                  : lc.startsWith('pat-testing')
+                    ? 'pat-testing'
+                    : lc.startsWith('lightning-protection')
+                      ? 'lightning-protection'
+                      : lc.startsWith('g98')
+                        ? 'g98-commissioning'
+                        : lc.startsWith('g99')
+                          ? 'g99-commissioning'
+                          : lc.startsWith('smoke-co')
+                            ? 'smoke-co-alarm'
+                            : lc.startsWith('testing-only')
+                              ? 'testing-only'
+                              : lc.startsWith('disconnection')
+                              ? 'disconnection'
+                              : lc.startsWith('danger-notice')
+                                ? 'danger-notice'
+                                : lc.startsWith('isolation-cert')
+                                  ? 'isolation-cert'
+                                  : lc.startsWith('permit-to-work')
+                                    ? 'permit-to-work'
+                                    : lc.startsWith('safe-isolation')
+                                      ? 'safe-isolation'
+                                      : lc.startsWith('warning-labels')
+                                        ? 'warning-labels'
+                                        : lc.startsWith('minor-works')
+                                          ? 'minor-works'
+                                          : lc.startsWith('eic-')
+                                            ? 'eic'
+                                            : 'eicr';
+};
+
+/**
+ * THE status rule for every report, used by createReport, updateReport and
+ * updateReportWithVersionCheck alike.
+ *
+ * These three had drifted into three different rule sets: createReport carried
+ * all 22 per-type completion rules, updateReport carried 4, and
+ * updateReportWithVersionCheck — the path every autosave actually writes
+ * through (useReportSync) — carried none. The effect on live data was that a
+ * signed specialist certificate could never reach 'completed' after its first
+ * autosave, and one that had been marked completed on the row was demoted on
+ * the next save. Keep this function as the single source of truth; do not
+ * re-inline it.
+ *
+ * `currentStatus` is undefined on create and the stored status on update, which
+ * is what distinguishes "a new auto-sync row starts as auto-draft" from "an
+ * auto-sync over an existing auto-draft leaves it alone".
+ */
+const calculateReportStatus = ({
+  data,
+  reportType,
+  isAutoSync,
+  currentStatus,
+}: {
+  data: Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+  reportType: string;
+  isAutoSync: boolean;
+  currentStatus?: string;
+}): ReportStatus => {
+  // New auto-sync rows start as auto-draft; an auto-sync over an existing
+  // auto-draft keeps it. Both preserved exactly as the three callers had them.
+  if (isAutoSync && (currentStatus === undefined || currentStatus === 'auto-draft')) {
+    return 'auto-draft';
+  }
+  // Never demote an already-completed report.
+  if (currentStatus === 'completed') return 'completed';
+
+  if (data.status === 'completed') return 'completed';
+  if (data.certificateGenerated) return 'completed';
+  // EICR
+  if (data.satisfactoryForContinuedUse && data.inspectorSignature) return 'completed';
+  if (reportType === 'minor-works' && data.signature && data.workDate) return 'completed';
+  if (reportType === 'ev-charging' && data.installerSignature && data.installationDate)
+    return 'completed';
+  if (reportType === 'fire-alarm' && data.installerSignature && data.commissioningDate)
+    return 'completed';
+  if (reportType === 'fire-alarm-design' && data.designerSignature && data.designerDate)
+    return 'completed';
+  if (
+    reportType === 'fire-alarm-commissioning' &&
+    data.commissionerSignature &&
+    data.commissioningDate
+  )
+    return 'completed';
+  if (reportType === 'fire-alarm-inspection' && data.inspectorSignature && data.inspectionDate)
+    return 'completed';
+  if (reportType === 'fire-alarm-modification' && data.modifierSignature && data.modificationDate)
+    return 'completed';
+  if (reportType === 'emergency-lighting' && data.engineerSignature && data.testDate)
+    return 'completed';
+  if (reportType === 'pat-testing' && data.testerSignature && data.testDate) return 'completed';
+  if (reportType === 'bess' && data.installerSignature && data.commissioningDate)
+    return 'completed';
+  if (reportType === 'lightning-protection' && data.inspectorSignature && data.overallResult)
+    return 'completed';
+  if (
+    (reportType === 'g98-commissioning' || reportType === 'g99-commissioning') &&
+    data.installerSignature
+  )
+    return 'completed';
+  if (reportType === 'smoke-co-alarm' && data.installerSignature) return 'completed';
+  if (reportType === 'heat-pump' && data.engineerSignature && data.commissioningDate)
+    return 'completed';
+  if (reportType === 'testing-only' && data.testerSignature) return 'completed';
+  if (reportType === 'disconnection' && data.inspectorSignature && data.workDate)
+    return 'completed';
+  if (reportType === 'danger-notice' && data.contractorSignature) return 'completed';
+  if (reportType === 'isolation-cert' && data.personIsolatingSignature) return 'completed';
+  if (reportType === 'permit-to-work' && data.authorisedBySignature) return 'completed';
+  if (reportType === 'safe-isolation' && data.personSignature) return 'completed';
+  if (reportType === 'warning-labels') return 'completed';
+
+  const hasContent =
+    data.clientName ||
+    data.inspectionDate ||
+    data.workDate ||
+    data.dateOfInspection ||
+    data.installationDate ||
+    data.testDate ||
+    data.installationAddress ||
+    data.propertyAddress;
+  return hasContent ? 'in-progress' : 'draft';
+};
+
 export const reportCloud = {
   /**
    * Get all reports for a user with pagination
@@ -475,95 +657,7 @@ export const reportCloud = {
   ): Promise<{ success: boolean; reportId?: string; error?: unknown }> => {
     try {
       // Calculate status based on form data - handles all report types
-      const calculateStatus = (): 'auto-draft' | 'draft' | 'in-progress' | 'completed' => {
-        // Auto-sync creates 'auto-draft' - won't appear in Recent Certs until manually saved
-        if (isAutoSync) return 'auto-draft';
-        // Explicit status takes precedence
-        if (data.status === 'completed') return 'completed';
-        // Certificate generated means completed
-        if (data.certificateGenerated) return 'completed';
-        // EICR specific completion check
-        if (data.satisfactoryForContinuedUse && data.inspectorSignature) return 'completed';
-        // Minor Works specific: check for signature and work completion
-        if (reportType === 'minor-works' && data.signature && data.workDate) return 'completed';
-        // EV Charging specific: check for installer signature
-        if (reportType === 'ev-charging' && data.installerSignature && data.installationDate)
-          return 'completed';
-        // Fire Alarm specific
-        if (reportType === 'fire-alarm' && data.installerSignature && data.commissioningDate)
-          return 'completed';
-        // Fire Alarm Design (G1)
-        if (reportType === 'fire-alarm-design' && data.designerSignature && data.designerDate)
-          return 'completed';
-        // Fire Alarm Commissioning (G3)
-        if (
-          reportType === 'fire-alarm-commissioning' &&
-          data.commissionerSignature &&
-          data.commissioningDate
-        )
-          return 'completed';
-        // Fire Alarm Inspection (G6)
-        if (
-          reportType === 'fire-alarm-inspection' &&
-          data.inspectorSignature &&
-          data.inspectionDate
-        )
-          return 'completed';
-        // Fire Alarm Modification (G7)
-        if (
-          reportType === 'fire-alarm-modification' &&
-          data.modifierSignature &&
-          data.modificationDate
-        )
-          return 'completed';
-        // Emergency Lighting specific
-        if (reportType === 'emergency-lighting' && data.engineerSignature && data.testDate)
-          return 'completed';
-        // PAT Testing specific
-        if (reportType === 'pat-testing' && data.testerSignature && data.testDate)
-          return 'completed';
-        // BESS specific
-        if (reportType === 'bess' && data.installerSignature && data.commissioningDate)
-          return 'completed';
-        // Lightning Protection specific
-        if (reportType === 'lightning-protection' && data.inspectorSignature && data.overallResult)
-          return 'completed';
-        // G98/G99 commissioning
-        if (
-          (reportType === 'g98-commissioning' || reportType === 'g99-commissioning') &&
-          data.installerSignature
-        )
-          return 'completed';
-        // Smoke & CO Alarm
-        if (reportType === 'smoke-co-alarm' && data.installerSignature) return 'completed';
-        // Heat Pump (MCS MIS 3005) commissioning
-        if (reportType === 'heat-pump' && data.engineerSignature && data.commissioningDate)
-          return 'completed';
-        // Testing Only
-        if (reportType === 'testing-only' && data.testerSignature) return 'completed';
-        // Disconnection Certificate
-        if (reportType === 'disconnection' && data.inspectorSignature && data.workDate)
-          return 'completed';
-        // Labels & Warnings types
-        if (reportType === 'danger-notice' && data.contractorSignature) return 'completed';
-        if (reportType === 'isolation-cert' && data.personIsolatingSignature) return 'completed';
-        if (reportType === 'permit-to-work' && data.authorisedBySignature) return 'completed';
-        if (reportType === 'safe-isolation' && data.personSignature) return 'completed';
-        if (reportType === 'warning-labels') return 'completed';
-        // Check for any meaningful data entry (works for all report types)
-        const hasContent =
-          data.clientName ||
-          data.inspectionDate ||
-          data.workDate || // Minor Works date field
-          data.dateOfInspection || // EICR date field
-          data.installationDate || // EV Charging date field
-          data.testDate || // Fire/Emergency/PAT date field
-          data.installationAddress ||
-          data.propertyAddress;
-        return hasContent ? 'in-progress' : 'draft';
-      };
-
-      const status = calculateStatus();
+      const status = calculateReportStatus({ data, reportType, isAutoSync });
 
       console.log('[reportCloud] Creating report:', {
         type: reportType,
@@ -583,8 +677,8 @@ export const reportCloud = {
         client_name: data.clientName || null,
         installation_address:
           data.installationAddress || data.propertyAddress || data.premisesAddress || null,
-        inspection_date: data.inspectionDate || data.workDate || null,
-        inspector_name: data.inspectorName || data.contractorName || null,
+        inspection_date: reportInspectionDate(data),
+        inspector_name: reportInspectorName(data),
         data: data,
         last_synced_at: new Date().toISOString(),
       };
@@ -641,53 +735,7 @@ export const reportCloud = {
     isAutoSync: boolean = false
   ): Promise<{ success: boolean; error?: unknown }> => {
     try {
-      // Determine report type from reportId prefix
-      const lc = reportId.toLowerCase();
-      const reportType = lc.startsWith('fire-alarm-modification')
-        ? 'fire-alarm-modification'
-        : lc.startsWith('fire-alarm-inspection')
-          ? 'fire-alarm-inspection'
-          : lc.startsWith('fire-alarm-commissioning')
-            ? 'fire-alarm-commissioning'
-            : lc.startsWith('fire-alarm-design')
-              ? 'fire-alarm-design'
-              : lc.startsWith('fire-alarm')
-                ? 'fire-alarm'
-                : lc.startsWith('emergency-lighting')
-                  ? 'emergency-lighting'
-                  : lc.startsWith('ev-charging')
-                    ? 'ev-charging'
-                    : lc.startsWith('bess')
-                      ? 'bess'
-                      : lc.startsWith('pat-testing')
-                        ? 'pat-testing'
-                        : lc.startsWith('lightning-protection')
-                          ? 'lightning-protection'
-                          : lc.startsWith('g98')
-                            ? 'g98-commissioning'
-                            : lc.startsWith('g99')
-                              ? 'g99-commissioning'
-                              : lc.startsWith('smoke-co')
-                                ? 'smoke-co-alarm'
-                                : lc.startsWith('testing-only')
-                                  ? 'testing-only'
-                                  : lc.startsWith('disconnection')
-                                  ? 'disconnection'
-                                  : lc.startsWith('danger-notice')
-                                    ? 'danger-notice'
-                                    : lc.startsWith('isolation-cert')
-                                      ? 'isolation-cert'
-                                      : lc.startsWith('permit-to-work')
-                                        ? 'permit-to-work'
-                                        : lc.startsWith('safe-isolation')
-                                          ? 'safe-isolation'
-                                          : lc.startsWith('warning-labels')
-                                            ? 'warning-labels'
-                                            : lc.startsWith('minor-works')
-                                              ? 'minor-works'
-                                              : lc.startsWith('eic-')
-                                                ? 'eic'
-                                                : 'eicr';
+      const reportType = reportTypeFromId(reportId);
 
       // Get current status to check if it's an auto-draft.
       // No user_id filter (report_id is unique): a QS editing a team
@@ -702,30 +750,7 @@ export const reportCloud = {
       const currentStatus = currentReport?.status;
 
       // Calculate status - same logic as createReport
-      const calculateStatus = (): 'auto-draft' | 'draft' | 'in-progress' | 'completed' => {
-        // If it's an auto-sync AND currently auto-draft, keep it as auto-draft
-        if (isAutoSync && currentStatus === 'auto-draft') return 'auto-draft';
-        // Manual save promotes auto-draft to proper status
-        if (data.status === 'completed') return 'completed';
-        if (data.certificateGenerated) return 'completed';
-        if (data.satisfactoryForContinuedUse && data.inspectorSignature) return 'completed';
-        if (reportType === 'minor-works' && data.signature && data.workDate) return 'completed';
-        if (reportType === 'testing-only' && data.testerSignature) return 'completed';
-        if (reportType === 'disconnection' && data.inspectorSignature && data.workDate)
-          return 'completed';
-        if (reportType === 'heat-pump' && data.engineerSignature && data.commissioningDate)
-          return 'completed';
-        const hasContent =
-          data.clientName ||
-          data.inspectionDate ||
-          data.workDate ||
-          data.dateOfInspection ||
-          data.installationAddress ||
-          data.propertyAddress;
-        return hasContent ? 'in-progress' : 'draft';
-      };
-
-      const status = calculateStatus();
+      const status = calculateReportStatus({ data, reportType, isAutoSync, currentStatus });
 
       console.log('[reportCloud] Updating report:', {
         reportId,
@@ -740,8 +765,8 @@ export const reportCloud = {
         client_name: data.clientName || null,
         installation_address:
           data.installationAddress || data.propertyAddress || data.premisesAddress || null,
-        inspection_date: data.inspectionDate || data.workDate || null,
-        inspector_name: data.inspectorName || data.contractorName || null,
+        inspection_date: reportInspectionDate(data),
+        inspector_name: reportInspectorName(data),
         data: data,
         pdf_payload: null, // Clear stale formatted data — will be re-populated on next PDF generation
         last_synced_at: new Date().toISOString(),
@@ -1116,22 +1141,19 @@ export const reportCloud = {
       const currentStatus = currentReport?.status;
 
       // Calculate status - keep auto-draft if auto-sync and currently auto-draft
-      const calculateStatus = () => {
-        if (isAutoSync && currentStatus === 'auto-draft') return 'auto-draft';
-        if (data.status === 'completed') return 'completed';
-        if (data.certificateGenerated) return 'completed';
-        if (data.satisfactoryForContinuedUse && data.inspectorSignature) return 'completed';
-        return data.clientName || data.inspectionDate || data.workDate ? 'in-progress' : 'draft';
-      };
+      // Single source of truth — see calculateReportStatus at the top of this file.
+      // reportType is NOT a parameter of this function, so derive it the same
+      // way updateReport does before the per-type rules can be applied.
+      const reportType = reportTypeFromId(reportId);
 
       // No conflict, proceed with update
       const updateData: Record<string, unknown> = {
-        status: calculateStatus(),
+        status: calculateReportStatus({ data, reportType, isAutoSync, currentStatus }),
         client_name: data.clientName || null,
         installation_address:
           data.installationAddress || data.propertyAddress || data.premisesAddress || null,
-        inspection_date: data.inspectionDate || data.workDate || null,
-        inspector_name: data.inspectorName || data.contractorName || null,
+        inspection_date: reportInspectionDate(data),
+        inspector_name: reportInspectorName(data),
         data: data,
         pdf_payload: null, // Clear stale formatted data — will be re-populated on next PDF generation
         last_synced_at: new Date().toISOString(),

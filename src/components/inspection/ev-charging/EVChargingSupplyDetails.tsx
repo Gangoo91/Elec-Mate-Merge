@@ -1,76 +1,53 @@
 import React, { useEffect, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { EVSectionHeader } from './EVSectionHeader';
+import { FieldLabel, SubHeading, ToggleRow } from '@/components/forms';
+import {
+  inputCn,
+  selectTriggerCn,
+  cardCn,
+  chipBase,
+  chipOn,
+  chipOff,
+  checkRowCn,
+  infoPanelCn,
+} from '@/components/forms/fieldStyles';
 import { cn } from '@/lib/utils';
 import { useEVChargingSmartForm } from '@/hooks/inspection/useEVChargingSmartForm';
 import EVCircuitPresets from './EVCircuitPresets';
+import useReadingKeypad from '@/hooks/useReadingKeypad';
 
 interface EVChargingSupplyDetailsProps {
   formData: Record<string, unknown>;
   onUpdate: (field: string, value: unknown) => void;
 }
 
-/* ------------------------------------------------------------------ */
-/*  Shared styling                                                     */
-/* ------------------------------------------------------------------ */
-
-const inputCn =
-  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
-
-const selectTriggerCn =
-  'h-11 rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus:outline-none data-[state=open]:border-elec-yellow data-[state=open]:ring-0 touch-manipulation';
-
-const cardCn =
-  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
-
-const chipBase =
-  'h-11 rounded-xl border text-sm transition-all touch-manipulation active:scale-[0.98]';
-const chipOn = 'bg-elec-yellow border-elec-yellow text-black font-semibold';
-const chipOff = 'bg-white/[0.06] border-white/[0.12] text-white font-medium';
-
-const checkRowCn =
-  'flex min-h-[44px] items-center gap-3 rounded-xl border border-white/[0.12] bg-white/[0.05] px-3.5 py-3 cursor-pointer transition-colors hover:bg-white/[0.07] touch-manipulation';
-
-const infoPanelCn = 'rounded-xl border border-white/[0.12] bg-white/[0.05] px-3.5 py-3';
-
-const FieldLabel = ({ htmlFor, children }: { htmlFor?: string; children: React.ReactNode }) => (
-  <Label htmlFor={htmlFor} className="text-[12px] font-medium text-white mb-1 block">
-    {children}
-  </Label>
-);
-
-const SubHeading = ({ children }: { children: React.ReactNode }) => (
-  <div className="border-t border-white/[0.1] pt-4">
-    <h3 className="text-sm font-semibold text-white">{children}</h3>
-  </div>
-);
-
-/** Toggle-button row — selects exactly one value */
-const ToggleRow = ({
-  options,
-  value,
-  onChange,
-}: {
-  options: { label: string; value: string }[];
-  value: string;
-  onChange: (v: string) => void;
-}) => (
-  <div className="flex gap-2">
-    {options.map((opt) => (
-      <button
-        key={opt.value}
-        type="button"
-        onClick={() => onChange(opt.value)}
-        className={cn(chipBase, 'flex-1 px-2', value === opt.value ? chipOn : chipOff)}
-      >
-        {opt.label}
-      </button>
-    ))}
-  </div>
-);
+/** Numeric supply readings the keypad serves — free-number measurement and
+ * recorded-value inputs only. Nominal voltage (parsed-number storage) and
+ * cable length (parseFloat-on-change storage) stay keypad-free. Sequence
+ * follows the natural order down the page. */
+const KEYPAD_META = {
+  ze: { label: 'Ze — external loop impedance', unit: 'Ω' },
+  prospectiveFaultCurrent: { label: 'PSCC — prospective fault current', unit: 'kA' },
+  externalLoopImpedance: { label: 'Zs at origin', unit: 'Ω' },
+  earthElectrodeResistance: { label: 'Ra — earth electrode resistance', unit: 'Ω' },
+  maxDemandExisting: { label: 'Existing demand', unit: 'A' },
+  maxDemandEv: { label: 'EV charger load', unit: 'A' },
+  maxDemandTotal: { label: 'Total demand', unit: 'A' },
+  supplyCapacity: { label: 'Supply capacity', unit: 'A' },
+};
+const KEYPAD_SEQUENCE = [
+  'ze',
+  'prospectiveFaultCurrent',
+  'externalLoopImpedance',
+  'earthElectrodeResistance',
+  'maxDemandExisting',
+  'maxDemandEv',
+  'maxDemandTotal',
+  'supplyCapacity',
+];
 
 /* ------------------------------------------------------------------ */
 /*  Component                                                          */
@@ -122,6 +99,24 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
     if (isNaN(total) || isNaN(cap)) return null;
     return { ok: total <= cap, total, cap };
   }, [formData.maxDemandTotal, formData.supplyCapacity]);
+
+  // ── Reading keypad — shared MW pattern ──
+  // Values flow through the existing onUpdate paths; the demand verdict
+  // reuses demandStatus computed above — no new compliance logic.
+  const keypad = useReadingKeypad({
+    meta: KEYPAD_META,
+    sequence: KEYPAD_SEQUENCE,
+    getValue: (field) => String(formData[field] ?? ''),
+    setValue: (field, value) => onUpdate(field, value),
+    getStatus: (field) => {
+      if ((field === 'maxDemandTotal' || field === 'supplyCapacity') && demandStatus) {
+        return demandStatus.ok
+          ? { tone: 'pass', label: 'Within supply capacity' }
+          : { tone: 'check', label: 'Exceeds supply capacity' };
+      }
+      return null;
+    },
+  });
 
   // Auto-fill DNO notification date when checkbox is ticked and date is empty
   useEffect(() => {
@@ -216,6 +211,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 value={formData.ze || ''}
                 onChange={(e) => onUpdate('ze', e.target.value)}
                 className={inputCn}
+                {...keypad.field('ze')}
               />
             </div>
           </div>
@@ -232,6 +228,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 value={formData.prospectiveFaultCurrent || ''}
                 onChange={(e) => onUpdate('prospectiveFaultCurrent', e.target.value)}
                 className={inputCn}
+                {...keypad.field('prospectiveFaultCurrent')}
               />
             </div>
             <div>
@@ -244,6 +241,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 value={formData.externalLoopImpedance || ''}
                 onChange={(e) => onUpdate('externalLoopImpedance', e.target.value)}
                 className={inputCn}
+                {...keypad.field('externalLoopImpedance')}
               />
             </div>
           </div>
@@ -320,6 +318,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                     value={formData.earthElectrodeResistance || ''}
                     onChange={(e) => onUpdate('earthElectrodeResistance', e.target.value)}
                     className={cn(inputCn, 'sm:max-w-[12rem]')}
+                    {...keypad.field('earthElectrodeResistance')}
                   />
                 </div>
               )}
@@ -857,6 +856,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 value={formData.maxDemandExisting || ''}
                 onChange={(e) => onUpdate('maxDemandExisting', e.target.value)}
                 className={inputCn}
+                {...keypad.field('maxDemandExisting')}
               />
             </div>
             <div>
@@ -868,6 +868,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 value={formData.maxDemandEv || ''}
                 onChange={(e) => onUpdate('maxDemandEv', e.target.value)}
                 className={inputCn}
+                {...keypad.field('maxDemandEv')}
               />
             </div>
             <div>
@@ -879,6 +880,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 value={formData.maxDemandTotal || ''}
                 onChange={(e) => onUpdate('maxDemandTotal', e.target.value)}
                 className={inputCn}
+                {...keypad.field('maxDemandTotal')}
               />
             </div>
             <div>
@@ -890,6 +892,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 value={formData.supplyCapacity || ''}
                 onChange={(e) => onUpdate('supplyCapacity', e.target.value)}
                 className={inputCn}
+                {...keypad.field('supplyCapacity')}
               />
             </div>
           </div>
@@ -989,6 +992,12 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
           )}
         </section>
       </div>
+
+      {/* Scroll room so the last reading can rise clear of the keypad */}
+      {keypad.spacer}
+
+      {/* Reading keypad — coarse-pointer devices only */}
+      {keypad.element}
     </div>
   );
 };

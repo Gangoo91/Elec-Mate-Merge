@@ -8,7 +8,7 @@
  * - Stores selectedCustomerId in formData when customer is picked
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import ClientSelector from '@/components/ClientSelector';
 import { Customer } from '@/hooks/inspection/useCustomers';
@@ -57,6 +57,11 @@ const CertificateClientSection: React.FC<CertificateClientSectionProps> = ({
   fieldMapping = DEFAULT_CLIENT_FIELDS,
   accentColor,
 }) => {
+  // NOTE: this initialiser only runs on mount. Certs that render this section
+  // before formData has hydrated from the cloud will start on "New client"
+  // even for a cert linked to a CRM customer — the linked-customer badge below
+  // covers that case. Don't add a promote-to-existing effect: it makes that
+  // badge branch unreachable for customers arriving via nav state.
   const [mode, setMode] = useState<'new' | 'existing'>(
     formData.selectedCustomerId ? 'existing' : 'new'
   );

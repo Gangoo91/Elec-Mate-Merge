@@ -112,6 +112,8 @@ export interface SolarPVPayloadType {
 
   // Site access & safety
   site_access_notes: string;
+  installation_description: string;
+  circuits_tested: string;
   safe_isolation_verified: boolean;
   asbestos_check_required: boolean;
   asbestos_check_completed: boolean;

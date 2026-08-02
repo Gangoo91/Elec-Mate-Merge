@@ -1,8 +1,6 @@
 import React from 'react';
-import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Button } from '@/components/ui/button';
-import { ChevronDown, CheckCheck, RotateCcw, Ban, CheckCircle } from 'lucide-react';
+import { ChevronDown, Check } from 'lucide-react';
 import { InspectionSection } from '@/data/bs7671ChecklistData';
 import EnhancedInspectionItemRow from './EnhancedInspectionItemRow';
 import EnhancedInspectionItemCard from './EnhancedInspectionItemCard';
@@ -21,6 +19,7 @@ interface InspectionItem {
     | 'C1'
     | 'C2'
     | 'C3'
+    | 'FI'
     | 'not-applicable'
     | 'not-verified'
     | 'limitation'
@@ -41,6 +40,28 @@ interface EnhancedInspectionSectionCardProps {
   onBulkMarkNotApplicable?: (sectionId: string) => void;
   quickMarkMode?: boolean;
 }
+
+// Data titles are ALL CAPS with trailing regulation refs in parentheses.
+// Display them sentence case ("Intake equipment — visual inspection only")
+// with reg refs split out as a quiet mono suffix. Data stays untouched.
+const formatSectionTitle = (raw: string): { title: string; regRefs?: string } => {
+  let text = raw.trim();
+  let regRefs: string | undefined;
+
+  const parenMatch = text.match(/\s*\(([^)]*)\)\s*$/);
+  if (parenMatch && parenMatch[1].length > 2) {
+    if (/\d/.test(parenMatch[1])) {
+      regRefs = parenMatch[1];
+      text = text.slice(0, parenMatch.index).trim();
+    } else {
+      text = `${text.slice(0, parenMatch.index).trim()} — ${parenMatch[1].toLowerCase()}`;
+    }
+  }
+
+  let lower = text.toLowerCase();
+  lower = lower.replace(/\bpart (\d)/g, 'Part $1');
+  return { title: lower.charAt(0).toUpperCase() + lower.slice(1), regRefs };
+};
 
 const EnhancedInspectionSectionCard = ({
   section,
@@ -128,21 +149,19 @@ const EnhancedInspectionSectionCard = ({
     }).length;
   const c1c2Count = countOutcomes(['C1', 'C2']);
   const c3Count = countOutcomes(['C3']);
-  const progressPercent =
-    sectionItems.length > 0 ? Math.round((completedCount / sectionItems.length) * 100) : 0;
-  const isComplete = progressPercent === 100;
+  const satisfactoryCount = countOutcomes(['satisfactory']);
+  const isComplete = sectionItems.length > 0 && completedCount === sectionItems.length;
+  const allOk = sectionItems.length > 0 && satisfactoryCount === sectionItems.length;
+
+  const { title, regRefs } = formatSectionTitle(section.title);
+
+  const bulkChipCn =
+    'h-11 sm:h-9 shrink-0 rounded-lg px-3 text-[12px] font-semibold whitespace-nowrap transition-all touch-manipulation active:scale-[0.97]';
 
   return (
     <div
       data-section={section.id}
-      className={cn(
-        'rounded-2xl border overflow-hidden transition-colors',
-        isComplete
-          ? 'border-green-500/20 bg-green-500/[0.03]'
-          : isExpanded
-            ? 'border-elec-yellow/25 bg-white/[0.035]'
-            : 'border-white/[0.08] bg-white/[0.025] hover:border-white/[0.14]'
-      )}
+      className="rounded-2xl border border-white/[0.1] bg-white/[0.03] overflow-hidden"
     >
       <Collapsible
         open={isExpanded}
@@ -151,70 +170,48 @@ const EnhancedInspectionSectionCard = ({
           onToggle();
         }}
       >
-        {/* Section Header — number badge, title, inline progress bar */}
+        {/* Section header — quiet number tile, sentence-case title, quiet count */}
         <CollapsibleTrigger className="w-full" asChild>
           <button className="w-full flex items-center gap-3 p-3.5 text-left touch-manipulation active:scale-[0.99] transition-all">
-            {/* Section number / done badge */}
-            <span
-              className={cn(
-                'w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold flex-shrink-0 ring-1',
-                isComplete
-                  ? 'bg-green-500/15 text-green-400 ring-green-500/30'
-                  : progressPercent > 0
-                    ? 'bg-elec-yellow/15 text-elec-yellow ring-elec-yellow/30'
-                    : 'bg-white/[0.06] text-white/80 ring-white/10'
-              )}
-            >
-              {isComplete ? <CheckCircle className="h-4 w-4" /> : section.sectionNumber}
+            {/* Section number / done tile */}
+            <span className="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold shrink-0 bg-white/[0.08] text-white">
+              {isComplete ? <Check className="h-4 w-4 text-green-400" /> : section.sectionNumber}
             </span>
 
-            {/* Title + progress bar */}
+            {/* Title + reg refs */}
             <div className="flex-1 min-w-0">
-              <h3 className={cn('text-sm font-semibold truncate', isComplete ? 'text-green-400' : 'text-white')}>
-                {section.title}
-              </h3>
-              <div className="mt-1.5 flex items-center gap-2">
-                <div className="flex-1 h-1 rounded-full bg-white/[0.07] overflow-hidden">
-                  <div
-                    className={cn(
-                      'h-full rounded-full transition-all duration-300',
-                      isComplete ? 'bg-green-500/80' : 'bg-elec-yellow/80'
-                    )}
-                    style={{ width: `${progressPercent}%` }}
-                  />
-                </div>
-                <span
-                  className={cn(
-                    'text-[10px] font-bold tabular-nums flex-shrink-0',
-                    isComplete ? 'text-green-400' : progressPercent > 0 ? 'text-elec-yellow' : 'text-white/45'
-                  )}
-                >
-                  {completedCount}/{sectionItems.length}
-                </span>
-              </div>
+              <h3 className="text-sm font-semibold leading-snug text-white">{title}</h3>
+              {regRefs && (
+                <span className="font-mono text-[11px] text-white/80">{regRefs}</span>
+              )}
             </div>
 
             {/* Defect badges — visible while collapsed so a section's state
                 reads at a glance without expanding it */}
             {(c1c2Count > 0 || c3Count > 0) && (
-              <div className="flex items-center gap-1 flex-shrink-0">
+              <div className="flex items-center gap-1 shrink-0">
                 {c1c2Count > 0 && (
-                  <span className="text-[10px] font-bold text-red-400 bg-red-500/15 border border-red-500/25 px-1.5 py-0.5 rounded-md">
+                  <span className="rounded-md bg-red-600 px-1.5 py-0.5 text-[10px] font-bold text-white">
                     {c1c2Count}
                   </span>
                 )}
                 {c3Count > 0 && (
-                  <span className="text-[10px] font-bold text-yellow-400 bg-yellow-500/15 border border-yellow-500/25 px-1.5 py-0.5 rounded-md">
+                  <span className="rounded-md bg-elec-yellow px-1.5 py-0.5 text-[10px] font-bold text-black">
                     {c3Count}
                   </span>
                 )}
               </div>
             )}
 
+            {/* Progress count */}
+            <span className="shrink-0 text-[12px] font-medium tabular-nums text-white/80">
+              {completedCount}/{sectionItems.length}
+            </span>
+
             {/* Chevron */}
             <ChevronDown
               className={cn(
-                'h-5 w-5 text-white/60 transition-transform duration-200 flex-shrink-0',
+                'h-5 w-5 text-white/80 transition-transform duration-200 shrink-0',
                 isExpanded && 'rotate-180'
               )}
             />
@@ -222,99 +219,83 @@ const EnhancedInspectionSectionCard = ({
         </CollapsibleTrigger>
 
         <CollapsibleContent>
-          {/* Quick Actions Bar */}
+          {/* Bulk actions — neutral chips; All OK goes solid while the section is fully OK */}
           <div
             className={cn(
-              'flex gap-1.5 p-2 border-b border-white/[0.06]',
-              isMobile ? 'px-3 overflow-x-auto' : ''
+              'flex gap-1.5 px-3.5 pb-3',
+              isMobile ? 'overflow-x-auto' : ''
             )}
           >
             {onBulkMarkSatisfactory && (
-              <Button
-                variant="outline"
-                size="sm"
+              <button
+                type="button"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
                   handleBulkAction('satisfactory');
                 }}
-                className="h-9 px-3 rounded-lg bg-green-500/10 border-green-500/30 text-green-400 hover:bg-green-500/20 touch-manipulation whitespace-nowrap text-xs font-semibold active:scale-[0.98]"
+                className={cn(
+                  bulkChipCn,
+                  allOk
+                    ? 'bg-green-500 border border-green-500 text-black'
+                    : 'bg-white/[0.06] border border-white/[0.12] text-white'
+                )}
               >
                 All OK
-              </Button>
+              </button>
             )}
-            <Button
-              variant="outline"
-              size="sm"
+            <button
+              type="button"
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 handleBulkAction('na');
               }}
-              className="h-9 px-3 rounded-lg bg-white/[0.04] border-white/[0.08] text-white hover:bg-white/[0.06] touch-manipulation whitespace-nowrap text-xs font-semibold active:scale-[0.98]"
+              className={cn(bulkChipCn, 'bg-white/[0.06] border border-white/[0.12] text-white')}
             >
               All N/A
-            </Button>
+            </button>
             {onBulkClearSection && (
-              <Button
-                variant="outline"
-                size="sm"
+              <button
+                type="button"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
                   handleBulkAction('clear');
                 }}
-                className="h-9 px-3 rounded-lg bg-white/[0.03] border-white/[0.06] text-white hover:bg-white/[0.06] touch-manipulation whitespace-nowrap text-xs font-semibold active:scale-[0.98]"
+                className={cn(bulkChipCn, 'bg-white/[0.06] border border-white/[0.12] text-white')}
               >
                 Clear
-              </Button>
+              </button>
             )}
           </div>
 
-          {/* Inspection Items */}
-          <div className="h-[1px] bg-gradient-to-r from-elec-yellow/20 to-transparent" />
-          <div className={cn(isMobile ? 'px-2 py-2' : 'p-4')}>
-            {/* Desktop Table View */}
-            <div className="hidden md:block rounded-xl border border-white/10 overflow-hidden bg-black/20">
-              <Table>
-                <TableHeader>
-                  <TableRow className="hover:bg-transparent border-white/10 bg-white/[0.03]">
-                    <TableHead className="pl-4 text-left text-white/55 text-[11px] font-semibold uppercase tracking-wider">
-                      Item &amp; Regulation
-                    </TableHead>
-                    <TableHead className="w-[440px] text-left text-white/55 text-[11px] font-semibold uppercase tracking-wider">
-                      Outcome
-                    </TableHead>
-                    <TableHead className="text-left text-white/55 text-[11px] font-semibold uppercase tracking-wider">
-                      Notes
-                    </TableHead>
-                    <TableHead className="w-24 text-center text-white/55 text-[11px] font-semibold uppercase tracking-wider">
-                      Actions
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {section.items.map((sectionItem) => {
-                    const inspectionItem = inspectionItems.find(
-                      (item) => item.id === sectionItem.id
-                    );
-                    return (
-                      <EnhancedInspectionItemRow
-                        key={sectionItem.id}
-                        sectionItem={sectionItem}
-                        inspectionItem={inspectionItem}
-                        onUpdateItem={onUpdateItem}
-                        onOutcomeChange={handleOutcomeChange}
-                        onNavigateToObservations={onNavigateToObservations}
-                      />
-                    );
-                  })}
-                </TableBody>
-              </Table>
+          {/* Inspection items */}
+          <div className={cn('border-t border-white/[0.1]', isMobile ? 'px-2 py-2' : 'p-3')}>
+            {/* Desktop — one dense row per item; the chip labels are the column
+                signposts. lg: (not md:) so the switch lines up with
+                useIsMobile()'s 1024px break — at md the row has no room for the
+                item text and no swipe, while the hint below still promised one. */}
+            <div className="hidden lg:block space-y-1.5">
+              {section.items.map((sectionItem) => {
+                const inspectionItem = inspectionItems.find(
+                  (item) => item.id === sectionItem.id
+                );
+                return (
+                  <EnhancedInspectionItemRow
+                    key={sectionItem.id}
+                    sectionItem={sectionItem}
+                    inspectionItem={inspectionItem}
+                    onUpdateItem={onUpdateItem}
+                    onOutcomeChange={handleOutcomeChange}
+                    onNavigateToObservations={onNavigateToObservations}
+                  />
+                );
+              })}
             </div>
 
-            {/* Mobile Card View */}
-            <div className="md:hidden space-y-1.5">
+            {/* Mobile + tablet card view — swipeable, matches useIsMobile() */}
+            <div className="lg:hidden space-y-1.5">
               {section.items.map((sectionItem) => {
                 const inspectionItem = inspectionItems.find((item) => item.id === sectionItem.id);
                 return (
@@ -333,7 +314,7 @@ const EnhancedInspectionSectionCard = ({
 
             {/* Swipe hint for first section */}
             {isMobile && section.sectionNumber === '1' && (
-              <p className="mt-3 text-[10px] text-white text-center">
+              <p className="mt-3 text-center text-[11px] text-white">
                 Swipe right to mark OK, tap to expand
               </p>
             )}

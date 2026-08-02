@@ -262,9 +262,9 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
             <button
               type="button"
               onClick={handleAutoFillFromProfile}
-              className="h-8 px-2.5 text-[10px] font-medium rounded-md bg-white/[0.06] border border-white/[0.08] text-white hover:text-white touch-manipulation active:scale-[0.98] flex-shrink-0"
+              className="h-11 px-3 text-[12px] font-medium rounded-md bg-white/[0.06] border border-white/[0.08] text-white hover:text-white touch-manipulation active:scale-[0.98] flex-shrink-0"
             >
-              Use Profile
+              Use profile
             </button>
           )}
         </div>
@@ -318,7 +318,7 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
               <button
                 type="button"
                 onClick={() => handleInstrumentChange('')}
-                className="text-xs text-elec-yellow hover:text-elec-yellow/80 underline touch-manipulation"
+                className="h-11 w-full rounded-xl bg-white/[0.06] border border-white/[0.12] text-sm font-medium text-white touch-manipulation active:scale-[0.98]"
               >
                 Back to dropdown
               </button>

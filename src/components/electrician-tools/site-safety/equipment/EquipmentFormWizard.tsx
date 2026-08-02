@@ -221,6 +221,7 @@ export function EquipmentFormWizard({
     purple: 'border-purple-500/25 bg-purple-500/[0.07] text-purple-400',
     cyan: 'border-cyan-500/25 bg-cyan-500/[0.07] text-cyan-400',
     indigo: 'border-indigo-500/25 bg-indigo-500/[0.07] text-indigo-400',
+    grey: 'bg-white/[0.06] text-white border-white/[0.12]',
   };
 
   const formatFrequency = (days: number) =>

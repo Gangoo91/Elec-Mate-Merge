@@ -26,6 +26,17 @@ import {
 type CertificateContext = {
   client: { name: string; email?: string; phone?: string; address: string; postcode: string };
   jobDetails: { title: string; description: string; location: string };
+  items?: Array<{
+    id: string;
+    description: string;
+    quantity: number;
+    unit: string;
+    unitPrice: number;
+    totalPrice: number;
+    category: string;
+    subcategory?: string;
+    notes?: string;
+  }>;
   linkedCertificate?: {
     reportId: string;
     certificateType: string;
@@ -129,10 +140,25 @@ const QuoteBuilderCreate = () => {
     }
 
     if (certificateSessionId) {
-      const parsed = storageGetJSONSync<any>(certificateSessionId, null);
+      // certificateToQuote writes via storageSetJSONSync, but
+      // StartCertificateDialog writes raw sessionStorage under the same
+      // param — check both stores so neither sender's payload drops.
+      let parsed = storageGetJSONSync<any>(certificateSessionId, null);
       if (parsed) {
-        setCertificateContext(parsed.certificateData);
         storageRemoveSync(certificateSessionId);
+      } else {
+        const storedContext = sessionStorage.getItem(certificateSessionId);
+        if (storedContext) {
+          try {
+            parsed = JSON.parse(storedContext);
+          } catch {
+            parsed = null;
+          }
+          sessionStorage.removeItem(certificateSessionId);
+        }
+      }
+      if (parsed?.certificateData) {
+        setCertificateContext(parsed.certificateData);
       }
     }
 
@@ -368,7 +394,11 @@ const QuoteBuilderCreate = () => {
           >
             <p className="text-[13px] font-semibold text-blue-400">Certificate Data Imported</p>
             <p className="text-[12px] text-white mt-0.5">
-              Client details pre-filled from certificate
+              {certificateContext.items && certificateContext.items.length > 0
+                ? `Client details and ${certificateContext.items.length} remedial ${
+                    certificateContext.items.length === 1 ? 'item' : 'items'
+                  } pre-filled from certificate`
+                : 'Client details pre-filled from certificate'}
             </p>
           </motion.div>
         )}

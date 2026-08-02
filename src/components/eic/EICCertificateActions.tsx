@@ -1,17 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Badge } from '@/components/ui/badge';
-import {
-  FileText,
-  Download,
-  Save,
-  Mail,
-  AlertTriangle,
-  CheckCircle,
-  Clock,
-  Loader2,
-  Receipt,
-} from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { supabase } from '@/integrations/supabase/client';
@@ -19,46 +8,60 @@ import { saveCertificatePdf } from '@/utils/certificate-pdf-storage';
 import { formatEicJson } from '@/utils/eicJsonFormatter';
 import { createInvoiceFromCertificate } from '@/utils/certificateToQuote';
 import PDFExportProgress from '@/components/PDFExportProgress';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
+import { useMobileKeyboard } from '@/hooks/use-mobile-keyboard';
+import {
+  useEICValidation,
+  TAB_LABEL,
+  type EICTabId,
+  type ValidationRule,
+} from '@/hooks/useEICValidation';
 import { cn } from '@/lib/utils';
 
-const SectionTitle = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
-);
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const secondaryBtnCn =
+  'bg-white/[0.06] border border-white/[0.12] text-white font-medium rounded-xl touch-manipulation active:scale-[0.98] transition-all';
+
+/** Imperative actions the sticky shell footer can trigger on the Issue step —
+ * mirrors the MW pattern (MinorWorksForm pdfActionsRef). Shape matches the
+ * ref EICForm creates: `useRef<{ generate: () => void } | null>`. */
+export type EICPdfActionsRef = React.MutableRefObject<{
+  generate: () => void;
+  email: () => void;
+  invoice: () => void;
+} | null>;
 
 interface EICCertificateActionsProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
   reportId: string;
   onGenerateCertificate: () => void;
-  onSaveDraft: () => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onUpdate?: (field: string, value: any) => void;
+  /** Kept current with the in-tab generate handler so the shell footer's
+   * Generate produces the real PDF (MW pattern). */
+  actionsRef?: EICPdfActionsRef;
 }
 
 const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
   formData,
   reportId,
   onGenerateCertificate,
-  onSaveDraft,
   onUpdate,
+  actionsRef,
 }) => {
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
   const haptic = useHaptic();
+  const keyboard = useMobileKeyboard();
   const { toast } = useToast();
   const { companyProfile } = useCompanyProfile();
   const [isExporting, setIsExporting] = useState(false);
@@ -66,22 +69,28 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
   const [exportStatus, setExportStatus] = useState<
     'preparing' | 'generating' | 'complete' | 'error'
   >('preparing');
-  const [showEmailDialog, setShowEmailDialog] = useState(false);
+  const [showEmailSheet, setShowEmailSheet] = useState(false);
   const [emailRecipient, setEmailRecipient] = useState('');
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [showMissingFieldsSheet, setShowMissingFieldsSheet] = useState(false);
+  // Generated PDF URL — feeds linked_certificate_pdf_url on the invoice path
+  // (MW parity: previously EIC passed no pdfUrl at all, so the cert never
+  // attached to invoices raised from it).
+  const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | null>(null);
 
-  // Validation checks
-  const hasRequiredInstallationDetails =
-    formData.clientName && formData.installationAddress && formData.installationDate;
-  const hasRequiredDeclarations =
-    formData.designerName &&
-    formData.designerSignature &&
-    formData.constructorName &&
-    formData.constructorSignature &&
-    formData.inspectorName &&
-    formData.inspectorSignature;
-  // Check for completed inspections - either via inspections object (legacy) or inspectionItems array (current)
+  // Single source of truth for "can this cert generate" — the same
+  // useEICValidation the panel above and the shell header ring read, so the
+  // counts can never disagree and Generate can't fire while errors remain.
+  const validation = useEICValidation(formData);
+  const canGenerateCertificate = validation.isValid;
+  const missingByTab = validation.errors.reduce((acc, rule) => {
+    const tab = rule.tab || 'certificate';
+    (acc.get(tab) || acc.set(tab, []).get(tab)!).push(rule);
+    return acc;
+  }, new Map<EICTabId, ValidationRule[]>());
+
+  // Section completion — inspections/testing aren't hard generation gates
+  // (they surface as validation warnings), so derive their ticks directly.
   const hasCompletedInspections =
     (formData.inspections && Object.keys(formData.inspections).length > 0) ||
     (formData.inspectionItems &&
@@ -94,21 +103,6 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
           item.outcome === 'limitation'
       ));
   const hasTestResults = formData.scheduleOfTests && formData.scheduleOfTests.length > 0;
-
-  const canGenerateCertificate = hasRequiredInstallationDetails && hasRequiredDeclarations;
-  const isFullyComplete = canGenerateCertificate && hasCompletedInspections && hasTestResults;
-
-  // Build a human-readable list of what's blocking generation
-  const missingFields: string[] = [];
-  if (!formData.clientName) missingFields.push('Client name');
-  if (!formData.installationAddress) missingFields.push('Installation address');
-  if (!formData.installationDate) missingFields.push('Installation date');
-  if (!formData.designerName) missingFields.push('Designer name');
-  if (!formData.designerSignature) missingFields.push('Designer signature');
-  if (!formData.constructorName) missingFields.push('Constructor name');
-  if (!formData.constructorSignature) missingFields.push('Constructor signature');
-  if (!formData.inspectorName) missingFields.push('Inspector name');
-  if (!formData.inspectorSignature) missingFields.push('Inspector signature');
 
   const handleGeneratePDF = async () => {
     if (!canGenerateCertificate) {
@@ -223,6 +217,11 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
 
       setExportProgress(90);
 
+      // Keep the URL for the invoice path + persist into formData so raising
+      // an invoice in a later session still attaches the certificate.
+      setGeneratedPdfUrl(permanentUrl);
+      onUpdate?.('pdfUrl', permanentUrl);
+
       // Download the PDF — uses native share sheet on iOS, blob download on web
       const { openOrDownloadPdf } = await import('@/utils/pdf-download');
       await openOrDownloadPdf(permanentUrl, filename);
@@ -232,7 +231,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
 
       haptic.success();
       toast({
-        title: 'EIC Generated Successfully',
+        title: 'EIC generated',
         description: storagePath
           ? 'Your certificate has been generated and saved permanently.'
           : 'Your certificate has been generated and downloaded.',
@@ -244,7 +243,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
       console.error('PDF generation error:', error);
       setExportStatus('error');
       toast({
-        title: 'Export Failed',
+        title: 'Export failed',
         description:
           error instanceof Error
             ? error.message
@@ -256,39 +255,61 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
     }
   };
 
-  const handleSaveDraft = () => {
-    haptic.success();
-    onSaveDraft();
-    toast({
-      title: 'Draft Saved',
-      description: 'Your EIC progress has been saved successfully.',
-    });
-  };
 
   const handleEmailCertificate = () => {
     if (!canGenerateCertificate) {
       haptic.warning();
-      toast({
-        title: 'Cannot Email Certificate',
-        description: 'Please complete all required sections first.',
-        variant: 'destructive',
-      });
+      setShowMissingFieldsSheet(true);
       return;
     }
 
     haptic.light();
-    // Pre-fill with client email if available
-    if (formData.clientEmail) {
+    // Pre-fill with client email only when the field is still empty — never
+    // overwrite a recipient the user has already typed.
+    if (formData.clientEmail && !emailRecipient) {
       setEmailRecipient(formData.clientEmail);
     }
 
-    setShowEmailDialog(true);
+    setShowEmailSheet(true);
   };
+
+  const handleCreateInvoice = () => {
+    if (!canGenerateCertificate) {
+      haptic.warning();
+      setShowMissingFieldsSheet(true);
+      return;
+    }
+    const url = createInvoiceFromCertificate({
+      clientName: formData.clientName || '',
+      clientEmail: formData.clientEmail || '',
+      clientPhone: formData.clientPhone || '',
+      clientAddress: formData.clientAddress || '',
+      installationAddress: formData.installationAddress || '',
+      certificateType: 'EIC',
+      certificateReference: formData.certificateNumber || '',
+      reportId: reportId,
+      pdfUrl: generatedPdfUrl || formData.pdfUrl || undefined,
+    });
+    navigate(url);
+  };
+
+  // Keep the shell footer's imperative handle current (MW actionsRef pattern).
+  useEffect(() => {
+    if (!actionsRef) return;
+    actionsRef.current = {
+      generate: handleGeneratePDF,
+      email: handleEmailCertificate,
+      invoice: handleCreateInvoice,
+    };
+    return () => {
+      actionsRef.current = null;
+    };
+  });
 
   const handleSendEmail = async () => {
     if (!emailRecipient || !emailRecipient.includes('@')) {
       toast({
-        title: 'Invalid Email',
+        title: 'Invalid email',
         description: 'Please enter a valid email address.',
         variant: 'destructive',
       });
@@ -343,17 +364,17 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
 
       haptic.success();
       toast({
-        title: 'Certificate Sent',
+        title: 'Certificate sent',
         description: result?.pdfAttached
           ? `EIC certificate sent to ${emailRecipient} with the PDF attached`
           : `EIC certificate sent successfully to ${emailRecipient}`,
       });
 
-      setShowEmailDialog(false);
+      setShowEmailSheet(false);
       setEmailRecipient('');
     } catch (error) {
       toast({
-        title: 'Email Failed',
+        title: 'Email failed',
         description: error instanceof Error ? error.message : 'Failed to send certificate email.',
         variant: 'destructive',
       });
@@ -362,92 +383,53 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
     }
   };
 
+  // Distinct short labels — two chips both reading "Schedule" were
+  // indistinguishable. These match the shell's step names.
   const completionSections = [
-    { label: 'Installation Details', done: hasRequiredInstallationDetails },
-    { label: 'Schedule of Inspections', done: hasCompletedInspections },
-    { label: 'Schedule of Testing', done: hasTestResults },
-    { label: 'Declarations & Signatures', done: hasRequiredDeclarations },
+    { label: 'Details', done: !missingByTab.has('details') },
+    { label: 'Inspections', done: hasCompletedInspections },
+    { label: 'Testing', done: hasTestResults },
+    { label: 'Sign off', done: !missingByTab.has('declarations') },
   ];
 
   return (
     <>
-      <div className="space-y-4">
+      <div className={cardCn}>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">
+          Certificate actions
+        </h2>
+
         {/* Section Completion — compact row */}
-        <div className="grid grid-cols-4 gap-1">
+        <div className="grid grid-cols-4 gap-2">
           {completionSections.map((section) => (
             <div
               key={section.label}
               className={cn(
-                'h-9 rounded-lg flex items-center justify-center text-[9px] font-semibold',
-                section.done
-                  ? 'bg-green-500/20 border border-green-500/30 text-green-400'
-                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                'h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] flex items-center justify-center px-1 text-center text-[11px] font-semibold',
+                section.done ? 'text-green-400' : 'text-white'
               )}
             >
-              {section.done ? '✓' : '○'} {section.label.split(' ')[0]}
+              {section.label}
             </div>
           ))}
         </div>
 
-        {/* Validation hint — inline, tappable to open full sheet */}
+        {/* Validation hint — inline, tappable to open full sheet. Count comes
+            from the same validation the panel above renders, so they agree. */}
         {!canGenerateCertificate && (
           <button
             type="button"
             onClick={() => setShowMissingFieldsSheet(true)}
-            className="w-full text-left text-[10px] text-elec-yellow underline-offset-2 hover:underline touch-manipulation"
+            className="w-full min-h-11 flex items-center text-left text-[12px] font-medium text-elec-yellow touch-manipulation"
           >
-            {missingFields.length} item{missingFields.length === 1 ? '' : 's'} to complete before generating — tap to see
+            {validation.errors.length} item{validation.errors.length === 1 ? '' : 's'} to complete before generating — tap to see
           </button>
         )}
 
-        {/* Generate button — always tappable; opens missing-fields sheet if not ready */}
-        <button
-          type="button"
-          onClick={handleGeneratePDF}
-          disabled={isExporting}
-          className="h-12 w-full touch-manipulation bg-elec-yellow text-black font-semibold text-sm rounded-lg active:scale-[0.98] transition-transform disabled:opacity-50 flex items-center justify-center gap-2"
-        >
-          {isExporting ? 'Generating...' : 'Generate EIC PDF'}
-        </button>
-
-        {/* Secondary Actions */}
-        <div className="grid grid-cols-3 gap-1">
-          <button
-            type="button"
-            onClick={handleSaveDraft}
-            className="h-10 touch-manipulation bg-white/[0.05] border border-white/[0.08] text-white rounded-lg active:scale-[0.98] flex items-center justify-center text-[10px] font-semibold"
-          >
-            Save
-          </button>
-          <button
-            type="button"
-            onClick={handleEmailCertificate}
-            disabled={!canGenerateCertificate}
-            className="h-10 touch-manipulation bg-white/[0.05] border border-white/[0.08] text-white rounded-lg active:scale-[0.98] disabled:opacity-50 flex items-center justify-center text-[10px] font-semibold"
-          >
-            Email
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              const url = createInvoiceFromCertificate({
-                clientName: formData.clientName || '',
-                clientEmail: formData.clientEmail || '',
-                clientPhone: formData.clientPhone || '',
-                clientAddress: formData.clientAddress || '',
-                installationAddress: formData.installationAddress || '',
-                certificateType: 'EIC',
-                certificateReference: formData.certificateNumber || '',
-                reportId: reportId,
-              });
-              navigate(url);
-            }}
-            disabled={!canGenerateCertificate}
-            className="h-10 touch-manipulation bg-white/[0.05] border border-elec-yellow/30 text-elec-yellow rounded-lg active:scale-[0.98] disabled:opacity-50 flex items-center justify-center text-[10px] font-semibold"
-          >
-            Invoice
-          </button>
-        </div>
+        {/* ELE-1460 — no inline Generate/Save/Email/Invoice duplicates: the
+            sticky footer carries Generate + Email + Invoice, the shell header
+            carries Save. The validation hint above stays — it explains the
+            footer gate. */}
       </div>
 
       <PDFExportProgress
@@ -459,96 +441,80 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         certificateType="EIC"
       />
 
-      {/* Missing-fields sheet — replaces the dead-end disabled-button + toast pattern */}
+      {/* Missing-fields sheet — grouped by the tab each field lives in,
+          driven by useEICValidation so it matches the panel + header ring */}
       <Sheet open={showMissingFieldsSheet} onOpenChange={setShowMissingFieldsSheet}>
+        {/* h-[85vh] + internal scroll — a fresh EIC can list 16 rules across 4
+            groups, which overflowed an uncapped sheet off the top of a phone
+            and put "Got it" out of reach. Same shape as EICForm's ring sheet. */}
         <SheetContent
           side="bottom"
-          className="bg-background border-white/[0.06] rounded-t-2xl"
+          className="h-[85vh] bg-background border-white/[0.14] rounded-t-2xl p-0 overflow-hidden"
         >
-          <SheetHeader>
-            <SheetTitle className="text-white flex items-center gap-2 text-left">
-              <AlertTriangle className="h-5 w-5 text-elec-yellow shrink-0" />
-              {missingFields.length} item{missingFields.length === 1 ? '' : 's'} to complete
-            </SheetTitle>
-          </SheetHeader>
-          <div className="space-y-4 py-4">
-            <p className="text-xs text-white/60">
-              Finish these fields then tap Generate again. Tap any item below for the
-              tab it lives in.
-            </p>
-            {(() => {
-              const detailsItems = missingFields.filter((f) =>
-                ['Client name', 'Installation address', 'Installation date'].includes(f)
-              );
-              const declarationItems = missingFields.filter((f) => !detailsItems.includes(f));
-              return (
-                <>
-                  {detailsItems.length > 0 && (
-                    <div className="space-y-2">
-                      <p className="text-[10px] uppercase tracking-wider text-elec-yellow font-semibold">
-                        Installation Details tab
-                      </p>
-                      <div className="space-y-1.5">
-                        {detailsItems.map((f) => (
-                          <div
-                            key={f}
-                            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.06]"
-                          >
-                            <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow shrink-0" />
-                            <span className="text-sm text-white">{f}</span>
-                          </div>
-                        ))}
+          <div className="flex h-full flex-col">
+            <SheetHeader className="shrink-0 border-b border-white/[0.08] px-4 pb-3 pt-4">
+              <SheetTitle className="text-white text-left">
+                {validation.errors.length} item{validation.errors.length === 1 ? '' : 's'} to complete
+              </SheetTitle>
+            </SheetHeader>
+            <div className="flex-1 space-y-4 overflow-y-auto overscroll-contain px-4 py-4">
+              <p className="text-[12px] text-white">
+                Finish these fields then tap Generate again.
+              </p>
+              {Array.from(missingByTab.entries()).map(([tab, rules]) => (
+                <div key={tab} className="space-y-2">
+                  <p className="text-[12px] font-semibold text-elec-yellow">{TAB_LABEL[tab]}</p>
+                  <div className="space-y-1.5">
+                    {rules.map((rule) => (
+                      <div
+                        key={rule.field}
+                        className="px-3 py-2 rounded-xl bg-white/[0.06] border border-white/[0.12]"
+                      >
+                        <span className="text-sm text-white">{rule.message}</span>
                       </div>
-                    </div>
-                  )}
-                  {declarationItems.length > 0 && (
-                    <div className="space-y-2">
-                      <p className="text-[10px] uppercase tracking-wider text-elec-yellow font-semibold">
-                        Declarations tab
-                      </p>
-                      <div className="space-y-1.5">
-                        {declarationItems.map((f) => (
-                          <div
-                            key={f}
-                            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.06]"
-                          >
-                            <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow shrink-0" />
-                            <span className="text-sm text-white">{f}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </>
-              );
-            })()}
-            <button
-              type="button"
-              onClick={() => setShowMissingFieldsSheet(false)}
-              className="w-full h-11 rounded-lg bg-white/[0.05] border border-white/[0.08] text-white text-sm font-semibold touch-manipulation active:scale-[0.98]"
-            >
-              Got it
-            </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+            {/* p-0 above drops the sheet variant's safe-area pb, so the
+                non-scrolling footer re-applies it — clears the gesture pill. */}
+            <div className="shrink-0 border-t border-white/[0.08] px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+              <button
+                type="button"
+                onClick={() => setShowMissingFieldsSheet(false)}
+                className={cn(secondaryBtnCn, 'w-full h-12 text-sm font-semibold')}
+              >
+                Got it
+              </button>
+            </div>
           </div>
         </SheetContent>
       </Sheet>
 
-      {/* Email Dialog */}
-      <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>
-        <DialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-md overflow-hidden bg-white/[0.03] border border-white/[0.06]">
-          <DialogHeader className="text-left">
-            <DialogTitle className="flex items-center gap-2 text-white">
-              <Mail className="h-5 w-5 text-elec-yellow shrink-0" />
-              Email EIC Certificate
-            </DialogTitle>
-            <DialogDescription className="text-left text-white">
+      {/* Email sheet — bottom sheet, matching the missing-fields surface.
+          The sheet is position:fixed, so the soft keyboard would sit straight
+          over the recipient input and Send button; lifting by the measured
+          visualViewport delta keeps both above the keyboard. Scoped to this
+          sheet deliberately — the alternative (interactive-widget on the
+          viewport meta) changes every sheet in the app and needs a device
+          pass first. */}
+      <Sheet open={showEmailSheet} onOpenChange={setShowEmailSheet}>
+        <SheetContent
+          side="bottom"
+          className="bg-background border-white/[0.14] rounded-t-2xl max-h-[85vh] overflow-y-auto overscroll-contain"
+          style={keyboard.isVisible ? { paddingBottom: keyboard.height } : undefined}
+        >
+          <SheetHeader>
+            <SheetTitle className="text-white text-left">Email EIC certificate</SheetTitle>
+          </SheetHeader>
+          <div className="space-y-4 py-4 min-w-0">
+            <p className="text-[12px] text-white">
               The certificate will be generated and sent as a PDF attachment.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4 py-2 min-w-0">
-            <div className="space-y-2">
-              <label htmlFor="email" className="text-white text-xs font-medium">
-                Recipient Email
+            </p>
+            <div>
+              <label htmlFor="email" className={labelCn}>
+                Recipient email
               </label>
               <Input
                 id="email"
@@ -558,50 +524,46 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
                 value={emailRecipient}
                 onChange={(e) => setEmailRecipient(e.target.value)}
                 disabled={isSendingEmail}
-                className="h-12 text-base text-left touch-manipulation w-full bg-white/[0.06] border-white/[0.08] text-white"
+                className={inputCn}
               />
             </div>
             {formData.clientEmail && emailRecipient !== formData.clientEmail && (
               <button
                 type="button"
                 onClick={() => setEmailRecipient(formData.clientEmail)}
-                className="w-full h-11 flex items-center gap-2 px-3 text-sm touch-manipulation border border-white/[0.08] rounded-lg text-white hover:bg-white/[0.05] active:scale-[0.98] transition-transform overflow-hidden"
+                className={cn(secondaryBtnCn, 'w-full h-11 flex items-center px-3 text-sm overflow-hidden')}
               >
-                <Mail className="h-4 w-4 text-elec-yellow shrink-0" />
-                <span className="truncate">Use Client Email: {formData.clientEmail}</span>
+                <span className="truncate">Use client email: {formData.clientEmail}</span>
               </button>
             )}
+            <div className="flex flex-col gap-3 pt-2">
+              <button
+                type="button"
+                onClick={handleSendEmail}
+                disabled={isSendingEmail || !emailRecipient}
+                className="h-12 w-full touch-manipulation bg-elec-yellow border border-elec-yellow text-black font-semibold rounded-xl active:scale-[0.98] transition-transform disabled:bg-elec-yellow disabled:text-black disabled:opacity-100 flex items-center justify-center gap-2"
+              >
+                {isSendingEmail ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin text-black" />
+                    Sending...
+                  </>
+                ) : (
+                  'Send certificate'
+                )}
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowEmailSheet(false)}
+                disabled={isSendingEmail}
+                className={cn(secondaryBtnCn, 'h-12 w-full text-sm font-semibold disabled:opacity-50')}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
-          <div className="flex flex-col gap-3 pt-2">
-            <button
-              type="button"
-              onClick={handleSendEmail}
-              disabled={isSendingEmail || !emailRecipient}
-              className="h-12 w-full touch-manipulation bg-elec-yellow text-black font-semibold rounded-xl active:scale-[0.98] transition-transform flex items-center justify-center gap-2"
-            >
-              {isSendingEmail ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Sending...
-                </>
-              ) : (
-                <>
-                  <Mail className="h-4 w-4" />
-                  Send Certificate
-                </>
-              )}
-            </button>
-            <button
-              type="button"
-              onClick={() => setShowEmailDialog(false)}
-              disabled={isSendingEmail}
-              className="h-11 w-full touch-manipulation text-white hover:bg-white/[0.05] rounded-xl"
-            >
-              Cancel
-            </button>
-          </div>
-        </DialogContent>
-      </Dialog>
+        </SheetContent>
+      </Sheet>
     </>
   );
 };

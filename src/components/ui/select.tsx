@@ -31,13 +31,13 @@ const SelectTrigger = React.forwardRef<
       // Placeholder — style the SelectValue span
       '[&>span[data-placeholder]]:text-muted-foreground',
       // Focus states
-      'focus:outline-none focus:border-elec-yellow/50',
-      'focus:ring-2 focus:ring-elec-yellow/20',
+      'focus:outline-none focus:border-elec-yellow',
+      'focus:ring-0',
       // Active/pressed state
       'active:scale-[0.98]',
       // Data state when open
-      'data-[state=open]:border-elec-yellow/50',
-      'data-[state=open]:ring-2 data-[state=open]:ring-elec-yellow/20',
+      'data-[state=open]:border-elec-yellow',
+      'data-[state=open]:ring-0',
       // Transitions
       'transition-all duration-150 ease-out',
       // Disabled
@@ -63,7 +63,7 @@ const SelectScrollUpButton = React.forwardRef<
   <SelectPrimitive.ScrollUpButton
     ref={ref}
     className={cn(
-      'flex cursor-default items-center justify-center py-2 bg-gradient-to-b from-[#1c1c1e] to-transparent',
+      'flex cursor-default items-center justify-center py-2 bg-gradient-to-b from-[hsl(0_0%_16%)] to-transparent',
       'sticky top-0 z-10',
       className
     )}
@@ -81,7 +81,7 @@ const SelectScrollDownButton = React.forwardRef<
   <SelectPrimitive.ScrollDownButton
     ref={ref}
     className={cn(
-      'flex cursor-default items-center justify-center py-2 bg-gradient-to-t from-[#1c1c1e] to-transparent',
+      'flex cursor-default items-center justify-center py-2 bg-gradient-to-t from-[hsl(0_0%_16%)] to-transparent',
       'sticky bottom-0 z-10',
       className
     )}
@@ -102,11 +102,11 @@ const SelectContent = React.forwardRef<
       className={cn(
         // Base
         'relative z-[9999] overflow-hidden',
-        // Premium iOS-style styling - darker, more contrast
-        'rounded-2xl',
-        'border border-white/[0.12] bg-[#1c1c1e] backdrop-blur-xl',
+        // Opaque elevated panel — one dropdown language app-wide
+        'rounded-xl',
+        'border border-white/[0.14] bg-[hsl(0_0%_16%)]',
         'text-foreground',
-        'shadow-2xl shadow-black/70',
+        'shadow-[0_16px_40px_rgba(0,0,0,0.55)]',
         // Width constraints
         'min-w-[8rem] w-[var(--radix-select-trigger-width)]',
         // Max height for scrolling
@@ -127,7 +127,7 @@ const SelectContent = React.forwardRef<
       <SelectScrollUpButton />
       <SelectPrimitive.Viewport
         className={cn(
-          'p-2 overflow-y-auto',
+          'p-1 overflow-y-auto',
           'max-h-[min(65vh,400px)]',
           'touch-manipulation overscroll-contain',
           '[&]:[-webkit-overflow-scrolling:touch]'
@@ -148,7 +148,7 @@ const SelectLabel = React.forwardRef<
   <SelectPrimitive.Label
     ref={ref}
     className={cn(
-      'py-2.5 pl-4 pr-2 text-[11px] uppercase tracking-wider font-semibold text-elec-yellow/70',
+      'py-2.5 pl-4 pr-2 text-[11px] font-semibold text-white/60',
       className
     )}
     {...props}
@@ -165,7 +165,7 @@ const SelectItem = React.forwardRef<
     className={cn(
       // Base - allow multi-line content
       'relative flex w-full cursor-pointer select-none items-start',
-      'rounded-xl py-3.5 sm:py-3 pl-11 pr-4',
+      'rounded-lg py-3.5 sm:py-3 pl-11 pr-4',
       'text-[16px] sm:text-[15px] outline-none',
       // Touch targets - 52px minimum on mobile
       'min-h-[52px] sm:min-h-[48px]',
@@ -173,14 +173,14 @@ const SelectItem = React.forwardRef<
       'text-white',
       // Add subtle bottom border for separation
       'border-b border-white/[0.04] last:border-b-0',
-      // Hover/Focus states - subtle highlight
-      'focus:bg-white/[0.08]',
-      'data-[highlighted]:bg-white/[0.08]',
+      // Hover/keyboard-highlight — same state for both
+      'focus:bg-white/[0.10]',
+      'data-[highlighted]:bg-white/[0.10]',
       // Active state - press feedback like iOS
-      'active:bg-elec-yellow/15 active:scale-[0.99]',
-      // Selected state - yellow accent with glow
-      'data-[state=checked]:bg-elec-yellow/10',
-      'data-[state=checked]:border-l-2 data-[state=checked]:border-l-elec-yellow',
+      'active:bg-white/[0.08] active:scale-[0.99]',
+      // Selected state — solid volt
+      'data-[state=checked]:bg-elec-yellow data-[state=checked]:text-black',
+      'data-[state=checked]:font-semibold',
       // Disabled
       'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       // Touch & transitions
@@ -192,7 +192,7 @@ const SelectItem = React.forwardRef<
     {/* Check icon - positioned left */}
     <span className="absolute left-3 top-3.5 sm:top-3 flex h-6 w-6 items-center justify-center">
       <SelectPrimitive.ItemIndicator>
-        <Check className="h-5 w-5 text-elec-yellow" strokeWidth={2.5} />
+        <Check className="h-5 w-5 text-black" strokeWidth={2.5} />
       </SelectPrimitive.ItemIndicator>
     </span>
 

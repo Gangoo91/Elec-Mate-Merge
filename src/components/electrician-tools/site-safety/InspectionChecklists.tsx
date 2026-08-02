@@ -886,7 +886,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
   const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
-  const { data: jobs = [] } = useSparkProjects('active');
+  const { projects: jobs = [] } = useSparkProjects('active');
   const jobTitleFor = (id: string | null) =>
     id ? (jobs.find((j) => j.id === id)?.title ?? null) : null;
 
@@ -1581,7 +1581,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
       <Sheet open={showTemplates} onOpenChange={setShowTemplates}>
         <SheetContent
           side="bottom"
-          className="h-[80vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
         >
           <SheetShell
             eyebrow="New inspection"
@@ -1619,7 +1619,7 @@ export function InspectionChecklists({ onBack }: { onBack?: () => void }) {
       <Sheet open={!!viewingInspection} onOpenChange={() => setViewingInspection(null)}>
         <SheetContent
           side="bottom"
-          className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
         >
           {viewingInspection &&
             (() => {

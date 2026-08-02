@@ -376,7 +376,7 @@ export function ViewTenderSheet({
               </button>
             )}
 
-            <FormCard eyebrow="Tender details">
+            <FormCard bleed eyebrow="Tender details">
               {tender.description && (
                 <div>
                   <Eyebrow>Description</Eyebrow>
@@ -433,7 +433,7 @@ export function ViewTenderSheet({
             </FormCard>
 
             {(tender.contact_name || tender.contact_email || tender.contact_phone) && (
-              <FormCard eyebrow="Contact">
+              <FormCard bleed eyebrow="Contact">
                 <div className="flex items-center gap-2">
                   <User className="h-4 w-4 text-white" />
                   {tender.contact_name && (
@@ -463,7 +463,7 @@ export function ViewTenderSheet({
               </FormCard>
             )}
 
-            <FormCard eyebrow="Documents">
+            <FormCard bleed eyebrow="Documents">
               <div className="flex items-center justify-between mb-1">
                 <div className="flex items-center gap-2">
                   <FileIcon className="h-4 w-4 text-white" />
@@ -531,7 +531,7 @@ export function ViewTenderSheet({
             </FormCard>
 
             {tender.notes && (
-              <FormCard eyebrow="Notes">
+              <FormCard bleed eyebrow="Notes">
                 <p className="text-sm text-white whitespace-pre-wrap">{tender.notes}</p>
               </FormCard>
             )}
@@ -602,6 +602,7 @@ export function ViewTenderSheet({
               <Field label="Value (£)">
                 <Input
                   type="number"
+                            inputMode="decimal"
                   value={editForm.value}
                   onChange={(e) => setEditForm({ ...editForm, value: Number(e.target.value) })}
                   className={inputClass}

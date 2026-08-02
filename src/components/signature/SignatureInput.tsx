@@ -91,7 +91,7 @@ const SignatureInput = ({
             type="button"
             onClick={() => setActiveTab(tab.value)}
             className={cn(
-              'flex h-10 items-center justify-center rounded-lg text-[12.5px] font-semibold transition-all touch-manipulation active:scale-[0.98]',
+              'flex h-11 items-center justify-center rounded-lg text-[12.5px] font-semibold transition-all touch-manipulation active:scale-[0.98]',
               activeTab === tab.value
                 ? 'border border-elec-yellow bg-elec-yellow text-black'
                 : 'border border-white/[0.1] bg-white/[0.05] text-white'
@@ -138,7 +138,7 @@ const SignatureInput = ({
                 handleDigitalSignatureChange(null);
                 signaturePadRef.current?.clear();
               }}
-              className="w-full h-11 rounded-lg text-[11px] font-medium bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98] sm:h-8"
+              className="w-full h-11 rounded-lg text-[11px] font-medium bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98]"
             >
               Redraw
             </button>

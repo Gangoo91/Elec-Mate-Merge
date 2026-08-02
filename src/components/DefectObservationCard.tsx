@@ -1,26 +1,13 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { sanitizeTextInput } from '@/utils/inputSanitization';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Checkbox } from '@/components/ui/checkbox';
-import {
-  AlertTriangle,
-  CheckCircle,
-  XCircle,
-  FileText,
-  Trash2,
-  Minus,
-  Info,
-  Camera,
-  Check,
-  Sparkles,
-  BookOpen,
-} from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useInspectionPhotos } from '@/hooks/useInspectionPhotos';
 import { useEnhanceObservation } from '@/hooks/useEnhanceObservation';
+import { useHaptic } from '@/hooks/useHaptic';
 import InspectionPhotoUpload from './inspection/InspectionPhotoUpload';
 import InspectionPhotoGallery from './inspection/InspectionPhotoGallery';
 import AIEnhanceObservationSheet from './inspection/eicr/AIEnhanceObservationSheet';
@@ -59,61 +46,80 @@ interface DefectObservationCardProps {
   };
 }
 
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const textareaCn =
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none resize-none touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+// SOLID colour-coded selected states — never translucent washes.
 const defectCodeConfig = {
   C1: {
     label: 'C1 - DANGER',
-    description: 'Danger present — immediate action required',
-    bgClass: 'bg-red-500/20',
-    borderClass: 'border-red-500',
-    textClass: 'text-red-400',
-    cardBg: '',
-    icon: XCircle,
+    description: 'Danger present. Risk of injury. Immediate remedial action is necessary',
+    chipOn: 'bg-red-600 border-red-600 text-white font-semibold',
+    borderL: 'border-l-red-600',
   },
   C2: {
     label: 'C2 - POTENTIALLY DANGEROUS',
-    description: 'Potentially dangerous — urgent action required',
-    bgClass: 'bg-orange-500/20',
-    borderClass: 'border-orange-500',
-    textClass: 'text-orange-400',
-    cardBg: '',
-    icon: AlertTriangle,
+    description: 'Potentially dangerous — urgent remedial action is necessary',
+    chipOn: 'bg-orange-500 border-orange-500 text-black font-semibold',
+    borderL: 'border-l-orange-500',
   },
   C3: {
     label: 'C3 - IMPROVEMENT',
     description: 'Improvement recommended',
-    bgClass: 'bg-yellow-500/20',
-    borderClass: 'border-yellow-500/60',
-    textClass: 'text-yellow-400',
-    cardBg: '',
-    icon: CheckCircle,
+    chipOn: 'bg-elec-yellow border-elec-yellow text-black font-semibold',
+    borderL: 'border-l-elec-yellow',
   },
   FI: {
     label: 'FI - FURTHER INVESTIGATION',
-    description: 'Further investigation advised',
-    bgClass: 'bg-blue-500/20',
-    borderClass: 'border-blue-500/60',
-    textClass: 'text-blue-400',
-    cardBg: '',
-    icon: FileText,
+    description: 'Further investigation is advised',
+    chipOn: 'bg-blue-500 border-blue-500 text-white font-semibold',
+    borderL: 'border-l-blue-500',
   },
   'N/A': {
     label: 'N/A',
     description: 'Not applicable',
-    bgClass: 'bg-white/10',
-    borderClass: 'border-white/20',
-    textClass: 'text-white',
-    cardBg: '',
-    icon: Minus,
+    chipOn: 'bg-white border-white text-black font-semibold',
+    borderL: 'border-l-white/30',
   },
   LIM: {
     label: 'LIM - LIMITATION',
     description: 'Limitation noted',
-    bgClass: 'bg-purple-500/20',
-    borderClass: 'border-purple-500/60',
-    textClass: 'text-purple-400',
-    cardBg: '',
-    icon: Info,
+    chipOn: 'bg-purple-500 border-purple-500 text-white font-semibold',
+    borderL: 'border-l-purple-500',
   },
+};
+
+const chipOff = 'bg-white/[0.06] border border-white/[0.12] text-white font-medium';
+
+/**
+ * Textarea that grows to fit its content — an AI-written observation is
+ * several sentences and used to arrive trapped in a 70px scroll box, which
+ * hid the very thing the user asked for. Grows to a generous ceiling, then
+ * scrolls, so a card can never run away down the page.
+ */
+const AutoTextarea = ({
+  value,
+  maxHeight = 320,
+  className,
+  ...props
+}: React.ComponentProps<typeof Textarea> & { maxHeight?: number }) => {
+  const ref = useRef<HTMLTextAreaElement | null>(null);
+
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.height = 'auto';
+    const next = Math.min(el.scrollHeight, maxHeight);
+    el.style.height = `${next}px`;
+    el.style.overflowY = el.scrollHeight > maxHeight ? 'auto' : 'hidden';
+  }, [value, maxHeight]);
+
+  return <Textarea ref={ref} value={value} className={cn(className, 'resize-none')} {...props} />;
 };
 
 const DefectObservationCard = ({
@@ -126,6 +132,7 @@ const DefectObservationCard = ({
 }: DefectObservationCardProps) => {
   const [showAISheet, setShowAISheet] = useState(false);
   const { enhance, retry, isEnhancing, suggestions, progressStep } = useEnhanceObservation();
+  const haptic = useHaptic();
 
   const { photos, isUploading, isScanning, uploadPhoto, deletePhoto, scanPhotoWithAI } =
     useInspectionPhotos({
@@ -142,7 +149,9 @@ const DefectObservationCard = ({
     });
 
   const config = defectCodeConfig[defect.defectCode];
-  const IconComponent = config.icon;
+
+  // The AI needs something to work from — the gate stays, but the button says so.
+  const canUseAI = defect.description.trim().length >= 5;
 
   // Split photos into the defect (before) evidence and rectification (after)
   // evidence. After-photos are tagged with a sentinel prefix on the description
@@ -162,40 +171,54 @@ const DefectObservationCard = ({
   };
 
   return (
-    <div className={cn('rounded-xl overflow-hidden border-l-[3px]', config.borderClass, 'border border-white/[0.06]', config.cardBg)}>
-      {/* Header — item number + current code badge + delete */}
-      <div className="flex items-center justify-between px-3.5 py-2.5 bg-white/[0.02] border-b border-white/[0.04]">
-        <div className="flex items-center gap-2.5">
+    <div
+      className={cn(
+        'overflow-hidden rounded-xl border border-white/[0.1] border-l-[3px] bg-white/[0.05]',
+        config.borderL
+      )}
+    >
+      {/* Header — item number + current code chip + remove */}
+      <div className="flex items-center justify-between gap-2 border-b border-white/[0.08] px-3.5 py-2">
+        <div className="flex min-w-0 items-center gap-2.5">
           <span className="text-sm font-bold text-white">#{index + 1}</span>
-          <span className={cn('text-[11px] font-bold px-2.5 py-1 rounded-md border', config.bgClass, config.borderClass, config.textClass)}>
+          <span
+            className={cn('rounded-md border px-2.5 py-1 text-[11px] font-bold', config.chipOn)}
+          >
             {defect.defectCode}
           </span>
-          <span className="text-[10px] text-white/30 hidden sm:inline">{config.description}</span>
+          <span className="hidden truncate text-[11px] text-white/80 sm:inline">
+            {config.description}
+          </span>
         </div>
         <button
-          onClick={() => onRemove(defect.id)}
-          className="w-8 h-8 rounded-lg flex items-center justify-center text-red-400/50 hover:text-red-400 hover:bg-red-500/10 touch-manipulation active:scale-[0.95] transition-colors"
+          type="button"
+          onClick={() => {
+            haptic.warning();
+            onRemove(defect.id);
+          }}
+          className="h-11 shrink-0 px-2 text-[13px] font-medium text-red-400 touch-manipulation active:scale-[0.98]"
         >
-          <Trash2 className="h-3.5 w-3.5" />
+          Remove
         </button>
       </div>
 
-      {/* Classification selector — full-width row of tappable buttons */}
-      <div className="px-3.5 py-2.5 border-b border-white/[0.04] bg-white/[0.01]">
-        <div className="grid grid-cols-6 gap-1.5">
+      {/* Classification selector — full-width grid on phones, natural-width
+          chips on larger screens (six stretched bars read badly at desktop). */}
+      <div className="border-b border-white/[0.08] px-3.5 py-2.5">
+        <div className="grid grid-cols-6 gap-1.5 sm:flex sm:flex-wrap">
           {(Object.keys(defectCodeConfig) as DefectObservation['defectCode'][]).map((code) => {
-            const codeConfig = defectCodeConfig[code];
             const isActive = defect.defectCode === code;
             return (
               <button
                 key={code}
                 type="button"
-                onClick={() => handleCodeChange(code)}
+                onClick={() => {
+                  haptic.light();
+                  handleCodeChange(code);
+                }}
                 className={cn(
-                  'h-9 rounded-lg text-xs font-bold transition-all touch-manipulation active:scale-[0.96]',
-                  isActive
-                    ? cn(codeConfig.bgClass, codeConfig.borderClass, codeConfig.textClass, 'border')
-                    : 'bg-white/[0.03] border border-white/[0.06] text-white/30'
+                  'h-11 rounded-xl border text-xs transition-all touch-manipulation active:scale-[0.96] sm:w-16',
+                  isActive ? defectCodeConfig[code].chipOn : chipOff
                 )}
               >
                 {code}
@@ -205,258 +228,262 @@ const DefectObservationCard = ({
         </div>
       </div>
 
-      {/* Content */}
-      <div className="px-3.5 py-3 space-y-3">
-        {/* Item / Location */}
-        <div>
-          <Label className="text-[10px] text-white/50 uppercase tracking-wider mb-1 block">Item / Location</Label>
-          <Input
-            placeholder="e.g., Consumer unit, Kitchen socket"
-            value={defect.item}
-            onChange={(e) => onUpdate(defect.id, 'item', sanitizeTextInput(e.target.value))}
-            className="h-11 text-sm bg-white/[0.04] border-white/[0.06] focus:border-yellow-500 focus:ring-yellow-500 placeholder:text-white/25 touch-manipulation"
-          />
-        </div>
-
-        {/* Observation description */}
-        <div>
-          <Label className="text-[10px] text-white/50 uppercase tracking-wider mb-1 block">
-            {defect.defectCode === 'N/A'
-              ? 'Reason for Not Applicable'
-              : defect.defectCode === 'LIM'
-                ? 'Limitation Description'
-                : 'Observation'}
-          </Label>
-          <Textarea
-            placeholder={
-              defect.defectCode === 'N/A'
-                ? 'Explain why this item is not applicable...'
-                : defect.defectCode === 'LIM'
-                  ? 'Describe the limitation encountered...'
-                  : 'Include the relevant schedule reference(s), as appropriate...'
-            }
-            value={defect.description}
-            onChange={(e) => onUpdate(defect.id, 'description', sanitizeTextInput(e.target.value))}
-            rows={2}
-            className="text-base bg-white/[0.04] border-white/[0.06] focus:border-yellow-500 focus:ring-yellow-500
-                       placeholder:text-white/25 resize-none min-h-[70px] touch-manipulation"
-          />
-        </div>
-
-        {/* Recommendation */}
-        {defect.defectCode !== 'N/A' && (
+      {/* Content — single column on phones; on desktop the written record
+          (left) sits beside the evidence/tools column (right) so a card is
+          one screen, not a scroll. */}
+      <div className="px-3.5 py-4 lg:grid lg:grid-cols-2 lg:gap-x-6">
+        <div className="space-y-4 lg:min-w-0">
+          {/* Item / location */}
           <div>
-            <Label className="text-[10px] text-white/50 uppercase tracking-wider mb-1 block">
-              {defect.defectCode === 'LIM' ? 'Further Action Required' : 'Recommendation'}
-            </Label>
-            <Textarea
-              placeholder={
-                defect.defectCode === 'LIM'
-                  ? 'What action is needed to overcome this limitation...'
-                  : 'Recommended remedial action...'
-              }
-              value={defect.recommendation}
-              onChange={(e) => onUpdate(defect.id, 'recommendation', sanitizeTextInput(e.target.value))}
-              rows={2}
-              className="text-base bg-white/[0.04] border-white/[0.06] focus:border-yellow-500 focus:ring-yellow-500
-                         placeholder:text-white/25 resize-none min-h-[60px] touch-manipulation"
+            <label className={labelCn}>Item / location</label>
+            <Input
+              placeholder="e.g., Consumer unit, Kitchen socket"
+              value={defect.item}
+              onChange={(e) => onUpdate(defect.id, 'item', sanitizeTextInput(e.target.value))}
+              className={inputCn}
             />
           </div>
-        )}
 
-        {/* BS 7671 References (read-only, populated by AI). Rendered as a clean
-            list — reg number as a chip, the clause text as readable prose — so it
-            never reads as a wall of monospace text (ELE-1188). */}
-        {defect.regulation && (
-          <div className="rounded-xl p-3.5 border border-white/[0.08] bg-white/[0.03]">
-            <div className="flex items-center gap-1.5 mb-2.5">
-              <BookOpen className="h-3.5 w-3.5 text-elec-yellow" />
-              <span className="text-xs font-semibold text-white">BS 7671 references</span>
-            </div>
-            <div className="space-y-2">
-              {defect.regulation
-                .split(';')
-                .map((ref) => ref.trim())
-                .filter(Boolean)
-                .map((ref, i) => {
-                  const idx = ref.indexOf(':');
-                  const num = idx > -1 ? ref.slice(0, idx).trim() : ref;
-                  const title = idx > -1 ? ref.slice(idx + 1).trim() : '';
-                  // Only treat the prefix as a reg-number chip when it looks like
-                  // one — otherwise (messy AI prose) render it all as readable text.
-                  const isRegNumber = idx > -1 && num.length <= 22;
-                  return (
-                    <div key={i} className="flex gap-2">
-                      {isRegNumber ? (
-                        <>
-                          <span className="shrink-0 h-fit font-mono text-[11px] text-elec-yellow bg-elec-yellow/10 border border-elec-yellow/20 rounded px-1.5 py-0.5">
-                            {num}
-                          </span>
-                          {title && (
-                            <span className="text-xs text-white/70 leading-relaxed">{title}</span>
-                          )}
-                        </>
-                      ) : (
-                        <span className="text-xs text-white/70 leading-relaxed">{ref}</span>
-                      )}
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
-        )}
-
-        {/* AI Assist — the star tool: turns a few words into a full BS 7671
-            observation, recommendation and regulation references. Always shown
-            (when codeable) so inspectors know it's there. */}
-        {defect.defectCode !== 'N/A' && (
-          <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3.5">
-            <Button
-              type="button"
-              onClick={async () => {
-                setShowAISheet(true);
-                await enhance({
-                  description: defect.description,
-                  location: defect.item,
-                  currentCode: defect.defectCode,
-                });
-              }}
-              disabled={isEnhancing || defect.description.trim().length < 5}
-              variant="ghost"
-              className="h-12 w-full gap-2 bg-elec-yellow text-black font-semibold
-                         hover:bg-elec-yellow/90 hover:text-black touch-manipulation active:scale-[0.99]
-                         disabled:opacity-100 disabled:bg-white/[0.04] disabled:text-white/40"
-            >
-              <Sparkles className="h-4 w-4" />
-              {isEnhancing ? 'AI is writing…' : 'Write this observation with AI'}
-            </Button>
-            <p className="text-xs text-white/45 mt-2.5 text-center leading-relaxed">
-              {defect.description.trim().length < 5
-                ? 'Jot a few words in Observation above (e.g. “gas bonding missing”) — AI writes the full BS 7671 wording, recommendation &amp; reg refs.'
-                : 'AI drafts the full observation, recommendation and BS 7671 references — review and accept.'}
-            </p>
-          </div>
-        )}
-
-        {/* Photo Evidence */}
-        <div className="pt-3 border-t border-white/5">
-          <div className="flex items-center justify-between mb-3">
-            <Label className="text-xs text-white flex items-center gap-1.5">
-              <Camera className="h-3.5 w-3.5" />
-              Photo Evidence
-            </Label>
-            <span className="text-xs text-white">
-              {beforePhotos.length} photo{beforePhotos.length !== 1 ? 's' : ''}
-            </span>
+          {/* Observation description */}
+          <div>
+            <label className={labelCn}>
+              {defect.defectCode === 'N/A'
+                ? 'Reason for not applicable'
+                : defect.defectCode === 'LIM'
+                  ? 'Limitation description'
+                  : 'Observation'}
+            </label>
+            <AutoTextarea
+              placeholder={
+                defect.defectCode === 'N/A'
+                  ? 'Explain why this item is not applicable…'
+                  : defect.defectCode === 'LIM'
+                    ? 'Describe the limitation encountered…'
+                    : 'Include the relevant schedule reference(s), as appropriate…'
+              }
+              value={defect.description}
+              onChange={(e) =>
+                onUpdate(defect.id, 'description', sanitizeTextInput(e.target.value))
+              }
+              className={cn(textareaCn, 'min-h-[70px]')}
+            />
           </div>
 
-          <InspectionPhotoUpload
-            onPhotoCapture={async (file) => {
-              await uploadPhoto(file, defect.defectCode, defect.description);
-            }}
-            isUploading={isUploading}
-          />
-
-          {beforePhotos.length > 0 && (
-            <div className="mt-3">
-              <InspectionPhotoGallery
-                photos={beforePhotos}
-                onDeletePhoto={deletePhoto}
-                onScanPhoto={scanPhotoWithAI}
-                isScanning={isScanning}
-                inspectorContext={{
-                  classification: defect.defectCode,
-                  itemLocation: defect.item || 'Not specified',
-                  description: defect.description || 'No description provided',
-                  recommendation: defect.recommendation,
-                }}
-                certificateContext={certificateContext}
+          {/* Recommendation */}
+          {defect.defectCode !== 'N/A' && (
+            <div>
+              <label className={labelCn}>
+                {defect.defectCode === 'LIM' ? 'Further action required' : 'Recommendation'}
+              </label>
+              <AutoTextarea
+                placeholder={
+                  defect.defectCode === 'LIM'
+                    ? 'What action is needed to overcome this limitation…'
+                    : 'Recommended remedial action…'
+                }
+                value={defect.recommendation}
+                onChange={(e) =>
+                  onUpdate(defect.id, 'recommendation', sanitizeTextInput(e.target.value))
+                }
+                className={cn(textareaCn, 'min-h-[60px]')}
               />
             </div>
           )}
         </div>
 
-        {/* Rectified Checkbox */}
-        {defect.defectCode !== 'N/A' && defect.defectCode !== 'LIM' && (
-          <div className="pt-3 border-t border-white/5">
-            <button
-              type="button"
-              onClick={() => onUpdate(defect.id, 'rectified', !defect.rectified)}
-              className={cn(
-                'flex items-center gap-3 w-full p-3 rounded-xl transition-all touch-manipulation',
-                defect.rectified
-                  ? 'bg-green-500/15 border border-green-500/30'
-                  : 'bg-white/5 border border-white/10 hover:bg-white/10'
-              )}
-            >
-              <div
-                className={cn(
-                  'w-5 h-5 rounded flex items-center justify-center transition-colors',
-                  defect.rectified
-                    ? 'bg-green-500 text-white'
-                    : 'bg-white/10 border border-white/20'
-                )}
-              >
-                {defect.rectified && <Check className="h-3.5 w-3.5" />}
-              </div>
-              <span
-                className={cn(
-                  'text-sm font-medium',
-                  defect.rectified ? 'text-green-400' : 'text-white'
-                )}
-              >
-                {defect.rectified ? 'Rectified during inspection' : 'Mark as rectified'}
-              </span>
-            </button>
-
-            {/* Rectification (after) evidence — only once marked rectified */}
-            {defect.rectified && (
-              <div className="mt-3 rounded-xl border border-green-500/25 bg-green-500/[0.06] p-3">
-                <div className="flex items-center justify-between mb-3">
-                  <Label className="text-xs text-green-300 flex items-center gap-1.5">
-                    <Camera className="h-3.5 w-3.5" />
-                    Rectification evidence (after)
-                  </Label>
-                  <span className="text-xs text-green-300/80">
-                    {rectifiedPhotos.length} photo{rectifiedPhotos.length !== 1 ? 's' : ''}
-                  </span>
-                </div>
-
-                <InspectionPhotoUpload
-                  onPhotoCapture={async (file) => {
-                    await uploadPhoto(
-                      file,
-                      defect.defectCode,
-                      `${RECTIFIED_TAG} ${defect.description}`.trim()
+        {/* Evidence + tools column. One rhythm: every sub-block is a heading and
+          its content, spaced by space-y-4 — no stacked dividers, no dead gaps. */}
+        <div className="mt-4 space-y-4 border-t border-white/[0.08] pt-4 lg:mt-0 lg:min-w-0 lg:border-t-0 lg:pt-0">
+          {/* BS 7671 references (read-only, populated by AI). Rendered as a clean
+            list — reg number as a chip, the clause text as readable prose — so it
+            never reads as a wall of monospace text (ELE-1188). */}
+          {defect.regulation && (
+            <div>
+              <span className={labelCn}>BS 7671 references</span>
+              <div className="space-y-2 rounded-xl bg-white/[0.05] p-3.5">
+                {defect.regulation
+                  .split(';')
+                  .map((ref) => ref.trim())
+                  .filter(Boolean)
+                  .map((ref, i) => {
+                    const idx = ref.indexOf(':');
+                    const num = idx > -1 ? ref.slice(0, idx).trim() : ref;
+                    const title = idx > -1 ? ref.slice(idx + 1).trim() : '';
+                    // Only treat the prefix as a reg-number chip when it looks like
+                    // one — otherwise (messy AI prose) render it all as readable text.
+                    const isRegNumber = idx > -1 && num.length <= 22;
+                    return (
+                      <div key={i} className="flex gap-2">
+                        {isRegNumber ? (
+                          <>
+                            <span className="h-fit shrink-0 rounded border border-elec-yellow/30 px-1.5 py-0.5 font-mono text-[11px] text-elec-yellow">
+                              {num}
+                            </span>
+                            {title && (
+                              <span className="text-xs leading-relaxed text-white/80">{title}</span>
+                            )}
+                          </>
+                        ) : (
+                          <span className="text-xs leading-relaxed text-white/80">{ref}</span>
+                        )}
+                      </div>
                     );
-                  }}
-                  isUploading={isUploading}
-                />
+                  })}
+              </div>
+            </div>
+          )}
 
-                {rectifiedPhotos.length > 0 && (
-                  <div className="mt-3">
-                    <InspectionPhotoGallery
-                      photos={rectifiedPhotos}
-                      onDeletePhoto={deletePhoto}
-                      onScanPhoto={scanPhotoWithAI}
-                      isScanning={isScanning}
-                      inspectorContext={{
-                        classification: defect.defectCode,
-                        itemLocation: defect.item || 'Not specified',
-                        description: defect.description || 'No description provided',
-                        recommendation: defect.recommendation,
-                      }}
-                      certificateContext={certificateContext}
-                    />
-                  </div>
+          {/* AI assist — the star tool: turns a few words into a full BS 7671
+            observation, recommendation and regulation references. Always shown
+            (when codeable) so inspectors know it's there. The disabled state is
+            a deliberate neutral button that says what it needs — never a washed
+            out ghost of the live one. */}
+          {defect.defectCode !== 'N/A' && (
+            <div>
+              <span className={labelCn}>AI assistant</span>
+              <Button
+                type="button"
+                onClick={async () => {
+                  haptic.light();
+                  setShowAISheet(true);
+                  await enhance({
+                    description: defect.description,
+                    location: defect.item,
+                    currentCode: defect.defectCode,
+                  });
+                }}
+                disabled={isEnhancing || !canUseAI}
+                variant="ghost"
+                className={cn(
+                  'h-12 w-full rounded-xl text-sm font-semibold transition-all touch-manipulation active:scale-[0.99]',
+                  isEnhancing
+                    ? 'bg-elec-yellow text-black disabled:bg-elec-yellow disabled:text-black disabled:opacity-100'
+                    : canUseAI
+                      ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90 hover:text-black'
+                      : 'border border-white/[0.12] bg-white/[0.04] text-white/85 hover:bg-white/[0.04] hover:text-white/85 disabled:opacity-100'
                 )}
+              >
+                {isEnhancing ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin text-black" />
+                    AI is writing…
+                  </>
+                ) : canUseAI ? (
+                  'Write with AI'
+                ) : (
+                  'Add a few words to use AI'
+                )}
+              </Button>
+              <p className="mt-2 text-[12px] leading-relaxed text-white/85">
+                Jot a few words above — AI writes the full observation, recommendation and BS 7671
+                references from the regulations database.
+              </p>
+            </div>
+          )}
+
+          {/* Photo evidence */}
+          <div>
+            <div className="mb-2 flex items-center justify-between gap-2">
+              <span className={cn(labelCn, 'mb-0')}>Photo evidence</span>
+              <span className="text-[12px] text-white/85">
+                {beforePhotos.length} photo{beforePhotos.length !== 1 ? 's' : ''}
+              </span>
+            </div>
+
+            <InspectionPhotoUpload
+              onPhotoCapture={async (file) => {
+                await uploadPhoto(file, defect.defectCode, defect.description);
+              }}
+              isUploading={isUploading}
+            />
+
+            {beforePhotos.length > 0 && (
+              <div className="mt-3">
+                <InspectionPhotoGallery
+                  photos={beforePhotos}
+                  onDeletePhoto={deletePhoto}
+                  onScanPhoto={scanPhotoWithAI}
+                  isScanning={isScanning}
+                  inspectorContext={{
+                    classification: defect.defectCode,
+                    itemLocation: defect.item || 'Not specified',
+                    description: defect.description || 'No description provided',
+                    recommendation: defect.recommendation,
+                  }}
+                  certificateContext={certificateContext}
+                />
               </div>
             )}
           </div>
-        )}
+
+          {/* Rectified toggle — the section-closing action for this column */}
+          {defect.defectCode !== 'N/A' && defect.defectCode !== 'LIM' && (
+            <div>
+              <span className={labelCn}>Rectification</span>
+              <button
+                type="button"
+                onClick={() => {
+                  haptic.light();
+                  onUpdate(defect.id, 'rectified', !defect.rectified);
+                }}
+                className={cn(
+                  'h-11 w-full rounded-xl border text-sm transition-all touch-manipulation active:scale-[0.99]',
+                  defect.rectified
+                    ? 'border-green-500 bg-green-500 font-semibold text-black'
+                    : chipOff
+                )}
+              >
+                {defect.rectified ? 'Rectified during inspection' : 'Mark as rectified'}
+              </button>
+
+              {/* Rectification (after) evidence — only once marked rectified */}
+              {defect.rectified && (
+                <div className="mt-3 rounded-xl border border-green-500/30 bg-white/[0.05] p-3.5">
+                  <div className="mb-2 flex items-center justify-between gap-2">
+                    <span className="text-[12px] font-medium text-white">
+                      Rectification evidence (after)
+                    </span>
+                    <span className="text-[12px] text-white/85">
+                      {rectifiedPhotos.length} photo{rectifiedPhotos.length !== 1 ? 's' : ''}
+                    </span>
+                  </div>
+
+                  <InspectionPhotoUpload
+                    onPhotoCapture={async (file) => {
+                      await uploadPhoto(
+                        file,
+                        defect.defectCode,
+                        `${RECTIFIED_TAG} ${defect.description}`.trim()
+                      );
+                    }}
+                    isUploading={isUploading}
+                  />
+
+                  {rectifiedPhotos.length > 0 && (
+                    <div className="mt-3">
+                      <InspectionPhotoGallery
+                        photos={rectifiedPhotos}
+                        onDeletePhoto={deletePhoto}
+                        onScanPhoto={scanPhotoWithAI}
+                        isScanning={isScanning}
+                        inspectorContext={{
+                          classification: defect.defectCode,
+                          itemLocation: defect.item || 'Not specified',
+                          description: defect.description || 'No description provided',
+                          recommendation: defect.recommendation,
+                        }}
+                        certificateContext={certificateContext}
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* Issue Danger Notice — C1 only */}
+      {/* Issue danger notice — C1 only */}
       {defect.defectCode === 'C1' && certificateContext && (
         <IssueDangerNoticeButton
           defect={defect}
@@ -508,7 +535,7 @@ const DefectObservationCard = ({
   );
 };
 
-/** Danger Notice button for C1 observations — navigates with pre-fill data */
+/** Danger notice button for C1 observations — navigates with pre-fill data */
 function IssueDangerNoticeButton({
   defect,
   certificateContext,
@@ -521,7 +548,7 @@ function IssueDangerNoticeButton({
   const navigate = useNavigate();
 
   return (
-    <div className="pt-3 border-t border-white/5">
+    <div className="border-t border-white/[0.08] px-3.5 pb-4 pt-3.5">
       <button
         type="button"
         onClick={() => {
@@ -549,12 +576,11 @@ function IssueDangerNoticeButton({
             },
           });
         }}
-        className="flex items-center gap-3 w-full p-3 rounded-xl bg-red-500/10 border border-red-500/25 hover:bg-red-500/15 transition-all touch-manipulation active:scale-[0.98]"
+        className="h-12 w-full rounded-xl bg-red-600 text-sm font-semibold text-white transition-all touch-manipulation active:scale-[0.98]"
       >
-        <div className="w-2 h-2 rounded-full bg-red-400 flex-shrink-0" />
-        <span className="text-sm font-medium text-red-400">Issue Danger Notice</span>
-        <span className="text-[10px] text-white ml-auto">Pre-filled from this observation</span>
+        Issue danger notice
       </button>
+      <p className="mt-2 text-center text-xs text-white/80">Pre-filled from this observation</p>
     </div>
   );
 }

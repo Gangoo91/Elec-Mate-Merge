@@ -65,7 +65,7 @@ export function ReceiveDeliverySheet({ open, onOpenChange, order, onDone }: Rece
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl overflow-hidden">
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
         {order && (
           <SheetShell
             eyebrow="Goods in"

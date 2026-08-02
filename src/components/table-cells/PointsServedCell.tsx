@@ -14,7 +14,7 @@ const PointsServedCellComponent: React.FC<PointsServedCellProps> = ({ result, on
       <ValidatedInput
         value={result.pointsServed}
         onChange={(value) => onUpdate(result.id, 'pointsServed', value)}
-        className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
+        className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow focus:shadow-none hover:bg-white/[0.04] focus:bg-transparent"
         placeholder="—"
       />
     </TableCell>

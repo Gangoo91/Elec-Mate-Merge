@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Calculator, CheckCircle2, AlertTriangle, ArrowDownToLine } from 'lucide-react';
+import { CheckCircle2, AlertTriangle } from 'lucide-react';
 import { analyseR1R2, R1R2Calculation } from '@/utils/r1r2Calculator';
 import { TestResult } from '@/types/testResult';
+import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
 
 interface R1R2CalculatorProps {
@@ -11,6 +11,11 @@ interface R1R2CalculatorProps {
   onUpdate?: (field: keyof TestResult, value: string) => void;
   className?: string;
 }
+
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-center text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none [color-scheme:dark] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
 
 /**
  * R1+R2 Calculator — expected (R1 + R2) from conductor CSA, length and the test
@@ -21,6 +26,7 @@ interface R1R2CalculatorProps {
  * See src/utils/r1r2Calculator.ts.
  */
 const R1R2Calculator: React.FC<R1R2CalculatorProps> = ({ result, onUpdate, className }) => {
+  const haptic = useHaptic();
   const [cableLength, setCableLength] = useState<string>('');
   const [ambientTemp, setAmbientTemp] = useState<string>('20');
   const [calculation, setCalculation] = useState<R1R2Calculation | null>(null);
@@ -39,32 +45,30 @@ const R1R2Calculator: React.FC<R1R2CalculatorProps> = ({ result, onUpdate, class
 
   const expected = calculation?.expectedR1R2;
   const hasResult = !!calculation && !!expected;
+  const hasSizes = !!result.liveSize;
 
   return (
     <div
       className={cn(
-        'w-full rounded-2xl border border-white/10 bg-[hsl(0_0%_9%)] shadow-2xl overflow-hidden',
+        'w-full overflow-hidden rounded-2xl border border-white/[0.14] bg-[hsl(0_0%_9%)] shadow-2xl',
         className
       )}
     >
-      {/* Header */}
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06]">
-        <div className="h-7 w-7 rounded-lg bg-elec-yellow/15 flex items-center justify-center">
-          <Calculator className="h-4 w-4 text-elec-yellow" />
-        </div>
-        <div className="min-w-0">
-          <div className="text-sm font-semibold text-white leading-tight">R1+R2 Calculator</div>
-          <div className="text-[10.5px] text-white/45 leading-tight">
-            Live {result.liveSize || '—'} · CPC {result.cpcSize || result.liveSize || '—'} mm²
-          </div>
+      {/* Header — typography only */}
+      <div className="border-b border-white/[0.08] px-4 py-3">
+        <div className="text-sm font-semibold tracking-tight text-white">R1+R2 calculator</div>
+        <div className="text-[11px] leading-tight text-white/85 tabular-nums">
+          {hasSizes
+            ? `Live ${result.liveSize} · CPC ${result.cpcSize || result.liveSize} mm²`
+            : 'Set the live and CPC sizes on the circuit first'}
         </div>
       </div>
 
-      <div className="p-4 space-y-3.5">
+      <div className="space-y-3.5 p-4">
         {/* Inputs */}
-        <div className="grid grid-cols-2 gap-2.5">
-          <div className="space-y-1">
-            <label className="text-[11px] font-medium text-white/60">Cable length (m)</label>
+        <div className="grid grid-cols-2 gap-x-4">
+          <div>
+            <label className={labelCn}>Cable length (m)</label>
             <Input
               type="number"
               inputMode="decimal"
@@ -74,11 +78,11 @@ const R1R2Calculator: React.FC<R1R2CalculatorProps> = ({ result, onUpdate, class
               step="0.1"
               min="0"
               autoFocus
-              className="h-10 text-base text-center touch-manipulation bg-white/[0.04] border-white/10 focus:border-elec-yellow focus:ring-elec-yellow/30"
+              className={inputCn}
             />
           </div>
-          <div className="space-y-1">
-            <label className="text-[11px] font-medium text-white/60">Test ambient (°C)</label>
+          <div>
+            <label className={labelCn}>Test ambient (°C)</label>
             <Input
               type="number"
               inputMode="decimal"
@@ -87,17 +91,15 @@ const R1R2Calculator: React.FC<R1R2CalculatorProps> = ({ result, onUpdate, class
               step="1"
               min="0"
               max="40"
-              className="h-10 text-base text-center touch-manipulation bg-white/[0.04] border-white/10 focus:border-elec-yellow focus:ring-elec-yellow/30"
+              className={inputCn}
             />
           </div>
         </div>
 
         {/* Expected result — the headline number */}
-        <div className="rounded-xl bg-elec-yellow/[0.08] border border-elec-yellow/20 px-4 py-3 text-center">
-          <div className="text-[10px] uppercase tracking-[0.14em] text-elec-yellow/70 font-semibold">
-            Expected R1+R2
-          </div>
-          <div className="mt-0.5 text-3xl font-bold text-elec-yellow tabular-nums">
+        <div className="rounded-xl border border-white/[0.12] bg-white/[0.06] px-4 py-3 text-center">
+          <div className="text-[12px] font-medium text-white">Expected R1+R2</div>
+          <div className="mt-0.5 text-3xl font-bold tabular-nums text-elec-yellow">
             {hasResult ? `${expected!.toFixed(2)} Ω` : '—'}
           </div>
         </div>
@@ -108,20 +110,20 @@ const R1R2Calculator: React.FC<R1R2CalculatorProps> = ({ result, onUpdate, class
             className={cn(
               'flex items-center justify-between rounded-xl border px-3.5 py-2.5',
               calculation!.isWithinTolerance
-                ? 'bg-green-500/[0.08] border-green-500/25'
-                : 'bg-red-500/[0.08] border-red-500/25'
+                ? 'border-green-500/30 bg-green-500/10'
+                : 'border-red-500/30 bg-red-500/10'
             )}
           >
-            <div className="text-[12px] text-white/70">
+            <div className="text-[12px] text-white">
               Measured{' '}
-              <span className="font-semibold text-white tabular-nums">
+              <span className="font-semibold tabular-nums text-white">
                 {calculation!.actualR1R2} Ω
               </span>
             </div>
             <div
               className={cn(
                 'flex items-center gap-1.5 text-[12px] font-semibold',
-                calculation!.isWithinTolerance ? 'text-green-400' : 'text-red-400'
+                calculation!.isWithinTolerance ? 'text-green-300' : 'text-red-300'
               )}
             >
               {calculation!.isWithinTolerance ? (
@@ -137,27 +139,39 @@ const R1R2Calculator: React.FC<R1R2CalculatorProps> = ({ result, onUpdate, class
 
         {/* Warnings (only the first, kept terse for the popover) */}
         {hasResult && calculation!.warnings.length > 0 && (
-          <div className="flex items-start gap-2 rounded-lg bg-amber-500/[0.06] border border-amber-500/20 px-3 py-2">
-            <AlertTriangle className="h-3.5 w-3.5 text-amber-400 mt-0.5 shrink-0" />
-            <p className="text-[11.5px] text-amber-200/90 leading-snug">{calculation!.warnings[0]}</p>
+          <div className="flex items-start gap-2 rounded-xl border border-orange-500/30 bg-orange-500/10 px-3 py-2">
+            <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-orange-300" />
+            <p className="text-[11.5px] leading-snug text-orange-300">
+              {calculation!.warnings[0]}
+            </p>
           </div>
         )}
 
-        {/* Apply */}
+        {/* Apply — solid volt only when there's a value to use; neutral
+            otherwise (a washed-out volt bar reads brown). */}
         {onUpdate && (
-          <Button
-            onClick={() => expected != null && onUpdate('r1r2', expected.toFixed(2))}
+          <button
+            type="button"
+            onClick={() => {
+              if (expected == null) return;
+              haptic.success();
+              onUpdate('r1r2', expected.toFixed(2));
+            }}
             disabled={!hasResult}
-            className="w-full h-11 rounded-xl bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation disabled:opacity-40"
+            className={cn(
+              'h-12 w-full rounded-xl text-sm font-semibold touch-manipulation transition-transform active:scale-[0.98] outline-none focus:outline-none focus-visible:outline-none',
+              hasResult
+                ? 'bg-elec-yellow text-black'
+                : 'cursor-default border border-white/[0.12] bg-white/[0.04] text-white/85'
+            )}
           >
-            <ArrowDownToLine className="h-4 w-4 mr-1.5" />
             {hasResult ? `Use ${expected!.toFixed(2)} Ω` : 'Enter a length'}
-          </Button>
+          </button>
         )}
 
-        <p className="text-[10px] text-white/35 leading-snug text-center">
-          BS 7671 Table 9A resistances at 20°C, corrected to test ambient (GN3). R1+R2
-          is recorded at ambient — not operating temperature.
+        <p className="text-center text-[10.5px] leading-snug text-white/80">
+          BS 7671 Table 9A resistances at 20°C, corrected to test ambient (GN3). R1+R2 is
+          recorded at ambient — not operating temperature.
         </p>
       </div>
     </div>

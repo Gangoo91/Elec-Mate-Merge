@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
+import { useHaptic } from '@/hooks/useHaptic';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { SPD_MAKES, SPD_RATED_KA } from '@/constants/spdData';
 import MWSmartDefaults from './MWSmartDefaults';
@@ -62,7 +63,7 @@ const FormField = ({
       {required && ' *'}
     </Label>
     {children}
-    {hint && <span className="text-[11px] text-white/85 block mt-1">{hint}</span>}
+    {hint && <span className="text-[11px] text-white block mt-1">{hint}</span>}
   </div>
 );
 
@@ -90,6 +91,8 @@ const PRESET_PROTECTION_RESETS: Record<string, string | boolean> = {
 };
 
 const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
+  const haptic = useHaptic();
+
   // ============================================================================
   // Smart defaults
   // ============================================================================
@@ -249,7 +252,10 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
   }) => (
     <button
       type="button"
-      onClick={onClick}
+      onClick={() => {
+        haptic.light();
+        onClick();
+      }}
       disabled={disabled}
       aria-disabled={disabled || undefined}
       className={cn(
@@ -275,7 +281,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
   // ============================================================================
 
   return (
-    <div className="px-4 sm:px-0 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+    <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
       {/* Smart Defaults Quick Fill */}
       <div className="lg:col-span-2">
         <MWSmartDefaults onApply={handleSmartDefaultApply} />
@@ -404,7 +410,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
         </div>
         {formData.overcurrentDeviceBsEn &&
           filteredDeviceTypes.length < PROTECTIVE_DEVICE_TYPES.length && (
-            <span className="text-[11px] text-white/85 block">
+            <span className="text-[11px] text-white block">
               Filtered for {formData.overcurrentDeviceBsEn as string}
             </span>
           )}
@@ -432,7 +438,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
           </FormField>
         </div>
         {formData.protectiveDeviceType && filteredRatings.length < DEVICE_RATINGS.length && (
-          <span className="text-[11px] text-white/85 block">
+          <span className="text-[11px] text-white block">
             BS 7671 ratings for{' '}
             {PROTECTIVE_DEVICE_TYPES.find((d) => d.value === formData.protectiveDeviceType)
               ?.label || (formData.protectiveDeviceType as string)}
@@ -452,6 +458,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                 key={item.id}
                 type="button"
                 onClick={() => {
+                  haptic.light();
                   const next = !formData[item.id];
                   if (item.id === 'protectionRcd' || item.id === 'protectionRcbo') {
                     handleProtectionToggle(item.id, next);
@@ -647,7 +654,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
 
         {/* Live Conductor Size — common sizes as chips, "Other" opens picker for full list */}
         <FormField label="Live conductor size" required>
-          <div className="grid grid-cols-7 gap-1">
+          <div className="grid grid-cols-4 gap-1.5">
             {COMMON_CABLE_SIZES.map((size) => (
               <ToggleButton
                 key={size}
@@ -668,7 +675,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                 placeholder="Other"
                 title="Live conductor size (mm²)"
                 triggerClassName={cn(
-                  'h-11 rounded-lg font-semibold text-xs touch-manipulation',
+                  'h-11 rounded-lg font-semibold text-xs px-1 touch-manipulation',
                   !COMMON_CABLE_SIZES.includes(formData.liveConductorSize as string) &&
                     formData.liveConductorSize
                     ? 'bg-elec-yellow border border-elec-yellow text-black'
@@ -686,7 +693,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
         </FormField>
 
         <FormField label="CPC size">
-          <div className="grid grid-cols-7 gap-1">
+          <div className="grid grid-cols-4 gap-1.5">
             {COMMON_CABLE_SIZES.map((size) => {
               const allowed = filteredCpcSizes.some((o) => o.value === size);
               return (
@@ -711,7 +718,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                 placeholder="Other"
                 title="CPC size (mm²)"
                 triggerClassName={cn(
-                  'h-11 rounded-lg font-semibold text-xs touch-manipulation',
+                  'h-11 rounded-lg font-semibold text-xs px-1 touch-manipulation',
                   !COMMON_CABLE_SIZES.includes(formData.cpcSize as string) && formData.cpcSize
                     ? 'bg-elec-yellow border border-elec-yellow text-black'
                     : 'bg-white/[0.06] border border-white/[0.12] text-white'
@@ -727,7 +734,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
             )}
           {formData.liveConductorSize &&
             parseFloat(formData.liveConductorSize as string) > 16 && (
-              <span className="text-[11px] text-white/85 block mt-1">
+              <span className="text-[11px] text-white block mt-1">
                 CPC limited to {formData.liveConductorSize as string}mm² (BS 7671)
               </span>
             )}
@@ -756,7 +763,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
           </FormField>
         </div>
         {formData.referenceMethod && (
-          <span className="text-[11px] text-white/85 block">
+          <span className="text-[11px] text-white block">
             {REFERENCE_METHODS.find((r) => r.value === formData.referenceMethod)?.description}
           </span>
         )}

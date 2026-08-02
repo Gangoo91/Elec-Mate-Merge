@@ -28,6 +28,7 @@ import { Input } from '@/components/ui/input';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
+import { fireAlarmTemplateId } from '@/utils/fireAlarmPdfRouting';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import CertShellHeader from '@/components/inspection/shared/CertShellHeader';
@@ -268,7 +269,7 @@ const {
           .eq('report_id', savedReportId);
       const { data: fn, error: fnErr } = await supabase.functions.invoke(
         'generate-fire-alarm-pdf',
-        { body: { formData: payload, templateId: '5ECD2939-5CE2-4E98-8E47-32F25975C352' } }
+        { body: { formData: payload, templateId: fireAlarmTemplateId('fire-alarm-modification') } }
       );
       if (fnErr) throw new Error(fnErr.message);
       if (!fn?.success || !fn?.pdfUrl) throw new Error(fn?.error || 'No PDF URL');
@@ -309,7 +310,15 @@ const {
       }
       const { data: result, error: fnError } = await supabase.functions.invoke(
         'send-certificate-resend',
-        { body: { reportId: savedReportId, recipientEmail: emailRecipient, formattedData } }
+        {
+          body: {
+            reportId: savedReportId,
+            recipientEmail: emailRecipient,
+            formattedData,
+            // Shares generate-fire-alarm-pdf, whose default template is G2.
+            templateId: fireAlarmTemplateId('fire-alarm-modification'),
+          },
+        }
       );
       if (fnError) {
         let errorMessage = fnError.message;
@@ -474,7 +483,7 @@ const {
         isGenerating={isGenerating}
         pdfUrl={generatedPdfUrl}
         pdfFilename={pdfFilename}
-        error={generationError}
+        errorMessage={generationError}
         documentLabel="Certificate"
       />
 

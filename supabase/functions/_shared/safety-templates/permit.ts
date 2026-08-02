@@ -1,6 +1,7 @@
 import {
   renderPage, sectionHeader, kvGrid, statBoxes, textBox, dataTable, badges,
-  bulletList, signatureBlock, paragraph, warningBanner, type StatusColour, type Branding,
+  bulletList, signatureBlock, paragraph, warningBanner, photoGrid,
+  type StatusColour, type Branding,
 } from '../safety-html-base.ts';
 
 const fmtDate = (d: string | null) =>
@@ -21,7 +22,10 @@ const TYPE_LABELS: Record<string, string> = {
 const TYPE_REGS: Record<string, string> = {
   'hot-work': 'Regulatory Reform (Fire Safety) Order 2005 (RRO), BS 9999, HSG168 — Fire watch minimum 60 minutes post-work. Combustible materials cleared within 10m radius. Fire extinguisher within 2m of work area.',
   'confined-space': 'Confined Spaces Regulations 1997, ACOP L101 — Continuous atmospheric monitoring required (O₂, LEL, CO, H₂S). Written rescue plan mandatory. Trained standby person at entry point.',
-  'electrical-isolation': 'Electricity at Work Regulations 1989 (Reg 12-14), BS 7671:2018+A2:2022, HSE GS38 — 3-point prove dead test. Lock-off with personal padlock. Danger tags at all isolation points.',
+  // A4:2026 is the current amendment. This printed on issued permits as
+  // A2:2022 — a stale standard reference on a document that gets filed as
+  // evidence of a safe system of work.
+  'electrical-isolation': 'Electricity at Work Regulations 1989 (Reg 12-14), BS 7671:2018+A4:2026, HSE GS38 — 3-point prove dead test. Lock-off with personal padlock. Danger tags at all isolation points.',
   'working-at-height': 'Work at Height Regulations 2005, CDM 2015 — Guard rails (950mm min) + mid-rails + toe boards. Rescue plan in place. Equipment inspected before use. Weather assessment required.',
   'excavation': 'CDM 2015 (Reg 22), HSG47 — CAT & Genny scan completed. Service drawings obtained from all utility providers. Trench support for depths >1.2m. Hand-dig within 500mm of services.',
 };
@@ -131,6 +135,17 @@ export function permitTemplate(record: any, branding: Branding): string {
   if (record.additional_notes) {
     body += sectionHeader('Additional Notes');
     body += paragraph(record.additional_notes);
+  }
+
+  // Site photos. `permits_to_work.photos` has always been written by the form
+  // (SafetyPhotoCapture → photoUrls → the create payload) but no template ever
+  // rendered it, so the evidence an electrician deliberately captured never
+  // reached the issued permit. photoGrid returns '' when there is nothing to
+  // show, so the section header stays conditional on real content.
+  const permitPhotos = photoGrid(record.photos, 2);
+  if (permitPhotos) {
+    body += sectionHeader('Site Photos');
+    body += permitPhotos;
   }
 
   // Permit closure

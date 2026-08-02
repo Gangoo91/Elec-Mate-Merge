@@ -46,7 +46,10 @@ export const bs7671InspectionSections: InspectionSection[] = [
         id: 'item_1_1',
         number: '1.1',
         item: 'Distributor/supplier intake equipment',
-        clause: '132.12',
+        // No reg citation — the official A4:2026 model form lists none for the
+        // Section 1.0 intake items (132.12 is working space/accessibility and
+        // belongs to items 4.1/5.20 only).
+        clause: '',
         description:
           '• Service cable\n• Service head\n• Earthing arrangement\n• Meter tails\n• Metering equipment\n• Means of isolation (where present)',
       },

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -6,6 +6,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { cn } from '@/lib/utils';
 import { useEmergencyLightingSmartForm } from '@/hooks/inspection/useEmergencyLightingSmartForm';
+import { useHaptic } from '@/hooks/useHaptic';
+import {
+  EL_CURRENT_DESIGN_STANDARD,
+  EL_DESIGN_STANDARD_OPTIONS,
+} from '@/data/emergencyLightingStandards';
 import { DurationBadge } from './ValidationBadge';
 import { supabase } from '@/integrations/supabase/client';
 import CertificateClientSection from '@/components/inspection/shared/CertificateClientSection';
@@ -52,9 +57,8 @@ const SectionHeader = ({ title }: { title: string }) => (
 );
 
 const Sub = ({ title }: { title: string }) => (
-  <div className="flex items-center gap-3 pt-2">
-    <p className="text-[13px] font-semibold text-white shrink-0">{title}</p>
-    <div className="h-px flex-1 bg-white/[0.08]" />
+  <div className="border-t border-white/[0.1] pt-4">
+    <h3 className="text-sm font-semibold text-white">{title}</h3>
   </div>
 );
 
@@ -111,7 +115,7 @@ const Toggle = ({
 
 const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpdate }) => {
   const { getDurationForPremises } = useEmergencyLightingSmartForm();
-  const [sameAsClientAddress, setSameAsClientAddress] = useState(false);
+  const haptic = useHaptic();
 
   // Fetch existing clients from previous certificates
   const { data: existingClients } = useQuery({
@@ -170,24 +174,43 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
     ? getDurationForPremises(formData.premisesType)
     : null;
 
+  // Suggest the 3-hour duration ONCE, when the premises type actually changes.
+  // getDurationForPremises returns a fresh object every call, so keying the
+  // effect on `durationGuidance` re-ran it on every render — picking "1 Hour"
+  // for a 3-hour premises snapped straight back to 180 and the option could
+  // never be chosen. Track the premises type we last acted on instead.
+  // Seeded with the premises type present at mount (the page blocks render
+  // until the cert has hydrated), so re-opening a saved cert never overwrites
+  // a duration the user deliberately set.
+  const autoDurationFor = useRef<string>(formData.premisesType || '');
   useEffect(() => {
-    if (durationGuidance && durationGuidance.duration === 180 && formData.ratedDuration === 60) {
+    const premisesType = formData.premisesType || '';
+    if (autoDurationFor.current === premisesType) return;
+    autoDurationFor.current = premisesType;
+    if (durationGuidance?.duration === 180 && formData.ratedDuration === 60) {
       onUpdate('ratedDuration', 180);
     }
-  }, [formData.premisesType, durationGuidance]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData.premisesType]);
 
   const copyClientAddress = () => {
     if (formData.clientAddress) {
       onUpdate('premisesAddress', formData.clientAddress);
-      setSameAsClientAddress(true);
     }
   };
 
   return (
-    <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
-      {/* Client Details */}
+    <div
+      className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4"
+      // Delegated press haptic — every chip/button tap in this tab buzzes
+      // without wiring each onClick individually.
+      onPointerDown={(e) => {
+        if ((e.target as HTMLElement).closest('button')) haptic.light();
+      }}
+    >
+      {/* Client details */}
       <div className={cardCn}>
-        <SectionHeader title="Client Details" />
+        <SectionHeader title="Client details" />
         <CertificateClientSection formData={formData} onUpdate={onUpdate} />
 
         {existingClients && existingClients.length > 0 && (
@@ -205,7 +228,7 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-          <Field label="Client Name" required>
+          <Field label="Client name" required>
             <Input
               value={formData.clientName || ''}
               onChange={(e) => onUpdate('clientName', e.target.value)}
@@ -231,7 +254,7 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
               className={inputCn}
             />
           </Field>
-          <Field label="Certificate No.">
+          <Field label="Certificate no.">
             <Input
               value={formData.certificateNumber || ''}
               onChange={(e) => onUpdate('certificateNumber', e.target.value)}
@@ -240,7 +263,7 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
             />
           </Field>
         </div>
-        <Field label="Client Address">
+        <Field label="Client address">
           <Textarea
             value={formData.clientAddress || ''}
             onChange={(e) => onUpdate('clientAddress', e.target.value)}
@@ -252,9 +275,9 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
 
       {/* Premises */}
       <div className={cardCn}>
-        <SectionHeader title="Premises Details" />
+        <SectionHeader title="Premises details" />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-          <Field label="Premises Name">
+          <Field label="Premises name">
             <Input
               value={formData.premisesName || ''}
               onChange={(e) => onUpdate('premisesName', e.target.value)}
@@ -274,7 +297,7 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
             )}
           </div>
         </div>
-        <Field label="Premises Address" required>
+        <Field label="Premises address" required>
           <Textarea
             value={formData.premisesAddress || ''}
             onChange={(e) => {
@@ -286,7 +309,7 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
           />
         </Field>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-          <Field label="Premises Type">
+          <Field label="Premises type">
             <MobileSelectPicker
               value={formData.premisesType || ''}
               onValueChange={(v) => onUpdate('premisesType', v)}
@@ -296,8 +319,8 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
                 { value: 'industrial', label: 'Industrial' },
                 { value: 'educational', label: 'Educational' },
                 { value: 'healthcare', label: 'Healthcare' },
-                { value: 'residential-communal', label: 'Residential Communal' },
-                { value: 'hotel', label: 'Hotel / Hospitality' },
+                { value: 'residential-communal', label: 'Residential communal' },
+                { value: 'hotel', label: 'Hotel / hospitality' },
                 { value: 'entertainment', label: 'Entertainment' },
                 { value: 'warehouse', label: 'Warehouse' },
               ]}
@@ -305,22 +328,22 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
               triggerClassName={pickerTrigger}
             />
           </Field>
-          <Field label="Occupancy Risk">
+          <Field label="Occupancy risk">
             <MobileSelectPicker
               value={formData.occupancyType || ''}
               onValueChange={(v) => onUpdate('occupancyType', v)}
               options={[
-                { value: 'sleeping', label: 'Sleeping Risk' },
-                { value: 'high', label: 'High Risk' },
-                { value: 'normal', label: 'Normal Risk' },
-                { value: 'low', label: 'Low Risk' },
+                { value: 'sleeping', label: 'Sleeping risk' },
+                { value: 'high', label: 'High risk' },
+                { value: 'normal', label: 'Normal risk' },
+                { value: 'low', label: 'Low risk' },
               ]}
               placeholder="Select..."
               triggerClassName={pickerTrigger}
             />
           </Field>
         </div>
-        <Field label="Extent of Installation Covered">
+        <Field label="Extent of installation covered">
           <Textarea
             value={formData.extentOfInstallation || ''}
             onChange={(e) => onUpdate('extentOfInstallation', e.target.value)}
@@ -332,15 +355,15 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
 
       {/* System Classification */}
       <div className={cn(cardCn, 'lg:col-span-2')}>
-        <SectionHeader title="System Classification (BS 5266)" />
+        <SectionHeader title="System classification (BS 5266)" />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-          <Field label="Certificate Type">
+          <Field label="Certificate type">
             <MobileSelectPicker
               value={formData.certificateType || ''}
               onValueChange={(v) => onUpdate('certificateType', v)}
               options={[
                 { value: 'completion', label: 'Completion' },
-                { value: 'periodic', label: 'Periodic Inspection' },
+                { value: 'periodic', label: 'Periodic inspection' },
                 { value: 'existing-site', label: 'Existing Site' },
                 { value: 'completion-small', label: 'Completion (Small)' },
               ]}
@@ -348,14 +371,14 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
               triggerClassName={pickerTrigger}
             />
           </Field>
-          <Field label="Test Type">
+          <Field label="Test type">
             <MobileSelectPicker
               value={formData.testType || ''}
               onValueChange={(v) => onUpdate('testType', v)}
               options={[
                 { value: 'commissioning', label: 'Commissioning' },
-                { value: 'monthly', label: 'Monthly Functional' },
-                { value: 'annual', label: 'Annual Duration' },
+                { value: 'monthly', label: 'Monthly functional' },
+                { value: 'annual', label: 'Annual duration' },
               ]}
               placeholder="Select..."
               triggerClassName={pickerTrigger}
@@ -363,7 +386,7 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
           </Field>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-          <Field label="Test Date" required>
+          <Field label="Test date" required>
             <Input
               type="date"
               value={formData.testDate || ''}
@@ -371,13 +394,13 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
               className={inputCn}
             />
           </Field>
-          <Field label="System Type" required>
+          <Field label="System type" required>
             <MobileSelectPicker
               value={formData.systemType || ''}
               onValueChange={(v) => onUpdate('systemType', v)}
               options={[
                 { value: 'maintained', label: 'Maintained' },
-                { value: 'non-maintained', label: 'Non-Maintained' },
+                { value: 'non-maintained', label: 'Non-maintained' },
                 { value: 'combined', label: 'Combined (Sustained)' },
               ]}
               placeholder="Select..."
@@ -386,15 +409,15 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
           </Field>
         </div>
 
-        <Sub title="Rated Duration" />
+        <Sub title="Rated duration" />
         <div className="flex items-center gap-3">
           <div className="flex-1">
             <MobileSelectPicker
               value={formData.ratedDuration?.toString() || '180'}
               onValueChange={(v) => onUpdate('ratedDuration', parseInt(v))}
               options={[
-                { value: '60', label: '1 Hour (60 min)' },
-                { value: '180', label: '3 Hours (180 min)' },
+                { value: '60', label: '1 hour (60 min)' },
+                { value: '180', label: '3 hours (180 min)' },
               ]}
               placeholder="Select..."
               triggerClassName={pickerTrigger}
@@ -415,7 +438,7 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
           </div>
         )}
 
-        <Sub title="Power Source" />
+        <Sub title="Power source" />
         <div className="space-y-3">
           <Toggle
             label="Self-contained luminaires"
@@ -431,7 +454,7 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
           />
           {formData.centralBatterySystem && (
             <div className="ml-4">
-              <Field label="Central Battery Location">
+              <Field label="Central battery location">
                 <Input
                   value={formData.centralBatteryLocation || ''}
                   onChange={(e) => onUpdate('centralBatteryLocation', e.target.value)}
@@ -443,22 +466,18 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
           )}
         </div>
 
-        <Sub title="Compliance References" />
+        <Sub title="Compliance references" />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-          <Field label="Design Standard">
+          <Field label="Design standard">
             <MobileSelectPicker
-              value={formData.designStandard || 'BS 5266-1:2016'}
+              value={formData.designStandard || EL_CURRENT_DESIGN_STANDARD}
               onValueChange={(v) => onUpdate('designStandard', v)}
-              options={[
-                { value: 'BS 5266-1:2016', label: 'BS 5266-1:2016' },
-                { value: 'BS EN 50172:2004', label: 'BS EN 50172:2004' },
-                { value: 'BS 5266-1 + BS EN 50172', label: 'BS 5266-1 + BS EN 50172' },
-              ]}
+              options={EL_DESIGN_STANDARD_OPTIONS}
               placeholder="Select..."
               triggerClassName={pickerTrigger}
             />
           </Field>
-          <Field label="Previous Cert No.">
+          <Field label="Previous cert no.">
             <Input
               value={formData.previousCertificateNumber || ''}
               onChange={(e) => onUpdate('previousCertificateNumber', e.target.value)}
@@ -468,7 +487,7 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
           </Field>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-          <Field label="Risk Assessment Ref">
+          <Field label="Risk assessment ref">
             <Input
               value={formData.riskAssessmentReference || ''}
               onChange={(e) => onUpdate('riskAssessmentReference', e.target.value)}
@@ -476,7 +495,7 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
               placeholder="RA reference"
             />
           </Field>
-          <Field label="Drawing Ref">
+          <Field label="Drawing ref">
             <Input
               value={formData.drawingReference || ''}
               onChange={(e) => onUpdate('drawingReference', e.target.value)}
@@ -485,7 +504,7 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
             />
           </Field>
         </div>
-        <Field label="Wiring System">
+        <Field label="Wiring system">
           <MobileSelectPicker
             value={formData.wiringSystem || ''}
             onValueChange={(v) => onUpdate('wiringSystem', v)}
@@ -500,14 +519,14 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
           />
         </Field>
         <Toggle
-          label="Automatic Test System (BS EN 62034)"
+          label="Automatic test system (BS EN 62034)"
           field="automaticTestSystem"
           value={formData.automaticTestSystem || false}
           onUpdate={onUpdate}
         />
         {formData.automaticTestSystem && (
           <div className="ml-4">
-            <Field label="ATS Details">
+            <Field label="ATS details">
               <Input
                 value={formData.atsDetails || ''}
                 onChange={(e) => onUpdate('atsDetails', e.target.value)}
@@ -521,7 +540,7 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
 
       {/* Purpose of System */}
       <div className={cardCn}>
-        <SectionHeader title="Purpose of System (BS 5266)" />
+        <SectionHeader title="Purpose of system (BS 5266)" />
         <div className="space-y-3">
           <Toggle
             label="Escape route lighting"
@@ -552,9 +571,9 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
 
       {/* Equipment Summary */}
       <div className={cardCn}>
-        <SectionHeader title="Equipment Summary" />
+        <SectionHeader title="Equipment summary" />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-          <Field label="Luminaire Count">
+          <Field label="Luminaire count">
             <Input
               type="number"
               min="0"
@@ -568,7 +587,7 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
               className={inputCn}
             />
           </Field>
-          <Field label="Exit Sign Count">
+          <Field label="Exit sign count">
             <Input
               type="number"
               min="0"
@@ -584,7 +603,7 @@ const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpd
           </Field>
         </div>
         {formData.centralBatterySystem && (
-          <Field label="Central Battery Units">
+          <Field label="Central battery units">
             <Input
               type="number"
               min="0"

@@ -19,6 +19,7 @@ import {
 import ComboboxCell from '@/components/table-cells/ComboboxCell';
 import { getCompatibleDetectors } from '@/data/fireAlarmEquipmentDatabase';
 import { useFireAlarmSmartForm } from '@/hooks/inspection/useFireAlarmSmartForm';
+import useReadingKeypad, { ReadingMeta } from '@/hooks/useReadingKeypad';
 
 const cardCn =
   '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
@@ -302,6 +303,36 @@ export default function FAZonesDevices({ formData, onUpdate }: Props) {
     if (!dBReading) return null;
     return validateSoundReading(dBReading);
   };
+
+  // ── Reading keypad — shared MW pattern for sounder dB readings ──
+  // Field names are keyed per sounder id so data-keypad-field stays unique as
+  // devices are added/removed. Values flow through the EXISTING updateSounder
+  // path; the header verdict reuses getDbValidation (no new compliance logic).
+  const keypadMeta = useMemo(() => {
+    const meta: Record<string, ReadingMeta> = {};
+    sounders.forEach((s, idx) => {
+      meta[`dBReading-${s.id}`] = { label: `Sound level — sounder ${idx + 1}`, unit: 'dB' };
+    });
+    return meta;
+  }, [sounders]);
+  const keypad = useReadingKeypad({
+    meta: keypadMeta,
+    getValue: (field) => {
+      const snd = sounders.find((s) => s.id === field.replace('dBReading-', ''));
+      return String(snd?.dBReading ?? '');
+    },
+    setValue: (field, value) =>
+      updateSounder(field.replace('dBReading-', ''), 'dBReading', value),
+    getStatus: (field) => {
+      const snd = sounders.find((s) => s.id === field.replace('dBReading-', ''));
+      const dbVal = snd ? getDbValidation(snd.dBReading || '') : null;
+      if (!dbVal) return null;
+      if (dbVal.status === 'pass') return { tone: 'pass', label: 'Pass' };
+      if (dbVal.status === 'fail')
+        return { tone: 'check', label: `Fail — min ${dbVal.minRequired} dB` };
+      return null;
+    },
+  });
 
   return (
     <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
@@ -655,6 +686,7 @@ export default function FAZonesDevices({ formData, onUpdate }: Props) {
                       value={snd.dBReading || ''}
                       onChange={(e) => updateSounder(snd.id, 'dBReading', e.target.value)}
                       inputMode="decimal"
+                      {...keypad.field(`dBReading-${snd.id}`)}
                       className={cn(
                         inputCn,
                         dbVal &&
@@ -838,6 +870,12 @@ export default function FAZonesDevices({ formData, onUpdate }: Props) {
           </div>
         </div>
       </div>
+
+      {/* Scroll room so the last reading can rise clear of the keypad */}
+      {keypad.spacer}
+
+      {/* Reading keypad — coarse-pointer devices only */}
+      {keypad.element}
     </div>
   );
 }

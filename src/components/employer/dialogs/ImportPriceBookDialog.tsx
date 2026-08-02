@@ -274,6 +274,7 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
                   <div className="flex items-center gap-2">
                     <Input
                       type="number"
+                            inputMode="decimal"
                       value={markup}
                       onChange={(e) => setMarkup(Number(e.target.value))}
                       className={`${inputClass} w-28`}

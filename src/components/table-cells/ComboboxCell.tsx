@@ -7,7 +7,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { ChevronDown, Check, Search, X } from 'lucide-react';
+import { ChevronDown, Check, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { SwipeableBottomSheet } from '@/components/native/SwipeableBottomSheet';
@@ -22,6 +22,9 @@ interface ComboboxCellProps {
   onChange: (value: string) => void;
   options: ComboboxOption[];
   placeholder?: string;
+  /** Sheet header title on mobile — tells the user WHICH column they're
+   * editing (the dense table headers scroll out of view). */
+  title?: string;
   className?: string;
   allowCustom?: boolean;
   compact?: boolean;
@@ -32,6 +35,7 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
   onChange,
   options,
   placeholder = '',
+  title,
   className,
   allowCustom = true,
   compact = false,
@@ -58,13 +62,8 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
     }
   }, [open]);
 
-  // Delayed focus on mobile — let sheet animate in first
-  useEffect(() => {
-    if (open && isMobile) {
-      const timer = setTimeout(() => searchInputRef.current?.focus(), 400);
-      return () => clearTimeout(timer);
-    }
-  }, [open, isMobile]);
+  // No autofocus on mobile — focusing the filter pops the keyboard OVER the
+  // option list the user came to read. They tap the filter when they want it.
 
   const filtered = options.filter((opt) => {
     if (!search) return true;
@@ -98,12 +97,12 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
         isTableCell
           ? cn(
               'h-8 px-2 rounded-md text-center outline-none',
-              // Filled cells blend with the row — no resting pill. Hover/focus/open still highlight.
-              value ? 'text-white bg-transparent' : 'text-white bg-transparent',
-              open && 'bg-elec-yellow/[0.08] ring-1 ring-elec-yellow/40',
-              'hover:bg-white/[0.05] focus-visible:bg-white/[0.05] focus-visible:ring-1 focus-visible:ring-elec-yellow/40'
+              // Cells blend with the row — no resting pill. Hover/focus/open still highlight.
+              'text-white bg-transparent',
+              open && 'bg-white/[0.06] ring-1 ring-inset ring-elec-yellow',
+              'hover:bg-white/[0.06] focus-visible:bg-white/[0.06] focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow'
             )
-          : 'h-12 px-3 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 hover:bg-white/[0.08] active:scale-[0.98]',
+          : 'h-12 px-3 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 hover:bg-white/[0.08] active:scale-[0.98]',
         !value && !isTableCell && 'text-white',
         className
       )}
@@ -138,17 +137,17 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
             'w-full text-left flex items-center justify-between gap-3 touch-manipulation active:scale-[0.99]',
             'px-4 py-3.5 border-b border-white/[0.05] last:border-b-0 transition-colors',
             selected
-              ? 'bg-elec-yellow/[0.08]'
-              : 'bg-transparent active:bg-white/[0.04]'
+              ? 'bg-elec-yellow'
+              : 'bg-transparent active:bg-white/[0.06]'
           )}
         >
           <span className={cn(
-            'text-[15px] flex-1 min-w-0',
-            selected ? 'text-elec-yellow font-semibold' : 'text-white'
+            'text-[15px] flex-1 min-w-0 leading-snug',
+            selected ? 'text-black font-semibold' : 'text-white'
           )}>
             {opt.label}
           </span>
-          {selected && <Check className="h-4 w-4 text-elec-yellow flex-shrink-0" strokeWidth={2.5} />}
+          {selected && <Check className="h-4 w-4 text-black flex-shrink-0" strokeWidth={2.5} />}
         </button>
       );
     }
@@ -161,16 +160,16 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
         onClick={() => handleSelect(opt.value)}
         title={opt.label}
         className={cn(
-          'group/option w-full text-left flex items-center gap-2 px-3 py-1.5 text-sm transition-colors',
+          'group/option w-full text-left flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors',
           selected
-            ? 'bg-elec-yellow/[0.08] text-elec-yellow'
-            : 'text-white hover:bg-white/[0.05]'
+            ? 'bg-elec-yellow text-black font-semibold'
+            : 'text-white hover:bg-white/[0.06]'
         )}
       >
         <span className="w-4 flex-shrink-0 flex items-center justify-center">
-          {selected && <Check className="h-3.5 w-3.5 text-elec-yellow" />}
+          {selected && <Check className="h-3.5 w-3.5 text-black" />}
         </span>
-        <span className={cn('truncate', selected && 'font-medium')}>{opt.label}</span>
+        <span className="min-w-0 flex-1 whitespace-normal leading-snug">{opt.label}</span>
       </button>
     );
   };
@@ -186,29 +185,40 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
           contentClassName="p-0"
         >
           <div className="flex flex-col max-h-[70vh]">
-            {/* Header — count + clear + compact search */}
-            <div className="px-4 pt-2 pb-3 sticky top-0 bg-background z-10 border-b border-white/[0.05]">
+            {/* Header — title + count + clear + compact search */}
+            <div className="px-4 pt-2 pb-3 sticky top-0 bg-[hsl(0_0%_16%)] z-10 border-b border-white/[0.05]">
               <div className="flex items-center justify-between mb-2.5">
-                <p className="text-[11px] font-semibold text-white/50 uppercase tracking-wider">
-                  {options.length} {options.length === 1 ? 'option' : 'options'}
-                </p>
+                <div className="min-w-0">
+                  {title && (
+                    <p className="truncate text-[15px] font-semibold tracking-tight text-white">
+                      {title}
+                    </p>
+                  )}
+                  <p className="text-[11px] font-semibold text-white/60 tabular-nums">
+                    {options.length} {options.length === 1 ? 'option' : 'options'}
+                  </p>
+                </div>
                 {value && (
                   <button
-                    onClick={() => { onChange(''); setOpen(false); }}
-                    className="text-[12px] text-red-400 font-medium touch-manipulation active:opacity-60"
+                    onClick={() => {
+                      onChange('');
+                      setOpen(false);
+                    }}
+                    // 44px hit area — padding grows the target, negative margins
+                    // keep the compact header row layout.
+                    className="min-h-[44px] px-3 -mx-3 -my-2 flex items-center text-[12px] text-red-400 font-medium touch-manipulation active:opacity-60"
                   >
                     Clear
                   </button>
                 )}
               </div>
-              <div className="flex items-center gap-2.5 h-11 px-3 rounded-xl bg-white/[0.06] border border-white/[0.08] focus-within:border-elec-yellow/40 focus-within:bg-white/[0.08] transition-colors">
-                <Search className="h-4 w-4 text-white/50 flex-shrink-0" />
+              <div className="flex items-center gap-2.5 h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.10] focus-within:border-elec-yellow transition-colors">
                 <input
                   ref={searchInputRef}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder={allowCustom ? 'Filter or type your own…' : 'Search…'}
-                  className="flex-1 bg-transparent text-base text-white placeholder:text-white outline-none"
+                  className="flex-1 bg-transparent text-base text-white placeholder:text-white/25 caret-elec-yellow outline-none"
                 />
                 {search && (
                   <button
@@ -226,10 +236,12 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
               <button
                 type="button"
                 onClick={() => handleSelect(search.trim())}
-                className="mx-4 my-2 px-4 py-3 rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.08] text-sm text-elec-yellow font-medium touch-manipulation active:scale-[0.98] text-left flex items-center gap-2"
+                className="mx-4 my-2 px-4 py-3 rounded-xl border border-white/[0.12] bg-white/[0.06] text-sm text-white font-medium touch-manipulation active:scale-[0.98] text-left flex items-center gap-2"
               >
-                <span className="text-elec-yellow/60">+</span>
-                <span>Use &ldquo;{search.trim()}&rdquo;</span>
+                <span className="text-white/60">+</span>
+                <span>
+                  Use <span className="text-elec-yellow">&ldquo;{search.trim()}&rdquo;</span>
+                </span>
               </button>
             )}
             {/* Options — flat list, dividers between rows */}
@@ -253,35 +265,36 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>{trigger}</PopoverTrigger>
       <PopoverContent
-        className="min-w-[240px] max-w-[360px] w-[max(var(--radix-popover-trigger-width),240px)] p-0 z-[9999] bg-elec-dark border border-white/[0.08] rounded-lg shadow-2xl shadow-black/50"
+        className="min-w-[280px] max-w-[min(92vw,380px)] w-[max(var(--radix-popover-trigger-width),280px)] p-0 z-[9999] bg-[hsl(0_0%_16%)] border border-white/[0.14] rounded-xl shadow-[0_16px_40px_rgba(0,0,0,0.55)]"
         align="start"
         side="bottom"
         sideOffset={4}
       >
         {/* Search — compact */}
         <div className="px-2 pt-2 pb-1.5 border-b border-white/[0.06]">
-          <div className="flex items-center gap-2 h-8 px-2 rounded-md bg-white/[0.04] border border-white/[0.05] focus-within:border-elec-yellow/40 focus-within:bg-white/[0.06] transition-colors">
-            <Search className="h-3.5 w-3.5 text-white/50 flex-shrink-0" />
+          <div className="flex items-center gap-2 h-10 px-3 rounded-lg bg-white/[0.06] border border-white/[0.10] focus-within:border-elec-yellow transition-colors">
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Filter..."
-              className="flex-1 bg-transparent text-sm text-white placeholder:text-white outline-none"
+              placeholder="Filter…"
+              className="flex-1 bg-transparent text-sm text-white placeholder:text-white/25 caret-elec-yellow outline-none"
               autoFocus
             />
           </div>
         </div>
         {/* Options — dense list */}
-        <div className="max-h-[280px] overflow-y-auto py-1">
+        <div className="max-h-[280px] overflow-y-auto p-1">
           {filtered.map((opt) => renderOption(opt))}
           {filtered.length === 0 && search.trim() && allowCustom && (
             <button
               type="button"
               onClick={() => handleSelect(search.trim())}
-              className="w-full text-left flex items-center gap-2 px-3 py-1.5 text-sm text-elec-yellow hover:bg-white/[0.05] transition-colors"
+              className="w-full text-left flex items-center gap-2 rounded-lg border border-white/[0.12] bg-white/[0.06] px-3 py-2 text-sm text-white hover:bg-white/[0.08] transition-colors"
             >
-              <span className="w-4 flex-shrink-0 text-center text-elec-yellow/70">+</span>
-              <span className="truncate">Use &quot;{search.trim()}&quot;</span>
+              <span className="w-4 flex-shrink-0 text-center text-white/60">+</span>
+              <span className="min-w-0 flex-1 whitespace-normal leading-snug">
+                Use <span className="text-elec-yellow">&quot;{search.trim()}&quot;</span>
+              </span>
             </button>
           )}
           {filtered.length === 0 && !search.trim() && (

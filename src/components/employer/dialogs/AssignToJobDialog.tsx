@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
-import { useIsMobile } from '@/hooks/use-mobile';
 import type { Employee } from '@/services/employeeService';
 import { useCreateJobAssignment } from '@/hooks/useJobAssignments';
 import { useJobs } from '@/hooks/useJobs';
@@ -28,7 +27,6 @@ interface AssignToJobDialogProps {
 }
 
 export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobDialogProps) {
-  const isMobile = useIsMobile();
   const createAssignment = useCreateJobAssignment();
   const { data: jobs = [] } = useJobs();
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
@@ -89,22 +87,18 @@ export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobD
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        className={cn(
-          'bg-[hsl(0_0%_8%)] border-white/[0.08]',
-          isMobile
-            ? 'max-w-[95vw] h-[90vh] p-0 flex flex-col'
-            : 'sm:max-w-lg max-h-[85vh] p-0 flex flex-col'
-        )}
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.08]"
       >
         <div className="flex-shrink-0 p-4 pb-0">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-white">
+          <SheetHeader>
+            <SheetTitle className="flex items-center gap-2 text-white">
               <Briefcase className="h-5 w-5 text-elec-yellow" />
               Assign to Job
-            </DialogTitle>
-          </DialogHeader>
+            </SheetTitle>
+          </SheetHeader>
 
           <div className="flex items-center gap-3 p-3 bg-white/[0.04] border border-white/[0.08] rounded-xl mt-4">
             <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center font-bold text-elec-yellow flex-shrink-0">
@@ -225,7 +219,7 @@ export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobD
             </PrimaryButton>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 }

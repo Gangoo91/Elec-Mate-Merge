@@ -39,14 +39,29 @@ export function lazyWithRetry<T extends ComponentType<unknown>>(
           throw error;
         }
 
-        // On last retry, try clearing caches
-        if (attempt === retries - 1 && 'caches' in window) {
+        // On last retry, clear caches AND unregister the service worker.
+        //
+        // ELE-1437: clearing Cache Storage alone is not enough. `sw.ts`
+        // registers a Workbox NavigationRoute that serves the PRECACHED
+        // index.html for every navigation, so a still-registered worker can
+        // answer the retry with the very same stale HTML — pointing at the
+        // same missing chunk — and fail identically. The inline handler in
+        // index.html, `handleChunkError` in main.tsx and ErrorBoundary all
+        // unregister; this path was the last one that did not. Keep all four
+        // in step.
+        if (attempt === retries - 1) {
           try {
-            const keys = await caches.keys();
-            await Promise.all(keys.map((k) => caches.delete(k)));
-            console.log('[lazyWithRetry] Cleared caches before final retry');
+            if ('serviceWorker' in navigator) {
+              const regs = await navigator.serviceWorker.getRegistrations();
+              await Promise.all(regs.map((r) => r.unregister()));
+            }
+            if ('caches' in window) {
+              const keys = await caches.keys();
+              await Promise.all(keys.map((k) => caches.delete(k)));
+            }
+            console.log('[lazyWithRetry] Cleared caches + unregistered SW before final retry');
           } catch {
-            // Ignore cache clearing errors
+            // Ignore cleanup errors — the reload below is the real fallback
           }
         }
       }

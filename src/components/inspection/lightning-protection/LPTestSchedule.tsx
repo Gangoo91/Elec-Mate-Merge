@@ -5,6 +5,7 @@ import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { cn } from '@/lib/utils';
 import { useLightningProtectionSmartForm } from '@/hooks/inspection/useLightningProtectionSmartForm';
 import { EarthElectrodeTest, DownConductorTest, BondingTest, SPDCheck, SeparationDistanceCheck, EARTH_RESISTANCE_THRESHOLD, CONTINUITY_THRESHOLD, BONDING_THRESHOLD } from '@/types/lightning-protection';
+import useReadingKeypad, { ReadingMeta } from '@/hooks/useReadingKeypad';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -39,9 +40,8 @@ const SectionHeader = ({ title, count, subtitle }: { title: string; count?: numb
 );
 
 const Sub = ({ title }: { title: string }) => (
-  <div className="flex items-center gap-2 pt-2">
-    <p className="text-[12px] font-semibold text-white shrink-0">{title}</p>
-    <div className="h-px flex-1 bg-white/[0.08]" />
+  <div className="border-t border-white/[0.1] pt-4">
+    <h3 className="text-sm font-semibold text-white">{title}</h3>
   </div>
 );
 
@@ -135,6 +135,76 @@ export default function LPTestSchedule({ formData, onUpdate }: Props) {
   const removeSepCheck = (id: string) => onUpdate('separationChecks', sepChecks.filter((t) => t.id !== id));
   const updateSepCheck = (id: string, field: string, value: any) => onUpdate('separationChecks', sepChecks.map((t) => t.id === id ? { ...t, [field]: value } : t));
 
+  // ── Reading keypad — shared MW pattern ──
+  // Entry rows are dynamic, so reading names are keyed `${kind}-${entry.id}`
+  // (unique per input on the page). Values flow through the existing per-entry
+  // updaters; the header verdict reuses the SAME pass/fail helpers that drive
+  // the PassFailBadge chips — no new limits. Sequence is omitted: DOM order
+  // already matches the natural test order (conditions → earths → down
+  // conductors → bonds → separation).
+  const keypadMeta: Record<string, ReadingMeta> = {
+    ambientTemp: { label: 'Ambient temperature', unit: '°C' },
+    soilResistivity: { label: 'Soil resistivity', unit: 'Ω·m' },
+  };
+  earthTests.forEach((t) => {
+    keypadMeta[`earth-measured-${t.id}`] = { label: `${t.reference || 'Electrode'} — earth electrode resistance`, unit: 'Ω' };
+    keypadMeta[`earth-previous-${t.id}`] = { label: `${t.reference || 'Electrode'} — previous reading`, unit: 'Ω' };
+  });
+  dcTests.forEach((t) => {
+    keypadMeta[`dc-measured-${t.id}`] = { label: `${t.reference || 'Down conductor'} — continuity resistance`, unit: 'Ω' };
+  });
+  bondTests.forEach((t) => {
+    keypadMeta[`bond-measured-${t.id}`] = { label: `${t.reference || 'Bond'} — bonding resistance`, unit: 'Ω' };
+  });
+  sepChecks.forEach((c, i) => {
+    keypadMeta[`sep-measured-${c.id}`] = { label: `Separation ${i + 1} — measured distance`, unit: 'mm' };
+    keypadMeta[`sep-required-${c.id}`] = { label: `Separation ${i + 1} — required distance`, unit: 'mm' };
+  });
+
+  const keypad = useReadingKeypad({
+    meta: keypadMeta,
+    getValue: (field) => {
+      if (field === 'ambientTemp' || field === 'soilResistivity') return String(formData[field] ?? '');
+      if (field.startsWith('earth-measured-')) return earthTests.find((t) => t.id === field.slice('earth-measured-'.length))?.measuredResistance ?? '';
+      if (field.startsWith('earth-previous-')) return earthTests.find((t) => t.id === field.slice('earth-previous-'.length))?.previousReading ?? '';
+      if (field.startsWith('dc-measured-')) return dcTests.find((t) => t.id === field.slice('dc-measured-'.length))?.measuredResistance ?? '';
+      if (field.startsWith('bond-measured-')) return bondTests.find((t) => t.id === field.slice('bond-measured-'.length))?.measuredResistance ?? '';
+      if (field.startsWith('sep-measured-')) return sepChecks.find((c) => c.id === field.slice('sep-measured-'.length))?.measuredDistance ?? '';
+      if (field.startsWith('sep-required-')) return sepChecks.find((c) => c.id === field.slice('sep-required-'.length))?.requiredDistance ?? '';
+      return '';
+    },
+    setValue: (field, value) => {
+      if (field === 'ambientTemp' || field === 'soilResistivity') { onUpdate(field, value); return; }
+      if (field.startsWith('earth-measured-')) { updateEarthTest(field.slice('earth-measured-'.length), 'measuredResistance', value); return; }
+      if (field.startsWith('earth-previous-')) { updateEarthTest(field.slice('earth-previous-'.length), 'previousReading', value); return; }
+      if (field.startsWith('dc-measured-')) { updateDcTest(field.slice('dc-measured-'.length), 'measuredResistance', value); return; }
+      if (field.startsWith('bond-measured-')) { updateBondTest(field.slice('bond-measured-'.length), 'measuredResistance', value); return; }
+      if (field.startsWith('sep-measured-')) { updateSepCheck(field.slice('sep-measured-'.length), 'measuredDistance', value); return; }
+      if (field.startsWith('sep-required-')) { updateSepCheck(field.slice('sep-required-'.length), 'requiredDistance', value); return; }
+    },
+    getStatus: (field, value) => {
+      const badge = (result: 'pass' | 'fail' | '', passLabel: string, failLabel: string) =>
+        result === '' ? null : result === 'pass'
+          ? { tone: 'pass' as const, label: passLabel }
+          : { tone: 'check' as const, label: failLabel };
+      if (field.startsWith('earth-measured-'))
+        return badge(isEarthResistancePass(value), `Within ≤${EARTH_RESISTANCE_THRESHOLD}Ω limit`, `Above ${EARTH_RESISTANCE_THRESHOLD}Ω limit`);
+      if (field.startsWith('dc-measured-'))
+        return badge(isContinuityPass(value), `Within <${CONTINUITY_THRESHOLD}Ω limit`, `At or above ${CONTINUITY_THRESHOLD}Ω limit`);
+      if (field.startsWith('bond-measured-'))
+        return badge(isBondingPass(value), `Within ≤${BONDING_THRESHOLD}Ω limit`, `Above ${BONDING_THRESHOLD}Ω limit`);
+      if (field.startsWith('sep-measured-')) {
+        // Same check as the entry's PassFailBadge: measured >= required.
+        const check = sepChecks.find((c) => c.id === field.slice('sep-measured-'.length));
+        if (!check?.requiredDistance || !value) return null;
+        return parseFloat(value) >= parseFloat(check.requiredDistance)
+          ? { tone: 'pass' as const, label: `Meets required ${check.requiredDistance}mm` }
+          : { tone: 'check' as const, label: `Below required ${check.requiredDistance}mm` };
+      }
+      return null;
+    },
+  });
+
   // Select options
   const weatherOptions = [
     { value: 'dry', label: 'Dry' },
@@ -192,10 +262,10 @@ export default function LPTestSchedule({ formData, onUpdate }: Props) {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <Field label="Ambient temp (°C)">
-            <Input type="number" value={formData.ambientTemp} onChange={(e) => onUpdate('ambientTemp', e.target.value)} className={inputCn} />
+            <Input value={formData.ambientTemp} onChange={(e) => onUpdate('ambientTemp', e.target.value)} className={inputCn} {...keypad.field('ambientTemp')} />
           </Field>
           <Field label="Soil resistivity (Ω·m)">
-            <Input type="number" step="0.1" value={formData.soilResistivity} onChange={(e) => onUpdate('soilResistivity', e.target.value)} className={inputCn} placeholder="If measured" />
+            <Input step="0.1" value={formData.soilResistivity} onChange={(e) => onUpdate('soilResistivity', e.target.value)} className={inputCn} placeholder="If measured" {...keypad.field('soilResistivity')} />
           </Field>
         </div>
 
@@ -264,9 +334,9 @@ export default function LPTestSchedule({ formData, onUpdate }: Props) {
               <Sub title="Test readings" />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
                 <MobileSelectPicker value={test.testMethod} onValueChange={(v) => updateEarthTest(test.id, 'testMethod', v)} options={testMethodOptions} placeholder="Method" title="Test Method" triggerClassName={pickerTrigger} />
-                <Input value={test.measuredResistance} onChange={(e) => updateEarthTest(test.id, 'measuredResistance', e.target.value)} className={inputCn} placeholder="Reading (Ω)" />
+                <Input value={test.measuredResistance} onChange={(e) => updateEarthTest(test.id, 'measuredResistance', e.target.value)} className={inputCn} placeholder="Reading (Ω)" {...keypad.field(`earth-measured-${test.id}`)} />
               </div>
-              <Input value={test.previousReading} onChange={(e) => updateEarthTest(test.id, 'previousReading', e.target.value)} className={cn(inputCn, 'opacity-60')} placeholder="Previous (Ω)" />
+              <Input value={test.previousReading} onChange={(e) => updateEarthTest(test.id, 'previousReading', e.target.value)} className={cn(inputCn, 'opacity-60')} placeholder="Previous (Ω)" {...keypad.field(`earth-previous-${test.id}`)} />
             </div>
           ))}
         </div>
@@ -303,7 +373,7 @@ export default function LPTestSchedule({ formData, onUpdate }: Props) {
                 <Input value={test.fromPoint} onChange={(e) => updateDcTest(test.id, 'fromPoint', e.target.value)} className={inputCn} placeholder="From" />
                 <Input value={test.toPoint} onChange={(e) => updateDcTest(test.id, 'toPoint', e.target.value)} className={inputCn} placeholder="To" />
               </div>
-              <Input value={test.measuredResistance} onChange={(e) => updateDcTest(test.id, 'measuredResistance', e.target.value)} className={inputCn} placeholder="Reading (Ω)" />
+              <Input value={test.measuredResistance} onChange={(e) => updateDcTest(test.id, 'measuredResistance', e.target.value)} className={inputCn} placeholder="Reading (Ω)" {...keypad.field(`dc-measured-${test.id}`)} />
             </div>
           ))}
         </div>
@@ -330,7 +400,7 @@ export default function LPTestSchedule({ formData, onUpdate }: Props) {
               <Sub title="Readings" />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
                 <Input value={test.conductorSize} onChange={(e) => updateBondTest(test.id, 'conductorSize', e.target.value)} className={inputCn} placeholder="Size (mm²)" />
-                <Input value={test.measuredResistance} onChange={(e) => updateBondTest(test.id, 'measuredResistance', e.target.value)} className={inputCn} placeholder="Reading (Ω)" />
+                <Input value={test.measuredResistance} onChange={(e) => updateBondTest(test.id, 'measuredResistance', e.target.value)} className={inputCn} placeholder="Reading (Ω)" {...keypad.field(`bond-measured-${test.id}`)} />
               </div>
             </div>
           ))}
@@ -379,14 +449,20 @@ export default function LPTestSchedule({ formData, onUpdate }: Props) {
               </div>
               <Input value={check.location} onChange={(e) => updateSepCheck(check.id, 'location', e.target.value)} className={inputCn} placeholder="Location" />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-                <Input value={check.measuredDistance} onChange={(e) => updateSepCheck(check.id, 'measuredDistance', e.target.value)} className={inputCn} placeholder="Measured (mm)" />
-                <Input value={check.requiredDistance} onChange={(e) => updateSepCheck(check.id, 'requiredDistance', e.target.value)} className={inputCn} placeholder="Required (mm)" />
+                <Input value={check.measuredDistance} onChange={(e) => updateSepCheck(check.id, 'measuredDistance', e.target.value)} className={inputCn} placeholder="Measured (mm)" {...keypad.field(`sep-measured-${check.id}`)} />
+                <Input value={check.requiredDistance} onChange={(e) => updateSepCheck(check.id, 'requiredDistance', e.target.value)} className={inputCn} placeholder="Required (mm)" {...keypad.field(`sep-required-${check.id}`)} />
               </div>
             </div>
           ))}
         </div>
         <button onClick={addSepCheck} className={addButtonCn}>Add separation check</button>
       </div>
+
+      {/* Scroll room so the last reading can rise clear of the keypad */}
+      {keypad.spacer}
+
+      {/* Reading keypad — coarse-pointer devices only */}
+      {keypad.element}
     </div>
   );
 }

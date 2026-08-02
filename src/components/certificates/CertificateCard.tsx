@@ -42,6 +42,11 @@ interface CertificateCardProps {
   isBulkMode?: boolean;
   isSelected?: boolean;
   onSelectToggle?: () => void;
+  /**
+   * ELE-1458 — the library is filtered to one status, so repeating that status
+   * on every card is noise. Drops the state word from the top row.
+   */
+  hideStatus?: boolean;
 }
 
 const getTypeLabel = (type: string) => {
@@ -89,31 +94,17 @@ const getStatusLabel = (status: string) => {
   }
 };
 
-// Single accent dot — the only scan-by-state signal, mono palette otherwise.
-const getStatusDot = (status: string) => {
-  switch (status) {
-    case 'completed':
-      return 'bg-emerald-400';
-    case 'in-progress':
-      return 'bg-amber-400';
-    case 'draft':
-      return 'bg-white/30';
-    default:
-      return 'bg-white/20';
-  }
-};
-
-// Status text colour — the footer reads as a coloured state word, not grey.
+// Status text colour — the state reads as a coloured word, not a mute dot.
 const getStatusText = (status: string) => {
   switch (status) {
     case 'completed':
       return 'text-emerald-300';
     case 'in-progress':
       return 'text-amber-300';
-    case 'draft':
-      return 'text-white/70';
+    // Draft and auto-draft are neutral states, not warnings — plain white.
+    // Low-opacity white reads as grey on this ground, which is banned.
     default:
-      return 'text-white/55';
+      return 'text-white';
   }
 };
 
@@ -131,8 +122,8 @@ const formatDate = (timestamp: number | string) => {
 /**
  * Certificate card — premium self-contained tile for the 2-up grid on My
  * Certificates. Uniform height (h-full flex column with a spacer), rounded
- * bordered surface, status accent dot + mono type badge up top, big title +
- * address, and a hairline footer carrying the state · date and a yellow "Open".
+ * bordered surface, a plain type eyebrow up top, the title as the one large
+ * element, address beneath, and a quiet state · date meta line at the foot.
  * Tap opens the action sheet (Edit / Download / Delete etc.).
  */
 export const CertificateCard: React.FC<CertificateCardProps> = ({
@@ -141,6 +132,7 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
   isBulkMode = false,
   isSelected = false,
   onSelectToggle,
+  hideStatus = false,
 }) => {
   // ELE-1421 — a team member's cert is someone else's record. Bulk status change
   // and bulk delete both end in `.eq('user_id', <me>)`, which matches zero rows
@@ -182,15 +174,26 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
       className={cn(
         'group relative flex h-full w-full flex-col text-left rounded-2xl border p-3.5 sm:p-4 transition-all touch-manipulation',
         'focus:outline-none focus-visible:ring-1 focus-visible:ring-elec-yellow/50 active:scale-[0.99]',
+        // Slightly brighter surface and border than before: with the volt
+        // "Open" gone the tile has to hold its own edge, and volt is now
+        // reserved for the hover/press state so it still means something.
+        // Selected = a SOLID volt border on a brighter neutral fill. A
+        // translucent volt wash (bg-elec-yellow/[0.07]) reads muddy brown on
+        // this ground, and hover:from-elec-yellow/[0.07] did the same on every
+        // hover. Volt is only ever solid-with-black-text, or plain text.
         isSelected
-          ? 'border-elec-yellow/40 bg-elec-yellow/[0.07]'
-          : 'border-white/[0.09] bg-gradient-to-b from-white/[0.05] to-white/[0.015] hover:border-elec-yellow/30 hover:from-elec-yellow/[0.06] hover:to-white/[0.01]',
+          ? 'border-elec-yellow bg-gradient-to-b from-white/[0.16] to-white/[0.08]'
+          : 'border-white/[0.18] bg-gradient-to-b from-white/[0.12] to-white/[0.06] hover:border-elec-yellow/50 hover:from-white/[0.16]',
         // Not yours to bulk-edit — say so visually instead of failing silently.
         isBulkMode && !selectable && 'opacity-40 active:scale-100 cursor-not-allowed'
       )}
     >
-      {/* Header — type badge (or bulk checkbox) left, lock + status dot right */}
-      <div className="flex items-center justify-between gap-2">
+      {/* Top line — the type as a plain eyebrow, not a bordered chip. A boxed
+          badge is furniture: it draws as much ink as the title it sits above,
+          and twenty of them turn a library into a grid of buttons. Uppercase
+          tracking alone reads as a label. Only the genuinely exceptional
+          markers (amended, locked) earn a bordered chip opposite it. */}
+      <div className="flex items-start justify-between gap-2">
         {isBulkMode && selectable ? (
           <div onClick={(e) => e.stopPropagation()}>
             <Checkbox
@@ -203,52 +206,55 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
             />
           </div>
         ) : (
-          <span className="text-[9px] font-bold uppercase tracking-[0.14em] text-white/75 border border-white/[0.14] bg-white/[0.06] rounded-md px-2 py-1">
+          <span className="truncate text-[10px] font-bold uppercase tracking-[0.16em] text-white">
             {typeLabel}
           </span>
         )}
-        <span className="flex items-center gap-1.5 shrink-0">
-          {version > 1 && (
-            <span
-              className="text-[9px] font-bold uppercase tracking-[0.1em] text-white/70 border border-white/[0.16] bg-white/[0.06] rounded px-1.5 py-0.5"
-              title={`Amended — version ${version}`}
-            >
-              V{version}
-            </span>
-          )}
-          {certificate.lockedAt && (
-            <span
-              className="text-[9px] font-bold uppercase tracking-[0.1em] text-emerald-300 border border-emerald-400/40 bg-emerald-400/[0.06] rounded px-1.5 py-0.5"
-              title="Issued & locked — signed off"
-            >
-              Locked
-            </span>
-          )}
-          <span
-            className={cn('w-2 h-2 rounded-full shrink-0', getStatusDot(certificate.status))}
-            aria-hidden
-          />
-        </span>
+        {(version > 1 || certificate.lockedAt) && (
+          <span className="flex items-center gap-1 shrink-0">
+            {version > 1 && (
+              <span
+                className="text-[9px] font-bold uppercase tracking-[0.1em] text-white border border-white/[0.16] bg-white/[0.06] rounded px-1.5 py-0.5"
+                title={`Amended — version ${version}`}
+              >
+                V{version}
+              </span>
+            )}
+            {certificate.lockedAt && (
+              <span
+                className="text-[9px] font-bold uppercase tracking-[0.1em] text-emerald-300 border border-emerald-400/40 bg-emerald-400/[0.06] rounded px-1.5 py-0.5"
+                title="Issued & locked — signed off"
+              >
+                Locked
+              </span>
+            )}
+          </span>
+        )}
       </div>
 
-      {/* Title */}
+      {/* Title — the one thing anyone scans for, so it gets the size. Every
+          other line on the card is deliberately smaller; that difference is
+          the whole hierarchy, since low-opacity white reads grey here and is
+          not available as a way to push things back. */}
       <h3
         title={title}
-        className="mt-3 text-[15.5px] sm:text-[16px] font-semibold tracking-tight leading-[1.2] text-white group-hover:text-elec-yellow transition-colors line-clamp-2"
+        className="mt-2 text-[16px] sm:text-[17px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors line-clamp-2"
       >
         {title}
       </h3>
 
-      {/* Address — clean text, no inline icon (the pin threw the wrap) */}
-      <p
-        title={certificate.installationAddress || undefined}
-        className={cn(
-          'mt-1.5 text-[12.5px] leading-snug line-clamp-2',
-          certificate.installationAddress ? 'text-white/65' : 'text-white/40 italic'
-        )}
-      >
-        {certificate.installationAddress || 'No address'}
-      </p>
+      {/* Address — clean text, no inline icon (the pin threw the wrap).
+          Absent addresses render nothing at all: a grid of drafts each saying
+          "No address" in grey italics read as a broken screen, and the spacer
+          below already keeps the row heights equal without a filler line. */}
+      {certificate.installationAddress && (
+        <p
+          title={certificate.installationAddress}
+          className="mt-1.5 text-[12.5px] leading-snug text-white line-clamp-2"
+        >
+          {certificate.installationAddress}
+        </p>
+      )}
 
       {/* Attribution + review state. One wrapping row so a team cert carrying
           both chips never pushes the footer out of alignment with its neighbour. */}
@@ -262,12 +268,12 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
               className="inline-flex max-w-full items-center gap-1 rounded border border-white/[0.14] bg-white/[0.06] py-0.5 pl-0.5 pr-1.5"
             >
               <span
-                className="grid h-[15px] w-[15px] shrink-0 place-items-center rounded-[3px] bg-elec-yellow/20 text-[8px] font-bold leading-none text-elec-yellow"
+                className="grid h-[15px] w-[15px] shrink-0 place-items-center rounded-[3px] bg-elec-yellow text-[8px] font-bold leading-none text-black"
                 aria-hidden
               >
                 {ownerInitial}
               </span>
-              <span className="truncate text-[9.5px] font-semibold text-white/85">
+              <span className="truncate text-[9.5px] font-semibold text-white">
                 {ownerFirstName}
               </span>
             </span>
@@ -288,19 +294,36 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
         </div>
       )}
 
-      {/* Spacer keeps every card in a row the same height */}
-      <div className="flex-1 min-h-[12px]" />
+      {/* Spacer keeps every card in a row the same height. No min-height — a
+          card with no address should be short, and the grid's items-stretch
+          already levels it against its neighbours. */}
+      <div className="flex-1" />
 
-      {/* Footer — coloured state · date, round open affordance */}
-      <div className="mt-3 pt-3 border-t border-white/[0.07] flex items-center justify-between gap-2">
-        <span className="min-w-0 flex items-baseline gap-1 text-[11.5px]">
-          <span className={cn('font-semibold shrink-0', statusColor)}>{statusLabel}</span>
-          <span className="text-white/25 shrink-0">·</span>
-          <span className="text-white/50 tabular-nums truncate">
-            {formatDate(certificate.lastModified)}
-          </span>
+      {/*
+        Meta line — state and date together, because they answer the same
+        question: how far along is this and when did I last touch it.
+
+        Three deliberate removals here:
+        · the "Open" label, which was volt on every single card. An accent
+          repeated twenty times stops being an accent, and the whole tile is
+          already a button — the affordance was decoration, not information.
+          Volt now appears on hover/press only, where it means something.
+        · the divider rule, which separated a meta line from empty space.
+        · the state's bold weight. It was reading as loud as the title it sat
+          above; state is context, not the headline.
+      */}
+      <div className="mt-3 flex items-baseline gap-1.5 text-[11.5px] leading-none">
+        {!hideStatus && (
+          <>
+            <span className={cn('shrink-0 truncate', statusColor)}>{statusLabel}</span>
+            <span className="shrink-0 text-white" aria-hidden>
+              ·
+            </span>
+          </>
+        )}
+        <span className="min-w-0 truncate tabular-nums text-white">
+          {formatDate(certificate.lastModified)}
         </span>
-        <span className="shrink-0 text-[12px] font-bold text-elec-yellow">Open</span>
       </div>
     </button>
   );

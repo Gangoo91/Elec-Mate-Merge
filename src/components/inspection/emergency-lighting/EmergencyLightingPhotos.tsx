@@ -2,13 +2,8 @@ import React, { useRef, useState } from 'react';
 import { Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { useHaptic } from '@/hooks/useHaptic';
 import { CertificatePhoto, Luminaire } from '@/types/emergency-lighting';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -24,17 +19,17 @@ interface EmergencyLightingPhotosProps {
 }
 
 const PHOTO_CATEGORIES = [
-  { value: 'installation', label: 'Installation Overview' },
+  { value: 'installation', label: 'Installation overview' },
   { value: 'luminaire', label: 'Luminaire' },
-  { value: 'central-battery', label: 'Central Battery' },
-  { value: 'exit-sign', label: 'Exit Sign' },
+  { value: 'central-battery', label: 'Central battery' },
+  { value: 'exit-sign', label: 'Exit sign' },
 ] as const;
 
 // Gallery grouping includes 'defect' — defect photos are captured from defect
 // rows in Test Results (not via the upload picker) but must still show here.
 const GALLERY_CATEGORIES = [
   ...PHOTO_CATEGORIES,
-  { value: 'defect', label: 'Defect Evidence' },
+  { value: 'defect', label: 'Defect evidence' },
 ] as const;
 
 // Paper-form underline input
@@ -43,8 +38,15 @@ const inputCn =
 
 const labelCn = 'text-[12px] font-medium text-white mb-1 block';
 
-const selectTriggerCn =
-  'h-11 w-full touch-manipulation rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none';
+const pickerTrigger =
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 w-full px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
+
+// Sub-heading inside the photo card — rule above, plain type. No hairlines.
+const GroupHeading = ({ children }: { children: React.ReactNode }) => (
+  <div className="border-t border-white/[0.1] pt-4">
+    <h3 className="text-sm font-semibold text-white">{children}</h3>
+  </div>
+);
 
 export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = ({
   photos,
@@ -53,6 +55,7 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
   onPhotosChange,
   certificateId,
 }) => {
+  const haptic = useHaptic();
   const [isUploading, setIsUploading] = useState(false);
   const [selectedCategory, setSelectedCategory] =
     useState<CertificatePhoto['category']>('installation');
@@ -226,56 +229,54 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
   })).filter((cat) => cat.photos.length > 0);
 
   return (
-    <div className="space-y-4">
-      {/* Upload Section */}
+    <div
+      className="space-y-4"
+      // Delegated press haptic — every chip/button tap here buzzes without
+      // wiring each onClick individually.
+      onPointerDown={(e) => {
+        if ((e.target as HTMLElement).closest('button')) haptic.light();
+      }}
+    >
+      {/* Upload section */}
       <div className="space-y-4">
-        <div className="flex items-center gap-3">
-          <p className="text-[13px] font-semibold text-white shrink-0">Add Photo</p>
-          <div className="h-px flex-1 bg-white/[0.08]" />
-        </div>
+        <GroupHeading>Add photo</GroupHeading>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <div>
-            <Label className={labelCn}>Photo Category</Label>
-            <Select
+            <Label className={labelCn}>Photo category</Label>
+            <MobileSelectPicker
               value={selectedCategory}
               onValueChange={(v) => setSelectedCategory(v as CertificatePhoto['category'])}
-            >
-              <SelectTrigger className={selectTriggerCn}>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {PHOTO_CATEGORIES.map((cat) => (
-                  <SelectItem key={cat.value} value={cat.value}>
-                    {cat.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              options={PHOTO_CATEGORIES.map((cat) => ({ value: cat.value, label: cat.label }))}
+              placeholder="Select..."
+              title="Photo category"
+              triggerClassName={pickerTrigger}
+            />
           </div>
 
           {selectedCategory === 'luminaire' && luminaires.length > 0 && (
             <div>
-              <Label className={labelCn}>Link to Luminaire (Optional)</Label>
-              <Select value={selectedLinkedId} onValueChange={setSelectedLinkedId}>
-                <SelectTrigger className={selectTriggerCn}>
-                  <SelectValue placeholder="Select luminaire..." />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">No link</SelectItem>
-                  {luminaires.map((lum, idx) => (
-                    <SelectItem key={lum.id} value={lum.id}>
-                      #{idx + 1} - {lum.location || 'Unnamed'}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Label className={labelCn}>Link to luminaire (optional)</Label>
+              <MobileSelectPicker
+                value={selectedLinkedId}
+                onValueChange={setSelectedLinkedId}
+                options={[
+                  { value: 'none', label: 'No link' },
+                  ...luminaires.map((lum, idx) => ({
+                    value: lum.id,
+                    label: `#${idx + 1} — ${lum.location || 'Unnamed'}`,
+                  })),
+                ]}
+                placeholder="Select luminaire..."
+                title="Link to luminaire"
+                triggerClassName={pickerTrigger}
+              />
             </div>
           )}
         </div>
 
         <div>
-          <Label className={labelCn}>Caption (Optional)</Label>
+          <Label className={labelCn}>Caption (optional)</Label>
           <Input
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
@@ -302,10 +303,10 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
           {isUploading ? (
             <>
               <Loader2 className="h-4 w-4 mr-2 animate-spin text-black" />
-              Uploading...
+              Uploading…
             </>
           ) : (
-            'Upload Photo'
+            'Upload photo'
           )}
         </button>
       </div>
@@ -315,12 +316,9 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
         <div className="space-y-4">
           {photosByCategory.map((category) => (
             <div key={category.value} className="space-y-2">
-              <div className="flex items-center gap-3">
-                <p className="text-[13px] font-semibold text-white shrink-0">
-                  {category.label} <span className="text-white/80">({category.photos.length})</span>
-                </p>
-                <div className="h-px flex-1 bg-white/[0.08]" />
-              </div>
+              <GroupHeading>
+                {category.label} <span className="text-white/85">({category.photos.length})</span>
+              </GroupHeading>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                 {category.photos.map((photo) => (
                   <div key={photo.id} className="relative">

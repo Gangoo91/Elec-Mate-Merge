@@ -142,12 +142,21 @@ export const MobileSelectPicker = ({
                 'h-11 px-3 rounded-lg',
                 'touch-manipulation active:scale-[0.98]',
                 'transition-all duration-150',
+                // Selected is SOLID volt with black text. A translucent volt
+                // wash (elec-yellow/20) reads brown on this dark surface.
                 value === option.value
-                  ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30'
-                  : 'bg-white/[0.05] hover:bg-white/[0.08] border border-transparent'
+                  ? 'bg-elec-yellow border border-elec-yellow text-black'
+                  : 'bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.12] text-white'
               )}
             >
-              <span className="text-xs font-medium truncate">{option.label}</span>
+              <span
+                className={cn(
+                  'text-xs truncate',
+                  value === option.value ? 'font-semibold' : 'font-medium'
+                )}
+              >
+                {option.label}
+              </span>
               {value === option.value && <Check className="h-3.5 w-3.5 flex-shrink-0 ml-1" />}
             </button>
           ))}
@@ -180,7 +189,7 @@ export const MobileSelectPicker = ({
                   setOpen(false);
                 }
               }}
-              className="h-11 px-4 rounded-lg font-semibold text-xs bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow touch-manipulation active:scale-[0.98] disabled:opacity-30"
+              className="h-11 px-4 rounded-lg font-semibold text-xs bg-elec-yellow border border-elec-yellow text-black touch-manipulation active:scale-[0.98] disabled:opacity-30"
             >
               Use
             </button>

@@ -171,6 +171,44 @@ export function bulletList(items: string[]): string {
   return `<ul class="bullet-list">${lis}</ul>`;
 }
 
+/** A photo, as stored. Site Safety writes bare public URLs; a few surfaces
+ *  (briefings) store `{ url, caption }`. Accept both — the read path has to
+ *  tolerate what is already in the tables. */
+export type PhotoRef = string | { url?: string | null; caption?: string | null };
+
+/**
+ * Render captured photos.
+ *
+ * Eleven safety tables carry a `photos` column and the UI writes to it, but no
+ * template rendered them and this base offered no way to — so every photo an
+ * electrician took as evidence was silently dropped from the PDF. On an
+ * accident record or a near miss that is the part an investigator actually
+ * wants.
+ *
+ * Photos are public storage URLs, so they embed directly. Anything that isn't a
+ * usable URL is skipped rather than emitting a broken image on a document that
+ * may be filed as evidence.
+ */
+export function photoGrid(photos: PhotoRef[] | null | undefined, cols = 2): string {
+  const items = (photos ?? [])
+    .map((p) => (typeof p === 'string' ? { url: p, caption: null } : { url: p?.url, caption: p?.caption }))
+    .filter((p): p is { url: string; caption: string | null } => typeof p.url === 'string' && /^https?:\/\//.test(p.url));
+
+  if (items.length === 0) return '';
+
+  const cells = items
+    .map(
+      (p) => `
+      <figure class="photo-cell">
+        <img src="${esc(p.url)}" alt="" />
+        ${p.caption ? `<figcaption>${esc(p.caption)}</figcaption>` : ''}
+      </figure>`
+    )
+    .join('');
+
+  return `<div class="photo-grid" style="grid-template-columns: repeat(${cols}, 1fr);">${cells}</div>`;
+}
+
 export function signatureBlock(parties: SignatureParty[]): string {
   const blocks = parties
     .map(
@@ -491,6 +529,19 @@ export function renderPage(opts: {
   .bullet-list li::before {
     content: ''; position: absolute; left: 0; top: 10px;
     width: 5px; height: 5px; background: ${primary}; border-radius: 50%;
+  }
+
+  /* ── Photo grid ────────────────────────────────────── */
+  /* break-inside avoids a photo being sliced across a page boundary, which on
+     an accident or near-miss record is the evidence itself. */
+  .photo-grid { display: grid; gap: 10px; margin: 10px 0 4px; }
+  .photo-cell { margin: 0; break-inside: avoid; page-break-inside: avoid; }
+  .photo-cell img {
+    width: 100%; height: 150px; object-fit: cover; display: block;
+    border: 1px solid #e5e7eb; border-radius: 6px; background: #f3f4f6;
+  }
+  .photo-cell figcaption {
+    margin-top: 4px; font-size: 9px; color: #6b7280; line-height: 1.4;
   }
 
   /* ── Signature block ───────────────────────────────── */

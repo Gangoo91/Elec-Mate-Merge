@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { SectionHeader } from "./BESSSectionHeader";
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -22,9 +22,8 @@ const Field = ({ label, required, children }: { label: string; required?: boolea
 );
 
 const Sub = ({ title }: { title: string }) => (
-  <div className="flex items-center gap-2 pt-2">
-    <p className="text-[13px] font-semibold text-white shrink-0">{title}</p>
-    <div className="h-px flex-1 bg-white/[0.08]" />
+  <div className="border-t border-white/[0.1] pt-4">
+    <h3 className="text-sm font-semibold text-white">{title}</h3>
   </div>
 );
 
@@ -117,6 +116,23 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
   // Auto-set configuration based on module count
   const moduleCount = parseInt(formData.numberOfModules) || 1;
   const autoConfig = moduleCount === 1 ? 'single' : 'parallel';
+
+  // Commit the two displayed fallbacks into formData — both inputs rendered a
+  // computed value that was never stored, so the PDF lost them. The template
+  // wraps total generation in `{% unless totalSiteGeneration == blank %}`, so
+  // the whole "Total Generation — G98/G99" row was dropped; configuration
+  // printed "1 ()". Only fills a blank, never overwrites a user's entry.
+  useEffect(() => {
+    if (!formData.configuration && autoConfig) onUpdate('configuration', autoConfig);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData.configuration, autoConfig]);
+
+  useEffect(() => {
+    if (!formData.totalSiteGeneration && totalGeneration > 0) {
+      onUpdate('totalSiteGeneration', String(totalGeneration));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData.totalSiteGeneration, totalGeneration]);
 
   const applyPreset = useCallback((preset: BatteryPreset) => {
     onUpdate('batteryManufacturer', preset.manufacturer);

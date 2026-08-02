@@ -8,13 +8,6 @@ import {
 } from '@/components/ui/responsive-form-modal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import {
   Command,
@@ -56,10 +49,9 @@ import {
   PrimaryButton,
   SecondaryButton,
   inputClass,
-  selectTriggerClass,
-  selectContentClass,
   fieldLabelClass,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 
 const EXPIRY_OPTIONS = [
   { value: 1, label: '1 year' },
@@ -574,7 +566,7 @@ export const AddTrainingRecordDialog = ({
           )}
 
           {/* Section 1: Course Details */}
-          <FormCard eyebrow="Course details">
+          <FormCard bleed eyebrow="Course details">
             <div className="flex items-center gap-2 -mt-1">
               <Award className="h-4 w-4 text-elec-yellow" />
               <span className="text-[12.5px] text-white">Select the course / qualification</span>
@@ -883,7 +875,7 @@ export const AddTrainingRecordDialog = ({
           </FormCard>
 
           {/* Section 2: Dates & Certificate */}
-          <FormCard eyebrow="Dates & certificate">
+          <FormCard bleed eyebrow="Dates & certificate">
             <div className="flex items-center gap-2 -mt-1">
               <Clock className="h-4 w-4 text-elec-yellow" />
               <span className="text-[12.5px] text-white">Record when completed and when it expires</span>
@@ -925,26 +917,17 @@ export const AddTrainingRecordDialog = ({
           </FormCard>
 
           {/* Funding Info — only funding source persists (employer_elec_id_training.funded_by) */}
-          <FormCard eyebrow="Funding information">
+          <FormCard bleed eyebrow="Funding information">
             <div className="flex items-center gap-2 -mt-1">
               <PoundSterling className="h-4 w-4 text-elec-yellow" />
               <span className="text-[12.5px] text-white">Optional</span>
             </div>
             <Field label="Funding source">
-              <Select
-                value={formData.fundingSource}
-                onValueChange={(value) => setFormData({ ...formData, fundingSource: value })}
-              >
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  <SelectItem value="employer">Employer Funded</SelectItem>
-                  <SelectItem value="worker">Worker Self-Funded</SelectItem>
-                  <SelectItem value="grant">Grant / Subsidy</SelectItem>
-                  <SelectItem value="apprenticeship">Apprenticeship Levy</SelectItem>
-                </SelectContent>
-              </Select>
+              <SelectField
+        value={formData.fundingSource}
+        onValueChange={(value) => setFormData({ ...formData, fundingSource: value })}
+        options={[{ value: 'employer', label: 'Employer Funded' }, { value: 'worker', label: 'Worker Self-Funded' }, { value: 'grant', label: 'Grant / Subsidy' }, { value: 'apprenticeship', label: 'Apprenticeship Levy' }]}
+      />
             </Field>
           </FormCard>
         </div>

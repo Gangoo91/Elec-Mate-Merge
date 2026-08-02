@@ -12,6 +12,26 @@ export interface EICObservation {
   createdAt: string;
 }
 
+/** The three classifications the EIC observation card actually renders. */
+export type EICDefectDisplayCode = 'unsatisfactory' | 'limitation' | 'not-applicable';
+
+/**
+ * Read-path tolerance for legacy defect codes. Older EIC certs stored EICR
+ * codes ('C1'/'C2'/'C3') that the EIC card has no chips for — map them to
+ * 'unsatisfactory' so saved observations still highlight a chip, get a status
+ * border and are counted. The write path only ever stores EIC codes now.
+ */
+export const normalizeEICDefectCode = (code: string | undefined): EICDefectDisplayCode => {
+  switch (code) {
+    case 'limitation':
+      return 'limitation';
+    case 'not-applicable':
+      return 'not-applicable';
+    default:
+      return 'unsatisfactory';
+  }
+};
+
 export const useEICObservations = (initialObservations: EICObservation[] = []) => {
   const [observations, setObservations] = useState<EICObservation[]>(initialObservations);
 

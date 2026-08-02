@@ -1,6 +1,14 @@
 import { cableSizeOptions } from '@/types/cableTypes';
 
-// Enhanced cable current carrying capacities with installation methods
+// Installation-method derating used by the quick cable-capacity guidance.
+//
+// ⚠️ GUIDANCE FIGURES, NOT BS 7671 DATA. Appendix 4 publishes a tabulated
+// current-carrying capacity per reference method (Tables 4D1A–4G1A) — it does
+// not publish multipliers off Method C. These factors are an in-house
+// approximation for indicative guidance only; never present a result derived
+// from them as a BS 7671 Appendix 4 value or as a pass/fail against it. For
+// real Iz values use `@/lib/calculators/bs7671-data/appendix4CurrentCapacity`
+// (verified per-method tables), as `cableProtectiveDeviceValidator` now does.
 export const installationMethods = {
   method_c: { label: 'Method C (Clipped Direct)', factor: 1.0 },
   method_a1: { label: 'Method A1 (Conduit in Wall)', factor: 0.87 },
@@ -9,14 +17,16 @@ export const installationMethods = {
   method_e: { label: 'Method E (Free Air)', factor: 1.2 },
 };
 
-// Voltage drop factors (mV/A/m) for different cable types
-export const voltageDropFactors = {
-  pvc_copper: { r: 18, x: 0 },
-  xlpe_copper: { r: 18, x: 0 },
-  pvc_aluminium: { r: 29, x: 0 },
-  armoured_copper: { r: 18, x: 2.3 },
-  armoured_aluminium: { r: 29, x: 2.3 },
-};
+// NOTE: the old `voltageDropFactors` table and the `calculateVoltageDrop` /
+// `getMaximumCableLength` helpers were removed here. They held a SINGLE
+// mV/A/m constant per cable type (18 = the 2.5 mm² T&E figure) and then divided
+// by the CSA again — Appendix 4's mV/A/m is already per conductor size, so the
+// drop was under-reported by a factor of the CSA. They also combined R and X as
+// √(R²+X²) instead of R·cosφ + X·sinφ, and applied a flat 5% limit where
+// Appendix 4 §6.4 gives 3% for lighting. Nothing consumed them.
+//
+// Voltage drop belongs to the verified Appendix 4 dataset in
+// `@/lib/calculators/bs7671-data/` — use that, per size and reference method.
 
 export const cableTypes = [
   { value: 'pvc_copper', label: '70°C PVC Copper', tempRating: 70 },
@@ -41,37 +51,6 @@ export const getCableCapacity = (
   return isRingCircuit ? adjustedCapacity * 2 : adjustedCapacity;
 };
 
-// Enhanced voltage drop calculation
-export const calculateVoltageDrop = (
-  cableType: string,
-  cableSize: string,
-  length: number,
-  current: number,
-  powerFactor: number = 1.0
-): { voltageDrop: number; percentage: number; compliant: boolean } => {
-  const cable = cableSizeOptions.find((option) => option.value === cableSize);
-  const dropFactors = voltageDropFactors[cableType as keyof typeof voltageDropFactors];
-
-  if (!cable || !dropFactors) {
-    return { voltageDrop: 0, percentage: 0, compliant: false };
-  }
-
-  const csaValue = parseFloat(cableSize.replace('mm', ''));
-  const resistance = dropFactors.r;
-  const reactance = dropFactors.x;
-
-  // Calculate voltage drop considering power factor
-  const resistiveDrop = (resistance * length * current) / (1000 * csaValue);
-  const reactiveDrop =
-    (reactance * length * current * Math.sqrt(1 - powerFactor * powerFactor)) / (1000 * csaValue);
-  const totalDrop = Math.sqrt(resistiveDrop * resistiveDrop + reactiveDrop * reactiveDrop);
-
-  const percentage = (totalDrop / 230) * 100;
-  const compliant = percentage <= 5.0; // 5% limit for most circuits
-
-  return { voltageDrop: totalDrop, percentage, compliant };
-};
-
 // Get minimum cable size for a given protective device rating
 export const getCableSizeForRating = (
   rating: number,
@@ -89,26 +68,4 @@ export const getCableSizeForRating = (
   );
 
   return suitableCables.length > 0 ? suitableCables[0].label : 'Check manufacturer data';
-};
-
-// Calculate maximum cable length for given voltage drop limit
-export const getMaximumCableLength = (
-  cableType: string,
-  cableSize: string,
-  current: number,
-  voltageDropLimit: number = 5.0,
-  powerFactor: number = 1.0
-): number => {
-  const cable = cableSizeOptions.find((option) => option.value === cableSize);
-  const dropFactors = voltageDropFactors[cableType as keyof typeof voltageDropFactors];
-
-  if (!cable || !dropFactors) return 0;
-
-  const csaValue = parseFloat(cableSize.replace('mm', ''));
-  const maxVoltageDrop = (230 * voltageDropLimit) / 100;
-
-  // Simplified calculation for maximum length
-  const maxLength = (maxVoltageDrop * csaValue * 1000) / (dropFactors.r * current);
-
-  return Math.floor(maxLength);
 };

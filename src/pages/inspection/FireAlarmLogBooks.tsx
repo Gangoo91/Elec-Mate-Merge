@@ -6,7 +6,7 @@
  * and plain-English category descriptions — only the building name is
  * required, everything else can be added later from Manage.
  */
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
@@ -457,6 +457,10 @@ const FireAlarmLogBooks = () => {
 
   const [createOpen, setCreateOpen] = useState(false);
   const [step, setStep] = useState(0);
+  // ELE-1464 — land each wizard step at the top. The steps live inside the
+  // sheet's own scroll container, so window.scrollTo would be a no-op here.
+  const stepScrollRef = useRef<HTMLDivElement>(null);
+  const scrollToTop = () => stepScrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
   const [saving, setSaving] = useState(false);
   const [search, setSearch] = useState('');
 
@@ -830,7 +834,7 @@ const FireAlarmLogBooks = () => {
               </div>
             </div>
 
-            <div className="overflow-y-auto overscroll-contain min-h-0 px-5 py-5">
+            <div ref={stepScrollRef} className="overflow-y-auto overscroll-contain min-h-0 px-5 py-5">
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={step}
@@ -1077,7 +1081,10 @@ const FireAlarmLogBooks = () => {
               <div className="max-w-5xl mx-auto w-full flex gap-2.5">
                 {step > 0 && (
                   <Button
-                    onClick={() => setStep((s) => s - 1)}
+                    onClick={() => {
+                      setStep((s) => s - 1);
+                      scrollToTop();
+                    }}
                     variant="outline"
                     className="h-12 px-5 rounded-xl border-white/[0.15] bg-white/[0.05] text-white hover:bg-white/[0.1] touch-manipulation"
                   >
@@ -1092,6 +1099,7 @@ const FireAlarmLogBooks = () => {
                         return;
                       }
                       setStep((s) => s + 1);
+                      scrollToTop();
                     }}
                     className="flex-1 h-12 rounded-xl bg-elec-yellow text-black font-semibold hover:bg-yellow-400 touch-manipulation"
                   >

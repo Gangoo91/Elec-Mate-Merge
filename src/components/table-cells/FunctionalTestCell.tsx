@@ -29,7 +29,7 @@ const FunctionalTestCellComponent: React.FC<FunctionalTestCellProps> = ({ result
         value={result.functionalTesting || ''}
         onValueChange={handleChange}
       >
-        <SelectTrigger className="h-8 text-sm px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
+        <SelectTrigger className="h-8 text-sm px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-white/[0.04] focus:bg-transparent focus:ring-1 focus:ring-inset focus:ring-elec-yellow focus:shadow-none">
           <SelectValue placeholder="—" />
         </SelectTrigger>
         <SelectContent

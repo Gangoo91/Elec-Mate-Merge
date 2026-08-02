@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Disconnection Certificate</title>
   <style>
-    :root { --accent: #f59e0b; --accent-2: #fbbf24; --ink: #0a1628; }
+    :root { --accent: {{ companyAccentColor | default: '#f59e0b' }}; --accent-2: {{ companyAccentColor | default: '#fbbf24' }}; --ink: #0a1628; }
     @page { size: A4; margin: 6mm 6mm 7mm 6mm; }
     /* Client-facing cover renders full-bleed (zero page margin) */
     @page cover { size: A4; margin: 0; }

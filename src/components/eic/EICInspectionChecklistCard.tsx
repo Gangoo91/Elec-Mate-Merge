@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
-import { Check, Minus, MessageSquare } from 'lucide-react';
 import { EICInspectionItem } from '@/data/bs7671EICChecklistData';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
@@ -28,6 +27,9 @@ const InspectionItemRow: React.FC<{
   const [swipeOffset, setSwipeOffset] = useState(0);
   const [localNotes, setLocalNotes] = useState(item.notes || '');
   const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
+  // Notes live behind a toggle so 14 items stay scannable; a saved note keeps
+  // its editor open (incl. async hydration — the effect below re-syncs).
+  const [showNotes, setShowNotes] = useState(!!item.notes);
 
   const handleNotesChange = (value: string) => {
     setLocalNotes(value);
@@ -38,6 +40,7 @@ const InspectionItemRow: React.FC<{
 
   React.useEffect(() => {
     setLocalNotes(item.notes || '');
+    if (item.notes) setShowNotes(true);
   }, [item.notes]);
 
   React.useEffect(() => {
@@ -80,14 +83,14 @@ const InspectionItemRow: React.FC<{
   };
 
   return (
-    <div className="relative overflow-hidden rounded-lg">
+    <div className="relative overflow-hidden rounded-xl">
       {/* Swipe backgrounds */}
       <div className="absolute inset-0 flex pointer-events-none">
-        <div className={cn('flex-1 flex items-center px-4', swipeOffset > 20 ? 'opacity-100' : 'opacity-0', 'bg-green-500/20')}>
-          <Check className="h-5 w-5 text-green-400" />
+        <div className={cn('flex-1 flex items-center px-4', swipeOffset > 20 ? 'opacity-100' : 'opacity-0', 'bg-green-500')}>
+          <span className="text-xs font-semibold text-black">Satisfactory</span>
         </div>
-        <div className={cn('flex-1 flex items-center justify-end px-4', swipeOffset < -20 ? 'opacity-100' : 'opacity-0', 'bg-white/[0.06]')}>
-          <span className="text-xs text-white">N/A</span>
+        <div className={cn('flex-1 flex items-center justify-end px-4', swipeOffset < -20 ? 'opacity-100' : 'opacity-0', 'bg-white/[0.1]')}>
+          <span className="text-xs font-semibold text-white">N/A</span>
         </div>
       </div>
 
@@ -95,76 +98,87 @@ const InspectionItemRow: React.FC<{
         {...swipeHandlers}
         style={{ transform: `translateX(${swipeOffset}px)`, transition: swipeOffset === 0 ? 'transform 200ms ease-out' : 'none' }}
         className={cn(
-          'relative p-3 border-l-4 bg-white/[0.06] border border-white/[0.08] rounded-lg touch-manipulation',
+          'relative p-3 sm:py-2.5 border-l-4 bg-white/[0.05] border border-white/[0.1] rounded-xl touch-manipulation',
           getBorderColor(),
-          item.outcome === 'satisfactory' && 'bg-green-500/[0.08]',
-          item.outcome === 'limitation' && 'bg-amber-500/[0.08]',
         )}
       >
-        {/* Item number + description + buttons in one row */}
-        <div className="flex items-start gap-2">
-          <span className={cn(
-            'text-[10px] font-bold mt-0.5 shrink-0 w-5 text-center',
-            item.outcome === 'satisfactory' ? 'text-green-400' :
-            item.outcome === 'limitation' ? 'text-amber-400' :
-            'text-elec-yellow'
-          )}>
-            {item.itemNumber}
-          </span>
+        {/* Mobile: text stacked over the chip row. Desktop: one dense line —
+            text left, fixed-width chips + Note toggle right — so 14 items scan
+            without a marathon scroll. */}
+        <div className="sm:flex sm:items-center sm:gap-3">
+          <div className="flex items-start gap-2 sm:flex-1 sm:min-w-0">
+            <span className={cn(
+              'text-[11px] font-bold mt-0.5 shrink-0 w-5 text-center',
+              item.outcome === 'satisfactory' ? 'text-green-400' :
+              item.outcome === 'limitation' ? 'text-amber-400' :
+              'text-elec-yellow'
+            )}>
+              {item.itemNumber}
+            </span>
+            <p className="flex-1 min-w-0 text-[13px] text-white leading-snug">{item.description}</p>
+          </div>
 
-          <div className="flex-1 min-w-0">
-            <p className="text-xs text-white leading-snug">{item.description}</p>
-
-            {/* Outcome buttons — compact row */}
-            <div className="flex gap-1 mt-2">
-              <button
-                onClick={() => { haptic.light(); onOutcomeChange(item.id, 'satisfactory'); }}
-                className={cn(
-                  'h-8 flex-1 rounded-md font-semibold text-[11px] transition-all touch-manipulation active:scale-[0.97] flex items-center justify-center gap-1',
-                  item.outcome === 'satisfactory'
-                    ? 'bg-green-500/20 border border-green-500/40 text-green-400'
-                    : 'bg-white/[0.03] border border-white/[0.06] text-white'
-                )}
-              >
-                ✓
-              </button>
-              <button
-                onClick={() => { haptic.light(); onOutcomeChange(item.id, 'not-applicable'); }}
-                className={cn(
-                  'h-8 flex-1 rounded-md font-semibold text-[11px] transition-all touch-manipulation active:scale-[0.97]',
-                  item.outcome === 'not-applicable'
-                    ? 'bg-white/[0.08] border border-white/[0.15] text-white'
-                    : 'bg-white/[0.03] border border-white/[0.06] text-white'
-                )}
-              >
-                N/A
-              </button>
-              <button
-                onClick={() => { haptic.warning(); onOutcomeChange(item.id, 'limitation'); }}
-                className={cn(
-                  'h-8 flex-1 rounded-md font-semibold text-[11px] transition-all touch-manipulation active:scale-[0.97]',
-                  item.outcome === 'limitation'
-                    ? 'bg-amber-500/20 border border-amber-500/40 text-amber-400'
-                    : 'bg-white/[0.03] border border-white/[0.06] text-white'
-                )}
-              >
-                LIM
-              </button>
-            </div>
-
-            {/* Notes — always visible. Small + low-contrast until focused so it
-                doesn't clutter; discovery problem fix from EIC audit. */}
-            <div className="mt-2">
-              <Textarea
-                placeholder="Notes (optional)…"
-                value={localNotes}
-                onChange={(e) => handleNotesChange(e.target.value)}
-                className="min-h-[32px] text-xs bg-white/[0.03] border-white/[0.05] resize-none focus:ring-1 focus:ring-elec-yellow/30 placeholder:text-white/40"
-                style={{ fontSize: '13px' }}
-              />
-            </div>
+          {/* Outcome chips + Note toggle */}
+          <div className="mt-2 sm:mt-0 flex items-center gap-1.5 sm:shrink-0 pl-7 sm:pl-0">
+            <button
+              onClick={() => { haptic.light(); onOutcomeChange(item.id, 'satisfactory'); }}
+              className={cn(
+                'h-11 flex-1 sm:flex-none sm:w-14 rounded-lg font-semibold text-[12px] transition-all touch-manipulation active:scale-[0.97] flex items-center justify-center',
+                item.outcome === 'satisfactory'
+                  ? 'bg-green-500 border border-green-500 text-black'
+                  : 'bg-white/[0.06] border border-white/[0.12] text-white'
+              )}
+            >
+              Sat
+            </button>
+            <button
+              onClick={() => { haptic.light(); onOutcomeChange(item.id, 'not-applicable'); }}
+              className={cn(
+                'h-11 flex-1 sm:flex-none sm:w-14 rounded-lg font-semibold text-[12px] transition-all touch-manipulation active:scale-[0.97]',
+                item.outcome === 'not-applicable'
+                  ? 'bg-white/[0.18] border border-white/[0.25] text-white'
+                  : 'bg-white/[0.06] border border-white/[0.12] text-white'
+              )}
+            >
+              N/A
+            </button>
+            <button
+              onClick={() => { haptic.warning(); onOutcomeChange(item.id, 'limitation'); }}
+              className={cn(
+                'h-11 flex-1 sm:flex-none sm:w-14 rounded-lg font-semibold text-[12px] transition-all touch-manipulation active:scale-[0.97]',
+                item.outcome === 'limitation'
+                  ? 'bg-amber-500 border border-amber-500 text-black'
+                  : 'bg-white/[0.06] border border-white/[0.12] text-white'
+              )}
+            >
+              LIM
+            </button>
+            <button
+              onClick={() => setShowNotes((v) => !v)}
+              aria-expanded={showNotes}
+              className={cn(
+                'h-11 px-2.5 rounded-lg text-[12px] font-semibold transition-all touch-manipulation active:scale-[0.97] shrink-0',
+                showNotes || localNotes
+                  ? 'text-elec-yellow'
+                  : 'text-white'
+              )}
+            >
+              Note
+            </button>
           </div>
         </div>
+
+        {/* Notes — collapsed behind the toggle; open rows keep the soft area */}
+        {showNotes && (
+          <div className="mt-2 pl-7 sm:pl-7">
+            <Textarea
+              placeholder="Notes (optional)…"
+              value={localNotes}
+              onChange={(e) => handleNotesChange(e.target.value)}
+              className="textarea-soft min-h-[44px] resize-none rounded-xl border-0 bg-white/[0.05] px-3 py-2.5 text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none touch-manipulation"
+            />
+          </div>
+        )}
       </div>
     </div>
   );
@@ -213,8 +227,10 @@ const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
   }
 
   return (
-    <div className="space-y-1">
-      <p className="text-[9px] text-white mb-2">Swipe right = ✓ · Swipe left = N/A</p>
+    <div className="space-y-2">
+      <p className="text-[11px] text-white sm:hidden">
+        Swipe right for satisfactory, swipe left for N/A
+      </p>
       {inspectionItems.map((item) => (
         <InspectionItemRow
           key={item.id}

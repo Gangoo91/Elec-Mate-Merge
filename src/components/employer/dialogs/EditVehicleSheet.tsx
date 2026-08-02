@@ -41,6 +41,7 @@ import {
   selectContentClass,
   fieldLabelClass,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 
 const VEHICLE_STATUSES: VehicleStatus[] = ['Active', 'Available', 'Maintenance', 'Off Road'];
 const VEHICLE_TYPES: VehicleType[] = ['Van', 'Truck', 'Car', 'Pickup'];
@@ -147,7 +148,7 @@ export function EditVehicleSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side={isMobile ? 'bottom' : 'right'}
-        className={cn('p-0 overflow-hidden', isMobile ? 'h-[90vh]' : 'w-[480px]')}
+        className={cn('p-0 overflow-hidden', isMobile ? 'h-[85vh]' : 'w-[480px]')}
       >
         <SheetShell
           eyebrow="Fleet"
@@ -248,6 +249,7 @@ export function EditVehicleSheet({
               <Field label="Year">
                 <Input
                   type="number"
+                            inputMode="decimal"
                   value={year}
                   onChange={(e) => setYear(e.target.value)}
                   placeholder="2022"
@@ -255,18 +257,12 @@ export function EditVehicleSheet({
                 />
               </Field>
               <Field label="Type">
-                <Select value={vehicleType} onValueChange={(v) => setVehicleType(v as VehicleType)}>
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue placeholder="Select..." />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    {VEHICLE_TYPES.map((type) => (
-                      <SelectItem key={type} value={type}>
-                        {type}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <SelectField
+        value={vehicleType}
+        onValueChange={(v) => setVehicleType(v as VehicleType)}
+        placeholder="Select..."
+        options={VEHICLE_TYPES.map((type) => ({ value: type, label: type }))}
+      />
               </Field>
             </FormGrid>
             <FormGrid cols={2}>
@@ -322,23 +318,17 @@ export function EditVehicleSheet({
                 </Select>
               </Field>
               <Field label="Status">
-                <Select value={status} onValueChange={(v) => setStatus(v as VehicleStatus)}>
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    {VEHICLE_STATUSES.map((s) => (
-                      <SelectItem key={s} value={s}>
-                        {s}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <SelectField
+        value={status}
+        onValueChange={(v) => setStatus(v as VehicleStatus)}
+        options={VEHICLE_STATUSES.map((s) => ({ value: s, label: s }))}
+      />
               </Field>
             </FormGrid>
             <Field label="Current mileage">
               <Input
                 type="number"
+                            inputMode="decimal"
                 value={mileage}
                 onChange={(e) => setMileage(e.target.value)}
                 placeholder="45000"

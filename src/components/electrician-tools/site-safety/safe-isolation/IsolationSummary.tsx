@@ -119,7 +119,7 @@ export function IsolationSummary({ record, onBack }: IsolationSummaryProps) {
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
   const requestApproval = useRequestApproval();
   const updateRecord = useUpdateIsolationRecord();
-  const { data: jobs = [] } = useSparkProjects('active');
+  const { projects: jobs = [] } = useSparkProjects('active');
   const linkedJobTitle = record.job_id
     ? (jobs.find((j) => j.id === record.job_id)?.title ?? null)
     : null;

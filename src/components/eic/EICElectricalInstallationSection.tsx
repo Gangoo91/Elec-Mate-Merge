@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useHaptic } from '@/hooks/useHaptic';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
@@ -10,31 +11,38 @@ import {
   MAIN_BOARD_ID,
 } from '@/types/distributionBoard';
 import { cn } from '@/lib/utils';
-import {
-  FieldLimitationBadge,
-  FieldNotesInput,
-  isFieldMarker,
-} from '@/components/field-limitations';
+import useReadingKeypad from '@/hooks/useReadingKeypad';
 
-const SectionTitle = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const pickerTriggerCn =
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
+
+const chipBase =
+  'h-11 rounded-xl text-xs transition-all touch-manipulation active:scale-[0.98]';
+const chipOn = 'bg-elec-yellow border border-elec-yellow text-black font-semibold';
+const chipOff = 'bg-white/[0.06] border border-white/[0.12] text-white font-medium';
+
+const SectionHeading = ({ title }: { title: string }) => (
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const FormField = ({ label, required, hint, trailing, children }: { label: string; required?: boolean; hint?: string; trailing?: React.ReactNode; children: React.ReactNode }) => (
   <div>
-    <div className="flex items-center justify-between gap-2 mb-1.5">
-      <Label className="text-white text-xs">{label}{required && ' *'}</Label>
+    <div className="flex items-center justify-between gap-2 mb-1">
+      <Label className="text-[12px] font-medium text-white">{label}{required && ' *'}</Label>
       {trailing}
     </div>
     {children}
-    {hint && <span className="text-[10px] text-white block mt-1">{hint}</span>}
+    {hint && <span className="text-[11px] text-white block mt-1">{hint}</span>}
   </div>
 );
-
-const inputClasses = "h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]";
 
 interface EICElectricalInstallationSectionProps {
   formData: Record<string, unknown>;
@@ -45,8 +53,27 @@ const EICElectricalInstallationSection = ({
   formData,
   onUpdate,
 }: EICElectricalInstallationSectionProps) => {
-  const hasRCDProtection = formData.rcdMainSwitch && formData.rcdMainSwitch !== 'no';
+  // Legacy tolerance: the old smart-defaults bug wrote 'recommended' into
+  // rcdMainSwitch — never a chip value. Treat it as unset so certs that
+  // already stored it don't show the RCD detail fields with no chip lit.
+  const hasRCDProtection =
+    formData.rcdMainSwitch &&
+    formData.rcdMainSwitch !== 'no' &&
+    formData.rcdMainSwitch !== 'recommended';
   const showRCDFields = hasRCDProtection;
+
+  // Reading keypad — shared MW pattern for the two free-number RCD time
+  // readings, matching the Supply (Hz/Ipf/Ze) and Earthing (RA/max demand)
+  // sections so every numeric reading on the tab uses the same entry surface.
+  const keypad = useReadingKeypad({
+    meta: {
+      rcdOperatingTime: { label: 'RCD rated operating time', unit: 'ms' },
+      rcdMeasuredTime: { label: 'RCD measured operating time', unit: 'ms' },
+    },
+    sequence: ['rcdOperatingTime', 'rcdMeasuredTime'],
+    getValue: (field) => String(formData[field] ?? ''),
+    setValue: (field, value) => onUpdate(field, value),
+  });
 
   // Smart cascading: device type → auto-set BS EN
   const DEVICE_TO_BS: Record<string, string> = {
@@ -124,18 +151,6 @@ const EICElectricalInstallationSection = ({
   };
 
   // --- Option arrays ---
-
-  const deviceTypeOptions = [
-    { value: '__clear__', label: '— Clear —' },
-    { value: 'main-switch', label: 'Main Switch' },
-    { value: 'switch-fuse', label: 'Switch Fuse' },
-    { value: 'circuit-breaker', label: 'Circuit-breaker' },
-    { value: 'rcd', label: 'RCD' },
-    { value: 'mcb', label: 'MCB' },
-    { value: 'mccb', label: 'MCCB' },
-    { value: 'fuse', label: 'Fuse' },
-    { value: 'isolator', label: 'Isolator' },
-  ];
 
   const bsEnOptions = [
     { value: '__clear__', label: '— Clear —' },
@@ -252,21 +267,6 @@ const EICElectricalInstallationSection = ({
     { value: '100', label: '100kA' },
   ];
 
-  const rcdRatingOptions = [
-    { value: '__clear__', label: '— Clear —' },
-    { value: '30', label: '30mA' },
-    { value: '100', label: '100mA' },
-    { value: '300', label: '300mA' },
-  ];
-
-  const rcdTypeOptions = [
-    { value: '__clear__', label: '— Clear —' },
-    { value: 'ac', label: 'AC Type' },
-    { value: 'a', label: 'A Type' },
-    { value: 'b', label: 'B Type' },
-    { value: 'f', label: 'F Type' },
-  ];
-
   const rcdTimeDelayOptions = [
     { value: '__clear__', label: '— Clear —' },
     { value: '0', label: '0ms (No delay)' },
@@ -280,131 +280,145 @@ const EICElectricalInstallationSection = ({
   // RCD Main Switch toggle value
   const rcdMainSwitchValue = (formData.rcdMainSwitch as string) || '';
 
+
+  const haptic = useHaptic();
   return (
-    <div className="space-y-4">
+    <div
+      // lg:contents — on desktop each card becomes its own grid item of the
+      // parent 2-col grid (the MW per-card layout), so sections of different
+      // heights no longer leave multi-card blank bands. Events still bubble
+      // through display:contents, so the delegated haptic keeps working.
+      className="space-y-4 lg:space-y-0 lg:contents"
+      // Delegated press haptic — every chip/button tap in this section buzzes
+      // like the MW tabs without wiring each onClick individually.
+      onPointerDown={(e) => {
+        if ((e.target as HTMLElement).closest('button')) haptic.light();
+      }}
+    >
       {/* Main Switch */}
-      <SectionTitle title="Main Switch / Circuit-Breaker / RCD" />
+      <div className={cardCn}>
+        <SectionHeading title="Main switch / circuit-breaker / RCD" />
 
-      {/* Device Type as toggle buttons */}
-      <div className="grid grid-cols-4 gap-1">
-        {[
-          { value: 'main-switch', label: 'Switch' },
-          { value: 'circuit-breaker', label: 'CB' },
-          { value: 'rcd', label: 'RCD' },
-          { value: 'fuse', label: 'Fuse' },
-        ].map((opt) => (
-          <button
-            key={opt.value}
-            type="button"
-            onClick={() => handleDeviceTypeChange(opt.value)}
-            className={cn(
-              'h-10 rounded-lg font-semibold transition-all touch-manipulation text-[11px] active:scale-[0.98]',
-              formData.mainProtectiveDevice === opt.value
-                ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                : 'bg-white/[0.05] border border-white/[0.08] text-white'
-            )}
-          >
-            {opt.label}
-          </button>
-        ))}
+        {/* Device Type as toggle buttons */}
+        <div className="grid grid-cols-4 gap-2">
+          {[
+            { value: 'main-switch', label: 'Switch' },
+            { value: 'circuit-breaker', label: 'CB' },
+            { value: 'rcd', label: 'RCD' },
+            { value: 'fuse', label: 'Fuse' },
+          ].map((opt) => (
+            <button
+              key={opt.value}
+              type="button"
+              onClick={() => handleDeviceTypeChange(opt.value)}
+              className={cn(
+                chipBase,
+                'text-[11px]',
+                formData.mainProtectiveDevice === opt.value ? chipOn : chipOff
+              )}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+
+        <FormField label="Location">
+          <Input
+            value={(formData.mainSwitchLocation as string) || ''}
+            onChange={(e) => onUpdate('mainSwitchLocation', e.target.value)}
+            placeholder="e.g., Under stairs cupboard"
+            className={inputCn}
+          />
+        </FormField>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <FormField label="BS (EN)">
+            <MobileSelectPicker
+              value={(formData.mainSwitchBsEn as string) || ''}
+              onValueChange={(value) =>
+                onUpdate('mainSwitchBsEn', value === '__clear__' ? '' : value)
+              }
+              options={bsEnOptions}
+              placeholder="Select BS"
+              title="BS (EN) Standard"
+              triggerClassName={pickerTriggerCn}
+            />
+          </FormField>
+          <FormField label="Poles">
+            <MobileSelectPicker
+              value={(formData.mainSwitchPoles as string) || ''}
+              onValueChange={(value) =>
+                onUpdate('mainSwitchPoles', value === '__clear__' ? '' : value)
+              }
+              options={polesOptions}
+              placeholder="Poles"
+              title="Number of Poles"
+              triggerClassName={pickerTriggerCn}
+            />
+          </FormField>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <FormField label="Rating (A)" required>
+            <MobileSelectPicker
+              value={(formData.mainSwitchRating as string) || ''}
+              onValueChange={(value) =>
+                onUpdate('mainSwitchRating', value === '__clear__' ? '' : value)
+              }
+              options={currentRatingOptions}
+              placeholder="Rating"
+              title="Current Rating"
+              triggerClassName={pickerTriggerCn}
+            />
+          </FormField>
+          <FormField label="Fuse setting (A)">
+            <MobileSelectPicker
+              value={(formData.mainSwitchFuseRating as string) || ''}
+              onValueChange={(value) =>
+                onUpdate('mainSwitchFuseRating', value === '__clear__' ? '' : value)
+              }
+              options={fuseSettingOptions}
+              placeholder="Setting"
+              title="Fuse/Device Setting"
+              triggerClassName={pickerTriggerCn}
+            />
+          </FormField>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <FormField label="Voltage (V)">
+            <MobileSelectPicker
+              value={(formData.mainSwitchVoltageRating as string) || ''}
+              onValueChange={(value) =>
+                onUpdate('mainSwitchVoltageRating', value === '__clear__' ? '' : value)
+              }
+              options={voltageOptions}
+              placeholder="Voltage"
+              title="Voltage Rating"
+              triggerClassName={pickerTriggerCn}
+            />
+          </FormField>
+          <FormField label="Breaking capacity (kA)">
+            <MobileSelectPicker
+              value={(formData.breakingCapacity as string) || ''}
+              onValueChange={(value) =>
+                onUpdate('breakingCapacity', value === '__clear__' ? '' : value)
+              }
+              options={breakingCapacityOptions}
+              placeholder="Select capacity"
+              title="Breaking Capacity"
+              triggerClassName={pickerTriggerCn}
+            />
+          </FormField>
+        </div>
       </div>
 
-      <FormField label="Location">
-        <Input
-          value={(formData.mainSwitchLocation as string) || ''}
-          onChange={(e) => onUpdate('mainSwitchLocation', e.target.value)}
-          placeholder="e.g., Under stairs cupboard"
-          className={inputClasses}
-        />
-      </FormField>
-
-      <div className="grid grid-cols-2 gap-3 items-end">
-        <FormField label="BS (EN)">
-          <MobileSelectPicker
-            value={(formData.mainSwitchBsEn as string) || ''}
-            onValueChange={(value) =>
-              onUpdate('mainSwitchBsEn', value === '__clear__' ? '' : value)
-            }
-            options={bsEnOptions}
-            placeholder="Select BS"
-            title="BS (EN) Standard"
-            triggerClassName={inputClasses}
-          />
-        </FormField>
-        <FormField label="Poles">
-          <MobileSelectPicker
-            value={(formData.mainSwitchPoles as string) || ''}
-            onValueChange={(value) =>
-              onUpdate('mainSwitchPoles', value === '__clear__' ? '' : value)
-            }
-            options={polesOptions}
-            placeholder="Poles"
-            title="Number of Poles"
-            triggerClassName={inputClasses}
-          />
-        </FormField>
-      </div>
-
-      <div className="grid grid-cols-2 gap-3 items-end">
-        <FormField label="Rating (A)" required>
-          <MobileSelectPicker
-            value={(formData.mainSwitchRating as string) || ''}
-            onValueChange={(value) =>
-              onUpdate('mainSwitchRating', value === '__clear__' ? '' : value)
-            }
-            options={currentRatingOptions}
-            placeholder="Rating"
-            title="Current Rating"
-            triggerClassName={inputClasses}
-          />
-        </FormField>
-        <FormField label="Fuse Setting (A)">
-          <MobileSelectPicker
-            value={(formData.mainSwitchFuseRating as string) || ''}
-            onValueChange={(value) =>
-              onUpdate('mainSwitchFuseRating', value === '__clear__' ? '' : value)
-            }
-            options={fuseSettingOptions}
-            placeholder="Setting"
-            title="Fuse/Device Setting"
-            triggerClassName={inputClasses}
-          />
-        </FormField>
-      </div>
-
-      <div className="grid grid-cols-2 gap-3 items-end">
-        <FormField label="Voltage (V)">
-          <MobileSelectPicker
-            value={(formData.mainSwitchVoltageRating as string) || ''}
-            onValueChange={(value) =>
-              onUpdate('mainSwitchVoltageRating', value === '__clear__' ? '' : value)
-            }
-            options={voltageOptions}
-            placeholder="Voltage"
-            title="Voltage Rating"
-            triggerClassName={inputClasses}
-          />
-        </FormField>
-        <FormField label="Breaking Capacity (kA)">
-          <MobileSelectPicker
-            value={(formData.breakingCapacity as string) || ''}
-            onValueChange={(value) =>
-              onUpdate('breakingCapacity', value === '__clear__' ? '' : value)
-          }
-          options={breakingCapacityOptions}
-          placeholder="Select capacity"
-          title="Breaking Capacity"
-          triggerClassName={inputClasses}
-        />
-      </FormField>
-      </div>
-
-      {/* RCD Protection — grouped card */}
-      <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] space-y-3">
-        <SectionTitle title="RCD Protection" />
+      {/* RCD Protection */}
+      <div className={cardCn}>
+        <SectionHeading title="RCD protection" />
 
         {/* RCD Main Switch — toggle buttons */}
-        <div className="grid grid-cols-3 gap-1">
+        <div className="grid grid-cols-3 gap-2">
           {[
             { value: 'yes', label: 'RCD' },
             { value: 'no', label: 'No RCD' },
@@ -417,10 +431,8 @@ const EICElectricalInstallationSection = ({
                 rcdMainSwitchValue === opt.value ? '__clear__' : opt.value
               )}
               className={cn(
-                'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-                rcdMainSwitchValue === opt.value
-                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                chipBase,
+                rcdMainSwitchValue === opt.value ? chipOn : chipOff
               )}
             >
               {opt.label}
@@ -429,10 +441,10 @@ const EICElectricalInstallationSection = ({
         </div>
 
         {showRCDFields ? (
-          <div className="space-y-3">
+          <div className="space-y-4">
             {/* Type as toggle buttons */}
-            <FormField label="RCD Type">
-              <div className="grid grid-cols-4 gap-1">
+            <FormField label="RCD type">
+              <div className="grid grid-cols-4 gap-2">
                 {[
                   { value: 'ac', label: 'AC' },
                   { value: 'a', label: 'A' },
@@ -444,10 +456,8 @@ const EICElectricalInstallationSection = ({
                     type="button"
                     onClick={() => onUpdate('rcdType', (formData.rcdType as string) === opt.value ? '' : opt.value)}
                     className={cn(
-                      'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-                      (formData.rcdType as string) === opt.value
-                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                        : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                      chipBase,
+                      (formData.rcdType as string) === opt.value ? chipOn : chipOff
                     )}
                   >
                     Type {opt.label}
@@ -457,18 +467,16 @@ const EICElectricalInstallationSection = ({
             </FormField>
 
             {/* Rating as toggle buttons */}
-            <FormField label="IΔn Rating (mA)">
-              <div className="grid grid-cols-3 gap-1">
+            <FormField label="IΔn rating (mA)">
+              <div className="grid grid-cols-3 gap-2">
                 {['30', '100', '300'].map((r) => (
                   <button
                     key={r}
                     type="button"
                     onClick={() => onUpdate('rcdRating', (formData.rcdRating as string) === r ? '' : r)}
                     className={cn(
-                      'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-                      (formData.rcdRating as string) === r
-                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                        : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                      chipBase,
+                      (formData.rcdRating as string) === r ? chipOn : chipOff
                     )}
                   >
                     {r}mA
@@ -478,7 +486,7 @@ const EICElectricalInstallationSection = ({
             </FormField>
 
             {/* Time fields in 3-col */}
-            <div className="grid grid-cols-3 gap-2 items-end">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-4">
               <FormField label="Delay (ms)">
                 <MobileSelectPicker
                   value={(formData.rcdTimeDelay as string) || ''}
@@ -488,7 +496,7 @@ const EICElectricalInstallationSection = ({
                   options={rcdTimeDelayOptions}
                   placeholder="Delay"
                   title="Time Delay"
-                  triggerClassName={inputClasses}
+                  triggerClassName={pickerTriggerCn}
                 />
               </FormField>
               <FormField label="Rated (ms)">
@@ -498,7 +506,8 @@ const EICElectricalInstallationSection = ({
                   value={(formData.rcdOperatingTime as string) || ''}
                   onChange={(e) => onUpdate('rcdOperatingTime', e.target.value)}
                   placeholder="40"
-                  className={inputClasses}
+                  className={inputCn}
+                  {...keypad.field('rcdOperatingTime')}
                 />
               </FormField>
               <FormField label="Measured (ms)">
@@ -508,24 +517,34 @@ const EICElectricalInstallationSection = ({
                   value={(formData.rcdMeasuredTime as string) || ''}
                   onChange={(e) => onUpdate('rcdMeasuredTime', e.target.value)}
                   placeholder="28"
-                  className={inputClasses}
+                  className={inputCn}
+                  {...keypad.field('rcdMeasuredTime')}
                 />
               </FormField>
             </div>
           </div>
         ) : (
           rcdMainSwitchValue === 'no' && (
-          <div className="flex items-center justify-center p-4 bg-white/[0.03] border border-white/[0.08] rounded-lg">
-            <p className="text-xs text-white text-center">
-              RCD rating and type not applicable
-            </p>
-          </div>
-        )
-      )}
+            <div className="flex items-center justify-center rounded-xl bg-white/[0.05] p-4">
+              <p className="text-[12px] text-white text-center">
+                RCD rating and type not applicable
+              </p>
+            </div>
+          )
+        )}
       </div>
 
-      {/* Distribution Boards */}
-      <MultiboardSetup boards={boards} onBoardsChange={handleBoardsChange} certType="eic" />
+      {/* Distribution Boards — full width on desktop: the board list is the
+          tallest block on the tab and pairs badly with a single card. */}
+      <div className="lg:col-span-2">
+        <MultiboardSetup boards={boards} onBoardsChange={handleBoardsChange} certType="eic" />
+      </div>
+
+      {/* Scroll room so the last reading can rise clear of the keypad */}
+      {keypad.spacer}
+
+      {/* Reading keypad — coarse-pointer devices only */}
+      {keypad.element}
     </div>
   );
 };

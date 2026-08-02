@@ -57,11 +57,15 @@ export const SwipeableBottomSheet: React.FC<SwipeableBottomSheetProps> = ({
       modal={modal}
       dismissible={dismissible}
     >
+      {/* z-[150] deliberately: ui/sheet + ui/dialog render at z-[100], so at the
+          old z-50 any picker opened from INSIDE a sheet (e.g. the PAT appliance
+          sheet's Category / Repair code pickers) mounted BEHIND it and read as a
+          dead control. Kept below the z-[200] toast layer so toasts still win. */}
       <Drawer.Portal>
-        <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
+        <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[150]" />
         <Drawer.Content
           className={cn(
-            'fixed bottom-0 left-0 right-0 z-50',
+            'fixed bottom-0 left-0 right-0 z-[150]',
             'bg-background rounded-t-3xl',
             'border-t border-white/10',
             'max-h-[80vh]',

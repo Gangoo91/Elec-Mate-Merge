@@ -9,18 +9,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sh
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Loader2,
-  Sparkles,
-  Check,
-  Trash2,
-  ChevronDown,
-  ChevronUp,
-  Package,
-  Clock,
-  FileText,
-  X,
-} from 'lucide-react';
+import { Loader2, Check, Trash2, ChevronDown, ChevronUp, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import type { EstimateResult } from '@/hooks/useEstimateRemedialCosts';
@@ -122,7 +111,7 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
           <Button
             variant="ghost"
             size="sm"
-            className="h-11 w-11 p-0 text-red-400 hover:bg-red-500/10 touch-manipulation flex-shrink-0"
+            className="h-11 w-11 p-0 text-red-400 hover:bg-white/10 touch-manipulation flex-shrink-0"
             onClick={() => onDeleteItem(globalIndex)}
           >
             <Trash2 className="h-4 w-4" />
@@ -136,7 +125,7 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
               <Input
                 type="number"
                 defaultValue={item.quantity}
-                className="h-11 w-16 text-base px-2 touch-manipulation border-white/30 focus:border-yellow-500"
+                className="h-11 w-16 rounded-lg border-white/[0.15] bg-white/[0.06] px-2 text-base md:text-base text-white caret-elec-yellow focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none touch-manipulation"
                 autoFocus
                 onBlur={(e) => {
                   handleEditField(globalIndex, 'quantity', e.target.value);
@@ -150,12 +139,13 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
                 }}
               />
             ) : (
-              <span
-                className="text-white font-medium px-1.5 py-0.5 rounded bg-white/5 touch-manipulation cursor-pointer"
+              <button
+                type="button"
+                className="inline-flex h-11 items-center rounded-lg px-2 text-white font-medium bg-white/[0.06] border border-white/[0.12] touch-manipulation"
                 onClick={() => setEditingItem({ index: globalIndex, field: 'quantity' })}
               >
                 {item.quantity} {item.unit}
-              </span>
+              </button>
             )}
           </div>
           <span className="text-white">×</span>
@@ -165,7 +155,7 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
                 type="number"
                 step="0.01"
                 defaultValue={item.unitPrice}
-                className="h-11 w-20 text-base px-2 touch-manipulation border-white/30 focus:border-yellow-500"
+                className="h-11 w-20 rounded-lg border-white/[0.15] bg-white/[0.06] px-2 text-base md:text-base text-white caret-elec-yellow focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none touch-manipulation"
                 autoFocus
                 onBlur={(e) => {
                   handleEditField(globalIndex, 'unitPrice', e.target.value);
@@ -179,12 +169,13 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
                 }}
               />
             ) : (
-              <span
-                className="text-white font-medium px-1.5 py-0.5 rounded bg-white/5 touch-manipulation cursor-pointer"
+              <button
+                type="button"
+                className="inline-flex h-11 items-center rounded-lg px-2 text-white font-medium bg-white/[0.06] border border-white/[0.12] touch-manipulation"
                 onClick={() => setEditingItem({ index: globalIndex, field: 'unitPrice' })}
               >
                 {formatCurrency(item.unitPrice)}
-              </span>
+              </button>
             )}
           </div>
           <span className="text-white">=</span>
@@ -199,10 +190,7 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
   /* ── Shared header ── */
   const headerContent = (
     <div className="flex items-center justify-between">
-      <div className="flex items-center gap-2 text-base font-semibold text-white">
-        <Sparkles className="h-5 w-5 text-elec-yellow" />
-        AI Estimator
-      </div>
+      <div className="text-base font-semibold tracking-tight text-white">AI estimator</div>
       <div className="flex items-center gap-3">
         {isEstimating && <span className="text-xs text-white">{elapsedSeconds}s</span>}
         {!isMobile && (
@@ -235,7 +223,7 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
           <div className="w-full max-w-xs">
             <div className="h-1 rounded-full bg-white/10 overflow-hidden">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-elec-yellow to-amber-400 animate-progress-fill transition-all"
+                className="h-full rounded-full bg-elec-yellow animate-progress-fill transition-all"
                 style={
                   {
                     '--progress-width': `${(() => {
@@ -315,11 +303,8 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
       {estimateResult && !isEstimating && (
         <>
           {/* Summary Card */}
-          <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 space-y-3">
-            <h3 className="text-sm font-semibold text-white flex items-center gap-1.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              Estimate Summary
-            </h3>
+          <div className="bg-white/[0.05] border border-emerald-500/40 rounded-xl p-4 space-y-3">
+            <h3 className="text-sm font-semibold tracking-tight text-white">Estimate summary</h3>
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <span className="text-xs text-white block">Materials</span>
@@ -351,11 +336,12 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
           {/* Scope of Works - prominent at top */}
           <div className="space-y-2">
             <button
-              className="flex items-center gap-2 w-full text-left touch-manipulation"
+              className="flex min-h-11 items-center gap-2 w-full text-left touch-manipulation"
               onClick={() => setScopeOpen(!scopeOpen)}
             >
-              <FileText className="h-4 w-4 text-purple-400" />
-              <span className="text-sm font-semibold text-white flex-1">Scope of Works</span>
+              <span className="text-sm font-semibold tracking-tight text-white flex-1">
+                Scope of works
+              </span>
               {scopeOpen ? (
                 <ChevronUp className="h-4 w-4 text-white" />
               ) : (
@@ -367,7 +353,7 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
                 value={estimateResult.scopeOfWorks || ''}
                 onChange={(e) => onUpdateScopeOfWorks(e.target.value)}
                 placeholder="Describe the scope of remedial works..."
-                className="min-h-[120px] text-base text-white touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                className="textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[120px] touch-manipulation"
               />
             )}
           </div>
@@ -376,11 +362,10 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
           {materialItems.length > 0 && (
             <div className="space-y-2">
               <button
-                className="flex items-center gap-2 w-full text-left touch-manipulation"
+                className="flex min-h-11 items-center gap-2 w-full text-left touch-manipulation"
                 onClick={() => setMaterialsOpen(!materialsOpen)}
               >
-                <Package className="h-4 w-4 text-amber-400" />
-                <span className="text-sm font-semibold text-white flex-1">
+                <span className="text-sm font-semibold tracking-tight text-white flex-1">
                   Materials ({materialItems.length})
                 </span>
                 {materialsOpen ? (
@@ -404,11 +389,10 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
           {labourItems.length > 0 && (
             <div className="space-y-2">
               <button
-                className="flex items-center gap-2 w-full text-left touch-manipulation"
+                className="flex min-h-11 items-center gap-2 w-full text-left touch-manipulation"
                 onClick={() => setLabourOpen(!labourOpen)}
               >
-                <Clock className="h-4 w-4 text-blue-400" />
-                <span className="text-sm font-semibold text-white flex-1">
+                <span className="text-sm font-semibold tracking-tight text-white flex-1">
                   Labour ({labourItems.length})
                 </span>
                 {labourOpen ? (
@@ -436,10 +420,10 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
   const footerContent = estimateResult && !isEstimating && (
     <div className="px-4 md:px-5 py-4 border-t border-white/10 space-y-2">
       <Button
-        className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] transition-all"
+        className="w-full h-12 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] transition-all"
         onClick={onCreateQuote}
       >
-        Create Quote
+        Create quote
       </Button>
       <Button
         variant="ghost"

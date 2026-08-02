@@ -1,18 +1,6 @@
-import React, { useState, useMemo, useCallback } from 'react';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import FormSelectSheet from '@/components/ui/form-select-sheet';
-import { Cable, Gauge, CircuitBoard } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptic } from '@/hooks/useHaptic';
+import React, { useMemo } from 'react';
 import { useEICRSmartForm } from '@/hooks/inspection/useEICRSmartForm';
 import MultiboardSetup from '@/components/testing/MultiboardSetup';
-import {
-  FieldLimitationBadge,
-  FieldNotesInput,
-  isFieldMarker,
-} from '@/components/field-limitations';
 import {
   DistributionBoard,
   createMainBoard,
@@ -35,37 +23,8 @@ interface ElectricalInstallationSectionProps {
   onUpdate: (field: string, value: any) => void;
 }
 
-const SectionTitle = ({ title }: { icon?: any; title: string; color?: string; isMobile?: boolean }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
-);
-
-const FormField = ({
-  label,
-  required,
-  hint,
-  trailing,
-  children,
-}: {
-  label: string;
-  required?: boolean;
-  hint?: string;
-  trailing?: React.ReactNode;
-  children: React.ReactNode;
-}) => (
-  <div>
-    <div className="flex items-center justify-between gap-2 mb-1.5">
-      <Label className="text-white text-xs">
-        {label}{required && ' *'}
-      </Label>
-      {trailing}
-    </div>
-    {children}
-    {hint && <span className="text-[10px] text-white block mt-1">{hint}</span>}
-  </div>
-);
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
 /**
  * ElectricalInstallationSection - Best-in-class mobile form for electrical installation details
@@ -77,8 +36,6 @@ const ElectricalInstallationSectionInner = ({
   formData,
   onUpdate,
 }: ElectricalInstallationSectionProps) => {
-  const isMobile = useIsMobile();
-  const haptic = useHaptic();
   const { getWarningsForField } = useEICRSmartForm(formData);
 
   // Migrate legacy single-board data to multi-board format
@@ -126,18 +83,19 @@ const ElectricalInstallationSectionInner = ({
   };
 
   return (
-    <div className={cn('space-y-6', '')}>
-      {/* Distribution Boards Section */}
-      <div>
-        <SectionTitle title="Distribution Boards" />
-        <div className={cn('py-4', '')}>
-          <MultiboardSetup boards={boards} onBoardsChange={handleBoardsChange} certType="eicr" />
-          {/* Board ways vs circuits warnings */}
-          {boards.map((b) => getWarningsForField(`board-${b.id}`).map((w, i) => (
-            <p key={`${b.id}-${i}`} className="text-[10px] text-amber-400/80 mt-1">{w.message}</p>
-          )))}
-        </div>
-      </div>
+    <div className={cardCn}>
+      <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">
+        Distribution boards
+      </h2>
+      <MultiboardSetup boards={boards} onBoardsChange={handleBoardsChange} certType="eicr" />
+      {/* Board ways vs circuits warnings */}
+      {boards.map((b) =>
+        getWarningsForField(`board-${b.id}`).map((w, i) => (
+          <p key={`${b.id}-${i}`} className="text-[11px] text-elec-yellow mt-1">
+            {w.message}
+          </p>
+        ))
+      )}
     </div>
   );
 };

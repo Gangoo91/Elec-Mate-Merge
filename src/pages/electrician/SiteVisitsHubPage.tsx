@@ -99,6 +99,12 @@ const SiteVisitsHubPage = () => {
   // Quick-create dropdown
   const [showQuickCreateMenu, setShowQuickCreateMenu] = useState(false);
   const quickCreateRef = useRef<HTMLDivElement | null>(null);
+  // Long-press → selection mode. Component-scoped because only one press can
+  // be live at a time, and because the previous per-item `{ current: null }`
+  // object was rebuilt on every render — any re-render between touchstart and
+  // touchend left the timer running with nothing able to clear it.
+  const longPressTimer = useRef<number | null>(null);
+  const longPressStart = useRef<{ x: number; y: number } | null>(null);
 
   // Bulk select
   const [selectionMode, setSelectionMode] = useState(false);
@@ -605,7 +611,6 @@ const SiteVisitsHubPage = () => {
                 const sLabel = statusLabel[visit.status as StatusKey] || visit.status;
                 const counts = visitCount(visit);
                 const isSelected = selectedIds.has(visit.id);
-                const longPressTimer = { current: null as number | null };
                 return (
                   <motion.div
                     key={visit.id}
@@ -628,17 +633,34 @@ const SiteVisitsHubPage = () => {
                           else navigate(`/electrician/site-visit/${visit.id}`);
                         }
                       }}
-                      onTouchStart={() => {
+                      onTouchStart={(e) => {
+                        const t = e.touches[0];
+                        longPressStart.current = t ? { x: t.clientX, y: t.clientY } : null;
                         longPressTimer.current = window.setTimeout(() => {
                           enterSelectionMode(visit.id);
                           longPressTimer.current = null;
                         }, 500);
+                      }}
+                      onTouchMove={(e) => {
+                        // Without this the timer fired mid-scroll and dropped
+                        // the list into selection mode.
+                        if (!longPressTimer.current || !longPressStart.current) return;
+                        const t = e.touches[0];
+                        if (!t) return;
+                        if (
+                          Math.abs(t.clientX - longPressStart.current.x) > 10 ||
+                          Math.abs(t.clientY - longPressStart.current.y) > 10
+                        ) {
+                          window.clearTimeout(longPressTimer.current);
+                          longPressTimer.current = null;
+                        }
                       }}
                       onTouchEnd={() => {
                         if (longPressTimer.current) {
                           window.clearTimeout(longPressTimer.current);
                           longPressTimer.current = null;
                         }
+                        longPressStart.current = null;
                       }}
                       className={cn(
                         'group relative flex h-full min-h-[118px] cursor-pointer flex-col overflow-hidden rounded-2xl border p-4 text-left transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 active:scale-[0.995] touch-manipulation sm:p-5',

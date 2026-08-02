@@ -2,13 +2,6 @@ import { useState, useEffect } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -32,9 +25,8 @@ import {
   SecondaryButton,
   DestructiveButton,
   inputClass,
-  selectTriggerClass,
-  selectContentClass,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 
 const CATEGORIES = [
   'Cable',
@@ -123,7 +115,7 @@ export function EditPriceBookItemSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side={isMobile ? 'bottom' : 'right'}
-        className={cn('p-0 overflow-hidden', isMobile ? 'h-[90vh]' : 'w-[480px]')}
+        className={cn('p-0 overflow-hidden', isMobile ? 'h-[85vh]' : 'w-[480px]')}
       >
         <SheetShell
           eyebrow="Price book"
@@ -193,6 +185,7 @@ export function EditPriceBookItemSheet({
               <Field label="Buy price (£)">
                 <Input
                   type="number"
+                            inputMode="decimal"
                   step="0.01"
                   value={buyPrice}
                   onChange={(e) => setBuyPrice(e.target.value)}
@@ -202,6 +195,7 @@ export function EditPriceBookItemSheet({
               <Field label="Sell price (£)">
                 <Input
                   type="number"
+                            inputMode="decimal"
                   step="0.01"
                   value={sellPrice}
                   onChange={(e) => setSellPrice(e.target.value)}
@@ -214,32 +208,18 @@ export function EditPriceBookItemSheet({
             )}
             <FormGrid cols={2}>
               <Field label="Category">
-                <Select value={category} onValueChange={setCategory}>
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    {CATEGORIES.map((cat) => (
-                      <SelectItem key={cat} value={cat}>
-                        {cat}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <SelectField
+        value={category}
+        onValueChange={setCategory}
+        options={CATEGORIES.map((cat) => ({ value: cat, label: cat }))}
+      />
               </Field>
               <Field label="Unit">
-                <Select value={unit} onValueChange={setUnit}>
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    {UNITS.map((u) => (
-                      <SelectItem key={u} value={u}>
-                        {u}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <SelectField
+        value={unit}
+        onValueChange={setUnit}
+        options={UNITS.map((u) => ({ value: u, label: u }))}
+      />
               </Field>
             </FormGrid>
             <Field label="SKU (optional)">
@@ -257,6 +237,7 @@ export function EditPriceBookItemSheet({
               <Field label="Stock level">
                 <Input
                   type="number"
+                            inputMode="decimal"
                   value={stockLevel}
                   onChange={(e) => setStockLevel(e.target.value)}
                   className={inputClass}
@@ -265,6 +246,7 @@ export function EditPriceBookItemSheet({
               <Field label="Reorder level">
                 <Input
                   type="number"
+                            inputMode="decimal"
                   value={reorderLevel}
                   onChange={(e) => setReorderLevel(e.target.value)}
                   className={inputClass}

@@ -7,6 +7,7 @@ import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { LoadInstallerButton } from './LoadInstallerButton';
 import { EVSectionHeader } from './EVSectionHeader';
+import { inputCn, cardCn, labelCn, textareaCn, checkboxCn } from '@/components/forms/fieldStyles';
 import {
   useEVChargingSmartForm,
   InstallerDetails,
@@ -17,22 +18,13 @@ interface EVChargingDeclarationsProps {
   onUpdate: (field: string, value: unknown) => void;
 }
 
-const cardCn =
-  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
-const inputCn =
-  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
 
-const textareaCn =
-  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
 
-const labelCn = 'text-[12px] font-medium text-white mb-1 block';
 
 const selectTriggerCn =
   'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 px-1 text-base font-medium hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 data-[state=open]:border-elec-yellow data-[state=open]:ring-0 active:bg-transparent';
 
-const checkboxCn =
-  'h-5 w-5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black';
 
 const checkRowCn = 'flex min-h-11 items-center gap-3 touch-manipulation cursor-pointer';
 

@@ -24,6 +24,7 @@ import {
 import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
+import { fireAlarmTemplateId } from '@/utils/fireAlarmPdfRouting';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 
@@ -173,6 +174,9 @@ const {
     inspectionDate: formData.designDate,
     companyName: companyProfile?.company_name,
     formattedData: emailFormattedData,
+    // All five fire alarm certs share generate-fire-alarm-pdf, whose default
+    // template is G2 — without this an emailed cert regenerated against it.
+    templateId: fireAlarmTemplateId('fire-alarm-design'),
   });
 
   const handleSendEmail = async (email: string, cc?: string[], message?: string) => {
@@ -308,7 +312,7 @@ const {
 
       const { data: functionData, error: functionError } = await supabase.functions.invoke(
         'generate-fire-alarm-pdf',
-        { body: { formData: pdfData, templateId: '7DE2F415-5A70-414A-9FB3-707FB92D0F14' } }
+        { body: { formData: pdfData, templateId: fireAlarmTemplateId('fire-alarm-design') } }
       );
       if (functionError) throw new Error(functionError.message);
       if (!functionData?.success || !functionData?.pdfUrl)
@@ -457,7 +461,7 @@ const {
         isGenerating={isGenerating}
         pdfUrl={generatedPdfUrl}
         pdfFilename={pdfFilename}
-        error={generationError}
+        errorMessage={generationError}
         documentLabel="Certificate"
       />
     </div>

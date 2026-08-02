@@ -297,7 +297,7 @@ const MinorWorksForm = ({
   const handleTabChange = (tab: MWTabValue) => {
     setTab(tab);
     onTabChange?.(tab);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'auto' });
   };
 
   // Smart defaults
@@ -959,6 +959,9 @@ const MinorWorksForm = ({
       copyProvided: false,
       additionalNotes: '',
     });
+    // The report we're walking away from keeps its own keyed local draft,
+    // which would otherwise resurrect on the next open (EICR parity).
+    draftStorage.clearDraft('minor-works', currentReportId);
     setCurrentReportId(null);
     setShowStartNewDialog(false);
     toast({
@@ -985,6 +988,20 @@ const MinorWorksForm = ({
     delete duplicatedData.updated_at;
     duplicatedData.certificateNumber = certificateNumber;
     duplicatedData.status = 'draft';
+
+    // A duplicate is a NEW job — it must not arrive pre-signed and pre-dated
+    // for work that hasn't happened yet. Supply / earthing / circuit STRUCTURE
+    // carries over; the attestation and the work dates don't. (The separate
+    // "next circuit" duplicate deliberately keeps the signature — same visit.)
+    duplicatedData.signature = '';
+    duplicatedData.signatureDate = '';
+    duplicatedData.workDate = '';
+    duplicatedData.dateOfCompletion = '';
+    duplicatedData.certificateGenerated = false;
+    duplicatedData.certificateGeneratedAt = '';
+
+    // The abandoned form's local draft must not resurrect into this new cert.
+    draftStorage.clearDraft('minor-works', currentReportId);
 
     setFormData(duplicatedData);
     setCurrentReportId(null);
@@ -1304,14 +1321,38 @@ const MinorWorksForm = ({
             totalTabs={totalTabs}
             canNavigatePrevious={canNavigatePrevious}
             navigateNext={() => {
+      // Instant, and BEFORE the step swaps.
+      //
+      // `behavior: 'smooth'` here fought the step's own slide-in: the keyed
+      // content was replaced at once, the 260ms translateX played, and the
+      // window animated its scroll separately over a longer duration — two
+      // motions at different speeds, which reads as a jolt. Worse when the new
+      // step is shorter, because the browser clamps the scroll instantly first
+      // and then smooth-scrolls the remainder.
+      //
+      // The explicit `behavior` beats the global `scroll-behavior: smooth` in
+      // index.css, so this really is instant. Scrolling first means the new
+      // step mounts already at the top and only the slide animates.
+      window.scrollTo({ top: 0, behavior: 'auto' });
               navigateNext();
               onTabChange?.();
-              window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             navigatePrevious={() => {
+      // Instant, and BEFORE the step swaps.
+      //
+      // `behavior: 'smooth'` here fought the step's own slide-in: the keyed
+      // content was replaced at once, the 260ms translateX played, and the
+      // window animated its scroll separately over a longer duration — two
+      // motions at different speeds, which reads as a jolt. Worse when the new
+      // step is shorter, because the browser clamps the scroll instantly first
+      // and then smooth-scrolls the remainder.
+      //
+      // The explicit `behavior` beats the global `scroll-behavior: smooth` in
+      // index.css, so this really is instant. Scrolling first means the new
+      // step mounts already at the top and only the slide animates.
+      window.scrollTo({ top: 0, behavior: 'auto' });
               navigatePrevious();
               onTabChange?.();
-              window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onEmail={() => pdfActionsRef.current?.email()}
             onInvoice={() => pdfActionsRef.current?.invoice()}
@@ -1338,7 +1379,7 @@ const MinorWorksForm = ({
                 <h2 className="text-base font-bold text-white">
                   {mwValidation.errors.length === 0 ? 'Ready to issue' : 'Still to complete'}
                 </h2>
-                <p className="text-[12px] text-white/60 tabular-nums">
+                <p className="text-[12px] text-white tabular-nums">
                   {mwValidation.completionPercentage}% complete
                   {mwValidation.errors.length > 0 &&
                     ` · ${mwValidation.errors.length} required ${
@@ -1348,7 +1389,7 @@ const MinorWorksForm = ({
               </div>
               <div className="flex-1 space-y-5 overflow-y-auto px-4 py-4">
                 {mwValidation.errors.length === 0 ? (
-                  <p className="text-sm text-white/85">
+                  <p className="text-sm text-white">
                     Everything required is filled in. Head to Sign off to generate the
                     certificate.
                   </p>

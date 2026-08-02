@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState, useCallback, forwardRef, useImperativeHandle } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
+import { useHaptic } from '@/hooks/useHaptic';
 import { RotateCcw, Download, Upload } from 'lucide-react';
 
 interface SignaturePadProps {
@@ -29,6 +31,8 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
     const lastPosRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
     const debounceRef = useRef<NodeJS.Timeout>();
     const [isEmpty, setIsEmpty] = useState(true);
+    const [confirmClearOpen, setConfirmClearOpen] = useState(false);
+    const haptic = useHaptic();
 
     const getSignatureData = useCallback((): string | null => {
       const canvas = canvasRef.current;
@@ -228,55 +232,76 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
           </div>
         </div>
 
-        <div className="flex gap-1 sm:gap-2 justify-center flex-wrap">
+        <div className="space-y-2">
+          <div className="grid grid-cols-2 gap-3">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleDownload}
+              disabled={isEmpty}
+              className="gap-1 text-sm px-2 h-11 min-h-11 touch-manipulation"
+            >
+              <Download className="h-3 w-3" />
+              Download
+            </Button>
+
+            <label
+              className={`${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'} block`}
+            >
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={disabled}
+                className="gap-1 text-sm px-2 h-11 min-h-11 w-full touch-manipulation"
+                asChild
+              >
+                <span>
+                  <Upload className="h-3 w-3" />
+                  Upload
+                </span>
+              </Button>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleUpload}
+                className="hidden"
+                disabled={disabled}
+              />
+            </label>
+          </div>
+
           <Button
             variant="outline"
             size="sm"
-            onClick={handleClear}
+            onClick={() => {
+              haptic.warning();
+              setConfirmClearOpen(true);
+            }}
             disabled={disabled || isEmpty}
-            className="gap-1 text-sm px-2 h-9 min-h-[36px]"
+            className="gap-1 text-sm px-2 h-11 min-h-11 w-full touch-manipulation"
           >
             <RotateCcw className="h-3 w-3" />
             Clear
           </Button>
-
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleDownload}
-            disabled={isEmpty}
-            className="gap-1 text-sm px-2 h-9 min-h-[36px]"
-          >
-            <Download className="h-3 w-3" />
-            Download
-          </Button>
-
-          <label className={`${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}>
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={disabled}
-              className="gap-1 text-sm px-2 h-9 min-h-[36px]"
-              asChild
-            >
-              <span>
-                <Upload className="h-3 w-3" />
-                Upload
-              </span>
-            </Button>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleUpload}
-              className="hidden"
-              disabled={disabled}
-            />
-          </label>
         </div>
 
         {!isEmpty && (
           <p className="text-xs text-green-600 text-center">Signature captured successfully</p>
         )}
+
+        <ConfirmationDialog
+          open={confirmClearOpen}
+          onOpenChange={setConfirmClearOpen}
+          title="Clear signature?"
+          description="This removes the signature you have drawn. You will need to sign again."
+          confirmText="Clear"
+          cancelText="Keep"
+          variant="destructive"
+          onConfirm={() => {
+            handleClear();
+            setConfirmClearOpen(false);
+          }}
+        />
       </Card>
     );
   }

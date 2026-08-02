@@ -8,13 +8,6 @@ import {
 } from '@/components/ui/responsive-form-modal';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Briefcase, Loader2, Trophy } from 'lucide-react';
 import { useCreateJob } from '@/hooks/useJobs';
 import { useUpdateTender, type Tender } from '@/hooks/useTenders';
@@ -26,10 +19,9 @@ import {
   PrimaryButton,
   SecondaryButton,
   inputClass,
-  selectTriggerClass,
-  selectContentClass,
   textareaClass,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 
 interface ConvertTenderToJobDialogProps {
   open: boolean;
@@ -141,7 +133,7 @@ export function ConvertTenderToJobDialog({
             </p>
           </div>
 
-          <FormCard eyebrow="Job details">
+          <FormCard bleed eyebrow="Job details">
             <Field label="Job title" required>
               <Input
                 id="title"
@@ -177,6 +169,7 @@ export function ConvertTenderToJobDialog({
                 <Input
                   id="value"
                   type="number"
+                            inputMode="decimal"
                   value={formData.value}
                   onChange={(e) => setFormData({ ...formData, value: Number(e.target.value) })}
                   className={inputClass}
@@ -186,6 +179,7 @@ export function ConvertTenderToJobDialog({
                 <Input
                   id="workers"
                   type="number"
+                            inputMode="decimal"
                   min={1}
                   value={formData.workers_count}
                   onChange={(e) =>
@@ -198,20 +192,13 @@ export function ConvertTenderToJobDialog({
 
             <FormGrid cols={2}>
               <Field label="Initial status">
-                <Select
-                  value={formData.status}
-                  onValueChange={(value: 'Pending' | 'Active') =>
+                <SelectField
+        value={formData.status}
+        onValueChange={(value: 'Pending' | 'Active') =>
                     setFormData({ ...formData, status: value })
                   }
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    <SelectItem value="Pending">Pending</SelectItem>
-                    <SelectItem value="Active">Active</SelectItem>
-                  </SelectContent>
-                </Select>
+        options={[{ value: 'Pending', label: 'Pending' }, { value: 'Active', label: 'Active' }]}
+      />
               </Field>
               <Field label="Start date">
                 <Input

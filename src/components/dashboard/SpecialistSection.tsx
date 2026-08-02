@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useResumeDrafts, type ResumeDraftInfo } from '@/hooks/inspection/useResumeDrafts';
+import { useHaptic } from '@/hooks/useHaptic';
+import { CARD_NEUTRAL, CARD_DISABLED } from '@/components/ui/card-recipe';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -167,8 +169,12 @@ const GROUPS: { key: CertDef['category']; label: string }[] = [
   { key: 'fire-safety', label: 'Fire & Life Safety' },
 ];
 
-/** Card — same anatomy as the core Certificates page: dot + standard badge,
- * title, scope line, then an action row pinned to the base so rows align. */
+/**
+ * Card — identical to the Inspection & Testing hub and the core Certificates
+ * page: eyebrow, title, scope line, hairline footer with the meta on the left
+ * and the action on the right. Body is a div because the footer holds two real
+ * actions (Resume / New) and a button can't nest a button.
+ */
 const SpecCard = ({
   cert,
   onOpen,
@@ -180,67 +186,66 @@ const SpecCard = ({
   draft?: ResumeDraftInfo;
   onResume: () => void;
 }) => {
+  const haptic = useHaptic();
   const disabled = !!cert.comingSoon;
   // Route overrides open an area (log book) rather than starting a cert.
-  const primaryLabel = disabled ? 'Coming soon' : cert.route ? 'Open' : 'New';
+  const primaryLabel = cert.route ? 'Open' : 'New';
 
   return (
     <div
       className={cn(
-        'group relative flex flex-col overflow-hidden rounded-2xl p-5',
-        'bg-gradient-to-b from-white/[0.07] to-white/[0.03] border border-white/[0.12]',
-        'transition-all duration-200',
-        disabled
-          ? 'opacity-50'
-          : 'hover:border-white/[0.22] hover:from-white/[0.09] hover:to-white/[0.05] hover:shadow-[0_10px_32px_rgba(0,0,0,0.35)] focus-within:border-elec-yellow/50'
+        'group flex h-full flex-col rounded-2xl border p-3.5 text-left sm:p-4',
+        'transition-[background-color,border-color] duration-150 ease-out',
+        disabled ? CARD_DISABLED : CARD_NEUTRAL
       )}
     >
-      <div className="relative flex items-center justify-between gap-2">
-        <span className="grid h-9 w-9 place-items-center rounded-xl bg-white/[0.06] border border-white/[0.12] shrink-0">
-          <span className="h-2.5 w-2.5 rounded-full bg-elec-yellow" aria-hidden />
-        </span>
-        <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/60 border border-white/[0.16] rounded px-1.5 py-0.5 shrink-0">
-          {cert.standard}
-        </span>
-      </div>
+      <span className="min-w-0 truncate text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+        {cert.standard}
+      </span>
 
-      <h3 className="relative mt-4 text-[19px] font-semibold tracking-tight leading-[1.15] text-white">
+      <h3 className="mt-1.5 text-[15px] font-bold leading-tight tracking-tight text-white sm:text-[17px]">
         {cert.title}
       </h3>
-      <p className="relative mt-1.5 text-[13px] leading-relaxed text-white/65 line-clamp-2">
+      <p className="mt-1 text-[11.5px] leading-snug text-white sm:text-[12.5px]">
         {cert.description}
       </p>
 
-      <div className="relative mt-auto pt-5 flex items-center justify-between gap-2">
-        {!disabled && draft ? (
+      <div className="flex-grow" />
+
+      {/* Volt as TEXT, never a solid "New" button beside an outlined "Resume"
+          one — two volt blocks per card across fifteen cards, and the outlined
+          variant used bg-elec-yellow/[0.08], which reads muddy brown. */}
+      <div className="mt-3 flex items-center justify-between gap-2 border-t border-white/[0.10] pt-1">
+        {disabled ? (
+          <span className="min-w-0 truncate text-[11px] text-white">Coming soon</span>
+        ) : draft ? (
           <button
             type="button"
-            onClick={onResume}
-            className={cn(
-              'h-11 px-3.5 rounded-xl text-[12.5px] font-semibold text-elec-yellow',
-              'border border-elec-yellow/40 bg-elec-yellow/[0.08]',
-              'touch-manipulation active:scale-[0.97] transition-all hover:bg-elec-yellow/[0.14]'
-            )}
+            onClick={() => {
+              haptic.light();
+              onResume();
+            }}
+            className="-ml-1 flex h-11 min-w-0 items-center px-1 text-[11.5px] font-semibold text-white touch-manipulation [-webkit-tap-highlight-color:transparent] active:scale-[0.97]"
           >
-            Resume
-            <span className="ml-1.5 text-elec-yellow/70 tabular-nums">{draft.count}</span>
+            <span className="truncate">
+              Resume <span className="tabular-nums">{draft.count}</span>
+            </span>
           </button>
         ) : (
           <span aria-hidden />
         )}
-        <button
-          type="button"
-          onClick={() => !disabled && onOpen()}
-          disabled={disabled}
-          className={cn(
-            'h-11 px-5 rounded-xl text-[13px] font-bold touch-manipulation transition-transform',
-            disabled
-              ? 'bg-white/[0.08] text-white/50'
-              : 'bg-elec-yellow text-black active:scale-[0.97] shadow-[0_4px_16px_rgba(245,184,28,0.18)]'
-          )}
-        >
-          {primaryLabel}
-        </button>
+        {!disabled && (
+          <button
+            type="button"
+            onClick={() => {
+              haptic.light();
+              onOpen();
+            }}
+            className="-mr-1 flex h-11 shrink-0 items-center px-1 text-[12px] font-bold text-elec-yellow touch-manipulation [-webkit-tap-highlight-color:transparent] active:scale-[0.97]"
+          >
+            {primaryLabel}
+          </button>
+        )}
       </div>
     </div>
   );
@@ -261,7 +266,7 @@ const SpecialistSection = ({ onBack }: SpecialistSectionProps) => {
         <button
           type="button"
           onClick={onBack}
-          className="h-11 px-1 -ml-1 text-[13px] font-semibold text-white/60 touch-manipulation active:scale-[0.97]"
+          className="h-11 px-1 -ml-1 text-[13px] font-semibold text-white touch-manipulation active:scale-[0.97]"
         >
           Back
         </button>
@@ -269,7 +274,7 @@ const SpecialistSection = ({ onBack }: SpecialistSectionProps) => {
           <h1 className="text-2xl sm:text-[28px] font-bold tracking-tight text-white">
             Specialist Certificates
           </h1>
-          <span className="text-[13px] text-white/50">Fire, renewables, EV and more</span>
+          <span className="text-[13px] text-white">Fire, renewables, EV and more</span>
         </div>
       </div>
 
@@ -289,9 +294,9 @@ const SpecialistSection = ({ onBack }: SpecialistSectionProps) => {
                 <h2 className="text-[15px] font-semibold tracking-tight text-white">
                   {group.label}
                 </h2>
-                <span className="text-[12px] text-white/40 tabular-nums">{certs.length}</span>
+                <span className="text-[12px] text-white tabular-nums">{certs.length}</span>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
+              <div className="grid grid-cols-2 gap-2.5 sm:gap-3 xl:grid-cols-4">
                 {certs.map((cert) => (
                   <SpecCard
                     key={cert.id}

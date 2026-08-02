@@ -9,13 +9,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { Calendar as CalendarIcon, Clock, Video, Phone, Building, MapPin } from 'lucide-react';
@@ -26,10 +19,9 @@ import {
   PrimaryButton,
   SecondaryButton,
   inputClass,
-  selectTriggerClass,
-  selectContentClass,
   fieldLabelClass,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 
 interface ScheduleInterviewDialogProps {
   open: boolean;
@@ -160,7 +152,7 @@ export function ScheduleInterviewDialog({
             <p className="mt-1 text-[15px] font-semibold text-white">{candidateName}</p>
           </div>
 
-          <FormCard eyebrow="When">
+          <FormCard bleed eyebrow="When">
             <div className="space-y-1.5">
               <label className={fieldLabelClass}>Date</label>
               <Popover>
@@ -195,23 +187,16 @@ export function ScheduleInterviewDialog({
             </div>
 
             <Field label="Time">
-              <Select value={time} onValueChange={setTime}>
-                <SelectTrigger className={selectTriggerClass}>
-                  <Clock className="mr-2 h-4 w-4 text-white" />
-                  <SelectValue placeholder="Select time" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {timeSlots.map((slot) => (
-                    <SelectItem key={slot} value={slot}>
-                      {slot}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <SelectField
+        value={time}
+        onValueChange={setTime}
+        placeholder="Select time"
+        options={timeSlots.map((slot) => ({ value: slot, label: slot }))}
+      />
             </Field>
           </FormCard>
 
-          <FormCard eyebrow="Format">
+          <FormCard bleed eyebrow="Format">
             <label className={fieldLabelClass}>Interview type</label>
             <div className="grid grid-cols-3 gap-2">
               {(['In-person', 'Phone', 'Video'] as const).map((type) => {
@@ -261,7 +246,7 @@ export function ScheduleInterviewDialog({
           </FormCard>
 
           {date && time && (
-            <FormCard eyebrow="Summary">
+            <FormCard bleed eyebrow="Summary">
               <p className="text-[12.5px] text-white">
                 {format(date, 'EEEE, d MMMM yyyy')} at {time}
               </p>

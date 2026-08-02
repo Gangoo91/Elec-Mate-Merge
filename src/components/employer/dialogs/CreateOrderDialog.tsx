@@ -320,7 +320,7 @@ export function CreateOrderDialog({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[95vh] p-0 overflow-hidden">
+      <SheetContent side="bottom" className="h-[85vh] p-0 overflow-hidden">
         <SheetShell
           eyebrow="Purchase order"
           title="Raise a purchase order"
@@ -488,6 +488,7 @@ export function CreateOrderDialog({
                       <div className="flex items-center gap-2 mt-1">
                         <Input
                           type="number"
+                            inputMode="decimal"
                           value={item.qty}
                           onChange={(e) => updateItemQty(item.id, Number(e.target.value))}
                           className={`${inputClass} w-16 h-11`}
@@ -497,6 +498,7 @@ export function CreateOrderDialog({
                         <span className="text-[11px] text-white/50">× £</span>
                         <Input
                           type="number"
+                            inputMode="decimal"
                           value={item.price}
                           onChange={(e) => updateItemPrice(item.id, Number(e.target.value))}
                           className={`${inputClass} w-24 h-11`}
@@ -559,6 +561,7 @@ export function CreateOrderDialog({
               <Field label="Quantity">
                 <Input
                   type="number"
+                            inputMode="decimal"
                   value={newItem.qty}
                   onChange={(e) => setNewItem({ ...newItem, qty: Number(e.target.value) })}
                   min={1}
@@ -568,6 +571,7 @@ export function CreateOrderDialog({
               <Field label="Unit cost (£)">
                 <Input
                   type="number"
+                            inputMode="decimal"
                   value={newItem.price}
                   onChange={(e) => setNewItem({ ...newItem, price: Number(e.target.value) })}
                   min={0}

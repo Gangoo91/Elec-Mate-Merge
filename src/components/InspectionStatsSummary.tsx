@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import { Check, AlertTriangle, XCircle, AlertCircle, ChevronUp, Circle } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import React from 'react';
 
 interface InspectionItem {
   id: string;
@@ -13,6 +11,7 @@ interface InspectionItem {
     | 'C1'
     | 'C2'
     | 'C3'
+    | 'FI'
     | 'not-applicable'
     | 'not-verified'
     | 'limitation'
@@ -25,18 +24,24 @@ interface InspectionStatsSummaryProps {
 }
 
 const InspectionStatsSummary = ({ inspectionItems }: InspectionStatsSummaryProps) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-
   const c1Count = inspectionItems.filter((item) => item.outcome === 'C1').length;
   const c2Count = inspectionItems.filter((item) => item.outcome === 'C2').length;
   const c3Count = inspectionItems.filter((item) => item.outcome === 'C3').length;
+  const fiCount = inspectionItems.filter((item) => item.outcome === 'FI').length;
   const satisfactory = inspectionItems.filter((item) => item.outcome === 'satisfactory').length;
   const notApplicable = inspectionItems.filter((item) => item.outcome === 'not-applicable').length;
   const notVerified = inspectionItems.filter((item) => item.outcome === 'not-verified').length;
   const limitation = inspectionItems.filter((item) => item.outcome === 'limitation').length;
 
   const completed =
-    satisfactory + c1Count + c2Count + c3Count + notApplicable + notVerified + limitation;
+    satisfactory +
+    c1Count +
+    c2Count +
+    c3Count +
+    fiCount +
+    notApplicable +
+    notVerified +
+    limitation;
   const total = inspectionItems.length;
   const progressPercent = total > 0 ? Math.round((completed / total) * 100) : 0;
 
@@ -46,166 +51,64 @@ const InspectionStatsSummary = ({ inspectionItems }: InspectionStatsSummaryProps
   }
 
   return (
-    <>
-      {/* Mobile: Floating Stats Pill */}
-      <div className="lg:hidden">
-        <button
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="eicr-stats-pill touch-manipulation"
-        >
-          {/* Compact stats */}
-          <div className="flex items-center gap-3">
-            {/* Satisfactory */}
-            <div className="flex items-center gap-1">
-              <Check className="h-3.5 w-3.5 text-green-400" />
-              <span className="text-sm font-semibold text-green-400">{satisfactory}</span>
-            </div>
+    <div className="hidden rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 lg:block">
+      <div className="flex items-center justify-between">
+        <h2 className="text-[15px] font-semibold tracking-tight text-white">
+          Inspection summary
+        </h2>
+        <span className="text-sm font-semibold text-elec-yellow tabular-nums">
+          {progressPercent}%
+        </span>
+      </div>
 
-            {/* Critical (C1/C2) */}
-            {c1Count + c2Count > 0 && (
-              <div className="flex items-center gap-1">
-                <XCircle className="h-3.5 w-3.5 text-red-400" />
-                <span className="text-sm font-semibold text-red-400">{c1Count + c2Count}</span>
-              </div>
-            )}
-
-            {/* Improvements (C3) */}
-            {c3Count > 0 && (
-              <div className="flex items-center gap-1">
-                <AlertTriangle className="h-3.5 w-3.5 text-yellow-400" />
-                <span className="text-sm font-semibold text-yellow-400">{c3Count}</span>
-              </div>
-            )}
-          </div>
-
-          {/* Progress indicator */}
-          <div className="w-px h-4 bg-white/20" />
-
-          <div className="flex items-center gap-1.5">
-            <span className="text-xs text-white">{progressPercent}%</span>
-            <ChevronUp
-              className={cn(
-                'h-4 w-4 text-white transition-transform',
-                isExpanded && 'rotate-180'
-              )}
-            />
-          </div>
-        </button>
-
-        {/* Expanded Panel */}
-        {isExpanded && (
+      {/* Progress bar */}
+      <div className="mt-3">
+        <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.08]">
           <div
-            className="fixed bottom-32 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-sm
-                          bg-background border border-white/[0.08] rounded-2xl p-4
-                          shadow-2xl animate-in slide-in-from-bottom-2 duration-200"
-          >
-            {/* Progress row */}
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs text-white/50">{completed}/{total} items</span>
-              <span className="text-xs font-semibold text-white">{progressPercent}%</span>
-            </div>
-            <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden mb-4">
-              <div
-                className="h-full bg-elec-yellow rounded-full transition-all duration-500"
-                style={{ width: `${progressPercent}%` }}
-              />
-            </div>
-
-            {/* Stats — single row */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <span className="text-xs font-bold text-green-400">{satisfactory} <span className="font-normal text-white">OK</span></span>
-                <span className="text-xs font-bold text-red-400">{c1Count} <span className="font-normal text-white">C1</span></span>
-                <span className="text-xs font-bold text-orange-400">{c2Count} <span className="font-normal text-white">C2</span></span>
-                <span className="text-xs font-bold text-yellow-400">{c3Count} <span className="font-normal text-white">C3</span></span>
-              </div>
-              <div className="flex items-center gap-2 text-[10px] text-white/30">
-                <span>{notApplicable} N/A</span>
-                <span>{notVerified} N/V</span>
-                <span>{limitation} LIM</span>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Overlay when expanded */}
-        {isExpanded && (
-          <div className="fixed inset-0 z-30 bg-black/30" onClick={() => setIsExpanded(false)} />
-        )}
+            className={`h-full rounded-full transition-all duration-500 ${progressPercent === 100 ? 'bg-green-500' : 'bg-elec-yellow'}`}
+            style={{ width: `${progressPercent}%` }}
+          />
+        </div>
+        <div className="mt-1.5 flex items-center justify-between text-xs text-white">
+          <span>{completed} completed</span>
+          <span>{total - completed} remaining</span>
+        </div>
       </div>
 
-      {/* Desktop: Inline Stats Card */}
-      <div className="hidden lg:block eicr-section-card p-4">
-        <div className="flex items-center justify-between">
-          <h4 className="text-sm font-semibold text-white">Inspection Summary</h4>
-          <span className="text-sm text-elec-yellow font-semibold">
-            {progressPercent}% Complete
+      {/* Stats row — solid count chips, matching the outcome chip colours */}
+      <div className="mt-4 flex flex-wrap items-center gap-1.5 border-t border-white/[0.1] pt-3 text-[11px]">
+        {satisfactory > 0 && (
+          <span className="rounded-md bg-green-500 px-2 py-0.5 font-bold text-black tabular-nums">
+            {satisfactory} OK
           </span>
-        </div>
-
-        {/* Progress Bar */}
-        <div className="mt-3">
-          <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-elec-yellow rounded-full transition-all duration-500"
-              style={{ width: `${progressPercent}%` }}
-            />
-          </div>
-          <div className="flex items-center justify-between text-xs text-white mt-1.5">
-            <span>{completed} completed</span>
-            <span>{total - completed} remaining</span>
-          </div>
-        </div>
-
-        {/* Stats Row */}
-        <div className="flex items-center gap-4 mt-4 pt-3 border-t border-white/5">
-          <div className="flex items-center gap-1.5">
-            <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center">
-              <Check className="h-3.5 w-3.5 text-green-400" />
-            </div>
-            <span className="text-sm font-semibold text-green-400">{satisfactory}</span>
-            <span className="text-xs text-white">OK</span>
-          </div>
-
-          {c1Count > 0 && (
-            <div className="flex items-center gap-1.5">
-              <div className="w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center">
-                <XCircle className="h-3.5 w-3.5 text-red-400" />
-              </div>
-              <span className="text-sm font-semibold text-red-400">{c1Count}</span>
-              <span className="text-xs text-white">C1</span>
-            </div>
-          )}
-
-          {c2Count > 0 && (
-            <div className="flex items-center gap-1.5">
-              <div className="w-6 h-6 rounded-full bg-orange-500/20 flex items-center justify-center">
-                <AlertTriangle className="h-3.5 w-3.5 text-orange-400" />
-              </div>
-              <span className="text-sm font-semibold text-orange-400">{c2Count}</span>
-              <span className="text-xs text-white">C2</span>
-            </div>
-          )}
-
-          {c3Count > 0 && (
-            <div className="flex items-center gap-1.5">
-              <div className="w-6 h-6 rounded-full bg-yellow-500/20 flex items-center justify-center">
-                <AlertCircle className="h-3.5 w-3.5 text-yellow-400" />
-              </div>
-              <span className="text-sm font-semibold text-yellow-400">{c3Count}</span>
-              <span className="text-xs text-white">C3</span>
-            </div>
-          )}
-
-          {notApplicable > 0 && (
-            <div className="flex items-center gap-1.5 text-white">
-              <span className="text-sm font-semibold">{notApplicable}</span>
-              <span className="text-xs">N/A</span>
-            </div>
-          )}
-        </div>
+        )}
+        {c1Count > 0 && (
+          <span className="rounded-md bg-red-600 px-2 py-0.5 font-bold text-white tabular-nums">
+            {c1Count} C1
+          </span>
+        )}
+        {c2Count > 0 && (
+          <span className="rounded-md bg-orange-500 px-2 py-0.5 font-bold text-black tabular-nums">
+            {c2Count} C2
+          </span>
+        )}
+        {c3Count > 0 && (
+          <span className="rounded-md bg-elec-yellow px-2 py-0.5 font-bold text-black tabular-nums">
+            {c3Count} C3
+          </span>
+        )}
+        {fiCount > 0 && (
+          <span className="rounded-md bg-blue-500 px-2 py-0.5 font-bold text-white tabular-nums">
+            {fiCount} FI
+          </span>
+        )}
+        {notApplicable > 0 && (
+          <span className="rounded-md bg-white/[0.18] px-2 py-0.5 font-bold text-white tabular-nums">
+            {notApplicable} N/A
+          </span>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 

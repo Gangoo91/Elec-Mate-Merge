@@ -33,22 +33,22 @@ const statusConfig: Record<
   pass: {
     label: 'PASS',
     icon: Check,
-    classes: 'bg-green-500/20 text-green-400 border-green-500/30',
+    classes: 'bg-white/[0.06] text-green-400 border-white/[0.12]',
   },
   fail: {
     label: 'FAIL',
     icon: X,
-    classes: 'bg-red-500/20 text-red-400 border-red-500/30',
+    classes: 'bg-white/[0.06] text-red-400 border-white/[0.12]',
   },
   warning: {
     label: 'WARNING',
     icon: AlertTriangle,
-    classes: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+    classes: 'bg-white/[0.06] text-amber-400 border-white/[0.12]',
   },
   unknown: {
     label: '?',
     icon: HelpCircle,
-    classes: 'bg-gray-500/20 text-white border-gray-500/30',
+    classes: 'bg-white/[0.06] text-white/85 border-white/[0.12]',
   },
 };
 
@@ -113,7 +113,7 @@ export const AutoFilledBadge: React.FC<{ className?: string }> = ({ className })
             variant="outline"
             className={cn(
               'text-xs px-1.5 py-0.5 font-medium',
-              'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30',
+              'bg-white/[0.06] text-elec-yellow border-white/[0.12]',
               className
             )}
           >
@@ -146,12 +146,11 @@ export const OverdueBadge: React.FC<{
             variant="outline"
             className={cn(
               'text-xs px-1.5 py-0.5 font-medium',
-              'bg-red-500/20 text-red-400 border-red-500/30 animate-pulse',
+              'bg-white/[0.06] text-red-400 border-white/[0.12]',
               className
             )}
           >
-            <AlertTriangle className="h-3 w-3 mr-1" />
-            OVERDUE
+            {daysOverdue} {daysOverdue === 1 ? 'day' : 'days'} overdue
           </Badge>
         </TooltipTrigger>
         <TooltipContent side="top">
@@ -183,19 +182,19 @@ export const BatteryConditionBadge: React.FC<{
 
   switch (normalizedCondition) {
     case 'good':
-      classes = 'bg-green-500/20 text-green-400 border-green-500/30';
+      classes = 'bg-white/[0.06] text-green-400 border-white/[0.12]';
       label = 'Good';
       break;
     case 'fair':
-      classes = 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+      classes = 'bg-white/[0.06] text-amber-400 border-white/[0.12]';
       label = 'Fair';
       break;
     case 'poor':
-      classes = 'bg-red-500/20 text-red-400 border-red-500/30';
+      classes = 'bg-white/[0.06] text-red-400 border-white/[0.12]';
       label = 'Poor';
       break;
     default:
-      classes = 'bg-gray-500/20 text-white border-gray-500/30';
+      classes = 'bg-white/[0.06] text-white/85 border-white/[0.12]';
   }
 
   return (
@@ -228,14 +227,13 @@ export const DurationBadge: React.FC<{
             variant="outline"
             className={cn(
               'text-xs px-1.5 py-0.5 font-medium border',
-              isThreeHour
-                ? 'bg-purple-500/20 text-purple-400 border-purple-500/30'
-                : 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+              'bg-white/[0.06] border-white/[0.12]',
+              required ? 'text-elec-yellow' : 'text-white',
               className
             )}
           >
             {duration === 180 ? '3hr' : '1hr'}
-            {required && ' Required'}
+            {required && ' required'}
           </Badge>
         </TooltipTrigger>
         <TooltipContent side="top">

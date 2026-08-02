@@ -2,13 +2,6 @@ import { useState, useEffect } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { useCreateTender, CreateTenderData } from '@/hooks/useTenders';
 import { Loader2, ExternalLink, Plus } from 'lucide-react';
 import { toast } from 'sonner';
@@ -22,9 +15,8 @@ import {
   SecondaryButton,
   inputClass,
   textareaClass,
-  selectTriggerClass,
-  selectContentClass,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 
 interface CreateTenderDialogProps {
   open: boolean;
@@ -99,7 +91,7 @@ export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTe
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] p-0 overflow-hidden">
+      <SheetContent side="bottom" className="h-[85vh] p-0 overflow-hidden">
         <SheetShell
           eyebrow="Tenders"
           title={
@@ -170,6 +162,7 @@ export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTe
               <Field label="Estimated value (£)">
                 <Input
                   type="number"
+                            inputMode="decimal"
                   min="0"
                   step="1000"
                   placeholder="0"
@@ -188,21 +181,12 @@ export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTe
               </Field>
             </FormGrid>
             <Field label="Category">
-              <Select
-                value={formData.category}
-                onValueChange={(value) => updateField('category', value)}
-              >
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="Select category" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {CATEGORIES.map((cat) => (
-                    <SelectItem key={cat} value={cat}>
-                      {cat}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <SelectField
+        value={formData.category}
+        onValueChange={(value) => updateField('category', value)}
+        placeholder="Select category"
+        options={CATEGORIES.map((cat) => ({ value: cat, label: cat }))}
+      />
             </Field>
             <Field label="Description">
               <Textarea

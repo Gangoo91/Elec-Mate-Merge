@@ -32,6 +32,12 @@ import { useReportSync } from '@/hooks/useReportSync';
 import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
 import { draftStorage } from '@/utils/draftStorage';
+// Module-scope import to match G98. handleSendEmail called formatG99Json while
+// the only binding was a local const inside handleGeneratePDF, so every email
+// threw a ReferenceError that the surrounding try/catch swallowed — leaving
+// formattedData undefined and the send falling through to a 422. ESLint cannot
+// see this (no-undef is off for TS), so it survived every green build.
+import { formatG99Json } from '@/utils/g99JsonFormatter';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -49,6 +55,7 @@ import {
   G99_DEFAULTS,
 } from '@/types/g99-commissioning';
 import { useG99CommissioningTabs, G99TabValue } from '@/hooks/useG99CommissioningTabs';
+import useReadingKeypad from '@/hooks/useReadingKeypad';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -68,14 +75,42 @@ const labelCn = 'text-[12px] font-medium text-white mb-1 block';
 
 const DRAFT_KEY = 'elec-mate-draft-g99';
 
+/** Numeric commissioning readings the keypad serves — free-number inputs only:
+ * protection settings recorded from the relay/inverter plus the measured
+ * additional G99 test values. */
+const KEYPAD_META = {
+  ovStage1Voltage: { label: 'OV stage 1 — trip voltage', unit: 'V' },
+  ovStage1Time: { label: 'OV stage 1 — trip time', unit: 's' },
+  ovStage2Voltage: { label: 'OV stage 2 — trip voltage', unit: 'V' },
+  ovStage2Time: { label: 'OV stage 2 — trip time', unit: 's' },
+  uvStage1Voltage: { label: 'UV stage 1 — trip voltage', unit: 'V' },
+  uvStage1Time: { label: 'UV stage 1 — trip time', unit: 's' },
+  uvStage2Voltage: { label: 'UV stage 2 — trip voltage', unit: 'V' },
+  uvStage2Time: { label: 'UV stage 2 — trip time', unit: 's' },
+  ofStage1Freq: { label: 'OF stage 1 — trip frequency', unit: 'Hz' },
+  ofStage1Time: { label: 'OF stage 1 — trip time', unit: 's' },
+  ofStage2Freq: { label: 'OF stage 2 — trip frequency', unit: 'Hz' },
+  ofStage2Time: { label: 'OF stage 2 — trip time', unit: 's' },
+  ufStage1Freq: { label: 'UF stage 1 — trip frequency', unit: 'Hz' },
+  ufStage1Time: { label: 'UF stage 1 — trip time', unit: 's' },
+  ufStage2Freq: { label: 'UF stage 2 — trip frequency', unit: 'Hz' },
+  ufStage2Time: { label: 'UF stage 2 — trip time', unit: 's' },
+  rocoFRate: { label: 'ROCOF — trip rate', unit: 'Hz/s' },
+  rocoFTime: { label: 'ROCOF — trip time', unit: 's' },
+  reconnectionDelay: { label: 'Reconnection delay', unit: 's' },
+  powerQualityTHD: { label: 'THD — harmonic distortion', unit: '%' },
+  measuredExportKW: { label: 'Measured export power', unit: 'kW' },
+  gridVoltageAtConnection: { label: 'Grid voltage at connection', unit: 'V' },
+};
+const KEYPAD_SEQUENCE = Object.keys(KEYPAD_META);
+
 const SectionHeader = ({ title }: { title: string }) => (
   <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const Sub = ({ title }: { title: string }) => (
-  <div className="flex items-center gap-2 pt-2">
-    <p className="text-[12px] font-semibold text-white shrink-0">{title}</p>
-    <div className="h-px flex-1 bg-white/[0.08]" />
+  <div className="border-t border-white/[0.1] pt-4">
+    <h3 className="text-sm font-semibold text-white">{title}</h3>
   </div>
 );
 
@@ -266,6 +301,16 @@ const {
     setData((prev) => ({ ...prev, [field]: value }));
   }, []);
 
+  // Reading keypad — shared MW pattern for the grid protection settings and
+  // measured commissioning tests. Values flow through the existing update
+  // path; the spread only ADDS props.
+  const keypad = useReadingKeypad({
+    meta: KEYPAD_META,
+    sequence: KEYPAD_SEQUENCE,
+    getValue: (field) => String((data as any)[field] ?? ''),
+    setValue: (field, value) => update(field as keyof G99FormData, value),
+  });
+
   const settingsMatchDefaults = useMemo(() => {
     const keys = Object.keys(G99_DEFAULTS) as (keyof typeof G99_DEFAULTS)[];
     return keys.every((k) => data[k] === G99_DEFAULTS[k]);
@@ -371,24 +416,21 @@ const {
         return;
       }
 
-      let company: Record<string, any> = {};
-      try {
-        const { data: cpData } = await supabase.rpc('get_my_company_profile');
-        const cp = Array.isArray(cpData) ? cpData[0] : cpData;
-        if (cp) company = cp;
-      } catch {
-        /* company profile optional */
-      }
+      // One reader for the whole fleet — resolves the logo from the real columns
+      // (logo_data_url / logo_url) and the colour chosen in Settings → Business
+      // → Brand. Never throws; branding must never block a certificate.
+      const { formatG99Json, G99_ACCENT } = await import('@/utils/g99JsonFormatter');
+      const { fetchCertBranding } = await import('@/utils/certBranding');
+      const resolved = await fetchCertBranding(G99_ACCENT);
 
       const branding = {
-        companyName: company.company_name || data.installerCompany,
-        companyAddress: company.company_address || '',
-        companyPhone: company.company_phone || data.installerPhone,
-        companyEmail: company.company_email || data.installerEmail,
-        companyLogo: company.company_logo || '',
+        ...resolved,
+        // Fall back to what the installer typed on the form when Settings is bare.
+        companyName: resolved.companyName || data.installerCompany,
+        companyPhone: resolved.companyPhone || data.installerPhone,
+        companyEmail: resolved.companyEmail || data.installerEmail,
       };
 
-      const { formatG99Json } = await import('@/utils/g99JsonFormatter');
       const payload = formatG99Json(data, branding);
 
       const { data: pdfResult, error: pdfError } = await supabase.functions.invoke(
@@ -878,6 +920,7 @@ const {
               value={data.ovStage1Voltage}
               onChange={(e) => update('ovStage1Voltage', e.target.value)}
               className={inputCn}
+              {...keypad.field('ovStage1Voltage')}
             />
           </Field>
           <Field label="OV1 time">
@@ -885,6 +928,7 @@ const {
               value={data.ovStage1Time}
               onChange={(e) => update('ovStage1Time', e.target.value)}
               className={inputCn}
+              {...keypad.field('ovStage1Time')}
             />
           </Field>
           <Field label="OV2 (V)">
@@ -892,6 +936,7 @@ const {
               value={data.ovStage2Voltage}
               onChange={(e) => update('ovStage2Voltage', e.target.value)}
               className={inputCn}
+              {...keypad.field('ovStage2Voltage')}
             />
           </Field>
           <Field label="OV2 time">
@@ -899,6 +944,7 @@ const {
               value={data.ovStage2Time}
               onChange={(e) => update('ovStage2Time', e.target.value)}
               className={inputCn}
+              {...keypad.field('ovStage2Time')}
             />
           </Field>
         </div>
@@ -910,6 +956,7 @@ const {
               value={data.uvStage1Voltage}
               onChange={(e) => update('uvStage1Voltage', e.target.value)}
               className={inputCn}
+              {...keypad.field('uvStage1Voltage')}
             />
           </Field>
           <Field label="UV1 time">
@@ -917,6 +964,7 @@ const {
               value={data.uvStage1Time}
               onChange={(e) => update('uvStage1Time', e.target.value)}
               className={inputCn}
+              {...keypad.field('uvStage1Time')}
             />
           </Field>
           <Field label="UV2 (V)">
@@ -924,6 +972,7 @@ const {
               value={data.uvStage2Voltage}
               onChange={(e) => update('uvStage2Voltage', e.target.value)}
               className={inputCn}
+              {...keypad.field('uvStage2Voltage')}
             />
           </Field>
           <Field label="UV2 time">
@@ -931,6 +980,7 @@ const {
               value={data.uvStage2Time}
               onChange={(e) => update('uvStage2Time', e.target.value)}
               className={inputCn}
+              {...keypad.field('uvStage2Time')}
             />
           </Field>
         </div>
@@ -942,6 +992,7 @@ const {
               value={data.ofStage1Freq}
               onChange={(e) => update('ofStage1Freq', e.target.value)}
               className={inputCn}
+              {...keypad.field('ofStage1Freq')}
             />
           </Field>
           <Field label="OF1 time">
@@ -949,6 +1000,7 @@ const {
               value={data.ofStage1Time}
               onChange={(e) => update('ofStage1Time', e.target.value)}
               className={inputCn}
+              {...keypad.field('ofStage1Time')}
             />
           </Field>
           <Field label="OF2 (Hz)">
@@ -956,6 +1008,7 @@ const {
               value={data.ofStage2Freq}
               onChange={(e) => update('ofStage2Freq', e.target.value)}
               className={inputCn}
+              {...keypad.field('ofStage2Freq')}
             />
           </Field>
           <Field label="OF2 time">
@@ -963,6 +1016,7 @@ const {
               value={data.ofStage2Time}
               onChange={(e) => update('ofStage2Time', e.target.value)}
               className={inputCn}
+              {...keypad.field('ofStage2Time')}
             />
           </Field>
         </div>
@@ -974,6 +1028,7 @@ const {
               value={data.ufStage1Freq}
               onChange={(e) => update('ufStage1Freq', e.target.value)}
               className={inputCn}
+              {...keypad.field('ufStage1Freq')}
             />
           </Field>
           <Field label="UF1 time">
@@ -981,6 +1036,7 @@ const {
               value={data.ufStage1Time}
               onChange={(e) => update('ufStage1Time', e.target.value)}
               className={inputCn}
+              {...keypad.field('ufStage1Time')}
             />
           </Field>
           <Field label="UF2 (Hz)">
@@ -988,6 +1044,7 @@ const {
               value={data.ufStage2Freq}
               onChange={(e) => update('ufStage2Freq', e.target.value)}
               className={inputCn}
+              {...keypad.field('ufStage2Freq')}
             />
           </Field>
           <Field label="UF2 time">
@@ -995,6 +1052,7 @@ const {
               value={data.ufStage2Time}
               onChange={(e) => update('ufStage2Time', e.target.value)}
               className={inputCn}
+              {...keypad.field('ufStage2Time')}
             />
           </Field>
         </div>
@@ -1006,6 +1064,7 @@ const {
               value={data.rocoFRate}
               onChange={(e) => update('rocoFRate', e.target.value)}
               className={inputCn}
+              {...keypad.field('rocoFRate')}
             />
           </Field>
           <Field label="ROCOF time">
@@ -1013,6 +1072,7 @@ const {
               value={data.rocoFTime}
               onChange={(e) => update('rocoFTime', e.target.value)}
               className={inputCn}
+              {...keypad.field('rocoFTime')}
             />
           </Field>
           <Field label="Reconn. (s)">
@@ -1020,6 +1080,7 @@ const {
               value={data.reconnectionDelay}
               onChange={(e) => update('reconnectionDelay', e.target.value)}
               className={inputCn}
+              {...keypad.field('reconnectionDelay')}
             />
           </Field>
         </div>
@@ -1034,25 +1095,28 @@ const {
               onChange={(e) => update('powerQualityTHD', e.target.value)}
               className={inputCn}
               placeholder="Harmonic distortion"
+              {...keypad.field('powerQualityTHD')}
             />
           </Field>
           <Field label="Export (kW)">
             <Input
-              type="number"
+             
               step="0.01"
               value={data.measuredExportKW}
               onChange={(e) => update('measuredExportKW', e.target.value)}
               className={inputCn}
+              {...keypad.field('measuredExportKW')}
             />
           </Field>
         </div>
         <Field label="Grid voltage (V)">
           <Input
-            type="number"
+           
             step="0.1"
             value={data.gridVoltageAtConnection}
             onChange={(e) => update('gridVoltageAtConnection', e.target.value)}
             className={inputCn}
+            {...keypad.field('gridVoltageAtConnection')}
           />
         </Field>
         <div className="space-y-3">
@@ -1158,6 +1222,12 @@ const {
           />
         </div>
       </div>
+
+      {/* Scroll room so the last reading can rise clear of the keypad */}
+      {keypad.spacer}
+
+      {/* Reading keypad — coarse-pointer devices only */}
+      {keypad.element}
     </div>
   );
 

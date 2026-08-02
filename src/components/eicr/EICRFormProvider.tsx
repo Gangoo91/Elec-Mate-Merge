@@ -25,7 +25,7 @@ import {
 import OfflineBanner from '@/components/OfflineBanner';
 import { CreateCustomerDialog } from '@/components/CreateCustomerDialog';
 import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
-import { StickyFormSyncBar, type SyncState } from '@/components/ui/SyncStatusIndicator';
+import { type SyncState } from '@/components/ui/SyncStatusIndicator';
 import {
   findCustomerByName,
   createCustomerFromCertificate,
@@ -53,8 +53,18 @@ interface EICRFormContextType {
   isOnline: boolean;
   isAuthenticated: boolean;
   isLoadingReport: boolean;
+  /** True while an existing report hydrates from cloud/local — consumers must
+   * not auto-fill (profile/company defaults) during this window. */
+  isHydrating: boolean;
+  /** True when this session opened a saved report — auto-fill must never
+   * overwrite what the user saved (EIC parity). */
+  isExistingReport: boolean;
   lastSavedTime: Date | null;
   syncNow: (() => void) | undefined;
+  /** Flush pending edits when the step changes (EIC parity — EICFormProvider
+   * exposes the same). It was destructured from useCloudSync but never put on
+   * the context, so every `onTabChange?.()` in EICRForm was a silent no-op. */
+  onTabChange: (() => void) | undefined;
   syncNowImmediate: (() => Promise<SyncNowImmediateResult>) | undefined; // For PDF generation - returns saved data
   getSyncIndicatorState: () => SyncState;
   // Lock + versioning (ELE-1037)
@@ -154,7 +164,9 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       clientPhone: '',
       clientEmail: '',
       clientAddress: '',
-      sameAsClientAddress: 'false',
+      // Default ON: domestic client address = installation address in the common
+      // case, and the last-cert prefill can't fire until an address exists.
+      sameAsClientAddress: 'true',
       installationAddress: '',
       description: '',
       // EICR is always an existing installation; the field is hidden in the UI
@@ -170,9 +182,12 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       dateOfLastInspection: '',
 
       // Purpose & Inspection Details
-      purposeOfInspection: '',
+      // ~90% of EICRs are periodic inspections — editable chip, safe default.
+      purposeOfInspection: 'periodic',
       otherPurpose: '',
-      inspectionDate: '',
+      // Seeded to today on new certs — the inspection usually starts the day
+      // the cert is opened; editable. Initial state only (ELE-882: no silent writes).
+      inspectionDate: new Date().toISOString().split('T')[0],
       nextInspectionDate: '',
       inspectionInterval: '',
       extentOfInspection: '',
@@ -328,32 +343,12 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   // This ensures the ref is ALWAYS up-to-date when getLatestFormData() is called
   useLayoutEffect(() => {
     formDataRef.current = formData;
-    console.log('[EICRFormProvider] formDataRef updated (sync):', {
-      scheduleOfTests: formData.scheduleOfTests?.length || 0,
-      inspectionItems: formData.inspectionItems?.length || 0,
-      defectObservations: formData.defectObservations?.length || 0,
-      clientName: formData.clientName || 'empty',
-    });
   }, [formData]);
 
   // Getter function that returns the absolute latest formData from the ref
   // Use this in async callbacks (like PDF generation) to avoid stale closure data
   const getLatestFormData = useCallback(() => {
-    const refData = formDataRef.current;
-    const closureData = formData;
-
-    console.log('[getLatestFormData] ===== DATA COMPARISON =====');
-    console.log('[getLatestFormData] REF scheduleOfTests:', refData?.scheduleOfTests?.length || 0);
-    console.log(
-      '[getLatestFormData] CLOSURE scheduleOfTests:',
-      closureData?.scheduleOfTests?.length || 0
-    );
-    console.log('[getLatestFormData] REF clientName:', refData?.clientName || 'empty');
-    console.log('[getLatestFormData] CLOSURE clientName:', closureData?.clientName || 'empty');
-    console.log('[getLatestFormData] Using:', refData ? 'REF' : 'CLOSURE');
-    console.log('[getLatestFormData] ============================');
-
-    return refData || closureData;
+    return formDataRef.current || formData;
   }, [formData]);
 
   // Callback when auto-sync creates a new report - keeps component state in sync
@@ -818,7 +813,11 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     initCertificateNumber();
   }, []);
 
-  const updateFormData = (field: string, value: any) => {
+  // Stable identity — the five details sections are React.memo'd on
+  // prevProps.onUpdate === nextProps.onUpdate; a recreated-per-render function
+  // defeated every comparator and re-rendered the whole Details step per
+  // keystroke.
+  const updateFormData = useCallback((field: string, value: any) => {
     if (field === 'certificateNumber') {
       console.warn('Certificate number cannot be modified');
       return;
@@ -827,28 +826,9 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     // Sanitize string inputs to prevent XSS
     const sanitizedValue = typeof value === 'string' ? sanitizeTextInput(value) : value;
 
-    // DEBUG: Log every form data update
-    console.log(
-      '[updateFormData] Updating field:',
-      field,
-      Array.isArray(sanitizedValue)
-        ? `(${sanitizedValue.length} items)`
-        : typeof sanitizedValue === 'object'
-          ? '(object)'
-          : sanitizedValue
-    );
-
-    setFormData((prev) => {
-      const newData = { ...prev, [field]: sanitizedValue };
-      console.log('[updateFormData] New state will have:', {
-        scheduleOfTests: newData.scheduleOfTests?.length || 0,
-        inspectionItems: newData.inspectionItems?.length || 0,
-        defectObservations: newData.defectObservations?.length || 0,
-      });
-      return newData;
-    });
+    setFormData((prev) => ({ ...prev, [field]: sanitizedValue }));
     setHasUnsavedChanges(true);
-  };
+  }, []);
 
   const handleManualSave = async () => {
     if (!isAuthenticated) {
@@ -984,7 +964,9 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       clientPhone: '',
       clientEmail: '',
       clientAddress: '',
-      sameAsClientAddress: 'false',
+      // Default ON: domestic client address = installation address in the common
+      // case, and the last-cert prefill can't fire until an address exists.
+      sameAsClientAddress: 'true',
       installationAddress: '',
       description: '',
       // EICR is always an existing installation; the field is hidden in the UI
@@ -998,9 +980,12 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       alterationsDetails: '',
       lastInspectionType: 'unknown',
       dateOfLastInspection: '',
-      purposeOfInspection: '',
+      // ~90% of EICRs are periodic inspections — editable chip, safe default.
+      purposeOfInspection: 'periodic',
       otherPurpose: '',
-      inspectionDate: '',
+      // Seeded to today on new certs — the inspection usually starts the day
+      // the cert is opened; editable. Initial state only (ELE-882: no silent writes).
+      inspectionDate: new Date().toISOString().split('T')[0],
       nextInspectionDate: '',
       inspectionInterval: '',
       extentOfInspection: '',
@@ -1124,6 +1109,10 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       observations: [],
     };
 
+    // The abandoned form's local draft must not resurrect into the next
+    // "New EICR" visit — Start New is an explicit discard.
+    draftStorage.clearDraft('eicr', currentReportId);
+
     setFormData(newFormData);
     setCurrentReportId(null);
     setShowStartNewDialog(false);
@@ -1156,6 +1145,25 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     delete duplicatedData.updated_at;
     duplicatedData.certificateNumber = certificateNumber;
     duplicatedData.status = 'draft';
+
+    // A duplicate is a NEW inspection of a similar installation — it must not
+    // arrive pre-signed and pre-dated for work that hasn't happened yet.
+    // Supply/earthing/circuit STRUCTURE carries; attestations don't.
+    duplicatedData.inspectorSignature = '';
+    duplicatedData.inspectedBySignature = '';
+    duplicatedData.reportAuthorisedBySignature = '';
+    duplicatedData.scheduleInspectedBySignature = '';
+    duplicatedData.scheduleTestedBySignature = '';
+    duplicatedData.inspectionDate = '';
+    duplicatedData.inspectedByDate = '';
+    duplicatedData.reportAuthorisedByDate = '';
+    duplicatedData.scheduleInspectedByDate = '';
+    duplicatedData.scheduleTestedByDate = '';
+    duplicatedData.certificateGenerated = false;
+    duplicatedData.certificateGeneratedAt = '';
+
+    // The abandoned form's local draft must not resurrect into this new cert.
+    draftStorage.clearDraft('eicr', currentReportId);
 
     setFormData(duplicatedData);
     setCurrentReportId(null);
@@ -1207,8 +1215,11 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     isOnline,
     isAuthenticated,
     isLoadingReport,
+    isHydrating: isLoadingReport,
+    isExistingReport: !!initialReportId,
     lastSavedTime,
     syncNow,
+    onTabChange,
     syncNowImmediate,
     getSyncIndicatorState,
     isLocked,
@@ -1228,14 +1239,12 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
         clientName={formData.clientName || ''}
         installationAddress={formData.installationAddress || formData.clientAddress || ''}
       >
-        {/* Prominent sync status bar - always visible */}
-        <StickyFormSyncBar
-          state={getSyncIndicatorState()}
-          lastSaved={lastSavedTime}
-          isOnline={isOnline}
-          onRetry={syncNow}
-          certificateNumber={formData.certificateNumber}
-        />
+        {/*
+          StickyFormSyncBar removed: on mobile it printed the save state and
+          the certificate number 33px above a shell header that already shows
+          both, so every cert screen carried the same two facts twice and
+          started 33px further down. The shell header owns save state now.
+        */}
         {syncState.queuedChanges > 0 && (
           <OfflineBanner
             queuedChanges={syncState.queuedChanges}

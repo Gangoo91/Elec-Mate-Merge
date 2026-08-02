@@ -1,5 +1,6 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { bessPayloadSchema } from '../_shared/bess-payload-schema.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const TEMPLATE_ID = '8686DCA2-4377-46F5-A931-BB1DC1137E35';
@@ -51,9 +52,22 @@ Deno.serve(async (req: Request) => {
     console.log('[generate-bess-pdf] Ref:', formData.certificateNumber);
     console.log('[generate-bess-pdf] Battery:', formData.batteryManufacturer, formData.batteryModel);
     console.log('[generate-bess-pdf] Capacity:', formData.usableCapacity, 'kWh');
+    // Soft-fail schema check: log and report drift, never block the PDF. The
+    // payload sent below is the RAW formData, so validation only observes —
+    // it must not become the source of what PDFMonkey renders.
+    const validation = bessPayloadSchema.safeParse(formData);
+    if (!validation.success) {
+      console.error('[generate-bess-pdf] Schema validation failed:', JSON.stringify(validation.error.issues.slice(0, 10)));
+      await captureException(new Error('BESS payload schema drift detected'), {
+        functionName: 'generate-bess-pdf',
+        extra: { issues: validation.error.issues.slice(0, 20) },
+        tags: { schema_drift: 'true' },
+      });
+    }
+
     const doc = await createPDFMonkeyDocument(formData, templateId);
     const completed = await waitForPDF(doc.id);
-    return new Response(JSON.stringify({ success: true, document_id: completed.id, download_url: completed.download_url, preview_url: completed.preview_url }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+    return new Response(JSON.stringify({ success: true, document_id: completed.id, pdfUrl: completed.download_url, download_url: completed.download_url, preview_url: completed.preview_url }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
   } catch (error) {
     await captureException(error, { functionName: 'generate-bess-pdf', requestUrl: req.url, requestMethod: req.method });
     console.error('[generate-bess-pdf] Error:', error);

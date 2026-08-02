@@ -11,7 +11,7 @@ import { reportCloud, CloudReport } from '@/utils/reportCloud';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
-import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/ui/sheet';
 import {
   AlertDialog,
@@ -166,57 +166,59 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className={cn('space-y-4', className)}
+        className={cn('space-y-3', className)}
       >
-        <motion.div variants={itemVariants}>
-          <Eyebrow>UNSAVED DRAFTS</Eyebrow>
-        </motion.div>
+        <motion.h2
+          variants={itemVariants}
+          className="text-[15px] font-semibold tracking-tight text-white"
+        >
+          Unsaved drafts
+        </motion.h2>
 
+        {/*
+          Wide single row, not a five-row stack. This banner was ~230px tall to
+          say one thing — "you have N drafts" — with a description, a rule, a
+          "SEE ALL AND CHOOSE" helper next to "Open" (both meaning the same
+          tap), and a second rule above Delete all / Dismiss. Now: count + types
+          and the title on the left, Open on the right, with the two secondary
+          actions on one quiet line beneath.
+        */}
         <motion.div
           variants={itemVariants}
-          className="relative bg-gradient-to-b from-white/[0.07] to-white/[0.03] border border-white/[0.12] rounded-2xl overflow-hidden"
+          className="overflow-hidden rounded-2xl border border-white/[0.18] bg-gradient-to-b from-white/[0.12] to-white/[0.06]"
         >
-
           <button
             type="button"
             onClick={() => setShowSheet(true)}
-            className="group w-full text-left p-5 sm:p-6 hover:bg-white/[0.06] transition-colors touch-manipulation flex flex-col gap-3"
+            className="group flex w-full items-center gap-3 px-4 py-3 text-left transition-colors touch-manipulation select-none [-webkit-tap-highlight-color:transparent] hover:bg-white/[0.05] active:bg-white/[0.07]"
           >
-            <div className="flex items-baseline gap-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
-                {autoDrafts.length}
+            <span className="min-w-0 flex-1">
+              <span className="flex items-baseline gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em]">
+                <span className="tabular-nums text-elec-yellow">{autoDrafts.length}</span>
+                <span className="min-w-0 truncate text-white">· {uniqueTypes || 'Drafts'}</span>
               </span>
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-                · {uniqueTypes || 'Drafts'}
+              <span className="mt-1 block truncate text-[16px] font-bold leading-tight tracking-tight text-white transition-colors group-hover:text-elec-yellow">
+                {autoDrafts.length} unsaved draft{autoDrafts.length !== 1 ? 's' : ''} waiting
               </span>
-            </div>
-            <h3 className="text-[18px] sm:text-[20px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
-              {autoDrafts.length} unsaved draft{autoDrafts.length !== 1 ? 's' : ''} waiting
-            </h3>
-            <p className="text-[13px] text-white/60">
-              Auto-saved before you closed the tab. Tap to pick one up.
-            </p>
-            <div className="mt-2 flex items-center justify-between pt-3 border-t border-white/[0.05]">
-              <span className="text-[11px] text-white/55 uppercase tracking-[0.14em]">
-                See all and choose
+              <span className="mt-0.5 block truncate text-[11.5px] leading-snug text-white">
+                Auto-saved before you closed the tab.
               </span>
-              <span className="text-[12px] font-semibold text-elec-yellow">Open</span>
-            </div>
+            </span>
+            <span className="shrink-0 text-[13px] font-bold text-elec-yellow">Open</span>
           </button>
 
-          {/* Inline action bar — quiet, no chrome */}
-          <div className="flex items-center border-t border-white/[0.05] px-5">
+          <div className="flex items-center gap-4 border-t border-white/[0.10] px-4">
             <button
               type="button"
               onClick={() => setDeleteAll(true)}
-              className="h-11 flex items-center text-[11px] uppercase tracking-[0.14em] font-medium text-white/60 hover:text-red-300 transition-colors touch-manipulation"
+              className="flex h-11 items-center text-[11.5px] font-semibold text-white transition-colors touch-manipulation hover:text-red-300"
             >
               Delete all
             </button>
             <button
               type="button"
               onClick={() => setIsDismissed(true)}
-              className="h-11 flex items-center text-[11px] uppercase tracking-[0.14em] font-medium text-white/60 ml-auto hover:text-white transition-colors touch-manipulation"
+              className="ml-auto flex h-11 items-center text-[11.5px] font-semibold text-white touch-manipulation"
             >
               Dismiss
             </button>
@@ -235,7 +237,7 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
               <SheetTitle className="text-white text-base font-semibold text-left">
                 Unsaved Drafts
               </SheetTitle>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/15 text-amber-400">
+              <span className="rounded border border-white/[0.16] bg-white/[0.08] px-2 py-0.5 text-[10px] font-bold tabular-nums text-white">
                 {autoDrafts.length}
               </span>
             </div>

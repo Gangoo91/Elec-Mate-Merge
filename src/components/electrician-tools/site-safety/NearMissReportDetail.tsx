@@ -143,7 +143,7 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({
   const statusConf = STATUS_CONFIG[currentStatus] || STATUS_CONFIG.open;
   const StatusIcon = statusConf.icon;
 
-  const { data: jobs = [] } = useSparkProjects('active');
+  const { projects: jobs = [] } = useSparkProjects('active');
   const linkedJobTitle = report.job_id
     ? (jobs.find((j) => j.id === report.job_id)?.title ?? null)
     : null;

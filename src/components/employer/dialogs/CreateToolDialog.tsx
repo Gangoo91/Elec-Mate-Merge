@@ -9,13 +9,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
   useCreateTool,
   useUpdateTool,
   CreateToolData,
@@ -31,9 +24,8 @@ import {
   SecondaryButton,
   inputClass,
   textareaClass,
-  selectTriggerClass,
-  selectContentClass,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 
 interface CreateToolDialogProps {
   open: boolean;
@@ -172,7 +164,7 @@ export function CreateToolDialog({ open, onOpenChange, tool }: CreateToolDialogP
 
         <ResponsiveFormModalBody className="pb-6">
           <form onSubmit={handleSubmit} className="space-y-4">
-          <FormCard eyebrow="Equipment">
+          <FormCard bleed eyebrow="Equipment">
             <Field label="Equipment name" required>
               <Input
                 placeholder="e.g. Fluke 1664FC"
@@ -184,38 +176,20 @@ export function CreateToolDialog({ open, onOpenChange, tool }: CreateToolDialogP
             </Field>
             <FormGrid cols={2}>
               <Field label="Category" required>
-                <Select
-                  value={formData.category}
-                  onValueChange={(value) => updateField('category', value)}
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    {CATEGORIES.map((cat) => (
-                      <SelectItem key={cat} value={cat}>
-                        {cat}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <SelectField
+        value={formData.category}
+        onValueChange={(value) => updateField('category', value)}
+        placeholder="Select category"
+        options={CATEGORIES.map((cat) => ({ value: cat, label: cat }))}
+      />
               </Field>
               <Field label="Status">
-                <Select
-                  value={formData.status}
-                  onValueChange={(value) => updateField('status', value)}
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue placeholder="Select status" />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    {STATUSES.map((status) => (
-                      <SelectItem key={status} value={status}>
-                        {status}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <SelectField
+        value={formData.status}
+        onValueChange={(value) => updateField('status', value)}
+        placeholder="Select status"
+        options={STATUSES.map((status) => ({ value: status, label: status }))}
+      />
               </Field>
             </FormGrid>
             <FormGrid cols={2}>
@@ -248,6 +222,7 @@ export function CreateToolDialog({ open, onOpenChange, tool }: CreateToolDialogP
               <Field label="Purchase price (£)">
                 <Input
                   type="number"
+                            inputMode="decimal"
                   min="0"
                   step="0.01"
                   placeholder="0.00"
@@ -259,7 +234,7 @@ export function CreateToolDialog({ open, onOpenChange, tool }: CreateToolDialogP
             </FormGrid>
           </FormCard>
 
-          <FormCard eyebrow="PAT testing">
+          <FormCard bleed eyebrow="PAT testing">
             <FormGrid cols={2}>
               <Field label="Last PAT date">
                 <Input
@@ -280,7 +255,7 @@ export function CreateToolDialog({ open, onOpenChange, tool }: CreateToolDialogP
             </FormGrid>
           </FormCard>
 
-          <FormCard eyebrow="Calibration (if applicable)">
+          <FormCard bleed eyebrow="Calibration (if applicable)">
             <FormGrid cols={2}>
               <Field label="Last calibration">
                 <Input
@@ -301,7 +276,7 @@ export function CreateToolDialog({ open, onOpenChange, tool }: CreateToolDialogP
             </FormGrid>
           </FormCard>
 
-          <FormCard eyebrow="Notes">
+          <FormCard bleed eyebrow="Notes">
             <Field label="Notes">
               <Textarea
                 placeholder="Any additional notes..."

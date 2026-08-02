@@ -2,13 +2,6 @@ import { useState, useRef, useEffect } from 'react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { IOSStepIndicator } from '@/components/ui/ios-step-indicator';
@@ -39,11 +32,10 @@ import {
   PrimaryButton,
   SecondaryButton,
   inputClass,
-  selectTriggerClass,
-  selectContentClass,
   checkboxClass,
   Eyebrow,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 
 /* ==========================================================================
    AddEmployeeDialog — stepped bottom sheet for adding a team member.
@@ -407,7 +399,7 @@ export function AddEmployeeDialog({
       )}
       <SheetContent
         side="bottom"
-        className="h-[95vh] p-0 rounded-t-3xl bg-[hsl(0_0%_8%)] border-white/[0.08]"
+        className="h-[85vh] p-0 rounded-t-3xl bg-[hsl(0_0%_8%)] border-white/[0.08]"
       >
         <div className="flex flex-col h-full">
           {/* Drag indicator */}
@@ -472,7 +464,7 @@ export function AddEmployeeDialog({
                     </div>
                   </div>
 
-                  <FormCard eyebrow="Personal details">
+                  <FormCard bleed eyebrow="Personal details">
                     <Field label="Full name" required>
                       <Input
                         id="name"
@@ -545,23 +537,14 @@ export function AddEmployeeDialog({
 
               {step === 2 && (
                 <div className="space-y-4">
-                  <FormCard eyebrow="Role">
+                  <FormCard bleed eyebrow="Role">
                     <Field label="Job role" required>
-                      <Select
-                        value={formData.role}
-                        onValueChange={(val) => setFormData((prev) => ({ ...prev, role: val }))}
-                      >
-                        <SelectTrigger className={selectTriggerClass}>
-                          <SelectValue placeholder="Select role..." />
-                        </SelectTrigger>
-                        <SelectContent className={selectContentClass}>
-                          {JOB_ROLES.map((role) => (
-                            <SelectItem key={role} value={role}>
-                              {role}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <SelectField
+        value={formData.role}
+        onValueChange={(val) => setFormData((prev) => ({ ...prev, role: val }))}
+        placeholder="Select role..."
+        options={JOB_ROLES.map((role) => ({ value: role, label: role }))}
+      />
                     </Field>
                     <Field label="Team role" required>
                       <div className="grid grid-cols-2 gap-2">
@@ -593,7 +576,7 @@ export function AddEmployeeDialog({
                     </Field>
                   </FormCard>
 
-                  <FormCard eyebrow="Pay">
+                  <FormCard bleed eyebrow="Pay">
                     <div className="grid grid-cols-3 gap-2">
                       {[
                         { value: 'hourly', label: 'Hourly' },
@@ -687,7 +670,7 @@ export function AddEmployeeDialog({
 
               {step === 3 && (
                 <div className="space-y-4">
-                  <FormCard eyebrow="Elec-ID card">
+                  <FormCard bleed eyebrow="Elec-ID card">
                     <div
                       className="flex items-center space-x-3 p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] cursor-pointer touch-manipulation min-h-[44px]"
                       onClick={() =>
@@ -713,23 +696,14 @@ export function AddEmployeeDialog({
                     {formData.createElecId && (
                       <div className="space-y-3 pt-2 animate-fade-in">
                         <Field label="ECS card type">
-                          <Select
-                            value={formData.ecsCardType}
-                            onValueChange={(val) =>
+                          <SelectField
+        value={formData.ecsCardType}
+        onValueChange={(val) =>
                               setFormData((prev) => ({ ...prev, ecsCardType: val }))
                             }
-                          >
-                            <SelectTrigger className={selectTriggerClass}>
-                              <SelectValue placeholder="Select type..." />
-                            </SelectTrigger>
-                            <SelectContent className={selectContentClass}>
-                              {ECS_CARD_TYPES.map((type) => (
-                                <SelectItem key={type.value} value={type.value}>
-                                  {type.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
+        placeholder="Select type..."
+        options={ECS_CARD_TYPES.map((type) => ({ value: type.value, label: type.label }))}
+      />
                         </Field>
                         <FormGrid cols={2}>
                           <Field label="ECS card number">

@@ -475,7 +475,7 @@ export function ViewQuoteSheet({
             )}
 
             {quote.status === 'Sent' && (
-              <FormCard eyebrow="Client accept link">
+              <FormCard bleed eyebrow="Client accept link">
                 {acceptLink ? (
                   <div className="flex gap-2">
                     <Input value={acceptLink} readOnly className={inputClass} />
@@ -509,7 +509,7 @@ export function ViewQuoteSheet({
               </FormCard>
             )}
 
-            <FormCard eyebrow="Details">
+            <FormCard bleed eyebrow="Details">
               {(quote as any).job_title && (
                 <div className="bg-elec-yellow/10 rounded-xl p-3">
                   <Eyebrow>Project</Eyebrow>
@@ -579,7 +579,7 @@ export function ViewQuoteSheet({
             </FormCard>
 
             {lineItems.filter((item: any) => item.type === 'labour').length > 0 && (
-              <FormCard eyebrow="Labour">
+              <FormCard bleed eyebrow="Labour">
                 <div className="flex items-center gap-2 mb-1">
                   <Clock className="h-4 w-4 text-white" />
                   <Eyebrow>Labour</Eyebrow>
@@ -610,7 +610,7 @@ export function ViewQuoteSheet({
             )}
 
             {lineItems.filter((item: any) => item.type !== 'labour').length > 0 && (
-              <FormCard eyebrow="Materials">
+              <FormCard bleed eyebrow="Materials">
                 <div className="flex items-center gap-2 mb-1">
                   <Package className="h-4 w-4 text-white" />
                   <Eyebrow>Materials</Eyebrow>
@@ -686,7 +686,7 @@ export function ViewQuoteSheet({
             </div>
 
             {quote.notes && (
-              <FormCard eyebrow="Notes">
+              <FormCard bleed eyebrow="Notes">
                 <p className="text-sm text-white whitespace-pre-wrap">{quote.notes}</p>
               </FormCard>
             )}

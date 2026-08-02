@@ -13,6 +13,7 @@ interface InspectionItem {
     | 'C1'
     | 'C2'
     | 'C3'
+    | 'FI'
     | 'not-applicable'
     | 'not-verified'
     | 'limitation'
@@ -30,7 +31,6 @@ interface InspectionChecklistCardProps {
   onAutoCreateObservation: (inspectionItem: InspectionItem) => void;
   onBulkMarkSatisfactory: (sectionId: string) => void;
   onBulkClearSection: (sectionId: string) => void;
-  propertyType?: string;
   quickMarkMode?: boolean;
 }
 
@@ -44,7 +44,6 @@ const InspectionChecklistCard = ({
   onAutoCreateObservation,
   onBulkMarkSatisfactory,
   onBulkClearSection,
-  propertyType,
   quickMarkMode,
 }: InspectionChecklistCardProps) => {
   const filteredSections = sections;

@@ -5,10 +5,12 @@ import { Switch } from '@/components/ui/switch';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { cn } from '@/lib/utils';
 import { EVSectionHeader } from './EVSectionHeader';
+import { inputCn, cardCn, labelCn } from '@/components/forms/fieldStyles';
 import {
   useEVChargingSmartForm,
   TestResultValidation,
 } from '@/hooks/inspection/useEVChargingSmartForm';
+import useReadingKeypad from '@/hooks/useReadingKeypad';
 
 interface EVChargingTestScheduleProps {
   formData: Record<string, unknown>;
@@ -16,14 +18,9 @@ interface EVChargingTestScheduleProps {
 }
 
 // Section card — brighter step, the only box on the page
-const cardCn =
-  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
 // Paper-form underline input
-const inputCn =
-  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
 
-const labelCn = 'text-[12px] font-medium text-white mb-1 block';
 
 const selectTriggerCn =
   'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 px-1 touch-manipulation';
@@ -56,6 +53,36 @@ const ValidationBadge: React.FC<{ validation: TestResultValidation | undefined }
     </span>
   );
 };
+
+/** Numeric test readings the keypad serves — free-number measurement inputs
+ * only. Max Zs stays keypad-free (tabulated limit, auto-filled/read-only, not
+ * a measurement). Sequence follows the natural test order down the page. */
+const KEYPAD_META = {
+  ambientTemperature: { label: 'Ambient temperature', unit: '°C' },
+  r1r2: { label: 'R1+R2 — continuity', unit: 'Ω' },
+  r2: { label: 'R2 — cpc continuity', unit: 'Ω' },
+  zs: { label: 'Zs — earth fault loop', unit: 'Ω' },
+  insulationResistance: { label: 'Insulation resistance', unit: 'MΩ', inf: true },
+  earthElectrodeRa: { label: 'Ra — earth electrode resistance', unit: 'Ω' },
+  continuityPE: { label: 'PE continuity', unit: 'Ω' },
+  voltageDrop: { label: 'Voltage drop', unit: 'V' },
+  rcdTripTime: { label: 'RCD trip @ IΔn', unit: 'ms' },
+  rcdTripTimeX5: { label: 'RCD trip @ 5×IΔn', unit: 'ms' },
+  loadTestCurrent: { label: 'Load current — measured', unit: 'A' },
+};
+const KEYPAD_SEQUENCE = [
+  'ambientTemperature',
+  'r1r2',
+  'r2',
+  'zs',
+  'insulationResistance',
+  'earthElectrodeRa',
+  'continuityPE',
+  'voltageDrop',
+  'rcdTripTime',
+  'rcdTripTimeX5',
+  'loadTestCurrent',
+];
 
 const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formData, onUpdate }) => {
   const { calculateZs, calculateVoltageDrop, validateTestResults } = useEVChargingSmartForm();
@@ -147,6 +174,25 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
     return lookup;
   }, [testResults, validateTestResults]);
 
+  // ── Reading keypad — shared MW pattern ──
+  // Values flow through the existing updateTestResult path (zs goes via
+  // handleZsChange so keypad entry counts as manual, exactly like typing);
+  // the header verdict reuses the validations lookup computed above — no new
+  // compliance logic.
+  const trReadings = testResults as Record<string, string | undefined>;
+  const keypad = useReadingKeypad({
+    meta: KEYPAD_META,
+    sequence: KEYPAD_SEQUENCE,
+    getValue: (field) => String(trReadings[field] ?? ''),
+    setValue: (field, value) =>
+      field === 'zs' ? handleZsChange(value) : updateTestResult(field, value),
+    getStatus: (field) => {
+      const v = validations[field];
+      if (!v || v.status === 'unknown') return null;
+      return { tone: v.status === 'pass' ? 'pass' : 'check', label: v.message };
+    },
+  });
+
   return (
     <div className="py-2 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
       {/* Circuit Tests — wide */}
@@ -163,6 +209,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
               value={testResults.ambientTemperature || ''}
               onChange={(e) => updateTestResult('ambientTemperature', e.target.value)}
               className={inputCn}
+              {...keypad.field('ambientTemperature')}
             />
           </div>
           <label className="flex-1 flex items-center justify-between rounded-xl bg-white/[0.05] px-3.5 py-3 cursor-pointer touch-manipulation">
@@ -221,6 +268,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                 value={testResults.r1r2 || ''}
                 onChange={(e) => updateTestResult('r1r2', e.target.value)}
                 className={inputCn}
+                {...keypad.field('r1r2')}
               />
             </div>
             <div>
@@ -235,6 +283,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                 value={testResults.r2 || ''}
                 onChange={(e) => updateTestResult('r2', e.target.value)}
                 className={inputCn}
+                {...keypad.field('r2')}
               />
             </div>
             <div>
@@ -257,6 +306,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                     validations.zs?.status === 'pass' && 'border-green-500',
                     validations.zs?.status === 'fail' && 'border-red-500'
                   )}
+                  {...keypad.field('zs')}
                 />
                 {!zsIsManual && calculatedZs && (
                   <span className="absolute right-1 top-1/2 -translate-y-1/2 text-[10px] font-semibold text-blue-400">
@@ -322,6 +372,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                   validations.insulationResistance?.status === 'pass' && 'border-green-500',
                   validations.insulationResistance?.status === 'fail' && 'border-red-500'
                 )}
+                {...keypad.field('insulationResistance')}
               />
               <p className="text-[11px] text-white/85 mt-1">Min 1M&Omega; required</p>
             </div>
@@ -370,6 +421,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                   value={testResults.earthElectrodeRa || ''}
                   onChange={(e) => updateTestResult('earthElectrodeRa', e.target.value)}
                   className={inputCn}
+                  {...keypad.field('earthElectrodeRa')}
                 />
               </div>
             )}
@@ -394,6 +446,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
               value={testResults.continuityPE || ''}
               onChange={(e) => updateTestResult('continuityPE', e.target.value)}
               className={inputCn}
+              {...keypad.field('continuityPE')}
             />
             <p className="text-[11px] text-white/85 mt-1">Protective earth conductor</p>
           </div>
@@ -409,6 +462,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
               value={testResults.voltageDrop || ''}
               onChange={(e) => updateTestResult('voltageDrop', e.target.value)}
               className={inputCn}
+              {...keypad.field('voltageDrop')}
             />
             <div className="flex items-center gap-2 mt-1">
               <p className="text-[11px] text-white/85">Max 5% (11.5V)</p>
@@ -488,6 +542,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                 validations.rcdTripTime?.status === 'pass' && 'border-green-500',
                 validations.rcdTripTime?.status === 'fail' && 'border-red-500'
               )}
+              {...keypad.field('rcdTripTime')}
             />
             {validations.rcdTripTime ? (
               <p
@@ -521,6 +576,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                 validations.rcdTripTimeX5?.status === 'pass' && 'border-green-500',
                 validations.rcdTripTimeX5?.status === 'fail' && 'border-red-500'
               )}
+              {...keypad.field('rcdTripTimeX5')}
             />
             {validations.rcdTripTimeX5 ? (
               <p
@@ -666,6 +722,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
                 value={testResults.loadTestCurrent || ''}
                 onChange={(e) => updateTestResult('loadTestCurrent', e.target.value)}
                 className={inputCn}
+                {...keypad.field('loadTestCurrent')}
               />
             </div>
           </div>
@@ -790,6 +847,12 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
           />
         </div>
       </div>
+
+      {/* Scroll room so the last reading can rise clear of the keypad */}
+      {keypad.spacer}
+
+      {/* Reading keypad — coarse-pointer devices only */}
+      {keypad.element}
     </div>
   );
 };

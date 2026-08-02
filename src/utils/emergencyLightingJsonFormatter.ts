@@ -1,6 +1,7 @@
 /**
  * Formats Emergency Lighting certificate form data for PDF generation
- * Compliant with BS 5266-1:2016, BS EN 50172:2004, BS EN 1838:2013
+ * Standard designations come from @/data/emergencyLightingStandards — the
+ * 2016/2004/2013 editions are superseded (BS 5266-1:2025 in force 31 Oct 2025).
  */
 
 import {
@@ -10,6 +11,11 @@ import {
   CertificatePhoto,
 } from '@/types/emergency-lighting';
 import type { EmergencyLightingPayloadType } from '@/types/emergency-lighting-payload';
+import {
+  EL_CURRENT_DESIGN_STANDARD,
+  elStandardsList,
+  elDeclarationText,
+} from '@/data/emergencyLightingStandards';
 
 export const formatEmergencyLightingJson = (
   formData: Partial<EmergencyLightingFormData>
@@ -253,7 +259,7 @@ export const formatEmergencyLightingJson = (
       test_type: get('testType'),
       test_type_display: formatTestType(get('testType')),
       test_date: getDate('testDate'),
-      standards: 'BS 5266-1:2016, BS EN 50172:2004, BS EN 1838:2013',
+      standards: elStandardsList(get('designStandard')),
     },
 
     // Certificate type
@@ -487,8 +493,7 @@ export const formatEmergencyLightingJson = (
     // ============================================
     // DECLARATION TEXT (for PDF template)
     // ============================================
-    declaration_text:
-      'I/We certify that the emergency lighting system has been inspected and tested in accordance with BS 5266-1:2016, BS EN 50172:2004, and BS EN 1838:2013, and the results are as recorded in this certificate.',
+    declaration_text: elDeclarationText(get('designStandard')),
 
     // ============================================
     // FLAT COPIES FOR DIRECT TEMPLATE ACCESS
@@ -533,7 +538,7 @@ export const formatEmergencyLightingJson = (
     wiring_system: get('wiringSystem'),
     automatic_test_system: getBool('automaticTestSystem'),
     ats_details: get('atsDetails'),
-    design_standard: get('designStandard') || 'BS 5266-1:2016',
+    design_standard: get('designStandard') || EL_CURRENT_DESIGN_STANDARD,
 
     // Tester (flat)
     tester_name: get('testerName'),

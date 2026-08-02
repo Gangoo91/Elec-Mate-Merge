@@ -26,7 +26,7 @@ const ContinuityCellsComponent: React.FC<ContinuityCellsProps> = ({
         <EnhancedValidatedInput
           value={result.ringR1 || ''}
           onChange={(value) => onUpdate(result.id, 'ringR1', value)}
-          className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
+          className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow focus:shadow-none hover:bg-white/[0.04] focus:bg-transparent"
           placeholder="—"
         />
       </TableCell>
@@ -36,7 +36,7 @@ const ContinuityCellsComponent: React.FC<ContinuityCellsProps> = ({
         <EnhancedValidatedInput
           value={result.ringRn || ''}
           onChange={(value) => onUpdate(result.id, 'ringRn', value)}
-          className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
+          className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow focus:shadow-none hover:bg-white/[0.04] focus:bg-transparent"
           placeholder="—"
         />
       </TableCell>
@@ -46,7 +46,7 @@ const ContinuityCellsComponent: React.FC<ContinuityCellsProps> = ({
         <EnhancedValidatedInput
           value={result.ringR2 || ''}
           onChange={(value) => onUpdate(result.id, 'ringR2', value)}
-          className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
+          className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow focus:shadow-none hover:bg-white/[0.04] focus:bg-transparent"
           placeholder="—"
         />
       </TableCell>
@@ -58,7 +58,7 @@ const ContinuityCellsComponent: React.FC<ContinuityCellsProps> = ({
             value={result.r1r2 || ''}
             onChange={(value) => onUpdate(result.id, 'r1r2', value)}
             validation={validation?.r1r2}
-            className="h-8 text-sm text-center pl-1 pr-5 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30 min-w-0 flex-1"
+            className="h-8 text-sm text-center pl-1 pr-5 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow focus:shadow-none hover:bg-white/[0.04] focus:bg-transparent min-w-0 flex-1"
             placeholder="—"
           />
           <Popover>
@@ -91,7 +91,7 @@ const ContinuityCellsComponent: React.FC<ContinuityCellsProps> = ({
           value={result.ringContinuityLive || ''}
           onChange={(value) => onUpdate(result.id, 'ringContinuityLive', value)}
           validation={validation?.ringContinuityLive}
-          className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
+          className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow focus:shadow-none hover:bg-white/[0.04] focus:bg-transparent"
           placeholder="—"
         />
       </TableCell>

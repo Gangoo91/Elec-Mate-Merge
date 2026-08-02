@@ -84,7 +84,7 @@ const MWStickyFooter: React.FC<MWStickyFooterProps> = ({
         /* Sign off — the issue actions live in the thumb zone (EV parity):
            Back · Email · Invoice on one row, Generate full width below. */
         <div className="flex flex-col gap-2 pointer-events-auto lg:max-w-[1600px] lg:flex-row lg:items-center">
-          <span className="hidden text-[11.5px] text-white/60 tabular-nums lg:block">
+          <span className="hidden text-[11.5px] text-white/80 tabular-nums lg:block">
             {currentTabIndex + 1} of {totalTabs}
           </span>
           <div className="flex gap-2 lg:ml-auto">
@@ -95,7 +95,7 @@ const MWStickyFooter: React.FC<MWStickyFooterProps> = ({
                   navigatePrevious();
                   scrollToTop();
                 }}
-                className="h-[52px] flex-1 rounded-xl bg-white/[0.09] border border-white/[0.14] text-sm font-semibold text-white/85 touch-manipulation active:scale-[0.97] transition-transform lg:flex-none lg:px-5"
+                className="h-[52px] flex-1 rounded-xl bg-white/[0.09] border border-white/[0.14] text-sm font-semibold text-white touch-manipulation active:scale-[0.97] transition-transform lg:flex-none lg:px-5"
               >
                 Back
               </button>
@@ -106,7 +106,7 @@ const MWStickyFooter: React.FC<MWStickyFooterProps> = ({
                   haptic.light();
                   onEmail();
                 }}
-                className="h-[52px] flex-1 rounded-xl bg-white/[0.09] border border-white/[0.14] text-sm font-semibold text-white/85 touch-manipulation active:scale-[0.97] transition-transform lg:flex-none lg:px-5"
+                className="h-[52px] flex-1 rounded-xl bg-white/[0.09] border border-white/[0.14] text-sm font-semibold text-white touch-manipulation active:scale-[0.97] transition-transform lg:flex-none lg:px-5"
               >
                 Email
               </button>
@@ -117,7 +117,7 @@ const MWStickyFooter: React.FC<MWStickyFooterProps> = ({
                   haptic.light();
                   onInvoice();
                 }}
-                className="h-[52px] flex-1 rounded-xl bg-white/[0.09] border border-white/[0.14] text-sm font-semibold text-white/85 touch-manipulation active:scale-[0.97] transition-transform lg:flex-none lg:px-5"
+                className="h-[52px] flex-1 rounded-xl bg-white/[0.09] border border-white/[0.14] text-sm font-semibold text-white touch-manipulation active:scale-[0.97] transition-transform lg:flex-none lg:px-5"
               >
                 Invoice
               </button>
@@ -140,7 +140,7 @@ const MWStickyFooter: React.FC<MWStickyFooterProps> = ({
         </div>
       ) : (
         <div className="flex items-center gap-3 pointer-events-auto lg:max-w-[1600px]">
-          <span className="text-[11.5px] text-white/60 tabular-nums min-w-[46px]">
+          <span className="text-[11.5px] text-white/80 tabular-nums min-w-[46px]">
             {currentTabIndex + 1} of {totalTabs}
           </span>
           {canNavigatePrevious && (
@@ -150,7 +150,7 @@ const MWStickyFooter: React.FC<MWStickyFooterProps> = ({
                 navigatePrevious();
                 scrollToTop();
               }}
-              className="h-[52px] px-5 rounded-xl bg-white/[0.09] border border-white/[0.14] text-sm font-semibold text-white/85 touch-manipulation active:scale-[0.97] transition-transform lg:ml-auto"
+              className="h-[52px] px-5 rounded-xl bg-white/[0.09] border border-white/[0.14] text-sm font-semibold text-white touch-manipulation active:scale-[0.97] transition-transform lg:ml-auto"
             >
               Back
             </button>
@@ -174,7 +174,7 @@ const MWStickyFooter: React.FC<MWStickyFooterProps> = ({
             </button>
           )}
           {isLastTab && (
-            <span className="flex-1 text-right text-[11.5px] text-white/60">
+            <span className="flex-1 text-right text-[11.5px] text-white/80">
               Complete the declaration above to issue
             </span>
           )}

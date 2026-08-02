@@ -33,7 +33,7 @@ import {
   logIntegrityEvent,
 } from '@/utils/dataIntegrity';
 import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
-import { StickyFormSyncBar, type SyncState } from '@/components/ui/SyncStatusIndicator';
+import { type SyncState } from '@/components/ui/SyncStatusIndicator';
 import { Button } from '@/components/ui/button';
 import { Bell } from 'lucide-react';
 import { useDesignedCircuit, useUpdateDesignedCircuitStatus } from '@/hooks/useDesignedCircuits';
@@ -84,7 +84,10 @@ interface EICFormContextType {
     onAutoCreateObservation: (inspectionItem: {
       id: string;
       item: string;
-      clause: string;
+      itemNumber?: string;
+      clause?: string;
+      notes?: string;
+      defectCode?: 'limitation' | 'unsatisfactory' | 'C1' | 'C2' | 'C3';
     }) => string;
     onNavigateToObservations: () => void;
     onSyncToInspectionItem?: (inspectionItemId: string, newOutcome: string) => void;
@@ -95,6 +98,12 @@ interface EICFormContextType {
   handleBoardScanComplete: (data: any) => void;
   isLoadingDesign: boolean;
   canGenerateCertificate: () => boolean;
+  /** True while initial cloud hydration of a reopened report is in flight. */
+  isHydrating: boolean;
+  /** True when this session opened an existing report (vs starting a new cert).
+   * Profile auto-fill effects must not fire for existing reports — the saved
+   * state (including intentionally-cleared signatory fields) is the truth. */
+  isExistingReport: boolean;
 }
 
 const EICFormContext = createContext<EICFormContextType | undefined>(undefined);
@@ -148,7 +157,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     extentOfInstallation: '',
     constructionDate: '',
     description: '',
-    designStandard: 'BS7671',
+    designStandard: 'BS7671-A4',
     partPCompliance: '',
     supplyVoltage: '230',
     supplyFrequency: '50',
@@ -314,6 +323,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     updateObservation,
     removeObservation,
     autoCreateObservation,
+    removeObservationForInspectionItem,
   } = useEICObservations(formData.observations);
 
   // Update observations in form data when they change
@@ -915,6 +925,10 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
 
   const confirmStartNew = async () => {
     clearAutoSave();
+    // clearAutoSave only clears the "new cert" draft key — the report we're
+    // walking away from keeps its own keyed draft, which would otherwise
+    // resurrect on the next open (EICR parity).
+    draftStorage.clearDraft('eic', currentReportId);
     setCurrentReportId(null);
     const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
     const certificateNumber = await generateCertificateNumber('eic');
@@ -928,7 +942,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
       installationType: 'domestic',
       constructionDate: '',
       description: '',
-      designStandard: 'BS7671',
+      designStandard: 'BS7671-A4',
       partPCompliance: '',
       supplyVoltage: '230',
       supplyFrequency: '50',
@@ -1027,6 +1041,31 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     delete duplicatedData.certificateGeneratedAt;
     duplicatedData.certificateNumber = certificateNumber;
     duplicatedData.status = 'draft';
+
+    // A duplicate is a NEW installation certificate — it must not arrive
+    // pre-signed and pre-dated for work that hasn't happened yet. Supply /
+    // earthing / circuit STRUCTURE carries over; attestations don't.
+    duplicatedData.designerSignature = '';
+    duplicatedData.designer2Signature = '';
+    duplicatedData.constructorSignature = '';
+    duplicatedData.inspectorSignature = '';
+    duplicatedData.inspectedBySignature = '';
+    duplicatedData.reportAuthorisedBySignature = '';
+    duplicatedData.designerDate = '';
+    duplicatedData.designer2Date = '';
+    duplicatedData.constructorDate = '';
+    duplicatedData.inspectorDate = '';
+    duplicatedData.reportAuthorisedByDate = '';
+    // The work dates go with the attestations — the EICR clears its
+    // inspectionDate and the MW its workDate/dateOfCompletion for the same
+    // reason: the copy is for work that hasn't been done yet.
+    duplicatedData.installationDate = '';
+    duplicatedData.testDate = '';
+    duplicatedData.certificateGenerated = false;
+    duplicatedData.certificateGeneratedAt = '';
+
+    // The abandoned form's local draft must not resurrect into this new cert.
+    draftStorage.clearDraft('eic', currentReportId);
 
     setFormData(duplicatedData);
     setCurrentReportId(null);
@@ -1219,9 +1258,12 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
   };
 
   const handleAddObservation = () => {
+    // 'unsatisfactory' is the canonical EIC code — the observation card's chips
+    // are Unsat/LIM/N/A only. EICR codes (C1/C2/C3) are legacy values that old
+    // certs may still hold; the read path maps them via normalizeEICDefectCode.
     const newObsId = addObservation({
       item: 'General observation',
-      defectCode: 'C2',
+      defectCode: 'unsatisfactory',
       description: '',
       recommendation: '',
       rectified: false,
@@ -1237,16 +1279,47 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
         `[EICForm] Syncing observation change to inspection item ${inspectionItemId}: ${newOutcome}`
       );
 
+      // The EIC schedule of inspections only has Sat / N/A / LIM chips — it has
+      // no 'unsatisfactory' state. Writing an observation's 'unsatisfactory'
+      // verbatim left the item with no chip selected and a transparent border,
+      // so map any non-checklist outcome to 'limitation' (the only flagged state).
+      const checklistOutcomes = ['', 'satisfactory', 'not-applicable', 'limitation'];
+      const mappedOutcome = checklistOutcomes.includes(newOutcome) ? newOutcome : 'limitation';
+
       const items = formDataRef.current.inspectionItems || [];
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const updatedItems = items.map((item: any) =>
-        item.id === inspectionItemId ? { ...item, outcome: newOutcome, inspected: true } : item
+        item.id === inspectionItemId ? { ...item, outcome: mappedOutcome, inspected: true } : item
       );
 
       updateFormData('inspectionItems', updatedItems);
     },
     [updateFormData]
   );
+
+  // Un-toggling LIM on a checklist item (outcome back to '' or flipped to Sat)
+  // removes the observation that LIM auto-created — previously it was stranded
+  // and the user had to notice and delete it by hand. Transition-based so cloud
+  // hydration (which replaces items wholesale from '' outcomes) never deletes.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const prevInspectionItemsRef = useRef<any[] | null>(null);
+  useEffect(() => {
+    const items = Array.isArray(formData.inspectionItems) ? formData.inspectionItems : [];
+    const prev = prevInspectionItemsRef.current;
+    prevInspectionItemsRef.current = items;
+    if (!prev) return;
+    for (const item of items) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const prevItem = prev.find((p: any) => p.id === item.id);
+      if (
+        prevItem &&
+        prevItem.outcome === 'limitation' &&
+        (item.outcome === '' || item.outcome === 'satisfactory')
+      ) {
+        removeObservationForInspectionItem(item.id);
+      }
+    }
+  }, [formData.inspectionItems, removeObservationForInspectionItem]);
 
   const observationsProps = {
     observations,
@@ -1306,6 +1379,8 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     handleBoardScanComplete,
     isLoadingDesign: !!(designId && isLoadingDesign),
     canGenerateCertificate,
+    isHydrating: isLoadingReport,
+    isExistingReport: !!initialReportId,
   };
 
   return (
@@ -1316,13 +1391,8 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
         clientName={formData.clientName || ''}
         installationAddress={formData.installationAddress || formData.clientAddress || ''}
       >
-        <StickyFormSyncBar
-          state={getSyncIndicatorState()}
-          lastSaved={lastSavedTime}
-          isOnline={isOnline}
-          onRetry={syncNow}
-          certificateNumber={formData.certificateNumber}
-        />
+        {/* StickyFormSyncBar removed — the shell header already shows save
+            state and the certificate number (see EICRFormProvider). */}
         {children}
         <AppReviewPromptSheet
           open={showReviewPrompt}

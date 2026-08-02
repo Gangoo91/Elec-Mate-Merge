@@ -239,6 +239,8 @@ export const solarPVPayloadSchema = z.object({
 
   // Site access & safety
   site_access_notes: stringish.default(''),
+  installation_description: stringish.default(''),
+  circuits_tested: stringish.default(''),
   safe_isolation_verified: z.boolean().default(false),
   asbestos_check_required: z.boolean().default(false),
   asbestos_check_completed: z.boolean().default(false),

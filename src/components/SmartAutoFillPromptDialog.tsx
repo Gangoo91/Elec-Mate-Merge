@@ -1,35 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
+import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
-import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import {
-  Zap,
-  Lightbulb,
-  Plug,
-  ChefHat,
-  Droplets,
-  Car,
-  Flame,
-  Home,
-  Building2,
-  Server,
-  Wind,
-  Cpu,
-  Factory,
-  Wrench,
-  DoorOpen,
-  Shield,
-  X,
-  Check,
-  Sparkles,
-} from 'lucide-react';
+import { ChevronLeft, X } from 'lucide-react';
 import { TestResult } from '@/types/testResult';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useHaptic } from '@/hooks/useHaptic';
+import { cn } from '@/lib/utils';
 
 interface SmartAutoFillPromptDialogProps {
   open: boolean;
@@ -39,497 +16,550 @@ interface SmartAutoFillPromptDialogProps {
   circuitNumber: string;
 }
 
-// Circuit types with auto-fill suggestions (BS 7671 Table 41.3 compliant)
+// Circuit presets. Values verified against src/utils/circuitDefaults.ts
+// (pickCableSize / getCpcForLive / BS_STANDARD_MAP) and the Minor Works
+// verified presets (MWSmartDefaults). Field value formats match the schedule
+// selects exactly:
+//   typeOfWiring  — BS 7671 model-form codes (wiringTypeOptions): A = T&E,
+//                   F = SWA (thermoplastic), O = other (e.g. fire-resistant)
+//   bsStandard    — combined form from bsStandardOptions, e.g. 'MCB (BS EN 60898)'
+//   referenceMethod — Appendix 4 codes (referenceMethodOptions)
 const circuitTypes = [
   // Lighting circuits
   {
     type: 'Downstairs Lights',
-    icon: Lightbulb,
     category: 'Lighting',
     suggestions: {
       liveSize: '1.5mm',
       cpcSize: '1.0mm',
+      cableSize: '1.5/1.0',
       protectiveDeviceType: 'MCB',
       protectiveDeviceCurve: 'B',
       protectiveDeviceRating: '6',
-      bsStandard: 'BS EN 60898',
+      protectiveDevice: 'MCB B6',
+      bsStandard: 'MCB (BS EN 60898)',
       protectiveDeviceKaRating: '6',
       maxZs: '7.28',
-      referenceMethod: 'A',
-      typeOfWiring: 'Twin & Earth Cable',
+      referenceMethod: 'C',
+      typeOfWiring: 'A',
     },
   },
   {
     type: 'Upstairs Lights',
-    icon: Lightbulb,
     category: 'Lighting',
     suggestions: {
       liveSize: '1.5mm',
       cpcSize: '1.0mm',
+      cableSize: '1.5/1.0',
       protectiveDeviceType: 'MCB',
       protectiveDeviceCurve: 'B',
       protectiveDeviceRating: '6',
-      bsStandard: 'BS EN 60898',
+      protectiveDevice: 'MCB B6',
+      bsStandard: 'MCB (BS EN 60898)',
       protectiveDeviceKaRating: '6',
       maxZs: '7.28',
-      referenceMethod: 'A',
-      typeOfWiring: 'Twin & Earth Cable',
+      referenceMethod: 'C',
+      typeOfWiring: 'A',
     },
   },
   {
     type: 'Kitchen Lights',
-    icon: Lightbulb,
     category: 'Lighting',
     suggestions: {
       liveSize: '1.5mm',
       cpcSize: '1.0mm',
+      cableSize: '1.5/1.0',
       protectiveDeviceType: 'MCB',
       protectiveDeviceCurve: 'B',
       protectiveDeviceRating: '10',
-      bsStandard: 'BS EN 60898',
+      protectiveDevice: 'MCB B10',
+      bsStandard: 'MCB (BS EN 60898)',
       protectiveDeviceKaRating: '6',
       maxZs: '4.37',
-      referenceMethod: 'A',
-      typeOfWiring: 'Twin & Earth Cable',
+      referenceMethod: 'C',
+      typeOfWiring: 'A',
     },
   },
   {
     type: 'Outdoor Lights',
-    icon: Lightbulb,
     category: 'Lighting',
     suggestions: {
       liveSize: '1.5mm',
       cpcSize: '1.0mm',
+      cableSize: '1.5/1.0',
       protectiveDeviceType: 'RCBO',
       protectiveDeviceCurve: 'B',
       protectiveDeviceRating: '6',
-      bsStandard: 'BS EN 61009',
+      protectiveDevice: 'RCBO B6',
+      bsStandard: 'RCBO (BS EN 61009)',
       protectiveDeviceKaRating: '6',
       maxZs: '7.28',
-      referenceMethod: 'A',
-      typeOfWiring: 'Twin & Earth Cable',
+      referenceMethod: 'C',
+      typeOfWiring: 'A',
+      rcdBsStandard: 'RCBO (BS EN 61009)',
+      rcdType: 'A',
+      rcdRating: '30',
+      rcdRatingA: '6',
     },
   },
 
   // Socket circuits
   {
     type: 'Downstairs Ring',
-    icon: Plug,
     category: 'Sockets',
     suggestions: {
       liveSize: '2.5mm',
       cpcSize: '1.5mm',
+      cableSize: '2.5/1.5',
       protectiveDeviceType: 'RCBO',
       protectiveDeviceCurve: 'B',
       protectiveDeviceRating: '32',
-      bsStandard: 'BS EN 61009',
+      protectiveDevice: 'RCBO B32',
+      bsStandard: 'RCBO (BS EN 61009)',
       protectiveDeviceKaRating: '6',
       maxZs: '1.37',
       referenceMethod: 'A',
-      typeOfWiring: 'Twin & Earth Cable',
+      typeOfWiring: 'A',
+      rcdBsStandard: 'RCBO (BS EN 61009)',
+      rcdType: 'A',
+      rcdRating: '30',
+      rcdRatingA: '32',
     },
   },
   {
     type: 'Upstairs Ring',
-    icon: Plug,
     category: 'Sockets',
     suggestions: {
       liveSize: '2.5mm',
       cpcSize: '1.5mm',
+      cableSize: '2.5/1.5',
       protectiveDeviceType: 'RCBO',
       protectiveDeviceCurve: 'B',
       protectiveDeviceRating: '32',
-      bsStandard: 'BS EN 61009',
+      protectiveDevice: 'RCBO B32',
+      bsStandard: 'RCBO (BS EN 61009)',
       protectiveDeviceKaRating: '6',
       maxZs: '1.37',
       referenceMethod: 'A',
-      typeOfWiring: 'Twin & Earth Cable',
+      typeOfWiring: 'A',
+      rcdBsStandard: 'RCBO (BS EN 61009)',
+      rcdType: 'A',
+      rcdRating: '30',
+      rcdRatingA: '32',
     },
   },
   {
     type: 'Kitchen Ring',
-    icon: Plug,
     category: 'Sockets',
     suggestions: {
       liveSize: '2.5mm',
       cpcSize: '1.5mm',
+      cableSize: '2.5/1.5',
       protectiveDeviceType: 'RCBO',
       protectiveDeviceCurve: 'B',
       protectiveDeviceRating: '32',
-      bsStandard: 'BS EN 61009',
+      protectiveDevice: 'RCBO B32',
+      bsStandard: 'RCBO (BS EN 61009)',
       protectiveDeviceKaRating: '6',
       maxZs: '1.37',
       referenceMethod: 'A',
-      typeOfWiring: 'Twin & Earth Cable',
+      typeOfWiring: 'A',
+      rcdBsStandard: 'RCBO (BS EN 61009)',
+      rcdType: 'A',
+      rcdRating: '30',
+      rcdRatingA: '32',
     },
   },
   {
     type: 'Utility Radial',
-    icon: Zap,
     category: 'Sockets',
     suggestions: {
       liveSize: '2.5mm',
       cpcSize: '1.5mm',
+      cableSize: '2.5/1.5',
       protectiveDeviceType: 'RCBO',
       protectiveDeviceCurve: 'B',
       protectiveDeviceRating: '20',
-      bsStandard: 'BS EN 61009',
+      protectiveDevice: 'RCBO B20',
+      bsStandard: 'RCBO (BS EN 61009)',
       protectiveDeviceKaRating: '6',
       maxZs: '2.19',
       referenceMethod: 'A',
-      typeOfWiring: 'Twin & Earth Cable',
+      typeOfWiring: 'A',
+      rcdBsStandard: 'RCBO (BS EN 61009)',
+      rcdType: 'A',
+      rcdRating: '30',
+      rcdRatingA: '20',
     },
   },
 
   // Fixed appliances
   {
     type: 'Cooker',
-    icon: ChefHat,
     category: 'Appliances',
     suggestions: {
       liveSize: '6.0mm',
       cpcSize: '2.5mm',
+      cableSize: '6/2.5',
       protectiveDeviceType: 'MCB',
       protectiveDeviceCurve: 'B',
       protectiveDeviceRating: '32',
-      bsStandard: 'BS EN 60898',
+      protectiveDevice: 'MCB B32',
+      bsStandard: 'MCB (BS EN 60898)',
       protectiveDeviceKaRating: '6',
       maxZs: '1.37',
       pointsServed: '1',
       referenceMethod: 'A',
-      typeOfWiring: 'Twin & Earth Cable',
+      typeOfWiring: 'A',
     },
   },
   {
     type: 'Shower',
-    icon: Droplets,
     category: 'Appliances',
     suggestions: {
       liveSize: '10mm',
       cpcSize: '4.0mm',
-      protectiveDeviceType: 'MCB',
+      cableSize: '10/4',
+      protectiveDeviceType: 'RCBO',
       protectiveDeviceCurve: 'B',
       protectiveDeviceRating: '40',
-      bsStandard: 'BS EN 60898',
+      protectiveDevice: 'RCBO B40',
+      bsStandard: 'RCBO (BS EN 61009)',
       protectiveDeviceKaRating: '6',
       maxZs: '1.09',
       pointsServed: '1',
-      referenceMethod: 'A',
-      typeOfWiring: 'Twin & Earth Cable',
+      referenceMethod: 'C',
+      typeOfWiring: 'A',
+      rcdBsStandard: 'RCBO (BS EN 61009)',
+      rcdType: 'A',
+      rcdRating: '30',
+      rcdRatingA: '40',
     },
   },
   {
     type: 'Immersion',
-    icon: Droplets,
     category: 'Appliances',
     suggestions: {
       liveSize: '2.5mm',
       cpcSize: '1.5mm',
+      cableSize: '2.5/1.5',
       protectiveDeviceType: 'MCB',
       protectiveDeviceCurve: 'B',
       protectiveDeviceRating: '16',
-      bsStandard: 'BS EN 60898',
+      protectiveDevice: 'MCB B16',
+      bsStandard: 'MCB (BS EN 60898)',
       protectiveDeviceKaRating: '6',
       maxZs: '2.73',
       pointsServed: '1',
       referenceMethod: 'A',
-      typeOfWiring: 'Twin & Earth Cable',
+      typeOfWiring: 'A',
     },
   },
 
   // Modern circuits
   {
     type: 'EV Charger',
-    icon: Car,
     category: 'Modern',
     suggestions: {
       liveSize: '6.0mm',
       cpcSize: '2.5mm',
+      cableSize: '6/2.5',
       protectiveDeviceType: 'RCBO',
       protectiveDeviceCurve: 'C',
       protectiveDeviceRating: '32',
-      bsStandard: 'BS EN 61009',
+      protectiveDevice: 'RCBO C32',
+      bsStandard: 'RCBO (BS EN 61009)',
       protectiveDeviceKaRating: '6',
       maxZs: '0.68',
       pointsServed: '1',
-      referenceMethod: 'A',
-      typeOfWiring: 'Twin & Earth Cable',
+      referenceMethod: 'D',
+      typeOfWiring: 'F',
+      rcdBsStandard: 'RCBO (BS EN 61009)',
+      rcdType: 'A',
+      rcdRating: '30',
+      rcdRatingA: '32',
     },
   },
   {
     type: 'Heat Pump',
-    icon: Home,
     category: 'Modern',
     suggestions: {
       liveSize: '4.0mm',
-      cpcSize: '1.5mm',
+      cpcSize: '2.5mm',
+      cableSize: '4/2.5',
       protectiveDeviceType: 'MCB',
       protectiveDeviceCurve: 'B',
       protectiveDeviceRating: '25',
-      bsStandard: 'BS EN 60898',
+      protectiveDevice: 'MCB B25',
+      bsStandard: 'MCB (BS EN 60898)',
       protectiveDeviceKaRating: '6',
       maxZs: '1.75',
       pointsServed: '1',
       referenceMethod: 'A',
-      typeOfWiring: 'Twin & Earth Cable',
+      typeOfWiring: 'A',
     },
   },
   {
     type: 'Solar PV',
-    icon: Building2,
     category: 'Modern',
     suggestions: {
       liveSize: '4.0mm',
-      cpcSize: '1.5mm',
+      cpcSize: '2.5mm',
+      cableSize: '4/2.5',
       protectiveDeviceType: 'MCB',
       protectiveDeviceCurve: 'B',
       protectiveDeviceRating: '16',
-      bsStandard: 'BS EN 60898',
+      protectiveDevice: 'MCB B16',
+      bsStandard: 'MCB (BS EN 60898)',
       protectiveDeviceKaRating: '6',
       maxZs: '2.73',
       pointsServed: '1',
       referenceMethod: 'C',
-      typeOfWiring: 'Twin & Earth Cable',
+      typeOfWiring: 'A',
     },
   },
   {
     type: 'Heating',
-    icon: Flame,
     category: 'Modern',
     suggestions: {
       liveSize: '1.5mm',
       cpcSize: '1.0mm',
+      cableSize: '1.5/1.0',
       protectiveDeviceType: 'MCB',
       protectiveDeviceCurve: 'B',
       protectiveDeviceRating: '6',
-      bsStandard: 'BS EN 60898',
+      protectiveDevice: 'MCB B6',
+      bsStandard: 'MCB (BS EN 60898)',
       protectiveDeviceKaRating: '6',
       maxZs: '7.28',
       pointsServed: '1',
       referenceMethod: 'A',
-      typeOfWiring: 'Twin & Earth Cable',
+      typeOfWiring: 'A',
     },
   },
 
   // Commercial
   {
     type: 'Office Lights',
-    icon: Lightbulb,
     category: 'Commercial',
     suggestions: {
-      liveSize: '2.5mm',
-      cpcSize: '2.5mm',
+      liveSize: '1.5mm',
+      cpcSize: '1.0mm',
+      cableSize: '1.5/1.0',
       protectiveDeviceType: 'MCB',
       protectiveDeviceCurve: 'B',
-      protectiveDeviceRating: '16',
-      bsStandard: 'BS EN 60898',
+      protectiveDeviceRating: '10',
+      protectiveDevice: 'MCB B10',
+      bsStandard: 'MCB (BS EN 60898)',
       protectiveDeviceKaRating: '10',
-      maxZs: '2.73',
+      maxZs: '4.37',
       referenceMethod: 'C',
-      typeOfWiring: 'SWA Cable',
+      typeOfWiring: 'F',
     },
   },
   {
     type: 'Office Sockets',
-    icon: Plug,
     category: 'Commercial',
     suggestions: {
       liveSize: '4.0mm',
-      cpcSize: '4.0mm',
+      cpcSize: '2.5mm',
+      cableSize: '4/2.5',
       protectiveDeviceType: 'RCBO',
       protectiveDeviceCurve: 'B',
       protectiveDeviceRating: '32',
-      bsStandard: 'BS EN 61009',
+      protectiveDevice: 'RCBO B32',
+      bsStandard: 'RCBO (BS EN 61009)',
       protectiveDeviceKaRating: '10',
       maxZs: '1.37',
       referenceMethod: 'C',
-      typeOfWiring: 'SWA Cable',
+      typeOfWiring: 'F',
+      rcdBsStandard: 'RCBO (BS EN 61009)',
+      rcdType: 'A',
+      rcdRating: '30',
+      rcdRatingA: '32',
     },
   },
   {
     type: 'Server Room',
-    icon: Server,
     category: 'Commercial',
     suggestions: {
       liveSize: '4.0mm',
-      cpcSize: '4.0mm',
+      cpcSize: '2.5mm',
+      cableSize: '4/2.5',
       protectiveDeviceType: 'RCBO',
       protectiveDeviceCurve: 'C',
       protectiveDeviceRating: '20',
-      bsStandard: 'BS EN 61009',
+      protectiveDevice: 'RCBO C20',
+      bsStandard: 'RCBO (BS EN 61009)',
       protectiveDeviceKaRating: '10',
       maxZs: '1.09',
       referenceMethod: 'C',
-      typeOfWiring: 'SWA Cable',
+      typeOfWiring: 'F',
+      rcdBsStandard: 'RCBO (BS EN 61009)',
+      rcdType: 'A',
+      rcdRating: '30',
+      rcdRatingA: '20',
     },
   },
   {
     type: 'A/C Unit',
-    icon: Wind,
     category: 'Commercial',
     suggestions: {
       liveSize: '4.0mm',
-      cpcSize: '4.0mm',
+      cpcSize: '2.5mm',
+      cableSize: '4/2.5',
       protectiveDeviceType: 'MCB',
       protectiveDeviceCurve: 'C',
       protectiveDeviceRating: '20',
-      bsStandard: 'BS EN 60898',
+      protectiveDevice: 'MCB C20',
+      bsStandard: 'MCB (BS EN 60898)',
       protectiveDeviceKaRating: '10',
       maxZs: '1.09',
       pointsServed: '1',
       referenceMethod: 'C',
-      typeOfWiring: 'SWA Cable',
+      typeOfWiring: 'F',
     },
   },
   {
     type: 'Emergency Lights',
-    icon: Shield,
     category: 'Commercial',
     suggestions: {
       liveSize: '1.5mm',
-      cpcSize: '1.5mm',
+      cpcSize: '1.0mm',
+      cableSize: '1.5/1.0',
       protectiveDeviceType: 'MCB',
       protectiveDeviceCurve: 'B',
       protectiveDeviceRating: '6',
-      bsStandard: 'BS EN 60898',
+      protectiveDevice: 'MCB B6',
+      bsStandard: 'MCB (BS EN 60898)',
       protectiveDeviceKaRating: '10',
       maxZs: '7.28',
       referenceMethod: 'C',
-      typeOfWiring: 'SWA Cable',
+      typeOfWiring: 'F',
     },
   },
   {
     type: 'Fire Alarm',
-    icon: Flame,
     category: 'Commercial',
     suggestions: {
       liveSize: '1.5mm',
-      cpcSize: '1.5mm',
+      cpcSize: '1.0mm',
+      cableSize: '1.5/1.0',
       protectiveDeviceType: 'MCB',
       protectiveDeviceCurve: 'B',
       protectiveDeviceRating: '6',
-      bsStandard: 'BS EN 60898',
+      protectiveDevice: 'MCB B6',
+      bsStandard: 'MCB (BS EN 60898)',
       protectiveDeviceKaRating: '10',
       maxZs: '7.28',
       pointsServed: '1',
       referenceMethod: 'C',
-      typeOfWiring: 'Fire Resistant Cable',
+      typeOfWiring: 'O',
     },
   },
 
   // Industrial
   {
     type: '3-Phase Motor',
-    icon: Factory,
     category: 'Industrial',
     suggestions: {
       liveSize: '4.0mm',
-      cpcSize: '4.0mm',
+      cpcSize: '2.5mm',
+      cableSize: '4/2.5',
       protectiveDeviceType: 'MCB',
       protectiveDeviceCurve: 'D',
       protectiveDeviceRating: '16',
-      bsStandard: 'BS EN 60898',
+      protectiveDevice: 'MCB D16',
+      bsStandard: 'MCB (BS EN 60898)',
       protectiveDeviceKaRating: '10',
       maxZs: '0.68',
       pointsServed: '1',
       referenceMethod: 'E',
-      typeOfWiring: 'SWA Cable',
+      typeOfWiring: 'F',
+      phaseType: '3P',
     },
   },
   {
     type: 'Machinery',
-    icon: Wrench,
     category: 'Industrial',
     suggestions: {
       liveSize: '10mm',
-      cpcSize: '10mm',
+      cpcSize: '4.0mm',
+      cableSize: '10/4',
       protectiveDeviceType: 'MCB',
       protectiveDeviceCurve: 'D',
       protectiveDeviceRating: '40',
-      bsStandard: 'BS EN 60898',
+      protectiveDevice: 'MCB D40',
+      bsStandard: 'MCB (BS EN 60898)',
       protectiveDeviceKaRating: '10',
       maxZs: '0.27',
       pointsServed: '1',
       referenceMethod: 'E',
-      typeOfWiring: 'SWA Cable',
+      typeOfWiring: 'F',
     },
   },
   {
     type: 'Workshop Sockets',
-    icon: Plug,
     category: 'Industrial',
     suggestions: {
       liveSize: '6.0mm',
-      cpcSize: '6.0mm',
+      cpcSize: '2.5mm',
+      cableSize: '6/2.5',
       protectiveDeviceType: 'RCBO',
       protectiveDeviceCurve: 'C',
       protectiveDeviceRating: '32',
-      bsStandard: 'BS EN 61009',
+      protectiveDevice: 'RCBO C32',
+      bsStandard: 'RCBO (BS EN 61009)',
       protectiveDeviceKaRating: '10',
       maxZs: '0.68',
       referenceMethod: 'C',
-      typeOfWiring: 'SWA Cable',
+      typeOfWiring: 'F',
+      rcdBsStandard: 'RCBO (BS EN 61009)',
+      rcdType: 'A',
+      rcdRating: '30',
+      rcdRatingA: '32',
     },
   },
   {
     type: 'Compressor',
-    icon: Wind,
     category: 'Industrial',
     suggestions: {
       liveSize: '10mm',
-      cpcSize: '10mm',
+      cpcSize: '4.0mm',
+      cableSize: '10/4',
       protectiveDeviceType: 'MCB',
       protectiveDeviceCurve: 'D',
       protectiveDeviceRating: '32',
-      bsStandard: 'BS EN 60898',
+      protectiveDevice: 'MCB D32',
+      bsStandard: 'MCB (BS EN 60898)',
       protectiveDeviceKaRating: '10',
       maxZs: '0.34',
       pointsServed: '1',
       referenceMethod: 'E',
-      typeOfWiring: 'SWA Cable',
+      typeOfWiring: 'F',
     },
   },
 ];
 
-// Category definitions with icons and colours
-const categories = [
-  {
-    name: 'Lighting',
-    icon: Lightbulb,
-    color: 'text-yellow-400',
-    bg: 'bg-yellow-500/10 hover:bg-yellow-500/20 border-yellow-500/30',
-  },
-  {
-    name: 'Sockets',
-    icon: Plug,
-    color: 'text-blue-400',
-    bg: 'bg-blue-500/10 hover:bg-blue-500/20 border-blue-500/30',
-  },
-  {
-    name: 'Appliances',
-    icon: ChefHat,
-    color: 'text-orange-400',
-    bg: 'bg-orange-500/10 hover:bg-orange-500/20 border-orange-500/30',
-  },
-  {
-    name: 'Modern',
-    icon: Car,
-    color: 'text-green-400',
-    bg: 'bg-green-500/10 hover:bg-green-500/20 border-green-500/30',
-  },
-  {
-    name: 'Commercial',
-    icon: Building2,
-    color: 'text-purple-400',
-    bg: 'bg-purple-500/10 hover:bg-purple-500/20 border-purple-500/30',
-  },
-  {
-    name: 'Industrial',
-    icon: Factory,
-    color: 'text-red-400',
-    bg: 'bg-red-500/10 hover:bg-red-500/20 border-red-500/30',
-  },
-];
+const categories = ['Lighting', 'Sockets', 'Appliances', 'Modern', 'Commercial', 'Industrial'];
+
+// '2.5mm' → '2.5', '10mm' → '10'
+const stripMm = (v?: string) => (v || '').replace(/mm$/, '');
+
+// Quiet mono summary of what the preset prefills, e.g.
+// "32A Type B RCBO · 2.5/1.5mm² · ref A · 30mA RCD Type A"
+const presetSummary = (s: Partial<TestResult>) => {
+  const parts = [
+    `${s.protectiveDeviceRating}A Type ${s.protectiveDeviceCurve} ${s.protectiveDeviceType}`,
+    `${stripMm(s.liveSize)}/${stripMm(s.cpcSize)}mm²`,
+    `ref ${s.referenceMethod}`,
+  ];
+  if (s.rcdRating) parts.push(`${s.rcdRating}mA RCD Type ${s.rcdType}`);
+  return parts.join(' · ');
+};
+
+const noFocusRing =
+  'outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0';
 
 const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
   open,
@@ -538,10 +568,12 @@ const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
   onSkip,
   circuitNumber,
 }) => {
+  const isMobile = useIsMobile();
+  const haptic = useHaptic();
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedCircuitType, setSelectedCircuitType] = useState<string>('');
 
-  // Reset when dialog opens/closes
+  // Reset when the sheet closes
   useEffect(() => {
     if (!open) {
       setSelectedCategory('');
@@ -555,188 +587,203 @@ const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
   }, [selectedCategory]);
 
   const selectedConfig = circuitTypes.find((ct) => ct.type === selectedCircuitType);
-  const selectedCategoryData = categories.find((c) => c.name === selectedCategory);
 
-  const handleSelectCircuit = (type: string) => {
+  const handlePickCategory = (name: string) => {
+    haptic.selection();
+    setSelectedCategory(name);
+    setSelectedCircuitType('');
+  };
+
+  const handleBack = () => {
+    haptic.light();
+    setSelectedCategory('');
+    setSelectedCircuitType('');
+  };
+
+  const handlePickCircuit = (type: string) => {
+    haptic.selection();
     setSelectedCircuitType(type);
   };
 
-  const handleCreate = () => {
-    if (selectedCircuitType && selectedConfig) {
-      onUseAutoFill(selectedConfig.type, selectedConfig.suggestions);
-    } else {
-      onUseAutoFill();
-    }
+  const handleAddPreset = () => {
+    if (!selectedConfig) return;
+    haptic.success();
+    onUseAutoFill(selectedConfig.type, selectedConfig.suggestions);
   };
+
+  const handleAddBlank = () => {
+    haptic.light();
+    onSkip();
+  };
+
+  const body = (
+    <div className="flex h-full flex-col">
+      {/* Header */}
+      <div className="flex items-center gap-2 border-b border-white/[0.1] px-4 py-3">
+        {selectedCategory && (
+          <button
+            type="button"
+            onClick={handleBack}
+            aria-label="Back to categories"
+            className={cn(
+              'flex h-11 w-11 -ml-2 items-center justify-center rounded-xl text-white touch-manipulation active:scale-95',
+              noFocusRing
+            )}
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+        )}
+        <div className="min-w-0 flex-1">
+          <h2 className="truncate text-[15px] font-semibold tracking-tight text-white">
+            {selectedCategory
+              ? `${selectedCategory} — Way ${circuitNumber}`
+              : `Add circuit — Way ${circuitNumber}`}
+          </h2>
+          {!selectedCategory && (
+            <p className="mt-0.5 text-xs text-white/80">
+              Start from a preset — device, rating and cable sizes prefilled. Everything stays
+              editable.
+            </p>
+          )}
+        </div>
+        <button
+          type="button"
+          onClick={() => onOpenChange(false)}
+          aria-label="Close"
+          className={cn(
+            'flex h-11 w-11 -mr-2 items-center justify-center rounded-xl text-white touch-manipulation active:scale-95',
+            noFocusRing
+          )}
+        >
+          <X className="h-5 w-5" />
+        </button>
+      </div>
+
+      {/* Content */}
+      <div className="flex-1 overflow-y-auto p-4">
+        {!selectedCategory ? (
+          <div className="grid grid-cols-2 gap-2 lg:grid-cols-3">
+            {categories.map((name) => (
+              <button
+                key={name}
+                type="button"
+                onClick={() => handlePickCategory(name)}
+                className={cn(
+                  'h-12 rounded-xl border border-white/[0.12] bg-white/[0.06] px-3 text-sm font-medium text-white transition-colors touch-manipulation active:scale-[0.98]',
+                  noFocusRing
+                )}
+              >
+                {name}
+              </button>
+            ))}
+          </div>
+        ) : (
+          <div className="space-y-2">
+            {filteredCircuits.map((circuit) => {
+              const isSelected = selectedCircuitType === circuit.type;
+              return (
+                <button
+                  key={circuit.type}
+                  type="button"
+                  onClick={() => handlePickCircuit(circuit.type)}
+                  className={cn(
+                    'w-full rounded-xl border p-3 text-left transition-colors touch-manipulation active:scale-[0.99]',
+                    noFocusRing,
+                    isSelected
+                      ? 'border-elec-yellow bg-elec-yellow'
+                      : 'border-white/[0.12] bg-white/[0.06]'
+                  )}
+                >
+                  <span
+                    className={cn(
+                      'block text-sm font-semibold',
+                      isSelected ? 'text-black' : 'text-white'
+                    )}
+                  >
+                    {circuit.type}
+                  </span>
+                  <span
+                    className={cn(
+                      'mt-0.5 block font-mono text-[11px] tabular-nums',
+                      isSelected ? 'text-black' : 'text-white/80'
+                    )}
+                  >
+                    {presetSummary(circuit.suggestions)}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* Footer */}
+      <div className="flex gap-3 border-t border-white/[0.1] px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+        <button
+          type="button"
+          onClick={handleAddBlank}
+          className={cn(
+            'h-12 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.06] text-sm font-medium text-white touch-manipulation active:scale-[0.98]',
+            noFocusRing
+          )}
+        >
+          Add blank way
+        </button>
+        <button
+          type="button"
+          onClick={handleAddPreset}
+          disabled={!selectedConfig}
+          className={cn(
+            'h-12 flex-1 rounded-xl text-sm font-semibold touch-manipulation active:scale-[0.98] disabled:active:scale-100',
+            noFocusRing,
+            selectedConfig
+              ? 'bg-elec-yellow text-black'
+              : 'border border-white/[0.12] bg-white/[0.06] text-white opacity-50'
+          )}
+        >
+          Add circuit
+        </button>
+      </div>
+    </div>
+  );
+
+  if (isMobile) {
+    return (
+      <Sheet open={open} onOpenChange={onOpenChange}>
+        <SheetContent
+          side="bottom"
+          hideCloseButton
+          className="h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.14] p-0"
+        >
+          <VisuallyHidden>
+            <SheetTitle>Add circuit — Way {circuitNumber}</SheetTitle>
+            <SheetDescription>
+              Pick a circuit preset with device, rating and cable sizes prefilled, or add a blank
+              way.
+            </SheetDescription>
+          </VisuallyHidden>
+          {body}
+        </SheetContent>
+      </Sheet>
+    );
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg p-0 bg-card border-border/50 overflow-hidden max-h-[85vh] flex flex-col">
+      <DialogContent
+        hideCloseButton
+        className={cn(
+          'flex max-h-[85vh] max-w-lg flex-col overflow-hidden rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-0 shadow-none',
+          noFocusRing
+        )}
+      >
         <VisuallyHidden>
-          <DialogTitle>Quick Add Circuit — C{circuitNumber}</DialogTitle>
+          <DialogTitle>Add circuit — Way {circuitNumber}</DialogTitle>
           <DialogDescription>
-            BS 7671 compliant circuit builder. Choose a category, set the parameters, and add it to
-            the board.
+            Pick a circuit preset with device, rating and cable sizes prefilled, or add a blank way.
           </DialogDescription>
         </VisuallyHidden>
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-border/30 bg-gradient-to-r from-amber-500/10 to-transparent">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center">
-              <Sparkles className="h-5 w-5 text-amber-400" />
-            </div>
-            <div>
-              <h2 className="font-bold text-foreground">Quick Add Circuit</h2>
-              <p className="text-xs text-muted-foreground">C{circuitNumber} • BS 7671 compliant</p>
-            </div>
-          </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => onOpenChange(false)}
-            className="h-8 w-8 rounded-lg text-muted-foreground hover:text-foreground"
-          >
-            <X className="h-4 w-4" />
-          </Button>
-        </div>
-
-        {/* Content */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          {/* Step 1: Category Selection */}
-          <div>
-            <p className="text-xs font-semibold text-white uppercase tracking-wide mb-3">
-              1. Choose Category
-            </p>
-            <div className="grid grid-cols-3 gap-2">
-              {categories.map((cat) => {
-                const Icon = cat.icon;
-                const isSelected = selectedCategory === cat.name;
-                return (
-                  <button
-                    key={cat.name}
-                    onClick={() => {
-                      setSelectedCategory(cat.name);
-                      setSelectedCircuitType('');
-                    }}
-                    className={`p-3 rounded-xl border transition-all touch-manipulation active:scale-95 flex flex-col items-center gap-1.5 ${
-                      isSelected
-                        ? `${cat.bg} border-2`
-                        : 'bg-card border-border/50 hover:bg-muted/50'
-                    }`}
-                  >
-                    <Icon className={`h-5 w-5 ${isSelected ? cat.color : 'text-white'}`} />
-                    <span
-                      className={`text-xs font-medium ${isSelected ? 'text-foreground' : 'text-white'}`}
-                    >
-                      {cat.name}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Step 2: Circuit Type Selection */}
-          {selectedCategory && (
-            <div>
-              <p className="text-xs font-semibold text-white uppercase tracking-wide mb-3">
-                2. Select Circuit Type
-              </p>
-              <div className="grid grid-cols-2 gap-2">
-                {filteredCircuits.map((circuit) => {
-                  const Icon = circuit.icon;
-                  const isSelected = selectedCircuitType === circuit.type;
-                  return (
-                    <button
-                      key={circuit.type}
-                      onClick={() => handleSelectCircuit(circuit.type)}
-                      className={`p-3 rounded-xl border transition-all touch-manipulation active:scale-95 flex items-center gap-3 text-left ${
-                        isSelected
-                          ? `${selectedCategoryData?.bg} border-2`
-                          : 'bg-card border-border/50 hover:bg-muted/50'
-                      }`}
-                    >
-                      <Icon
-                        className={`h-4 w-4 flex-shrink-0 ${isSelected ? selectedCategoryData?.color : 'text-white'}`}
-                      />
-                      <span
-                        className={`text-sm font-medium ${isSelected ? 'text-foreground' : 'text-white'}`}
-                      >
-                        {circuit.type}
-                      </span>
-                      {isSelected && (
-                        <Check className={`h-4 w-4 ml-auto ${selectedCategoryData?.color}`} />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* Preview */}
-          {selectedConfig && (
-            <div className={`p-4 rounded-xl border-2 ${selectedCategoryData?.bg}`}>
-              <div className="flex items-center gap-2 mb-3">
-                <selectedConfig.icon className={`h-4 w-4 ${selectedCategoryData?.color}`} />
-                <span className="font-semibold text-foreground text-sm">{selectedConfig.type}</span>
-              </div>
-              <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
-                <div className="flex justify-between">
-                  <span className="text-white">Cable:</span>
-                  <span className="text-white font-medium">
-                    {selectedConfig.suggestions.liveSize}/{selectedConfig.suggestions.cpcSize}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-white">Protection:</span>
-                  <span className="text-white font-medium">
-                    {selectedConfig.suggestions.protectiveDeviceType}{' '}
-                    {selectedConfig.suggestions.protectiveDeviceCurve}
-                    {selectedConfig.suggestions.protectiveDeviceRating}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-white">Breaking:</span>
-                  <span className="text-white font-medium">
-                    {selectedConfig.suggestions.protectiveDeviceKaRating}kA
-                  </span>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Footer */}
-        <div className="p-4 border-t border-border/30 bg-muted/30 flex gap-3">
-          <Button
-            variant="outline"
-            onClick={onSkip}
-            className="flex-1 h-12 rounded-xl font-medium touch-manipulation active:scale-[0.98]"
-          >
-            Skip
-          </Button>
-          <Button
-            onClick={handleCreate}
-            className={`flex-1 h-12 rounded-xl font-medium touch-manipulation active:scale-[0.98] gap-2 ${
-              selectedCircuitType
-                ? 'bg-amber-500 hover:bg-amber-600 text-black'
-                : 'bg-muted hover:bg-muted/80 text-foreground'
-            }`}
-          >
-            {selectedCircuitType ? (
-              <>
-                <Check className="h-4 w-4" />
-                Create {selectedConfig?.type}
-              </>
-            ) : (
-              <>
-                <Zap className="h-4 w-4" />
-                Create Empty
-              </>
-            )}
-          </Button>
-        </div>
+        {body}
       </DialogContent>
     </Dialog>
   );

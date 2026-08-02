@@ -1,13 +1,24 @@
 /**
  * BS 7671 Maximum Earth Fault Loop Impedance (Zs) Values
  *
- * Source: BS 7671:2018+A3:2024 Tables 41.2, 41.3, 41.4, 41.6
+ * Source: BS 7671:2018+A4:2026 Tables 41.2, 41.3, 41.4, 41.5
  *
  * IMPORTANT NOTES:
  * - All values are in Ohms (Ω)
  * - Values determined using Cmin = 0.95 (Note 1 in BS 7671)
  * - 0.4s disconnection time for final circuits (Reg 411.3.2.2)
  * - 5s disconnection time for distribution circuits (Reg 411.3.2.3)
+ * - Table 41.3 (circuit-breakers, Reg 411.4.202) covers both the 0.4 s and the
+ *   5 s disconnection time, but NOT by publishing one shared set of values:
+ *     · 41.3(a) Type B and 41.3(b) Type C each print a SINGLE Zs row, valid for
+ *       both times — formulae 230 x 0.95/(5·In) and 230 x 0.95/(10·In).
+ *     · 41.3(c) Type D prints TWO rows: a '0.4 sec' row at 230 x 0.95/(20·In)
+ *       and a SEPARATE '5 secs' row at 230 x 0.95/(10·In) — i.e. the 5 s values
+ *       are exactly double the 0.4 s ones. Type D is the only curve that
+ *       differs by disconnection time. Verified against the printed table.
+ *   The Type D '5s' values therefore coincide numerically with the Type C row
+ *   because both use the 10·In multiplier. That is a genuine shared formula,
+ *   NOT a copy-paste error — do not "fix" it by mirroring the 0.4 s row.
  * - Measured values should be compared after temperature correction if tested at different temperatures
  */
 
@@ -80,7 +91,10 @@ export const MCB_RCBO_ZS_LIMITS = {
       125: 0.17,
     },
   },
-  // Type D - Table 41.3(c)
+  // Type D - Table 41.3(c). The ONLY curve with two printed rows:
+  //   '0.4s' = 230 × 0.95 / (20 × In)  (top of the 10–20×In magnetic band)
+  //   '5s'   = 230 × 0.95 / (10 × In)  (bottom of the band is enough for 5 s)
+  // so the 5 s figures are double the 0.4 s ones (D32: 0.34 Ω vs 0.68 Ω).
   typeD: {
     '0.4s': {
       6: 1.82,

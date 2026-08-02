@@ -12,7 +12,6 @@ import { EICObservation } from '@/hooks/useEICObservations';
 interface EICDefectObservationsListProps {
   observations: EICObservation[];
   reportId: string;
-  onAddObservation: () => void;
   onUpdateObservation: (id: string, field: keyof EICObservation, value: any) => void;
   onRemoveObservation: (id: string) => void;
   onSyncToInspectionItem?: (inspectionItemId: string, newOutcome: string) => void;
@@ -30,7 +29,7 @@ const EICDefectObservationsList: React.FC<EICDefectObservationsListProps> = ({
   }
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       <AnimatePresence mode="popLayout">
         {observations.map((observation, index) => (
           <motion.div

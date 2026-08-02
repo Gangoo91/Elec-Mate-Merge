@@ -1,28 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Checkbox } from '@/components/ui/checkbox';
-import {
-  Award,
-  Shield,
-  CheckCircle,
-  AlertTriangle,
-  Sparkles,
-  ChevronDown,
-} from 'lucide-react';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import EICCertificateActions from './EICCertificateActions';
-import { useIsMobile } from '@/hooks/use-mobile';
+import EICCertificateActions, { type EICPdfActionsRef } from './EICCertificateActions';
+import { useEICForm } from './EICFormProvider';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
 import { useQsTeamContext } from '@/hooks/useQsReview';
 import QsReviewPanel from '@/components/inspection/shared/QsReviewPanel';
-import EICValidationPanel from './EICValidationPanel';
-import type { EICTabId } from '@/hooks/useEICValidation';
 
 interface EICCertificateTabProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -32,16 +20,23 @@ interface EICCertificateTabProps {
   reportId: string;
   onGenerateCertificate: () => void;
   onSaveDraft: () => void;
-  canGenerateCertificate: boolean;
-  onJumpToTab?: (tab: EICTabId) => void;
+  /** Accepted for the shell's call-site compatibility; generation gating now
+   * derives from useEICValidation inside EICCertificateActions. */
+  canGenerateCertificate?: boolean;
+  /** Shell footer's imperative Generate handle (MW pattern). */
+  actionsRef?: EICPdfActionsRef;
 }
 
-const SectionTitle = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
-);
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const chipOn = 'bg-elec-yellow border border-elec-yellow text-black font-semibold';
+const chipOff = 'bg-white/[0.06] border border-white/[0.12] text-white font-medium';
 
 const CollapsibleSection = ({
   title,
@@ -55,24 +50,14 @@ const CollapsibleSection = ({
   onToggle: () => void;
   children: React.ReactNode;
 }) => (
-  <div className="space-y-3">
+  <div className={cardCn}>
     <button
       type="button"
       onClick={onToggle}
-      className="w-full text-left touch-manipulation"
+      className="w-full min-h-11 flex items-center justify-between gap-2 text-left touch-manipulation"
     >
-      <div className="border-b border-white/[0.06] pb-1">
-        <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-        <div className="flex items-center justify-between">
-          <h3 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h3>
-          <ChevronDown
-            className={cn(
-              'h-4 w-4 text-white/60 transition-transform',
-              isOpen && 'rotate-180'
-            )}
-          />
-        </div>
-      </div>
+      <h2 className="text-[15px] font-semibold tracking-tight text-white">{title}</h2>
+      <span className="text-[11px] font-medium text-white">{isOpen ? 'Hide' : 'Show'}</span>
     </button>
     {isOpen && <div>{children}</div>}
   </div>
@@ -84,12 +69,13 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
   reportId,
   onGenerateCertificate,
   onSaveDraft,
-  canGenerateCertificate,
-  onJumpToTab,
+  actionsRef,
 }) => {
-  const isMobile = useIsMobile();
   const haptic = useHaptic();
   const { toast } = useToast();
+  // Reopened certs must render their saved state — profile auto-fill is a
+  // new-cert convenience only, and must never race async cloud hydration.
+  const { isHydrating, isExistingReport } = useEICForm();
   const { companyProfile } = useCompanyProfile();
   const { getDefaultProfile } = useInspectorProfiles();
   // ELE-1307 — company team members who aren't the QS can't self-authorise.
@@ -112,6 +98,9 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
   // QS countersignature block hidden behind the locked panel.
   useEffect(() => {
     if (qsCtx === undefined || lockedForQs) return;
+    // Never auto-fill a reopened report (saved state may have intentionally
+    // cleared fields) or while cloud hydration is still in flight.
+    if (isHydrating || isExistingReport) return;
     if (!formData.reportAuthorisedByName) {
       const inspectorProfile = getDefaultProfile();
 
@@ -166,33 +155,7 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [companyProfile, getDefaultProfile, qsCtx, lockedForQs]);
-
-  // Completion checks
-  const isReportAuthorisedComplete =
-    formData.reportAuthorisedByName &&
-    formData.reportAuthorisedBySignature &&
-    formData.reportAuthorisedByDate;
-  const isComplianceComplete = formData.bs7671Compliance;
-  const allComplete = isReportAuthorisedComplete && isComplianceComplete;
-
-  const getCompletionPercentage = (section: string) => {
-    switch (section) {
-      case 'reportAuthorised': {
-        const fields = [
-          'reportAuthorisedByName',
-          'reportAuthorisedBySignature',
-          'reportAuthorisedByDate',
-        ];
-        const filled = fields.filter((f) => formData[f]).length;
-        return Math.round((filled / fields.length) * 100);
-      }
-      case 'compliance':
-        return formData.bs7671Compliance ? 100 : 0;
-      default:
-        return 0;
-    }
-  };
+  }, [companyProfile, getDefaultProfile, qsCtx, lockedForQs, isHydrating, isExistingReport]);
 
   // Fill from inspector profile or business settings
   const fillFromBusinessSettings = () => {
@@ -273,6 +236,7 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
 
   // Copy from inspector declaration
   const copyFromInspector = () => {
+    haptic.light();
     onUpdate('reportAuthorisedByName', formData.inspectorName?.toUpperCase() || '');
     onUpdate('reportAuthorisedBySignature', formData.inspectorSignature);
     onUpdate('reportAuthorisedByDate', new Date().toISOString().split('T')[0]);
@@ -289,8 +253,8 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
 
   return (
     <div className="space-y-4">
-      {/* Pre-flight validation summary — surfaces what's missing before user taps Generate */}
-      <EICValidationPanel formData={formData} onJumpToTab={onJumpToTab} />
+      {/* No pre-flight validation panel here — the header ring's tap-sheet and
+          the actions card's missing-items hint already carry it (Andrew, 08-02). */}
 
       {/* QS review — submit/track/countersign. Renders nothing for solo users. */}
       <QsReviewPanel reportId={reportId} reportType="eic" onBeforeSubmit={onSaveDraft} />
@@ -299,14 +263,11 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
           members who aren't the QS see a locked explainer instead of editable
           fields; solo users (not on a company team) remain their own QS. */}
       {lockedForQs ? (
-        <div className="p-4 rounded-lg bg-white/[0.02] border border-white/[0.06] space-y-2">
-          <div className="flex items-center gap-2">
-            <Shield className="h-4 w-4 text-elec-yellow" />
-            <h3 className="text-xs font-medium text-white uppercase tracking-wider">
-              Report Authorisation
-            </h3>
-          </div>
-          <p className="text-xs leading-relaxed text-white/70">
+        <div className={cardCn}>
+          <h2 className="text-[15px] font-semibold tracking-tight text-white">
+            Report authorisation
+          </h2>
+          <p className="text-[13px] leading-relaxed text-white">
             This section is completed by your company's Qualifying Supervisor. Use{' '}
             <span className="text-elec-yellow">Send for QS review</span> above — their
             countersignature is applied automatically when they approve this certificate.
@@ -314,57 +275,69 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
         </div>
       ) : (
       <CollapsibleSection
-        title="Report Authorisation"
-        icon={Award}
+        title="Report authorisation"
         isOpen={openSections.reportAuthorised}
         onToggle={() => toggleSection('reportAuthorised')}
       >
-        <div className="space-y-5">
+        <div className="space-y-4 pt-1">
           {/* Quick Fill */}
           <button
             type="button"
             onClick={fillFromBusinessSettings}
-            className="w-full h-10 rounded-lg font-semibold text-xs bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow touch-manipulation active:scale-[0.98]"
+            className="w-full h-11 rounded-xl text-sm bg-elec-yellow border border-elec-yellow text-black font-semibold touch-manipulation active:scale-[0.98] transition-all"
           >
             Load from Business Settings
           </button>
+          {formData.inspectorName && (
+            <button
+              type="button"
+              onClick={copyFromInspector}
+              className={cn(
+                'w-full h-11 rounded-xl text-sm touch-manipulation active:scale-[0.98] transition-all',
+                chipOff
+              )}
+            >
+              Copy from inspector declaration
+            </button>
+          )}
 
           {/* Authorising Person */}
-          <div className="space-y-3">
-            <div className="grid grid-cols-2 gap-2 items-end">
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
               <div>
-                <Label className="text-white text-xs mb-1 block">Name *</Label>
+                <Label className={labelCn}>Name *</Label>
                 <Input
                   value={formData.reportAuthorisedByName || ''}
                   onChange={(e) => onUpdate('reportAuthorisedByName', e.target.value.toUpperCase())}
                   placeholder="FULL NAME"
-                  className={cn('uppercase h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white', !formData.reportAuthorisedByName && 'border-red-500/30')}
+                  className={cn(inputCn, 'uppercase', !formData.reportAuthorisedByName && 'border-red-500/40')}
                 />
               </div>
               <div>
-                <Label className="text-white text-xs mb-1 block">Company</Label>
+                <Label className={labelCn}>Company</Label>
                 <Input
                   value={formData.reportAuthorisedByForOnBehalfOf || ''}
                   onChange={(e) => onUpdate('reportAuthorisedByForOnBehalfOf', e.target.value)}
                   placeholder="Company"
-                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white"
+                  className={inputCn}
                 />
               </div>
             </div>
 
             <div>
-              <Label className="text-white text-xs mb-1 block">Position</Label>
-              <div className="grid grid-cols-3 gap-1">
+              <Label className={labelCn}>Position</Label>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {['Qualified Supervisor', 'Approved Electrician', 'Installation Electrician', 'Electrical Engineer', 'Site Manager'].map((pos) => (
                   <button
                     key={pos}
                     type="button"
-                    onClick={() => onUpdate('reportAuthorisedByPosition', pos)}
+                    onClick={() => {
+                      haptic.light();
+                      onUpdate('reportAuthorisedByPosition', pos);
+                    }}
                     className={cn(
-                      'h-8 rounded-md font-medium text-[9px] touch-manipulation transition-all active:scale-[0.98]',
-                      formData.reportAuthorisedByPosition === pos
-                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                        : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                      'min-h-11 rounded-xl px-2 py-1.5 text-xs touch-manipulation transition-all active:scale-[0.98]',
+                      formData.reportAuthorisedByPosition === pos ? chipOn : chipOff
                     )}
                   >
                     {pos}
@@ -374,34 +347,33 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
             </div>
 
             <div>
-              <Label className="text-white text-xs mb-1 block">Address</Label>
+              <Label className={labelCn}>Address</Label>
               <Input
                 value={formData.reportAuthorisedByAddress || ''}
                 onChange={(e) => onUpdate('reportAuthorisedByAddress', e.target.value)}
                 placeholder="Full business address including postcode"
-                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white"
+                className={inputCn}
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-2 items-end">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
               <div>
-                <Label className="text-white text-xs mb-1 block">Tel</Label>
+                <Label className={labelCn}>Tel</Label>
                 <Input
                   type="tel"
                   value={formData.reportAuthorisedByPhone || ''}
                   onChange={(e) => onUpdate('reportAuthorisedByPhone', e.target.value)}
                   placeholder="Phone number"
-                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white"
+                  className={inputCn}
                 />
               </div>
               <div>
-                <Label className="text-white text-xs mb-1 block">Date *</Label>
+                <Label className={labelCn}>Date *</Label>
                 <Input
                   type="date"
                   value={formData.reportAuthorisedByDate || ''}
                   onChange={(e) => onUpdate('reportAuthorisedByDate', e.target.value)}
-                  className={cn('h-11 touch-manipulation bg-white/[0.06] border-white/[0.08] text-white text-xs', !formData.reportAuthorisedByDate && 'border-red-500/30')}
-                  style={{ fontSize: '12px' }}
+                  className={cn(inputCn, !formData.reportAuthorisedByDate && 'border-red-500/40')}
                 />
               </div>
             </div>
@@ -418,13 +390,10 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
       )}
 
       {/* Compliance Confirmations */}
-      <div className="space-y-3">
-        <div className="border-b border-white/[0.06] pb-1">
-          <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-          <h3 className="text-xs font-medium text-white uppercase tracking-wider">Compliance</h3>
-        </div>
+      <div className={cardCn}>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">Compliance</h2>
 
-        <div className="grid grid-cols-3 gap-1">
+        <div className="grid grid-cols-3 gap-2">
           {[
             { field: 'bs7671Compliance', label: 'BS 7671 *' },
             { field: 'buildingRegsCompliance', label: 'Building Regs' },
@@ -433,27 +402,27 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
             <button
               key={field}
               type="button"
-              onClick={() => onUpdate(field, !formData[field])}
+              onClick={() => {
+                haptic.light();
+                onUpdate(field, !formData[field]);
+              }}
               className={cn(
-                'h-10 rounded-lg font-semibold transition-all touch-manipulation text-[10px] active:scale-[0.98] flex items-center justify-center gap-1',
-                formData[field]
-                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                'min-h-11 rounded-xl px-2 py-1.5 text-xs transition-all touch-manipulation active:scale-[0.98]',
+                formData[field] ? chipOn : chipOff
               )}
             >
-              {formData[field] && <CheckCircle className="h-3 w-3" />}
               {label}
             </button>
           ))}
         </div>
 
-        <div className="space-y-1.5">
-          <Label className="text-white text-xs">Additional Notes</Label>
+        <div>
+          <Label className={labelCn}>Additional notes</Label>
           <Input
             placeholder="Comments, observations, special considerations..."
             value={formData.additionalNotes || ''}
             onChange={(e) => onUpdate('additionalNotes', e.target.value)}
-            className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white"
+            className={inputCn}
           />
         </div>
       </div>
@@ -463,8 +432,8 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
         formData={formData}
         reportId={reportId}
         onGenerateCertificate={onGenerateCertificate}
-        onSaveDraft={onSaveDraft}
         onUpdate={onUpdate}
+        actionsRef={actionsRef}
       />
     </div>
   );

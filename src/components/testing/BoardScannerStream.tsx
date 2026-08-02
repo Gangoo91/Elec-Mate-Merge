@@ -5,22 +5,35 @@
  * `board-read-stream` edge function, consumes SSE events, and renders an
  * editorial review experience as the model produces results.
  *
- * Design language matches Cost Engineer / Tips & Guidance / college primitives:
- * - Eyebrow + numbered sections, no icons
- * - Hairline dividers, mobile-flat
- * - Yellow accent only, tabular-nums for figures
- * - Headline ends in a full stop, status crossfades
+ * Design language matches the cert sheets (BoardScannerOverlay / MWTestingTab):
+ * - Sheet header: bold title + text-[12px] white/60 subline, no gradient bars
+ * - Recipe sub-headings (border-t + h3), sentence case, no numbered markers
+ * - Neutral chips, coloured text for flags, tabular-nums for figures
+ * - Streaming rows keep their skeleton + motion enter animations
  * - Inline editing per row
  */
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type MutableRefObject,
+  type ReactNode,
+} from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sheet, SheetContent, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import * as SelectPrimitive from '@radix-ui/react-select';
-import { ChevronDown } from 'lucide-react';
-import { Eyebrow, Pill, containerVariants, itemVariants } from '@/components/college/primitives';
-import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
+import { ChevronDown, Loader2 } from 'lucide-react';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
+import { useHaptic } from '@/hooks/useHaptic';
+import {
+  supabase,
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY,
+} from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 
 // ────────────────────────────────────────────────────────
@@ -214,13 +227,96 @@ function crossCheck(c: ConfirmedCircuit, isThreePhase: boolean): string | null {
 }
 
 // ────────────────────────────────────────────────────────
+// Correction capture — fire-and-forget telemetry on user edits
+// ────────────────────────────────────────────────────────
+
+/** Normalise a value for diffing/storage: empty → null, everything → string. */
+const normCorrectionValue = (v: unknown): string | null =>
+  v === null || v === undefined || v === '' ? null : String(v);
+
+const CORRECTION_FIELDS: Array<[string, (c: ConfirmedCircuit) => unknown]> = [
+  ['device', (c) => c.device],
+  ['rating', (c) => c.rating],
+  ['curve', (c) => c.curve],
+  ['label', (c) => c.label],
+  ['rcdType', (c) => c.rcdType],
+  ['iDeltaNmA', (c) => c.iDeltaNmA],
+  ['phaseDesignation', (c) => c.phaseDesignation],
+];
+
+/**
+ * Diffs the user's saved row against the ORIGINAL AI-detected circuit and
+ * inserts one `board_scan_corrections` row per changed field. Strictly
+ * fire-and-forget: the table may not exist yet (migration pending) and a
+ * failure must never break saving — hence `.then(noop, noop)`, never
+ * `.catch()` (the Supabase builder is a thenable, not a Promise: `.catch()`
+ * both throws and silently never sends the request).
+ */
+function recordScanCorrections(
+  original: ConfirmedCircuit | undefined,
+  next: ConfirmedCircuit,
+  board: BoardData | null
+) {
+  try {
+    if (!original) return;
+    const changed = CORRECTION_FIELDS.filter(
+      ([, get]) => normCorrectionValue(get(original)) !== normCorrectionValue(get(next))
+    );
+    if (changed.length === 0) return;
+
+    supabase.auth
+      .getUser()
+      .then(({ data }) => {
+        const userId = data.user?.id;
+        if (!userId) return;
+        const rows = changed.map(([field, get]) => ({
+          user_id: userId,
+          position: original.position,
+          field,
+          ai_value: normCorrectionValue(get(original)),
+          user_value: normCorrectionValue(get(next)),
+          ai_confidence: original.confidence ?? null,
+          board_brand: board?.brand ?? null,
+          board_model: board?.model ?? null,
+        }));
+        // Untyped table access — types regenerate once the migration lands.
+        (
+          supabase as unknown as {
+            from: (t: string) => {
+              insert: (r: unknown[]) => PromiseLike<unknown>;
+            };
+          }
+        )
+          .from('board_scan_corrections')
+          .insert(rows)
+          .then(
+            () => {},
+            () => {}
+          );
+      })
+      .then(
+        () => {},
+        () => {}
+      );
+  } catch {
+    // Correction telemetry must never break the save path.
+  }
+}
+
+// ────────────────────────────────────────────────────────
 // Streaming hook — owns the SSE connection
 // ────────────────────────────────────────────────────────
 
 function useBoardStream(
   open: boolean,
   imageUrls: string[],
-  hints: BoardScannerStreamProps['hints']
+  hints: BoardScannerStreamProps['hints'],
+  /**
+   * Read at scan start (never a dependency — changing it mid-stream must not
+   * restart the scan). Carries the user's optional expected-ways hint into
+   * the NEXT scan's request body.
+   */
+  expectedWaysRef: MutableRefObject<number | null>
 ) {
   const [board, setBoard] = useState<BoardData | null>(null);
   const [circuits, setCircuits] = useState<ConfirmedCircuit[]>([]);
@@ -251,6 +347,14 @@ function useBoardStream(
 
     (async () => {
       try {
+        // Merge the session's expected-ways hint (if the user set one) into
+        // the request. Read once at scan start via ref so mid-stream chip
+        // taps only affect the NEXT scan.
+        const mergedHints = {
+          ...(hints ?? {}),
+          ...(expectedWaysRef.current ? { expected_ways: expectedWaysRef.current } : {}),
+        };
+
         const response = await fetch(`${SUPABASE_URL}/functions/v1/board-read-stream`, {
           method: 'POST',
           headers: {
@@ -258,7 +362,7 @@ function useBoardStream(
             apikey: SUPABASE_PUBLISHABLE_KEY,
             Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
           },
-          body: JSON.stringify({ images: imageUrls, hints: hints ?? {} }),
+          body: JSON.stringify({ images: imageUrls, hints: mergedHints }),
           signal: controller.signal,
         });
 
@@ -385,7 +489,7 @@ function useBoardStream(
       controller.abort();
       startedRef.current = null;
     };
-  }, [open, imageUrls, hints]);
+  }, [open, imageUrls, hints, expectedWaysRef]);
 
   return { board, circuits, status, phase, error };
 }
@@ -394,14 +498,102 @@ function useBoardStream(
 // Atoms
 // ────────────────────────────────────────────────────────
 
+/** One row of the board definition grid — label left, value left-adjacent.
+ *  Each fact slides in as the board data streams in. */
 const BoardFact = ({ label, value }: { label: string; value: string }) => (
-  <div className="flex items-baseline justify-between gap-4 py-2 border-b border-white/[0.06] last:border-b-0">
-    <span className="text-[10.5px] uppercase tracking-[0.18em] font-medium text-white/55">
+  <>
+    <motion.span variants={itemVariants} className="text-[12px] font-medium text-white leading-6">
       {label}
-    </span>
-    <span className="text-[14px] sm:text-[15px] text-white tabular-nums text-right">{value}</span>
-  </div>
+    </motion.span>
+    <motion.span variants={itemVariants} className="text-sm text-white tabular-nums leading-6">
+      {value}
+    </motion.span>
+  </>
 );
+
+/** Compact neutral chip for device / rating / curve facts. */
+const Chip = ({ children }: { children: ReactNode }) => (
+  <span className="inline-flex items-center rounded-md border border-white/[0.12] bg-white/[0.06] px-2 py-0.5 text-[12px] font-medium text-white tabular-nums">
+    {children}
+  </span>
+);
+
+/** Sentence-case field label for the per-circuit edit block. */
+const FieldLabel = ({ children }: { children: ReactNode }) => (
+  <div className="mb-1.5 text-[12px] font-medium text-white">{children}</div>
+);
+
+/** Small volt pulse dot — the streaming heartbeat. */
+const PulseDot = () => (
+  <span className="relative inline-flex h-1.5 w-1.5 flex-shrink-0">
+    <span className="absolute inline-flex h-full w-full rounded-full bg-elec-yellow opacity-75 animate-ping" />
+    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-elec-yellow" />
+  </span>
+);
+
+/**
+ * Photo hero — the captured board photo the AI is reading. While the stream
+ * is live a volt scan-line sweeps the image top-to-bottom (reuses the global
+ * `scan` keyframes from index.css); when the read completes a volt chip
+ * fades in. Additional captures render as a horizontal snap row beneath.
+ */
+const PhotoHero = ({
+  imageUrls,
+  isStreaming,
+  isDone,
+}: {
+  imageUrls: string[];
+  isStreaming: boolean;
+  isDone: boolean;
+}) => {
+  if (imageUrls.length === 0) return null;
+  return (
+    <div className="pt-4">
+      <div className="relative overflow-hidden rounded-xl border border-white/[0.14] bg-black/50">
+        {/* object-CONTAIN — the whole board must be visible (cover cropped it
+            to a letterbox slice, Andrew). The dark backdrop fills the bars. */}
+        <img
+          src={imageUrls[0]}
+          alt="Captured board photo"
+          className="mx-auto max-h-64 w-full object-contain sm:max-h-80"
+        />
+        {isStreaming && (
+          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            {/* Subtle dimming so the volt line reads against bright photos */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/25" />
+            {/* Volt scan-line — sweeps top → bottom on loop */}
+            <div className="absolute inset-x-0 h-[2px] bg-elec-yellow shadow-[0_0_16px_3px_hsl(var(--elec-yellow)/0.55)] motion-safe:animate-[scan_2.2s_ease-in-out_infinite]" />
+          </div>
+        )}
+        <AnimatePresence>
+          {isDone && (
+            <motion.span
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="absolute right-2.5 top-2.5 rounded-md bg-elec-yellow px-2 py-1 text-[11px] font-semibold text-black"
+            >
+              Read complete
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {imageUrls.length > 1 && (
+        <div className="mt-2 -mx-1 flex gap-2 overflow-x-auto snap-x snap-mandatory px-1 pb-1">
+          {imageUrls.slice(1).map((url, i) => (
+            <img
+              key={url}
+              src={url}
+              alt={`Board photo ${i + 2}`}
+              className="h-16 w-24 flex-shrink-0 snap-start rounded-lg border border-white/[0.14] object-cover"
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 /**
  * Editorial inline select — direct Radix primitives so we have full control
@@ -436,16 +628,16 @@ const InlineSelect = <T extends string | number>({
         className={cn(
           'flex items-center justify-between gap-2',
           'bg-transparent border-0 border-b border-white/15 rounded-none',
-          'h-9 text-[15px] text-white tabular-nums px-0',
-          'hover:border-white/25 focus:border-elec-yellow/70 focus:outline-none',
-          'data-[state=open]:border-elec-yellow/70 transition-colors touch-manipulation'
+          'h-11 text-[15px] text-white tabular-nums px-0',
+          'hover:border-white/25 focus:border-elec-yellow focus:outline-none',
+          'data-[state=open]:border-elec-yellow transition-colors touch-manipulation'
         )}
       >
         <SelectPrimitive.Value>
           {stringValue ? (
             <span className="text-white">
               {stringValue}
-              {suffix && <span className="text-white/55 ml-0.5">{suffix}</span>}
+              {suffix && <span className="text-white/80 ml-0.5">{suffix}</span>}
             </span>
           ) : (
             <span className="text-white/35">—</span>
@@ -479,7 +671,6 @@ const InlineSelect = <T extends string | number>({
                   'focus:outline-none focus:bg-white/[0.06]',
                   'data-[highlighted]:bg-white/[0.06]',
                   'data-[state=checked]:text-elec-yellow data-[state=checked]:font-medium',
-                  'data-[state=checked]:bg-elec-yellow/[0.06]',
                   'before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2',
                   'before:h-5 before:w-[2px] before:rounded-full before:bg-transparent',
                   'data-[state=checked]:before:bg-elec-yellow',
@@ -488,7 +679,7 @@ const InlineSelect = <T extends string | number>({
               >
                 <SelectPrimitive.ItemText>
                   {String(o)}
-                  {suffix && <span className="text-white/45 ml-0.5">{suffix}</span>}
+                  {suffix && <span className="text-white/80 ml-0.5">{suffix}</span>}
                 </SelectPrimitive.ItemText>
               </SelectPrimitive.Item>
             ))}
@@ -525,13 +716,10 @@ const WarmupSkeleton = ({ elapsedSec }: { elapsedSec: number }) => {
   return (
     <div className="mt-6 space-y-2.5">
       {/* Live status card with elapsed time + phase label */}
-      <div className="rounded-xl bg-white/[0.035] border border-white/[0.06] px-4 sm:px-5 py-4 sm:py-5">
+      <div className="rounded-xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-4 sm:px-5 py-4 sm:py-5">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 min-w-0">
-            <span className="relative inline-flex h-2 w-2 flex-shrink-0">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-elec-yellow opacity-75 animate-ping" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-elec-yellow" />
-            </span>
+            <PulseDot />
             <AnimatePresence mode="wait">
               <motion.span
                 key={currentPhase.label}
@@ -539,19 +727,19 @@ const WarmupSkeleton = ({ elapsedSec }: { elapsedSec: number }) => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.25 }}
-                className="text-[14px] sm:text-[15px] text-white/85 truncate"
+                className="text-sm font-medium text-white truncate"
               >
                 {currentPhase.label}
               </motion.span>
             </AnimatePresence>
           </div>
-          <span className="text-[11px] uppercase tracking-[0.18em] font-semibold text-elec-yellow tabular-nums whitespace-nowrap">
+          <span className="text-[12px] font-medium text-elec-yellow tabular-nums whitespace-nowrap">
             {elapsedSec}s
           </span>
         </div>
 
         {/* Indeterminate progress sweep */}
-        <div className="mt-4 h-[2px] w-full rounded-full bg-white/[0.06] overflow-hidden">
+        <div className="mt-4 h-[2px] w-full rounded-full bg-white/[0.1] overflow-hidden">
           <motion.div
             className="h-full w-1/3 rounded-full bg-elec-yellow"
             initial={{ x: '-100%' }}
@@ -561,19 +749,20 @@ const WarmupSkeleton = ({ elapsedSec }: { elapsedSec: number }) => {
         </div>
       </div>
 
-      {/* Three placeholder cards that subtly pulse */}
+      {/* Skeleton shimmer rows — bright enough to read, staggered so the
+          list breathes while the model warms up */}
       {[0, 1, 2].map((i) => (
         <motion.div
           key={i}
-          className="rounded-xl bg-white/[0.02] border border-white/[0.04]"
-          animate={{ opacity: [0.4, 0.7, 0.4] }}
-          transition={{ duration: 2, repeat: Infinity, delay: i * 0.25 }}
+          className="rounded-xl border border-white/[0.1] bg-white/[0.08]"
+          animate={{ opacity: [0.55, 1, 0.55] }}
+          transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
         >
           <div className="px-4 sm:px-5 py-4 sm:py-5 flex items-center gap-3 sm:gap-4">
-            <span className="flex-shrink-0 w-7 sm:w-8 text-[14px] sm:text-[15px] font-medium text-white/20 tabular-nums">
+            <span className="flex-shrink-0 w-7 sm:w-8 text-sm font-medium text-white/45 tabular-nums">
               {String(i + 1).padStart(2, '0')}
             </span>
-            <div className="h-3 flex-1 max-w-[180px] rounded-full bg-white/[0.06]" />
+            <div className="h-3 flex-1 max-w-[180px] rounded-full bg-white/[0.14] animate-pulse" />
           </div>
         </motion.div>
       ))}
@@ -592,6 +781,7 @@ const CircuitRow = ({
   warning,
   canMoveUp,
   canMoveDown,
+  deleteMode,
   onSave,
   onDelete,
   onMoveUp,
@@ -603,6 +793,12 @@ const CircuitRow = ({
   warning: string | null;
   canMoveUp: boolean;
   canMoveDown: boolean;
+  /**
+   * 'remove' — the row is genuinely deleted (manual ways).
+   * 'spare' — streamed rows are converted to a Spare that stays in the list;
+   * the control is labelled honestly so it never claims to destroy scan data.
+   */
+  deleteMode: 'remove' | 'spare';
   onSave: (next: ConfirmedCircuit) => void;
   onDelete: () => void;
   onMoveUp: () => void;
@@ -611,6 +807,7 @@ const CircuitRow = ({
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(circuit);
   const [dragX, setDragX] = useState(0);
+  const haptic = useHaptic();
 
   useEffect(() => {
     if (!editing) setDraft(circuit);
@@ -626,6 +823,7 @@ const CircuitRow = ({
   const isInfra = circuit.isInfrastructure === true;
   const showWarning = !!warning && !editing && !isInfra;
   const dimmed = circuit.confidence === 'low' && !showWarning;
+  const deleteLabel = deleteMode === 'spare' ? 'Mark spare' : 'Delete';
 
   // Swipe-to-delete config — left swipe past 35% reveals delete; past 65%
   // commits the delete with a fly-out animation.
@@ -633,6 +831,7 @@ const CircuitRow = ({
   const SWIPE_COMMIT = -180;
 
   const handleSave = () => {
+    haptic.light();
     onSave(draft);
     setEditing(false);
   };
@@ -657,17 +856,17 @@ const CircuitRow = ({
           ? 'Main switch'
           : circuit.device || 'Infrastructure');
     return (
-      <motion.li variants={itemVariants} layout className="relative">
-        <div className="rounded-xl bg-white/[0.015] border border-white/[0.04] border-dashed">
+      <motion.li variants={itemVariants} layout className="relative lg:col-span-2">
+        <div className="rounded-xl border border-dashed border-white/[0.14] bg-white/[0.04]">
           <div className="px-4 sm:px-5 py-3 sm:py-3.5 flex items-center gap-3 sm:gap-4">
-            <span className="flex-shrink-0 w-7 sm:w-8 text-[10.5px] uppercase tracking-[0.18em] font-semibold text-white/35">
+            <span className="flex-shrink-0 w-7 sm:w-8 text-sm font-medium text-white/45 tabular-nums">
               —
             </span>
             <div className="flex-1 min-w-0 flex items-baseline justify-between gap-3">
-              <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-white/45">
+              <div className="text-[12px] font-medium text-white">
                 {circuit.device === 'RCD' ? 'Upstream RCD' : 'Main switch'}
               </div>
-              <span className="text-[13px] sm:text-[14px] text-white/55 tabular-nums truncate">
+              <span className="text-[13px] text-white/85 tabular-nums truncate">
                 {infraLabel}
                 {circuit.iDeltaNmA ? ` · ${circuit.iDeltaNmA}mA` : ''}
               </span>
@@ -682,12 +881,15 @@ const CircuitRow = ({
     <motion.li
       variants={itemVariants}
       layout
-      className="relative"
+      className={cn('relative flex flex-col', editing && 'lg:col-span-2')}
     >
       {/* Delete affordance behind the card — revealed by left-swipe */}
       <motion.button
         type="button"
-        onClick={onDelete}
+        onClick={() => {
+          haptic.medium();
+          onDelete();
+        }}
         animate={{
           opacity: dragX < -16 ? 1 : 0,
           scale: dragX < SWIPE_REVEAL ? 1 : 0.92,
@@ -695,11 +897,11 @@ const CircuitRow = ({
         transition={{ duration: 0.15 }}
         className={cn(
           'absolute inset-y-0 right-0 w-[88px] flex items-center justify-center',
-          'rounded-xl bg-red-500/15 text-red-400 text-[11px] uppercase tracking-[0.18em] font-semibold',
+          'rounded-xl bg-white/[0.06] text-red-400 text-[12px] font-semibold',
           'pointer-events-none'
         )}
       >
-        Delete
+        {deleteLabel}
       </motion.button>
 
       <motion.div
@@ -711,6 +913,7 @@ const CircuitRow = ({
         onDragEnd={(_, info) => {
           if (info.offset.x < SWIPE_COMMIT * 0.7) {
             // Animate the row off-screen then commit deletion
+            haptic.medium();
             onDelete();
           } else {
             setDragX(0);
@@ -719,13 +922,15 @@ const CircuitRow = ({
         animate={{ x: dragX < SWIPE_REVEAL ? SWIPE_REVEAL : 0 }}
         transition={{ type: 'spring', stiffness: 400, damping: 32 }}
         className={cn(
-          'relative rounded-xl bg-white/[0.035] hover:bg-white/[0.05] border border-white/[0.06]',
-          'transition-colors touch-pan-y',
-          editing && 'bg-white/[0.06] border-white/[0.1]'
+          // flex-1 — every card in a grid row stretches to the row's height,
+          // so a chip-less Spare matches its 3P neighbour (Andrew).
+          'relative flex-1 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]',
+          'transition-colors duration-150 touch-pan-y',
+          editing && 'border-white/[0.22]'
         )}
       >
-      <div className="px-4 sm:px-5 py-4 sm:py-5 flex items-start gap-3 sm:gap-4">
-        <span className="flex-shrink-0 text-[14px] sm:text-[15px] font-medium text-elec-yellow/70 tabular-nums leading-tight pt-1 whitespace-nowrap">
+      <div className="flex h-full items-start gap-3 px-4 py-3 sm:gap-4 sm:px-5 sm:py-3.5">
+        <span className="flex-shrink-0 text-sm font-medium text-white/85 tabular-nums leading-tight pt-1 whitespace-nowrap">
           {displayNumber === null
             ? '—'
             : circuit.spansWays && circuit.spansWays > 1
@@ -737,12 +942,12 @@ const CircuitRow = ({
           {!editing ? (
             <>
               <div className="flex items-baseline justify-between gap-3">
-                <div className="text-[16px] sm:text-[17px] font-semibold text-white leading-snug truncate">
+                <div className="text-[15px] sm:text-base font-semibold text-white leading-snug truncate">
                   {circuit.label || (isSpare ? 'Spare' : 'Unlabelled')}
                 </div>
                 <div className="flex items-center gap-3 flex-shrink-0">
                   {isThreePhase && circuit.phaseDesignation && (
-                    <span className="text-[11px] uppercase tracking-[0.18em] font-semibold text-amber-400 tabular-nums whitespace-nowrap">
+                    <span className="text-[12px] font-medium text-elec-yellow tabular-nums whitespace-nowrap">
                       {circuit.phase === '3P' || circuit.phaseDesignation.includes(',')
                         ? 'L1·L2·L3'
                         : circuit.phaseDesignation}
@@ -750,13 +955,18 @@ const CircuitRow = ({
                   )}
                   <button
                     type="button"
-                    onClick={() => setEditing(true)}
+                    onClick={() => {
+                      haptic.light();
+                      setEditing(true);
+                    }}
                     className={cn(
-                      'text-[11px] uppercase tracking-[0.18em] font-semibold',
-                      'transition-colors touch-manipulation whitespace-nowrap',
+                      // 44px hit area — padding grows the target, negative
+                      // margins keep the row layout unchanged.
+                      'px-3 -mx-3 py-3.5 -my-3.5 text-[12px] font-semibold',
+                      'transition-colors duration-150 touch-manipulation whitespace-nowrap',
                       showWarning
-                        ? 'text-amber-400 hover:text-amber-300'
-                        : 'text-elec-yellow/80 hover:text-elec-yellow'
+                        ? 'text-orange-300 hover:text-orange-200'
+                        : 'text-elec-yellow hover:text-elec-yellow/85'
                     )}
                   >
                     {showWarning ? 'Review' : 'Edit'}
@@ -765,17 +975,15 @@ const CircuitRow = ({
               </div>
 
               {!isSpare && (
-                <div className="mt-2 flex flex-wrap gap-1.5 items-center">
-                  <Pill tone={circuit.device === 'RCBO' ? 'yellow' : 'yellow'}>
-                    {circuit.device}
-                  </Pill>
+                <div className="mt-1.5 flex flex-wrap gap-1.5 items-center">
+                  <Chip>{circuit.device}</Chip>
                   {circuit.curve && circuit.rating !== null && (
-                    <Pill>{`${circuit.curve}${circuit.rating}`}</Pill>
+                    <Chip>{`${circuit.curve}${circuit.rating}`}</Chip>
                   )}
-                  {!circuit.curve && circuit.rating !== null && <Pill>{`${circuit.rating}A`}</Pill>}
-                  {circuit.rcdType && <Pill>Type {circuit.rcdType}</Pill>}
+                  {!circuit.curve && circuit.rating !== null && <Chip>{`${circuit.rating}A`}</Chip>}
+                  {circuit.rcdType && <Chip>Type {circuit.rcdType}</Chip>}
                   {circuit.iDeltaNmA !== null && circuit.iDeltaNmA !== undefined && (
-                    <Pill>{circuit.iDeltaNmA}mA</Pill>
+                    <Chip>{circuit.iDeltaNmA}mA</Chip>
                   )}
                 </div>
               )}
@@ -788,7 +996,7 @@ const CircuitRow = ({
                     exit={{ opacity: 0, height: 0 }}
                     className="overflow-hidden"
                   >
-                    <p className="mt-3 text-[13px] italic text-amber-400/85 leading-relaxed">
+                    <p className="mt-2.5 text-[12px] text-orange-300 leading-relaxed">
                       {warning}
                     </p>
                   </motion.div>
@@ -802,20 +1010,22 @@ const CircuitRow = ({
               className="overflow-hidden"
             >
               <div className="flex items-baseline justify-between gap-3 mb-4">
-                <div className="text-[16px] sm:text-[17px] font-semibold text-white">
+                <div className="text-[15px] sm:text-base font-semibold text-white">
                   Way {displayNumber ?? '—'}
                 </div>
-                <div className="flex items-center gap-4 text-[11px] uppercase tracking-[0.18em] font-semibold">
+                {/* 44px hit areas via padding + negative margin so the header
+                    row keeps its compact visual height */}
+                <div className="flex items-center gap-2 text-[12px] font-semibold">
                   <button
                     type="button"
                     onClick={onMoveUp}
                     disabled={!canMoveUp}
                     aria-label="Move up"
                     className={cn(
-                      'text-[14px] tabular-nums leading-none touch-manipulation transition-colors',
+                      'px-3 py-3 -my-3 text-[14px] tabular-nums leading-none touch-manipulation transition-colors',
                       canMoveUp
-                        ? 'text-white/65 hover:text-white'
-                        : 'text-white/15 cursor-not-allowed'
+                        ? 'text-white/85 hover:text-white'
+                        : 'text-white/20 cursor-not-allowed'
                     )}
                   >
                     ↑
@@ -826,10 +1036,10 @@ const CircuitRow = ({
                     disabled={!canMoveDown}
                     aria-label="Move down"
                     className={cn(
-                      'text-[14px] tabular-nums leading-none touch-manipulation transition-colors',
+                      'px-3 py-3 -my-3 text-[14px] tabular-nums leading-none touch-manipulation transition-colors',
                       canMoveDown
-                        ? 'text-white/65 hover:text-white'
-                        : 'text-white/15 cursor-not-allowed'
+                        ? 'text-white/85 hover:text-white'
+                        : 'text-white/20 cursor-not-allowed'
                     )}
                   >
                     ↓
@@ -837,14 +1047,14 @@ const CircuitRow = ({
                   <button
                     type="button"
                     onClick={handleCancel}
-                    className="text-white/55 hover:text-white touch-manipulation"
+                    className="px-2.5 py-3.5 -my-3.5 text-white/80 hover:text-white touch-manipulation"
                   >
                     Cancel
                   </button>
                   <button
                     type="button"
                     onClick={handleSave}
-                    className="text-elec-yellow hover:text-elec-yellow/85 touch-manipulation"
+                    className="px-2.5 py-3.5 -my-3.5 text-elec-yellow hover:text-elec-yellow/85 touch-manipulation"
                   >
                     Save
                   </button>
@@ -853,7 +1063,7 @@ const CircuitRow = ({
 
               <div className="space-y-4">
                 <div>
-                  <Eyebrow className="mb-1.5 text-white/55">Device</Eyebrow>
+                  <FieldLabel>Device</FieldLabel>
                   <InlineSelect
                     value={draft.device || 'MCB'}
                     options={DEVICE_OPTIONS}
@@ -864,7 +1074,7 @@ const CircuitRow = ({
                 {draft.device !== 'Spare' && (
                   <div className="flex flex-wrap gap-x-6 gap-y-3">
                     <div>
-                      <Eyebrow className="mb-1.5 text-white/55">Curve</Eyebrow>
+                      <FieldLabel>Curve</FieldLabel>
                       <InlineSelect
                         value={draft.curve as 'B' | 'C' | 'D' | null}
                         options={CURVE_OPTIONS}
@@ -872,7 +1082,7 @@ const CircuitRow = ({
                       />
                     </div>
                     <div>
-                      <Eyebrow className="mb-1.5 text-white/55">Rating</Eyebrow>
+                      <FieldLabel>Rating</FieldLabel>
                       <InlineSelect
                         value={draft.rating}
                         options={RATING_OPTIONS}
@@ -884,7 +1094,7 @@ const CircuitRow = ({
                     {(draft.device === 'RCBO' || draft.device === 'RCD') && (
                       <>
                         <div>
-                          <Eyebrow className="mb-1.5 text-white/55">RCD type</Eyebrow>
+                          <FieldLabel>RCD type</FieldLabel>
                           <InlineSelect
                             value={draft.rcdType as 'AC' | 'A' | 'F' | 'B' | null}
                             options={RCD_TYPE_OPTIONS}
@@ -892,7 +1102,7 @@ const CircuitRow = ({
                           />
                         </div>
                         <div>
-                          <Eyebrow className="mb-1.5 text-white/55">I∆n</Eyebrow>
+                          <FieldLabel>I∆n</FieldLabel>
                           <InlineSelect
                             value={draft.iDeltaNmA}
                             options={I_DELTA_N_OPTIONS}
@@ -905,7 +1115,7 @@ const CircuitRow = ({
 
                     {isThreePhase && (
                       <div>
-                        <Eyebrow className="mb-1.5 text-white/55">Phase</Eyebrow>
+                        <FieldLabel>Phase</FieldLabel>
                         <InlineSelect
                           value={(draft.phaseDesignation as string) || 'L1'}
                           options={['L1', 'L2', 'L3', 'L1,L2,L3']}
@@ -923,14 +1133,16 @@ const CircuitRow = ({
                 )}
 
                 <div>
-                  <Eyebrow className="mb-1.5 text-white/55">Label</Eyebrow>
+                  <FieldLabel>Label</FieldLabel>
                   <Input
                     value={draft.label}
                     onChange={(e) => setDraft({ ...draft, label: e.target.value })}
                     className={cn(
-                      'bg-transparent border-0 border-b border-white/15 rounded-none',
-                      'h-9 text-[15px] text-white px-0',
-                      'focus:border-elec-yellow/70 focus-visible:ring-0'
+                      'bg-transparent border-0 border-b border-white/[0.15] rounded-none',
+                      'h-11 text-[15px] text-white px-0 caret-elec-yellow',
+                      'hover:border-white/[0.3] focus:border-elec-yellow',
+                      'focus-visible:ring-0 focus:ring-0 focus:outline-none',
+                      'transition-colors duration-150 touch-manipulation'
                     )}
                   />
                 </div>
@@ -938,10 +1150,13 @@ const CircuitRow = ({
                 <div className="pt-2">
                   <button
                     type="button"
-                    onClick={onDelete}
-                    className="text-[11px] uppercase tracking-[0.18em] font-semibold text-white/45 hover:text-red-400 transition-colors touch-manipulation"
+                    onClick={() => {
+                      haptic.medium();
+                      onDelete();
+                    }}
+                    className="min-h-[44px] px-3 -mx-3 flex items-center text-[12px] font-semibold text-red-400 hover:text-red-300 transition-colors duration-150 touch-manipulation"
                   >
-                    Delete row
+                    {deleteMode === 'spare' ? 'Mark row spare' : 'Delete row'}
                   </button>
                 </div>
               </div>
@@ -958,6 +1173,17 @@ const CircuitRow = ({
 // Main component
 // ────────────────────────────────────────────────────────
 
+/** Quick-pick options for the expected-ways hint. */
+const WAYS_PRESETS = [6, 8, 10, 12, 16, 24] as const;
+
+/**
+ * Session-scoped memory for the expected-ways hint. The stream view unmounts
+ * on rescan (the overlay clears its imageUrls), so component state alone
+ * would lose the hint exactly when it is needed — module scope survives
+ * remounts within the session.
+ */
+let sessionExpectedWays: number | null = null;
+
 export const BoardScannerStream = ({
   open,
   onOpenChange,
@@ -966,7 +1192,26 @@ export const BoardScannerStream = ({
   onConfirm,
   onRescan,
 }: BoardScannerStreamProps) => {
-  const { board, circuits, status, phase, error } = useBoardStream(open, imageUrls, hints);
+  const expectedWaysRef = useRef<number | null>(sessionExpectedWays);
+  const { board, circuits, status, phase, error } = useBoardStream(
+    open,
+    imageUrls,
+    hints,
+    expectedWaysRef
+  );
+  const haptic = useHaptic();
+  const [expectedWays, setExpectedWays] = useState<number | null>(sessionExpectedWays);
+  const [showOtherWays, setShowOtherWays] = useState<boolean>(
+    () =>
+      sessionExpectedWays !== null &&
+      !(WAYS_PRESETS as readonly number[]).includes(sessionExpectedWays)
+  );
+
+  const applyExpectedWays = useCallback((n: number | null) => {
+    setExpectedWays(n);
+    expectedWaysRef.current = n;
+    sessionExpectedWays = n;
+  }, []);
   const [edited, setEdited] = useState<Record<number, ConfirmedCircuit>>({});
   const [manualWays, setManualWays] = useState<ConfirmedCircuit[]>([]);
   const [reversed, setReversed] = useState(false);
@@ -998,15 +1243,17 @@ export const BoardScannerStream = ({
     }
   }, [board?.main_switch_side, reverseTouchedByUser]);
 
-  // Live elapsed-time counter while the first board info hasn't landed yet.
-  // Gives the user something to look at during the 1.5–4s Gemini warmup.
+  // Live elapsed-time counter while the warmup skeleton is visible. The
+  // skeleton only clears when the first CIRCUITS land (not board metadata),
+  // so keep counting until then — otherwise the seconds freeze mid-count.
+  const hasCircuitRows = circuits.length > 0;
   useEffect(() => {
     if (!open) return;
-    if (board) return; // first data landed, stop counting
+    if (hasCircuitRows) return; // rows landed, skeleton gone — stop counting
     setElapsedSec(0);
     const t = setInterval(() => setElapsedSec((s) => s + 1), 1000);
     return () => clearInterval(t);
-  }, [open, board]);
+  }, [open, hasCircuitRows]);
 
   // `merged` keeps original positions for stable editing keys.
   // `displayed` reverses the ordering when needed; numbering still reads 1, 2, 3
@@ -1062,34 +1309,56 @@ export const BoardScannerStream = ({
 
   const handleSaveRow = useCallback(
     (next: ConfirmedCircuit) => {
+      // Correction capture — diff against the ORIGINAL AI-detected circuit
+      // (not a previous edit) so the log reflects what the model got wrong.
+      recordScanCorrections(
+        circuits.find((c) => c.position === next.position),
+        next,
+        board
+      );
       setEdited((prev) => ({ ...prev, [next.position]: next }));
     },
-    [setEdited]
+    [circuits, board]
   );
 
   const handleDeleteRow = useCallback(
     (position: number) => {
       // If this is a manual user-added way, drop it from manualWays. Otherwise
-      // turn the streamed row into a Spare via the edited override.
+      // turn the streamed row into a Spare via the edited override (the control
+      // is labelled 'Mark spare' for streamed rows).
       const isManual = manualWays.some((w) => w.position === position);
       if (isManual) {
         setManualWays((prev) => prev.filter((w) => w.position !== position));
         return;
       }
-      setEdited((prev) => ({
-        ...prev,
-        [position]: {
-          id: `c-${position}`,
-          position,
-          label: 'Spare',
-          device: 'Spare',
-          rating: null,
-          curve: null,
-          confidence: 'high',
-        },
-      }));
+      // Correction capture — marking a streamed row spare is itself a signal
+      // the model read a device where there was none.
+      const original = circuits.find((c) => c.position === position);
+      if (original && original.device !== 'Spare') {
+        recordScanCorrections(original, { ...original, device: 'Spare' }, board);
+      }
+      // Preserve phase/spansWays: a mis-scanned 3P row still occupies its
+      // physical DIN positions, so marking it spare must not collapse 3 ways
+      // to 1 and shift every later way number.
+      setEdited((prev) => {
+        const source = prev[position] ?? circuits.find((c) => c.position === position);
+        return {
+          ...prev,
+          [position]: {
+            id: `c-${position}`,
+            position,
+            label: 'Spare',
+            device: 'Spare',
+            rating: null,
+            curve: null,
+            confidence: 'high',
+            phase: source?.phase,
+            spansWays: source?.spansWays,
+          },
+        };
+      });
     },
-    [manualWays]
+    [manualWays, circuits, board]
   );
 
   const handleMoveRow = useCallback(
@@ -1155,125 +1424,133 @@ export const BoardScannerStream = ({
     onConfirm(remapped, board);
   };
 
-  const headlineText = useMemo(() => {
-    if (error) return 'Couldn’t read board.';
-    if (phase === 'connecting') return 'Reading board.';
+  const wayCount = merged.filter((c) => !c.isInfrastructure).length;
+
+  // Live subline under the sheet title — crossfades as the stream progresses.
+  const subline = useMemo(() => {
+    if (error) return 'The scan could not be completed.';
+    if (phase === 'connecting') return 'Reading the board…';
     if (board && phase === 'analyzing') {
-      const brand = board.brand && board.brand !== 'Unknown' ? board.brand : '';
       const ways = board.estimated_total_ways;
       const seen = circuits.length;
-      if (brand && ways) return `${brand}. ${seen} of ${ways} read.`;
-      if (ways) return `${seen} of ${ways} read.`;
-      return `${seen} read.`;
+      if (ways && seen > 0) return `Reading the board — ${seen} of ${ways} read…`;
+      return 'Reading the board…';
     }
-    if (phase === 'validating') return `Verifying. ${circuits.length} read.`;
+    if (phase === 'validating') return 'Checking the results…';
     if (isDone) {
-      const brand = board?.brand && board.brand !== 'Unknown' ? board.brand : 'Board';
-      const flagged = flaggedCount > 0 ? ` ${flaggedCount} to review.` : '';
-      return `${brand}. ${merged.filter((c) => !c.isInfrastructure).length} ways.${flagged}`;
+      return flaggedCount > 0
+        ? `Scan complete — ${flaggedCount} to review, then apply`
+        : 'Scan complete — review and apply';
     }
     return status;
-  }, [phase, error, board, circuits.length, isDone, flaggedCount, merged.length, status]);
+  }, [phase, error, board, circuits.length, isDone, flaggedCount, status]);
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
-        className="h-[92vh] p-0 rounded-t-2xl overflow-hidden border-white/10"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/10 outline-none focus:outline-none focus-visible:outline-none"
       >
         <SheetTitle className="sr-only">Board scanner — review detected circuits</SheetTitle>
         <SheetDescription className="sr-only">
           Live results from the board scan. Edit any row before applying to the schedule of tests.
         </SheetDescription>
         <div className="flex flex-col h-full bg-background">
-          {/* Sticky header */}
-          <div className="flex-shrink-0 sticky top-0 z-10 backdrop-blur-xl bg-background/95">
-            <div className="h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-orange-400" />
-
-            <div className="px-5 sm:px-8 pt-6 pb-5">
-              <div className="flex items-center justify-between gap-3">
-                <Eyebrow className="text-elec-yellow">Board scanner</Eyebrow>
-                {(isStreaming || flaggedCount > 0) && (
-                  <Eyebrow
-                    className={cn(
-                      'tabular-nums',
-                      flaggedCount > 0 ? 'text-amber-400' : 'text-elec-yellow/70'
-                    )}
-                  >
-                    {flaggedCount > 0 ? `${flaggedCount} to review` : 'Reading'}
-                  </Eyebrow>
-                )}
+          {/* Sticky header — cert sheet language */}
+          <div className="flex-shrink-0 sticky top-0 z-10 border-b border-white/[0.08] backdrop-blur-xl bg-background/95">
+            <div className="px-5 sm:px-8 pt-5 pb-4">
+              <div className="flex items-center gap-2">
+                <h2 className="text-base font-bold text-white">
+                  {wayCount > 0 ? (
+                    <>
+                      Board scan — <span className="tabular-nums">{wayCount}</span>{' '}
+                      {wayCount === 1 ? 'way' : 'ways'}
+                    </>
+                  ) : (
+                    'Board scan'
+                  )}
+                </h2>
+                {isStreaming && <PulseDot />}
               </div>
 
-              <div className="mt-2 min-h-[1.5em]">
+              <div className="mt-0.5 min-h-[1.125rem]">
                 <AnimatePresence mode="wait">
-                  <motion.h2
-                    key={headlineText}
-                    initial={{ opacity: 0, y: 4 }}
+                  <motion.p
+                    key={subline}
+                    initial={{ opacity: 0, y: 3 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -4 }}
-                    transition={{ duration: 0.25 }}
-                    className="text-[24px] sm:text-[30px] leading-[1.05] font-semibold text-white tracking-tight"
+                    exit={{ opacity: 0, y: -3 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-[12px] text-white/85 truncate tabular-nums"
                   >
-                    {headlineText.split('. ').map((part, i, arr) => {
-                      const isNumeric = /^\d+/.test(part) || /\d+ of \d+/.test(part);
-                      return (
-                        <span key={i}>
-                          {isNumeric ? (
-                            <span className="text-elec-yellow tabular-nums">{part}</span>
-                          ) : (
-                            part
-                          )}
-                          {i < arr.length - 1 && '. '}
-                          {i === arr.length - 1 && headlineText.endsWith('.') ? '' : ''}
-                        </span>
-                      );
-                    })}
-                  </motion.h2>
+                    {subline}
+                  </motion.p>
                 </AnimatePresence>
               </div>
             </div>
+
+            {/* Live volt progress bar — determinate once the board reports its
+                way count, indeterminate sweep before that */}
+            {isStreaming && (
+              <div className="h-[3px] w-full overflow-hidden bg-white/[0.08]">
+                {board?.estimated_total_ways ? (
+                  <div
+                    className="h-full bg-elec-yellow transition-[width] duration-500 ease-out"
+                    style={{
+                      width: `${Math.min(
+                        100,
+                        Math.round((circuits.length / board.estimated_total_ways) * 100)
+                      )}%`,
+                    }}
+                  />
+                ) : (
+                  <motion.div
+                    className="h-full w-1/3 bg-elec-yellow"
+                    initial={{ x: '-100%' }}
+                    animate={{ x: '300%' }}
+                    transition={{ duration: 1.4, ease: 'easeInOut', repeat: Infinity }}
+                  />
+                )}
+              </div>
+            )}
           </div>
 
           {/* Body */}
           <div className="flex-1 overflow-y-auto overscroll-contain">
             <div className="px-5 sm:px-8 pt-2 pb-32">
+              {/* The photo the AI is reading — always visible so the scan has
+                  a subject, with a live scan-line while streaming */}
+              <PhotoHero imageUrls={imageUrls} isStreaming={isStreaming && !error} isDone={isDone} />
+
               {error ? (
-                <div className="py-12">
-                  <Eyebrow className="text-amber-400">Error</Eyebrow>
-                  <p className="mt-3 text-[15px] text-white/75 leading-relaxed">{error}</p>
+                <div className="py-8">
+                  <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] px-4 sm:px-5 py-4">
+                    <p className="text-sm font-semibold text-red-400">Couldn’t read the board</p>
+                    <p className="mt-1 text-[12px] text-white/85 leading-relaxed">{error}</p>
+                  </div>
                   <button
                     type="button"
-                    onClick={onRescan}
-                    className="mt-6 text-[11px] uppercase tracking-[0.18em] font-semibold text-elec-yellow hover:text-elec-yellow/85"
+                    onClick={() => {
+                      haptic.light();
+                      onRescan();
+                    }}
+                    className="mt-4 h-12 px-5 rounded-xl text-sm font-medium bg-white/[0.06] border border-white/[0.12] text-white hover:bg-white/[0.1] active:scale-[0.98] transition-all duration-150 touch-manipulation"
                   >
-                    Rescan →
+                    Rescan
                   </button>
                 </div>
               ) : (
                 <motion.div variants={containerVariants} initial="hidden" animate="visible">
-                  {/* 01 — Board */}
-                  <section className="pt-8 sm:pt-10">
-                    <div className="flex items-baseline gap-4 sm:gap-6">
-                      <span className="text-[26px] sm:text-[30px] leading-none font-light text-elec-yellow/70 tabular-nums">
-                        01
-                      </span>
-                      <div className="flex-1 min-w-0">
-                        <Eyebrow className="text-elec-yellow">Board</Eyebrow>
-                        <h3 className="mt-1 text-[18px] sm:text-[22px] leading-tight font-semibold text-white tracking-tight">
-                          {board?.brand && board.brand !== 'Unknown' ? (
-                            `${board.brand} ${board.model || ''}`.trim()
-                          ) : (
-                            <span className="inline-flex items-center gap-2">
-                              <span className="relative inline-flex h-1.5 w-1.5">
-                                <span className="absolute inline-flex h-full w-full rounded-full bg-elec-yellow opacity-75 animate-ping" />
-                                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-elec-yellow" />
-                              </span>
-                              <span className="text-white/55 animate-pulse">Reading</span>
-                            </span>
-                          )}
-                        </h3>
-                      </div>
+                  {/* Board */}
+                  <section className="pt-5">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <h3 className="text-sm font-semibold text-white">Board</h3>
+                      {!board && (
+                        <span className="flex items-center gap-2 text-[12px] text-white/85">
+                          <PulseDot />
+                          Reading…
+                        </span>
+                      )}
                     </div>
 
                     <AnimatePresence>
@@ -1282,8 +1559,14 @@ export const BoardScannerStream = ({
                           initial={{ opacity: 0, y: 6 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.3 }}
-                          className="mt-5 max-w-md"
+                          className="mt-4 rounded-xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-4 sm:px-5 py-4"
                         >
+                          <motion.div
+                            variants={containerVariants}
+                            initial="hidden"
+                            animate="visible"
+                            className="grid grid-cols-[auto,1fr] gap-x-6 gap-y-2 max-w-md"
+                          >
                           {board.brand && (
                             <BoardFact label="Brand" value={board.brand} />
                           )}
@@ -1310,80 +1593,148 @@ export const BoardScannerStream = ({
                               value={board.spd_status === 'present' ? 'Present' : 'Not present'}
                             />
                           )}
+                          </motion.div>
                         </motion.div>
                       )}
                     </AnimatePresence>
                   </section>
 
-                  {/* 02 — Circuits */}
-                  <section className="pt-12 sm:pt-16">
-                    <div className="flex items-baseline gap-4 sm:gap-6">
-                      <span className="text-[26px] sm:text-[30px] leading-none font-light text-elec-yellow/70 tabular-nums">
-                        02
-                      </span>
-                      <div className="flex-1 min-w-0 flex items-baseline justify-between gap-3">
-                        <div>
-                          <Eyebrow className="text-elec-yellow">Circuits</Eyebrow>
-                          <h3 className="mt-1 text-[18px] sm:text-[22px] leading-tight font-semibold text-white tracking-tight">
-                            {merged.length > 0 ? (
-                              <>
-                                <span className="text-elec-yellow tabular-nums">
-                                  {merged.filter((c) => !c.isInfrastructure).length}
-                                </span>
-                                {totalWays && totalWays > merged.length ? (
-                                  <>
-                                    {' '}
-                                    way{merged.filter((c) => !c.isInfrastructure).length === 1 ? '' : 's'} of{' '}
-                                    <span className="text-elec-yellow tabular-nums">
-                                      {totalWays}
-                                    </span>
-                                    .
-                                  </>
-                                ) : (
-                                  ` way${merged.filter((c) => !c.isInfrastructure).length === 1 ? '' : 's'}.`
-                                )}
-                              </>
-                            ) : (
-                              <span className="inline-flex items-center gap-2">
-                                <span className="relative inline-flex h-1.5 w-1.5">
-                                  <span className="absolute inline-flex h-full w-full rounded-full bg-elec-yellow opacity-75 animate-ping" />
-                                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-elec-yellow" />
-                                </span>
-                                <span className="text-white/55 animate-pulse">Reading</span>
-                              </span>
-                            )}
-                          </h3>
-                        </div>
+                  {/* Circuits */}
+                  <section className="mt-8 border-t border-white/[0.1] pt-4">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <h3 className="text-sm font-semibold text-white">Circuits</h3>
 
-                        {merged.length > 1 && (
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setReversed((r) => !r);
-                              setReverseTouchedByUser(true);
-                            }}
-                            className={cn(
-                              'flex-shrink-0 text-[11px] uppercase tracking-[0.18em] font-semibold',
-                              'transition-colors touch-manipulation whitespace-nowrap',
-                              reversed
-                                ? 'text-elec-yellow hover:text-elec-yellow/85'
-                                : 'text-white/55 hover:text-white'
-                            )}
-                          >
-                            {reversed ? 'Reversed ✓' : 'Reverse'}
-                          </button>
-                        )}
-                      </div>
+                      {merged.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            haptic.selection();
+                            setReversed((r) => !r);
+                            setReverseTouchedByUser(true);
+                            // Manual ↑/↓ moves write an explicit rank for every
+                            // row, which would otherwise pin the order and make
+                            // this toggle a no-op. Reversing is a fresh base
+                            // ordering — clear the overrides so it always takes.
+                            setOrderOverride({});
+                          }}
+                          className={cn(
+                            // 44px hit area without shifting the header layout:
+                            // padding grows the target, negative margins absorb it.
+                            'flex-shrink-0 px-3 -mx-3 py-3.5 -my-3.5 text-[12px] font-semibold',
+                            'transition-colors duration-150 touch-manipulation whitespace-nowrap',
+                            reversed
+                              ? 'text-elec-yellow hover:text-elec-yellow/85'
+                              : 'text-white/85 hover:text-white'
+                          )}
+                        >
+                          {reversed ? 'Reversed ✓' : 'Reverse'}
+                        </button>
+                      )}
+                    </div>
+
+                    <div className="mt-1 min-h-[1.125rem]">
+                      {merged.length > 0 ? (
+                        <p className="text-[12px] text-white/85 tabular-nums">
+                          {totalWays && totalWays > merged.length
+                            ? `${wayCount} of ${totalWays} ways read`
+                            : `${wayCount} way${wayCount === 1 ? '' : 's'}`}
+                        </p>
+                      ) : (
+                        <span className="flex items-center gap-2 text-[12px] text-white/85">
+                          <PulseDot />
+                          Reading…
+                        </span>
+                      )}
                     </div>
 
                     {board?.main_switch_side === 'right' && reversed && (
-                      <p className="mt-3 ml-[calc(26px+1rem)] sm:ml-[calc(30px+1.5rem)] text-[13px] text-white/55">
+                      <p className="mt-2 text-[12px] text-white/85">
                         Main switch detected on the right — circuit numbering reversed automatically.
                       </p>
                     )}
 
+                    {/* Expected-ways hint — only useful before circuits land.
+                        The choice persists for the session and is sent as
+                        hints.expected_ways on the next scan (rescan path). */}
+                    {circuits.length === 0 && !error && (
+                      <div className="mt-4 rounded-xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-4 sm:px-5 py-4">
+                        <p className="text-[12px] font-medium text-white">
+                          How many ways? (optional)
+                        </p>
+                        <p className="mt-0.5 text-[12px] text-white/80">
+                          Applied as a hint on your next scan so no position is missed.
+                        </p>
+                        <div className="mt-3 flex flex-wrap items-center gap-2">
+                          {WAYS_PRESETS.map((n) => (
+                            <button
+                              key={n}
+                              type="button"
+                              onClick={() => {
+                                haptic.selection();
+                                setShowOtherWays(false);
+                                applyExpectedWays(expectedWays === n ? null : n);
+                              }}
+                              className={cn(
+                                'h-9 min-w-[44px] rounded-lg border px-3 text-[13px] tabular-nums',
+                                'transition-colors touch-manipulation',
+                                expectedWays === n
+                                  ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
+                                  : 'bg-white/[0.06] border-white/[0.12] text-white font-medium hover:bg-white/[0.1]'
+                              )}
+                            >
+                              {n}
+                            </button>
+                          ))}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              haptic.selection();
+                              setShowOtherWays((s) => !s);
+                            }}
+                            className={cn(
+                              'h-9 rounded-lg border px-3 text-[13px]',
+                              'transition-colors touch-manipulation',
+                              showOtherWays
+                                ? 'border-elec-yellow/60 bg-white/[0.06] text-white font-medium'
+                                : 'bg-white/[0.06] border-white/[0.12] text-white font-medium hover:bg-white/[0.1]'
+                            )}
+                          >
+                            Other
+                          </button>
+                          {showOtherWays && (
+                            <input
+                              type="text"
+                              inputMode="numeric"
+                              pattern="[0-9]*"
+                              autoFocus
+                              value={expectedWays ?? ''}
+                              onChange={(e) => {
+                                const digits = e.target.value.replace(/\D/g, '').slice(0, 3);
+                                const parsed = digits ? parseInt(digits, 10) : NaN;
+                                applyExpectedWays(
+                                  Number.isFinite(parsed) && parsed > 0 ? parsed : null
+                                );
+                              }}
+                              placeholder="Ways"
+                              aria-label="Expected number of ways"
+                              className={cn(
+                                'h-9 w-20 rounded-none border-0 border-b border-white/[0.15]',
+                                'bg-transparent px-1 text-[14px] text-white tabular-nums',
+                                'placeholder:text-white/25 caret-elec-yellow',
+                                'focus:border-elec-yellow focus:outline-none focus:ring-0',
+                                'touch-manipulation'
+                              )}
+                            />
+                          )}
+                        </div>
+                      </div>
+                    )}
+
                     {displayed.length > 0 ? (
-                      <motion.ul className="mt-6 space-y-2.5">
+                      /* 2-up on desktop — single-column full-width rows left a
+                         sea of void at 1600px. A row being edited spans both
+                         columns for room. */
+                      <motion.ul className="mt-5 grid grid-cols-1 gap-2.5 lg:grid-cols-2 lg:gap-3">
                         {displayed.map(({ row, displayNumber }, idx) => (
                           <CircuitRow
                             key={row.id}
@@ -1393,6 +1744,11 @@ export const BoardScannerStream = ({
                             warning={warningMap[row.position] ?? null}
                             canMoveUp={idx > 0}
                             canMoveDown={idx < displayed.length - 1}
+                            deleteMode={
+                              manualWays.some((w) => w.position === row.position)
+                                ? 'remove'
+                                : 'spare'
+                            }
                             onSave={handleSaveRow}
                             onDelete={() => handleDeleteRow(row.position)}
                             onMoveUp={() => handleMoveRow(row.position, -1)}
@@ -1401,27 +1757,27 @@ export const BoardScannerStream = ({
                         ))}
 
                         {isStreaming && totalWays > merged.length && (
-                          <li className="rounded-xl bg-white/[0.02] border border-white/[0.04] border-dashed">
-                            <div className="px-4 sm:px-5 py-4 sm:py-5 flex items-center gap-3 sm:gap-4">
-                              <span className="flex-shrink-0 w-7 sm:w-8 text-[14px] sm:text-[15px] font-medium text-white/30 tabular-nums">
+                          <motion.li
+                            className="rounded-xl border border-white/[0.1] bg-white/[0.08]"
+                            animate={{ opacity: [0.6, 1, 0.6] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                          >
+                            <div className="px-4 sm:px-5 py-3 sm:py-3.5 flex items-center gap-3 sm:gap-4">
+                              <span className="flex-shrink-0 w-7 sm:w-8 text-sm font-medium text-white/45 tabular-nums">
                                 {String(merged.length + 1).padStart(2, '0')}
                               </span>
-                              <span className="flex items-center gap-2 text-[13px] sm:text-[14px] text-white/55">
-                                <span className="relative inline-flex h-1.5 w-1.5">
-                                  <span className="absolute inline-flex h-full w-full rounded-full bg-elec-yellow opacity-75 animate-ping" />
-                                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-elec-yellow" />
-                                </span>
+                              <span className="flex items-center gap-2 text-[13px] text-white/85">
+                                <PulseDot />
                                 <span>
                                   Reading way{' '}
-                                  <span className="tabular-nums text-white/85">
+                                  <span className="tabular-nums text-white">
                                     {merged.length + 1}
                                   </span>{' '}
-                                  of{' '}
-                                  <span className="tabular-nums text-white/85">{totalWays}</span>
+                                  of <span className="tabular-nums text-white">{totalWays}</span>
                                 </span>
                               </span>
                             </div>
-                          </li>
+                          </motion.li>
                         )}
 
                         {/* Add way — appears once the stream is done so the user
@@ -1430,18 +1786,21 @@ export const BoardScannerStream = ({
                           <li>
                             <button
                               type="button"
-                              onClick={handleAddWay}
+                              onClick={() => {
+                                haptic.light();
+                                handleAddWay();
+                              }}
                               className={cn(
-                                'w-full rounded-xl border border-dashed border-white/[0.10]',
-                                'hover:border-elec-yellow/40 hover:bg-elec-yellow/[0.03]',
-                                'transition-colors touch-manipulation',
+                                'w-full rounded-xl border border-dashed border-white/[0.14]',
+                                'hover:border-elec-yellow/60 active:scale-[0.99]',
+                                'transition-all duration-150 touch-manipulation',
                                 'px-4 sm:px-5 py-4 sm:py-5 flex items-center gap-3 sm:gap-4'
                               )}
                             >
-                              <span className="flex-shrink-0 w-7 sm:w-8 text-[14px] sm:text-[15px] font-medium text-elec-yellow/70 tabular-nums">
+                              <span className="flex-shrink-0 w-7 sm:w-8 text-sm font-medium text-elec-yellow tabular-nums">
                                 +
                               </span>
-                              <span className="text-[14px] sm:text-[15px] font-medium text-white/65 group-hover:text-white">
+                              <span className="text-sm font-medium text-white/85">
                                 Add way
                               </span>
                             </button>
@@ -1453,28 +1812,21 @@ export const BoardScannerStream = ({
                     )}
                   </section>
 
-                  {/* 03 — Three phase, only if relevant */}
+                  {/* Three phase, only if relevant */}
                   {isThreePhase && (
-                    <section className="pt-12 sm:pt-16">
-                      <div className="flex items-baseline gap-4 sm:gap-6">
-                        <span className="text-[26px] sm:text-[30px] leading-none font-light text-elec-yellow/70 tabular-nums">
-                          03
-                        </span>
-                        <div className="flex-1 min-w-0">
-                          <Eyebrow className="text-elec-yellow">Three phase</Eyebrow>
-                          <h3 className="mt-1 text-[20px] sm:text-[24px] leading-tight font-semibold text-white tracking-tight">
-                            {board?.main_switch_poles
-                              ? `${board.main_switch_poles} main switch.`
-                              : 'Three phase board.'}
-                          </h3>
-                        </div>
-                      </div>
+                    <section className="mt-8 border-t border-white/[0.1] pt-4">
+                      <h3 className="text-sm font-semibold text-white">Three phase</h3>
+                      <p className="mt-1 text-[12px] text-white/85">
+                        {board?.main_switch_poles
+                          ? `${board.main_switch_poles} main switch`
+                          : 'Three phase board'}
+                      </p>
 
                       {board?.circuits_per_phase && (
-                        <div className="mt-5 flex flex-wrap gap-2">
-                          <Pill tone="amber">L1 · {board.circuits_per_phase.L1 ?? 0}</Pill>
-                          <Pill tone="amber">L2 · {board.circuits_per_phase.L2 ?? 0}</Pill>
-                          <Pill tone="amber">L3 · {board.circuits_per_phase.L3 ?? 0}</Pill>
+                        <div className="mt-3 flex flex-wrap gap-1.5">
+                          <Chip>L1 · {board.circuits_per_phase.L1 ?? 0}</Chip>
+                          <Chip>L2 · {board.circuits_per_phase.L2 ?? 0}</Chip>
+                          <Chip>L3 · {board.circuits_per_phase.L3 ?? 0}</Chip>
                         </div>
                       )}
                     </section>
@@ -1487,11 +1839,14 @@ export const BoardScannerStream = ({
           {/* Sticky footer */}
           {!error && (
             <div className="flex-shrink-0 sticky bottom-0 z-10 border-t border-white/[0.06] bg-background/95 backdrop-blur-xl">
-              <div className="px-5 sm:px-8 py-4 flex items-center justify-between gap-4">
+              <div className="px-5 sm:px-8 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] flex items-center gap-3">
                 <button
                   type="button"
-                  onClick={onRescan}
-                  className="text-[11px] uppercase tracking-[0.18em] font-semibold text-white/65 hover:text-white touch-manipulation"
+                  onClick={() => {
+                    haptic.light();
+                    onRescan();
+                  }}
+                  className="h-12 px-5 rounded-xl text-sm font-medium bg-white/[0.06] border border-white/[0.12] text-white hover:bg-white/[0.1] active:scale-[0.98] transition-all duration-150 touch-manipulation"
                 >
                   Rescan
                 </button>
@@ -1499,18 +1854,28 @@ export const BoardScannerStream = ({
                 <button
                   type="button"
                   disabled={!isDone || merged.length === 0}
-                  onClick={handleApply}
+                  onClick={() => {
+                    haptic.success();
+                    handleApply();
+                  }}
                   className={cn(
-                    'h-12 px-6 rounded-xl text-[14px] font-semibold tracking-tight',
-                    'transition-all touch-manipulation',
-                    isDone && merged.length > 0
-                      ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90 shadow-[0_8px_30px_-8px_rgba(252,196,25,0.45)]'
-                      : 'bg-white/[0.04] text-white/35 cursor-not-allowed'
+                    'h-12 flex-1 px-5 rounded-xl text-sm font-semibold',
+                    'active:scale-[0.98] transition-all duration-150 touch-manipulation',
+                    isDone && merged.length === 0
+                      ? 'bg-white/[0.06] border border-white/[0.12] text-white disabled:opacity-40'
+                      : // Busy volt — while streaming the CTA stays SOLID volt
+                        // with a black spinner, never a washed-out brown bar.
+                        'bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:bg-elec-yellow disabled:text-black disabled:opacity-100 disabled:cursor-not-allowed'
                   )}
                 >
-                  {isDone
-                    ? `Apply to schedule (${merged.filter((c) => !c.isInfrastructure).length}) →`
-                    : 'Reading…'}
+                  {isDone ? (
+                    `Apply to schedule (${wayCount})`
+                  ) : (
+                    <span className="flex items-center justify-center gap-2">
+                      <Loader2 className="h-4 w-4 animate-spin text-black" />
+                      Reading…
+                    </span>
+                  )}
                 </button>
               </div>
             </div>

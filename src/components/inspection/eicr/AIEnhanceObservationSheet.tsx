@@ -1,28 +1,23 @@
 /**
  * AIEnhanceObservationSheet
- * Mobile: 85vh bottom sheet. Desktop: centred modal panel.
- * Follows CLAUDE.md: h-11 touch targets, touch-manipulation, UK English.
+ * The AI assistant for EICR/EIC observations. Bottom sheet, h-[85vh].
+ *
+ * Three honest states:
+ *   working  — staged progress driven by the hook's `progressStep` (no fake stages)
+ *   ready    — the suggestions as reviewable cards, each with its own "Use this"
+ *   failed   — the AI didn't come back; retry is right there
+ *
+ * Accept wiring is unchanged (onAcceptCode / onAcceptDescription /
+ * onAcceptRecommendation / onAcceptRegulations / onAcceptAll / onRetry).
  */
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import {
-  Loader2,
-  Sparkles,
-  Check,
-  Copy,
-  BookOpen,
-  ArrowRight,
-  RotateCcw,
-  CircleCheck,
-  X,
-} from 'lucide-react';
+import { Loader2, Check, Copy, ArrowRight, RotateCcw } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { copyToClipboard } from '@/utils/clipboard';
 import { useToast } from '@/hooks/use-toast';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useHaptic } from '@/hooks/useHaptic';
 import type { ObservationSuggestions } from '@/hooks/useEnhanceObservation';
 
 interface AIEnhanceObservationSheetProps {
@@ -41,18 +36,26 @@ interface AIEnhanceObservationSheetProps {
   onRetry: () => void;
 }
 
+/* Solid, colour-coded — the same codes the observation card uses. Never washes. */
 const codeColours: Record<string, string> = {
-  C1: 'bg-red-500/15 text-red-400 border-red-500/40',
-  C2: 'bg-orange-500/15 text-orange-400 border-orange-500/40',
-  C3: 'bg-yellow-500/15 text-yellow-400 border-yellow-500/40',
-  FI: 'bg-blue-500/15 text-blue-400 border-blue-500/40',
+  C1: 'bg-red-600 border-red-600 text-white',
+  C2: 'bg-orange-500 border-orange-500 text-black',
+  C3: 'bg-elec-yellow border-elec-yellow text-black',
+  FI: 'bg-blue-500 border-blue-500 text-white',
 };
 
+/* Mirrors the hook's progressStep exactly — no invented stages. */
 const PROGRESS_STEPS = [
-  { key: 'searching', label: 'Searching BS 7671 regulations...' },
-  { key: 'analysing', label: 'Analysing with AI...' },
-  { key: 'done', label: 'Complete' },
+  { key: 'searching', label: 'Searching the BS 7671 regulations' },
+  { key: 'analysing', label: 'Writing the observation' },
+  { key: 'done', label: 'Ready to review' },
 ] as const;
+
+const sectionCn = 'rounded-xl border border-white/[0.1] bg-white/[0.04] p-4';
+const sectionHeadingCn = 'text-[12px] font-medium text-white';
+const microLabelCn = 'text-[11px] font-medium text-white';
+const quietChipCn =
+  'inline-flex h-11 items-center gap-1.5 rounded-xl border border-white/[0.12] bg-white/[0.06] px-3.5 text-[13px] font-medium text-white transition-colors touch-manipulation hover:bg-white/[0.1] active:scale-[0.98]';
 
 const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
   open,
@@ -70,7 +73,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
   onRetry,
 }) => {
   const { toast } = useToast();
-  const isMobile = useIsMobile();
+  const haptic = useHaptic();
   const [accepted, setAccepted] = useState<Set<string>>(new Set());
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -106,6 +109,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
   const handleCopy = async (text: string, label: string) => {
     try {
       await copyToClipboard(text);
+      haptic.light();
       toast({ title: 'Copied', description: `${label} copied to clipboard.` });
     } catch {
       toast({
@@ -117,6 +121,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
   };
 
   const markAccepted = (field: string) => {
+    haptic.light();
     setAccepted((prev) => new Set(prev).add(field));
   };
 
@@ -145,6 +150,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
 
   const handleAcceptAll = () => {
     onAcceptAll();
+    haptic.success();
 
     // Count what actually changed
     let count = 0;
@@ -170,475 +176,380 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
     (suggestions?.recommendation ? 1 : 0) +
     (suggestions?.regulationRefs?.length ? 1 : 0);
 
-  /* ── Shared header ── */
-  const headerContent = (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-2 text-base font-semibold text-white">
-        <Sparkles className="h-5 w-5 text-elec-yellow" />
-        AI Enhancement
+  const stepIndex = PROGRESS_STEPS.findIndex((s) => s.key === progressStep);
+  const failed = !isEnhancing && !suggestions;
+
+  /* ── Applied marker ── */
+  const appliedChip = (
+    <span className="inline-flex items-center gap-1 rounded-md bg-green-500 px-2 py-0.5 text-[10px] font-bold text-black">
+      <Check className="h-3 w-3" />
+      Applied
+    </span>
+  );
+
+  /* ── Working ── */
+  const workingContent = (
+    <div className={cn(sectionCn, 'space-y-5')}>
+      <div className="flex items-center gap-3">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-elec-yellow/40 animate-ai-ring-pulse">
+          <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
+        </div>
+        <div className="min-w-0">
+          <p className="text-sm font-semibold tracking-tight text-white">
+            Writing your observation
+          </p>
+          <p className="text-[12px] text-white/85">
+            {elapsedSeconds}s — this usually takes about 30s
+          </p>
+        </div>
       </div>
-      <div className="flex items-center gap-2">
-        {suggestions && !isEnhancing && (
-          <Button
-            variant="ghost"
-            size="sm"
-            className="h-11 px-3 text-xs text-white hover:bg-white/10 touch-manipulation gap-1.5"
-            onClick={onRetry}
-          >
-            <RotateCcw className="h-3.5 w-3.5" />
-            Retry
-          </Button>
-        )}
-        {!isMobile && (
-          <button
-            type="button"
-            onClick={() => onOpenChange(false)}
-            className="h-11 w-11 rounded-lg flex items-center justify-center text-white hover:text-white hover:bg-white/10 transition-colors touch-manipulation"
-          >
-            <X className="h-4 w-4" />
-          </button>
-        )}
+
+      {/* Volt progress */}
+      <div className="h-1 overflow-hidden rounded-full bg-white/10">
+        <div
+          className="h-full rounded-full bg-elec-yellow transition-[width] duration-500 ease-out"
+          style={{
+            width: `${stepIndex >= 0 ? ((stepIndex + 1) / PROGRESS_STEPS.length) * 100 : 5}%`,
+          }}
+        />
+      </div>
+
+      {/* Stages */}
+      <div className="space-y-3">
+        {PROGRESS_STEPS.map((step, i) => {
+          const isActive = step.key === progressStep;
+          const isComplete = stepIndex > -1 && i < stepIndex;
+          return (
+            <div
+              key={step.key}
+              className={cn(
+                'flex items-center gap-3',
+                i <= Math.max(stepIndex, 0) ? 'animate-step-appear' : 'opacity-45'
+              )}
+            >
+              <div
+                className={cn(
+                  'flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[11px] font-semibold transition-colors duration-300',
+                  isComplete || isActive
+                    ? 'bg-elec-yellow text-black'
+                    : 'border border-white/[0.14] text-white'
+                )}
+              >
+                {isComplete ? (
+                  <Check className="h-4 w-4" />
+                ) : isActive ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  i + 1
+                )}
+              </div>
+              <span className="text-sm font-medium text-white">{step.label}</span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 
-  /* ── Shared body content ── */
-  const bodyContent = (
-    <div className="space-y-4">
-      {/* Progress Steps */}
-      {isEnhancing && (
-        <div className="flex flex-col items-center justify-center py-10 gap-8">
-          {/* Pulsing ring spinner */}
-          <div className="relative">
-            <div className="w-16 h-16 rounded-full border-2 border-elec-yellow/20 flex items-center justify-center animate-ai-ring-pulse">
-              <Loader2 className="h-7 w-7 animate-spin text-elec-yellow" />
-            </div>
-          </div>
+  /* ── Failed / nothing to show ── */
+  const failedContent = (
+    <div className={cn(sectionCn, 'space-y-3')}>
+      <p className="text-sm font-semibold tracking-tight text-white">Couldn&apos;t reach the AI</p>
+      <p className="text-[13px] leading-relaxed text-white/85">
+        Nothing came back this time. Your observation hasn&apos;t been changed — try again, or carry
+        on writing it yourself.
+      </p>
+      <div className="flex flex-wrap gap-2 pt-1">
+        <button
+          type="button"
+          onClick={() => {
+            haptic.light();
+            onRetry();
+          }}
+          className="inline-flex h-11 items-center gap-1.5 rounded-xl bg-elec-yellow px-4 text-[13px] font-semibold text-black transition-colors touch-manipulation active:scale-[0.98]"
+        >
+          <RotateCcw className="h-3.5 w-3.5" />
+          Try again
+        </button>
+        <button type="button" onClick={() => onOpenChange(false)} className={quietChipCn}>
+          Close
+        </button>
+      </div>
+    </div>
+  );
 
-          {/* Progress bar */}
-          <div className="w-full max-w-xs">
-            <div className="h-1 rounded-full bg-white/10 overflow-hidden">
-              <div
-                className="h-full rounded-full bg-gradient-to-r from-elec-yellow to-amber-400 animate-progress-fill transition-all"
-                style={
-                  {
-                    '--progress-width': `${(() => {
-                      const stepIndex = PROGRESS_STEPS.findIndex((s) => s.key === progressStep);
-                      return stepIndex >= 0 ? ((stepIndex + 1) / PROGRESS_STEPS.length) * 100 : 0;
-                    })()}%`,
-                  } as React.CSSProperties
-                }
-              />
-            </div>
-          </div>
+  /* ── Ready — reviewable suggestion cards ── */
+  const readyContent = suggestions && (
+    // 2-up on desktop — a single stacked column left the wide sheet mostly
+    // empty (Andrew). Prose blocks span both columns so lines stay readable.
+    <div className="mx-auto w-full max-w-5xl space-y-4 lg:grid lg:grid-cols-2 lg:items-start lg:gap-4 lg:space-y-0">
+      {/* Classification */}
+      <section className={sectionCn}>
+        <div className="mb-3 flex items-center justify-between gap-2">
+          <h3 className={sectionHeadingCn}>Suggested classification</h3>
+          {accepted.has('code') && appliedChip}
+        </div>
+        <div className="flex flex-wrap items-center gap-2.5">
+          {codeChanged && (
+            <>
+              <span
+                className={cn(
+                  'rounded-md border px-2.5 py-1 text-[13px] font-bold',
+                  codeColours[currentCode] || 'border-white/[0.12] bg-white/[0.06] text-white'
+                )}
+              >
+                {currentCode}
+              </span>
+              <ArrowRight className="h-4 w-4 text-white" />
+            </>
+          )}
+          <span
+            className={cn(
+              'rounded-md border px-2.5 py-1 text-[13px] font-bold',
+              codeColours[suggestions.suggestedCode]
+            )}
+          >
+            {suggestions.suggestedCode}
+          </span>
+          <span className="text-[12px] text-white/85">
+            {Math.round(suggestions.confidence * 100)}% confident
+          </span>
+        </div>
+        {codeChanged
+          ? !accepted.has('code') && (
+              <button
+                type="button"
+                className={cn(quietChipCn, 'mt-3')}
+                onClick={() => handleAcceptCode(suggestions.suggestedCode)}
+              >
+                <Check className="h-3.5 w-3.5" />
+                Use this code
+              </button>
+            )
+          : !accepted.has('code') && (
+              <p className="mt-3 text-[12px] text-white/85">Matches the code you already picked.</p>
+            )}
+      </section>
 
-          {/* Steps */}
-          <div className="w-full max-w-xs space-y-3">
-            {PROGRESS_STEPS.map((step, i) => {
-              const stepIndex = PROGRESS_STEPS.findIndex((s) => s.key === progressStep);
-              const isActive = step.key === progressStep;
-              const isComplete = i < stepIndex;
-              const isVisible = i <= stepIndex;
+      {/* Description */}
+      <section className={cn(sectionCn, 'lg:col-span-2')}>
+        <div className="mb-3 flex items-center justify-between gap-2">
+          <h3 className={sectionHeadingCn}>Observation wording</h3>
+          {accepted.has('description') && appliedChip}
+        </div>
+        <div className="space-y-3">
+          <div>
+            <p className={cn(microLabelCn, 'mb-1')}>What you wrote</p>
+            <p
+              className={cn(
+                'text-[13px] leading-relaxed text-white/85',
+                accepted.has('description') && 'line-through'
+              )}
+            >
+              {currentDescription}
+            </p>
+          </div>
+          <div className="border-t border-white/[0.1] pt-3">
+            <p className={cn(microLabelCn, 'mb-1')}>AI version</p>
+            <p className="text-sm leading-relaxed text-white">{suggestions.enhancedDescription}</p>
+          </div>
+        </div>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {!accepted.has('description') && (
+            <button
+              type="button"
+              className={quietChipCn}
+              onClick={() => handleAcceptDescription(suggestions.enhancedDescription)}
+            >
+              <Check className="h-3.5 w-3.5" />
+              Use this
+            </button>
+          )}
+          <button
+            type="button"
+            className={quietChipCn}
+            onClick={() => handleCopy(suggestions.enhancedDescription, 'Description')}
+          >
+            <Copy className="h-3.5 w-3.5" />
+            Copy
+          </button>
+        </div>
+      </section>
+
+      {/* Recommendation */}
+      {suggestions.recommendation && (
+        <section className={cn(sectionCn, 'lg:col-span-2')}>
+          <div className="mb-3 flex items-center justify-between gap-2">
+            <h3 className={sectionHeadingCn}>Recommended remedial action</h3>
+            {accepted.has('recommendation') && appliedChip}
+          </div>
+          <p className="text-sm leading-relaxed text-white">{suggestions.recommendation}</p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {!accepted.has('recommendation') && (
+              <button
+                type="button"
+                className={quietChipCn}
+                onClick={() => handleAcceptRecommendation(suggestions.recommendation)}
+              >
+                <Check className="h-3.5 w-3.5" />
+                Use this
+              </button>
+            )}
+            <button
+              type="button"
+              className={quietChipCn}
+              onClick={() => handleCopy(suggestions.recommendation, 'Recommendation')}
+            >
+              <Copy className="h-3.5 w-3.5" />
+              Copy
+            </button>
+          </div>
+        </section>
+      )}
+
+      {/* BS 7671 references — reg-number chip + readable title, same idiom as
+          the stored references on the observation card. */}
+      {suggestions.regulationRefs.length > 0 && (
+        <section className={sectionCn}>
+          <div className="mb-3 flex items-center justify-between gap-2">
+            <h3 className={sectionHeadingCn}>BS 7671 references</h3>
+            {accepted.has('regulations') && appliedChip}
+          </div>
+          <div className="space-y-2">
+            {suggestions.regulationRefs.map((ref, i) => {
+              const num = (ref.number || '').trim();
+              const body = (ref.title || ref.relevance || '').trim();
+              // Only render the prefix as a reg-number chip when it looks like
+              // one — otherwise (messy AI prose) render it readably, never as a
+              // monospace wall that overflows the row (ELE-1188).
+              const isRegNumber = num.length > 0 && num.length <= 22;
               return (
-                <div
-                  key={step.key}
-                  className={cn(
-                    'flex items-center gap-3 transition-all duration-300',
-                    isVisible ? 'animate-step-appear' : 'opacity-0'
-                  )}
-                  style={isVisible ? { animationDelay: `${i * 100}ms` } : undefined}
+                <button
+                  key={i}
+                  type="button"
+                  className="flex min-h-11 w-full items-start gap-2 rounded-lg py-2 text-left transition-colors touch-manipulation active:bg-white/[0.06]"
+                  onClick={() =>
+                    handleCopy(`${num}${body ? ` — ${body}` : ''}`, `Regulation ${num}`)
+                  }
                 >
-                  <div
-                    className={cn(
-                      'w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-500',
-                      isComplete
-                        ? 'bg-green-500 scale-100'
-                        : isActive
-                          ? 'bg-elec-yellow scale-110'
-                          : 'bg-white/10 scale-90'
-                    )}
-                  >
-                    {isComplete ? (
-                      <Check className="h-4 w-4 text-white" />
-                    ) : isActive ? (
-                      <Loader2 className="h-4 w-4 animate-spin text-black" />
-                    ) : (
-                      <span className="text-[10px] text-white">{i + 1}</span>
-                    )}
-                  </div>
-                  <span
-                    className={cn(
-                      'text-sm font-medium transition-colors duration-300',
-                      isActive ? 'text-white' : isComplete ? 'text-white' : 'text-white'
-                    )}
-                  >
-                    {step.label}
-                  </span>
-                </div>
+                  {isRegNumber ? (
+                    <>
+                      <span className="h-fit shrink-0 rounded border border-elec-yellow/30 px-1.5 py-0.5 font-mono text-[11px] text-elec-yellow">
+                        {num}
+                      </span>
+                      {body && (
+                        <span className="min-w-0 flex-1 break-words text-xs leading-relaxed text-white/85">
+                          {body}
+                        </span>
+                      )}
+                    </>
+                  ) : (
+                    <span className="min-w-0 flex-1 break-words text-xs leading-relaxed text-white/85">
+                      {body ? `${num} — ${body}` : num}
+                    </span>
+                  )}
+                </button>
               );
             })}
           </div>
-
-          {/* Timer */}
-          <div className="flex items-center gap-2 text-xs text-white">
-            <div className="w-1 h-1 rounded-full bg-elec-yellow animate-pulse" />
-            <span>{elapsedSeconds}s / ~30s</span>
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            {!accepted.has('regulations') && (
+              <button type="button" className={quietChipCn} onClick={handleAcceptRegulations}>
+                <Check className="h-3.5 w-3.5" />
+                Use these
+              </button>
+            )}
+            <p className="text-[12px] text-white/85">Tap a reference to copy it.</p>
           </div>
-        </div>
+        </section>
       )}
 
-      {suggestions && !isEnhancing && (
-        <>
-          {/* Suggested Code */}
-          <section
-            className={cn(
-              'rounded-xl p-4 border transition-all',
-              accepted.has('code')
-                ? 'bg-green-500/5 border-green-500/20'
-                : 'bg-white/[0.03] border-white/10'
-            )}
-          >
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-xs font-semibold text-white flex items-center gap-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-yellow-400" />
-                Suggested Classification
-              </h3>
-              {accepted.has('code') && (
-                <span className="flex items-center gap-1 text-[10px] text-green-400 font-medium">
-                  <CircleCheck className="h-3 w-3" />
-                  Applied
-                </span>
-              )}
-            </div>
-            <div className="flex items-center gap-3">
-              {codeChanged && (
-                <>
-                  <Badge
-                    variant="outline"
-                    className={cn(
-                      'text-sm px-3 py-1',
-                      codeColours[currentCode] || 'bg-white/10 text-white'
-                    )}
-                  >
-                    {currentCode}
-                  </Badge>
-                  <ArrowRight className="h-4 w-4 text-white" />
-                </>
-              )}
-              <Badge
-                variant="outline"
-                className={cn('text-sm px-3 py-1', codeColours[suggestions.suggestedCode])}
-              >
-                {suggestions.suggestedCode}
-              </Badge>
-              <span className="text-xs text-white ml-1">
-                {Math.round(suggestions.confidence * 100)}% confidence
-              </span>
-              {codeChanged && !accepted.has('code') && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-11 px-3 text-xs text-green-400 hover:bg-green-500/10 touch-manipulation ml-auto"
-                  onClick={() => handleAcceptCode(suggestions.suggestedCode)}
-                >
-                  <Check className="h-3.5 w-3.5 mr-1" />
-                  Accept
-                </Button>
-              )}
-              {!codeChanged && (
-                <span className="text-xs text-green-400 ml-auto flex items-center gap-1">
-                  <Check className="h-3 w-3" />
-                  Matches
-                </span>
-              )}
-            </div>
-          </section>
-
-          {/* Enhanced Description */}
-          <section
-            className={cn(
-              'rounded-xl p-4 border transition-all',
-              accepted.has('description')
-                ? 'bg-green-500/5 border-green-500/20'
-                : 'bg-white/[0.03] border-white/10'
-            )}
-          >
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-xs font-semibold text-white flex items-center gap-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-                Enhanced Description
-              </h3>
-              {accepted.has('description') && (
-                <span className="flex items-center gap-1 text-[10px] text-green-400 font-medium">
-                  <CircleCheck className="h-3 w-3" />
-                  Applied
-                </span>
-              )}
-            </div>
-            <div className="space-y-3 text-left">
-              <div>
-                <p className="text-[10px] uppercase tracking-wider text-white mb-1">Current</p>
-                <p
-                  className={cn(
-                    'text-sm leading-relaxed text-left',
-                    accepted.has('description') ? 'text-white line-through' : 'text-white'
-                  )}
-                >
-                  {currentDescription}
-                </p>
-              </div>
-              <div className="border-t border-white/10 pt-3">
-                <p className="text-[10px] uppercase tracking-wider text-elec-yellow mb-1">
-                  AI Enhanced
-                </p>
-                <p className="text-sm text-white leading-relaxed text-left">
-                  {suggestions.enhancedDescription}
-                </p>
-              </div>
-            </div>
-            {!accepted.has('description') && (
-              <div className="flex gap-2 mt-4">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-11 px-4 text-xs text-green-400 hover:bg-green-500/10 touch-manipulation"
-                  onClick={() => handleAcceptDescription(suggestions.enhancedDescription)}
-                >
-                  <Check className="h-3.5 w-3.5 mr-1" />
-                  Accept
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-11 px-4 text-xs text-white hover:bg-white/10 touch-manipulation"
-                  onClick={() => handleCopy(suggestions.enhancedDescription, 'Description')}
-                >
-                  <Copy className="h-3.5 w-3.5 mr-1" />
-                  Copy
-                </Button>
-              </div>
-            )}
-          </section>
-
-          {/* Client Explanation */}
-          {suggestions.clientExplanation && (
-            <section className="rounded-xl p-4 border border-white/10 bg-white/[0.03]">
-              <h3 className="text-xs font-semibold text-white mb-3 flex items-center gap-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-green-400" />
-                Client Explanation
-              </h3>
-              <p className="text-sm text-white leading-relaxed text-left">
-                {suggestions.clientExplanation}
-              </p>
-              <div className="flex gap-2 mt-4">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-11 px-4 text-xs text-white hover:bg-white/10 touch-manipulation"
-                  onClick={() => handleCopy(suggestions.clientExplanation, 'Client explanation')}
-                >
-                  <Copy className="h-3.5 w-3.5 mr-1" />
-                  Copy to clipboard
-                </Button>
-              </div>
-              <p className="text-[10px] text-white mt-2">
-                Use in client reports or emails — not written to the certificate.
-              </p>
-            </section>
-          )}
-
-          {/* Recommendation */}
-          {suggestions.recommendation && (
-            <section
-              className={cn(
-                'rounded-xl p-4 border transition-all',
-                accepted.has('recommendation')
-                  ? 'bg-green-500/5 border-green-500/20'
-                  : 'bg-white/[0.03] border-white/10'
-              )}
+      {/* Client explanation — never written to the certificate */}
+      {suggestions.clientExplanation && (
+        <section className={sectionCn}>
+          <h3 className={cn(sectionHeadingCn, 'mb-3')}>Plain-English version for the client</h3>
+          <p className="text-sm leading-relaxed text-white">{suggestions.clientExplanation}</p>
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              className={quietChipCn}
+              onClick={() => handleCopy(suggestions.clientExplanation, 'Client explanation')}
             >
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-xs font-semibold text-white flex items-center gap-1.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-                  Recommended Remedial Action
-                </h3>
-                {accepted.has('recommendation') && (
-                  <span className="flex items-center gap-1 text-[10px] text-green-400 font-medium">
-                    <CircleCheck className="h-3 w-3" />
-                    Applied
-                  </span>
-                )}
-              </div>
-              <p className="text-sm text-white leading-relaxed text-left">
-                {suggestions.recommendation}
-              </p>
-              {!accepted.has('recommendation') && (
-                <div className="flex gap-2 mt-4">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-11 px-4 text-xs text-green-400 hover:bg-green-500/10 touch-manipulation"
-                    onClick={() => handleAcceptRecommendation(suggestions.recommendation)}
-                  >
-                    <Check className="h-3.5 w-3.5 mr-1" />
-                    Accept
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-11 px-4 text-xs text-white hover:bg-white/10 touch-manipulation"
-                    onClick={() => handleCopy(suggestions.recommendation, 'Recommendation')}
-                  >
-                    <Copy className="h-3.5 w-3.5 mr-1" />
-                    Copy
-                  </Button>
-                </div>
-              )}
-            </section>
-          )}
-
-          {/* Regulation References */}
-          {suggestions.regulationRefs.length > 0 && (
-            <section
-              className={cn(
-                'rounded-xl p-4 border transition-all',
-                accepted.has('regulations')
-                  ? 'bg-green-500/5 border-green-500/20'
-                  : 'bg-white/[0.03] border-white/10'
-              )}
-            >
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-xs font-semibold text-white flex items-center gap-1.5">
-                  <BookOpen className="h-3.5 w-3.5 text-elec-yellow" />
-                  BS 7671 References
-                </h3>
-                {accepted.has('regulations') && (
-                  <span className="flex items-center gap-1 text-[10px] text-green-400 font-medium">
-                    <CircleCheck className="h-3 w-3" />
-                    Applied
-                  </span>
-                )}
-              </div>
-              <div className="space-y-2">
-                {suggestions.regulationRefs.map((ref, i) => {
-                  const num = (ref.number || '').trim();
-                  const body = (ref.title || ref.relevance || '').trim();
-                  // Only render the prefix as a reg-number chip when it looks like
-                  // one — otherwise (messy AI prose) render it readably, never as a
-                  // monospace wall that overflows the row (ELE-1188).
-                  const isRegNumber = num.length > 0 && num.length <= 22;
-                  return (
-                    <button
-                      key={i}
-                      type="button"
-                      className="w-full text-left flex items-start gap-2.5 rounded-lg p-3 bg-white/[0.04] border border-white/10 touch-manipulation active:bg-white/10 transition-colors"
-                      onClick={() =>
-                        handleCopy(`${num}${body ? ` — ${body}` : ''}`, `Regulation ${num}`)
-                      }
-                    >
-                      {isRegNumber ? (
-                        <>
-                          <span className="shrink-0 h-fit font-mono text-[11px] font-semibold text-elec-yellow bg-elec-yellow/10 border border-elec-yellow/20 rounded px-1.5 py-0.5">
-                            {num}
-                          </span>
-                          <span className="text-xs text-white/80 leading-relaxed flex-1 min-w-0 break-words">
-                            {body}
-                          </span>
-                        </>
-                      ) : (
-                        <span className="text-xs text-white/80 leading-relaxed flex-1 min-w-0 break-words">
-                          {body ? `${num} — ${body}` : num}
-                        </span>
-                      )}
-                      <Copy className="h-3 w-3 text-white/50 flex-shrink-0 mt-0.5" />
-                    </button>
-                  );
-                })}
-              </div>
-              {!accepted.has('regulations') ? (
-                <div className="flex gap-2 mt-4">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-11 px-4 text-xs text-green-400 hover:bg-green-500/10 touch-manipulation"
-                    onClick={handleAcceptRegulations}
-                  >
-                    <Check className="h-3.5 w-3.5 mr-1" />
-                    Accept
-                  </Button>
-                </div>
-              ) : (
-                <p className="text-[10px] text-white mt-3">Tap a reference to copy it.</p>
-              )}
-            </section>
-          )}
-        </>
+              <Copy className="h-3.5 w-3.5" />
+              Copy
+            </button>
+            <p className="text-[12px] text-white/85">
+              For emails and reports — not the certificate.
+            </p>
+          </div>
+        </section>
       )}
     </div>
   );
 
-  /* ── Shared footer ── */
-  const footerContent = suggestions && !isEnhancing && (
-    <div className="px-4 md:px-5 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] border-t border-white/10 bg-background flex-shrink-0">
-      {accepted.size > 0 && accepted.size < totalFields && (
-        <p className="text-[10px] text-white text-center mb-2">
-          {accepted.size} of {totalFields} applied — tap below to accept remaining
-        </p>
-      )}
-      <Button
-        className="w-full h-12 gap-2 bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation rounded-xl text-sm"
-        onClick={handleAcceptAll}
-      >
-        <Sparkles className="h-4 w-4" />
-        {accepted.size > 0 ? 'Accept Remaining' : 'Accept All Suggestions'}
-      </Button>
-    </div>
-  );
-
-  /* ── Desktop: centred modal panel ── */
-  if (!isMobile) {
-    if (!open) return null;
-
-    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center">
-        {/* Backdrop */}
-        <div
-          className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-in fade-in-0 duration-200"
-          onClick={() => onOpenChange(false)}
-        />
-
-        {/* Panel */}
-        <div className="relative z-10 w-full max-w-lg mx-4 max-h-[80vh] bg-background border border-white/10 rounded-2xl shadow-2xl shadow-black/50 flex flex-col animate-in fade-in-0 zoom-in-95 duration-200">
-          {/* Header */}
-          <div className="px-5 pt-5 pb-4 border-b border-white/10 flex-shrink-0">
-            {headerContent}
-          </div>
-
-          {/* Scrollable content */}
-          <div className="flex-1 overflow-y-auto px-5 py-4">{bodyContent}</div>
-
-          {/* Footer */}
-          {footerContent}
-        </div>
-      </div>
-    );
-  }
-
-  /* ── Mobile: bottom sheet ── */
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
-          {/* Header */}
-          <SheetHeader className="px-4 pt-4 pb-3 border-b border-white/10">
-            {headerContent}
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] overflow-hidden rounded-t-2xl p-0 outline-none focus:outline-none"
+      >
+        <div className="flex h-full flex-col bg-background">
+          {/* Header — pr-14 keeps the title clear of the sheet's close button */}
+          <SheetHeader className="flex-shrink-0 space-y-0 border-b border-white/[0.08] px-4 pb-3 pr-14 pt-4 text-left">
+            <SheetTitle className="text-base font-semibold tracking-tight text-white">
+              AI assistant
+            </SheetTitle>
+            <p className="text-[12px] text-white/85">
+              Grounded in the BS 7671 regulations — review every suggestion before you use it.
+            </p>
+            {suggestions && !isEnhancing && (
+              <div className="pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    haptic.light();
+                    onRetry();
+                  }}
+                  className={quietChipCn}
+                >
+                  <RotateCcw className="h-3.5 w-3.5" />
+                  Rewrite
+                </button>
+              </div>
+            )}
           </SheetHeader>
 
-          {/* Content */}
-          <div className="flex-1 overflow-y-auto px-4 py-4">{bodyContent}</div>
+          {/* Body */}
+          <div
+            className={cn(
+              'flex-1 overflow-y-auto px-4 py-4',
+              // Working/failed states are short — centre them in the sheet
+              // rather than stranding them above a screen of black.
+              (isEnhancing || failed) && 'flex flex-col items-center justify-center'
+            )}
+          >
+            <div className={cn('w-full', (isEnhancing || failed) && 'max-w-xl')}>
+              {isEnhancing ? workingContent : failed ? failedContent : readyContent}
+            </div>
+          </div>
 
-          {/* Footer */}
-          {footerContent}
+          {/* Footer — the one primary action */}
+          {suggestions && !isEnhancing && (
+            <div className="flex-shrink-0 border-t border-white/[0.08] bg-background px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+              {accepted.size > 0 && accepted.size < totalFields && (
+                <p className="mb-2 text-[12px] text-white/85">
+                  {accepted.size} of {totalFields} applied
+                </p>
+              )}
+              <button
+                type="button"
+                className="h-12 w-full rounded-xl bg-elec-yellow text-sm font-semibold text-black transition-all touch-manipulation active:scale-[0.98]"
+                onClick={handleAcceptAll}
+              >
+                {accepted.size > 0 ? 'Use the rest' : 'Use everything'}
+              </button>
+            </div>
+          )}
         </div>
       </SheetContent>
     </Sheet>

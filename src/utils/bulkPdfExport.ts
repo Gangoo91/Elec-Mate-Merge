@@ -71,6 +71,12 @@ const getEdgeFunctionForReportType = (reportType: string): string => {
 /**
  * Get template ID for a specific report type from storage
  */
+import {
+  isFireAlarmReportType,
+  fireAlarmTemplateId,
+  formatFireAlarmPayload,
+} from './fireAlarmPdfRouting';
+
 const getTemplateIdForReportType = async (reportType: string): Promise<string | undefined> => {
   const { offlineStorage } = await import('./offlineStorage');
   const credentials = await offlineStorage.getApiCredentials('pdfMonkey');
@@ -80,6 +86,10 @@ const getTemplateIdForReportType = async (reportType: string): Promise<string | 
     return credentials.eicTemplateId;
   } else if (normalizedType === 'eicr') {
     return credentials.eicrTemplateId;
+  } else if (isFireAlarmReportType(normalizedType)) {
+    // Each fire alarm cert has its own template; without this the bulk export
+    // rendered every one of them against the G2 template.
+    return fireAlarmTemplateId(normalizedType);
   }
 
   return undefined;
@@ -339,9 +349,11 @@ export const generateBulkPDFs = async (
         } else if (rtLower === 'pat-testing') {
           const { formatPATTestingJson } = await import('./patTestingJsonFormatter');
           dataForPdf = formatPATTestingJson(validation.data);
-        } else if (rtLower.startsWith('fire-alarm')) {
-          const { formatFireAlarmJson } = await import('./fireAlarmJsonFormatter');
-          dataForPdf = formatFireAlarmJson(validation.data);
+        } else if (isFireAlarmReportType(rtLower)) {
+          // Each of the five fire alarm certs has its OWN formatter. This used
+          // to run all five through the stale G2 fork.
+          const formatted = await formatFireAlarmPayload(rtLower, validation.data);
+          if (formatted) dataForPdf = formatted;
         } else if (rtLower === 'emergency-lighting') {
           const { formatEmergencyLightingJson } = await import('./emergencyLightingJsonFormatter');
           dataForPdf = formatEmergencyLightingJson(validation.data);

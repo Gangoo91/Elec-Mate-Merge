@@ -9,7 +9,6 @@
 
 import React, { useCallback, useState } from 'react';
 import { Sheet, SheetContent, SheetTitle, SheetDescription } from '@/components/ui/sheet';
-import { Eyebrow } from '@/components/college/primitives';
 import { BoardPhotoCapture } from './BoardPhotoCapture';
 import {
   BoardScannerStream,
@@ -34,15 +33,19 @@ interface BoardScannerOverlayProps {
     warnings?: string[];
   }) => void;
   onClose: () => void;
-  /** Title shown in header (kept for backwards compatibility) */
+  /** Title shown in the capture sheet header. Defaults to 'Board scanner'. */
   title?: string;
-  /** Whether this is used in a wizard context (affects styling) */
+  /**
+   * @deprecated No longer affects styling — accepted only so existing call
+   * sites (EICR wizard) keep compiling.
+   */
   isWizard?: boolean;
 }
 
 export const BoardScannerOverlay: React.FC<BoardScannerOverlayProps> = ({
   onAnalysisComplete,
   onClose,
+  title = 'Board scanner',
 }) => {
   const [imageUrls, setImageUrls] = useState<string[] | null>(null);
   const [showStream, setShowStream] = useState(false);
@@ -173,9 +176,9 @@ export const BoardScannerOverlay: React.FC<BoardScannerOverlayProps> = ({
       <Sheet open={!showStream} onOpenChange={(open) => !open && onClose()}>
         <SheetContent
           side="bottom"
-          className="h-[85vh] rounded-t-2xl p-0 flex flex-col overflow-hidden border-white/10"
+          className="h-[85vh] rounded-t-2xl p-0 flex flex-col overflow-hidden border-white/10 outline-none focus:outline-none focus-visible:outline-none"
         >
-          <SheetTitle className="sr-only">Board scanner — capture a photo</SheetTitle>
+          <SheetTitle className="sr-only">{title} — capture a photo</SheetTitle>
           <SheetDescription className="sr-only">
             Take or upload a photo of the distribution board. The scanner will then read every circuit.
           </SheetDescription>
@@ -184,29 +187,20 @@ export const BoardScannerOverlay: React.FC<BoardScannerOverlayProps> = ({
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
 
-          {/* Editorial header */}
-          <div className="flex-shrink-0 px-5 sm:px-8 pt-3 pb-5">
-            <div className="h-[2px] -mx-5 sm:-mx-8 mb-4 bg-gradient-to-r from-elec-yellow via-amber-400 to-orange-400" />
-            <Eyebrow className="text-elec-yellow">Board scanner</Eyebrow>
-            <h2 className="mt-2 text-[24px] sm:text-[30px] leading-[1.05] font-semibold text-white tracking-tight">
-              Snap your board.
-            </h2>
-            <p className="mt-2 text-[14px] sm:text-[15px] text-white/55 max-w-md leading-relaxed">
-              Frame the whole unit including the legend. Three-phase boards work — the scanner reads the main switch first.
+          {/* Header — cert sheet language, aligned to the same column as the body */}
+          <div className="mx-auto w-full max-w-3xl flex-shrink-0 border-b border-white/[0.08] px-5 sm:px-8 pt-2 pb-4">
+            <h2 className="text-base font-bold text-white">{title}</h2>
+            <p className="mt-0.5 text-[12px] text-white/85">
+              Frame the whole unit including the legend. Three-phase boards work — the scanner
+              reads the main switch first.
             </p>
           </div>
 
-          {/* Capture body */}
+          {/* Capture body — content centres vertically on desktop so the intro
+              reads as one composed viewport, never a scroll */}
           <div className="flex-1 overflow-auto">
-            <div className="max-w-2xl mx-auto px-5 sm:px-8 pb-8">
-              <BoardPhotoCapture
-                onAnalysisComplete={() => {
-                  /* not used in streaming flow */
-                }}
-                onPhotosReady={handlePhotosReady}
-                onClose={onClose}
-                renderContentOnly
-              />
+            <div className="mx-auto flex min-h-full w-full max-w-3xl flex-col px-5 py-5 pb-8 sm:justify-center sm:px-8">
+              <BoardPhotoCapture onPhotosReady={handlePhotosReady} />
             </div>
           </div>
         </SheetContent>

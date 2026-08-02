@@ -1,6 +1,6 @@
 import React from 'react';
-import { Check, X, AlertTriangle, AlertCircle, Circle, FileText, Info, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface InspectionItem {
   id: string;
@@ -28,68 +28,31 @@ interface EnhancedInspectionOutcomeSelectProps {
   compact?: boolean; // For desktop table view
 }
 
-// Primary outcomes (most common)
-const primaryOutcomes = [
-  {
-    value: 'satisfactory' as const,
-    label: 'OK',
-    icon: Check,
-    activeClass: 'bg-green-500 text-white border-green-500',
-    inactiveClass: 'bg-green-500/10 border-green-500/30 text-green-400 hover:bg-green-500/20',
-  },
-  {
-    value: 'C1' as const,
-    label: 'C1',
-    icon: X,
-    activeClass: 'bg-red-500 text-white border-red-500',
-    inactiveClass: 'bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20',
-  },
-  {
-    value: 'C2' as const,
-    label: 'C2',
-    icon: AlertCircle,
-    activeClass: 'bg-orange-500 text-white border-orange-500',
-    inactiveClass: 'bg-orange-500/10 border-orange-500/30 text-orange-400 hover:bg-orange-500/20',
-  },
-  {
-    value: 'C3' as const,
-    label: 'C3',
-    icon: AlertTriangle,
-    activeClass: 'bg-yellow-500 text-black border-yellow-500',
-    inactiveClass: 'bg-yellow-500/10 border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/20',
-  },
-];
+// Resting chip — quiet neutral; the label is the signpost
+const outcomeChipOff = 'bg-white/[0.06] border border-white/[0.12] text-white';
 
-// Secondary outcomes (less common)
-const secondaryOutcomes = [
-  {
-    value: 'FI' as const,
-    label: 'FI',
-    icon: Search,
-    activeClass: 'bg-blue-400 text-white border-blue-400',
-    inactiveClass: 'bg-blue-400/10 border-blue-400/30 text-blue-300 hover:bg-blue-400/20',
-  },
-  {
-    value: 'not-applicable' as const,
-    label: 'N/A',
-    icon: Circle,
-    activeClass: 'bg-gray-500 text-white border-gray-500',
-    inactiveClass: 'bg-white/5 border-white/20 text-white hover:bg-white/10',
-  },
-  {
-    value: 'not-verified' as const,
-    label: 'N/V',
-    icon: FileText,
-    activeClass: 'bg-blue-500 text-white border-blue-500',
-    inactiveClass: 'bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20',
-  },
-  {
-    value: 'limitation' as const,
-    label: 'LIM',
-    icon: Info,
-    activeClass: 'bg-purple-500 text-white border-purple-500',
-    inactiveClass: 'bg-purple-500/10 border-purple-500/30 text-purple-400 hover:bg-purple-500/20',
-  },
+// Selected chip — SOLID fills only (translucent washes read brown)
+const outcomeChipOn: Record<string, string> = {
+  satisfactory: 'bg-green-500 border border-green-500 text-black',
+  C1: 'bg-red-600 border border-red-600 text-white',
+  C2: 'bg-orange-500 border border-orange-500 text-black',
+  C3: 'bg-elec-yellow border border-elec-yellow text-black',
+  FI: 'bg-blue-500 border border-blue-500 text-white',
+  'not-applicable': 'bg-white/[0.18] border border-white/[0.25] text-white',
+  'not-verified': 'bg-white/[0.18] border border-white/[0.25] text-white',
+  limitation: 'bg-amber-500 border border-amber-500 text-black',
+};
+
+// A4:2026 — all 8 outcomes, in reading order
+const outcomeOptions: { value: InspectionItem['outcome']; label: string }[] = [
+  { value: 'satisfactory', label: 'OK' },
+  { value: 'C1', label: 'C1' },
+  { value: 'C2', label: 'C2' },
+  { value: 'C3', label: 'C3' },
+  { value: 'FI', label: 'FI' },
+  { value: 'not-applicable', label: 'N/A' },
+  { value: 'not-verified', label: 'N/V' },
+  { value: 'limitation', label: 'LIM' },
 ];
 
 const EnhancedInspectionOutcomeSelect = ({
@@ -98,10 +61,13 @@ const EnhancedInspectionOutcomeSelect = ({
   onOutcomeChange,
   compact = false,
 }: EnhancedInspectionOutcomeSelectProps) => {
+  const haptic = useHaptic();
+
   const handleChipClick = (value: InspectionItem['outcome']) => {
-    // Haptic feedback on mobile
-    if ('vibrate' in navigator) {
-      navigator.vibrate(10);
+    if (value === 'C1' || value === 'C2') {
+      haptic.warning();
+    } else {
+      haptic.light();
     }
 
     // If clicking same value, deselect (set to empty)
@@ -112,24 +78,21 @@ const EnhancedInspectionOutcomeSelect = ({
     }
   };
 
-  // Compact mode for desktop table - single row, smaller chips
+  // Compact mode for desktop rows — one line, fixed widths so the chip
+  // columns align down the page
   if (compact) {
     return (
-      <div className="flex flex-wrap gap-1">
-        {[...primaryOutcomes, ...secondaryOutcomes].map((chip) => {
+      <div className="flex items-center gap-1.5">
+        {outcomeOptions.map((chip) => {
           const isActive = currentOutcome === chip.value;
-          const IconComponent = chip.icon;
-
           return (
             <button
               key={chip.value}
               type="button"
               onClick={() => handleChipClick(chip.value)}
               className={cn(
-                'px-2 py-1 rounded-lg text-xs font-medium',
-                'border transition-all touch-manipulation',
-                'active:scale-95',
-                isActive ? chip.activeClass : chip.inactiveClass
+                'h-9 w-12 shrink-0 rounded-lg text-[12px] font-semibold flex items-center justify-center transition-all touch-manipulation active:scale-[0.97]',
+                isActive ? outcomeChipOn[chip.value] : outcomeChipOff
               )}
             >
               {chip.label}
@@ -140,60 +103,25 @@ const EnhancedInspectionOutcomeSelect = ({
     );
   }
 
-  // Full mode for mobile cards - 2 rows, larger touch targets
+  // Full mode for mobile — full-width wrap row, thumb-sized targets
   return (
-    <div className="space-y-2">
-      {/* Row 1: Primary outcomes (OK, C1, C2, C3) */}
-      <div className="flex gap-2">
-        {primaryOutcomes.map((chip) => {
-          const isActive = currentOutcome === chip.value;
-          const IconComponent = chip.icon;
-
-          return (
-            <button
-              key={chip.value}
-              type="button"
-              onClick={() => handleChipClick(chip.value)}
-              className={cn(
-                'flex-1 flex items-center justify-center gap-1.5',
-                'h-11 rounded-xl text-sm font-medium',
-                'border transition-all touch-manipulation',
-                'active:scale-95',
-                isActive ? chip.activeClass : chip.inactiveClass
-              )}
-            >
-              <IconComponent className="h-4 w-4" />
-              <span>{chip.label}</span>
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Row 2: Secondary outcomes (N/A, N/V, LIM) */}
-      <div className="flex gap-2">
-        {secondaryOutcomes.map((chip) => {
-          const isActive = currentOutcome === chip.value;
-          const IconComponent = chip.icon;
-
-          return (
-            <button
-              key={chip.value}
-              type="button"
-              onClick={() => handleChipClick(chip.value)}
-              className={cn(
-                'flex-1 flex items-center justify-center gap-1.5',
-                'h-11 rounded-xl text-sm font-medium',
-                'border transition-all touch-manipulation',
-                'active:scale-95',
-                isActive ? chip.activeClass : chip.inactiveClass
-              )}
-            >
-              <IconComponent className="h-4 w-4" />
-              <span>{chip.label}</span>
-            </button>
-          );
-        })}
-      </div>
+    <div className="grid grid-cols-4 gap-1.5">
+      {outcomeOptions.map((chip) => {
+        const isActive = currentOutcome === chip.value;
+        return (
+          <button
+            key={chip.value}
+            type="button"
+            onClick={() => handleChipClick(chip.value)}
+            className={cn(
+              'h-11 rounded-lg text-[12px] font-semibold flex items-center justify-center transition-all touch-manipulation active:scale-[0.97]',
+              isActive ? outcomeChipOn[chip.value] : outcomeChipOff
+            )}
+          >
+            {chip.label}
+          </button>
+        );
+      })}
     </div>
   );
 };

@@ -463,6 +463,11 @@ export interface SolarPVFormData {
 
   // ========== Site Access & Safety ==========
   siteAccessNotes: string; // Access requirements, parking, etc.
+  /** MIS 3002 App C (BS EN 62446-1 Annex A) — Model Handover Document requires a
+   *  plain description of the installation and its key components. */
+  installationDescription: string;
+  /** MIS 3002 App C — Model Handover Document: which circuits were tested. */
+  circuitsTested: string;
   safeIsolationVerified: boolean; // MCS requirement
   asbestosCheckRequired: boolean; // Pre-2000 properties
   asbestosCheckCompleted: boolean;
@@ -655,6 +660,8 @@ export const getDefaultSolarPVFormData = (): SolarPVFormData => ({
 
   // Site Access & Safety
   siteAccessNotes: '',
+  installationDescription: '',
+  circuitsTested: '',
   safeIsolationVerified: false,
   asbestosCheckRequired: false,
   asbestosCheckCompleted: false,

@@ -5,13 +5,6 @@ import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
 import { Textarea } from '@/components/ui/textarea';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -84,11 +77,10 @@ import {
   Pill,
   Eyebrow,
   inputClass,
-  selectTriggerClass,
-  selectContentClass,
   textareaClass,
   SuccessCheckmark,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 
 interface ViewJobSheetProps {
   job: Job | null;
@@ -428,22 +420,16 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
               <FormCard eyebrow="Status & value">
                 <FormGrid cols={2}>
                   <Field label="Status">
-                    <Select value={status} onValueChange={(v) => setStatus(v as JobStatus)}>
-                      <SelectTrigger className={selectTriggerClass}>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className={selectContentClass}>
-                        <SelectItem value="Active">Active</SelectItem>
-                        <SelectItem value="Pending">Pending</SelectItem>
-                        <SelectItem value="Completed">Completed</SelectItem>
-                        <SelectItem value="On Hold">On Hold</SelectItem>
-                        <SelectItem value="Cancelled">Cancelled</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <SelectField
+        value={status}
+        onValueChange={(v) => setStatus(v as JobStatus)}
+        options={[{ value: 'Active', label: 'Active' }, { value: 'Pending', label: 'Pending' }, { value: 'Completed', label: 'Completed' }, { value: 'On Hold', label: 'On Hold' }, { value: 'Cancelled', label: 'Cancelled' }]}
+      />
                   </Field>
                   <Field label="Value (£)">
                     <Input
                       type="number"
+                            inputMode="decimal"
                       value={value}
                       onChange={(e) => setValue(e.target.value)}
                       className={inputClass}

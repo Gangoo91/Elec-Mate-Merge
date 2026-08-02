@@ -5,11 +5,8 @@ import EICScheduleOfInspections from './EICScheduleOfInspections';
 import EICScheduleOfTesting from './EICScheduleOfTesting';
 import EICDeclarations from './EICDeclarations';
 import EICCertificateTab from './EICCertificateTab';
-import EICTabNavigation from './EICTabNavigation';
 import EICObservationsSection from './EICObservationsSection';
 import { EICObservation } from '@/hooks/useEICObservations';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { cn } from '@/lib/utils';
 
 interface EICTabContentProps {
   tabValue: EICTabValue;
@@ -17,21 +14,6 @@ interface EICTabContentProps {
   formData: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onUpdate: (field: string, value: any) => void;
-  tabNavigationProps: {
-    currentTab: EICTabValue;
-    currentTabIndex: number;
-    totalTabs: number;
-    canNavigateNext: boolean;
-    canNavigatePrevious: boolean;
-    navigateNext: () => void;
-    navigatePrevious: () => void;
-    getProgressPercentage: () => number;
-    isCurrentTabComplete: boolean;
-    currentTabHasRequiredFields: boolean;
-    onToggleComplete: () => void;
-    onGenerateCertificate?: () => void;
-    canGenerateCertificate?: boolean;
-  };
   observationsProps: {
     observations: EICObservation[];
     reportId: string;
@@ -39,10 +21,15 @@ interface EICTabContentProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onUpdateObservation: (id: string, field: keyof EICObservation, value: any) => void;
     onRemoveObservation: (id: string) => void;
+    // Matches the real call sites (EICInspectionChecklistCard) and the
+    // useEICObservations signature — the old {id,item,clause} shape was wrong.
     onAutoCreateObservation: (inspectionItem: {
       id: string;
       item: string;
-      clause: string;
+      itemNumber?: string;
+      clause?: string;
+      notes?: string;
+      defectCode?: 'limitation' | 'unsatisfactory' | 'C1' | 'C2' | 'C3';
     }) => string;
     onNavigateToObservations: () => void;
     onSyncToInspectionItem?: (inspectionItemId: string, newOutcome: string) => void;
@@ -50,33 +37,33 @@ interface EICTabContentProps {
   onGenerateCertificate: () => void;
   onSaveDraft: () => void;
   canGenerateCertificate?: boolean;
-  onJumpToTab?: (tab: EICTabValue) => void;
+  /** Shell-footer Generate/Email/Invoice → in-tab PDF flow (MW pattern). The
+   * Issue tab's actions register their handlers here. */
+  actionsRef?: React.MutableRefObject<{
+    generate: () => void;
+    email: () => void;
+    invoice: () => void;
+  } | null>;
 }
 
+/** Per-step content for the v3 EIC shell. Step navigation lives in the shared
+ * CertShellFooter — no per-tab nav renders here. */
 const EICTabContent: React.FC<EICTabContentProps> = ({
   tabValue,
   formData,
   onUpdate,
-  tabNavigationProps,
   observationsProps,
   onGenerateCertificate,
   onSaveDraft,
   canGenerateCertificate = true,
-  onJumpToTab,
+  actionsRef,
 }) => {
-  const isMobile = useIsMobile();
-
   switch (tabValue) {
     case 'details':
-      return (
-        <div className="space-y-6 w-full">
-          <EICInstallationDetails formData={formData} onUpdate={onUpdate} />
-          <EICTabNavigation {...tabNavigationProps} />
-        </div>
-      );
+      return <EICInstallationDetails formData={formData} onUpdate={onUpdate} />;
     case 'inspection':
       return (
-        <div className="space-y-6 w-full">
+        <div className="space-y-4 w-full">
           <EICScheduleOfInspections
             formData={formData}
             onUpdate={onUpdate}
@@ -92,38 +79,33 @@ const EICTabContent: React.FC<EICTabContentProps> = ({
             onSyncToInspectionItem={observationsProps.onSyncToInspectionItem}
             className="mt-6"
           />
-          <EICTabNavigation {...tabNavigationProps} />
         </div>
       );
     case 'testing':
       return (
-        <div className="w-full max-w-none space-y-6">
+        <div className="w-full max-w-none">
           <EICScheduleOfTesting formData={formData} onUpdate={onUpdate} />
-          <EICTabNavigation {...tabNavigationProps} />
         </div>
       );
     case 'declarations':
+      return <EICDeclarations formData={formData} onUpdate={onUpdate} />;
+    case 'certificate': {
+      // actionsRef travels via a spread variable so this file stays compatible
+      // whether or not EICCertificateTab has grown the receiving prop yet
+      // (added in the sign-off fix round; ignored harmlessly until then).
+      const forwarded = actionsRef ? { actionsRef } : {};
       return (
-        <div className="space-y-6 w-full">
-          <EICDeclarations formData={formData} onUpdate={onUpdate} />
-          <EICTabNavigation {...tabNavigationProps} />
-        </div>
+        <EICCertificateTab
+          formData={formData}
+          onUpdate={onUpdate}
+          reportId={observationsProps.reportId}
+          onGenerateCertificate={onGenerateCertificate}
+          onSaveDraft={onSaveDraft}
+          canGenerateCertificate={canGenerateCertificate}
+          {...forwarded}
+        />
       );
-    case 'certificate':
-      return (
-        <div className="space-y-6 w-full">
-          <EICCertificateTab
-            formData={formData}
-            onUpdate={onUpdate}
-            reportId={observationsProps.reportId}
-            onGenerateCertificate={onGenerateCertificate}
-            onSaveDraft={onSaveDraft}
-            canGenerateCertificate={canGenerateCertificate}
-            onJumpToTab={onJumpToTab}
-          />
-          <EICTabNavigation {...tabNavigationProps} showGenerate />
-        </div>
-      );
+    }
     default:
       return null;
   }

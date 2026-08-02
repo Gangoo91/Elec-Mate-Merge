@@ -148,6 +148,7 @@ serve(async (req) => {
       price_1TnbOj2RKw5t5RAmEIXS6oyV: 'electrician_yearly', // £199.99/year (current — Jun 2026, new customers)
       price_1TKlA12RKw5t5RAmdhZyhX1I: 'electrician', // £12.99/month (prior — keep for existing subs)
       price_1SqJVr2RKw5t5RAmaiTGelLN: 'electrician', // £9.99/month (legacy)
+      price_1TMoQE2RKw5t5RAmuFglsBof: 'electrician', // £9.99/month ("Electrician Monthly win back" — winback offer price; unmapped until Aug 2026, which wrote tier 'unknown' onto paying customers)
       price_1TKlKL2RKw5t5RAmpD8FH7qp: 'electrician_yearly', // £129.99/year (prior — keep for existing subs)
       price_1SqJVs2RKw5t5RAmVeD2QVsb: 'electrician_yearly', // £99.99/year (legacy)
       // Business AI - £39.99/month, £399.99/year (current — Apr 2026)
@@ -234,9 +235,26 @@ serve(async (req) => {
 
       // Check orphaned_stripe_subscriptions — a pay link may have created a
       // Stripe customer with a different email, which the webhook couldn't match.
-      // If we find one matching this user's email, link it now.
+      //
+      // ELE-1461: this used to match on `customer_email ILIKE user.email` and
+      // nothing else, which defeated the very case the comment describes. A real
+      // customer paid as `mark@company.co.uk` while his account was
+      // `mark.smith@company.co.uk`; the emails never matched, so the reconciler
+      // could never fire and he would have lost access while still being billed.
+      //
+      // Two signals are now tried, and BOTH are ones the payer cannot forge:
+      //
+      //   A. exact email match (as before)
+      //   B. `metadata.userId` on the Stripe subscription equals this user
+      //
+      // Deliberately NOT used: name, billing postcode, or "same email domain".
+      // This code runs as whoever is logged in, so a loose match is an account
+      // takeover — set your company email to a victim's Stripe address, call
+      // this endpoint, inherit their subscription. Anything short of an
+      // unforgeable signal stays a human decision, which is what the Sentry
+      // alert raised by the webhook is for.
       try {
-        const { data: orphan } = await supabaseClient
+        let { data: orphan } = await supabaseClient
           .from('orphaned_stripe_subscriptions')
           .select('*')
           .ilike('customer_email', user.email!)
@@ -244,11 +262,47 @@ serve(async (req) => {
           .limit(1)
           .maybeSingle();
 
+        let matchedBy = orphan ? 'email' : null;
+
+        // B. Fall back to subscription metadata. `metadata.userId` is written by
+        // us when a checkout or support pay-link is created, so it is
+        // authoritative regardless of which address the customer paid with.
+        // Unresolved orphans are rare (each one is an alert), so the per-row
+        // Stripe lookup is cheap.
+        if (!orphan) {
+          const { data: candidates } = await supabaseClient
+            .from('orphaned_stripe_subscriptions')
+            .select('*')
+            .eq('resolved', false)
+            .not('stripe_subscription_id', 'is', null)
+            .order('created_at', { ascending: false })
+            .limit(25);
+
+          for (const candidate of candidates ?? []) {
+            try {
+              const candidateSub = await stripe.subscriptions.retrieve(
+                candidate.stripe_subscription_id as string
+              );
+              const metaUserId =
+                (candidateSub.metadata as Record<string, string> | undefined)?.userId ??
+                (candidateSub.metadata as Record<string, string> | undefined)?.user_id;
+              if (metaUserId && metaUserId === user.id) {
+                orphan = candidate;
+                matchedBy = 'metadata.userId';
+                break;
+              }
+            } catch {
+              // Subscription deleted or unreadable — skip, never block the check.
+            }
+          }
+        }
+
         if (orphan?.stripe_customer_id) {
-          logger.info('Found orphaned subscription matching user email, reconciling', {
+          logger.info('Found orphaned subscription for this user, reconciling', {
             userId: user.id,
             orphanCustomerId: orphan.stripe_customer_id,
             orphanTier: orphan.tier,
+            matchedBy,
           });
 
           const orphanTier = orphan.tier || 'electrician';

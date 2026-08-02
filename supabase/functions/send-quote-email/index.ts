@@ -210,10 +210,39 @@ const handler = async (req: Request): Promise<Response> => {
     let certPdfBase64Wrapped: string | null = null;
     let certFilename: string | null = null;
 
-    if (quote.linked_certificate_pdf_url) {
+    // Fallback: quotes raised before the certificate PDF existed (or before the
+    // sender-side pdfUrl fix) have linked_certificate_id but a NULL pdf_url —
+    // resolve the current PDF from the report itself instead of silently
+    // skipping the attachment.
+    let certPdfUrl: string | null = quote.linked_certificate_pdf_url || null;
+    if (!certPdfUrl && quote.linked_certificate_id) {
+      try {
+        const linkId = String(quote.linked_certificate_id);
+        let { data: certReport } = await supabase
+          .from('reports')
+          .select('pdf_url')
+          .eq('report_id', linkId)
+          .maybeSingle();
+        if (!certReport && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(linkId)) {
+          ({ data: certReport } = await supabase
+            .from('reports')
+            .select('pdf_url')
+            .eq('id', linkId)
+            .maybeSingle());
+        }
+        if (certReport?.pdf_url) {
+          certPdfUrl = certReport.pdf_url;
+          console.log('Certificate PDF resolved via linked_certificate_id fallback');
+        }
+      } catch (lookupError) {
+        console.warn('Certificate PDF fallback lookup failed (non-fatal):', lookupError);
+      }
+    }
+
+    if (certPdfUrl) {
       console.log('Linked certificate found, downloading certificate PDF...');
       try {
-        const certPdfResponse = await fetch(quote.linked_certificate_pdf_url);
+        const certPdfResponse = await fetch(certPdfUrl);
         if (certPdfResponse.ok) {
           const certPdfArrayBuffer = await certPdfResponse.arrayBuffer();
           const certPdfBase64 = base64Encode(new Uint8Array(certPdfArrayBuffer));

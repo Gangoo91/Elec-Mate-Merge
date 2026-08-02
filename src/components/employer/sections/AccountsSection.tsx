@@ -124,7 +124,7 @@ export const AccountsSection = () => {
             />
 
             <ListCard>
-              <ListCardHeader title="Profit & loss" subtitle={range.label} />
+              <ListCardHeader title="Profit & loss" meta={range.label} />
               <ListBody>
                 <ListRow title="Revenue invoiced" trailing={`£${money(pnl?.revenueInvoiced ?? 0)}`} />
                 <Divider label="Costs" />
@@ -165,7 +165,7 @@ export const AccountsSection = () => {
       ) : ledger.length === 0 ? (
         <EmptyState
           title="Nothing in this period"
-          subtitle="Paid invoices, purchase orders and expense claims will appear here as they happen."
+          description="Paid invoices, purchase orders and expense claims will appear here as they happen."
         />
       ) : (
         <div className="mt-5 space-y-5">
@@ -183,7 +183,7 @@ export const AccountsSection = () => {
           />
 
           <ListCard>
-            <ListCardHeader title="Ledger" subtitle={`${ledger.length} entries · ${range.label}`} />
+            <ListCardHeader title="Ledger" meta={`${ledger.length} entries · ${range.label}`} />
             <ListBody>
               {ledger.map((e) => (
                 <ListRow

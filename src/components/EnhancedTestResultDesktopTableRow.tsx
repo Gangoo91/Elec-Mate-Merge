@@ -17,8 +17,6 @@ import { checkRegulationCompliance } from '@/utils/autoRegChecker';
 import { getSpareCircuitFields } from '@/utils/spareCircuitFields';
 
 // Import all the cell components
-import { CircuitNumberCell } from './table-cells/CircuitNumberCell';
-import { CircuitDetailsCells } from './table-cells/CircuitDetailsCells';
 import { TypeOfWiringCell } from './table-cells/TypeOfWiringCell';
 import { RefMethodCell } from './table-cells/RefMethodCell';
 import { PointsServedCell } from './table-cells/PointsServedCell';
@@ -48,7 +46,6 @@ interface EnhancedTestResultDesktopTableRowProps {
   canMoveDown?: boolean;
   showRegulationStatus?: boolean;
   collapsedGroups: Set<string>;
-  rowNumber: number;
   earthingArrangement?: string;
 }
 
@@ -64,7 +61,6 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
   canMoveDown = false,
   showRegulationStatus = false,
   collapsedGroups,
-  rowNumber,
   earthingArrangement,
 }) => {
   const [showRegulationWarning, setShowRegulationWarning] = useState(false);
@@ -91,11 +87,14 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
   const regulationCompliance = useMemo(() => checkRegulationCompliance(result), [result]);
 
   // Memoized row background class - prevents expensive recalculation on every render
+  // Default rows take base/zebra tones from the .sot-row CSS; error/warning
+  // validation tints are dedicated classes so index.css can keep them flat on
+  // hover too (founder call: pointing at a row must not shift colours).
   const rowBgClass = useMemo(() => {
     const overallCompliance = getOverallCompliance(validation);
-    if (overallCompliance === 'error') return 'bg-red-500/10 hover:bg-red-500/20';
-    if (overallCompliance === 'warning') return 'bg-amber-500/10 hover:bg-amber-500/20';
-    return 'bg-card hover:bg-muted/30';
+    if (overallCompliance === 'error') return 'sot-row-error';
+    if (overallCompliance === 'warning') return 'sot-row-warning';
+    return '';
   }, [validation]);
 
   // Get regulation status icon
@@ -105,7 +104,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
         <Button
           variant="ghost"
           size="sm"
-          className="h-5 w-5 p-0 text-red-600 hover:text-red-700"
+          className="h-5 w-5 p-0 text-red-400 hover:text-red-300"
           onClick={handleValidateClick}
           title="Click to view regulation compliance issues"
         >
@@ -120,7 +119,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
         <Button
           variant="ghost"
           size="sm"
-          className="h-5 w-5 p-0 text-amber-600 hover:text-amber-700"
+          className="h-5 w-5 p-0 text-amber-400 hover:text-amber-300"
           onClick={handleValidateClick}
           title="Click to view validation warnings"
         >
@@ -131,7 +130,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
 
     return (
       <div className="flex items-center justify-center">
-        <CheckCircle className="h-3 w-3 text-green-600" />
+        <CheckCircle className="h-3 w-3 text-green-400" />
       </div>
     );
   };
@@ -143,152 +142,27 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
 
   const isGroupCollapsed = (groupName: string) => collapsedGroups.has(groupName);
 
-  // Field completion indicator
-  const getFieldCompletion = () => {
-    const requiredFields = [
-      'circuitDesignation',
-      'circuitDescription',
-      'liveSize',
-      'cpcSize',
-      'bsStandard',
-      'protectiveDeviceRating',
-      'maxZs',
-      'insulationLiveNeutral',
-      'insulationLiveEarth',
-      'polarity',
-      'zs',
-    ];
-
-    const filledFields = requiredFields.filter((field) => {
-      const value = result[field as keyof TestResult];
-      return value && value !== '';
-    });
-
-    const completionPercentage = (filledFields.length / requiredFields.length) * 100;
-
-    if (completionPercentage === 100) {
-      return { icon: '✅', color: 'text-green-600', title: '100% Complete' };
-    } else if (completionPercentage >= 50) {
-      return {
-        icon: '⚠️',
-        color: 'text-amber-600',
-        title: `${Math.round(completionPercentage)}% Complete`,
-      };
-    } else {
-      return {
-        icon: '⭕',
-        color: 'text-muted-foreground',
-        title: `${Math.round(completionPercentage)}% Complete`,
-      };
-    }
-  };
-
-  const fieldCompletion = getFieldCompletion();
-
   return (
     <>
       <TableRow
         data-circuit-id={result.id}
-        className={`${rowBgClass} border-b border-border/30 transition-colors`}
+        className={`sot-row transition-colors ${rowBgClass}`}
       >
-        {/* Circuit Number - Always visible, sticky (ELE-830 overlap fix) */}
-        <TableCell className="sot-sticky-col p-0 h-8 align-middle w-[112px] min-w-[112px] max-w-[112px]">
-          <EnhancedValidatedInput
-            value={result.circuitDesignation}
-            onChange={(value) => onUpdate(result.id, 'circuitDesignation', value)}
-            className="h-8 text-[11px] text-center px-2 w-full tracking-tight whitespace-nowrap"
-            disabled={!!result.sourceCircuitId}
-          />
-        </TableCell>
-
-        {/* Phase Type - Always visible */}
-        <PhaseTypeCell result={result} onUpdate={onUpdate} />
-
-        {/* Circuit Details */}
-        {!isGroupCollapsed('circuit') && (
-          <>
-            <TableCell className="sot-sticky-col-2 p-0 h-8 align-middle min-w-[244px] max-w-[244px]">
-              <EnhancedValidatedInput
-                value={result.circuitDescription}
-                onChange={(value) => onUpdate(result.id, 'circuitDescription', value)}
-                onCommit={(value) => {
-                  // Typing "spare" in the description cascades N/A to every
-                  // test + detail field — saves hunting for the Spare button
-                  // on the right-hand side of a 30-column table.
-                  const normalised = (value || '').trim().toLowerCase();
-                  if ((normalised === 'spare' || normalised === 'spare way') && onBulkUpdate) {
-                    onBulkUpdate(result.id, getSpareCircuitFields());
-                  }
-                }}
-                placeholder="e.g. Kitchen Ring — type 'spare' to N/A all fields"
-                className="h-8 text-sm px-2 w-full"
-                disabled={!!result.sourceCircuitId}
-              />
-            </TableCell>
-            <TypeOfWiringCell result={result} onUpdate={onUpdate} />
-            <RefMethodCell result={result} onUpdate={onUpdate} />
-            <PointsServedCell result={result} onUpdate={onUpdate} />
-          </>
-        )}
-
-        {/* Conductor Details */}
-        {!isGroupCollapsed('conductor') && <ConductorCells result={result} onUpdate={onUpdate} />}
-
-        {/* Protective Device */}
-        {!isGroupCollapsed('protection') && (
-          <ProtectiveDeviceCells result={result} onUpdate={onUpdate} onBulkUpdate={onBulkUpdate} />
-        )}
-
-        {/* RCD Details */}
-        {!isGroupCollapsed('rcdDetails') && (
-          <RcdDetailsCells result={result} onUpdate={onUpdate} onBulkUpdate={onBulkUpdate} />
-        )}
-
-        {/* Continuity Tests */}
-        {!isGroupCollapsed('continuity') && (
-          <ContinuityCells result={result} onUpdate={onUpdate} validation={validation} />
-        )}
-
-        {/* Insulation Tests */}
-        {!isGroupCollapsed('insulation') && (
-          <InsulationCells result={result} onUpdate={onUpdate} validation={validation} />
-        )}
-
-        {/* Zs (Ω) Tests */}
-        {!isGroupCollapsed('zs') && (
-          <ZsCells result={result} onUpdate={onUpdate} validation={validation} />
-        )}
-
-        {/* RCD Tests */}
-        {!isGroupCollapsed('rcd') && <RcdTestCells result={result} onUpdate={onUpdate} />}
-
-        {/* AFDD Test */}
-        {!isGroupCollapsed('afdd') && <AfddCell result={result} onUpdate={onUpdate} />}
-
-        {/* Functional Test */}
-        {!isGroupCollapsed('functional') && (
-          <FunctionalTestCell result={result} onUpdate={onUpdate} />
-        )}
-
-        {/* Remarks Column */}
-        <RemarksCell result={result} onUpdate={onUpdate} />
-
-        {/* Regulation Status Column */}
-        {showRegulationStatus && (
-          <TableCell className="text-center h-8 p-1">{getRegulationStatusIcon()}</TableCell>
-        )}
-
-        {/* Actions Column */}
-        <TableCell className="text-center h-8 p-1">
-          <div className="flex items-center gap-1 justify-center">
-            {/* ELE-857 — move up/down */}
+        {/* Actions — first column on the left (Craig/QS feedback: no more
+            scrolling 30 columns to move/duplicate a circuit) but NOT sticky
+            (founder call) — it scrolls away under the pinned Way column.
+            Density cell — h-7 controls exempt from the 44px rule. */}
+        <TableCell className="h-8 px-1.5 py-0.5 align-middle w-[210px] min-w-[210px] max-w-[210px] border-r border-white/10">
+          {/* One even row of compact controls — no pills, no dividers.
+              Density cell — h-7 controls exempt from the 44px rule. */}
+          <div className="flex items-center justify-center gap-1">
             {onMoveUp && (
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => onMoveUp(result.id)}
                 disabled={!canMoveUp}
-                className="h-7 w-7 p-0 text-muted-foreground hover:text-foreground hover:bg-muted/30 rounded-md transition-colors disabled:opacity-25 disabled:cursor-not-allowed"
+                className="h-7 w-7 p-0 text-white/80 hover:text-white hover:bg-white/10 rounded-md transition-colors disabled:opacity-25 disabled:cursor-not-allowed"
                 title="Move circuit up"
               >
                 <ChevronUp className="h-4 w-4" />
@@ -300,7 +174,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
                 size="sm"
                 onClick={() => onMoveDown(result.id)}
                 disabled={!canMoveDown}
-                className="h-7 w-7 p-0 text-muted-foreground hover:text-foreground hover:bg-muted/30 rounded-md transition-colors disabled:opacity-25 disabled:cursor-not-allowed"
+                className="h-7 w-7 p-0 text-white/80 hover:text-white hover:bg-white/10 rounded-md transition-colors disabled:opacity-25 disabled:cursor-not-allowed"
                 title="Move circuit down"
               >
                 <ChevronDown className="h-4 w-4" />
@@ -311,7 +185,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
                 variant="ghost"
                 size="sm"
                 onClick={() => onBulkUpdate(result.id, getSpareCircuitFields())}
-                className="h-7 px-2 text-[11px] text-muted-foreground hover:text-foreground hover:bg-muted/30 rounded-md transition-colors"
+                className="h-7 px-2 text-[11px] font-medium text-white/80 hover:text-white hover:bg-white/10 rounded-md transition-colors"
                 title="Mark as spare way — sets all results to N/A"
               >
                 Spare
@@ -322,7 +196,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
                 variant="ghost"
                 size="sm"
                 onClick={() => onDuplicate(result.id)}
-                className="h-7 w-7 p-0 text-muted-foreground hover:text-elec-yellow hover:bg-muted/30 rounded-md transition-colors"
+                className="h-7 w-7 p-0 text-white/80 hover:text-elec-yellow hover:bg-white/10 rounded-md transition-colors"
                 title="Duplicate this circuit"
               >
                 <Copy className="h-4 w-4" />
@@ -332,13 +206,115 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
               variant="ghost"
               size="sm"
               onClick={() => onRemove(result.id)}
-              className="h-7 w-7 p-0 text-red-500 hover:text-red-400 hover:bg-red-500/10 rounded-md transition-colors"
+              className="h-7 w-7 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-md transition-colors"
               title="Remove this circuit"
             >
               <Trash2 className="h-4 w-4" />
             </Button>
           </div>
         </TableCell>
+
+        {/* Circuit Number — sticky at left:0; the non-sticky Actions column
+            scrolls in under it (ELE-830 overlap rules still apply). */}
+        <TableCell className="sot-sticky-col p-0 h-8 align-middle w-[112px] min-w-[112px] max-w-[112px]">
+          <EnhancedValidatedInput
+            value={result.circuitDesignation}
+            onChange={(value) => onUpdate(result.id, 'circuitDesignation', value)}
+            className="h-8 text-[11px] text-center px-2 w-full tracking-tight whitespace-nowrap"
+            disabled={!!result.sourceCircuitId}
+          />
+        </TableCell>
+
+        {/* Description — always visible, sticky flush after Way (founder call:
+            sits before 1P/3P), last frozen column */}
+        <TableCell className="sot-sticky-col-2 sot-sticky-last p-0 h-8 align-middle min-w-[244px] max-w-[244px]">
+          <EnhancedValidatedInput
+            value={result.circuitDescription}
+            onChange={(value) => onUpdate(result.id, 'circuitDescription', value)}
+            onCommit={(value) => {
+              // Typing "spare" in the description cascades N/A to every
+              // test + detail field — saves hunting for the Spare button
+              // on the right-hand side of a 30-column table.
+              const normalised = (value || '').trim().toLowerCase();
+              if ((normalised === 'spare' || normalised === 'spare way') && onBulkUpdate) {
+                onBulkUpdate(result.id, getSpareCircuitFields());
+              }
+            }}
+            placeholder="e.g. Kitchen Ring — type 'spare' to N/A all fields"
+            className="h-8 text-sm px-2 w-full"
+            disabled={!!result.sourceCircuitId}
+          />
+        </TableCell>
+
+        {/* Phase Type - Always visible */}
+        <PhaseTypeCell result={result} onUpdate={onUpdate} />
+
+        {/* Circuit Details */}
+        {!isGroupCollapsed('circuit') && (
+          <>
+            <TypeOfWiringCell result={result} onUpdate={onUpdate} />
+            <RefMethodCell result={result} onUpdate={onUpdate} />
+            <PointsServedCell result={result} onUpdate={onUpdate} />
+          </>
+        )}
+
+        {/* Collapsed groups keep ONE narrow column (matching the colSpan-1 group
+            banner in the header) — placeholder cells keep every row's column
+            count identical in collapsed state. */}
+        {isGroupCollapsed('circuit') && <TableCell className="h-8 p-0" />}
+
+        {/* Conductor Details */}
+        {!isGroupCollapsed('conductor') && <ConductorCells result={result} onUpdate={onUpdate} />}
+        {isGroupCollapsed('conductor') && <TableCell className="h-8 p-0" />}
+
+        {/* Protective Device */}
+        {!isGroupCollapsed('protection') && (
+          <ProtectiveDeviceCells result={result} onUpdate={onUpdate} onBulkUpdate={onBulkUpdate} />
+        )}
+        {isGroupCollapsed('protection') && <TableCell className="h-8 p-0" />}
+
+        {/* RCD Details */}
+        {!isGroupCollapsed('rcdDetails') && (
+          <RcdDetailsCells result={result} onUpdate={onUpdate} onBulkUpdate={onBulkUpdate} />
+        )}
+        {isGroupCollapsed('rcdDetails') && <TableCell className="h-8 p-0" />}
+
+        {/* Continuity Tests */}
+        {!isGroupCollapsed('continuity') && (
+          <ContinuityCells result={result} onUpdate={onUpdate} validation={validation} />
+        )}
+        {isGroupCollapsed('continuity') && <TableCell className="h-8 p-0" />}
+
+        {/* Insulation Tests */}
+        {!isGroupCollapsed('insulation') && (
+          <InsulationCells result={result} onUpdate={onUpdate} validation={validation} />
+        )}
+        {isGroupCollapsed('insulation') && <TableCell className="h-8 p-0" />}
+
+        {/* Zs (Ω) Tests */}
+        {!isGroupCollapsed('zs') && (
+          <ZsCells result={result} onUpdate={onUpdate} validation={validation} />
+        )}
+        {isGroupCollapsed('zs') && <TableCell className="h-8 p-0" />}
+
+        {/* RCD Tests */}
+        {!isGroupCollapsed('rcd') && <RcdTestCells result={result} onUpdate={onUpdate} />}
+        {isGroupCollapsed('rcd') && <TableCell className="h-8 p-0" />}
+
+        {/* AFDD Test — single-column group, never collapsible (header has no
+            toggle for it) */}
+        <AfddCell result={result} onUpdate={onUpdate} />
+
+        {/* Functional Test — same */}
+        <FunctionalTestCell result={result} onUpdate={onUpdate} />
+
+        {/* Remarks Column */}
+        <RemarksCell result={result} onUpdate={onUpdate} />
+
+        {/* Regulation Status Column */}
+        {showRegulationStatus && (
+          <TableCell className="text-center h-8 p-1">{getRegulationStatusIcon()}</TableCell>
+        )}
       </TableRow>
 
       {/* Enhanced Regulation Warning Dialog */}
@@ -365,7 +341,11 @@ const arePropsEqual = (
   if (prev.canMoveUp !== next.canMoveUp) return false;
   if (prev.canMoveDown !== next.canMoveDown) return false;
   if (prev.showRegulationStatus !== next.showRegulationStatus) return false;
-  if (prev.rowNumber !== next.rowNumber) return false;
+  if (prev.onDuplicate !== next.onDuplicate) return false;
+  // Validation (TT vs TN Zs limits) is derived from the earthing arrangement —
+  // omitting it left memoised rows showing stale red/amber tints after an
+  // earthing change on the supply tab.
+  if (prev.earthingArrangement !== next.earthingArrangement) return false;
   // Deep compare Sets: same size and same entries
   if (prev.collapsedGroups.size !== next.collapsedGroups.size) return false;
   for (const key of prev.collapsedGroups) {

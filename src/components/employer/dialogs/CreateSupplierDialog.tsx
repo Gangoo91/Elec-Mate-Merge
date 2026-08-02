@@ -2,13 +2,6 @@ import { useState, useEffect } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { useCreateSupplier, useUpdateSupplier } from '@/hooks/useFinance';
 import type { Supplier } from '@/services/financeService';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
@@ -21,9 +14,8 @@ import {
   SecondaryButton,
   inputClass,
   textareaClass,
-  selectTriggerClass,
-  selectContentClass,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 
 interface CreateSupplierDialogProps {
   open: boolean;
@@ -198,7 +190,7 @@ export function CreateSupplierDialog({ open, onOpenChange, supplier }: CreateSup
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] p-0 overflow-hidden">
+      <SheetContent side="bottom" className="h-[85vh] p-0 overflow-hidden">
         <SheetShell
           eyebrow="Suppliers"
           title={isEdit ? 'Edit supplier' : 'Add supplier'}
@@ -229,18 +221,11 @@ export function CreateSupplierDialog({ open, onOpenChange, supplier }: CreateSup
             </Field>
             <FormGrid cols={2}>
               <Field label="Category">
-                <Select value={category} onValueChange={setCategory}>
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    {CATEGORIES.map((cat) => (
-                      <SelectItem key={cat} value={cat}>
-                        {cat}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <SelectField
+        value={category}
+        onValueChange={setCategory}
+        options={CATEGORIES.map((cat) => ({ value: cat, label: cat }))}
+      />
               </Field>
               <Field label="Account number">
                 <Input
@@ -258,6 +243,7 @@ export function CreateSupplierDialog({ open, onOpenChange, supplier }: CreateSup
               <Field label="Credit limit (£)">
                 <Input
                   type="number"
+                            inputMode="decimal"
                   placeholder="0"
                   value={creditLimit}
                   onChange={(e) => setCreditLimit(e.target.value)}
@@ -268,6 +254,7 @@ export function CreateSupplierDialog({ open, onOpenChange, supplier }: CreateSup
               <Field label="Discount %">
                 <Input
                   type="number"
+                            inputMode="decimal"
                   placeholder="0"
                   value={discountPercent}
                   onChange={(e) => setDiscountPercent(e.target.value)}
@@ -320,18 +307,11 @@ export function CreateSupplierDialog({ open, onOpenChange, supplier }: CreateSup
 
           <FormCard eyebrow="Delivery">
             <Field label="Delivery days">
-              <Select value={deliveryDays} onValueChange={setDeliveryDays}>
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  <SelectItem value="0">Same day</SelectItem>
-                  <SelectItem value="1">Next day</SelectItem>
-                  <SelectItem value="2">2 days</SelectItem>
-                  <SelectItem value="3">3 days</SelectItem>
-                  <SelectItem value="5">5 days</SelectItem>
-                </SelectContent>
-              </Select>
+              <SelectField
+        value={deliveryDays}
+        onValueChange={setDeliveryDays}
+        options={[{ value: '0', label: 'Same day' }, { value: '1', label: 'Next day' }, { value: '2', label: '2 days' }, { value: '3', label: '3 days' }, { value: '5', label: '5 days' }]}
+      />
             </Field>
           </FormCard>
 

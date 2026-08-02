@@ -12,6 +12,7 @@ import {
 } from '@/constants/minorWorksOptions';
 import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
 import MWReadingKeypad, { KeypadStatus } from '@/components/minor-works/MWReadingKeypad';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface MWTestingTabProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -62,7 +63,7 @@ const FormField = ({
       {required && ' *'}
     </Label>
     {children}
-    {hint && <span className="text-[11px] text-white/85 block mt-1">{hint}</span>}
+    {hint && <span className="text-[11px] text-white block mt-1">{hint}</span>}
   </div>
 );
 
@@ -80,34 +81,40 @@ const ToggleButtons = ({
   options: { value: string; label: string; color?: string }[];
   value: string;
   onChange: (v: string) => void;
-}) => (
-  <div className="flex gap-2">
-    {options.map((opt) => {
-      const isActive = value === opt.value;
-      const activeColor =
-        opt.color === 'green'
-          ? 'bg-green-500 border-green-500 text-black font-semibold'
-          : opt.color === 'red'
-            ? 'bg-red-500 border-red-500 text-white font-semibold'
-            : opt.color === 'amber'
-              ? 'bg-amber-500 border-amber-500 text-black font-semibold'
-              : 'bg-elec-yellow border-elec-yellow text-black font-semibold';
-      return (
-        <button
-          key={opt.value}
-          type="button"
-          onClick={() => onChange(opt.value)}
-          className={cn(
-            'h-11 px-3 rounded-xl border text-sm touch-manipulation transition-all active:scale-[0.98] flex-1',
-            isActive ? activeColor : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
-          )}
-        >
-          {opt.label}
-        </button>
-      );
-    })}
-  </div>
-);
+}) => {
+  const haptic = useHaptic();
+  return (
+    <div className="flex gap-2">
+      {options.map((opt) => {
+        const isActive = value === opt.value;
+        const activeColor =
+          opt.color === 'green'
+            ? 'bg-green-500 border-green-500 text-black font-semibold'
+            : opt.color === 'red'
+              ? 'bg-red-500 border-red-500 text-white font-semibold'
+              : opt.color === 'amber'
+                ? 'bg-amber-500 border-amber-500 text-black font-semibold'
+                : 'bg-elec-yellow border-elec-yellow text-black font-semibold';
+        return (
+          <button
+            key={opt.value}
+            type="button"
+            onClick={() => {
+              haptic.light();
+              onChange(opt.value);
+            }}
+            className={cn(
+              'h-11 px-3 rounded-xl border text-sm touch-manipulation transition-all active:scale-[0.98] flex-1',
+              isActive ? activeColor : 'bg-white/[0.06] border-white/[0.12] text-white font-medium'
+            )}
+          >
+            {opt.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+};
 
 /* ── Component ─────────────────────────────────────────────────── */
 
@@ -140,6 +147,7 @@ const KEYPAD_META: Record<string, { label: string; unit: string; inf?: boolean }
 };
 
 const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
+  const haptic = useHaptic();
   const [recentInstruments, setRecentInstruments] = useState<string[]>([]);
   // Cross-connect ring readings are optional — only expand if user already filled them in.
   const [showCrossConnect, setShowCrossConnect] = useState<boolean>(
@@ -237,7 +245,9 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
       return;
     }
     setActiveKeypad(next);
-    scrollReadingClearOfKeypad(document.querySelector<HTMLElement>(`[data-keypad-field="${next}"]`));
+    scrollReadingClearOfKeypad(
+      document.querySelector<HTMLElement>(`[data-keypad-field="${next}"]`)
+    );
   };
 
   // Smart form hook for saved instruments from Business Settings
@@ -368,39 +378,44 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
 
     if (!isTT && !(bsEn && rating)) return;
 
-    import('@/utils/zsCalculations').then(({ getMaxZsWithRcd, getRcdMaxZs }) => {
-      // Extract curve from device type (e.g., 'mcb-type-b' → 'B')
-      const curve = deviceType.includes('type-b') ? 'B'
-        : deviceType.includes('type-c') ? 'C'
-        : deviceType.includes('type-d') ? 'D'
-        : 'B';
-      let maxZs: number | null = null;
-      let source: 'rcd' | 'overcurrent' = 'overcurrent';
-      if (isTT) {
-        maxZs = getRcdMaxZs(formData.rcdIdn || formData.rcdRating || '30');
-        source = 'rcd';
-      } else {
-        const lookup = getMaxZsWithRcd({
-          bsStandard: bsEn,
-          curve,
-          rating,
-          rcdRating:
-            formData.protectionRcd || formData.protectionRcbo
-              ? formData.rcdRating || formData.rcdIdn || null
-              : null,
-          rcdType: formData.rcdType || null,
-          protectiveDeviceType: deviceType,
-        });
-        maxZs = lookup.maxZs;
-        source = lookup.source === 'rcd' ? 'rcd' : 'overcurrent';
-      }
-      if (maxZs !== null) {
-        setZsLimitSource(source);
-        if (String(maxZs) !== formData.maxPermittedZs) {
-          onUpdate('maxPermittedZs', String(maxZs));
+    import('@/utils/zsCalculations')
+      .then(({ getMaxZsWithRcd, getRcdMaxZs }) => {
+        // Extract curve from device type (e.g., 'mcb-type-b' → 'B')
+        const curve = deviceType.includes('type-b')
+          ? 'B'
+          : deviceType.includes('type-c')
+            ? 'C'
+            : deviceType.includes('type-d')
+              ? 'D'
+              : 'B';
+        let maxZs: number | null = null;
+        let source: 'rcd' | 'overcurrent' = 'overcurrent';
+        if (isTT) {
+          maxZs = getRcdMaxZs(formData.rcdIdn || formData.rcdRating || '30');
+          source = 'rcd';
+        } else {
+          const lookup = getMaxZsWithRcd({
+            bsStandard: bsEn,
+            curve,
+            rating,
+            rcdRating:
+              formData.protectionRcd || formData.protectionRcbo
+                ? formData.rcdRating || formData.rcdIdn || null
+                : null,
+            rcdType: formData.rcdType || null,
+            protectiveDeviceType: deviceType,
+          });
+          maxZs = lookup.maxZs;
+          source = lookup.source === 'rcd' ? 'rcd' : 'overcurrent';
         }
-      }
-    }).catch(() => {});
+        if (maxZs !== null) {
+          setZsLimitSource(source);
+          if (String(maxZs) !== formData.maxPermittedZs) {
+            onUpdate('maxPermittedZs', String(maxZs));
+          }
+        }
+      })
+      .catch(() => {});
   }, [
     formData.overcurrentDeviceBsEn,
     formData.bsEnStandard,
@@ -516,8 +531,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
     const calDate = new Date(formData.testEquipmentCalDate);
     const today = new Date();
     const monthsAgo =
-      (today.getFullYear() - calDate.getFullYear()) * 12 +
-      (today.getMonth() - calDate.getMonth());
+      (today.getFullYear() - calDate.getFullYear()) * 12 + (today.getMonth() - calDate.getMonth());
     return monthsAgo > 12 ? 'expired' : 'valid';
   }, [formData.testEquipmentCalDate]);
 
@@ -616,10 +630,15 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
             {/* Cross-connect readings — optional, hidden by default */}
             <button
               type="button"
-              onClick={() => setShowCrossConnect((v) => !v)}
+              onClick={() => {
+                haptic.light();
+                setShowCrossConnect((v) => !v);
+              }}
               className="w-full h-11 rounded-xl text-sm font-medium bg-white/[0.06] border border-white/[0.12] text-white touch-manipulation active:scale-[0.98]"
             >
-              {showCrossConnect ? 'Hide cross-connect readings' : 'Show cross-connect readings (optional)'}
+              {showCrossConnect
+                ? 'Hide cross-connect readings'
+                : 'Show cross-connect readings (optional)'}
             </button>
 
             {showCrossConnect && (
@@ -650,7 +669,6 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
           </div>
         )}
 
-
         <FormField label="Test voltage">
           <ToggleButtons
             options={INSULATION_TEST_VOLTAGES.map((v) => ({
@@ -665,7 +683,13 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           {[
             // A4:2026 MEIWC model form: single-phase L-N reading IS the "Live-Live" column (ELE-1228)
-            { field: 'insulationLiveNeutral', label: (formData.supplyPhases === '3' || formData.supplyPhases === 'Three') ? 'L-N (MΩ)' : 'L-L (MΩ)' },
+            {
+              field: 'insulationLiveNeutral',
+              label:
+                formData.supplyPhases === '3' || formData.supplyPhases === 'Three'
+                  ? 'L-N (MΩ)'
+                  : 'L-L (MΩ)',
+            },
             { field: 'insulationLiveEarth', label: 'L-E (MΩ)' },
             // Explicit L-L only applicable to 3-phase
             ...(formData.supplyPhases === '3' || formData.supplyPhases === 'Three'
@@ -691,7 +715,10 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                   />
                   <button
                     type="button"
-                    onClick={() => onUpdate(field, '>999')}
+                    onClick={() => {
+                      haptic.light();
+                      onUpdate(field, '>999');
+                    }}
                     className={cn(
                       'h-11 w-11 rounded-xl border text-base font-semibold touch-manipulation active:scale-[0.97] transition-all shrink-0',
                       isInfinite
@@ -738,7 +765,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
             </div>
             {zsFromZe && (
               <div className="mt-2 flex flex-wrap items-center gap-2">
-                <span className="text-[11px] text-white/85">
+                <span className="text-[11px] text-white">
                   Ze {formData.externalImpedance} + (R1+R2 {formData.continuityR1R2}
                   {zsTempCorrection ? ' × 1.2' : ''}) = {zsFromZe} Ω
                 </span>
@@ -746,6 +773,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                   <button
                     type="button"
                     onClick={() => {
+                      haptic.light();
                       lastAutoZsRef.current = zsFromZe;
                       onUpdate('earthFaultLoopImpedance', zsFromZe);
                     }}
@@ -756,7 +784,10 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                 )}
                 <button
                   type="button"
-                  onClick={() => setZsTempCorrection((v) => !v)}
+                  onClick={() => {
+                    haptic.light();
+                    setZsTempCorrection((v) => !v);
+                  }}
                   aria-pressed={zsTempCorrection}
                   className={cn(
                     'h-11 px-3 rounded-xl border text-xs font-semibold touch-manipulation active:scale-[0.97] transition-all',
@@ -792,7 +823,10 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
               </div>
               <button
                 type="button"
-                onClick={() => setZsManualOverride((v) => !v)}
+                onClick={() => {
+                  haptic.light();
+                  setZsManualOverride((v) => !v);
+                }}
                 className={cn(
                   'h-11 px-2.5 rounded-xl border text-xs font-semibold touch-manipulation active:scale-[0.97] transition-all shrink-0',
                   zsManualOverride
@@ -917,7 +951,6 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
             {/* RCD/RCBO Testing */}
             {(formData.protectionRcd || formData.protectionRcbo) && (
               <div className="space-y-4">
-
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
                   <FormField label="RCD type">
                     <MobileSelectPicker
@@ -1061,7 +1094,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                     </div>
                   </FormField>
                 </div>
-                <span className="text-[11px] text-white/85 block">
+                <span className="text-[11px] text-white block">
                   Note: not all AFDDs have a test button
                 </span>
               </div>
@@ -1098,11 +1131,9 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                     onCheckedChange={(c) => onUpdate('spdTestButton', c)}
                     className="h-6 w-6 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 touch-manipulation"
                   />
-                  <span className="text-sm text-white">
-                    SPD test button operates correctly
-                  </span>
+                  <span className="text-sm text-white">SPD test button operates correctly</span>
                 </label>
-                <span className="text-[11px] text-white/85 block">
+                <span className="text-[11px] text-white block">
                   Note: not all SPDs have visible functionality indication
                 </span>
               </div>
@@ -1166,11 +1197,15 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
         <button
           type="button"
           onClick={() => {
+            haptic.light();
             const equipment = loadTestEquipment?.();
             if (equipment) {
-              if (equipment.testEquipmentModel) onUpdate('testEquipmentModel', equipment.testEquipmentModel);
-              if (equipment.testEquipmentSerial) onUpdate('testEquipmentSerial', equipment.testEquipmentSerial);
-              if (equipment.testEquipmentCalDate) onUpdate('testEquipmentCalDate', equipment.testEquipmentCalDate);
+              if (equipment.testEquipmentModel)
+                onUpdate('testEquipmentModel', equipment.testEquipmentModel);
+              if (equipment.testEquipmentSerial)
+                onUpdate('testEquipmentSerial', equipment.testEquipmentSerial);
+              if (equipment.testEquipmentCalDate)
+                onUpdate('testEquipmentCalDate', equipment.testEquipmentCalDate);
             }
           }}
           className={cn(
@@ -1225,93 +1260,121 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
         {calibrationStatus === 'expired' && (
           <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
             <p className="text-xs font-semibold text-red-400">Calibration expired</p>
-            <p className="text-xs text-white/85 mt-0.5">
-              Test equipment must be calibrated within the last 12 months. This certificate may not be valid.
+            <p className="text-xs text-white mt-0.5">
+              Test equipment must be calibrated within the last 12 months. This certificate may not
+              be valid.
             </p>
           </div>
         )}
       </div>
 
-      {/* Spacer while the keypad is up — lets the last readings scroll clear
-          of the fixed panel (~290px), which the page's own bottom padding
-          cannot cover. */}
-      {coarsePointer && activeKeypad && (
-        <div aria-hidden="true" className="h-72 lg:col-span-2" />
-      )}
-
-      {/* Reading keypad — touch devices only. Verdicts reuse the tab's own checks. */}
-      {coarsePointer && activeKeypad && (() => {
-        const meta = KEYPAD_META[activeKeypad];
-        if (!meta) return null;
-        const reading =
-          activeKeypad === 'insulationLiveNeutral' && threePhaseSupply
-            ? { ...meta, label: 'Insulation L-N' }
-            : meta;
-        const raw = (formData[activeKeypad] as string) || '';
-        let status: KeypadStatus | null = null;
-        let hint: string | undefined;
-        if (
-          activeKeypad === 'insulationLiveNeutral' ||
-          activeKeypad === 'insulationLiveEarth' ||
-          activeKeypad === 'insulationLiveLive'
-        ) {
-          const ok = checkInsulationValue(raw);
-          if (ok === true) status = { tone: 'pass', label: `At or above the ${insulationMin} MΩ minimum (Reg 643.3)` };
-          if (ok === false) status = { tone: 'check', label: `Below the ${insulationMin} MΩ minimum (Reg 643.3)` };
-        } else if (activeKeypad === 'earthFaultLoopImpedance') {
-          if (zsValidation === true && zsMargin)
-            status = { tone: 'pass', label: `${zsMargin.percent}% margin vs max ${formData.maxPermittedZs} Ω` };
-          if (zsValidation === false)
-            status = { tone: 'check', label: `Exceeds max ${formData.maxPermittedZs} Ω (Reg ${zsRegRef})` };
-          if (zsValidation === null) hint = formData.maxPermittedZs ? `Max permitted ${formData.maxPermittedZs} Ω` : 'Max Zs set on the Circuit tab';
-        } else if (activeKeypad === 'prospectiveFaultCurrent') {
-          if (pfcKaCheck?.pass === true) status = { tone: 'pass', label: `Within the ${pfcKaCheck.ka} kA device rating` };
-          if (pfcKaCheck?.pass === false) status = { tone: 'check', label: `Exceeds ${pfcKaCheck.ka} kA (Reg 434.5.1)` };
-        } else if (activeKeypad === 'rcdOneX' || activeKeypad === 'rcboTripTime') {
-          const ms = parseFloat(raw);
-          if (raw && !isNaN(ms)) status = ms <= 300
-            ? { tone: 'pass', label: 'Within the 300 ms limit at 1×IΔn' }
-            : { tone: 'check', label: 'Above the 300 ms limit at 1×IΔn' };
-        } else if (activeKeypad === 'rcdFiveX') {
-          const ms = parseFloat(raw);
-          if (raw && !isNaN(ms)) status = ms <= 40
-            ? { tone: 'pass', label: 'Within the 40 ms limit at 5×IΔn' }
-            : { tone: 'check', label: 'Above the 40 ms limit at 5×IΔn' };
-        } else if (activeKeypad === 'earthElectrodeResistance') {
-          if (raIdnResult) status = raIdnResult.pass
-            ? { tone: 'pass', label: `RA×IΔn = ${raIdnResult.touchVoltage} V — within 50 V (Reg 411.5.3)` }
-            : { tone: 'check', label: `RA×IΔn = ${raIdnResult.touchVoltage} V — exceeds 50 V (Reg 411.5.3)` };
-        } else {
-          hint = 'No fixed limit — record the measured value';
-        }
-        const seqIx = keypadSequence.indexOf(activeKeypad);
-        // Off-sequence fields advance through the DOM, so they are only "last"
-        // when no visible reading follows them on the page.
-        const isLast =
-          seqIx === -1
-            ? nextVisibleKeypadField(activeKeypad) === null
-            : seqIx === keypadSequence.length - 1;
-        return (
-          <>
-            {/* Scroll room so even the last reading on the page can rise clear
+      {/* Reading keypad — touch devices only. Verdicts reuse the tab's own checks.
+          The single scroll spacer lives with the panel below (h-[300px]); a second
+          one here stacked ~590px of dead scroll under the last card. */}
+      {coarsePointer &&
+        activeKeypad &&
+        (() => {
+          const meta = KEYPAD_META[activeKeypad];
+          if (!meta) return null;
+          const reading =
+            activeKeypad === 'insulationLiveNeutral' && threePhaseSupply
+              ? { ...meta, label: 'Insulation L-N' }
+              : meta;
+          const raw = (formData[activeKeypad] as string) || '';
+          let status: KeypadStatus | null = null;
+          let hint: string | undefined;
+          if (
+            activeKeypad === 'insulationLiveNeutral' ||
+            activeKeypad === 'insulationLiveEarth' ||
+            activeKeypad === 'insulationLiveLive'
+          ) {
+            const ok = checkInsulationValue(raw);
+            if (ok === true)
+              status = {
+                tone: 'pass',
+                label: `At or above the ${insulationMin} MΩ minimum (Reg 643.3)`,
+              };
+            if (ok === false)
+              status = {
+                tone: 'check',
+                label: `Below the ${insulationMin} MΩ minimum (Reg 643.3)`,
+              };
+          } else if (activeKeypad === 'earthFaultLoopImpedance') {
+            if (zsValidation === true && zsMargin)
+              status = {
+                tone: 'pass',
+                label: `${zsMargin.percent}% margin vs max ${formData.maxPermittedZs} Ω`,
+              };
+            if (zsValidation === false)
+              status = {
+                tone: 'check',
+                label: `Exceeds max ${formData.maxPermittedZs} Ω (Reg ${zsRegRef})`,
+              };
+            if (zsValidation === null)
+              hint = formData.maxPermittedZs
+                ? `Max permitted ${formData.maxPermittedZs} Ω`
+                : 'Max Zs set on the Circuit tab';
+          } else if (activeKeypad === 'prospectiveFaultCurrent') {
+            if (pfcKaCheck?.pass === true)
+              status = { tone: 'pass', label: `Within the ${pfcKaCheck.ka} kA device rating` };
+            if (pfcKaCheck?.pass === false)
+              status = { tone: 'check', label: `Exceeds ${pfcKaCheck.ka} kA (Reg 434.5.1)` };
+          } else if (activeKeypad === 'rcdOneX' || activeKeypad === 'rcboTripTime') {
+            const ms = parseFloat(raw);
+            if (raw && !isNaN(ms))
+              status =
+                ms <= 300
+                  ? { tone: 'pass', label: 'Within the 300 ms limit at 1×IΔn' }
+                  : { tone: 'check', label: 'Above the 300 ms limit at 1×IΔn' };
+          } else if (activeKeypad === 'rcdFiveX') {
+            const ms = parseFloat(raw);
+            if (raw && !isNaN(ms))
+              status =
+                ms <= 40
+                  ? { tone: 'pass', label: 'Within the 40 ms limit at 5×IΔn' }
+                  : { tone: 'check', label: 'Above the 40 ms limit at 5×IΔn' };
+          } else if (activeKeypad === 'earthElectrodeResistance') {
+            if (raIdnResult)
+              status = raIdnResult.pass
+                ? {
+                    tone: 'pass',
+                    label: `RA×IΔn = ${raIdnResult.touchVoltage} V — within 50 V (Reg 411.5.3)`,
+                  }
+                : {
+                    tone: 'check',
+                    label: `RA×IΔn = ${raIdnResult.touchVoltage} V — exceeds 50 V (Reg 411.5.3)`,
+                  };
+          } else {
+            hint = 'No fixed limit — record the measured value';
+          }
+          const seqIx = keypadSequence.indexOf(activeKeypad);
+          // Off-sequence fields advance through the DOM, so they are only "last"
+          // when no visible reading follows them on the page.
+          const isLast =
+            seqIx === -1
+              ? nextVisibleKeypadField(activeKeypad) === null
+              : seqIx === keypadSequence.length - 1;
+          return (
+            <>
+              {/* Scroll room so even the last reading on the page can rise clear
                 of the keypad panel — removed the moment the keypad closes. */}
-            <div className="h-[300px] lg:col-span-2" aria-hidden="true" />
-            <MWReadingKeypad
-              activeField={activeKeypad}
-            label={reading.label}
-            unit={reading.unit}
-            value={raw}
-            allowInfinity={!!reading.inf}
-            status={status}
-            hint={hint}
-            isLastReading={isLast}
-              onChange={(v) => onUpdate(activeKeypad, v)}
-              onNext={keypadAdvance}
-              onClose={() => setActiveKeypad(null)}
-            />
-          </>
-        );
-      })()}
+              <div className="h-[300px] lg:col-span-2" aria-hidden="true" />
+              <MWReadingKeypad
+                activeField={activeKeypad}
+                label={reading.label}
+                unit={reading.unit}
+                value={raw}
+                allowInfinity={!!reading.inf}
+                status={status}
+                hint={hint}
+                isLastReading={isLast}
+                onChange={(v) => onUpdate(activeKeypad, v)}
+                onNext={keypadAdvance}
+                onClose={() => setActiveKeypad(null)}
+              />
+            </>
+          );
+        })()}
     </div>
   );
 };

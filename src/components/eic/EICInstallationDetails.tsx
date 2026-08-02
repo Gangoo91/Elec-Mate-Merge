@@ -1,5 +1,4 @@
 import React from 'react';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import EICClientDetailsSection from './EICClientDetailsSection';
 import EICSupplyCharacteristicsSection from './EICSupplyCharacteristicsSection';
@@ -8,33 +7,28 @@ import EarthingAndBondingSection from './EarthingAndBondingSection';
 import StandardsComplianceSection from './StandardsComplianceSection';
 import SmartFieldDependencies from './SmartFieldDependencies';
 
-const SectionTitle = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
-);
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
-const FormField = ({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) => (
-  <div>
-    <Label className="text-white text-xs mb-1.5 block">{label}{required && ' *'}</Label>
-    {children}
-  </div>
-);
+const textareaCn =
+  'textarea-soft rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 text-base md:text-base text-white placeholder:text-white/25 caret-elec-yellow transition-colors focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/50 focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
 
 interface EICInstallationDetailsProps {
   formData: any;
   onUpdate: (field: string, value: any) => void;
-  onQuickSave?: () => void;
 }
 
 const EICInstallationDetails: React.FC<EICInstallationDetailsProps> = ({
   formData,
   onUpdate,
 }) => {
+  // No bottom padding on the tab root — EICForm's <main> already carries the
+  // sticky footer clearance (pb-32 sm:pb-24); stacking another pb-20 on top
+  // left ~200px of dead scroll under the last field.
   return (
-    <div className="space-y-4 pb-20 lg:pb-4">
+    <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
       <SmartFieldDependencies formData={formData} onUpdate={onUpdate} />
+      {/* Client details spans both columns — it holds the address blocks */}
       <EICClientDetailsSection formData={formData} onUpdate={onUpdate} />
       <EICSupplyCharacteristicsSection formData={formData} onUpdate={onUpdate} />
       <EICElectricalInstallationSection formData={formData} onUpdate={onUpdate} />
@@ -49,16 +43,18 @@ const EICInstallationDetails: React.FC<EICInstallationDetailsProps> = ({
           .split(',')
           .includes(t)
       ) && (
-        <div className="space-y-4">
-          <SectionTitle title="Comments on Existing Installation" />
-          <p className="text-[10px] text-white">
+        <div className={`${cardCn} lg:col-span-2`}>
+          <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">
+            Comments on existing installation
+          </h2>
+          <p className="text-[11px] text-white">
             In the case of an addition or alteration, see Regulation 644.1.2
           </p>
           <Textarea
             value={formData.existingInstallationComments || ''}
             onChange={(e) => onUpdate('existingInstallationComments', e.target.value)}
             placeholder="Record any comments on the condition of the existing installation..."
-            className="min-h-[100px] text-base touch-manipulation resize-none bg-white/[0.06] border-white/[0.08] placeholder:text-white"
+            className={textareaCn}
           />
         </div>
       )}

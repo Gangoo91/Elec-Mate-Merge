@@ -4,12 +4,14 @@
  * Sound level readings with dB validation, environmental conditions, test equipment
  */
 
+import { useMemo } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
 import ComboboxCell from '@/components/table-cells/ComboboxCell';
 import { useFireAlarmSmartForm } from '@/hooks/inspection/useFireAlarmSmartForm';
+import useReadingKeypad, { ReadingMeta } from '@/hooks/useReadingKeypad';
 
 const cardCn =
   '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
@@ -156,6 +158,50 @@ export default function FAG3SoundEnvironment({ formData, onUpdate }: Props) {
       equipment.map((e: any) => (e.id === id ? { ...e, [field]: value } : e))
     );
 
+  // ── Reading keypad — shared MW pattern ──
+  // Per-reading dB fields are keyed by reading id so data-keypad-field stays
+  // unique as rows are added/removed. Values flow through the EXISTING
+  // updateReading/onUpdate paths; the header verdict reuses the r.result the
+  // file already auto-computes (no new compliance logic).
+  const keypadMeta = useMemo(() => {
+    const meta: Record<string, ReadingMeta> = {
+      ambientTemperature: { label: 'Ambient temperature', unit: '°C' },
+      ambientNoiseLevel: { label: 'Ambient noise level', unit: 'dB' },
+    };
+    readings.forEach((r: any, idx: number) => {
+      meta[`dBReading-${r.id}`] = { label: `Sound level — reading ${idx + 1}`, unit: 'dB' };
+    });
+    return meta;
+  }, [readings]);
+  const keypad = useReadingKeypad({
+    meta: keypadMeta,
+    getValue: (field) => {
+      if (field === 'ambientTemperature') return String(formData.ambientTemperature ?? '');
+      if (field === 'ambientNoiseLevel') return String(formData.ambientNoiseLevel ?? '');
+      const id = field.replace('dBReading-', '');
+      const reading = readings.find((r: any) => r.id === id);
+      return String(reading?.dBReading ?? '');
+    },
+    setValue: (field, value) => {
+      if (field === 'ambientTemperature' || field === 'ambientNoiseLevel') {
+        onUpdate(field, value);
+        return;
+      }
+      updateReading(field.replace('dBReading-', ''), 'dBReading', value);
+    },
+    getStatus: (field) => {
+      if (!field.startsWith('dBReading-')) return null;
+      const id = field.replace('dBReading-', '');
+      const reading = readings.find((r: any) => r.id === id);
+      if (!reading) return null;
+      if (reading.result === 'pass')
+        return { tone: 'pass', label: `Meets ${reading.minRequired || '65'} dB minimum` };
+      if (reading.result === 'fail')
+        return { tone: 'check', label: `Below ${reading.minRequired || '65'} dB minimum` };
+      return null;
+    },
+  });
+
   return (
     <div className="py-4 space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
       {/* Sound level readings */}
@@ -222,6 +268,7 @@ export default function FAG3SoundEnvironment({ formData, onUpdate }: Props) {
                         : ''
                   )}
                   placeholder="e.g. 85"
+                  {...keypad.field(`dBReading-${r.id}`)}
                 />
               </Field>
               <Field label="Min required">
@@ -262,6 +309,7 @@ export default function FAG3SoundEnvironment({ formData, onUpdate }: Props) {
               inputMode="decimal"
               className={inputCn}
               placeholder="e.g. 20"
+              {...keypad.field('ambientTemperature')}
             />
           </Field>
           <Field label="Ambient noise (dB)">
@@ -271,6 +319,7 @@ export default function FAG3SoundEnvironment({ formData, onUpdate }: Props) {
               inputMode="decimal"
               className={inputCn}
               placeholder="e.g. 45"
+              {...keypad.field('ambientNoiseLevel')}
             />
           </Field>
           <Field label="Weather">
@@ -358,6 +407,12 @@ export default function FAG3SoundEnvironment({ formData, onUpdate }: Props) {
           Add test equipment
         </button>
       </div>
+
+      {/* Scroll room so the last reading can rise clear of the keypad */}
+      {keypad.spacer}
+
+      {/* Reading keypad — coarse-pointer devices only */}
+      {keypad.element}
     </div>
   );
 }

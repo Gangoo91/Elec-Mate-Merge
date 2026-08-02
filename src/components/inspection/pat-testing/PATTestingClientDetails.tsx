@@ -19,6 +19,7 @@ import { useInspectorProfiles, InspectorProfile } from '@/hooks/useInspectorProf
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { TestingInstrument } from '@/types/company';
 import { PATTesterAutocomplete } from './PATTesterAutocomplete';
+import useReadingKeypad from '@/hooks/useReadingKeypad';
 
 interface PATTestingClientDetailsProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -48,12 +49,25 @@ const SectionHeader = ({ title }: { title: string }) => (
   <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
+/** The only free-number reading on this tab — ambient temperature. */
+const KEYPAD_META = {
+  testTemperature: { label: 'Ambient temperature', unit: '°C' },
+};
+
 const PATTestingClientDetails: React.FC<PATTestingClientDetailsProps> = ({
   formData,
   onUpdate,
 }) => {
   const { profiles, getDefaultProfile } = useInspectorProfiles();
   const { companyProfile } = useCompanyProfile();
+
+  // Reading keypad — shared MW pattern. Value flows through the existing
+  // onUpdate path; the spread only adds keypad props.
+  const keypad = useReadingKeypad({
+    meta: KEYPAD_META,
+    getValue: (field) => String(formData[field] ?? ''),
+    setValue: (field, value) => onUpdate(field, value),
+  });
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const updateTestEquipment = (field: string, value: any) => {
@@ -310,6 +324,7 @@ const PATTestingClientDetails: React.FC<PATTestingClientDetailsProps> = ({
               value={formData.testTemperature || ''}
               onChange={(e) => onUpdate('testTemperature', e.target.value)}
               className={inputCn}
+              {...keypad.field('testTemperature')}
             />
           </div>
         </div>
@@ -447,6 +462,9 @@ const PATTestingClientDetails: React.FC<PATTestingClientDetailsProps> = ({
           />
         </div>
       </div>
+
+      {keypad.spacer}
+      {keypad.element}
     </div>
   );
 };

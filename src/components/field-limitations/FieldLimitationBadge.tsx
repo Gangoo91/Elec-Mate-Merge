@@ -59,15 +59,20 @@ export const FieldLimitationBadge: React.FC<FieldLimitationBadgeProps> = ({
   };
 
   return (
-    <div className={cn('flex items-center gap-1', className)}>
+    <div className={cn('flex items-center gap-2', className)}>
       {markers.map((marker) => (
         <button
           key={marker}
           type="button"
           onClick={() => toggle(marker)}
           className={cn(
-            'rounded-lg font-semibold touch-manipulation transition-colors shrink-0 active:scale-[0.98] border',
-            compact ? 'h-7 px-2 text-[10px]' : 'h-8 px-3 text-[10px]',
+            'relative rounded-lg font-semibold touch-manipulation transition-colors shrink-0 active:scale-[0.98] border',
+            // The pill stays small so the fixed-height label rows it sits in do
+            // not grow; an invisible pseudo-element carries the 44px tap target.
+            // Asymmetric on the vertical so it reaches up into the grid gap
+            // rather than down over the input beneath it.
+            "after:absolute after:content-[''] after:-inset-x-1 after:-top-3 after:-bottom-1",
+            compact ? 'h-7 min-w-[36px] px-2 text-[10px]' : 'h-8 min-w-[36px] px-3 text-[10px]',
             value === marker
               ? MARKER_CLASSES[marker]
               : 'bg-white/[0.05] border-white/[0.08] text-white hover:text-white'

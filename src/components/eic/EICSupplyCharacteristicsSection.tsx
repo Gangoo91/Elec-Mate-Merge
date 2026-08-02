@@ -1,28 +1,47 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useHaptic } from '@/hooks/useHaptic';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
-import { Checkbox } from '@/components/ui/checkbox';
-import { AlertCircle, Shield, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import useReadingKeypad from '@/hooks/useReadingKeypad';
 
 interface EICSupplyCharacteristicsSectionProps {
   formData: Record<string, string | boolean>;
   onUpdate: (field: string, value: string | boolean) => void;
 }
 
-const SectionTitle = ({ title }: { title: string }) => (
-  <div className="border-b border-white/[0.06] pb-1 mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
-  </div>
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
+
+const inputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
+
+const labelCn = 'text-[12px] font-medium text-white mb-1 block';
+
+const pickerTriggerCn =
+  'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';
+
+const chipBase =
+  'h-11 rounded-xl text-xs transition-all touch-manipulation active:scale-[0.98]';
+
+/** Canonical supplyVoltage is the chip form ('230V'/'400V'). The provider seed
+ * and the design-import path historically stored bare '230'/'400' — map those
+ * on read so the chips light, while a mount effect upgrades the stored value. */
+const normaliseSupplyVoltage = (value: string): string =>
+  value === '230' ? '230V' : value === '400' ? '400V' : value;
+const chipOn = 'bg-elec-yellow border border-elec-yellow text-black font-semibold';
+const chipOff = 'bg-white/[0.06] border border-white/[0.12] text-white font-medium';
+
+const SectionHeading = ({ title }: { title: string }) => (
+  <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">{title}</h2>
 );
 
 const FormField = ({ label, required, hint, children }: { label: string; required?: boolean; hint?: string; children: React.ReactNode }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">{label}{required && ' *'}</Label>
+    <Label className={labelCn}>{label}{required && ' *'}</Label>
     {children}
-    {hint && <span className="text-[10px] text-white block mt-1">{hint}</span>}
+    {hint && <span className="text-[11px] text-white block mt-1">{hint}</span>}
   </div>
 );
 
@@ -117,10 +136,44 @@ const EARTHING_OPTIONS: { key: string; value: string; variant?: 'pme' | 'pnb'; l
   { key: 'it', value: 'it', label: 'IT' },
 ];
 
+/** Numeric supply readings the keypad serves — free-number inputs only.
+ * Nominal voltage is chips (230V/400V/Other) so it stays keypad-free. */
+const KEYPAD_META = {
+  supplyFrequency: { label: 'Frequency — supply', unit: 'Hz' },
+  prospectiveFaultCurrent: { label: 'Ipf — prospective fault current', unit: 'kA' },
+  externalZe: { label: 'Ze — external loop impedance', unit: 'Ω' },
+};
+const KEYPAD_SEQUENCE = ['supplyFrequency', 'prospectiveFaultCurrent', 'externalZe'];
+
 const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionProps> = ({
   formData,
   onUpdate,
 }) => {
+  // Reading keypad — shared MW pattern. Values flow through the existing
+  // onUpdate path; getValue mirrors what each input renders (frequency
+  // defaults to '50' exactly like its value prop).
+  const keypad = useReadingKeypad({
+    meta: KEYPAD_META,
+    sequence: KEYPAD_SEQUENCE,
+    getValue: (field) =>
+      field === 'supplyFrequency'
+        ? String(formData.supplyFrequency ?? '50')
+        : String(formData[field] ?? ''),
+    setValue: (field, value) => onUpdate(field, value),
+  });
+
+  const storedVoltage = String(formData.supplyVoltage ?? '');
+  const supplyVoltage = normaliseSupplyVoltage(storedVoltage);
+
+  // Write path — upgrade a legacy bare '230'/'400' (provider seed, design
+  // import, old saves) to the canonical chip form so the certificate prints
+  // '230V' and every consumer sees one format.
+  useEffect(() => {
+    if (storedVoltage !== supplyVoltage) {
+      onUpdate('supplyVoltage', supplyVoltage);
+    }
+  }, [storedVoltage, supplyVoltage, onUpdate]);
+
   // Get available types based on selected BS standard
   const getAvailableTypes = () => {
     const bsStandard = formData.supplyDeviceBsEn || '';
@@ -194,78 +247,115 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
     Object.entries(values).forEach(([field, value]) => onUpdate(field, value));
   };
 
+
+  const haptic = useHaptic();
   return (
-    <div className="space-y-4">
+    <div
+      // lg:contents — on desktop each card becomes its own grid item of the
+      // parent 2-col grid (the MW per-card layout), so sections of different
+      // heights no longer leave multi-card blank bands. Events still bubble
+      // through display:contents, so the delegated haptic keeps working.
+      className="space-y-4 lg:space-y-0 lg:contents"
+      // Delegated press haptic — every chip/button tap in this section buzzes
+      // like the MW tabs without wiring each onClick individually.
+      onPointerDown={(e) => {
+        if ((e.target as HTMLElement).closest('button')) haptic.light();
+      }}
+    >
       {/* Supply Details */}
-      <SectionTitle title="Supply Details" />
+      <div className={cardCn}>
+        <SectionHeading title="Supply details" />
 
-      {/* Quick-start presets — covers most UK installations */}
-      <div className="space-y-1.5">
-        <Label className="text-[10px] text-white/60 uppercase tracking-wider">
-          Quick start
-        </Label>
-        <div className="grid grid-cols-3 gap-1.5">
-          {[
-            {
-              key: 'dom-tncs',
-              label: 'Domestic',
-              sub: '1ph 230V TN-C-S',
-              values: {
-                supplyVoltage: '230V',
-                phases: 'single',
-                earthingArrangement: 'tncs',
-                tncsVariant: 'pme',
-                supplyPME: 'yes',
-                liveCondutorType: 'ac-1ph-2w',
+        {/* Quick-start presets — covers most UK installations */}
+        <div>
+          <Label className={labelCn}>Quick start</Label>
+          <div className="grid grid-cols-3 gap-2">
+            {[
+              {
+                key: 'dom-tncs',
+                label: 'Domestic',
+                sub: '1ph 230V TN-C-S',
+                values: {
+                  supplyVoltage: '230V',
+                  phases: 'single',
+                  earthingArrangement: 'tncs',
+                  tncsVariant: 'pme',
+                  supplyPME: 'yes',
+                  liveCondutorType: 'ac-1ph-2w',
+                },
               },
-            },
-            {
-              key: 'com-tncs',
-              label: 'Commercial',
-              sub: '3ph 400V TN-C-S',
-              values: {
-                supplyVoltage: '400V',
-                phases: 'three',
-                earthingArrangement: 'tncs',
-                tncsVariant: 'pme',
-                supplyPME: 'yes',
-                liveCondutorType: 'ac-3ph-4w',
+              {
+                key: 'com-tncs',
+                label: 'Commercial',
+                sub: '3ph 400V TN-C-S',
+                values: {
+                  supplyVoltage: '400V',
+                  phases: 'three',
+                  earthingArrangement: 'tncs',
+                  tncsVariant: 'pme',
+                  supplyPME: 'yes',
+                  liveCondutorType: 'ac-3ph-4w',
+                },
               },
-            },
-            {
-              key: 'tt-1ph',
-              label: 'TT supply',
-              sub: '1ph 230V electrode',
-              values: {
-                supplyVoltage: '230V',
-                phases: 'single',
-                earthingArrangement: 'tt',
-                tncsVariant: '',
-                supplyPME: 'no',
-                liveCondutorType: 'ac-1ph-2w',
+              {
+                key: 'tt-1ph',
+                label: 'TT supply',
+                sub: '1ph 230V electrode',
+                values: {
+                  supplyVoltage: '230V',
+                  phases: 'single',
+                  earthingArrangement: 'tt',
+                  tncsVariant: '',
+                  supplyPME: 'no',
+                  liveCondutorType: 'ac-1ph-2w',
+                },
               },
-            },
-          ].map((preset) => (
-            <button
-              key={preset.key}
-              type="button"
-              onClick={() => applyPreset(preset.values)}
-              className="h-12 rounded-lg bg-elec-yellow/10 border border-elec-yellow/25 text-elec-yellow touch-manipulation active:scale-[0.98] flex flex-col items-center justify-center gap-0.5 px-1"
-            >
-              <span className="text-[11px] font-semibold leading-none">{preset.label}</span>
-              <span className="text-[9px] text-elec-yellow/70 leading-none text-center">
-                {preset.sub}
-              </span>
-            </button>
-          ))}
+            ].map((preset) => {
+              // Lit when every preset field matches the form — MW presets
+              // reflect state so a returning user sees what was applied.
+              const isActive = Object.entries(preset.values).every(([field, value]) =>
+                field === 'supplyVoltage'
+                  ? supplyVoltage === value
+                  : String(formData[field] ?? '') === value
+              );
+              return (
+                <button
+                  key={preset.key}
+                  type="button"
+                  onClick={() => applyPreset(preset.values)}
+                  className={cn(
+                    'h-12 rounded-xl touch-manipulation active:scale-[0.98] flex flex-col items-center justify-center gap-0.5 px-1 transition-all',
+                    isActive
+                      ? 'bg-elec-yellow border border-elec-yellow'
+                      : 'bg-white/[0.06] border border-white/[0.12]'
+                  )}
+                >
+                  <span
+                    className={cn(
+                      'text-[11px] font-semibold leading-none',
+                      isActive ? 'text-black' : 'text-white'
+                    )}
+                  >
+                    {preset.label}
+                  </span>
+                  <span
+                    className={cn(
+                      'text-[10px] leading-none text-center',
+                      isActive ? 'text-black/70' : 'text-white'
+                    )}
+                  >
+                    {preset.sub}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
-      </div>
 
-      <div className="space-y-3">
         {/* Voltage + Phases as toggle buttons */}
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <FormField label="Voltage" required>
-            <div className="grid grid-cols-3 gap-1">
+            <div className="grid grid-cols-3 gap-2">
               {[
                 { value: '230V', label: '230V' },
                 { value: '400V', label: '400V' },
@@ -276,10 +366,8 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                   type="button"
                   onClick={() => onUpdate('supplyVoltage', opt.value)}
                   className={cn(
-                    'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-                    formData.supplyVoltage === opt.value
-                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                    chipBase,
+                    supplyVoltage === opt.value ? chipOn : chipOff
                   )}
                 >
                   {opt.label}
@@ -288,20 +376,18 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
             </div>
           </FormField>
           <FormField label="Phases" required>
-            <div className="grid grid-cols-2 gap-1">
+            <div className="grid grid-cols-2 gap-2">
               {[
-                { value: 'single', label: '1-Phase' },
-                { value: 'three', label: '3-Phase' },
+                { value: 'single', label: 'Single' },
+                { value: 'three', label: 'Three' },
               ].map((opt) => (
                 <button
                   key={opt.value}
                   type="button"
                   onClick={() => handlePhasesChange(opt.value)}
                   className={cn(
-                    'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-                    formData.phases === opt.value
-                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                    chipBase,
+                    formData.phases === opt.value ? chipOn : chipOff
                   )}
                 >
                   {opt.label}
@@ -319,25 +405,25 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
             value={formData.supplyFrequency ?? '50'}
             onChange={(e) => onUpdate('supplyFrequency', e.target.value)}
             placeholder="50"
-            className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+            className={inputCn}
+            {...keypad.field('supplyFrequency')}
           />
         </FormField>
       </div>
 
       {/* Earthing Arrangement */}
-      <SectionTitle title="Earthing Arrangement" />
-      <div className="space-y-3">
-        <div className="grid grid-cols-3 gap-1">
+      <div className={cardCn}>
+        <SectionHeading title="Earthing arrangement" />
+        <div className="grid grid-cols-3 gap-2">
           {EARTHING_OPTIONS.map((opt) => (
             <button
               key={opt.key}
               type="button"
               onClick={() => handleEarthingArrangementChange(opt)}
               className={cn(
-                'h-10 rounded-lg font-semibold transition-all touch-manipulation text-[11px] active:scale-[0.98]',
-                isEarthingActive(opt)
-                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                chipBase,
+                'text-[11px]',
+                isEarthingActive(opt) ? chipOn : chipOff
               )}
             >
               {opt.label}
@@ -346,7 +432,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
         </div>
 
         <FormField label="PME">
-          <div className="grid grid-cols-3 gap-1">
+          <div className="grid grid-cols-3 gap-2">
             {[
               { value: 'yes', label: 'Yes' },
               { value: 'no', label: 'No' },
@@ -357,10 +443,8 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                 type="button"
                 onClick={() => onUpdate('supplyPME', opt.value)}
                 className={cn(
-                  'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-                  formData.supplyPME === opt.value
-                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                  chipBase,
+                  formData.supplyPME === opt.value ? chipOn : chipOff
                 )}
               >
                 {opt.label}
@@ -370,35 +454,38 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
           {formData.earthingArrangement === 'tncs' &&
             (formData.tncsVariant || 'pme') !== 'pnb' &&
             formData.supplyPME !== 'yes' && (
-              <span className="text-[10px] text-elec-yellow/80 block mt-1">TN-C-S systems typically have PME</span>
+              <span className="text-[11px] text-elec-yellow block mt-1">TN-C-S systems typically have PME</span>
             )}
         </FormField>
       </div>
 
       {/* Number and Type of Live Conductors */}
-      <SectionTitle title="Number and Type of Live Conductors" />
-      <FormField label="Live Conductor Configuration" required>
-        <MobileSelectPicker
-          value={(formData.liveCondutorType as string) || ''}
-          onValueChange={(value) => onUpdate('liveCondutorType', value)}
-          options={[
-            { value: 'ac-1ph-2w', label: 'AC: 1-phase, 2-wire' },
-            { value: 'ac-2ph-3w', label: 'AC: 2-phase, 3-wire' },
-            { value: 'ac-3ph-3w', label: 'AC: 3-phase, 3-wire' },
-            { value: 'ac-3ph-4w', label: 'AC: 3-phase, 4-wire' },
-            { value: 'dc-2w', label: 'DC: 2-wire' },
-            { value: 'dc-3w', label: 'DC: 3-wire' },
-            { value: 'other', label: 'Other' },
-          ]}
-          placeholder="Select configuration"
-          title="Live Conductor Configuration"
-        />
-      </FormField>
+      <div className={cardCn}>
+        <SectionHeading title="Number and type of live conductors" />
+        <FormField label="Live conductor configuration" required>
+          <MobileSelectPicker
+            value={(formData.liveCondutorType as string) || ''}
+            onValueChange={(value) => onUpdate('liveCondutorType', value)}
+            options={[
+              { value: 'ac-1ph-2w', label: 'AC: 1-phase, 2-wire' },
+              { value: 'ac-2ph-3w', label: 'AC: 2-phase, 3-wire' },
+              { value: 'ac-3ph-3w', label: 'AC: 3-phase, 3-wire' },
+              { value: 'ac-3ph-4w', label: 'AC: 3-phase, 4-wire' },
+              { value: 'dc-2w', label: 'DC: 2-wire' },
+              { value: 'dc-3w', label: 'DC: 3-wire' },
+              { value: 'other', label: 'Other' },
+            ]}
+            placeholder="Select configuration"
+            title="Live Conductor Configuration"
+            triggerClassName={pickerTriggerCn}
+          />
+        </FormField>
+      </div>
 
       {/* Nature of Supply Parameters */}
-      <SectionTitle title="Nature of Supply Parameters" />
-      <div className="space-y-3">
-        <div className="grid grid-cols-2 gap-3 items-end">
+      <div className={cardCn}>
+        <SectionHeading title="Nature of supply parameters" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <FormField label="Ipf (kA)" required>
             <Input
               id="prospectiveFaultCurrent"
@@ -407,7 +494,8 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
               value={formData.prospectiveFaultCurrent || ''}
               onChange={(e) => onUpdate('prospectiveFaultCurrent', e.target.value)}
               placeholder="16"
-              className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+              className={inputCn}
+              {...keypad.field('prospectiveFaultCurrent')}
             />
           </FormField>
           <FormField label="Ze (Ω)" required>
@@ -418,7 +506,8 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
               value={formData.externalZe || ''}
               onChange={(e) => onUpdate('externalZe', e.target.value)}
               placeholder="0.35"
-              className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+              className={inputCn}
+              {...keypad.field('externalZe')}
             />
           </FormField>
         </div>
@@ -429,114 +518,115 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
             type="button"
             onClick={() => onUpdate('supplyPolarityConfirmed', !formData.supplyPolarityConfirmed)}
             className={cn(
-              'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1.5',
-              formData.supplyPolarityConfirmed
-                ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                : 'bg-white/[0.05] border border-white/[0.08] text-white'
+              chipBase,
+              'flex items-center justify-center',
+              formData.supplyPolarityConfirmed ? chipOn : chipOff
             )}
           >
-            {formData.supplyPolarityConfirmed && <Check className="h-3.5 w-3.5" />}
-            Polarity Confirmed
+            Polarity confirmed
           </button>
           <button
             type="button"
             onClick={() => onUpdate('otherSourcesOfSupply', !formData.otherSourcesOfSupply)}
             className={cn(
-              'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1.5',
-              formData.otherSourcesOfSupply
-                ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                : 'bg-white/[0.05] border border-white/[0.08] text-white'
+              chipBase,
+              'flex items-center justify-center',
+              formData.otherSourcesOfSupply ? chipOn : chipOff
             )}
           >
-            {formData.otherSourcesOfSupply && <Check className="h-3.5 w-3.5" />}
-            Other Sources
+            Other sources
           </button>
         </div>
 
         {formData.otherSourcesOfSupply && (
-          <FormField label="Details of Other Sources">
+          <FormField label="Details of other sources">
             <Input
               id="otherSourcesDetails"
               value={formData.otherSourcesDetails || ''}
               onChange={(e) => onUpdate('otherSourcesDetails', e.target.value)}
               placeholder="e.g., Solar PV, Generator"
-              className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+              className={inputCn}
             />
           </FormField>
         )}
       </div>
 
       {/* Supply Protective Device */}
-      <SectionTitle title="Supply Protective Device" />
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2 text-white">
-          <Shield className="h-4 w-4" />
-          <span className="text-xs font-medium">Device Details</span>
+      <div className={cardCn}>
+        <div className="mb-3 flex items-center justify-between gap-2">
+          <h2 className="text-[15px] font-semibold tracking-tight text-white">Supply protective device</h2>
+          <button
+            type="button"
+            onClick={() => {
+              if (formData.supplyDeviceRating === 'LIM') {
+                onUpdate('supplyDeviceRating', '');
+              } else {
+                onUpdate('supplyDeviceRating', 'LIM');
+              }
+            }}
+            className={cn(
+              'h-11 px-4 rounded-xl text-sm touch-manipulation transition-colors shrink-0 border',
+              formData.supplyDeviceRating === 'LIM' ? chipOn : chipOff
+            )}
+          >
+            LIM
+          </button>
         </div>
-        <button
-          type="button"
-          onClick={() => {
-            if (formData.supplyDeviceRating === 'LIM') {
-              onUpdate('supplyDeviceRating', '');
-            } else {
-              onUpdate('supplyDeviceRating', 'LIM');
-            }
-          }}
-          className={cn(
-            'h-9 px-3 rounded-md text-sm font-semibold touch-manipulation transition-colors shrink-0',
-            formData.supplyDeviceRating === 'LIM'
-              ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-              : 'bg-white/[0.05] border border-white/[0.08] text-white'
-          )}
-        >
-          LIM
-        </button>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-4">
+          <FormField label="BS (EN)">
+            <MobileSelectPicker
+              value={(formData.supplyDeviceBsEn as string) || ''}
+              onValueChange={handleBsStandardChange}
+              disabled={formData.supplyDeviceRating === 'LIM'}
+              options={[
+                { value: 'BS EN 60898', label: 'BS EN 60898 (MCB)' },
+                { value: 'BS EN 61009', label: 'BS EN 61009 (RCBO)' },
+                { value: 'BS EN 60947-2', label: 'BS EN 60947-2 (MCCB)' },
+                { value: 'BS 88-2', label: 'BS 88-2 (HRC Fuse)' },
+                { value: 'BS 88-3', label: 'BS 88-3 (Fuse)' },
+                { value: 'BS 1361', label: 'BS 1361 (Fuse)' },
+                { value: 'BS 3036', label: 'BS 3036 (Rewirable Fuse)' },
+                { value: 'other', label: 'Other' },
+              ]}
+              placeholder="Select BS standard"
+              title="BS (EN) Standard"
+              triggerClassName={pickerTriggerCn}
+            />
+          </FormField>
+          <FormField label="Type">
+            <MobileSelectPicker
+              value={(formData.supplyDeviceType as string) || ''}
+              onValueChange={(value) => onUpdate('supplyDeviceType', value)}
+              disabled={formData.supplyDeviceRating === 'LIM'}
+              options={getAvailableTypes().map((t) => ({ value: t.value, label: t.label }))}
+              placeholder="Select type"
+              title="Device Type"
+              triggerClassName={pickerTriggerCn}
+            />
+          </FormField>
+          <FormField label="Rated current (A)">
+            <MobileSelectPicker
+              value={
+                formData.supplyDeviceRating === 'LIM' ? '' : (formData.supplyDeviceRating as string) || ''
+              }
+              onValueChange={(value) => onUpdate('supplyDeviceRating', value)}
+              disabled={formData.supplyDeviceRating === 'LIM'}
+              options={getAvailableRatings().map((rating) => ({ value: rating, label: `${rating}A` }))}
+              placeholder={
+                formData.supplyDeviceRating === 'LIM' ? 'LIM' : 'Select rating'
+              }
+              title="Rated Current"
+              triggerClassName={pickerTriggerCn}
+            />
+          </FormField>
+        </div>
       </div>
-      <div className="grid grid-cols-3 gap-2 items-end">
-        <FormField label="BS (EN)">
-          <MobileSelectPicker
-            value={(formData.supplyDeviceBsEn as string) || ''}
-            onValueChange={handleBsStandardChange}
-            disabled={formData.supplyDeviceRating === 'LIM'}
-            options={[
-              { value: 'BS EN 60898', label: 'BS EN 60898 (MCB)' },
-              { value: 'BS EN 61009', label: 'BS EN 61009 (RCBO)' },
-              { value: 'BS EN 60947-2', label: 'BS EN 60947-2 (MCCB)' },
-              { value: 'BS 88-2', label: 'BS 88-2 (HRC Fuse)' },
-              { value: 'BS 88-3', label: 'BS 88-3 (Fuse)' },
-              { value: 'BS 1361', label: 'BS 1361 (Fuse)' },
-              { value: 'BS 3036', label: 'BS 3036 (Rewirable Fuse)' },
-              { value: 'other', label: 'Other' },
-            ]}
-            placeholder="Select BS standard"
-            title="BS (EN) Standard"
-          />
-        </FormField>
-        <FormField label="Type">
-          <MobileSelectPicker
-            value={(formData.supplyDeviceType as string) || ''}
-            onValueChange={(value) => onUpdate('supplyDeviceType', value)}
-            disabled={formData.supplyDeviceRating === 'LIM'}
-            options={getAvailableTypes().map((t) => ({ value: t.value, label: t.label }))}
-            placeholder="Select type"
-            title="Device Type"
-          />
-        </FormField>
-        <FormField label="Rated Current (A)">
-          <MobileSelectPicker
-            value={
-              formData.supplyDeviceRating === 'LIM' ? '' : (formData.supplyDeviceRating as string) || ''
-            }
-            onValueChange={(value) => onUpdate('supplyDeviceRating', value)}
-            disabled={formData.supplyDeviceRating === 'LIM'}
-            options={getAvailableRatings().map((rating) => ({ value: rating, label: `${rating}A` }))}
-            placeholder={
-              formData.supplyDeviceRating === 'LIM' ? 'LIM' : 'Select rating'
-            }
-            title="Rated Current"
-          />
-        </FormField>
-      </div>
+
+      {/* Scroll room so the last reading can rise clear of the keypad */}
+      {keypad.spacer}
+
+      {/* Reading keypad — coarse-pointer devices only */}
+      {keypad.element}
     </div>
   );
 };

@@ -464,7 +464,7 @@ export function AIEstimateSheet({
                   <div className="flex items-center justify-between mb-2">
                     <Eyebrow>Overheads</Eyebrow>
                     <Select value={overheadPercent} onValueChange={handleOverheadChange}>
-                      <SelectTrigger className={cn(selectTriggerClass, 'h-9 w-20 px-2')}>
+                      <SelectTrigger className={cn(selectTriggerClass, 'w-20 px-2')}>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className={selectContentClass}>
@@ -485,7 +485,7 @@ export function AIEstimateSheet({
                   <div className="flex items-center justify-between mb-2">
                     <Eyebrow>Profit</Eyebrow>
                     <Select value={profitPercent} onValueChange={handleProfitChange}>
-                      <SelectTrigger className={cn(selectTriggerClass, 'h-9 w-20 px-2')}>
+                      <SelectTrigger className={cn(selectTriggerClass, 'w-20 px-2')}>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className={selectContentClass}>
@@ -674,9 +674,10 @@ function CostCard({ icon, label, value, isEditing, onEdit }: CostCardProps) {
       {isEditing ? (
         <Input
           type="number"
+                            inputMode="decimal"
           value={value}
           onChange={(e) => onEdit(Number(e.target.value))}
-          className={cn(inputClass, 'h-10')}
+          className={cn(inputClass)}
         />
       ) : (
         <p className="font-semibold text-base text-white tabular-nums">

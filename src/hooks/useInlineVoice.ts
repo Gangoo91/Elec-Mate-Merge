@@ -461,9 +461,23 @@ export function useInlineVoice(options: UseInlineVoiceOptions = {}) {
         clearTimeout(connectionTimeoutRef.current);
         connectionTimeoutRef.current = null;
       }
-      toast.error('Failed to connect', {
-        description: error instanceof Error ? error.message : 'Unknown error',
-      });
+      // Mic permission refusals need guidance, not a raw error string —
+      // "Permission denied" told the user nothing about how to fix it.
+      const name = error instanceof DOMException ? error.name : '';
+      if (name === 'NotAllowedError' || name === 'SecurityError') {
+        toast.error('Microphone blocked', {
+          description:
+            "Voice needs the microphone. Allow mic access for Elec-Mate in your browser's site settings (padlock icon in the address bar), then try again.",
+        });
+      } else if (name === 'NotFoundError') {
+        toast.error('No microphone found', {
+          description: 'Connect or enable a microphone, then try again.',
+        });
+      } else {
+        toast.error('Failed to connect', {
+          description: error instanceof Error ? error.message : 'Unknown error',
+        });
+      }
     }
   }, [agentId, conversation, isConnecting, isActive]);
 
@@ -480,7 +494,6 @@ export function useInlineVoice(options: UseInlineVoiceOptions = {}) {
       'isConnecting:',
       isConnecting
     );
-    toast.info('Voice button clicked');
     if (isActive) {
       stopVoice();
     } else {

@@ -28,6 +28,14 @@ export interface CertificateEmailData {
   overallAssessment?: string;
   companyName?: string;
   formattedData?: Record<string, any>;
+  /**
+   * PDFMonkey template to render with, when the cert type does not use the
+   * edge function's default. send-certificate-resend forwards this straight to
+   * the generate-*-pdf function. Required for the fire alarm sub-types: all
+   * five share generate-fire-alarm-pdf, whose default template is G2, so
+   * without this a G1/G3/G6/G7 email regenerated against the WRONG template.
+   */
+  templateId?: string;
 }
 
 export interface SendEmailParams {
@@ -97,6 +105,7 @@ export const useCertificateEmail = (data: CertificateEmailData): UseCertificateE
               cc,
               customMessage,
               formattedData: data.formattedData,
+              templateId: data.templateId,
             },
           }
         );

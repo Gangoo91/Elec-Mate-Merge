@@ -16,13 +16,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { useCreateJob } from '@/hooks/useJobs';
 import { linkRecordToClient } from '@/services/employerClientService';
 import { toast } from '@/hooks/use-toast';
@@ -36,10 +29,9 @@ import {
   PrimaryButton,
   SecondaryButton,
   inputClass,
-  selectTriggerClass,
-  selectContentClass,
   textareaClass,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 
 const JOB_STATUSES = ['Active', 'Pending', 'On Hold'];
 
@@ -175,7 +167,7 @@ export function AddJobDialog({
 
   const formContent = (
     <form id="job-form" onSubmit={handleSubmit} className="space-y-4 pt-2">
-      <FormCard eyebrow="Job details">
+      <FormCard bleed eyebrow="Job details">
         <Field label="Job title" required>
           <Input
             id="title"
@@ -207,12 +199,13 @@ export function AddJobDialog({
         </FormGrid>
       </FormCard>
 
-      <FormCard eyebrow="Financial & status">
+      <FormCard bleed eyebrow="Financial & status">
         <FormGrid cols={2}>
           <Field label="Job value (£)">
             <Input
               id="value"
               type="number"
+                            inputMode="decimal"
               value={formData.value}
               onChange={(e) => setFormData((prev) => ({ ...prev, value: e.target.value }))}
               placeholder="50000"
@@ -220,26 +213,16 @@ export function AddJobDialog({
             />
           </Field>
           <Field label="Status">
-            <Select
-              value={formData.status}
-              onValueChange={(val) => setFormData((prev) => ({ ...prev, status: val }))}
-            >
-              <SelectTrigger className={selectTriggerClass}>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className={selectContentClass}>
-                {JOB_STATUSES.map((status) => (
-                  <SelectItem key={status} value={status}>
-                    {status}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <SelectField
+        value={formData.status}
+        onValueChange={(val) => setFormData((prev) => ({ ...prev, status: val }))}
+        options={JOB_STATUSES.map((status) => ({ value: status, label: status }))}
+      />
           </Field>
         </FormGrid>
       </FormCard>
 
-      <FormCard eyebrow="Schedule">
+      <FormCard bleed eyebrow="Schedule">
         <FormGrid cols={2}>
           <Field label="Start date">
             <Input
@@ -262,11 +245,12 @@ export function AddJobDialog({
         </FormGrid>
       </FormCard>
 
-      <FormCard eyebrow="Team & scope">
+      <FormCard bleed eyebrow="Team & scope">
         <Field label="Workers required">
           <Input
             id="workers"
             type="number"
+                            inputMode="decimal"
             min="1"
             value={formData.workersCount}
             onChange={(e) => setFormData((prev) => ({ ...prev, workersCount: e.target.value }))}
@@ -318,7 +302,7 @@ export function AddJobDialog({
             )}
           </DrawerTrigger>
         )}
-        <DrawerContent className="max-h-[90vh] bg-[hsl(0_0%_8%)] border-white/[0.08]">
+        <DrawerContent className="max-h-[85vh] bg-[hsl(0_0%_8%)] border-white/[0.08]">
           <DrawerHeader className="pb-4 border-b border-white/[0.06]">
             <DrawerTitle>{header}</DrawerTitle>
           </DrawerHeader>
@@ -340,7 +324,7 @@ export function AddJobDialog({
           )}
         </DialogTrigger>
       )}
-      <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[90vh] overflow-y-auto bg-[hsl(0_0%_8%)] border-white/[0.08]">
+      <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[85vh] overflow-y-auto bg-[hsl(0_0%_8%)] border-white/[0.08]">
         <DialogHeader className="pb-4 border-b border-white/[0.06]">
           <DialogTitle>{header}</DialogTitle>
         </DialogHeader>

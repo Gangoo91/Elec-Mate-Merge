@@ -60,8 +60,9 @@ export const checkZsCompliance = (
   const circuitDescription = result.circuitDescription || '';
   const isTT = earthingArrangement === 'TT';
 
-  // For TT systems, Zs limit is based on RCD rating (Reg 411.5.2), not fuse/MCB tables
-  // TT systems rely on RCD disconnection — max Zs = 230V / I∆n (e.g. 1667Ω for 30mA RCD)
+  // For TT systems the RCD provides fault protection, so the Zs limit comes from
+  // Table 41.5 (Reg 411.5.3: Ra × I∆n ≤ 50 V), not the fuse/MCB tables —
+  // 50 / I∆n, e.g. 1667Ω for a 30mA RCD.
   if (isTT) {
     const rcdRatingMa = parseInt(result.rcdRating?.replace('mA', '') || '');
     if (!isNaN(rcdRatingMa) && [30, 100, 300, 500].includes(rcdRatingMa)) {

@@ -111,14 +111,35 @@ class ErrorBoundary extends Component<Props, State> {
       const navigate = () => {
         window.location.href = bustedUrl;
       };
-      if ('caches' in window) {
-        caches
-          .keys()
-          .then((keys) => Promise.all(keys.map((k) => caches.delete(k))))
-          .finally(navigate);
-      } else {
-        navigate();
-      }
+
+      // ELE-1437: unregister the service worker as well as clearing caches.
+      //
+      // `sw.ts` registers a Workbox `NavigationRoute` that serves the
+      // **precached index.html** for every navigation. Clearing Cache Storage
+      // alone leaves that service worker registered and in control, so the
+      // cache-busted reload can be answered with the very same stale HTML —
+      // full of chunk URLs that no longer exist — and fail identically. The
+      // second failure then trips the ELE-792 loop guard above and the user
+      // lands on "Something went wrong", which is exactly the report in
+      // ELE-1437 (and why it never reproduced in incognito, where there is no
+      // registered worker).
+      //
+      // The two sibling handlers — the inline one in `index.html` and
+      // `handleChunkError` in `main.tsx` — have both done this since ELE-1273.
+      // This boundary was the only recovery path that did not, so any chunk
+      // error that reached React before those handlers saw it recovered less
+      // well than one that did not. Keep all three in step.
+      const unregisterSWs =
+        'serviceWorker' in navigator
+          ? navigator.serviceWorker
+              .getRegistrations()
+              .then((regs) => Promise.all(regs.map((r) => r.unregister())))
+          : Promise.resolve([]);
+      const clearCaches =
+        'caches' in window
+          ? caches.keys().then((keys) => Promise.all(keys.map((k) => caches.delete(k))))
+          : Promise.resolve([]);
+      Promise.allSettled([unregisterSWs, clearCaches]).finally(navigate);
       return; // Already reported above as a downgraded `chunk` warning
     }
 

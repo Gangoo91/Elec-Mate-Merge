@@ -4,6 +4,9 @@
  * smoke-co-alarm / testing-only / minor-works templates).
  */
 
+/** Disconnection's house colour, used until the electrician sets their own. */
+export const DISCONNECTION_ACCENT = '#f59e0b';
+
 function formatDateUK(dateStr: string): string {
   if (!dateStr) return '';
   try {
@@ -71,5 +74,10 @@ export function formatDisconnectionCertificatePayload(data: Record<string, any>,
     companyEmail: company.company_email || data.contractorEmail || '',
     companyLogo: company.logo_data_url || company.logo_url || '',
     schemeLogo: company.scheme_logo_data_url || company.registration_scheme_logo || '',
+    companyWebsite: company.company_website || '',
+    // Primary is the colour an electrician means by "my colour" (Settings →
+    // Business → Brand); accent is read as a fallback. Falls back to the
+    // certificate's own amber when neither is set.
+    companyAccentColor: company.primary_color || company.accent_color || DISCONNECTION_ACCENT,
   };
 }

@@ -4,8 +4,15 @@
     <meta charset="UTF-8">
     <title>Smoke &amp; CO Alarm Installation Certificate</title>
     <style>
-        :root { --accent: #dc2626; }
+        /* Accent = the colour the electrician picked in Settings -> Business -> Brand.
+           Falls back to this cert's house red when they haven't chosen one.
+           Everything accented below (header bar, section rules, certificate
+           number, cover band, footer) inherits from this single variable. */
+        :root { --accent: {{ companyAccentColor | default: '#dc2626' }}; }
         @page { size: A4; margin: 3mm 3mm 4mm 3mm; }
+        /* Client-facing cover renders full-bleed (zero page margin) — same
+           named-page technique as the EICR template. */
+        @page cover { size: A4; margin: 0; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 8.5px; line-height: 1.4; color: #1a1a1a; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 
@@ -22,8 +29,6 @@
         .section { margin-bottom: 8px; }
         .section-title { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 8.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; padding: 5px 8px; margin-bottom: 4px; border-left: 3px solid var(--accent); }
         .section-title.green { border-left-color: #22c55e; }
-        .section-title.blue { border-left-color: #3b82f6; }
-        .section-title.purple { border-left-color: #8b5cf6; }
         .section-title.amber { border-left-color: #f59e0b; }
 
         .form-grid { display: table; width: 100%; border-collapse: collapse; margin-bottom: 4px; }
@@ -57,12 +62,80 @@
 
         .footer { margin-top: 8px; padding-top: 6px; border-top: 2px solid var(--accent); display: flex; justify-content: space-between; font-size: 7px; color: #64748b; }
         .avoid-break { page-break-inside: avoid; }
+        .page-break { page-break-after: always; }
+
+        /* =============================================
+             CLIENT-FACING COVER SHEET — matches the EICR cover recipe
+             (full-bleed navy hero, accent rule, status band, detail rows).
+             Gold is replaced by var(--accent) so the electrician's brand
+             colour from Settings -> Business -> Brand drives the page.
+             ============================================= */
+        .cover-page { page: cover; width: 210mm; height: 296mm; overflow: hidden; display: flex; flex-direction: column; color: #0a1628; }
+        .cover-hero { position: relative; background: linear-gradient(160deg, #0a1628 0%, #152238 60%, #1c2e4a 100%); color: #fff; padding: 22mm 18mm 16mm; }
+        .cover-hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: var(--accent); }
+        .cover-logos { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18mm; min-height: 60px; }
+        .cover-logos img { max-height: 60px; max-width: 190px; object-fit: contain; }
+        .cover-band-name { color: var(--accent); font-weight: 700; font-size: 18px; letter-spacing: 0.3px; }
+        .cover-eyebrow { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 12px; }
+        .cover-title { font-size: 40px; line-height: 1.08; font-weight: 800; letter-spacing: -0.5px; color: #fff; }
+        .cover-title-rule { width: 80px; height: 4px; background: var(--accent); margin-top: 16px; border-radius: 2px; }
+        .cover-subtitle { margin-top: 16px; font-size: 11px; color: #cbd5e1; letter-spacing: 0.3px; }
+        .cover-status { padding: 14px 18mm; display: flex; align-items: center; justify-content: space-between; background: #475569; color: #fff; }
+        .cover-status.is-sat { background: #16a34a; }
+        .cover-status-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; opacity: 0.95; }
+        .cover-status-value { font-size: 24px; font-weight: 800; letter-spacing: 2px; }
+        .cover-details { flex: 1; padding: 14mm 18mm; border-left: 4px solid var(--accent); }
+        .cover-details-h { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #94a3b8; font-weight: 700; margin-bottom: 6px; }
+        .cover-row { display: flex; border-bottom: 1px solid #e2e8f0; }
+        .cover-row:last-child { border-bottom: 0; }
+        .cover-k { width: 185px; flex-shrink: 0; color: #0a1628; font-weight: 700; text-transform: uppercase; font-size: 9.5px; letter-spacing: 0.5px; padding: 11px 0; align-self: center; }
+        .cover-v { flex: 1; color: #0f172a; font-weight: 600; font-size: 12px; padding: 11px 0; align-self: center; }
+        .cover-v .muted { color: #64748b; font-weight: 500; }
+        .cover-footer { background: #0a1628; color: #94a3b8; font-size: 8.5px; font-style: italic; padding: 11px 18mm; }
+        .cover-foot-name { font-size: 9px; font-weight: 700; color: #0f172a; }
 
         .compliance-box { background: #f0fdf4; border: 1px solid #86efac; border-left: 3px solid #22c55e; border-radius: 2px; padding: 6px 10px; margin: 6px 0; }
         .compliance-text { font-size: 8px; color: #166534; font-weight: 600; line-height: 1.6; }
     </style>
 </head>
 <body>
+
+<!-- =============================================
+     COVER SHEET — full-bleed navy + brand accent, EICR recipe
+     ============================================= -->
+<div class="cover-page">
+    <div class="cover-hero">
+        <div class="cover-logos">
+            {% if companyLogo %}<img src="{{ companyLogo }}" alt="{{ companyName }}" />{% else %}<span class="cover-band-name">{{ companyName }}</span>{% endif %}
+            {% if registrationSchemeLogo %}<img src="{{ registrationSchemeLogo }}" alt="{{ registrationScheme | default: 'Registration Scheme' }}" />{% endif %}
+        </div>
+        <div class="cover-eyebrow">BS 5839-6:2019+A1:2020</div>
+        <h1 class="cover-title">Smoke &amp; Carbon Monoxide<br />Alarm Certificate</h1>
+        <div class="cover-title-rule"></div>
+        <div class="cover-subtitle">Smoke and Carbon Monoxide Alarm (England) Regulations 2015 (as amended 2022){% if companyName %} &middot; {{ companyName }}{% endif %}</div>
+    </div>
+
+    <div class="cover-status {% if compliesSmokeCORegs2022 %}is-sat{% endif %}">
+        <span class="cover-status-label">System Grade &amp; Category Achieved</span>
+        <span class="cover-status-value">{% if gradeAchieved == blank %}&mdash;{% else %}GRADE {{ gradeAchieved }}{% unless categoryAchieved == blank %} &middot; {{ categoryAchieved }}{% endunless %}{% endif %}</span>
+    </div>
+
+    <div class="cover-details">
+        <div class="cover-details-h">Certificate Details</div>
+        <div class="cover-row"><span class="cover-k">Property Address</span><span class="cover-v">{{ propertyAddress }}</span></div>
+        <div class="cover-row"><span class="cover-k">Landlord / Client</span><span class="cover-v">{% if landlordName == blank %}<span class="muted">&mdash;</span>{% else %}{{ landlordName }}{% endif %}</span></div>
+        <div class="cover-row"><span class="cover-k">Certificate Reference</span><span class="cover-v">{{ referenceNumber }}</span></div>
+        <div class="cover-row"><span class="cover-k">Date of Work</span><span class="cover-v">{{ installationDate }}</span></div>
+        <div class="cover-row"><span class="cover-k">Next Inspection Due</span><span class="cover-v">{% if nextInspectionDate == blank %}<span class="muted">&mdash;</span>{% else %}{{ nextInspectionDate }}{% endif %}</span></div>
+        <div class="cover-row"><span class="cover-k">Alarms Installed</span><span class="cover-v">{{ alarms.size }}{% unless numberOfStoreys == blank %} <span class="muted">across {{ numberOfStoreys }} storeys</span>{% endunless %}</span></div>
+        <div class="cover-row"><span class="cover-k">Installed &amp; Tested By</span><span class="cover-v">{{ installerName }}</span></div>
+        {% if installerCompany and installerCompany != "" %}<div class="cover-row"><span class="cover-k">For / On Behalf Of</span><span class="cover-v">{{ installerCompany }}</span></div>{% endif %}
+        {% if registrationScheme and registrationScheme != "" %}<div class="cover-row"><span class="cover-k">Registration Scheme</span><span class="cover-v">{{ registrationScheme }}{% unless registrationNumber == blank %} <span class="muted">&middot; {{ registrationNumber }}</span>{% endunless %}</span></div>{% endif %}
+    </div>
+
+    <div class="cover-footer">This certificate is valid only when accompanied by the alarm schedule, system test results and declarations that form part of it.</div>
+</div>
+<!-- cover fills the sheet; no explicit break needed (an extra one rendered a blank page) -->
 
 <div class="doc-header">
     <div class="doc-header-content">
@@ -102,7 +175,7 @@
 
 <!-- Landlord / Client -->
 <div class="section avoid-break">
-    <div class="section-title purple">Landlord / Client</div>
+    <div class="section-title">Landlord / Client</div>
     <div class="form-grid">
         <div class="form-row"><div class="form-label">Landlord</div><div class="form-value">{{ landlordName }}</div><div class="form-label">Contact</div><div class="form-value">{{ landlordPhone }}{% unless landlordEmail == blank %} | {{ landlordEmail }}{% endunless %}</div></div>
         {% unless landlordAddress == blank %}<div class="form-row"><div class="form-label">Address</div><div class="form-value" colspan="3">{{ landlordAddress }}</div></div>{% endunless %}
@@ -123,7 +196,7 @@
 
 <!-- System Design -->
 <div class="section avoid-break">
-    <div class="section-title red">System Design</div>
+    <div class="section-title">System Design</div>
     <div class="form-grid">
         <div class="form-row"><div class="form-label">BS 5839-6 Grade</div><div class="form-value" style="font-weight: 600;">Grade {{ gradeAchieved }}</div><div class="form-label">Category</div><div class="form-value" style="font-weight: 600;">{{ categoryAchieved }}</div></div>
         <div class="form-row"><div class="form-label">Interconnection</div><div class="form-value">{{ interconnectionMethod }}{% unless rfWirelessSystem == blank %} ({{ rfWirelessSystem }}){% endunless %}</div><div class="form-label">Power Supply</div><div class="form-value">{{ powerSupply }}</div></div>
@@ -133,7 +206,7 @@
 
 <!-- Alarm Schedule -->
 <div class="section">
-    <div class="section-title red">Alarm Schedule ({{ alarms.size }} alarms)</div>
+    <div class="section-title">Alarm Schedule ({{ alarms.size }} alarms)</div>
     <table class="alarm-table">
         <thead>
             <tr><th>No.</th><th>Floor</th><th>Room</th><th>Type</th><th>Make / Model</th><th>Serial</th><th>Power</th><th>Link</th><th>Mount</th><th>Mfg Date</th><th>Replace By</th><th>Test</th><th>Mains</th></tr>
@@ -153,7 +226,7 @@
                 <td>{{ alarm.dateOfManufacture }}</td>
                 <td style="color: #dc2626; font-weight: 600;">{{ alarm.replacementDue }}</td>
                 <td>{% if alarm.functionalTest == 'pass' %}<span class="badge pass">PASS</span>{% elsif alarm.functionalTest == 'fail' %}<span class="badge fail">FAIL</span>{% endif %}</td>
-                <td>{% if alarm.mainsIndicator == 'pass' %}<span class="badge pass">OK</span>{% elsif alarm.mainsIndicator == 'fail' %}<span class="badge fail">FAIL</span>{% else %}—{% endif %}</td>
+                <td>{% if alarm.mainsIndicator == 'pass' %}<span class="badge pass">OK</span>{% elsif alarm.mainsIndicator == 'fail' %}<span class="badge fail">FAIL</span>{% elsif alarm.mainsIndicator == 'na' %}N/A{% else %}—{% endif %}</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -162,11 +235,11 @@
 
 <!-- System Tests -->
 <div class="section avoid-break">
-    <div class="section-title green">System Tests</div>
+    <div class="section-title">System Tests</div>
     <div class="form-grid">
-        <div class="form-row"><div class="form-label">Interconnection</div><div class="form-value">{% if interconnectionTest == 'pass' %}<span class="badge pass">PASS</span>{% elsif interconnectionTest == 'fail' %}<span class="badge fail">FAIL</span>{% else %}N/A{% endif %}{% unless interconnectionTriggerAlarm == blank %} — triggered from {{ interconnectionTriggerAlarm }}{% endunless %}</div></div>
-        <div class="form-row"><div class="form-label">Audibility</div><div class="form-value">{% if audibilityTest == 'pass' %}<span class="badge pass">PASS</span>{% elsif audibilityTest == 'fail' %}<span class="badge fail">FAIL</span>{% else %}N/A{% endif %}</div><div class="form-label">Mains Supply</div><div class="form-value">{% if mainsSupplyVerified == 'pass' %}<span class="badge pass">PASS</span>{% elsif mainsSupplyVerified == 'fail' %}<span class="badge fail">FAIL</span>{% else %}N/A{% endif %}</div></div>
-        <div class="form-row"><div class="form-label">Battery Backup</div><div class="form-value">{% if batteryBackupTest == 'pass' %}<span class="badge pass">PASS</span>{% elsif batteryBackupTest == 'fail' %}<span class="badge fail">FAIL</span>{% else %}N/A{% endif %}</div><div class="form-label">RF Signal</div><div class="form-value">{% if rfSignalTest == 'pass' %}<span class="badge pass">PASS</span>{% elsif rfSignalTest == 'fail' %}<span class="badge fail">FAIL</span>{% else %}N/A{% endif %}</div></div>
+        <div class="form-row"><div class="form-label">Interconnection</div><div class="form-value">{% if interconnectionTest == 'pass' %}<span class="badge pass">PASS</span>{% elsif interconnectionTest == 'fail' %}<span class="badge fail">FAIL</span>{% elsif interconnectionTest == 'na' %}N/A{% else %}&mdash;{% endif %}{% unless interconnectionTriggerAlarm == blank %} — triggered from {{ interconnectionTriggerAlarm }}{% endunless %}</div></div>
+        <div class="form-row"><div class="form-label">Audibility</div><div class="form-value">{% if audibilityTest == 'pass' %}<span class="badge pass">PASS</span>{% elsif audibilityTest == 'fail' %}<span class="badge fail">FAIL</span>{% elsif audibilityTest == 'na' %}N/A{% else %}&mdash;{% endif %}</div><div class="form-label">Mains Supply</div><div class="form-value">{% if mainsSupplyVerified == 'pass' %}<span class="badge pass">PASS</span>{% elsif mainsSupplyVerified == 'fail' %}<span class="badge fail">FAIL</span>{% elsif mainsSupplyVerified == 'na' %}N/A{% else %}&mdash;{% endif %}</div></div>
+        <div class="form-row"><div class="form-label">Battery Backup</div><div class="form-value">{% if batteryBackupTest == 'pass' %}<span class="badge pass">PASS</span>{% elsif batteryBackupTest == 'fail' %}<span class="badge fail">FAIL</span>{% elsif batteryBackupTest == 'na' %}N/A{% else %}&mdash;{% endif %}</div><div class="form-label">RF Signal</div><div class="form-value">{% if rfSignalTest == 'pass' %}<span class="badge pass">PASS</span>{% elsif rfSignalTest == 'fail' %}<span class="badge fail">FAIL</span>{% elsif rfSignalTest == 'na' %}N/A{% else %}&mdash;{% endif %}</div></div>
     </div>
 </div>
 
@@ -175,9 +248,10 @@
     <div class="section-title green">Compliance Declaration</div>
     <div class="inline-form">
         <div class="checkbox-item"><span class="checkbox-box {% if compliesSmokeCORegs2022 %}checked{% endif %}">{% if compliesSmokeCORegs2022 %}&#10003;{% endif %}</span><label>Smoke &amp; CO Alarm Regs 2015 (as amended 2022)</label></div>
-        <div class="checkbox-item"><span class="checkbox-box {% if compliesBS5839_6 %}checked{% endif %}">{% if compliesBS5839_6 %}&#10003;{% endif %}</span><label>BS 5839-6:2019+A1:2020 — Grade {{ gradeAchieved }}, {{ categoryAchieved }}</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if compliesBS5839_6 %}checked{% endif %}">{% if compliesBS5839_6 %}&#10003;{% endif %}</span><label>BS 5839-6:2019+A1:2020 — Grade {{ gradeAchieved }}, {{ categoryAchieved }} <span style="color:#64748b;">(Approved Document B Vol 1 §1.1: minimum Grade D2 / Category LD3 for dwellings)</span></label></div>
         <div class="checkbox-item"><span class="checkbox-box {% if compliesBSEN14604 %}checked{% endif %}">{% if compliesBSEN14604 %}&#10003;{% endif %}</span><label>BS EN 14604 (smoke alarms)</label></div>
         <div class="checkbox-item"><span class="checkbox-box {% if compliesBSEN50291 %}checked{% endif %}">{% if compliesBSEN50291 %}&#10003;{% endif %}</span><label>BS EN 50291-1:2018 + BSI Kitemark (CO alarms)</label></div>
+        {% if compliesBS5446_2 %}<div class="checkbox-item"><span class="checkbox-box checked">&#10003;</span><label>BS 5446-2 (heat alarms)</label></div>{% endif %}
         <div class="checkbox-item"><span class="checkbox-box {% if compliesBS7671 %}checked{% endif %}">{% if compliesBS7671 %}&#10003;{% endif %}</span><label>BS 7671:2018+A4:2026 (if hardwired)</label></div>
     </div>
     {% unless partPNotification == blank %}

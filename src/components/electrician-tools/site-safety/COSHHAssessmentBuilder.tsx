@@ -102,6 +102,16 @@ interface COSHHAssessment {
   review_date: string;
   job_id: string | null;
   created_at: string;
+  /**
+   * These three are real columns on `coshh_assessments` — they were simply
+   * missing from this interface, so every read of them went through a
+   * `as Record<string, unknown>` cast that TypeScript rejected anyway
+   * (TS2352: the types don't sufficiently overlap). Declaring them removes
+   * nine cast sites and nine errors.
+   */
+  assessor_signature: string | null;
+  reviewer_signature: string | null;
+  reviewer_name: string | null;
 }
 
 // ─── Constants ───
@@ -363,6 +373,7 @@ const RISK_PILL_CLASS: Record<Tone, string> = {
   yellow: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25',
   cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/25',
   indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/25',
+  grey: 'bg-white/[0.06] text-white border-white/[0.12]',
 };
 
 function RiskPill({ rating }: { rating: COSHHAssessment['risk_rating'] }) {
@@ -507,6 +518,9 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
     review_date: a.review_date,
     job_id: a.job_id ?? null,
     created_at: a.created_at,
+    assessor_signature: a.assessor_signature ?? null,
+    reviewer_signature: a.reviewer_signature ?? null,
+    reviewer_name: a.reviewer_name ?? null,
   }));
 
   const [showWizard, setShowWizard] = useState(false);
@@ -593,7 +607,7 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
-  const { data: jobs = [] } = useSparkProjects('active');
+  const { projects: jobs = [] } = useSparkProjects('active');
   const jobTitleFor = (id: string | null) =>
     id ? (jobs.find((j) => j.id === id)?.title ?? null) : null;
 
@@ -1949,35 +1963,26 @@ export function COSHHAssessmentBuilder({ onBack }: { onBack: () => void }) {
                 </div>
 
                 {/* Signatures */}
-                {((viewingAssessment as Record<string, unknown>).assessor_signature ||
-                  (viewingAssessment as Record<string, unknown>).reviewer_signature) && (
+                {(viewingAssessment.assessor_signature || viewingAssessment.reviewer_signature) && (
                   <div className="space-y-3">
                     <Eyebrow>Signatures</Eyebrow>
-                    {(viewingAssessment as Record<string, unknown>).assessor_signature && (
+                    {viewingAssessment.assessor_signature && (
                       <div className="p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)]">
                         <p className="text-[11.5px] text-white mb-2">Assessor</p>
                         <img
-                          src={
-                            (viewingAssessment as Record<string, unknown>)
-                              .assessor_signature as string
-                          }
+                          src={viewingAssessment.assessor_signature}
                           alt="Assessor signature"
                           className="h-16 rounded border border-white/10 bg-white"
                         />
                       </div>
                     )}
-                    {(viewingAssessment as Record<string, unknown>).reviewer_signature && (
+                    {viewingAssessment.reviewer_signature && (
                       <div className="p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)]">
                         <p className="text-[11.5px] text-white mb-2">
-                          Reviewer:{' '}
-                          {((viewingAssessment as Record<string, unknown>)
-                            .reviewer_name as string) || 'N/A'}
+                          Reviewer: {viewingAssessment.reviewer_name || 'N/A'}
                         </p>
                         <img
-                          src={
-                            (viewingAssessment as Record<string, unknown>)
-                              .reviewer_signature as string
-                          }
+                          src={viewingAssessment.reviewer_signature}
                           alt="Reviewer signature"
                           className="h-16 rounded border border-white/10 bg-white"
                         />

@@ -7,13 +7,6 @@ import {
   ResponsiveFormModalBody,
 } from '@/components/ui/responsive-form-modal';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { useAddElecIdSkill } from '@/hooks/useElecId';
 import { toast } from '@/hooks/use-toast';
 import { Star } from 'lucide-react';
@@ -24,9 +17,8 @@ import {
   PrimaryButton,
   SecondaryButton,
   inputClass,
-  selectTriggerClass,
-  selectContentClass,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 
 const SKILL_LEVELS = [
   { value: 'beginner', label: 'Beginner' },
@@ -121,7 +113,7 @@ export const AddSkillDialog = ({
         </ResponsiveFormModalHeader>
         <ResponsiveFormModalBody className="pb-6">
           <form onSubmit={handleSubmit} className="space-y-4">
-          <FormCard eyebrow="Skill details">
+          <FormCard bleed eyebrow="Skill details">
             <Field label="Skill name" required>
               <Input
                 value={formData.skillName}
@@ -139,25 +131,16 @@ export const AddSkillDialog = ({
 
             <FormGrid cols={2}>
               <Field label="Skill level">
-                <Select
-                  value={formData.skillLevel}
-                  onValueChange={(val) => setFormData((prev) => ({ ...prev, skillLevel: val }))}
-                >
-                  <SelectTrigger className={selectTriggerClass}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    {SKILL_LEVELS.map((level) => (
-                      <SelectItem key={level.value} value={level.value}>
-                        {level.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <SelectField
+        value={formData.skillLevel}
+        onValueChange={(val) => setFormData((prev) => ({ ...prev, skillLevel: val }))}
+        options={SKILL_LEVELS.map((level) => ({ value: level.value, label: level.label }))}
+      />
               </Field>
               <Field label="Years experience">
                 <Input
                   type="number"
+                            inputMode="decimal"
                   min="0"
                   max="50"
                   value={formData.yearsExperience}

@@ -21,7 +21,7 @@ const Checkbox = React.forwardRef<
       'flex items-center justify-center',
       // Focus states
       'focus:outline-none focus:border-elec-yellow',
-      'focus:shadow-[0_0_0_3px_hsl(var(--elec-yellow)/0.15)]',
+      'focus:shadow-none',
       // Checked state - elec-yellow
       'data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow',
       // Transitions

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { storageGetJSONSync, storageRemoveSync } from '@/utils/storage';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 import { Helmet } from 'react-helmet';
 import { X } from 'lucide-react';
@@ -57,11 +58,23 @@ const InvoiceBuilderCreate = () => {
     }
 
     if (certificateSessionId) {
-      const storedContext = sessionStorage.getItem(certificateSessionId);
-      if (storedContext) {
-        const parsed = JSON.parse(storedContext);
+      // Two writer conventions share this param: certificateToQuote writes via
+      // storageSetJSONSync (localStorage on web, Preferences on native), while
+      // TimeTrackerPage/StartCertificateDialog write raw sessionStorage.
+      // Reading only sessionStorage silently dropped every certificate payload
+      // — check both stores.
+      let parsed = storageGetJSONSync<any>(certificateSessionId, null);
+      if (parsed?.certificateData) {
+        storageRemoveSync(certificateSessionId);
+      } else {
+        const storedContext = sessionStorage.getItem(certificateSessionId);
+        if (storedContext) {
+          parsed = JSON.parse(storedContext);
+          sessionStorage.removeItem(certificateSessionId);
+        }
+      }
+      if (parsed?.certificateData) {
         setCertificateContext(parsed.certificateData);
-        sessionStorage.removeItem(certificateSessionId);
       }
     }
 

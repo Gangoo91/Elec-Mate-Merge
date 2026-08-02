@@ -18,6 +18,9 @@ import EICRScheduleOfTests from '@/components/EICRScheduleOfTests';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+// Current amendment from the single source of truth (data/standards.ts) —
+// a certificate issued today must not declare against a superseded amendment.
+import { formatDesignStandard } from '@/data/standards';
 import { cn } from '@/lib/utils';
 import { reportCloud } from '@/utils/reportCloud';
 import { useReportSync } from '@/hooks/useReportSync';
@@ -289,11 +292,17 @@ const {
       // form_data lacks the boards/circuits arrays the template needs.
       let formattedData: Record<string, unknown> | undefined;
       try {
-        const { formatTestingOnlyJson } = await import('@/utils/testingOnlyJsonFormatter');
-        formattedData = formatTestingOnlyJson({
-          ...data,
-          referenceNumber: data.referenceNumber || `TOC-${Date.now().toString(36).toUpperCase()}`,
-        });
+        const { formatTestingOnlyJson, TESTING_ONLY_ACCENT } = await import(
+          '@/utils/testingOnlyJsonFormatter'
+        );
+        const { fetchCertBranding } = await import('@/utils/certBranding');
+        formattedData = formatTestingOnlyJson(
+          {
+            ...data,
+            referenceNumber: data.referenceNumber || `TOC-${Date.now().toString(36).toUpperCase()}`,
+          },
+          await fetchCertBranding(TESTING_ONLY_ACCENT),
+        );
       } catch {
         formattedData = undefined; // fall back to server-side pdf_payload
       }
@@ -335,18 +344,28 @@ const {
     setGenerationError(null);
     setShowGenerationDialog(true);
     try {
-      await syncNowImmediate();
+      // Use the reportId syncNowImmediate RETURNS, not the savedReportId state.
+      // On a first generate the row is created by this very call; onReportCreated
+      // then setState()s the id, which this already-running closure can never
+      // see. The old code therefore skipped pdf_payload entirely and fell back
+      // to the human reference ('TOC-…'), so every `.eq('report_id', …)` below
+      // matched ZERO rows — silently, since Supabase reports no error for that.
+      // Production evidence: 0 of 63 testing-only rows had a pdf_payload.
+      const syncResult = await syncNowImmediate();
+      const reportId = syncResult?.reportId || savedReportId;
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Please sign in');
+      if (!reportId) throw new Error('Could not save the certificate — check your connection and try again');
 
-      const { formatTestingOnlyJson } = await import('@/utils/testingOnlyJsonFormatter');
-      const payload = formatTestingOnlyJson(data);
+      const { formatTestingOnlyJson, TESTING_ONLY_ACCENT } = await import(
+        '@/utils/testingOnlyJsonFormatter'
+      );
+      const { fetchCertBranding } = await import('@/utils/certBranding');
+      const payload = formatTestingOnlyJson(data, await fetchCertBranding(TESTING_ONLY_ACCENT));
 
       // Persist the formatted payload so server-side email/regeneration uses
       // the boards/circuits arrays the template needs (raw form_data lacks them).
-      if (savedReportId) {
-        await supabase.from('reports').update({ pdf_payload: payload }).eq('report_id', savedReportId);
-      }
+      await supabase.from('reports').update({ pdf_payload: payload }).eq('report_id', reportId);
 
       const { data: pdfResult, error: pdfError } = await supabase.functions.invoke('generate-testing-only-pdf', { body: { formData: payload } });
       if (pdfError) throw new Error(pdfError.message || 'PDF generation failed');
@@ -356,7 +375,6 @@ const {
 
       // Save to permanent storage
       let permanentPdfUrl = pdfResult.pdfUrl;
-      const reportId = savedReportId || data.referenceNumber;
       try {
         const { saveCertificatePdf } = await import('@/utils/certificate-pdf-storage');
         const { permanentUrl, storagePath } = await saveCertificatePdf(pdfResult.pdfUrl, user.id, reportId, data.referenceNumber);
@@ -479,7 +497,7 @@ const {
       <section className={cardCn}>
         <SectionHeader title="Declaration" />
         <div className="rounded-xl bg-white/[0.05] px-3.5 py-3">
-          <p className="text-sm text-white leading-relaxed">I confirm that the tests recorded in this document have been carried out by me in accordance with BS 7671:2018+A3:2024, using calibrated instruments, and the results are a true record of the readings obtained.</p>
+          <p className="text-sm text-white leading-relaxed">I confirm that the tests recorded in this document have been carried out by me in accordance with {formatDesignStandard('')}, using calibrated instruments, and the results are a true record of the readings obtained.</p>
         </div>
         <div className="flex items-center justify-between gap-3">
           <Label className="text-white text-sm font-medium">I confirm the above</Label>

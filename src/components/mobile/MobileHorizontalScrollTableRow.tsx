@@ -14,7 +14,6 @@ import {
 import { referenceMethodOptions } from '@/types/cableTypes';
 import { cableSizeOptions } from '@/types/cableTypes';
 import {
-  protectiveDeviceTypeOptions,
   protectiveDeviceRatingOptions,
   bsStandardOptions,
   protectiveDeviceCurveOptions,
@@ -23,7 +22,7 @@ import {
 } from '@/types/protectiveDeviceTypes';
 import { insulationTestVoltageOptions } from '@/types/testOptions';
 import { wiringTypeOptions, rcdTypeOptions } from '@/types/wiringTypes';
-import { columnGroups } from '@/utils/mobileTableUtils';
+import { normaliseRcdRating } from '@/utils/rcdRating';
 import ComboboxCell from '@/components/table-cells/ComboboxCell';
 import { cn } from '@/lib/utils';
 import { Calculator } from 'lucide-react';
@@ -117,25 +116,34 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
   };
 
   const inputClassName =
-    'h-11 text-sm px-2 border border-input bg-background text-foreground focus:ring-2 focus:ring-primary text-center touch-manipulation';
+    'h-11 text-sm px-2 bg-white/[0.06] border border-white/[0.10] rounded-lg text-white placeholder:text-white/25 focus:border-elec-yellow focus:outline-none focus:ring-0 focus:shadow-none text-center touch-manipulation';
   const selectTriggerClassName =
-    'h-11 text-sm px-2 border border-input bg-background focus:ring-2 focus:ring-primary touch-manipulation';
+    'h-11 text-sm px-2 bg-white/[0.06] border border-white/[0.10] rounded-lg text-white focus:border-elec-yellow focus:outline-none focus:ring-0 focus:shadow-none touch-manipulation';
+  const comboboxCellClassName =
+    'h-11 bg-white/[0.06] border border-white/[0.10] rounded-lg text-sm text-white';
 
   return (
     <TableRow
-      className={cn('hover:bg-muted/50 border-b border-border', getBorderColor())}
+      className={cn(
+        // No hover tint — touch-first table, and the opaque sticky first cell
+        // wouldn't join it anyway (founder no-hover call). Hover colours match
+        // the resting tones to neutralise the ui TableRow hover:bg-muted/30.
+        'group border-b border-white/[0.06] bg-[hsl(0_0%_10%)] even:bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_10%)] even:hover:bg-[hsl(0_0%_12%)]',
+        getBorderColor()
+      )}
       style={{ contentVisibility: 'auto', containIntrinsicSize: '0 48px' }}
     >
       {/* Circuit Details Group */}
-      <TableCell className="sticky left-0 z-10 border-r-[3px] border-primary/40 p-0.5 font-bold text-center whitespace-nowrap bg-card-light w-[83px] min-w-[83px] max-w-[83px]">
+      <TableCell className="sticky left-0 z-10 border-r border-white/[0.08] p-0.5 font-bold text-center whitespace-nowrap bg-[hsl(0_0%_10%)] group-even:bg-[hsl(0_0%_12%)] w-[83px] min-w-[83px] max-w-[83px] shadow-[4px_0_8px_-2px_rgba(0,0,0,0.5)]">
         <Input
           value={result.circuitDesignation}
           onChange={(e) => onUpdate(result.id, 'circuitDesignation', e.target.value)}
           className={inputClassName}
-          placeholder="C1"
+          placeholder="Way 1"
         />
       </TableCell>
-      <TableCell className="p-0.5 border-r border-border bg-card w-[152px] min-w-[152px] max-w-[152px]">
+
+      <TableCell className="p-0.5 border-r border-white/[0.08] w-[152px] min-w-[152px] max-w-[152px]">
         <Input
           value={result.circuitDescription}
           onChange={(e) => onUpdate(result.id, 'circuitDescription', e.target.value)}
@@ -143,25 +151,29 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           placeholder="Desc"
         />
       </TableCell>
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[92px] min-w-[92px] max-w-[92px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[92px] min-w-[92px] max-w-[92px]">
         <ComboboxCell
           value={result.typeOfWiring || ''}
           onChange={(v) => onUpdate(result.id, 'typeOfWiring', v)}
           options={wiringTypeOptions}
+          title="Wiring type"
           placeholder="Type"
           compact
+          className={comboboxCellClassName}
         />
       </TableCell>
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[76px] min-w-[76px] max-w-[76px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[76px] min-w-[76px] max-w-[76px]">
         <ComboboxCell
           value={result.referenceMethod || ''}
           onChange={(v) => onUpdate(result.id, 'referenceMethod', v)}
           options={referenceMethodOptions}
+          title="Reference method"
           placeholder="Ref"
           compact
+          className={comboboxCellClassName}
         />
       </TableCell>
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[83px] min-w-[83px] max-w-[83px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[83px] min-w-[83px] max-w-[83px]">
         <Input
           value={result.pointsServed || ''}
           onChange={(e) => onUpdate(result.id, 'pointsServed', e.target.value)}
@@ -173,36 +185,42 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
       </TableCell>
 
       {/* Conductor Details Group */}
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[110px] min-w-[110px] max-w-[110px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[110px] min-w-[110px] max-w-[110px]">
         <ComboboxCell
           value={result.liveSize || ''}
           onChange={(v) => onUpdate(result.id, 'liveSize', v)}
           options={cableSizeOptions}
+          title="Live conductor size (mm²)"
           placeholder="mm²"
           compact
+          className={comboboxCellClassName}
         />
       </TableCell>
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[110px] min-w-[110px] max-w-[110px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[110px] min-w-[110px] max-w-[110px]">
         <ComboboxCell
           value={result.cpcSize || ''}
           onChange={(v) => onUpdate(result.id, 'cpcSize', v)}
           options={cableSizeOptions}
+          title="CPC size (mm²)"
           placeholder="mm²"
           compact
+          className={comboboxCellClassName}
         />
       </TableCell>
 
       {/* Protection Group */}
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[110px] min-w-[110px] max-w-[110px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[110px] min-w-[110px] max-w-[110px]">
         <ComboboxCell
           value={result.bsStandard || ''}
           onChange={handleBsStandardChange}
           options={bsStandardOptions}
+          title="Protective device BS EN"
           placeholder="BS"
           compact
+          className={comboboxCellClassName}
         />
       </TableCell>
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[76px] min-w-[76px] max-w-[76px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[76px] min-w-[76px] max-w-[76px]">
         <Select
           value={result.protectiveDeviceCurve || ''}
           onValueChange={handleCurveChange}
@@ -220,16 +238,18 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[92px] min-w-[92px] max-w-[92px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[92px] min-w-[92px] max-w-[92px]">
         <ComboboxCell
           value={result.protectiveDeviceRating || ''}
           onChange={handleRatingChange}
           options={protectiveDeviceRatingOptions}
+          title="Device rating (A)"
           placeholder="A"
           compact
+          className={comboboxCellClassName}
         />
       </TableCell>
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[83px] min-w-[83px] max-w-[83px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[83px] min-w-[83px] max-w-[83px]">
         <Input
           value={result.protectiveDeviceKaRating}
           onChange={(e) => onUpdate(result.id, 'protectiveDeviceKaRating', e.target.value)}
@@ -237,7 +257,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           placeholder="kA"
         />
       </TableCell>
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[110px] min-w-[110px] max-w-[110px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[110px] min-w-[110px] max-w-[110px]">
         <Input
           value={result.maxZs || ''}
           onChange={(e) => onUpdate(result.id, 'maxZs', e.target.value)}
@@ -249,46 +269,53 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
       </TableCell>
 
       {/* RCD Details Group */}
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[110px] min-w-[110px] max-w-[110px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[110px] min-w-[110px] max-w-[110px]">
         <ComboboxCell
           value={result.rcdBsStandard || ''}
           onChange={(v) => onUpdate(result.id, 'rcdBsStandard', v)}
           options={rcdBsStandardOptions}
+          title="RCD BS EN"
           placeholder="BS"
           compact
+          className={comboboxCellClassName}
         />
       </TableCell>
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[92px] min-w-[92px] max-w-[92px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[92px] min-w-[92px] max-w-[92px]">
         <ComboboxCell
           value={result.rcdType || ''}
           onChange={(v) => onUpdate(result.id, 'rcdType', v)}
           options={rcdTypeOptions}
+          title="RCD type"
           placeholder="Type"
           compact
+          className={comboboxCellClassName}
         />
       </TableCell>
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[92px] min-w-[92px] max-w-[92px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[92px] min-w-[92px] max-w-[92px]">
+        {/* Canonical values carry the unit ('30mA') to match the desktop cell
+            Select; normaliseRcdRating maps legacy bare '30' on read so old
+            mobile-filled certs still display. */}
         <Select
-          value={result.rcdRating || ''}
+          value={normaliseRcdRating(result.rcdRating)}
           onValueChange={(value) => onUpdate(result.id, 'rcdRating', value)}
         >
           <SelectTrigger className={selectTriggerClassName}>
             <SelectValue placeholder="mA" />
           </SelectTrigger>
           <SelectContent className="z-[100] bg-background border border-border">
-            <SelectItem value="10" className="text-xs py-2">
+            <SelectItem value="10mA" className="text-xs py-2">
               10mA
             </SelectItem>
-            <SelectItem value="30" className="text-xs py-2">
+            <SelectItem value="30mA" className="text-xs py-2">
               30mA
             </SelectItem>
-            <SelectItem value="100" className="text-xs py-2">
+            <SelectItem value="100mA" className="text-xs py-2">
               100mA
             </SelectItem>
-            <SelectItem value="300" className="text-xs py-2">
+            <SelectItem value="300mA" className="text-xs py-2">
               300mA
             </SelectItem>
-            <SelectItem value="500" className="text-xs py-2">
+            <SelectItem value="500mA" className="text-xs py-2">
               500mA
             </SelectItem>
             <SelectItem value="N/A" className="text-xs py-2">
@@ -297,7 +324,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-0.5 border-r-2 border-border whitespace-nowrap bg-card w-[92px] min-w-[92px] max-w-[92px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[92px] min-w-[92px] max-w-[92px]">
         <Input
           value={result.rcdRatingA || ''}
           onChange={(e) => onUpdate(result.id, 'rcdRatingA', e.target.value)}
@@ -307,7 +334,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
       </TableCell>
 
       {/* Continuity Tests Group */}
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[92px] min-w-[92px] max-w-[92px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[92px] min-w-[92px] max-w-[92px]">
         <Input
           value={result.ringR1 || ''}
           onChange={(e) => onUpdate(result.id, 'ringR1', e.target.value)}
@@ -317,7 +344,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           step="0.001"
         />
       </TableCell>
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[92px] min-w-[92px] max-w-[92px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[92px] min-w-[92px] max-w-[92px]">
         <Input
           value={result.ringRn || ''}
           onChange={(e) => onUpdate(result.id, 'ringRn', e.target.value)}
@@ -327,12 +354,12 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           step="0.001"
         />
       </TableCell>
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[110px] min-w-[110px] max-w-[110px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[132px] min-w-[132px] max-w-[132px]">
         <div className="flex items-center gap-0">
           <Input
             value={result.ringR2 || ''}
             onChange={(e) => onUpdate(result.id, 'ringR2', e.target.value)}
-            className={cn(inputClassName, 'flex-1')}
+            className={cn(inputClassName, 'min-w-0 flex-1')}
             placeholder="Ω"
             type="number"
             step="0.001"
@@ -341,15 +368,15 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
             type="button"
             variant="ghost"
             size="icon"
-            className="h-7 w-7 shrink-0 p-0"
+            className="h-11 w-11 shrink-0 p-0 text-white/80 hover:text-elec-yellow touch-manipulation"
             onClick={handleCalculateR1R2}
-            title="Calc"
+            aria-label="Calculate R1+R2 from ring readings"
           >
-            <Calculator className="h-3 w-3" />
+            <Calculator className="h-4 w-4" />
           </Button>
         </div>
       </TableCell>
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[110px] min-w-[110px] max-w-[110px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[132px] min-w-[132px] max-w-[132px]">
         <div className="flex items-center gap-0.5">
           <Input
             value={result.r1r2}
@@ -366,11 +393,10 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
                 type="button"
                 variant="ghost"
                 size="icon"
-                className="h-7 w-6 shrink-0 p-0 text-muted-foreground hover:text-elec-yellow touch-manipulation"
-                title="R1+R2 calculator"
+                className="h-11 w-11 shrink-0 p-0 text-white/80 hover:text-elec-yellow touch-manipulation"
                 aria-label="Open R1+R2 calculator"
               >
-                <Calculator className="h-3 w-3" />
+                <Calculator className="h-4 w-4" />
               </Button>
             </PopoverTrigger>
             <PopoverContent align="end" className="w-80 p-0 border-0 bg-transparent shadow-none">
@@ -382,7 +408,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           </Popover>
         </div>
       </TableCell>
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[92px] min-w-[92px] max-w-[92px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[92px] min-w-[92px] max-w-[92px]">
         <Input
           value={result.ringContinuityLive || ''}
           onChange={(e) => onUpdate(result.id, 'ringContinuityLive', e.target.value)}
@@ -394,7 +420,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
       </TableCell>
 
       {/* Insulation Tests Group */}
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[110px] min-w-[110px] max-w-[110px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[110px] min-w-[110px] max-w-[110px]">
         <Select
           value={result.insulationTestVoltage || ''}
           onValueChange={(value) => onUpdate(result.id, 'insulationTestVoltage', value)}
@@ -411,28 +437,32 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[110px] min-w-[110px] max-w-[110px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[110px] min-w-[110px] max-w-[110px]">
         <input
           type="text"
           inputMode="text"
           value={result.insulationLiveNeutral || ''}
           onChange={(e) => onUpdate(result.id, 'insulationLiveNeutral', e.target.value)}
-          className="w-full h-11 text-sm text-center bg-background border border-input text-white rounded-md focus:ring-2 focus:ring-primary focus:outline-none touch-manipulation"
+          className="w-full h-11 text-sm text-center bg-white/[0.06] border border-white/[0.10] text-white placeholder:text-white/25 rounded-lg focus:border-elec-yellow focus:outline-none touch-manipulation"
+          /* 16px stops iOS zooming the page on focus — matches ui/input */
+          style={{ fontSize: '16px' }}
           placeholder=">200"
         />
       </TableCell>
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[110px] min-w-[110px] max-w-[110px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[110px] min-w-[110px] max-w-[110px]">
         <input
           type="text"
           inputMode="text"
           value={result.insulationLiveEarth || ''}
           onChange={(e) => onUpdate(result.id, 'insulationLiveEarth', e.target.value)}
-          className="w-full h-11 text-sm text-center bg-background border border-input text-white rounded-md focus:ring-2 focus:ring-primary focus:outline-none touch-manipulation"
+          className="w-full h-11 text-sm text-center bg-white/[0.06] border border-white/[0.10] text-white placeholder:text-white/25 rounded-lg focus:border-elec-yellow focus:outline-none touch-manipulation"
+          /* 16px stops iOS zooming the page on focus — matches ui/input */
+          style={{ fontSize: '16px' }}
           placeholder=">200"
         />
       </TableCell>
       {/* Earth Fault Tests Group */}
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[76px] min-w-[76px] max-w-[76px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[76px] min-w-[76px] max-w-[76px]">
         <Select
           value={result.polarity || ''}
           onValueChange={(value) => onUpdate(result.id, 'polarity', value)}
@@ -453,7 +483,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[110px] min-w-[110px] max-w-[110px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[110px] min-w-[110px] max-w-[110px]">
         <Input
           value={result.zs}
           onChange={(e) => onUpdate(result.id, 'zs', e.target.value)}
@@ -465,7 +495,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
       </TableCell>
 
       {/* RCD Tests Group */}
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[92px] min-w-[92px] max-w-[92px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[92px] min-w-[92px] max-w-[92px]">
         <Input
           value={result.rcdOneX}
           onChange={(e) => onUpdate(result.id, 'rcdOneX', e.target.value)}
@@ -474,7 +504,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           type="number"
         />
       </TableCell>
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[76px] min-w-[76px] max-w-[76px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[76px] min-w-[76px] max-w-[76px]">
         <Select
           value={result.rcdTestButton || ''}
           onValueChange={(value) => onUpdate(result.id, 'rcdTestButton', value)}
@@ -497,7 +527,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
       </TableCell>
 
       {/* AFDD Group */}
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[76px] min-w-[76px] max-w-[76px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[76px] min-w-[76px] max-w-[76px]">
         <Select
           value={result.afddTest || ''}
           onValueChange={(value) => onUpdate(result.id, 'afddTest', value)}
@@ -506,10 +536,10 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
             <SelectValue placeholder="-" />
           </SelectTrigger>
           <SelectContent className="z-[100] bg-background border border-border">
-            <SelectItem value="✓" className="text-xs py-2 text-green-600">
+            <SelectItem value="✓" className="text-xs py-2 text-green-400">
               ✓
             </SelectItem>
-            <SelectItem value="✗" className="text-xs py-2 text-red-600">
+            <SelectItem value="✗" className="text-xs py-2 text-red-400">
               ✗
             </SelectItem>
             <SelectItem value="N/A" className="text-xs py-2">
@@ -520,7 +550,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
       </TableCell>
 
       {/* Functional Group */}
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[76px] min-w-[76px] max-w-[76px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[76px] min-w-[76px] max-w-[76px]">
         <Select
           value={result.functionalTesting || ''}
           onValueChange={(value) => onUpdate(result.id, 'functionalTesting', value)}
@@ -528,17 +558,17 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           <SelectTrigger
             className={cn(
               selectTriggerClassName,
-              result.functionalTesting === '✓' && 'text-green-600',
-              result.functionalTesting === '✗' && 'text-red-600'
+              result.functionalTesting === '✓' && 'text-green-400',
+              result.functionalTesting === '✗' && 'text-red-400'
             )}
           >
             <SelectValue placeholder="-" />
           </SelectTrigger>
           <SelectContent className="z-[100] bg-background border border-border">
-            <SelectItem value="✓" className="text-xs py-2 text-green-600">
+            <SelectItem value="✓" className="text-xs py-2 text-green-400">
               ✓
             </SelectItem>
-            <SelectItem value="✗" className="text-xs py-2 text-red-600">
+            <SelectItem value="✗" className="text-xs py-2 text-red-400">
               ✗
             </SelectItem>
             <SelectItem value="N/A" className="text-xs py-2">
@@ -547,7 +577,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[152px] min-w-[152px] max-w-[152px]">
+      <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[152px] min-w-[152px] max-w-[152px]">
         <Input
           value={result.notes || ''}
           onChange={(e) => onUpdate(result.id, 'notes', e.target.value)}
@@ -556,17 +586,19 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
         />
       </TableCell>
 
-      {/* Actions Column */}
-      <TableCell className="border-l border-border p-0.5 whitespace-nowrap bg-card w-[140px] min-w-[140px] max-w-[140px]">
-        <div className="flex items-center gap-0.5">
+      {/* Actions — right-hand end on mobile (founder call: a 213px frozen zone
+          eats too much phone width; desktop's Actions column is first but NOT
+          sticky either) */}
+      <TableCell className="p-0.5 whitespace-nowrap border-r-0 w-[200px] min-w-[200px] max-w-[200px]">
+        <div className="flex items-center gap-1">
           {onMoveUp && (
             <Button
               variant="ghost"
               size="icon"
               onClick={() => onMoveUp(result.id)}
               disabled={!canMoveUp}
-              className="h-11 w-9 text-muted-foreground hover:bg-muted/40 touch-manipulation disabled:opacity-25"
-              title="Move up"
+              className="h-11 w-11 text-white/80 hover:bg-white/10 touch-manipulation disabled:opacity-25"
+              aria-label="Move circuit up"
             >
               <ChevronUp className="h-4 w-4" />
             </Button>
@@ -577,8 +609,8 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
               size="icon"
               onClick={() => onMoveDown(result.id)}
               disabled={!canMoveDown}
-              className="h-11 w-9 text-muted-foreground hover:bg-muted/40 touch-manipulation disabled:opacity-25"
-              title="Move down"
+              className="h-11 w-11 text-white/80 hover:bg-white/10 touch-manipulation disabled:opacity-25"
+              aria-label="Move circuit down"
             >
               <ChevronDown className="h-4 w-4" />
             </Button>
@@ -588,17 +620,20 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
               variant="ghost"
               size="icon"
               onClick={() => onDuplicate(result.id)}
-              className="h-11 w-9 text-muted-foreground hover:text-elec-yellow hover:bg-muted/40 touch-manipulation"
-              title="Duplicate circuit"
+              className="h-11 w-11 text-white/80 hover:text-elec-yellow hover:bg-white/10 touch-manipulation"
+              aria-label="Duplicate circuit"
             >
               <Copy className="h-4 w-4" />
             </Button>
           )}
+          {/* Delete is destructive — keep it off the end of the duplicate button */}
+          <span aria-hidden="true" className="h-6 w-px shrink-0 bg-white/[0.12]" />
           <Button
             variant="ghost"
             size="icon"
             onClick={() => onRemove(result.id)}
-            className="h-11 w-11 text-destructive hover:bg-destructive/10 touch-manipulation"
+            className="h-11 w-11 text-red-400 hover:bg-white/10 touch-manipulation"
+            aria-label="Delete circuit"
           >
             <Trash2 className="h-4 w-4" />
           </Button>

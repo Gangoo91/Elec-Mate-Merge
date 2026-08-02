@@ -2,13 +2,6 @@ import { useState, useEffect } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { IOSStepIndicator } from '@/components/ui/ios-step-indicator';
 import {
   Plus,
@@ -41,9 +34,8 @@ import {
   SecondaryButton,
   inputClass,
   textareaClass,
-  selectTriggerClass,
-  selectContentClass,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 
 interface LineItem {
   id: string;
@@ -640,29 +632,18 @@ export function CreateQuoteDialog({
               </div>
               <FormGrid cols={2}>
                 <Field label="Valid for">
-                  <Select value={validityDays} onValueChange={setValidityDays}>
-                    <SelectTrigger className={selectTriggerClass}>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      <SelectItem value="14">14 days</SelectItem>
-                      <SelectItem value="30">30 days</SelectItem>
-                      <SelectItem value="60">60 days</SelectItem>
-                      <SelectItem value="90">90 days</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <SelectField
+        value={validityDays}
+        onValueChange={setValidityDays}
+        options={[{ value: '14', label: '14 days' }, { value: '30', label: '30 days' }, { value: '60', label: '60 days' }, { value: '90', label: '90 days' }]}
+      />
                 </Field>
                 <Field label="VAT rate">
-                  <Select value={vatRate} onValueChange={setVatRate}>
-                    <SelectTrigger className={selectTriggerClass}>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      <SelectItem value="0">0% (Exempt)</SelectItem>
-                      <SelectItem value="5">5% (Reduced)</SelectItem>
-                      <SelectItem value="20">20% (Standard)</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <SelectField
+        value={vatRate}
+        onValueChange={setVatRate}
+        options={[{ value: '0', label: '0% (Exempt)' }, { value: '5', label: '5% (Reduced)' }, { value: '20', label: '20% (Standard)' }]}
+      />
                 </Field>
               </FormGrid>
             </FormCard>
@@ -753,7 +734,7 @@ export function CreateQuoteDialog({
                                 [item.id]: String(val),
                               }));
                             }}
-                            className={`${inputClass} w-20 h-10 text-center`}
+                            className={`${inputClass} w-20 text-center`}
                           />
                           <span className="text-[12px] text-white">hrs</span>
                           <span className="text-[12px] text-white">
@@ -881,7 +862,7 @@ export function CreateQuoteDialog({
                                 [item.id]: String(val),
                               }));
                             }}
-                            className={`${inputClass} w-20 h-10 text-center`}
+                            className={`${inputClass} w-20 text-center`}
                           />
                           <span className="text-[12px] text-white">{item.unit}</span>
                           <span className="text-[12px] text-white">
@@ -951,22 +932,11 @@ export function CreateQuoteDialog({
                   />
                 </Field>
                 <Field label="Unit">
-                  <Select
-                    value={newItem.unit}
-                    onValueChange={(v) => setNewItem({ ...newItem, unit: v })}
-                  >
-                    <SelectTrigger className={selectTriggerClass}>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      <SelectItem value="each">each</SelectItem>
-                      <SelectItem value="m">m</SelectItem>
-                      <SelectItem value="m²">m²</SelectItem>
-                      <SelectItem value="hour">hour</SelectItem>
-                      <SelectItem value="day">day</SelectItem>
-                      <SelectItem value="job">job</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <SelectField
+        value={newItem.unit}
+        onValueChange={(v) => setNewItem({ ...newItem, unit: v })}
+        options={[{ value: 'each', label: 'each' }, { value: 'm', label: 'm' }, { value: 'm²', label: 'm²' }, { value: 'hour', label: 'hour' }, { value: 'day', label: 'day' }, { value: 'job', label: 'job' }]}
+      />
                 </Field>
                 <Field label="Price £">
                   <Input
@@ -1153,7 +1123,7 @@ export function CreateQuoteDialog({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[95vh] p-0 overflow-hidden">
+      <SheetContent side="bottom" className="h-[85vh] p-0 overflow-hidden">
         <div className="flex flex-col h-full bg-[hsl(0_0%_8%)]">
           <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
             <div className="h-1 w-10 rounded-full bg-white/20" />

@@ -21,6 +21,8 @@ import CertShellFooter, {
 } from '@/components/inspection/shared/CertShellFooter';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { fetchCertBranding } from '@/utils/certBranding';
+import { formatDesignStandard } from '@/data/standards';
 import { cn } from '@/lib/utils';
 import { reportCloud } from '@/utils/reportCloud';
 import { useReportSync } from '@/hooks/useReportSync';
@@ -129,6 +131,7 @@ interface SmokeCOData {
   compliesSmokeCORegs2022: boolean;
   compliesBS5839_6: boolean;
   compliesBSEN14604: boolean;
+  compliesBS5446_2: boolean;
   compliesBSEN50291: boolean;
   compliesBS7671: boolean;
   partPNotification: string;
@@ -167,13 +170,15 @@ const defaultData = (): SmokeCOData => ({
   alarms: [newAlarm()],
   interconnectionTest: '', interconnectionTriggerAlarm: '', audibilityTest: '',
   mainsSupplyVerified: '', batteryBackupTest: '', rfSignalTest: '',
-  compliesSmokeCORegs2022: false, compliesBS5839_6: false, compliesBSEN14604: false,
+  compliesSmokeCORegs2022: false, compliesBS5839_6: false, compliesBSEN14604: false, compliesBS5446_2: false,
   compliesBSEN50291: false, compliesBS7671: false, partPNotification: '',
   observations: '', selectedRecommendations: [], nextInspectionDate: '',
   installerSignature: '', installerDate: new Date().toISOString().split('T')[0],
   clientSignature: '', clientDate: '', notes: '',
 });
 
+/** House accent for this cert; the user's Settings → Brand accent overrides it. */
+const SMOKE_CO_ACCENT = '#dc2626';
 const DRAFT_KEY = 'elec-mate-draft-smoke-co';
 
 type StepId = 'details' | 'system' | 'alarms' | 'signoff';
@@ -193,9 +198,8 @@ const Section = ({ title, className, children }: { title: string; className?: st
 );
 
 const Sub = ({ title }: { title: string }) => (
-  <div className="flex items-center gap-2 pt-2">
-    <p className="shrink-0 text-[13px] font-semibold text-white">{title}</p>
-    <div className="h-px flex-1 bg-white/[0.08]" />
+  <div className="border-t border-white/[0.1] pt-4">
+    <h3 className="text-sm font-semibold text-white">{title}</h3>
   </div>
 );
 
@@ -205,7 +209,10 @@ const Field = ({ label, required, children }: { label: string; required?: boolea
 
 const PassFailButtons = ({ value, onChange, includeNA }: { value: string; onChange: (v: string) => void; includeNA?: boolean }) => (
   <div className="flex gap-2">
-    {['pass', 'fail', ...(includeNA ? [''] : [])].map((v) => (
+    {/* N/A stores 'na', NOT '' — '' is the UNSET value, so an untouched test
+        used to render as an already-selected "N/A", and the data could not
+        distinguish "explicitly not applicable" from "never tested". */}
+    {['pass', 'fail', ...(includeNA ? ['na'] : [])].map((v) => (
       <button key={v || 'na'} type="button" onClick={() => onChange(v)}
         className={cn('flex-1 h-11 rounded-xl text-sm touch-manipulation transition-all active:scale-[0.98]',
           value === v
@@ -387,10 +394,24 @@ const {
   };
 
   // Compliance warnings
-  const smokeAlarmFloors = new Set(data.alarms.filter((a) => a.alarmType && a.alarmType !== 'CO' && a.alarmType !== 'multi-sensor-heat-co').map((a) => a.floor));
+  //
+  // Storey coverage counts SMOKE-detecting alarms only. The old test was a
+  // denylist (anything that isn't CO), which let a kitchen 'heat' alarm satisfy
+  // "smoke alarm on this storey" — a heat alarm is not a smoke alarm. It also
+  // mapped every alarm's floor, so an alarm with a type but no floor yet added
+  // '' to the Set and inflated the covered-storey count. Allowlist + drop blanks.
+  const SMOKE_DETECTING_TYPES = ['optical-smoke', 'multi-sensor-smoke-heat'];
+  const smokeAlarmFloors = new Set(
+    data.alarms
+      .filter((a) => SMOKE_DETECTING_TYPES.includes(a.alarmType) && a.floor)
+      .map((a) => a.floor)
+  );
   const totalStoreys = parseInt(data.numberOfStoreys) || 0;
   const hasSmokeEveryStorey = totalStoreys > 0 && smokeAlarmFloors.size >= totalStoreys;
-  const hasCombustionAppliances = data.combustionAppliances.length > 0;
+  // 'None' is a peer chip in the same list, so counting length alone made
+  // "no combustion appliances" trigger the missing-CO-alarm alert. The form
+  // already special-cases 'None' further down when showing the locations field.
+  const hasCombustionAppliances = data.combustionAppliances.filter((a) => a !== 'None').length > 0;
   const hasCOAlarm = data.alarms.some((a) => a.alarmType === 'CO' || a.alarmType === 'multi-sensor-heat-co');
   const coAlarmNeeded = hasCombustionAppliances && !hasCOAlarm;
 
@@ -422,7 +443,7 @@ const {
       let formattedData: Record<string, unknown> | undefined;
       try {
         let branding: Record<string, string> = {};
-        try { const { data: cpData } = await supabase.rpc('get_my_company_profile'); const cp = Array.isArray(cpData) ? cpData[0] : cpData; if (cp) branding = { companyName: cp.company_name || '', companyAddress: cp.company_address || '', companyPhone: cp.company_phone || '', companyEmail: cp.company_email || '', companyLogo: cp.company_logo || '' }; } catch { /* branding is optional */ }
+        branding = await fetchCertBranding(SMOKE_CO_ACCENT);
         const { formatSmokeCOJson } = await import('@/utils/smokeCOJsonFormatter');
         formattedData = formatSmokeCOJson(
           { ...data, referenceNumber: data.referenceNumber || `SCA-${Date.now().toString(36).toUpperCase()}` },
@@ -473,7 +494,7 @@ const {
       if (!user) { toast.error('Please sign in'); setIsSaving(false); return; }
 
       let branding: Record<string, string> = {};
-      try { const { data: cpData } = await supabase.rpc('get_my_company_profile'); const cp = Array.isArray(cpData) ? cpData[0] : cpData; if (cp) branding = { companyName: cp.company_name || '', companyAddress: cp.company_address || '', companyPhone: cp.company_phone || '', companyEmail: cp.company_email || '', companyLogo: cp.company_logo || '' }; } catch { /* branding is optional */ }
+      branding = await fetchCertBranding(SMOKE_CO_ACCENT);
       const { formatSmokeCOJson } = await import('@/utils/smokeCOJsonFormatter');
       const payload = formatSmokeCOJson(data, branding);
 
@@ -522,9 +543,11 @@ const {
     signoff: !!data.installerSignature,
   };
 
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
   const goToStep = (step: string) => {
     setCurrentStep(step as StepId);
-    window.scrollTo({ top: 0 });
+    scrollToTop();
   };
 
   const stepContent: Record<StepId, React.ReactNode> = {
@@ -798,7 +821,12 @@ const {
               { field: 'compliesBS5839_6' as const, label: `Complies with BS 5839-6:2019+A1:2020 — Grade ${data.gradeAchieved || '?'}, Category ${data.categoryAchieved || '?'}` },
               { field: 'compliesBSEN14604' as const, label: 'All smoke alarms comply with BS EN 14604' },
               { field: 'compliesBSEN50291' as const, label: 'All CO alarms comply with BS EN 50291-1:2018 and carry BSI Kitemark' },
-              { field: 'compliesBS7671' as const, label: 'Electrical work complies with BS 7671:2018+A3:2024 (if hardwired)' },
+              // Approved Document B Vol 1 §1.3 — heat alarms conform to BS 5446-2.
+              // Only relevant when a heat-detecting alarm has actually been recorded.
+              ...(data.alarms.some((a) => a.alarmType === 'heat' || a.alarmType === 'multi-sensor-smoke-heat' || a.alarmType === 'multi-sensor-heat-co')
+                ? [{ field: 'compliesBS5446_2' as const, label: 'All heat alarms comply with BS 5446-2' }]
+                : []),
+              { field: 'compliesBS7671' as const, label: `Electrical work complies with ${formatDesignStandard('')} (if hardwired)` },
             ].map(({ field, label }) => (
               <div key={field} className="flex items-center justify-between gap-3">
                 <Label className="flex-1 text-[13px] font-medium leading-snug text-white">{label}</Label>

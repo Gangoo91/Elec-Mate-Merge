@@ -1,5 +1,6 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { smokeCOPayloadSchema } from '../_shared/smoke-co-payload-schema.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const TEMPLATE_ID = '904D77D8-0781-41F7-816A-F8000C795CE1';
@@ -36,6 +37,19 @@ Deno.serve(async (req: Request) => {
     const { formData, templateId } = await req.json();
     if (!formData) throw new Error('No form data');
     console.log('[generate-smoke-co-alarm-pdf] Ref:', formData.referenceNumber, 'Grade:', formData.gradeAchieved, 'Cat:', formData.categoryAchieved, 'Alarms:', formData.alarms?.length);
+    // Soft-fail schema check: log and report drift, never block the PDF. The
+    // payload sent below is the RAW formData, so validation only observes —
+    // it must not become the source of what PDFMonkey renders.
+    const validation = smokeCOPayloadSchema.safeParse(formData);
+    if (!validation.success) {
+      console.error('[generate-smoke-co-alarm-pdf] Schema validation failed:', JSON.stringify(validation.error.issues.slice(0, 10)));
+      await captureException(new Error('Smoke & CO alarm payload schema drift detected'), {
+        functionName: 'generate-smoke-co-alarm-pdf',
+        extra: { issues: validation.error.issues.slice(0, 20) },
+        tags: { schema_drift: 'true' },
+      });
+    }
+
     const doc = await createDoc(formData, templateId);
     const completed = await waitForPDF(doc.id);
     return new Response(JSON.stringify({ success: true, document_id: completed.id, pdfUrl: completed.download_url, download_url: completed.download_url, preview_url: completed.preview_url }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });

@@ -188,6 +188,11 @@ interface AccidentRecord {
   photos?: string[];
   incident_number?: string;
   is_archived?: boolean;
+  /** Root-cause analysis — real columns on `accident_records`. `five_whys` is
+      jsonb, hence the loose element type. */
+  five_whys?: unknown[];
+  root_cause?: string | null;
+  root_cause_category?: string | null;
   created_at: string;
 }
 
@@ -255,6 +260,7 @@ const SEV_CLASS: Record<Tone, string> = {
   yellow: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25',
   cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/25',
   indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/25',
+  grey: 'bg-white/[0.06] text-white border-white/[0.12]',
 };
 
 const SEV_LABEL: Record<Severity, string> = {
@@ -514,7 +520,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
   const [form, setForm] = useState<Partial<AccidentRecord>>(emptyForm);
 
   // Spark project link
-  const { data: jobs = [] } = useSparkProjects('active');
+  const { projects: jobs = [] } = useSparkProjects('active');
   const jobTitleFor = (id: string | null) =>
     id ? (jobs.find((j) => j.id === id)?.title ?? null) : null;
 
@@ -1299,7 +1305,7 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
       <Sheet open={!!viewingRecord} onOpenChange={() => setViewingRecord(null)}>
         <SheetContent
           side="bottom"
-          className="h-[88vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06]"
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06]"
         >
           {viewingRecord && (
             <SheetShell
@@ -1522,13 +1528,9 @@ export function DigitalAccidentBook({ onBack }: { onBack: () => void }) {
               <FiveWhysAnalysis
                 table="accident_records"
                 recordId={viewingRecord.id}
-                existingWhys={((viewingRecord as Record<string, unknown>).five_whys as []) || []}
-                existingCategory={
-                  ((viewingRecord as Record<string, unknown>).root_cause_category as string) || ''
-                }
-                existingSummary={
-                  ((viewingRecord as Record<string, unknown>).root_cause as string) || ''
-                }
+                existingWhys={(viewingRecord.five_whys as []) ?? []}
+                existingCategory={viewingRecord.root_cause_category || ''}
+                existingSummary={viewingRecord.root_cause || ''}
               />
 
               {/* Corrective actions tracker */}

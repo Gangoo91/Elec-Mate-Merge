@@ -66,6 +66,7 @@ const RESULT_PILL: Record<Tone, string> = {
   purple: 'bg-purple-500/10 text-purple-400 border-purple-500/25',
   cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/25',
   indigo: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/25',
+  grey: 'bg-white/[0.06] text-white border-white/[0.12]',
 };
 
 function ResultPill({ result }: { result: string }) {
@@ -89,7 +90,7 @@ export function PreUseCheckTool({ onBack }: PreUseCheckToolProps) {
   const [selectedCategory, setSelectedCategory] = useState<CategoryKey | null>(null);
   const [showForm, setShowForm] = useState(false);
   const { data: checks = [], isLoading } = usePreUseChecks();
-  const { data: jobs = [] } = useSparkProjects('active');
+  const { projects: jobs = [] } = useSparkProjects('active');
   const jobTitleFor = (id: string | null) =>
     id ? (jobs.find((j) => j.id === id)?.title ?? null) : null;
   const [searchQuery, setSearchQuery] = useState('');

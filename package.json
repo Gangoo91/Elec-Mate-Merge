@@ -19,6 +19,8 @@
     "lint:bias": "node scripts/check-answer-bias.mjs",
     "preview": "vite preview",
     "test": "playwright test",
+    "check:cert-mapping": "node scripts/check-cert-mapping.mjs",
+    "check:cert-mapping:ci": "node scripts/check-cert-mapping.mjs --ci",
     "test:ui": "playwright test --ui",
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",

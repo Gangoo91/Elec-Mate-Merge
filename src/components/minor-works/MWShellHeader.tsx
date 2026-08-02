@@ -84,7 +84,7 @@ const MWShellHeader: React.FC<MWShellHeaderProps> = ({
         <div className="flex items-center gap-3 px-4 pt-3 lg:px-8">
           <button
             onClick={onBack}
-            className="h-11 px-3 -ml-3 text-[13px] font-semibold text-white/60 touch-manipulation active:scale-[0.97]"
+            className="h-11 px-3 -ml-3 text-[13px] font-semibold text-white touch-manipulation active:scale-[0.97] outline-none focus:outline-none focus-visible:outline-none"
           >
             Back
           </button>
@@ -93,7 +93,7 @@ const MWShellHeader: React.FC<MWShellHeaderProps> = ({
               Minor Works
             </h1>
             {certNumber && (
-              <p className="truncate text-[10.5px] text-white/60 tabular-nums tracking-wide">
+              <p className="truncate text-[10.5px] text-white tabular-nums tracking-wide">
                 {certNumber} · BS 7671
               </p>
             )}
@@ -103,7 +103,7 @@ const MWShellHeader: React.FC<MWShellHeaderProps> = ({
             disabled={saveDisabled || isSaving || syncState?.status === 'syncing'}
             aria-label={`Save now — currently ${save.word.toLowerCase()}`}
             className={cn(
-              'h-11 px-3 text-[11.5px] font-semibold touch-manipulation active:scale-[0.97] disabled:opacity-60',
+              'h-11 px-3 text-[11.5px] font-semibold touch-manipulation active:scale-[0.97] disabled:opacity-60 outline-none focus:outline-none focus-visible:outline-none',
               save.tone
             )}
           >
@@ -117,7 +117,7 @@ const MWShellHeader: React.FC<MWShellHeaderProps> = ({
             }}
             disabled={!onProgressTap}
             aria-label={`Certificate ${progressPercent}% complete — tap to see what's missing`}
-            className="relative -m-1 grid h-11 w-11 shrink-0 place-items-center touch-manipulation active:scale-[0.95] transition-transform"
+            className="relative -m-1 grid h-11 w-11 shrink-0 place-items-center touch-manipulation active:scale-[0.95] transition-transform outline-none focus:outline-none focus-visible:outline-none"
           >
             <svg width="36" height="36" className="-rotate-90" aria-hidden="true">
               <circle cx="18" cy="18" r={RING_R} fill="none" strokeWidth="3.4" className="stroke-white/[0.14]" />
@@ -159,8 +159,11 @@ const MWShellHeader: React.FC<MWShellHeaderProps> = ({
                 }}
                 aria-current={isActive ? 'step' : undefined}
                 className={cn(
-                  'relative flex-1 h-11 text-[13px] lg:text-sm font-semibold touch-manipulation transition-colors',
-                  isActive ? 'text-white' : isDone ? 'text-elec-yellow/90' : 'text-white/60'
+                  // No focus ring/outline — the browser's blue ring fought the
+                  // volt underline. The underline + aria-current carry the
+                  // active state; keyboard users still get the underline.
+                  'relative flex-1 h-11 text-[13px] lg:text-sm font-semibold touch-manipulation transition-colors outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0',
+                  isActive ? 'text-white' : isDone ? 'text-elec-yellow/90' : 'text-white'
                 )}
               >
                 {step.label}

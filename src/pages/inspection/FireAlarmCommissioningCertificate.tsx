@@ -20,6 +20,7 @@ import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { maybePromptLogBook } from '@/utils/fireAlarmLogBookPrompt';
 import { supabase } from '@/integrations/supabase/client';
+import { fireAlarmTemplateId } from '@/utils/fireAlarmPdfRouting';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import FireAlarmG3FormTabs from '@/components/inspection/fire-alarm/FireAlarmG3FormTabs';
@@ -180,6 +181,9 @@ const {
     inspectionDate: formData.commissioningDate,
     companyName: companyProfile?.company_name,
     formattedData: emailFormattedData,
+    // All five fire alarm certs share generate-fire-alarm-pdf, whose default
+    // template is G2 — without this an emailed cert regenerated against it.
+    templateId: fireAlarmTemplateId('fire-alarm-commissioning'),
   });
 
   useEffect(() => {
@@ -325,7 +329,7 @@ const {
           .eq('report_id', savedReportId);
       const { data: fn, error: fnErr } = await supabase.functions.invoke(
         'generate-fire-alarm-pdf',
-        { body: { formData: pdfData, templateId: '2EC2B796-CC4A-4ECA-AB6D-DCCE8EE229FF' } }
+        { body: { formData: pdfData, templateId: fireAlarmTemplateId('fire-alarm-commissioning') } }
       );
       if (fnErr) throw new Error(fnErr.message);
       if (!fn?.success || !fn?.pdfUrl) throw new Error(fn?.error || 'No PDF URL');
@@ -455,7 +459,7 @@ const {
         isGenerating={isGenerating}
         pdfUrl={generatedPdfUrl}
         pdfFilename={pdfFilename}
-        error={generationError}
+        errorMessage={generationError}
         documentLabel="Certificate"
       />
     </div>

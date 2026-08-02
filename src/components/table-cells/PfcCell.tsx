@@ -21,7 +21,7 @@ const PfcCellComponent: React.FC<PfcCellProps> = ({ result, onUpdate }) => {
           // Also update legacy field for backward compatibility
           onUpdate(result.id, 'pfcLiveNeutral', value);
         }}
-        className="h-8 text-sm text-center px-0 border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30 bg-transparent"
+        className="h-8 text-sm text-center px-0 border-0 rounded-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow focus:shadow-none hover:bg-white/[0.04] focus:bg-transparent bg-transparent"
         placeholder="—"
       />
     </TableCell>

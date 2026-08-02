@@ -12,6 +12,8 @@ export interface DefectObservation {
   description: string;
   location?: string;
   circuitRef?: string;
+  /** Inspector's recommended remedial action from the certificate */
+  recommendation?: string;
 }
 
 export interface RemedialQuoteItem {
@@ -403,6 +405,13 @@ export function mapDefectsToQuoteItems(defects: DefectObservation[]): RemedialQu
     const description = defect.description || '';
     if (!description.trim()) continue;
 
+    // Carry the inspector's context onto the quote line: code, observation,
+    // location, and the recommended action (previously dropped — audit P1-4).
+    const defectNotes =
+      `${code} defect: ${truncate(description, 80)}` +
+      (defect.location ? ` — ${defect.location}` : '') +
+      (defect.recommendation ? ` — Action: ${truncate(defect.recommendation, 100)}` : '');
+
     let matched = false;
 
     for (const { pattern, mapping } of DEFECT_REMEDIAL_MAP) {
@@ -421,7 +430,7 @@ export function mapDefectsToQuoteItems(defects: DefectObservation[]): RemedialQu
             category: 'materials',
             subcategory: material.subcategory,
             materialCode: generateCode(material.subcategory),
-            notes: `${code} defect: ${truncate(description, 80)}${defect.location ? ` — ${defect.location}` : ''}`,
+            notes: defectNotes,
             source: 'eicr-defect',
             defectCode: code,
             defectDescription: description,
@@ -439,7 +448,7 @@ export function mapDefectsToQuoteItems(defects: DefectObservation[]): RemedialQu
             totalPrice: labourRate * mapping.labourHours,
             category: 'labour',
             subcategory: mapping.category,
-            notes: `${code} defect: ${truncate(description, 80)}${defect.location ? ` — ${defect.location}` : ''}`,
+            notes: defectNotes,
             source: 'eicr-defect',
             defectCode: code,
             defectDescription: description,
@@ -456,14 +465,16 @@ export function mapDefectsToQuoteItems(defects: DefectObservation[]): RemedialQu
       const urgencyHours = code === 'C1' ? 2 : code === 'C2' ? 1.5 : 1;
       items.push({
         id: uuidv4(),
-        description: `Remedial work: ${truncate(description, 60)}`,
+        // Prefer the inspector's recommended action as the work description —
+        // it says what to DO, the observation only says what's wrong.
+        description: `Remedial work: ${truncate(defect.recommendation || description, 60)}`,
         quantity: urgencyHours,
         unit: 'hours',
         unitPrice: labourRate,
         totalPrice: labourRate * urgencyHours,
         category: 'labour',
         subcategory: 'General Remedial',
-        notes: `${code} defect: ${description}${defect.location ? ` — ${defect.location}` : ''}`,
+        notes: defectNotes,
         source: 'eicr-defect',
         defectCode: code,
         defectDescription: description,

@@ -7,6 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useLocalDraft } from '@/hooks/useLocalDraft';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { useShowMore } from '@/hooks/useShowMore';
+import { useHaptic } from '@/hooks/useHaptic';
 import { useRequestApproval } from '@/hooks/useSupervisorApproval';
 import {
   usePermits,
@@ -34,8 +35,6 @@ import {
 import { Switch } from '@/components/ui/switch';
 
 import {
-  PageHero,
-  StatStrip,
   FilterBar,
   EmptyState,
   LoadingState,
@@ -55,6 +54,7 @@ import {
 } from '@/components/college/primitives';
 
 import { safetyInputCn, safetySelectTriggerCn, safetyTextareaCn } from './common/SafetyDocField';
+import { SafetyPageHeader, SafetyStatStrip } from './common/SafetyPageHeader';
 import { SafetyModuleShell } from './common/SafetyModuleShell';
 import { SignatureField } from './common/SignatureField';
 import { LocationAutoFill } from './common/LocationAutoFill';
@@ -270,10 +270,12 @@ function statusTone(status: PermitStatus, expiring?: boolean): Tone | undefined 
 }
 
 const STATUS_PILL: Record<'amber' | 'green' | 'red' | 'blue' | 'neutral', string> = {
-  amber: 'bg-amber-500/10 text-amber-400 border-amber-500/25',
-  green: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
-  red: 'bg-red-500/10 text-red-400 border-red-500/25',
-  blue: 'bg-blue-500/10 text-blue-400 border-blue-500/25',
+  // Status is a neutral surface with COLOURED TEXT — coloured washes read
+  // muddy on the dark surface, and blue is not in the palette at all.
+  amber: 'bg-white/[0.05] text-amber-400 border-white/10',
+  green: 'bg-white/[0.05] text-emerald-400 border-white/10',
+  red: 'bg-white/[0.05] text-red-400 border-white/10',
+  blue: 'bg-white/[0.05] text-white border-white/10',
   neutral: 'bg-white/[0.05] text-white border-white/10',
 };
 
@@ -284,7 +286,7 @@ function StatusPill({ status, expiring }: { status: PermitStatus; expiring?: boo
   return (
     <span
       className={cn(
-        'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-[0.12em] border whitespace-nowrap',
+        'inline-flex items-center whitespace-nowrap rounded-full border px-2 py-0.5 text-[11px] font-medium',
         STATUS_PILL[key]
       )}
     >
@@ -352,6 +354,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
   const { data: ramsDocs = [] } = useRAMSDocuments();
 
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
+  const haptic = useHaptic();
 
   const [now, setNow] = useState(() => new Date());
   useEffect(() => {
@@ -436,7 +439,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
   const [linkedRamsTitle, setLinkedRamsTitle] = useState<string | null>(null);
   const [linkedJobId, setLinkedJobId] = useState<string | null>(null);
   const [linkedJobTitle, setLinkedJobTitle] = useState<string | null>(null);
-  const { data: jobs = [] } = useSparkProjects('active');
+  const { projects: jobs = [] } = useSparkProjects('active');
   const jobTitleFor = (id: string | null) =>
     id ? (jobs.find((j) => j.id === id)?.title ?? null) : null;
   // Remote receiver sign-off
@@ -904,25 +907,17 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
         return (
           <div className="space-y-4">
             <TextAction onClick={() => setShowLoadTemplate(true)}>
-              Load from a saved template →
+              Load from a saved template
             </TextAction>
             <ListCard>
               {PERMIT_TYPES.map((type, i) => (
                 <ListRow
                   key={type.id}
                   onClick={() => selectPermitType(type.id)}
-                  lead={
-                    <span className="text-[11px] font-medium tabular-nums text-elec-yellow/80 w-5">
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                  }
+                  // Numbered 01/02 markers and → glyphs are the superseded deck
+                  // style — the permit types are a choice, not a sequence.
                   title={type.label}
                   subtitle={type.description}
-                  trailing={
-                    <span aria-hidden className="text-elec-yellow/80">
-                      →
-                    </span>
-                  }
                 />
               ))}
             </ListCard>
@@ -1214,11 +1209,10 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
       moduleName="Permit to Work"
       trailing={activeCount > 0 ? <StatusPill status="active" /> : undefined}
       hero={
-        <PageHero
+        <SafetyPageHeader
           eyebrow="Permit to Work"
           title="Issue, track and close work permits"
           description="Hot work, confined space, isolation, height and excavation — issued with the right controls, sign-offs, version control and live expiry."
-          tone="amber"
           actions={
             <PrimaryButton
               onClick={() => {
@@ -1233,7 +1227,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
       }
       stats={
         permits.length > 0 ? (
-          <StatStrip
+          <SafetyStatStrip
             stats={[
               {
                 value: activeCount,
@@ -1255,20 +1249,24 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
       }
       filter={
         permits.length > 0 ? (
-          <FilterBar
-            tabs={[
-              { value: 'all', label: 'All', count: permits.length },
-              { value: 'active', label: 'Active', count: statusCounts.active },
-              { value: 'expired', label: 'Expired', count: statusCounts.expired },
-              { value: 'closed', label: 'Closed', count: statusCounts.closed },
-              { value: 'cancelled', label: 'Cancelled', count: statusCounts.cancelled },
-            ]}
-            activeTab={filterStatus}
-            onTabChange={(v) => setFilterStatus(v as PermitStatus | 'all')}
-            search={searchQuery}
-            onSearchChange={setSearchQuery}
-            searchPlaceholder="Search permits…"
-          />
+          // Capped: FilterBar uses lg:justify-between, which on a wide desktop
+          // threw the search box ~1500px away from the tabs it belongs with.
+          <div className="max-w-4xl">
+            <FilterBar
+              tabs={[
+                { value: 'all', label: 'All', count: permits.length },
+                { value: 'active', label: 'Active', count: statusCounts.active },
+                { value: 'expired', label: 'Expired', count: statusCounts.expired },
+                { value: 'closed', label: 'Closed', count: statusCounts.closed },
+                { value: 'cancelled', label: 'Cancelled', count: statusCounts.cancelled },
+              ]}
+              activeTab={filterStatus}
+              onTabChange={(v) => setFilterStatus(v as PermitStatus | 'all')}
+              search={searchQuery}
+              onSearchChange={setSearchQuery}
+              searchPlaceholder="Search permits…"
+            />
+          </div>
         ) : undefined
       }
     >
@@ -1291,43 +1289,70 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
         />
       ) : (
         <div className="space-y-3">
-          <ListCard>
+          {/* Two-up from lg. A permit register is scanned, not read line by
+              line, so on a desktop a single full-width row per permit wasted
+              most of the window and pushed the fifth permit below the fold.
+              Each card now carries what you actually need to triage — who
+              issued it, who holds it, and how long is left — instead of making
+              you open every one. */}
+          <div
+            className="grid gap-3 sm:grid-cols-[repeat(auto-fill,minmax(min(100%,420px),1fr))]"
+            onPointerDown={(e) => {
+              if ((e.target as HTMLElement).closest('button')) haptic.light();
+            }}
+          >
             {visiblePermits.map((permit) => {
               const typeLabel =
                 PERMIT_TYPES.find((t) => t.id === permit.type)?.label || permit.type;
               const isActive = permit.status === 'active';
               const expiring =
                 isActive && new Date(permit.end_time).getTime() - now.getTime() < 3600000;
+              const awaiting = isActive && permit.acceptance_status === 'awaiting_receiver';
               return (
-                <ListRow
+                <button
                   key={permit.id}
+                  type="button"
                   onClick={() => setViewingPermit(permit)}
-                  accent={statusTone(permit.status, expiring)}
-                  title={permit.title}
-                  subtitle={`${typeLabel} · ${permit.location}`}
-                  trailing={
-                    <div className="flex flex-col items-end gap-1">
-                      <StatusPill status={permit.status} expiring={expiring} />
-                      {isActive && permit.acceptance_status === 'awaiting_receiver' ? (
-                        <span className="text-[11px] text-amber-400">Awaiting receiver</span>
-                      ) : (
-                        <span
-                          className={cn(
-                            'text-[11px] tabular-nums',
-                            isActive ? remainingClasses(permit.end_time, now) : 'text-white'
-                          )}
-                        >
-                          {isActive
-                            ? remainingLabel(permit.end_time, now)
-                            : fmtDate(permit.start_time || permit.created_at)}
-                        </span>
-                      )}
+                  className="flex touch-manipulation flex-col gap-3 rounded-2xl border border-white/[0.10] bg-[hsl(0_0%_11%)] p-4 text-left transition-colors hover:border-white/[0.20] hover:bg-[hsl(0_0%_14%)] active:scale-[0.99]"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-[15px] font-semibold text-white">
+                        {permit.title}
+                      </p>
+                      <p className="mt-0.5 truncate text-[12px] text-white">{typeLabel}</p>
                     </div>
-                  }
-                />
+                    <StatusPill status={permit.status} expiring={expiring} />
+                  </div>
+
+                  <p className="truncate text-[13px] text-white">{permit.location}</p>
+
+                  <div className="flex items-baseline justify-between gap-3 border-t border-white/[0.1] pt-3">
+                    <span className="truncate text-[12px] text-white">
+                      {permit.issuer_name ? `Issued by ${permit.issuer_name}` : 'Issuer not named'}
+                      {permit.receiver_name ? ` · ${permit.receiver_name}` : ''}
+                    </span>
+                    {awaiting ? (
+                      <span className="shrink-0 text-[12px] font-medium text-amber-400">
+                        Awaiting receiver
+                      </span>
+                    ) : (
+                      <span
+                        className={cn(
+                          'shrink-0 text-[12px] font-medium tabular-nums',
+                          isActive ? remainingClasses(permit.end_time, now) : 'text-white'
+                        )}
+                      >
+                        {isActive
+                          ? remainingLabel(permit.end_time, now)
+                          : fmtDate(permit.start_time || permit.created_at)}
+                      </span>
+                    )}
+                  </div>
+                </button>
               );
             })}
-          </ListCard>
+          </div>
           {hasMore && <LoadMoreButton onLoadMore={loadMore} remaining={remaining} />}
         </div>
       )}
@@ -1336,7 +1361,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
       <Sheet open={showWizard} onOpenChange={setShowWizard}>
         <SheetContent
           side="bottom"
-          className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
         >
           <SheetShell
             eyebrow={
@@ -1405,7 +1430,17 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                 <DraftRecoveryBanner onRestore={restoreDraft} onDismiss={dismissDraft} />
               )}
             </AnimatePresence>
-            {renderWizardStep()}
+            {/* Delegated press haptic — every chip and button inside the wizard
+                buzzes without wiring each one individually. A permit is filled
+                in on site, often gloved, where the tactile confirmation is the
+                only reliable feedback that a tap registered. */}
+            <div
+              onPointerDown={(e) => {
+                if ((e.target as HTMLElement).closest('button')) haptic.light();
+              }}
+            >
+              {renderWizardStep()}
+            </div>
           </SheetShell>
         </SheetContent>
       </Sheet>
@@ -1414,7 +1449,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
       <Sheet open={!!viewingPermit} onOpenChange={() => setViewingPermit(null)}>
         <SheetContent
           side="bottom"
-          className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
         >
           {viewingPermit &&
             (() => {
@@ -1608,9 +1643,7 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                           key={role}
                           className="p-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]"
                         >
-                          <p className="text-[10px] uppercase tracking-[0.18em] text-white mb-1">
-                            {role}
-                          </p>
+                          <p className="mb-1 text-[12px] font-medium text-white">{role}</p>
                           <p className="text-[13px] text-white font-medium">{name}</p>
                           {sig && (
                             <img
@@ -1751,11 +1784,10 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                     subtitle={`${r.location || ''}${r.location ? ' · ' : ''}${fmtDate(r.date)}`}
                     trailing={
                       linkedRamsId === r.id ? (
-                        <span className="text-[11px] text-elec-yellow">Linked</span>
+                        <span className="text-[11px] font-medium text-elec-yellow">Linked</span>
                       ) : (
-                        <span aria-hidden className="text-elec-yellow/70">
-                          →
-                        </span>
+                        // A word, not a glyph — the row is already tappable.
+                        <span className="text-[11px] font-medium text-white">Link</span>
                       )
                     }
                   />
@@ -1791,8 +1823,8 @@ export function PermitToWork({ onBack }: { onBack: () => void }) {
                   className={cn(
                     'h-12 rounded-xl border text-center font-semibold touch-manipulation active:scale-[0.97] transition-all',
                     extensionHours === hours
-                      ? 'bg-elec-yellow/15 border-elec-yellow/40 text-elec-yellow'
-                      : 'border-white/10 bg-white/[0.04] text-white'
+                      ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                      : 'border-white/[0.12] bg-white/[0.06] text-white'
                   )}
                 >
                   {hours}h

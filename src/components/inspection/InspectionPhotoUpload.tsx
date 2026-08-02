@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
 import { Loader2 } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface InspectionPhotoUploadProps {
   onPhotoCapture: (file: File) => Promise<void>;
@@ -10,6 +12,8 @@ const InspectionPhotoUpload: React.FC<InspectionPhotoUploadProps> = ({
   onPhotoCapture,
   isUploading,
 }) => {
+  const { toast } = useToast();
+  const haptic = useHaptic();
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -24,7 +28,12 @@ const InspectionPhotoUpload: React.FC<InspectionPhotoUploadProps> = ({
     ];
 
     if (file.size > maxSize) {
-      alert(`File too large. Max 20MB. Yours: ${(file.size / 1024 / 1024).toFixed(1)}MB.`);
+      haptic.warning();
+      toast({
+        title: 'File too large',
+        description: `Maximum size is 20MB. Yours: ${(file.size / 1024 / 1024).toFixed(1)}MB.`,
+        variant: 'destructive',
+      });
       e.target.value = '';
       return;
     }
@@ -35,7 +44,12 @@ const InspectionPhotoUpload: React.FC<InspectionPhotoUploadProps> = ({
     const hasValidType = allowedTypes.includes(file.type) || file.type === '';
 
     if (!hasValidType && !hasValidExtension) {
-      alert('Invalid file type. Use JPEG, PNG, WEBP, or HEIC.');
+      haptic.warning();
+      toast({
+        title: 'Invalid file type',
+        description: 'Use JPEG, PNG, WEBP, or HEIC.',
+        variant: 'destructive',
+      });
       e.target.value = '';
       return;
     }
@@ -45,7 +59,7 @@ const InspectionPhotoUpload: React.FC<InspectionPhotoUploadProps> = ({
   };
 
   return (
-    <div className="grid grid-cols-2 gap-1">
+    <div className="grid grid-cols-2 gap-2">
       <input
         ref={cameraInputRef}
         type="file"
@@ -56,12 +70,15 @@ const InspectionPhotoUpload: React.FC<InspectionPhotoUploadProps> = ({
       />
       <button
         type="button"
-        onClick={() => cameraInputRef.current?.click()}
+        onClick={() => {
+          haptic.light();
+          cameraInputRef.current?.click();
+        }}
         disabled={isUploading}
-        className="h-9 rounded-lg text-[10px] font-semibold bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-1"
+        className="h-11 rounded-xl text-[13px] font-semibold bg-white/[0.06] border border-white/[0.12] text-white hover:bg-white/[0.1] touch-manipulation active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-1.5 transition-colors"
       >
         {isUploading ? <Loader2 className="h-3 w-3 animate-spin" /> : null}
-        Take Photo
+        Take photo
       </button>
 
       <input
@@ -73,12 +90,15 @@ const InspectionPhotoUpload: React.FC<InspectionPhotoUploadProps> = ({
       />
       <button
         type="button"
-        onClick={() => fileInputRef.current?.click()}
+        onClick={() => {
+          haptic.light();
+          fileInputRef.current?.click();
+        }}
         disabled={isUploading}
-        className="h-9 rounded-lg text-[10px] font-semibold bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-1"
+        className="h-11 rounded-xl text-[13px] font-semibold bg-white/[0.06] border border-white/[0.12] text-white hover:bg-white/[0.1] touch-manipulation active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-1.5 transition-colors"
       >
         {isUploading ? <Loader2 className="h-3 w-3 animate-spin" /> : null}
-        Upload
+        Upload photo
       </button>
     </div>
   );

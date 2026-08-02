@@ -10,6 +10,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
+import useReadingKeypad from '@/hooks/useReadingKeypad';
+
+/** Numeric test readings the keypad serves — free-number inputs only. */
+const KEYPAD_META = {
+  batteryVoltage: { label: 'Battery voltage — standby supply', unit: 'V' },
+};
 
 const cardCn =
   '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
@@ -113,6 +119,14 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
     onUpdate('powerTests', { ...pw, [field]: value });
   const updateFaultTest = (field: string, value: string) =>
     onUpdate('faultTests', { ...ft, [field]: value });
+
+  // Reading keypad — shared MW pattern. Values flow through the existing
+  // updatePowerTest path; the spread only ADDS props to the reading input.
+  const keypad = useReadingKeypad({
+    meta: KEYPAD_META,
+    getValue: () => String(pw.batteryVoltage ?? ''),
+    setValue: (_field, value) => updatePowerTest('batteryVoltage', value),
+  });
 
   // Test summary
   const testSummary = useMemo(() => {
@@ -263,6 +277,7 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
               inputMode="decimal"
               className={inputCn}
               placeholder="e.g. 27.6"
+              {...keypad.field('batteryVoltage')}
             />
           </div>
           <TestResultRow
@@ -573,7 +588,9 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
               type="button"
               onClick={() => {
                 const list = Array.isArray(formData.sampledDevices) ? formData.sampledDevices : [];
-                onUpdate('sampledDevices', [...list, { ref: '', zone: '', result: 'pass' }]);
+                // result starts UNSET — a sampled device the engineer adds and does not
+                // assess must not be recorded (or printed) as a pass.
+                onUpdate('sampledDevices', [...list, { ref: '', zone: '', result: '' }]);
               }}
               className="min-h-11 px-2 text-sm font-semibold text-elec-yellow touch-manipulation"
             >
@@ -636,10 +653,12 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
                           'h-11 w-16 shrink-0 rounded-xl border text-[12px] font-semibold touch-manipulation',
                           d.result === 'pass'
                             ? 'border-green-500 bg-green-500 text-black'
-                            : 'border-red-500 bg-red-500 text-white'
+                            : d.result === 'fail'
+                              ? 'border-red-500 bg-red-500 text-white'
+                              : 'border-white/[0.12] bg-white/[0.06] text-white'
                         )}
                       >
-                        {d.result === 'pass' ? 'Pass' : 'Fail'}
+                        {d.result === 'pass' ? 'Pass' : d.result === 'fail' ? 'Fail' : 'Set'}
                       </button>
                     </div>
                   </div>
@@ -751,6 +770,12 @@ export default function FAG6TestsSampling({ formData, onUpdate }: Props) {
           </div>
         );
       })()}
+
+      {/* Scroll room so the last reading can rise clear of the keypad */}
+      {keypad.spacer}
+
+      {/* Reading keypad — coarse-pointer devices only */}
+      {keypad.element}
     </div>
   );
 }

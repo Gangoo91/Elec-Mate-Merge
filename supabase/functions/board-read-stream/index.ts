@@ -60,6 +60,15 @@ interface BoardStructure {
   circuits_per_phase?: { L1: number; L2: number; L3: number };
 }
 
+/** Base64 image part as sent to Gemini — kept in memory for the validation pass. */
+type ImagePart = { inlineData: { mimeType: string; data: string } };
+
+/** Circuit as it flows through post-processing — detected fields plus tags. */
+type LooseCircuit = Omit<Partial<DetectedCircuit>, 'device'> & {
+  is_infrastructure?: boolean;
+  device?: (Partial<DetectedCircuit['device']> & Record<string, unknown>) | null;
+};
+
 // SSE Event Types
 type StreamEvent =
   | { type: 'stage'; stage: string; message: string }
@@ -675,6 +684,8 @@ async function analyzeWithGemini(
 ): Promise<{
   board: Partial<BoardStructure>;
   circuits: Partial<DetectedCircuit>[];
+  /** The base64 inlineData parts, kept in memory for the validation pass. */
+  imageParts: ImagePart[];
 }> {
   sendEvent({ type: 'stage', stage: 'analyzing', message: 'Analysing board with AI...' });
 
@@ -779,6 +790,7 @@ async function analyzeWithGemini(
     return {
       board: parsed.board || {},
       circuits: (parsed.circuits || []).map((c: any) => ({ ...c, source_model: 'gemini-3.5-flash' })),
+      imageParts: parts.slice(1) as ImagePart[],
     };
   }
 
@@ -847,7 +859,9 @@ async function analyzeWithGemini(
   try {
     result = parseAIResponse(raw, 'Board analysis');
   } catch (err) {
-    await captureException(err, { functionName: 'board-read-stream', requestUrl: req.url, requestMethod: req.method });
+    // NOTE: `req` is not in scope here — referencing it threw a ReferenceError
+    // that replaced the salvage path below with a hard failure.
+    await captureException(err, { functionName: 'board-read-stream' });
     console.error('[board-read-stream] Parse failed.', {
       rawLength: raw.length,
       preview: raw.slice(0, 500),
@@ -1081,7 +1095,169 @@ async function analyzeWithGemini(
   return {
     board: result.board || {},
     circuits: circuits.map((c: any) => ({ ...c, source_model: 'gemini-3.5-flash' })),
+    imageParts: parts.slice(1) as ImagePart[],
   };
+}
+
+// ============================================================================
+// VALIDATION PASS — thinking-enabled double-check of uncertain circuits
+// ============================================================================
+
+/**
+ * Re-reads low/medium-confidence circuits with a second, NON-streaming Gemini
+ * call. Thinking is deliberately left ON (no thinkingConfig) — this pass
+ * trades latency for accuracy on the tiny I∆n / model-code print that decides
+ * RCBO-vs-MCB. The original full-resolution base64 images are re-sent (no
+ * refetch — they are already in memory) and the prompt directs attention to
+ * each uncertain position, so the model re-reads specific ways rather than
+ * the whole board.
+ *
+ * MUST never break the scan — every failure path logs and returns.
+ */
+async function validateUncertainCircuits(
+  imageParts: ImagePart[],
+  circuits: LooseCircuit[],
+  sendEvent: (event: StreamEvent) => void
+): Promise<void> {
+  try {
+    if (imageParts.length === 0) return;
+
+    const uncertain = circuits
+      .filter(
+        (c) =>
+          !c.is_infrastructure &&
+          (c.confidence === 'low' || c.confidence === 'medium') &&
+          typeof c.index === 'number'
+      )
+      .slice(0, 8);
+
+    if (uncertain.length === 0) return;
+
+    sendEvent({
+      type: 'stage',
+      stage: 'validating',
+      message: `Double-checking ${uncertain.length} uncertain circuit${uncertain.length === 1 ? '' : 's'}…`,
+    });
+
+    // Compact list of what the first pass thinks is at each uncertain way —
+    // the "tiling" directive: each entry pins the model's attention to a
+    // specific physical position on the re-sent full-resolution photo(s).
+    const compact = uncertain.map((c) => ({
+      index: c.index,
+      position: c.index,
+      device: c.device?.category ?? null,
+      rating_amps: c.device?.rating_amps ?? null,
+      curve: c.device?.curve ?? null,
+      label: c.label_text ?? null,
+      confidence: c.confidence,
+    }));
+
+    const promptText =
+      `${VALIDATION_PROMPT}\n\n` +
+      `The original full-resolution photo(s) are attached. For EACH circuit listed below, ` +
+      `locate that exact physical position/way on the board and re-read the small print on ` +
+      `the device face — the I∆n value, model code and curve letter — before deciding. ` +
+      `Only return entries for the listed indices.\n\n` +
+      `UNCERTAIN CIRCUITS TO RE-CHECK:\n${JSON.stringify(compact, null, 2)}`;
+
+    const response = await fetchWithTimeout(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${geminiApiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: promptText }, ...imageParts] }],
+          generationConfig: {
+            maxOutputTokens: 8000,
+            temperature: 0.1,
+            responseMimeType: 'application/json',
+            // Bounded thinking: reasoning ON (unlike the speed-critical first
+            // read) but budgeted — an unlimited pass held scan completion for
+            // ~40s in live testing.
+            thinkingConfig: { thinkingBudget: 4096 },
+          },
+        }),
+      },
+      25000
+    );
+
+    if (!response.ok) {
+      console.error('[board-read-stream] Validation pass HTTP error:', response.status);
+      return;
+    }
+
+    const data = await response.json();
+    const text =
+      data.candidates?.[0]?.content?.parts
+        ?.map((p: { text?: string }) => p.text || '')
+        .join('') || '';
+    const parsed = parseAIResponse(text, 'Validation pass');
+    const validations = Array.isArray(parsed?.validations) ? parsed.validations : [];
+
+    let confirmedCount = 0;
+    let correctedCount = 0;
+
+    for (const v of validations) {
+      if (typeof v?.index !== 'number') continue;
+      const target = circuits.find((c) => c.index === v.index);
+      if (!target) continue;
+      // Only touch circuits we actually asked about.
+      if (!uncertain.some((u) => u.index === v.index)) continue;
+
+      if (v.status === 'confirmed') {
+        confirmedCount++;
+        target.confidence = 'high';
+        target.evidence = `${target.evidence || ''} [Validation pass: confirmed on re-read]`.trim();
+        sendEvent({
+          type: 'circuit_update',
+          index: v.index,
+          updates: { confidence: 'high', evidence: target.evidence } as Partial<DetectedCircuit>,
+        });
+      } else if (v.status === 'corrected' && v.corrections) {
+        correctedCount++;
+        const cor = v.corrections;
+        const device: NonNullable<LooseCircuit['device']> = { ...(target.device || {}) };
+        if (cor.device_category) device.category = cor.device_category;
+        if (cor.rating_amps !== undefined && cor.rating_amps !== null) {
+          device.rating_amps = cor.rating_amps;
+        }
+        if (cor.curve) device.curve = cor.curve;
+        if (cor.rcd_type) device.rcd_type = cor.rcd_type;
+        if (cor.i_delta_n_mA !== undefined && cor.i_delta_n_mA !== null) {
+          device.i_delta_n_mA = cor.i_delta_n_mA;
+        }
+        if (device.curve && device.rating_amps) {
+          device.type = `${device.curve}${device.rating_amps}`;
+        }
+        target.device = device;
+        if (cor.label_text) target.label_text = cor.label_text;
+        // Corrections keep their confidence flag so the row still invites a
+        // human glance — only confirmations get bumped to high.
+        target.evidence =
+          `${target.evidence || ''} [Validation pass: corrected — ${v.evidence || 'decision rule re-applied'}]`.trim();
+        sendEvent({
+          type: 'circuit_update',
+          index: v.index,
+          updates: {
+            device,
+            label_text: target.label_text,
+            confidence: target.confidence,
+            evidence: target.evidence,
+          } as Partial<DetectedCircuit>,
+        });
+      }
+    }
+
+    if (confirmedCount + correctedCount > 0) {
+      sendEvent({
+        type: 'decision',
+        message: `Double-check done — ${confirmedCount} confirmed, ${correctedCount} corrected.`,
+      });
+    }
+  } catch (err) {
+    // A validation-pass failure must NEVER break the scan.
+    console.error('[board-read-stream] Validation pass failed (non-fatal):', err);
+  }
 }
 
 // ============================================================================
@@ -1101,7 +1277,7 @@ serve(async (req) => {
   // Start processing in background
   (async () => {
     try {
-      const { images, hints }: BoardReadRequest = await req.json();
+      const { images, hints, options }: BoardReadRequest = await req.json();
 
       if (!images || images.length === 0) {
         sendEvent({ type: 'error', message: 'At least one image is required' });
@@ -1123,6 +1299,13 @@ serve(async (req) => {
 
       // Single comprehensive Gemini analysis
       const result = await analyzeWithGemini(images, hints, sendEvent);
+
+      // Second-pass validation of uncertain circuits (thinking ON, original
+      // full-res images re-sent). Skipped in fast mode; internally guarded so
+      // a failure can never break the scan.
+      if (options?.fast_mode !== true) {
+        await validateUncertainCircuits(result.imageParts, result.circuits, sendEvent);
+      }
 
       // Send completion
       sendEvent({

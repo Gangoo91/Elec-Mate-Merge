@@ -182,7 +182,7 @@ export function ReportsSection() {
     queryKey: ['debtor-aging'],
     queryFn: async () => {
       const { data } = await supabase
-        .from('employer_invoices')
+        .rpc('employer_invoices_unified')
         .select('client, amount, due_date, status')
         .neq('status', 'Paid');
       return data || [];

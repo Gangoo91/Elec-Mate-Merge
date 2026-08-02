@@ -25,7 +25,7 @@ export const BookmarksSheet = ({
     <Sheet open={open} onOpenChange={(o) => !o && onClose()}>
       <SheetContent
         side="bottom"
-        className="h-[80vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
       >
         <SheetShell
           eyebrow="Saved"

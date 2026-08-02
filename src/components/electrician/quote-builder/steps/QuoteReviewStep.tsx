@@ -133,6 +133,32 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
           <p className="text-[12px] text-white/75 whitespace-pre-line">{quote.notes}</p>
         </div>
       )}
+
+      {/* Linked certificate — mirrors InvoiceReviewStep so the electrician can
+          see (and verify) the attachment before sending */}
+      {quote.linked_certificate_id && (
+        <div className="border-t border-white/[0.12] pt-4">
+          <p className="text-[10px] font-medium text-white/80 uppercase tracking-[0.18em] mb-2">
+            Linked Document
+          </p>
+          <div className="flex items-center gap-3 p-3 rounded-xl bg-blue-500/[0.08] border border-blue-500/20">
+            <div className="flex-1 min-w-0">
+              <p className="text-[14px] font-medium text-white">{quote.linked_certificate_type}</p>
+              <p className="text-[12px] text-white">{quote.linked_certificate_reference}</p>
+            </div>
+            {quote.linked_certificate_pdf_url && (
+              <a
+                href={quote.linked_certificate_pdf_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[12px] font-medium text-blue-400 touch-manipulation flex-shrink-0"
+              >
+                View PDF
+              </a>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

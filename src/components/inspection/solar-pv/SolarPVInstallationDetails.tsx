@@ -296,6 +296,26 @@ const SolarPVInstallationDetails: React.FC<Props> = ({ formData, onUpdate }) => 
         </div>
       </Section>
 
+      {/* Handover record — MIS 3002 App C Model Handover Document */}
+      <Section title="Scope of Work">
+        <Field label="Description of installation">
+          <Textarea
+            value={formData.installationDescription || ''}
+            onChange={(e) => onUpdate('installationDescription', e.target.value)}
+            placeholder="Key components installed — e.g. 12 x 450Wp panels, 5kW hybrid inverter, 10kWh battery"
+            className={textareaCn}
+          />
+        </Field>
+        <Field label="Circuits tested">
+          <Textarea
+            value={formData.circuitsTested || ''}
+            onChange={(e) => onUpdate('circuitsTested', e.target.value)}
+            placeholder="e.g. PV array strings 1-2, AC generation circuit, battery DC circuit"
+            className={textareaCn}
+          />
+        </Field>
+      </Section>
+
       {/* Site Access & Safety */}
       <Section title="Site Access & Safety">
         <Field label="Site Access Notes">

@@ -46,12 +46,24 @@ export const safetySelectTriggerCn =
   'focus:border-elec-yellow focus:outline-none focus:ring-0 ' +
   'data-[state=open]:border-elec-yellow touch-manipulation';
 
+/**
+ * Textareas are SOFT FILLED, not underlined.
+ *
+ * Inputs and textareas deliberately differ: an underline suits a single short
+ * value, but a multi-line answer needs a container so the text has somewhere to
+ * sit — an underline under a five-line paragraph reads as a stray rule. This is
+ * the certificate spec verbatim (CLAUDE.md → Design System).
+ *
+ * `textarea-soft` is a REQUIRED marker class, not decoration: `index.css`
+ * carries a global `input::placeholder { color: white !important }` and this
+ * class scopes the low-opacity exception. Drop it and placeholders become
+ * indistinguishable from entered text.
+ */
 export const safetyTextareaCn =
-  'input-underline w-full resize-none rounded-none border-0 border-b border-white/[0.15] ' +
-  'bg-transparent px-1 py-2 text-base font-medium leading-relaxed text-white ' +
-  'placeholder:font-normal placeholder:text-white/25 caret-elec-yellow ' +
-  'transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow ' +
-  'focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation';
+  'textarea-soft w-full resize-none rounded-xl border-0 bg-white/[0.05] px-3.5 py-3 ' +
+  'text-base md:text-base leading-relaxed text-white placeholder:text-white/25 ' +
+  'caret-elec-yellow focus:bg-white/[0.07] focus:ring-1 focus:ring-elec-yellow/50 ' +
+  'focus:outline-none focus:shadow-none min-h-[90px] touch-manipulation';
 
 interface SafetyDocFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -110,9 +122,10 @@ export const SafetyDocTextarea = React.forwardRef<HTMLTextAreaElement, SafetyDoc
           ref={ref}
           aria-invalid={error ? true : undefined}
           className={cn(
-            safetyInputCn,
-            'h-auto min-h-[88px] resize-none py-2 leading-relaxed',
-            error && 'border-red-400',
+            // Was borrowing the INPUT class with overrides, which gave a
+            // multi-line field a single underline. Use the textarea language.
+            safetyTextareaCn,
+            error && 'ring-1 ring-red-400',
             className
           )}
           {...rest}

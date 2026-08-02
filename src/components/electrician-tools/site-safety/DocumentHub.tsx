@@ -121,6 +121,7 @@ const STATUS_PILL: Record<Tone | 'neutral', string> = {
   yellow: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25',
   cyan: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/25',
   neutral: 'bg-white/[0.05] text-white border-white/10',
+  grey: 'bg-white/[0.06] text-white border-white/[0.12]',
 };
 
 function statusTone(status: string): Tone | undefined {
@@ -482,9 +483,7 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
                       <span className="text-white" aria-hidden>
                         ·
                       </span>
-                      <span className="tabular-nums text-white">
-                        {fmtRelative(doc.updatedAt)}
-                      </span>
+                      <span className="tabular-nums text-white">{fmtRelative(doc.updatedAt)}</span>
                     </span>
                   }
                   trailing={

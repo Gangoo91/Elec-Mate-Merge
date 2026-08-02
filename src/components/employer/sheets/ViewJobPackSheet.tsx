@@ -4,13 +4,6 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -72,11 +65,10 @@ import {
   Pill,
   Eyebrow,
   inputClass,
-  selectTriggerClass,
-  selectContentClass,
   textareaClass,
   SuccessCheckmark,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 
 interface ViewJobPackSheetProps {
   jobPack: JobPack | null;
@@ -472,16 +464,11 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                     />
                   </Field>
                   <Field label="Status">
-                    <Select value={status} onValueChange={(v) => setStatus(v as JobPackStatus)}>
-                      <SelectTrigger className={selectTriggerClass}>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className={selectContentClass}>
-                        <SelectItem value="Draft">Draft</SelectItem>
-                        <SelectItem value="In Progress">Sent</SelectItem>
-                        <SelectItem value="Complete">Signed</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <SelectField
+        value={status}
+        onValueChange={(v) => setStatus(v as JobPackStatus)}
+        options={[{ value: 'Draft', label: 'Draft' }, { value: 'In Progress', label: 'Sent' }, { value: 'Complete', label: 'Signed' }]}
+      />
                   </Field>
                 </FormCard>
               </>

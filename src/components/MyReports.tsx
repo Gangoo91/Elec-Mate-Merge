@@ -4,11 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import {
-  FileText,
   X,
   Loader2,
   Users,
-  Search,
+  SlidersHorizontal,
 } from 'lucide-react';
 import { SortDropdown, SortOption } from './reports/SortDropdown';
 import { BulkActionsBar } from './reports/BulkActionsBar';
@@ -17,7 +16,6 @@ import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { EmptyState } from '@/components/ui/empty-state';
 import { cn } from '@/lib/utils';
 import { CertificateImportDialog } from '@/components/certificates/CertificateImportDialog';
 import { ExportToEICDialog } from '@/components/ExportToEICDialog';
@@ -128,6 +126,30 @@ const TYPE_GROUPS: { label: string; types: { value: string; label: string }[] }[
   },
 ];
 
+/** Flat value → short label lookup, for naming an active type filter. */
+const TYPE_LABELS: Record<string, string> = Object.fromEntries(
+  TYPE_GROUPS.flatMap((g) => g.types.map((t) => [t.value, t.label]))
+);
+
+const DATE_PRESETS = [
+  { value: 'all' as const, label: 'All time' },
+  { value: '30d' as const, label: 'Last 30 days' },
+  { value: '12m' as const, label: 'Last 12 months' },
+  { value: 'custom' as const, label: 'Custom' },
+];
+
+const STATUS_LABELS: Record<string, string> = {
+  draft: 'Drafts',
+  'in-progress': 'In progress',
+  completed: 'Done',
+};
+
+const SCOPE_OPTIONS: { value: LibraryScope; label: string; hint: string }[] = [
+  { value: 'all', label: 'Everyone', hint: "Mine and my team's" },
+  { value: 'mine', label: 'Mine', hint: 'Only certificates I created' },
+  { value: 'team', label: 'My team', hint: 'Signed-off team work' },
+];
+
 const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport }) => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -163,6 +185,9 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [showNewCertSheet, setShowNewCertSheet] = useState(false);
+  // ELE-1458 — on phones the audience/type/date rows live in here instead of
+  // stacking above the list. Desktop still shows them inline and never opens it.
+  const [showFiltersSheet, setShowFiltersSheet] = useState(false);
   // ELE-1421 — whose certificates: the company's (default), only mine, only the
   // team's. Defaults to 'all' deliberately. The bug being fixed was a signed-off
   // cert sitting behind a view nobody opened, so team work has to be present on
@@ -234,6 +259,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   const {
     data: reportsData,
     isLoading: isLoadingReports,
+    isFetching: isFetchingReports,
     refetch: refetchReports,
   } = useQuery<ReportsResponse>({
     // ELE-NEW — page key includes type + status so changing tab fetches fresh
@@ -283,6 +309,12 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
       }
     },
     enabled: !!user,
+    // ELE-1459 — hold the previous page on screen while the new filter loads.
+    // Every filter change mints a new query key, so without this `data` goes
+    // undefined for a beat, the list collapses to nothing and the page's height
+    // drops out from under the scroll position. That collapse-and-refill IS the
+    // "weird jump". Keeping the old rows means the layout never loses height.
+    placeholderData: (previous) => previous,
   });
 
   // ELE-NEW — per-type counts across the WHOLE library (not just the current
@@ -311,6 +343,10 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
       return counts;
     },
     enabled: !!user,
+    // ELE-1459 — the counts drive which filter rows render at all (the audience
+    // row only exists when team > 0). Letting them go undefined mid-refetch
+    // unmounts a whole row and shunts everything below it up the screen.
+    placeholderData: (previous) => previous,
   });
 
   useEffect(() => {
@@ -350,10 +386,10 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
    * never exists. The effect above keeps `scope` in its deps as a backstop —
    * setting currentPage to 1 when it is already 1 is a no-op.
    */
-  const changeScope = (next: LibraryScope) => {
+  const changeScope = useCallback((next: LibraryScope) => {
     setScope(next);
     setCurrentPage(1);
-  };
+  }, []);
 
   // Realtime subscription — show toast + refetch when agent creates/updates certs
   useEffect(() => {
@@ -442,6 +478,90 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
       completed: reports.filter((r) => r.status === 'completed').length,
     };
   }, [reports, countsData]);
+
+  /**
+   * ELE-1458 — the secondary filters, described once.
+   *
+   * On a phone these three rows now live behind one pill instead of stacking
+   * above the list, so the pill needs to say how many are on and the summary
+   * row needs to name them. Status is deliberately excluded: it stays visible
+   * as its own control, so counting it here would double-report it.
+   */
+  const activeSecondaryFilters = useMemo(() => {
+    const active: { key: string; label: string; clear: () => void }[] = [];
+    if (scope !== 'all') {
+      active.push({
+        key: 'scope',
+        label: SCOPE_OPTIONS.find((s) => s.value === scope)?.label ?? scope,
+        clear: () => changeScope('all'),
+      });
+    }
+    if (typeFilter !== 'all') {
+      active.push({
+        key: 'type',
+        label: TYPE_LABELS[typeFilter] ?? typeFilter.replace(/-/g, ' '),
+        clear: () => setTypeFilter('all'),
+      });
+    }
+    if (datePreset !== 'all') {
+      active.push({
+        key: 'date',
+        label:
+          datePreset === 'custom'
+            ? dateFrom || dateTo
+              ? `${dateFrom || 'Any'} to ${dateTo || 'Any'}`
+              : 'Custom dates'
+            : DATE_PRESETS.find((d) => d.value === datePreset)?.label ?? 'Dates',
+        clear: () => {
+          setDatePreset('all');
+          setDateFrom('');
+          setDateTo('');
+        },
+      });
+    }
+    return active;
+  }, [scope, typeFilter, datePreset, dateFrom, dateTo, changeScope]);
+
+  const clearSecondaryFilters = useCallback(() => {
+    changeScope('all');
+    setTypeFilter('all');
+    setDatePreset('all');
+    setDateFrom('');
+    setDateTo('');
+  }, [changeScope]);
+
+  /**
+   * Everything currently narrowing the list, search and status included.
+   *
+   * The empty state uses this rather than a generic "try adjusting your
+   * filters": an empty library is alarming, and the useful thing to show
+   * someone is exactly which of five controls is hiding their work — and to
+   * let them drop one without losing the rest.
+   */
+  const activeLibraryFilters = useMemo(() => {
+    const active = [...activeSecondaryFilters];
+    if (statusFilter !== 'all') {
+      active.unshift({
+        key: 'status',
+        label: STATUS_LABELS[statusFilter] ?? statusFilter,
+        clear: () => setStatusFilter('all'),
+      });
+    }
+    if (searchQuery.trim()) {
+      active.unshift({
+        key: 'search',
+        label: `“${searchQuery.trim()}”`,
+        clear: () => setSearchQuery(''),
+      });
+    }
+    return active;
+  }, [activeSecondaryFilters, statusFilter, searchQuery]);
+
+  const clearAllLibraryFilters = useCallback(() => {
+    setSearchQuery('');
+    setStatusFilter('all');
+    clearSecondaryFilters();
+  }, [clearSecondaryFilters]);
 
   // ELE-NEW — type/status filtering now happens server-side (see queryKey
   // above), so the loaded `reports` array is already pre-filtered. Only
@@ -1081,29 +1201,43 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
     setSelectedReports(new Set());
   };
 
-  // Loading state
-  if (!user || isLoadingReports) {
+  // Loading state — FIRST load only.
+  //
+  // ELE-1459 — this early return used to fire on `isLoadingReports` alone, and
+  // `isLoading` is true whenever the active query key has no cached data. Every
+  // filter tap mints a new key, so tapping a tab tore down the entire screen —
+  // sticky header, filter rows, list — and replaced it with three skeletons,
+  // then rebuilt it a moment later. That full unmount/remount was the jump.
+  // With placeholderData above it can no longer fire mid-filter; the length
+  // guard makes that impossible rather than merely unlikely.
+  if (!user || (isLoadingReports && allReports.length === 0)) {
     return (
+      // Mirrors the loaded header exactly — same Back line, same title scale,
+      // same gutters — so the first paint settles into place instead of
+      // swapping one header shape for another.
       <div className="min-h-screen bg-background text-foreground pb-8">
-        <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
-          <div className="flex items-center gap-3 h-11 px-4 py-2">
+        <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
+          <div className="flex items-center gap-1 px-4 pt-2 lg:px-8">
             <button
               type="button"
               onClick={onBack}
-              className="h-11 px-1 -ml-1 text-[13px] font-semibold text-white/60 touch-manipulation"
+              className="h-11 px-1 -ml-1 text-[13px] font-semibold text-white touch-manipulation"
             >
               Back
             </button>
-            <div>
-              <h1 className="text-base font-semibold text-white">My Certificates</h1>
-              <p className="text-[11px] text-white">Loading...</p>
-            </div>
           </div>
-        </div>
-        <div className="px-4 py-6">
-          <div className="space-y-3">
-            {[1, 2, 3].map((i) => (
-              <Skeleton key={i} className="h-28 w-full rounded-2xl bg-white/[0.03]" />
+          <div className="px-4 pb-3 lg:px-8">
+            <h1 className="text-2xl sm:text-[28px] font-bold tracking-tight text-white">
+              My Certificates
+            </h1>
+            <p className="mt-0.5 text-[13px] text-white">Loading…</p>
+          </div>
+          <div className="h-px bg-white/[0.08]" />
+        </header>
+        <div className="px-4 py-4 lg:px-8 lg:max-w-[1600px]">
+          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-3">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <Skeleton key={i} className="h-[132px] w-full rounded-2xl bg-white/[0.03]" />
             ))}
           </div>
         </div>
@@ -1116,21 +1250,28 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
       <div className="min-h-screen bg-background text-foreground pb-24 prevent-shortcuts">
         {/* Header */}
         <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
-          <div className="flex items-center gap-2 px-3 py-2">
+          {/*
+            Header, rebuilt to the pattern the other three I&T section pages
+            already use (Certificates / Specialist / Notices & Labels): a quiet
+            Back link on its own line, then a big title.
+
+            The old single row put Back, the title, Search, More and New on one
+            line at 390px, which truncated the page's own name to "My Cer…" and
+            left three grey text buttons competing with each other. Splitting it
+            gives the title the width it needs and lets the utility actions sit
+            where they belong — small, on the line above, out of the way.
+          */}
+          <div className="flex items-center gap-1 px-4 pt-2 lg:px-8">
             {/* Back */}
             <button
               type="button"
               onClick={onBack}
-              className="h-11 px-1 -ml-1 text-[13px] font-semibold text-white/60 flex-shrink-0 touch-manipulation active:scale-[0.97]"
+              className="h-11 px-1 -ml-1 text-[13px] font-semibold text-white flex-shrink-0 touch-manipulation active:scale-[0.97]"
             >
               Back
             </button>
 
-            {/* Title — single line with count */}
-            <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight flex-1 min-w-0 truncate">
-              My Certificates
-              <span className="text-white/40 font-normal text-[13px] ml-2 tabular-nums">{totalCount}</span>
-            </h1>
+            <div className="flex-1" />
 
             {/* Search Toggle */}
             <button
@@ -1140,7 +1281,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
               }}
               className={cn(
                 'h-11 px-2 rounded-lg text-[13px] font-semibold flex-shrink-0 touch-manipulation active:scale-[0.97] transition-colors',
-                showSearch ? 'text-elec-yellow' : 'text-white/70 hover:text-white'
+                showSearch ? 'text-elec-yellow' : 'text-white'
               )}
             >
               Search
@@ -1149,7 +1290,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             {/* Overflow Menu */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="h-11 px-2 rounded-lg flex-shrink-0 text-[13px] font-semibold text-white/70 hover:text-white touch-manipulation active:scale-[0.97] transition-colors">
+                <button className="h-11 px-2 -mr-2 rounded-lg flex-shrink-0 text-[13px] font-semibold text-white touch-manipulation active:scale-[0.97] transition-colors">
                   More
                 </button>
               </DropdownMenuTrigger>
@@ -1189,9 +1330,27 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
               </DropdownMenuContent>
             </DropdownMenu>
 
+          </div>
+
+          {/* Title row — the page's name at section-page scale, with the one
+              primary action beside it. The subtitle carries the count, so the
+              title doesn't need a number bolted to its end. */}
+          <div className="flex items-end justify-between gap-3 px-4 pb-3 lg:px-8">
+            <div className="min-w-0">
+              <h1 className="text-2xl sm:text-[28px] font-bold tracking-tight text-white">
+                My Certificates
+              </h1>
+              <p className="mt-0.5 text-[13px] text-white tabular-nums">
+                {totalCount} {totalCount === 1 ? 'certificate' : 'certificates'}
+                {/* The tab's own label, not the raw column value — this line
+                    read "0 certificates · draft" against a tab saying Drafts. */}
+                {statusFilter !== 'all' && ` · ${STATUS_LABELS[statusFilter] ?? statusFilter}`}
+              </p>
+            </div>
+
             {/* New Certificate */}
             <button
-              className="h-11 px-4 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[13px] font-bold flex-shrink-0 touch-manipulation active:scale-[0.97] transition-colors"
+              className="h-11 px-5 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[13px] font-bold flex-shrink-0 touch-manipulation active:scale-[0.97] transition-colors"
               onClick={() => {
                 navigator.vibrate?.(10);
                 setShowNewCertSheet(true);
@@ -1242,7 +1401,10 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
               untouched. Sits above the status control because it's the wider
               question: whose work first, then what state it's in. */}
           {(countsData?.team ?? 0) > 0 && (
-            <div className="px-4 pt-2">
+            // ELE-1458 — inline from lg up only; on a phone this row is the
+            // first of four and it's the least often changed, so it moves into
+            // the filter sheet rather than costing a row of the first screen.
+            <div className="hidden lg:block px-4 pt-2">
               <div className="flex items-center gap-1.5">
                 <Users className="h-3.5 w-3.5 shrink-0 text-white/40" aria-hidden />
                 <div
@@ -1269,17 +1431,12 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                         'flex-1 min-w-0 h-9 rounded-md text-[11px] font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-1.5',
                         scope === value
                           ? 'bg-white/[0.10] text-white ring-1 ring-inset ring-white/15'
-                          : 'text-white/60 hover:text-white'
+                          : 'text-white'
                       )}
                     >
                       <span className="truncate">{label}</span>
                       {(count ?? 0) > 0 && (
-                        <span
-                          className={cn(
-                            'text-[10px] tabular-nums leading-none',
-                            scope === value ? 'text-white/60' : 'text-white/35'
-                          )}
-                        >
+                        <span className="text-[10px] tabular-nums leading-none text-white">
                           {count}
                         </span>
                       )}
@@ -1290,9 +1447,11 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             </div>
           )}
 
-          {/* Status filter — full-width segmented control */}
-          <div className="px-4 py-2">
-            <div className="flex gap-1 p-1 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+          {/* Status filter — the one control that stays on screen at every
+              width. ELE-1458 pairs it with the filter pill on phones so the
+              whole filter surface is a single row before the list starts. */}
+          <div className="px-4 py-2 lg:px-8 flex items-center gap-2">
+            <div className="flex-1 min-w-0 flex gap-1 p-1 rounded-xl bg-white/[0.03] border border-white/[0.06]">
               {[
                 { value: 'all' as StatusFilter, label: 'All', count: statusCounts.all },
                 { value: 'draft' as StatusFilter, label: 'Drafts', count: statusCounts.draft },
@@ -1307,9 +1466,10 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                   }}
                   className={cn(
                     'flex-1 min-w-0 h-9 rounded-lg text-[11px] sm:text-[12px] font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-1',
-                    statusFilter === value
-                      ? 'bg-elec-yellow text-black'
-                      : 'text-white/60 hover:text-white'
+                    // Inactive tabs are full white — the volt fill is what marks
+                    // the active one, so dimming the rest only made them read as
+                    // disabled grey.
+                    statusFilter === value ? 'bg-elec-yellow text-black' : 'text-white'
                   )}
                 >
                   <span className="truncate">{label}</span>
@@ -1318,7 +1478,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                     <span
                       className={cn(
                         'hidden sm:inline text-[10px] tabular-nums leading-none',
-                        statusFilter === value ? 'text-black/60' : 'text-white/35'
+                        statusFilter === value ? 'text-black/70' : 'text-white'
                       )}
                     >
                       {count}
@@ -1327,11 +1487,72 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                 </button>
               ))}
             </div>
+
+            {/* ELE-1458 — the phone's single door to audience, type and time.
+                The badge is the whole point: filters that live behind a sheet
+                have to announce themselves, or a user forgets a narrow filter
+                is on and reads a short list as lost work. */}
+            <button
+              type="button"
+              onClick={() => {
+                navigator.vibrate?.(10);
+                setShowFiltersSheet(true);
+              }}
+              aria-label={
+                activeSecondaryFilters.length > 0
+                  ? `Filters, ${activeSecondaryFilters.length} active`
+                  : 'Filters'
+              }
+              className={cn(
+                'lg:hidden shrink-0 h-11 px-3 rounded-xl border flex items-center gap-1.5 text-[12px] font-semibold transition-colors touch-manipulation active:scale-[0.98]',
+                activeSecondaryFilters.length > 0
+                  ? 'bg-elec-yellow border-elec-yellow text-black'
+                  : 'bg-white/[0.03] border-white/[0.06] text-white'
+              )}
+            >
+              <SlidersHorizontal className="h-4 w-4 shrink-0" aria-hidden />
+              {activeSecondaryFilters.length > 0 && (
+                <span className="tabular-nums leading-none">{activeSecondaryFilters.length}</span>
+              )}
+            </button>
           </div>
+
+          {/* ELE-1458 — names the filters hiding in the sheet, and lets each be
+              dropped in one tap. Absent at rest, so the default library is a
+              status row and then certificates. */}
+          {activeSecondaryFilters.length > 0 && (
+            <div className="lg:hidden flex items-center gap-1.5 px-4 pb-2 overflow-x-auto scrollbar-hide">
+              {activeSecondaryFilters.map((f) => (
+                <button
+                  key={f.key}
+                  type="button"
+                  onClick={() => {
+                    navigator.vibrate?.(10);
+                    f.clear();
+                  }}
+                  aria-label={`Remove filter: ${f.label}`}
+                  className="shrink-0 h-7 pl-2.5 pr-2 rounded-md bg-white/[0.06] border border-white/[0.12] text-[11px] font-medium text-white flex items-center gap-1.5 touch-manipulation active:scale-[0.98]"
+                >
+                  <span className="truncate max-w-[9rem]">{f.label}</span>
+                  <X className="h-3 w-3 shrink-0 text-white/60" aria-hidden />
+                </button>
+              ))}
+              <button
+                type="button"
+                onClick={() => {
+                  navigator.vibrate?.(10);
+                  clearSecondaryFilters();
+                }}
+                className="shrink-0 h-7 px-2 text-[11px] font-semibold text-elec-yellow touch-manipulation"
+              >
+                Clear all
+              </button>
+            </div>
+          )}
 
           {/* Type filter row — grouped by category; non-core types appear only
               once the user has at least one, so the row stays short and relevant. */}
-          <div className="flex items-center gap-1.5 px-4 pb-2.5 overflow-x-auto scrollbar-hide">
+          <div className="hidden lg:flex items-center gap-1.5 px-4 pb-2.5 overflow-x-auto scrollbar-hide">
             {(() => {
               type ChipItem =
                 | { kind: 'chip'; value: string; label: string }
@@ -1387,7 +1608,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                           'text-[9px] px-1 py-0.5 rounded-sm tabular-nums leading-none',
                           typeFilter === value
                             ? 'bg-black/[0.15] text-black'
-                            : 'bg-white/[0.06] text-white/60'
+                            : 'bg-white/[0.06] text-white'
                         )}
                       >
                         {count}
@@ -1402,13 +1623,8 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
           {/* Date range filter row — ELE-1236 (NAPIT/NICEIC: "certs from the
               last 12 months"). Presets are rolling windows on last-updated;
               Custom reveals from/to date inputs. */}
-          <div className="flex gap-2 px-4 pb-2.5 overflow-x-auto scrollbar-hide">
-            {[
-              { value: 'all' as const, label: 'All time' },
-              { value: '30d' as const, label: 'Last 30 days' },
-              { value: '12m' as const, label: 'Last 12 months' },
-              { value: 'custom' as const, label: 'Custom' },
-            ].map(({ value, label }) => (
+          <div className="hidden lg:flex gap-2 px-4 pb-2.5 overflow-x-auto scrollbar-hide">
+            {DATE_PRESETS.map(({ value, label }) => (
               <button
                 key={value}
                 onClick={() => {
@@ -1427,7 +1643,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             ))}
           </div>
           {datePreset === 'custom' && (
-            <div className="flex items-center gap-2 px-4 pb-2.5">
+            <div className="hidden lg:flex items-center gap-2 px-4 pb-2.5">
               <input
                 type="date"
                 value={dateFrom}
@@ -1435,7 +1651,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                 aria-label="From date"
                 className="h-9 flex-1 min-w-0 rounded-md bg-white/[0.04] border border-white/[0.08] px-2.5 text-xs text-white touch-manipulation focus:outline-none focus:border-elec-yellow/40 [color-scheme:dark]"
               />
-              <span className="text-[11px] text-white/50 shrink-0">to</span>
+              <span className="text-[11px] text-white shrink-0">to</span>
               <input
                 type="date"
                 value={dateTo}
@@ -1446,7 +1662,11 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             </div>
           )}
 
-          <div className="h-[2px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
+          {/* Plain hairline. The gold gradient rule that used to sit here was
+              the last of the accent bars — the same one already stripped from
+              Certificates, Specialist and Notices & Labels. Volt is for the
+              things you press, not for decorating the page's seams. */}
+          <div className="h-px bg-white/[0.08]" />
 
           {/* Bulk Actions Bar */}
           {isBulkMode && selectedReports.size > 0 && (
@@ -1465,7 +1685,11 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
 
         {/* Content */}
         <PullToRefresh onRefresh={handleRefresh} isRefreshing={isRefreshing}>
-          <div className="max-w-6xl mx-auto px-4 py-4">
+          {/* Matches the width the header and filter rows already run at, and
+              the lg:max-w-[1600px] the other section pages settled on. The old
+              centred max-w-6xl left the grid floating in the middle of a
+              full-width header, which read as two different pages. */}
+          <div className="px-4 py-4 lg:px-8 lg:max-w-[1600px]">
             {filteredReports.length === 0 ? (
               // ELE-1421 — a QS filtered to their team's work hasn't got an empty
               // library, they've got a team with nothing finished yet. Offering
@@ -1476,64 +1700,121 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
               statusFilter === 'all' &&
               typeFilter === 'all' &&
               datePreset === 'all' ? (
-                <EmptyState
-                  icon={Users}
-                  title="Nothing from your team yet"
-                  description="Certificates your team completes or you sign off appear here alongside your own."
-                  secondaryAction={{
-                    label: 'Show my certificates',
-                    onClick: () => changeScope('mine'),
-                  }}
-                />
-              ) : searchQuery || statusFilter !== 'all' || typeFilter !== 'all' || datePreset !== 'all' ? (
-                <EmptyState
-                  icon={Search}
-                  title="No certificates found"
-                  description="Try adjusting your search or filter criteria."
-                  secondaryAction={{
-                    label: 'Clear Filters',
-                    onClick: () => {
-                      setSearchQuery('');
-                      setStatusFilter('all');
-                      setTypeFilter('all');
-                      setDatePreset('all');
-                      setDateFrom('');
-                      setDateTo('');
-                    },
-                  }}
-                />
+                <div className="mx-auto max-w-md py-16 text-center sm:py-24">
+                  <h2 className="text-xl font-bold tracking-tight text-white sm:text-2xl">
+                    Nothing from your team yet
+                  </h2>
+                  <p className="mx-auto mt-2 max-w-sm text-[13.5px] leading-relaxed text-white">
+                    Certificates your team completes, or that you sign off as QS, appear here
+                    alongside your own.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigator.vibrate?.(10);
+                      changeScope('mine');
+                    }}
+                    className="mt-6 h-11 rounded-xl border border-white/[0.14] bg-white/[0.05] px-6 text-[13px] font-semibold text-white touch-manipulation active:scale-[0.98]"
+                  >
+                    Show my certificates
+                  </button>
+                </div>
+              ) : activeLibraryFilters.length > 0 ? (
+                /*
+                  Filtered to nothing. "Try adjusting your search or filter
+                  criteria" is the least useful sentence this screen can print:
+                  the user has five controls and no idea which one is at fault.
+                  So name every active filter, and make each one droppable on
+                  its own — clearing all is the blunt option, not the only one.
+                */
+                <div className="mx-auto max-w-md py-14 text-center sm:py-20">
+                  <h2 className="text-xl font-bold tracking-tight text-white sm:text-2xl">
+                    Nothing matches
+                  </h2>
+                  <p className="mx-auto mt-2 max-w-sm text-[13.5px] leading-relaxed text-white">
+                    {activeLibraryFilters.length === 1
+                      ? 'One filter is narrowing your library. Tap it to remove it.'
+                      : `${activeLibraryFilters.length} filters are narrowing your library. Tap one to remove it.`}
+                  </p>
+
+                  <div className="mt-4 flex flex-wrap items-center justify-center gap-1.5">
+                    {activeLibraryFilters.map((f) => (
+                      <button
+                        key={f.key}
+                        type="button"
+                        onClick={() => {
+                          navigator.vibrate?.(10);
+                          f.clear();
+                        }}
+                        aria-label={`Remove filter: ${f.label}`}
+                        className="flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-white/[0.14] bg-white/[0.05] pl-3 pr-2.5 text-[12px] font-medium text-white touch-manipulation active:scale-[0.98]"
+                      >
+                        <span className="max-w-[11rem] truncate">{f.label}</span>
+                        <X className="h-3.5 w-3.5 shrink-0 text-white" aria-hidden />
+                      </button>
+                    ))}
+                  </div>
+
+                  {activeLibraryFilters.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.vibrate?.(10);
+                        clearAllLibraryFilters();
+                      }}
+                      className="mt-5 h-11 rounded-xl bg-elec-yellow px-6 text-[13px] font-bold text-black touch-manipulation active:scale-[0.98]"
+                    >
+                      Clear all filters
+                    </button>
+                  )}
+                </div>
               ) : (
-                <EmptyState
-                  icon={FileText}
-                  title="No certificates yet"
-                  description="Get started by creating your first certificate."
-                  action={{
-                    label: 'Create Certificate',
-                    onClick: () => setShowNewCertSheet(true),
-                  }}
-                />
+                /* A genuinely empty library — no filters to blame. */
+                <div className="mx-auto max-w-md py-16 text-center sm:py-24">
+                  <h2 className="text-xl font-bold tracking-tight text-white sm:text-2xl">
+                    No certificates yet
+                  </h2>
+                  <p className="mx-auto mt-2 max-w-sm text-[13.5px] leading-relaxed text-white">
+                    Everything you issue is stored here — searchable, exportable and ready to send
+                    to a client or a scheme assessor.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigator.vibrate?.(10);
+                      setShowNewCertSheet(true);
+                    }}
+                    className="mt-6 h-11 rounded-xl bg-elec-yellow px-6 text-[13px] font-bold text-black touch-manipulation active:scale-[0.98]"
+                  >
+                    New certificate
+                  </button>
+                </div>
               )
             ) : (
               <div className="space-y-2.5">
-                {/* Editorial section label — mirrors HubSection on the I&T pages */}
-                <div className="flex items-end justify-between gap-3 px-0.5">
-                  <h2 className="text-[14px] font-semibold tracking-tight text-white/80 capitalize">
-                    {typeFilter === 'all' ? 'Certificates' : typeFilter.replace(/-/g, ' ')}
-                    {/* ELE-1421 — name the active scope. Mixed lists are the
-                        default, so the heading is what tells a QS at a glance
-                        that they're looking at the company's work, not only
-                        their own. Silent on 'all' — that's the resting state. */}
-                    {scope !== 'all' && (
-                      <span className="ml-1.5 text-white/30 normal-case tracking-normal">
-                        · {scope === 'mine' ? 'mine only' : 'my team'}
-                      </span>
-                    )}
-                  </h2>
-                  <span className="text-[10.5px] text-white/30 tabular-nums">
-                    {sortedReports.length}
-                  </span>
-                </div>
-                <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3 items-stretch">
+                {/* Section label — only when it says something the header
+                    doesn't. At rest the page title already reads "My
+                    Certificates / N certificates", so a second "Certificates
+                    20" directly beneath it was pure duplication. It earns its
+                    place once a type or scope narrows the list.
+                    ELE-1421 — naming the scope is what tells a QS at a glance
+                    they're looking at the company's work, not only their own. */}
+                {(typeFilter !== 'all' || scope !== 'all') && (
+                  <div className="flex items-end justify-between gap-3 px-0.5">
+                    <h2 className="text-[14px] font-semibold tracking-tight text-white capitalize">
+                      {typeFilter === 'all' ? 'Certificates' : typeFilter.replace(/-/g, ' ')}
+                      {scope !== 'all' && (
+                        <span className="ml-1.5 font-normal normal-case tracking-normal text-white">
+                          · {scope === 'mine' ? 'mine only' : 'my team'}
+                        </span>
+                      )}
+                    </h2>
+                    <span className="text-[11px] text-white tabular-nums">
+                      {sortedReports.length}
+                    </span>
+                  </div>
+                )}
+                <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-3 items-stretch">
                   {sortedReports.map((report) => (
                     <CertificateCard
                       key={report.report_id}
@@ -1552,6 +1833,11 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                       isBulkMode={isBulkMode}
                       isSelected={selectedReports.has(report.report_id)}
                       onSelectToggle={() => handleSelectToggle(report.report_id)}
+                      // ELE-1458 — every card in a status-filtered list carries
+                      // the same state word, so it stops being information.
+                      // Drafts are the exception: 'draft' and 'auto-draft' both
+                      // land in that tab and the difference matters.
+                      hideStatus={statusFilter !== 'all' && statusFilter !== 'draft'}
                     />
                   ))}
                 </div>
@@ -1561,10 +1847,10 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                     sees how much is left to load within their selected tab. */}
                 {(hasMore || totalCount > 0) && (
                   <div className="py-4 flex flex-col items-center gap-2">
-                    <span className="text-[11px] text-white/50 tabular-nums">
+                    <span className="text-[11px] text-white tabular-nums">
                       Showing {filteredReports.length} of {totalCount}
                       {typeFilter !== 'all' && ` ${typeFilter.replace(/-/g, ' ')}`}
-                      {statusFilter !== 'all' && ` · ${statusFilter}`}
+                      {statusFilter !== 'all' && ` · ${STATUS_LABELS[statusFilter] ?? statusFilter}`}
                     </span>
                     {hasMore && (
                       <Button
@@ -1586,12 +1872,261 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
         {/* FAB removed - using header + button instead */}
       </div>
 
+      {/*
+        ELE-1458 — Filters bottom sheet (phones only).
+
+        Everything that used to stack above the list lives here: whose work,
+        which type, and over what period. Grouped and labelled rather than
+        rendered as three anonymous chip rails, because with the controls off
+        screen the headings are the only thing telling you what you're setting.
+        The footer counts the result so the sheet can be judged before closing.
+      */}
+      <Sheet open={showFiltersSheet} onOpenChange={setShowFiltersSheet}>
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-background border-white/[0.06]"
+        >
+          <div className="flex flex-col h-full">
+            <SheetHeader className="px-4 pt-5 pb-3 text-left shrink-0">
+              <SheetTitle className="text-white text-[18px]">Filter certificates</SheetTitle>
+            </SheetHeader>
+
+            <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-6">
+              {/* Whose certificates — only for accounts with team work. */}
+              {(countsData?.team ?? 0) > 0 && (
+                <section>
+                  <h3 className="mb-2 text-[13px] font-semibold text-white">
+                    Whose certificates
+                  </h3>
+                  <div className="space-y-1.5">
+                    {SCOPE_OPTIONS.map(({ value, label, hint }) => {
+                      const count =
+                        value === 'all'
+                          ? countsData?.total
+                          : value === 'mine'
+                            ? countsData?.mine
+                            : countsData?.team;
+                      return (
+                        <button
+                          key={value}
+                          type="button"
+                          aria-pressed={scope === value}
+                          onClick={() => {
+                            navigator.vibrate?.(10);
+                            changeScope(value);
+                          }}
+                          className={cn(
+                            'w-full min-h-11 px-3 py-2.5 rounded-xl border text-left flex items-center gap-3 transition-colors touch-manipulation active:scale-[0.99]',
+                            scope === value
+                              ? 'bg-elec-yellow border-elec-yellow'
+                              : 'bg-white/[0.03] border-white/[0.08]'
+                          )}
+                        >
+                          <span className="min-w-0 flex-1">
+                            <span
+                              className={cn(
+                                'block text-[13px] font-semibold',
+                                scope === value ? 'text-black' : 'text-white'
+                              )}
+                            >
+                              {label}
+                            </span>
+                            <span
+                              className={cn(
+                                'block text-[11px]',
+                                scope === value ? 'text-black/70' : 'text-white'
+                              )}
+                            >
+                              {hint}
+                            </span>
+                          </span>
+                          {(count ?? 0) > 0 && (
+                            <span
+                              className={cn(
+                                'shrink-0 text-[12px] font-semibold tabular-nums',
+                                scope === value ? 'text-black/70' : 'text-white'
+                              )}
+                            >
+                              {count}
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </section>
+              )}
+
+              {/* Certificate type — same "earn your place" rule as the desktop
+                  rail: a type appears once the user has one, so a domestic
+                  sparks never scrolls past BESS and lightning protection. */}
+              <section>
+                <h3 className="mb-2 text-[13px] font-semibold text-white">Certificate type</h3>
+                <div className="space-y-3">
+                  <button
+                    type="button"
+                    aria-pressed={typeFilter === 'all'}
+                    onClick={() => {
+                      navigator.vibrate?.(10);
+                      setTypeFilter('all');
+                    }}
+                    className={cn(
+                      'w-full h-11 rounded-xl border text-[13px] font-semibold transition-colors touch-manipulation active:scale-[0.99]',
+                      typeFilter === 'all'
+                        ? 'bg-elec-yellow border-elec-yellow text-black'
+                        : 'bg-white/[0.03] border-white/[0.08] text-white'
+                    )}
+                  >
+                    All types
+                  </button>
+                  {TYPE_GROUPS.map((group) => {
+                    const visible = group.types.filter(
+                      (t) =>
+                        CORE_TYPES.includes(t.value) ||
+                        (countsData?.byType[t.value] ?? 0) > 0 ||
+                        typeFilter === t.value
+                    );
+                    if (visible.length === 0) return null;
+                    return (
+                      <div key={group.label}>
+                        <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white">
+                          {group.label}
+                        </p>
+                        <div className="grid grid-cols-2 gap-1.5">
+                          {visible.map((t) => {
+                            const count = countsData?.byType[t.value] ?? 0;
+                            const on = typeFilter === t.value;
+                            return (
+                              <button
+                                key={t.value}
+                                type="button"
+                                aria-pressed={on}
+                                onClick={() => {
+                                  navigator.vibrate?.(10);
+                                  setTypeFilter(on ? 'all' : t.value);
+                                }}
+                                className={cn(
+                                  'h-11 px-3 rounded-xl border text-[13px] font-medium flex items-center justify-between gap-2 transition-colors touch-manipulation active:scale-[0.99]',
+                                  on
+                                    ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
+                                    : 'bg-white/[0.03] border-white/[0.08] text-white'
+                                )}
+                              >
+                                <span className="truncate">{t.label}</span>
+                                {count > 0 && (
+                                  <span
+                                    className={cn(
+                                      'shrink-0 text-[11px] tabular-nums',
+                                      on ? 'text-black/70' : 'text-white'
+                                    )}
+                                  >
+                                    {count}
+                                  </span>
+                                )}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </section>
+
+              {/* Time range — ELE-1236's rolling windows on last-updated. */}
+              <section>
+                <h3 className="mb-2 text-[13px] font-semibold text-white">Time range</h3>
+                <div className="grid grid-cols-2 gap-1.5">
+                  {DATE_PRESETS.map(({ value, label }) => (
+                    <button
+                      key={value}
+                      type="button"
+                      aria-pressed={datePreset === value}
+                      onClick={() => {
+                        navigator.vibrate?.(10);
+                        setDatePreset(value);
+                      }}
+                      className={cn(
+                        'h-11 px-3 rounded-xl border text-[13px] font-medium transition-colors touch-manipulation active:scale-[0.99]',
+                        datePreset === value
+                          ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
+                          : 'bg-white/[0.03] border-white/[0.08] text-white'
+                      )}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+                {datePreset === 'custom' && (
+                  <div className="mt-2.5 flex items-center gap-2">
+                    <input
+                      type="date"
+                      value={dateFrom}
+                      onChange={(e) => setDateFrom(e.target.value)}
+                      aria-label="From date"
+                      className="h-11 flex-1 min-w-0 rounded-xl bg-white/[0.03] border border-white/[0.08] px-3 text-[13px] text-white touch-manipulation focus:outline-none focus:border-elec-yellow [color-scheme:dark]"
+                    />
+                    <span className="text-[12px] text-white shrink-0">to</span>
+                    <input
+                      type="date"
+                      value={dateTo}
+                      onChange={(e) => setDateTo(e.target.value)}
+                      aria-label="To date"
+                      className="h-11 flex-1 min-w-0 rounded-xl bg-white/[0.03] border border-white/[0.08] px-3 text-[13px] text-white touch-manipulation focus:outline-none focus:border-elec-yellow [color-scheme:dark]"
+                    />
+                  </div>
+                )}
+              </section>
+            </div>
+
+            <div className="shrink-0 border-t border-white/[0.08] px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  navigator.vibrate?.(10);
+                  clearSecondaryFilters();
+                }}
+                disabled={activeSecondaryFilters.length === 0}
+                className="h-11 px-4 rounded-xl border border-white/[0.12] bg-white/[0.03] text-[13px] font-semibold text-white touch-manipulation disabled:opacity-40"
+              >
+                Clear all
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  navigator.vibrate?.(10);
+                  setShowFiltersSheet(false);
+                }}
+                className="flex-1 h-11 rounded-xl bg-elec-yellow text-[13px] font-bold text-black touch-manipulation active:scale-[0.99]"
+              >
+                {/* Names the result rather than saying "Apply" — filters are
+                    already live behind the sheet, so this button only closes.
+                    totalCount is the server's count for the WHOLE active filter
+                    set (scope + type + status + dates); statusCounts.all only
+                    knows about scope and would overstate whenever a type or
+                    date filter is on. */}
+                {isFetchingReports ? (
+                  <span className="inline-flex items-center gap-2">
+                    <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+                    Updating
+                  </span>
+                ) : (
+                  <>
+                    Show {totalCount} {totalCount === 1 ? 'certificate' : 'certificates'}
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+
       {/* New Certificate Bottom Sheet */}
       <Sheet open={showNewCertSheet} onOpenChange={setShowNewCertSheet}>
         <SheetContent side="bottom" className="h-auto rounded-t-2xl bg-background border-white/[0.06]">
           <SheetHeader className="pb-4 text-left">
             <SheetTitle className="text-white text-[18px]">New Certificate</SheetTitle>
-            <p className="text-[12px] text-white/50">Choose a certificate type to begin.</p>
+            <p className="text-[12px] text-white">Choose a certificate type to begin.</p>
           </SheetHeader>
           <div className="space-y-2 pb-6">
             {[
@@ -1622,7 +2157,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                     <p className="font-semibold text-white text-[15px] leading-snug group-hover:text-elec-yellow transition-colors">
                       {label}
                     </p>
-                    <p className="text-[11.5px] text-white/50 mt-0.5 truncate">{desc}</p>
+                    <p className="text-[11.5px] text-white mt-0.5 truncate">{desc}</p>
                   </div>
                   <span className="text-[12px] font-bold text-elec-yellow shrink-0">Open</span>
                 </div>

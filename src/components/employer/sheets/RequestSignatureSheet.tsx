@@ -8,13 +8,6 @@ import {
   ResponsiveFormModalTitle,
   ResponsiveFormModalBody,
 } from '@/components/ui/responsive-form-modal';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { CheckCircle2, Copy, Loader2, Send } from 'lucide-react';
 import {
   useCreateSignatureRequest,
@@ -27,9 +20,8 @@ import {
   SecondaryButton,
   Pill,
   inputClass,
-  selectTriggerClass,
-  selectContentClass,
 } from '@/components/employer/editorial';
+import { SelectField } from '@/components/forms';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 
@@ -197,18 +189,11 @@ export function RequestSignatureSheet({
             </Field>
 
             <Field label="Link valid for">
-              <Select value={expiryDays} onValueChange={setExpiryDays}>
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {EXPIRY_OPTIONS.map((opt) => (
-                    <SelectItem key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <SelectField
+        value={expiryDays}
+        onValueChange={setExpiryDays}
+        options={EXPIRY_OPTIONS.map((opt) => ({ value: opt.value, label: opt.label }))}
+      />
             </Field>
 
             <Field label="Message (optional)">

@@ -170,7 +170,7 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
           onValueChange={handleCurveChange}
           disabled={!showCurveSelector}
         >
-          <SelectTrigger className="h-8 text-sm px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 disabled:opacity-50">
+          <SelectTrigger className="h-8 text-sm px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-white/[0.04] focus:bg-transparent focus:ring-1 focus:ring-inset focus:ring-elec-yellow focus:shadow-none disabled:opacity-50">
             <SelectValue placeholder="—" className="truncate" />
           </SelectTrigger>
           <SelectContent
@@ -208,7 +208,7 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
         <EnhancedValidatedInput
           value={result.protectiveDeviceKaRating}
           onChange={(value) => onUpdate(result.id, 'protectiveDeviceKaRating', value)}
-          className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
+          className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow focus:shadow-none hover:bg-white/[0.04] focus:bg-transparent"
           placeholder="—"
         />
       </TableCell>
@@ -219,7 +219,7 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
           <EnhancedValidatedInput
             value={result.maxZs || ''}
             onChange={(value) => onUpdate(result.id, 'maxZs', value)}
-            className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
+            className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow focus:shadow-none hover:bg-white/[0.04] focus:bg-transparent"
             placeholder="—"
           />
           <FieldTooltip

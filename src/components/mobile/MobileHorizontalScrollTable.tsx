@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Table, TableBody, TableRow, TableCell } from '@/components/ui/table';
+import { Table, TableBody } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
 import { MobileHorizontalScrollTableHeader } from './MobileHorizontalScrollTableHeader';
 import { MobileHorizontalScrollTableRow } from './MobileHorizontalScrollTableRow';
@@ -11,7 +11,15 @@ interface MobileHorizontalScrollTableProps {
   onRemove: (id: string) => void;
   onDuplicate?: (id: string) => void;
   onBulkUpdate?: (id: string, updates: Partial<TestResult>) => void;
-  onBulkFieldUpdate?: (field: keyof TestResult, value: string) => void;
+  /**
+   * Bulk "Fill" from the header. The table is rendered once per distribution
+   * board with ONLY that board's circuits, so it passes `circuitIds` (the ids
+   * of the circuits it is rendering) as the third argument — parents that
+   * manage the whole schedule MUST scope the update to those ids, otherwise a
+   * fill on Board 2 silently overwrites Board 1. Parents that ignore the third
+   * argument keep the previous (whole-schedule) behaviour.
+   */
+  onBulkFieldUpdate?: (field: keyof TestResult, value: string, circuitIds?: string[]) => void;
   onMoveUp?: (id: string) => void;
   onMoveDown?: (id: string) => void;
 }
@@ -44,88 +52,122 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
   }
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const handleFillAllRcdTestButton = () => {
+  // Board-scoped fill helper — passes this table's circuit ids so a
+  // whole-schedule parent can limit the write to the rendered board.
+  const fillAll = (field: keyof TestResult, value: string) => {
     if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('rcdTestButton', '✓');
+      onBulkFieldUpdate(field, value, testResults.map((c) => c.id));
     } else {
       testResults.forEach((result) => {
-        onUpdate(result.id, 'rcdTestButton', '✓');
+        onUpdate(result.id, field, value);
       });
     }
-    toast.success(`✓ All ${testResults.length} circuits set to Pass`, {
-      description: 'RCD Test Button operation',
+  };
+
+  // ELE-871 parity with desktop — Pass/Fail/N/A menus, not Pass-only
+  const handleFillAllRcdTestButton = (value: string) => {
+    fillAll('rcdTestButton', value);
+    toast.success(`All ${testResults.length} RCD test button fields set to ${value}`, {
       duration: 2000,
     });
   };
 
-  const handleFillAllAfdd = () => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('afddTest', '✓');
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'afddTest', '✓');
-      });
-    }
-    toast.success(`✓ All ${testResults.length} circuits set to Pass`, {
-      description: 'AFDD Test operation',
+  const handleFillAllAfdd = (value: string) => {
+    fillAll('afddTest', value);
+    toast.success(`All ${testResults.length} AFDD fields set to ${value}`, {
       duration: 2000,
     });
+  };
+
+  const handleFillAllFunctional = (value: string) => {
+    fillAll('functionalTesting', value);
+    toast.success(`All ${testResults.length} Functional Test fields set to ${value}`);
+  };
+
+  // ELE-871 — Smart RCD per-circuit fill based on the protective device type
+  // (mirrors the desktop table's Smart fill).
+  const handleSmartFillRcd = () => {
+    if (!onBulkUpdate) {
+      toast.error('Smart fill requires bulk update support');
+      return;
+    }
+    let naCount = 0;
+    let filledCount = 0;
+    testResults.forEach((result) => {
+      const bs = (result.bsStandard || '').toUpperCase();
+      const isRcbo = bs.includes('61009');
+      const isRcd = bs.includes('61008');
+      const isNonRcdDevice =
+        bs.includes('60898') || bs.includes('BS 88') || bs.includes('3036') || bs.includes('1361');
+
+      if (isRcbo || isRcd) {
+        // Already-filled fields take priority — only backfill blanks
+        const updates: Partial<TestResult> = {};
+        if (!result.rcdBsStandard) {
+          updates.rcdBsStandard = isRcbo ? 'BS EN 61009' : 'BS EN 61008';
+        }
+        if (!result.rcdType) updates.rcdType = 'AC';
+        // Canonical mA form — matches the desktop cell Select vocabulary
+        if (!result.rcdRating) updates.rcdRating = '30mA';
+        if (!result.rcdRatingA && result.protectiveDeviceRating) {
+          updates.rcdRatingA = result.protectiveDeviceRating;
+        }
+        if (Object.keys(updates).length > 0) {
+          onBulkUpdate(result.id, updates);
+          filledCount++;
+        }
+      } else if (isNonRcdDevice) {
+        onBulkUpdate(result.id, {
+          rcdBsStandard: 'N/A',
+          rcdType: 'N/A',
+          rcdRating: 'N/A',
+          rcdRatingA: 'N/A',
+        });
+        naCount++;
+      }
+    });
+    if (naCount + filledCount === 0) {
+      toast.info('No circuits matched smart-fill rules (set BS standard first)');
+    } else {
+      toast.success(`Smart fill: ${filledCount} RCD/RCBO filled, ${naCount} non-RCD set to N/A`);
+    }
   };
 
   const handleFillAllRcdBsStandard = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('rcdBsStandard', value);
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'rcdBsStandard', value);
-      });
+    // '__smart__' is the Smart fill entry in the header's Fill menu
+    if (value === '__smart__') {
+      handleSmartFillRcd();
+      return;
     }
+    fillAll('rcdBsStandard', value);
     toast.success(`All RCD BS Standard fields filled with ${value}`);
   };
 
   const handleFillAllRcdType = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('rcdType', value);
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'rcdType', value);
-      });
-    }
+    fillAll('rcdType', value);
     toast.success(`All RCD Type fields filled with ${value}`);
   };
 
   const handleFillAllRcdRating = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('rcdRating', value);
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'rcdRating', value);
-      });
-    }
-    toast.success(`All RCD IΔn fields filled with ${value}mA`);
+    fillAll('rcdRating', value);
+    // Value is already canonical ('30mA' / 'N/A') — no unit suffix needed
+    toast.success(`All RCD IΔn fields filled with ${value}`);
   };
 
   const handleFillAllRcdRatingA = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('rcdRatingA', value);
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'rcdRatingA', value);
-      });
-    }
-    toast.success(`✓ All RCD Rating (A) set to ${value}A`, {
-      description: `${testResults.length} circuit${testResults.length > 1 ? 's' : ''} updated`,
-      duration: 2000,
-    });
+    fillAll('rcdRatingA', value);
+    toast.success(
+      `All RCD Rating (A) fields set to ${value === 'N/A' ? 'N/A' : `${value}A`}`,
+      {
+        description: `${testResults.length} circuit${testResults.length > 1 ? 's' : ''} updated`,
+        duration: 2000,
+      }
+    );
   };
 
   // ELE-1182 — quick-fill for the core protective-device fields.
   const handleFillAllBsStandard = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('bsStandard', value);
-    } else {
-      testResults.forEach((result) => onUpdate(result.id, 'bsStandard', value));
-    }
+    fillAll('bsStandard', value);
     toast.success(`All BS Standard fields filled with ${value}`);
   };
 
@@ -148,100 +190,51 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
   };
 
   const handleFillAllKa = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('protectiveDeviceKaRating', value);
-    } else {
-      testResults.forEach((result) => onUpdate(result.id, 'protectiveDeviceKaRating', value));
-    }
+    fillAll('protectiveDeviceKaRating', value);
     toast.success(`All kA fields filled with ${value}`);
-  };
-
-  const handleApplyRcdPreset = (
-    circuitIds: string[],
-    preset: { bsStandard: string; type: string; rating: string; ratingA: string; label: string }
-  ) => {
-    // Use onBulkUpdate if available for atomic updates, otherwise batch with requestAnimationFrame
-    if (onBulkUpdate) {
-      circuitIds.forEach((id) => {
-        onBulkUpdate(id, {
-          rcdBsStandard: preset.bsStandard,
-          rcdType: preset.type,
-          rcdRating: preset.rating,
-          rcdRatingA: preset.ratingA,
-        });
-      });
-    } else {
-      // Batch updates properly using requestAnimationFrame
-      circuitIds.forEach((id) => {
-        requestAnimationFrame(() => {
-          onUpdate(id, 'rcdBsStandard', preset.bsStandard);
-          onUpdate(id, 'rcdType', preset.type);
-          onUpdate(id, 'rcdRating', preset.rating);
-          onUpdate(id, 'rcdRatingA', preset.ratingA);
-        });
-      });
-    }
-
-    toast.success(`✓ ${preset.label} Applied`, {
-      description: `RCD details set for ${circuitIds.length} circuit${circuitIds.length > 1 ? 's' : ''}`,
-      duration: 2000,
-    });
   };
 
   // Insulation Resistance fill handlers
   const handleFillAllInsulationVoltage = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('insulationTestVoltage', value);
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'insulationTestVoltage', value);
-      });
-    }
+    fillAll('insulationTestVoltage', value);
     toast.success(`All Test Voltage fields filled with ${value}`);
   };
 
   const handleFillAllInsulationLiveNeutral = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('insulationLiveNeutral', value);
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'insulationLiveNeutral', value);
-      });
-    }
+    fillAll('insulationLiveNeutral', value);
     toast.success(`All Live-Neutral fields filled with ${value} MΩ`);
   };
 
   const handleFillAllInsulationLiveEarth = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('insulationLiveEarth', value);
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'insulationLiveEarth', value);
-      });
-    }
+    fillAll('insulationLiveEarth', value);
     toast.success(`All Live-Earth fields filled with ${value} MΩ`);
   };
 
   const handleFillAllPolarity = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('polarity', value);
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'polarity', value);
-      });
-    }
+    fillAll('polarity', value);
     toast.success(`All Polarity fields filled with ${value}`);
   };
 
-  const handleFillAllFunctional = () => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('functionalTesting', '✓');
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'functionalTesting', '✓');
-      });
-    }
-    toast.success(`All ${testResults.length} Functional Test fields filled with Satisfactory ✓`);
+  // P2.3 — circuit-details bulk fill. The header already rendered these Fill
+  // menus behind optional props; without these handlers they never mounted.
+  const handleFillAllWiringType = (value: string) => {
+    fillAll('typeOfWiring', value);
+    toast.success(`All Wiring Type fields filled with ${value}`);
+  };
+
+  const handleFillAllRefMethod = (value: string) => {
+    fillAll('referenceMethod', value);
+    toast.success(`All Reference Method fields filled with ${value}`);
+  };
+
+  const handleFillAllLiveSize = (value: string) => {
+    fillAll('liveSize', value);
+    toast.success(`All Live conductor sizes filled with ${value} mm²`);
+  };
+
+  const handleFillAllCpcSize = (value: string) => {
+    fillAll('cpcSize', value);
+    toast.success(`All CPC sizes filled with ${value} mm²`);
   };
 
   return (
@@ -268,17 +261,18 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
             onFillAllRcdType={handleFillAllRcdType}
             onFillAllRcdRating={handleFillAllRcdRating}
             onFillAllRcdRatingA={handleFillAllRcdRatingA}
+            showSmartFillRcd={!!onBulkUpdate}
             onFillAllInsulationVoltage={handleFillAllInsulationVoltage}
             onFillAllInsulationLiveNeutral={handleFillAllInsulationLiveNeutral}
             onFillAllInsulationLiveEarth={handleFillAllInsulationLiveEarth}
             onFillAllPolarity={handleFillAllPolarity}
             onFillAllFunctional={handleFillAllFunctional}
+            onFillAllWiringType={handleFillAllWiringType}
+            onFillAllRefMethod={handleFillAllRefMethod}
+            onFillAllLiveSize={handleFillAllLiveSize}
+            onFillAllCpcSize={handleFillAllCpcSize}
           />
           <TableBody>
-            {/* Spacer row to create gap for sticky header */}
-            <TableRow className="h-14">
-              <TableCell colSpan={100} className="p-0 border-0 bg-transparent" />
-            </TableRow>
             {testResults.map((result) => (
               <MobileHorizontalScrollTableRow
                 key={result.id}

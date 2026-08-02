@@ -16,6 +16,7 @@ import {
 } from '@/data/evChargerDatabase';
 import { getVehicleMakes, getVehicleModels, findVehicle } from '@/data/evVehicleDatabase';
 import { useEVChargingSmartForm } from '@/hooks/inspection/useEVChargingSmartForm';
+import { inputCn, cardCn, labelCn } from '@/components/forms/fieldStyles';
 
 interface EVChargingInstallationDetailsProps {
   formData: Record<string, unknown>;
@@ -24,13 +25,8 @@ interface EVChargingInstallationDetailsProps {
   onCustomerIdChange?: (id: string | undefined) => void;
 }
 
-const cardCn =
-  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
 
-const inputCn =
-  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
 
-const labelCn = 'text-[12px] font-medium text-white mb-1 block';
 
 const pickerTriggerCn =
   'rounded-none border-0 border-b border-white/[0.15] bg-transparent h-11 px-1 text-base font-medium text-white hover:border-white/[0.3] focus:border-elec-yellow focus:ring-0 focus-visible:ring-0 focus:outline-none touch-manipulation';

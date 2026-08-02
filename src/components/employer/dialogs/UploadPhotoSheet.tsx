@@ -146,7 +146,7 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side={isMobile ? 'bottom' : 'right'}
-        className={cn('p-0 overflow-hidden', isMobile ? 'h-[90vh]' : 'w-[480px]')}
+        className={cn('p-0 overflow-hidden', isMobile ? 'h-[85vh]' : 'w-[480px]')}
       >
         <SheetShell
           eyebrow="Job photos"

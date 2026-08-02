@@ -43,17 +43,31 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { data: invoice, error: invoiceError } = await caller
-      .from('employer_invoices')
+    // Invoices live in `quotes` (invoice_raised = true) — that is where both the
+    // Electrical Hub builder and, since 2026-08-02, the Employer Hub write.
+    // This read was `employer_invoices`, a legacy table with no rows, so every
+    // chase/resend 404'd. RLS on the caller client still enforces ownership
+    // (quotes.user_id ∈ my_employer_scope()).
+    const { data: row, error: invoiceError } = await caller
+      .from('quotes')
       .select('*')
       .eq('id', invoiceId)
-      .single();
-    if (invoiceError || !invoice) {
+      .maybeSingle();
+    if (invoiceError || !row) {
       return new Response(JSON.stringify({ error: 'Invoice not found' }), {
         status: 404,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
+
+    // The client name/email live in client_data on the real table; the code
+    // below reads `invoice.client`, so flatten rather than rewrite it.
+    const clientData = (row.client_data ?? {}) as Record<string, unknown>;
+    const invoice = {
+      ...row,
+      client: (clientData.name as string) ?? null,
+      client_email: (clientData.email as string) ?? null,
+    };
 
     const admin = createClient(supabaseUrl, serviceKey);
     const accessToken = crypto.randomUUID() + '-' + crypto.randomUUID();
@@ -106,13 +120,19 @@ Deno.serve(async (req) => {
     if (baseUrl && ALLOWED_ORIGINS.some((o) => String(baseUrl).startsWith(o))) {
       origin = baseUrl;
     }
-    const portalUrl = `${origin}/employer-invoice/${accessToken}`;
+    // Use the token that was actually STORED, not the freshly-minted one. On a
+    // resend the existing token is deliberately preserved (so links in already-
+    // sent emails keep working), but this line used the new random token — so
+    // the second chase emailed a URL that matched no row and 404'd for the
+    // client. Only the first send ever worked.
+    const storedToken = (accessRecord?.access_token as string) ?? accessToken;
+    const portalUrl = `${origin}/employer-invoice/${storedToken}`;
 
     return new Response(
       JSON.stringify({
         success: true,
         portalUrl,
-        accessToken,
+        accessToken: storedToken,
         expiresAt: expiresAt.toISOString(),
         accessId: accessRecord.id,
       }),

@@ -9,6 +9,7 @@
 
 import { PATTestingFormData, Appliance, PAT_REPAIR_CODES } from '@/types/pat-testing';
 import type { PATTestingPayloadType } from '@/types/pat-testing-payload';
+import { ukDate } from '@/utils/certDate';
 
 /** Compact result code: 'P' = pass, 'F' = fail, '' = not tested */
 const resultCode = (val: string): string => {
@@ -100,9 +101,9 @@ const formatAppliance = (app: Appliance, defaultTestedBy = '') => ({
 
   overall_result: app.overallResult || '',
   repair_code: app.repairCode || '',
-  next_test_due: app.nextTestDue || '',
+  next_test_due: ukDate(app.nextTestDue),
   notes: app.notes || '',
-  test_date: app.testDate || '',
+  test_date: ukDate(app.testDate),
   tested_by: app.testedBy || defaultTestedBy,
   has_photos: (app.photos || []).length > 0,
   photo_count: (app.photos || []).length,
@@ -181,7 +182,7 @@ export const formatPATTestingJson = (
     // Metadata
     metadata: {
       certificate_number: formData.certificateNumber || `PAT-${Date.now()}`,
-      test_date: formData.testDate || '',
+      test_date: ukDate(formData.testDate),
       report_reference: formData.reportReference || '',
       standard: 'IET Code of Practice (5th Edition)',
     },
@@ -242,7 +243,7 @@ export const formatPATTestingJson = (
         company: formData.testerCompany || '',
         qualifications: formData.testerQualifications || '',
         signature: formData.testerSignature || '',
-        date: formData.testerDate || '',
+        date: ukDate(formData.testerDate),
       },
     },
 

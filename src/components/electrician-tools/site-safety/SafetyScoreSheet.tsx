@@ -93,7 +93,7 @@ export const SafetyScoreSheet: React.FC<SafetyScoreSheetProps> = ({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
-        className="h-[92vh] sm:h-[88vh] rounded-t-2xl bg-[hsl(0_0%_8%)] border-white/[0.08] p-0 overflow-hidden flex flex-col"
+        className="h-[85vh] sm:h-[85vh] rounded-t-2xl bg-[hsl(0_0%_8%)] border-white/[0.08] p-0 overflow-hidden flex flex-col"
       >
         <SheetHeader className="px-6 pt-6 pb-2 text-left">
           <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">

@@ -56,9 +56,8 @@ const SectionTitle = ({ title }: { title: string }) => (
 );
 
 const Sub = ({ title }: { title: string }) => (
-  <div className="flex items-center gap-3 pt-2">
-    <p className="text-[13px] font-semibold text-white shrink-0">{title}</p>
-    <div className="h-px flex-1 bg-white/[0.08]" />
+  <div className="border-t border-white/[0.1] pt-4">
+    <h3 className="text-sm font-semibold text-white">{title}</h3>
   </div>
 );
 
@@ -260,9 +259,11 @@ export default function HeatPumpCertificate() {
   const isBack = currentIndex < prevIndexRef.current;
   prevIndexRef.current = currentIndex;
 
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
   const goToTab = (tab: HeatPumpTab) => {
     setCurrentTab(tab);
-    window.scrollTo({ top: 0 });
+    scrollToTop();
   };
 
   const stepWrapCn = 'space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4';

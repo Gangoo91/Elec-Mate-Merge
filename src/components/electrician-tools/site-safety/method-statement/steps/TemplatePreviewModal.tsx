@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogClose,
-} from '@/components/ui/dialog';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -17,11 +11,9 @@ import {
   Shield,
   AlertTriangle,
   CheckCircle2,
-  X,
   Zap,
   BookOpen,
   Settings,
-  Eye,
 } from 'lucide-react';
 import { MethodTemplate } from '@/types/method-statement';
 import { RequiredFieldTooltip } from '@/components/ui/required-field-tooltip';
@@ -73,25 +65,35 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
   }, 0);
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl w-full h-[90vh] flex flex-col p-0 gap-0 bg-elec-card border-elec-yellow/20">
-        <DialogHeader className="p-6 pb-4 border-b border-elec-yellow/20 flex-shrink-0">
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex-1 min-w-0">
-              <DialogTitle className="text-xl font-semibold text-elec-yellow flex items-center gap-2 mb-2">
-                <Eye className="h-5 w-5 flex-shrink-0" />
-                <span className="break-words">{template.name}</span>
-                {template.isPopular && (
-                  <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30">Popular</Badge>
-                )}
-              </DialogTitle>
-              <p className="text-white text-sm leading-relaxed">{template.description}</p>
+    /* Bottom sheet, not a centred 4xl dialog. A method statement gets written on
+       site, on a phone, and a centred modal cannot be reached one-handed. The
+       heading is type rather than a yellow eye icon, and "Popular" is a word
+       rather than a blue badge — the only accent here should be elec-yellow. */
+    <Sheet open={isOpen} onOpenChange={onClose}>
+      <SheetContent
+        side="bottom"
+        className="flex h-[85vh] flex-col gap-0 rounded-t-2xl border-white/[0.08] p-0"
+      >
+        <div className="flex-shrink-0 border-b border-white/[0.1] p-4">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0 flex-1">
+              <h2 className="break-words text-[19px] font-semibold tracking-tight text-white">
+                {template.name}
+              </h2>
+              <p className="mt-1 text-[13px] leading-relaxed text-white">
+                {template.description}
+                {template.isPopular && ' · Popular'}
+              </p>
             </div>
-            <DialogClose className="text-white hover:text-foreground transition-colors">
-              <X className="h-5 w-5" />
-            </DialogClose>
+            <button
+              type="button"
+              onClick={onClose}
+              className="-mr-1 h-11 shrink-0 touch-manipulation text-[15px] font-medium text-white"
+            >
+              Close
+            </button>
           </div>
-        </DialogHeader>
+        </div>
 
         <ScrollArea className="flex-1 p-6">
           <div className="space-y-6">
@@ -294,8 +296,8 @@ const TemplatePreviewModal: React.FC<TemplatePreviewModalProps> = ({
             </div>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 };
 

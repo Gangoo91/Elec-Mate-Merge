@@ -120,7 +120,10 @@ function ResponsiveFormModalBody({
   children: React.ReactNode;
   className?: string;
 }) {
-  return <div className={cn('flex-1 overflow-y-auto px-5 sm:px-6', className)}>{children}</div>;
+  // px-4 on mobile, matching the certificate forms and every other scroll
+  // container in the app. Keeping it at 5 meant a card could not bleed
+  // edge-to-edge here: the bleed is `-mx-4`, so the container must pad by 4.
+  return <div className={cn('flex-1 overflow-y-auto px-4 sm:px-6', className)}>{children}</div>;
 }
 
 function ResponsiveFormModalFooter({ children, className }: ResponsiveFormModalFooterProps) {

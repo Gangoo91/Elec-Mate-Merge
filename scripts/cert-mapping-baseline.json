@@ -1,0 +1,82 @@
+{
+  "emergency-lighting": {
+    "notPrinted": 20,
+    "unsourced": 0,
+    "neverRead": 0
+  },
+  "pat-testing": {
+    "notPrinted": 4,
+    "unsourced": 0,
+    "neverRead": 1
+  },
+  "solar-pv": {
+    "notPrinted": 19,
+    "unsourced": 0,
+    "neverRead": 1
+  },
+  "bess": {
+    "notPrinted": 4,
+    "unsourced": 0,
+    "neverRead": 0
+  },
+  "lightning-protection": {
+    "notPrinted": 2,
+    "unsourced": 0,
+    "neverRead": 0
+  },
+  "smoke-co-alarm": {
+    "notPrinted": 1,
+    "unsourced": 0,
+    "neverRead": 0
+  },
+  "g98-commissioning": {
+    "notPrinted": 6,
+    "unsourced": 0,
+    "neverRead": 0
+  },
+  "g99-commissioning": {
+    "notPrinted": 5,
+    "unsourced": 0,
+    "neverRead": 0
+  },
+  "disconnection": {
+    "notPrinted": 1,
+    "unsourced": 0,
+    "neverRead": 0
+  },
+  "testing-only": {
+    "notPrinted": 2,
+    "unsourced": 0,
+    "neverRead": 0
+  },
+  "ev-charging": {
+    "notPrinted": 29,
+    "unsourced": 0,
+    "neverRead": 0
+  },
+  "fire-alarm-g1": {
+    "notPrinted": 6,
+    "unsourced": 0,
+    "neverRead": 0
+  },
+  "fire-alarm-g2": {
+    "notPrinted": 171,
+    "unsourced": 0,
+    "neverRead": 1
+  },
+  "fire-alarm-g3": {
+    "notPrinted": 2,
+    "unsourced": 0,
+    "neverRead": 0
+  },
+  "fire-alarm-g6": {
+    "notPrinted": 2,
+    "unsourced": 0,
+    "neverRead": 0
+  },
+  "fire-alarm-g7": {
+    "notPrinted": 2,
+    "unsourced": 0,
+    "neverRead": 0
+  }
+}

@@ -111,7 +111,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
 
   const { data: activePermits = [] } = useActivePermits();
   const { data: approvedRams = [] } = useRAMSDocumentsByStatus('approved');
-  const { data: jobs = [] } = useSparkProjects('active');
+  const { projects: jobs = [] } = useSparkProjects('active');
   const jobTitleFor = (id: string | null) =>
     id ? (jobs.find((j) => j.id === id)?.title ?? null) : null;
 

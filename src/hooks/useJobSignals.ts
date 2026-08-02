@@ -45,7 +45,7 @@ export function useJobSignals() {
 
       const [incidentsRes, invoicesRes, certsRes] = await Promise.all([
         supabase.from('employer_incidents').select('job_id, status'),
-        supabase.from('employer_invoices').select('job_id, status, due_date, amount, paid_date'),
+        supabase.rpc('employer_invoices_unified').select('job_id, status, due_date, amount, paid_date'),
         supabase
           .from('employer_certifications')
           .select('employee_id, expiry_date')

@@ -186,11 +186,16 @@ export const getBoardWays = (
 };
 
 /**
- * Generate next sub-board name based on existing boards
+ * Generate next sub-board name based on existing boards.
+ * Uses max existing Sub-DB number + 1 (not a count) so removing Sub-DB1 and
+ * adding again can never produce two boards with the same visible name.
  */
 export const getNextSubBoardName = (boards: DistributionBoard[]): string => {
-  const subBoards = boards.filter((b) => b.name.startsWith('Sub-DB'));
-  const nextNumber = subBoards.length + 1;
+  const numbers = boards
+    .map((b) => /^Sub-DB(\d+)$/.exec((b.name || '').trim()))
+    .filter((m): m is RegExpExecArray => m !== null)
+    .map((m) => Number.parseInt(m[1], 10));
+  const nextNumber = numbers.length > 0 ? Math.max(...numbers) + 1 : 1;
   return `Sub-DB${nextNumber}`;
 };
 

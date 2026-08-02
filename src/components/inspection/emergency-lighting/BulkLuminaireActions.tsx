@@ -5,6 +5,7 @@
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface Luminaire {
   id: string;
@@ -31,15 +32,15 @@ interface BulkLuminaireActionsProps {
 }
 
 const GroupHeading = ({ title }: { title: string }) => (
-  <div className="flex items-center gap-3">
-    <p className="text-[13px] font-semibold text-white shrink-0">{title}</p>
-    <div className="h-px flex-1 bg-white/[0.08]" />
+  <div className="border-t border-white/[0.1] pt-4">
+    <h3 className="text-sm font-semibold text-white">{title}</h3>
   </div>
 );
 
 const BulkLuminaireActions: React.FC<BulkLuminaireActionsProps> = ({
   luminaires,
   onAddLuminaires,
+  onCloneLuminaire,
   onMarkAllPass,
   onMarkAllDurationPass,
   className,
@@ -47,6 +48,7 @@ const BulkLuminaireActions: React.FC<BulkLuminaireActionsProps> = ({
   const [isMarkingPass, setIsMarkingPass] = useState(false);
   const [isMarkingDurationPass, setIsMarkingDurationPass] = useState(false);
   const { toast } = useToast();
+  const haptic = useHaptic();
 
   const handleBulkAdd = (count: number) => {
     onAddLuminaires(count);
@@ -72,8 +74,25 @@ const BulkLuminaireActions: React.FC<BulkLuminaireActionsProps> = ({
     setTimeout(() => setIsMarkingDurationPass(false), 500);
   };
 
+  // Duplicate the last row — the fastest way to add the next of a run of
+  // identical bulkheads. onCloneLuminaire was passed in but never rendered,
+  // so the clone path had no way to be reached.
+  const lastLuminaire = luminaires[luminaires.length - 1];
+  const handleDuplicateLast = () => {
+    if (!lastLuminaire) return;
+    onCloneLuminaire(lastLuminaire);
+    toast({ title: 'Luminaire duplicated' });
+  };
+
   return (
-    <div className={cn('space-y-3', className)}>
+    <div
+      className={cn('space-y-3', className)}
+      // Delegated press haptic — every chip/button tap here buzzes without
+      // wiring each onClick individually.
+      onPointerDown={(e) => {
+        if ((e.target as HTMLElement).closest('button')) haptic.light();
+      }}
+    >
       {/* Bulk add */}
       <GroupHeading title="Bulk add" />
       <div className="grid grid-cols-4 gap-2">
@@ -88,6 +107,15 @@ const BulkLuminaireActions: React.FC<BulkLuminaireActionsProps> = ({
           </button>
         ))}
       </div>
+      {lastLuminaire && (
+        <button
+          type="button"
+          onClick={handleDuplicateLast}
+          className="h-11 w-full rounded-xl bg-white/[0.06] border border-white/[0.12] text-sm font-medium text-white touch-manipulation active:scale-[0.98]"
+        >
+          Duplicate last{lastLuminaire.location ? ` (${lastLuminaire.location})` : ''}
+        </button>
+      )}
 
       {/* Bulk test results */}
       {luminaires.length > 0 && (
@@ -104,7 +132,7 @@ const BulkLuminaireActions: React.FC<BulkLuminaireActionsProps> = ({
                   : 'bg-white/[0.06] border border-white/[0.12] text-white'
               )}
             >
-              {isMarkingPass ? 'Done!' : `All Functional PASS (${luminaires.length})`}
+              {isMarkingPass ? 'Done' : `All functional PASS (${luminaires.length})`}
             </button>
             {onMarkAllDurationPass && (
               <button
@@ -117,7 +145,7 @@ const BulkLuminaireActions: React.FC<BulkLuminaireActionsProps> = ({
                     : 'bg-white/[0.06] border border-white/[0.12] text-white'
                 )}
               >
-                {isMarkingDurationPass ? 'Done!' : `All Duration PASS (${luminaires.length})`}
+                {isMarkingDurationPass ? 'Done' : `All duration PASS (${luminaires.length})`}
               </button>
             )}
           </div>

@@ -9,6 +9,9 @@ import { ReliabilityLevel } from '@/hooks/useCustomerPaymentStats';
 import { CustomerListRow } from '@/components/customers/CustomerListRow';
 import { CustomerForm } from '@/components/customers/CustomerForm';
 import { MergeDuplicatesSheet } from '@/components/customers/MergeDuplicatesSheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { SlidersHorizontal } from 'lucide-react';
+import { useHaptic } from '@/hooks/useHaptic';
 import { CustomerImportDialog } from '@/components/customers/customers/CustomerImportDialog';
 import DeviceContactsImportSheet from '@/components/customers/DeviceContactsImportSheet';
 import { Capacitor } from '@capacitor/core';
@@ -168,6 +171,9 @@ export default function CustomersPage() {
   }, [invoiceData]);
 
   const [showSearch, setShowSearch] = useState(false);
+  // Mobile: sort / follow-up / view / tags all live behind one pill.
+  const [showFiltersSheet, setShowFiltersSheet] = useState(false);
+  const haptic = useHaptic();
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showImportDialog, setShowImportDialog] = useState(false);
   const [showDeviceImport, setShowDeviceImport] = useState(false);
@@ -268,6 +274,13 @@ export default function CustomersPage() {
   };
 
   // Client-side filters: needs-follow-up + active tag.
+  /**
+   * How many of the sheet-held filters are on. Sort is excluded — it always
+   * has a value, so counting it would mean the badge never reads zero.
+   */
+  const mobileFilterCount =
+    (showFollowUpOnly ? 1 : 0) + (activeTagFilter ? 1 : 0) + (viewMode === 'map' ? 1 : 0);
+
   const filteredCustomers = useMemo(() => {
     const ninetyDaysAgo = Date.now() - 90 * 86_400_000;
     return customers.filter((c) => {
@@ -541,53 +554,38 @@ export default function CustomersPage() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="mx-auto space-y-5 px-4 py-4 sm:space-y-6 sm:py-5 lg:max-w-[1600px] lg:px-8"
+          className={cn(
+            'mx-auto space-y-5 px-4 py-4 sm:space-y-6 sm:py-5 lg:max-w-[1600px] lg:px-8',
+            // Clear the fixed bulk bar — without this it sat on top of the
+            // last card and you couldn't reach the row you'd just selected.
+            selectionMode && 'pb-40'
+          )}
         >
           {/* Title */}
           <motion.div variants={itemVariants}>
             <h1 className="text-2xl font-bold tracking-tight text-white sm:text-[28px]">
               Customers
-              <span className="ml-2 align-baseline text-[15px] font-semibold tabular-nums text-white/40">
+              <span className="ml-2 align-baseline text-[15px] font-semibold tabular-nums text-white">
                 {totalCount || customers.length}
               </span>
             </h1>
-            <p className="mt-1 text-[13px] text-white/50">
-              Every customer, every job — call, email or open the full file.
-            </p>
+            <p className="mt-1 text-[13px] text-white">Every customer, every job.</p>
           </motion.div>
 
-          {/* KPI cards */}
-          {customers.length > 0 && (
-            <motion.div variants={itemVariants} className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-              {[
-                { label: 'Total customers', value: totalCount || customers.length, volt: true },
-                { label: 'With certificates', value: kpis.withCerts, volt: false },
-                { label: 'Added this month', value: kpis.thisMonth, volt: false },
-                { label: 'Reliable payers', value: kpis.reliable, volt: false },
-              ].map((s) => (
-                <div
-                  key={s.label}
-                  className="rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4"
-                >
-                  <div
-                    className={cn(
-                      'text-2xl font-bold tabular-nums tracking-tight',
-                      s.volt ? 'text-elec-yellow' : 'text-white'
-                    )}
-                  >
-                    {s.value}
-                  </div>
-                  <div className="mt-0.5 text-[12px] text-white/55">{s.label}</div>
-                </div>
-              ))}
-            </motion.div>
-          )}
+          {/*
+            The 2×2 KPI block that used to sit here is gone. "21 Total
+            customers" repeated the count already in the title two lines above,
+            and "Added this month" / "Reliable payers" both read 0 — roughly
+            370px of phone screen spent restating the heading and showing
+            zeroes before a single customer appeared.
+          */}
 
           {/* FilterBar: sort tabs + follow-up + export */}
           {!showSearch && customers.length > 0 && (
             <motion.div variants={itemVariants} className="space-y-3">
               <div className="flex flex-wrap items-center gap-2">
-                <div className="flex h-11 items-center gap-1 rounded-full border border-white/[0.08] bg-[hsl(0_0%_12%)] p-1">
+                {/* Sort — inline from lg up; on a phone it lives in the sheet. */}
+                <div className="hidden h-11 items-center gap-1 rounded-full border border-white/[0.08] bg-[hsl(0_0%_12%)] p-1 lg:flex">
                   {sortTabs.map((tab) => (
                     <button
                       key={tab.value}
@@ -608,8 +606,9 @@ export default function CustomersPage() {
                     </button>
                   ))}
                 </div>
-                {/* Status filter */}
-                <div className="flex h-11 items-center gap-1 rounded-full border border-white/[0.08] bg-[hsl(0_0%_12%)] p-1">
+                {/* Status filter — the one control that stays on screen at
+                    every width, paired with the filter pill on phones. */}
+                <div className="flex h-11 min-w-0 flex-1 items-center gap-1 rounded-full border border-white/[0.08] bg-[hsl(0_0%_12%)] p-1 lg:flex-none">
                   {(
                     [
                       { value: null, label: 'All' },
@@ -622,20 +621,50 @@ export default function CustomersPage() {
                       key={opt.label}
                       onClick={() => setStatusFilter(opt.value)}
                       className={cn(
-                        'h-9 rounded-full px-3.5 text-[13px] font-medium transition-colors touch-manipulation',
+                        // 12px/px-2 on a phone: at 13px/px-3 the four labels
+                        // overflowed their share of the rail and rendered as
+                        // "Lea…", "Acti…", "Ina…".
+                        'h-9 min-w-0 flex-1 whitespace-nowrap rounded-full px-2 text-[12px] font-medium transition-colors touch-manipulation lg:flex-none lg:px-3.5 lg:text-[13px]',
                         statusFilter === opt.value
                           ? 'bg-elec-yellow font-semibold text-black'
-                          : 'text-white/65 hover:text-white'
+                          : 'text-white hover:text-white'
                       )}
                     >
                       {opt.label}
                     </button>
                   ))}
                 </div>
+
+                {/* Phone-only door to sort, follow-up, view and tags. The badge
+                    matters: filters behind a sheet have to announce themselves
+                    or a narrowed list reads as missing customers. */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    haptic.light();
+                    setShowFiltersSheet(true);
+                  }}
+                  aria-label={
+                    mobileFilterCount > 0
+                      ? `Filters, ${mobileFilterCount} active`
+                      : 'Filters'
+                  }
+                  className={cn(
+                    'flex h-11 shrink-0 items-center gap-1.5 rounded-full border px-3.5 text-[13px] font-semibold transition-colors touch-manipulation active:scale-[0.97] lg:hidden',
+                    mobileFilterCount > 0
+                      ? 'border-elec-yellow bg-elec-yellow text-black'
+                      : 'border-white/[0.08] bg-white/[0.04] text-white'
+                  )}
+                >
+                  <SlidersHorizontal className="h-4 w-4 shrink-0" aria-hidden />
+                  {mobileFilterCount > 0 && (
+                    <span className="tabular-nums leading-none">{mobileFilterCount}</span>
+                  )}
+                </button>
                 <button
                   onClick={() => setShowFollowUpOnly((v) => !v)}
                   className={cn(
-                    'inline-flex h-11 items-center gap-1.5 rounded-full border px-4 text-[13px] font-medium transition-colors touch-manipulation',
+                    'hidden h-11 items-center gap-1.5 rounded-full border px-4 text-[13px] font-medium transition-colors touch-manipulation lg:inline-flex',
                     showFollowUpOnly
                       ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
                       : 'border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.07]'
@@ -653,7 +682,7 @@ export default function CustomersPage() {
                     </span>
                   )}
                 </button>
-                <div className="ml-auto flex items-center gap-2">
+                <div className="ml-auto hidden items-center gap-2 lg:flex">
                   {/* View toggle */}
                   <div className="flex h-11 items-center gap-1 rounded-full border border-white/[0.08] bg-[hsl(0_0%_12%)] p-1">
                     <button
@@ -698,8 +727,8 @@ export default function CustomersPage() {
               </div>
               {/* Tag filter chips */}
               {tagCounts.length > 0 && (
-                <div className="flex flex-wrap items-center gap-1.5">
-                  <span className="mr-0.5 text-[12px] font-medium text-white/45">Tags</span>
+                <div className="hidden flex-wrap items-center gap-1.5 lg:flex">
+                  <span className="mr-0.5 text-[12px] font-medium text-white">Tags</span>
                   {tagCounts.slice(0, 10).map(([tag, count]) => {
                     const active = activeTagFilter === tag;
                     return (
@@ -738,8 +767,9 @@ export default function CustomersPage() {
                   days.
                 </p>
               )}
-              {/* Secondary action row */}
-              <div className="flex flex-wrap items-center gap-2">
+              {/* Secondary action row — desktop only; on a phone bulk select
+                  lives in the filter sheet rather than costing a whole row. */}
+              <div className="hidden flex-wrap items-center gap-2 lg:flex">
                 {!selectionMode ? (
                   <button
                     onClick={() => enterSelectionMode()}
@@ -993,6 +1023,204 @@ export default function CustomersPage() {
         customer={editingCustomer ?? (vCardSeed as Customer | null)}
         onSave={handleSaveCustomer}
       />
+      {/*
+        Filters sheet (phones). Everything that used to stack above the list —
+        sort, follow-up, view mode, tags — lives here behind one pill, grouped
+        under real headings so each control still says what it does when it's
+        off screen.
+      */}
+      <Sheet open={showFiltersSheet} onOpenChange={setShowFiltersSheet}>
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.06] bg-background p-0"
+        >
+          <div className="flex h-full flex-col">
+            <SheetHeader className="shrink-0 px-4 pb-3 pt-5 text-left">
+              <SheetTitle className="text-[18px] text-white">Filter customers</SheetTitle>
+            </SheetHeader>
+
+            <div className="flex-1 space-y-6 overflow-y-auto px-4 pb-4">
+              <section>
+                <h3 className="mb-2 text-[13px] font-semibold text-white">Sort by</h3>
+                <div className="grid grid-cols-2 gap-1.5">
+                  {sortTabs.map((tab) => (
+                    <button
+                      key={tab.value}
+                      type="button"
+                      aria-pressed={sortField === tab.value}
+                      onClick={() => {
+                        haptic.light();
+                        handleSortChange(tab.value);
+                      }}
+                      className={cn(
+                        'h-11 rounded-xl border px-3 text-[13px] font-medium transition-colors touch-manipulation active:scale-[0.99]',
+                        sortField === tab.value
+                          ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                          : 'border-white/[0.08] bg-white/[0.03] text-white'
+                      )}
+                    >
+                      {tab.label}
+                      {sortField === tab.value && (
+                        <span className="ml-1 text-[10px]">
+                          {sortDirection === 'asc' ? '↑' : '↓'}
+                        </span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </section>
+
+              <section>
+                <h3 className="mb-2 text-[13px] font-semibold text-white">Show</h3>
+                <button
+                  type="button"
+                  aria-pressed={showFollowUpOnly}
+                  onClick={() => {
+                    haptic.light();
+                    setShowFollowUpOnly((v) => !v);
+                  }}
+                  className={cn(
+                    'flex min-h-11 w-full items-center justify-between gap-3 rounded-xl border px-3 py-2.5 text-left transition-colors touch-manipulation active:scale-[0.99]',
+                    showFollowUpOnly
+                      ? 'border-elec-yellow bg-elec-yellow'
+                      : 'border-white/[0.08] bg-white/[0.03]'
+                  )}
+                >
+                  <span className="min-w-0">
+                    <span
+                      className={cn(
+                        'block text-[13px] font-semibold',
+                        showFollowUpOnly ? 'text-black' : 'text-white'
+                      )}
+                    >
+                      Needs follow-up
+                    </span>
+                    <span
+                      className={cn(
+                        'block text-[11px]',
+                        showFollowUpOnly ? 'text-black/70' : 'text-white'
+                      )}
+                    >
+                      No activity in 90+ days
+                    </span>
+                  </span>
+                  {followUpCount > 0 && (
+                    <span
+                      className={cn(
+                        'shrink-0 text-[12px] font-semibold tabular-nums',
+                        showFollowUpOnly ? 'text-black/70' : 'text-white'
+                      )}
+                    >
+                      {followUpCount}
+                    </span>
+                  )}
+                </button>
+              </section>
+
+              <section>
+                <h3 className="mb-2 text-[13px] font-semibold text-white">View</h3>
+                <div className="grid grid-cols-2 gap-1.5">
+                  {(['grid', 'map'] as const).map((mode) => (
+                    <button
+                      key={mode}
+                      type="button"
+                      aria-pressed={viewMode === mode}
+                      onClick={() => {
+                        haptic.light();
+                        setViewMode(mode);
+                      }}
+                      className={cn(
+                        'h-11 rounded-xl border px-3 text-[13px] font-medium transition-colors touch-manipulation active:scale-[0.99]',
+                        viewMode === mode
+                          ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                          : 'border-white/[0.08] bg-white/[0.03] text-white'
+                      )}
+                    >
+                      {mode === 'grid' ? 'List' : 'Map'}
+                    </button>
+                  ))}
+                </div>
+              </section>
+
+              {tagCounts.length > 0 && (
+                <section>
+                  <h3 className="mb-2 text-[13px] font-semibold text-white">Tags</h3>
+                  <div className="flex flex-wrap gap-1.5">
+                    {tagCounts.slice(0, 20).map(([tag, count]) => {
+                      const active = activeTagFilter === tag;
+                      return (
+                        <button
+                          key={tag}
+                          type="button"
+                          aria-pressed={active}
+                          onClick={() => {
+                            haptic.light();
+                            setActiveTagFilter(active ? null : tag);
+                          }}
+                          className={cn(
+                            'inline-flex h-11 items-center gap-1.5 rounded-xl border px-3 text-[12.5px] font-medium transition-colors touch-manipulation active:scale-[0.99]',
+                            active
+                              ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                              : 'border-white/[0.08] bg-white/[0.03] text-white'
+                          )}
+                        >
+                          {tag}
+                          <span className={cn('tabular-nums', active ? 'text-black/70' : 'text-white')}>
+                            {count}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </section>
+              )}
+
+              <section>
+                <h3 className="mb-2 text-[13px] font-semibold text-white">Manage</h3>
+                <div className="space-y-1.5">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      haptic.light();
+                      setShowFiltersSheet(false);
+                      enterSelectionMode();
+                    }}
+                    className="h-11 w-full rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 text-left text-[13px] font-semibold text-white touch-manipulation active:scale-[0.99]"
+                  >
+                    Select multiple
+                  </button>
+                  <button
+                    type="button"
+                    disabled={customers.length === 0}
+                    onClick={() => {
+                      haptic.light();
+                      exportCustomers();
+                    }}
+                    className="h-11 w-full rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 text-left text-[13px] font-semibold text-white touch-manipulation active:scale-[0.99] disabled:opacity-40"
+                  >
+                    Export CSV
+                  </button>
+                </div>
+              </section>
+            </div>
+
+            <div className="shrink-0 border-t border-white/[0.08] px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+              <button
+                type="button"
+                onClick={() => {
+                  haptic.light();
+                  setShowFiltersSheet(false);
+                }}
+                className="h-11 w-full rounded-xl bg-elec-yellow text-[13px] font-bold text-black touch-manipulation active:scale-[0.99]"
+              >
+                Show {filteredCustomers.length}{' '}
+                {filteredCustomers.length === 1 ? 'customer' : 'customers'}
+              </button>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+
       <MergeDuplicatesSheet
         open={showMergeSheet}
         onOpenChange={setShowMergeSheet}
@@ -1035,17 +1263,31 @@ export default function CustomersPage() {
             transition={{ type: 'spring', stiffness: 380, damping: 30 }}
             className="fixed inset-x-0 bottom-0 z-40 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3"
           >
-            <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-x-3 gap-y-2 rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)] px-3 py-2.5 shadow-2xl backdrop-blur-xl sm:px-4 sm:py-3">
-              <div className="flex items-center gap-2">
+            {/*
+              Two deliberate rows instead of one flex-wrap row. Wrapping put
+              Tag/Email/Export/Delete on the first line and left "Done" orphaned
+              on a second, which read as a broken layout rather than a bar.
+              Row one is the count and the way out; row two is an even 4-up grid
+              of the actions, so nothing reflows as the count changes.
+            */}
+            <div className="mx-auto max-w-3xl space-y-2 rounded-2xl border border-white/[0.14] bg-[hsl(0_0%_10%)]/95 px-3 py-2.5 shadow-2xl backdrop-blur-xl sm:px-4 sm:py-3">
+              <div className="flex items-center justify-between gap-3">
                 <span className="text-[13px] font-semibold tabular-nums text-white">
                   {selectedIds.size} selected
                 </span>
+                <button
+                  onClick={exitSelectionMode}
+                  className="flex h-9 shrink-0 items-center rounded-full bg-elec-yellow px-5 text-[12.5px] font-bold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.97]"
+                >
+                  Done
+                </button>
               </div>
-              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+
+              <div className="grid grid-cols-4 gap-1.5">
                 <button
                   onClick={() => setShowBulkTagDialog(true)}
                   disabled={selectedIds.size === 0}
-                  className="flex h-9 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[12px] font-medium text-white transition-colors hover:bg-white/[0.08] disabled:opacity-40 touch-manipulation"
+                  className="flex h-10 items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.05] text-[12px] font-semibold text-white transition-colors hover:bg-white/[0.09] disabled:opacity-40 touch-manipulation active:scale-[0.97]"
                 >
                   Tag
                 </button>
@@ -1055,30 +1297,24 @@ export default function CustomersPage() {
                     selectedIds.size === 0 ||
                     !customers.some((c) => selectedIds.has(c.id) && c.email)
                   }
-                  className="flex h-9 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[12px] font-medium text-white transition-colors hover:bg-white/[0.08] disabled:opacity-40 touch-manipulation"
                   title="Open email client with selected customers as BCC"
+                  className="flex h-10 items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.05] text-[12px] font-semibold text-white transition-colors hover:bg-white/[0.09] disabled:opacity-40 touch-manipulation active:scale-[0.97]"
                 >
                   Email
                 </button>
                 <button
                   onClick={handleBulkExport}
                   disabled={selectedIds.size === 0}
-                  className="flex h-9 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-3 text-[12px] font-medium text-white transition-colors hover:bg-white/[0.08] disabled:opacity-40 touch-manipulation"
+                  className="flex h-10 items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.05] text-[12px] font-semibold text-white transition-colors hover:bg-white/[0.09] disabled:opacity-40 touch-manipulation active:scale-[0.97]"
                 >
                   Export
                 </button>
                 <button
                   onClick={() => setShowBulkDeleteConfirm(true)}
                   disabled={selectedIds.size === 0}
-                  className="flex h-9 items-center rounded-full border border-red-500/25 bg-red-500/[0.12] px-3 text-[12px] font-medium text-red-400 transition-colors hover:bg-red-500/20 disabled:opacity-40 touch-manipulation"
+                  className="flex h-10 items-center justify-center rounded-xl border border-red-500/30 bg-red-500/[0.12] text-[12px] font-semibold text-red-300 transition-colors hover:bg-red-500/20 disabled:opacity-40 touch-manipulation active:scale-[0.97]"
                 >
                   Delete
-                </button>
-                <button
-                  onClick={exitSelectionMode}
-                  className="flex h-9 items-center rounded-full bg-elec-yellow px-4 text-[12px] font-semibold text-black hover:bg-elec-yellow/90 touch-manipulation"
-                >
-                  Done
                 </button>
               </div>
             </div>
