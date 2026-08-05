@@ -1315,19 +1315,47 @@ async function getQBSalesTaxCode(
     const name = (c: any) => String(c.Name || '');
     const byName = (re: RegExp) => codes.find((c: any) => re.test(name(c)));
 
-    // ELE-1318 — CIS domestic reverse charge. UK QuickBooks companies have
-    // dedicated DRC codes ("Domestic Reverse Charge @ 20%" / "@ 5%"); coding
-    // the sale with one puts the right figures on the customer's VAT return
-    // and prints the DRC treatment on the QBO invoice. Prefer the 20% code.
-    // Fall back to the zero-rated path when the company has no DRC code so
-    // the sync still succeeds (memo wording is added either way).
+    // ELE-1318 / ELE-1466 — CIS domestic reverse charge.
+    //
+    // ELE-1318 matched DRC codes on the literal words "reverse charge". Most
+    // UK QuickBooks companies do not name them that way: the CIS codes are
+    // "20.0% RC CIS" and "5.0% RC CIS". "RC" never matched, so the lookup
+    // fell through to the zero-rated branch below and QuickBooks received a
+    // No-VAT code — the reported "subtotal is correct but the VAT boxes are
+    // left empty, so I have to amend them as 20% RC CIS".
+    //
+    // Match "RC" and "DRC" as well, and prefer the CIS variant: this is
+    // construction, and QBO also ships non-construction reverse-charge codes
+    // ("RC SG", "RC MPCCs") that would be the wrong treatment. Purchase-side
+    // and EC acquisition variants are input tax and are excluded outright —
+    // they must never land on a sales invoice.
     if (reverseCharge) {
-      const drcCodes = codes.filter((c: any) => /reverse\s*charge/i.test(name(c)));
-      const drc =
-        drcCodes.find((c: any) => /20/.test(name(c))) || drcCodes[0];
-      if (drc) return String(drc.Id);
+      // EC goods/services codes (ECG, ECS) are an intra-community treatment,
+      // not domestic construction — excluded along with the purchase-side
+      // (input tax) variants, which must never land on a sales invoice.
+      type QBTaxCode = { Id?: string | number; Name?: string };
+      const isSalesSide = (n: string) =>
+        !/\bec(g|s)?\b|acquisition|purchase|input/i.test(n);
+      const rcCodes: QBTaxCode[] = codes.filter((c: QBTaxCode) => {
+        const n = name(c);
+        return isSalesSide(n) && (/reverse\s*charge/i.test(n) || /\bd?rc\b/i.test(n));
+      });
+      const cisCodes = rcCodes.filter((c: QBTaxCode) => /\bcis\b/i.test(name(c)));
+      const wordedCodes = rcCodes.filter((c: QBTaxCode) => /reverse\s*charge/i.test(name(c)));
+      const prefer20 = (list: QBTaxCode[]) =>
+        list.find((c: QBTaxCode) => /20/.test(name(c))) || list[0];
+
+      // CIS first (construction), then anything explicitly worded "reverse
+      // charge". A bare "RC SG"/"RC MPCCs" is deliberately NOT used — the
+      // wrong reverse-charge type is worse than the zero-rated fallback.
+      const drc = prefer20(cisCodes) || prefer20(wordedCodes);
+      if (drc) {
+        console.log('[getQBSalesTaxCode] domestic reverse charge code:', name(drc));
+        return String(drc.Id);
+      }
       console.warn(
-        '[getQBSalesTaxCode] no Domestic Reverse Charge tax code in this QBO company — falling back to zero-rated (ELE-1318)'
+        '[getQBSalesTaxCode] no Domestic Reverse Charge tax code in this QBO company — falling back to zero-rated (ELE-1318). Codes seen:',
+        codes.map(name).join(' | ')
       );
     }
 
