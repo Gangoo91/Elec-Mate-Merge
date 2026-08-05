@@ -289,6 +289,13 @@ const QuoteViewPage = () => {
       docusign_status: _ds,
       external_invoice_id: _eii,
       external_invoice_provider: _eip,
+      // ELE-1469 — drop the CRM link. saveQuote only auto-matches the client
+      // to a customer when customer_id is absent, so carrying the source
+      // quote's customer_id kept the copy attached to the ORIGINAL customer no
+      // matter what client details were typed in. Clearing it lets the save
+      // re-resolve by email/name — the same customer if unchanged, the new one
+      // if not, which is the whole point of duplicating to another customer.
+      customer_id: _cid,
       ...rest
     } = quote;
     const duplicate: Partial<typeof quote> = {

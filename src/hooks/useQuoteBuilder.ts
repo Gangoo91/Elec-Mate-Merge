@@ -15,16 +15,25 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
   const { saveQuote } = useQuoteStorage();
   const { companyProfile } = useCompanyProfile();
 
-  const [quote, setQuote] = useState<Partial<Quote>>(
-    initialQuote || {
-      id: uuidv4(),
-      quoteNumber: '', // Will be generated when needed
-      items: [],
-      status: 'draft',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }
-  );
+  // ELE-1469 + ELE-1474 — the defaults are merged UNDER initialQuote, not
+  // replaced by it. This used to be `initialQuote || { ... }`, so any seeded
+  // quote — duplicate, project, customer, certificate, site visit, materials —
+  // started with no `id`, because every seeding path builds a plain object and
+  // the duplicate flows deliberately strip the source id. With no id the
+  // autosave upsert (`onConflict: 'id'`) failed on every tick, so the footer
+  // sat on "Retrying" and edited client details were never written, and
+  // generateQuote() then hard-aborted on its `!finalQuote.id` guard with
+  // "Could not generate quote — Please refresh the page and try again".
+  const [quote, setQuote] = useState<Partial<Quote>>(() => ({
+    quoteNumber: '', // Will be generated when needed
+    items: [],
+    status: 'draft',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    ...initialQuote,
+    // A seeded quote carries no id of its own — it must still get one.
+    id: initialQuote?.id || uuidv4(),
+  }));
 
   const [currentStep, setCurrentStep] = useState(0);
   const [priceAdjustment, setPriceAdjustment] = useState(0); // Percentage adjustment (0-20)
