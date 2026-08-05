@@ -115,7 +115,7 @@ const PublicQuoteView = () => {
   const cisT = useMemo(
     () =>
       quote
-        ? computeQuoteTotals(quote.items || [], quote.settings, { applyOverheadAndProfit: false })
+        ? computeQuoteTotals(quote.items || [], quote.settings)
         : null,
     [quote]
   );

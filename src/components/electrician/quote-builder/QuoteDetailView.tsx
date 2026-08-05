@@ -44,10 +44,10 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
     [quote.items, quote.settings]
   );
 
-  // CIS / VAT reverse charge figures. Quotes don't apply overhead/profit
-  // (see useQuoteBuilder), so match that here to keep cisT.total === quote.total.
+  // CIS / VAT reverse charge figures. Nothing applies overhead/profit any
+  // more (ELE-1473), so cisT.total === quote.total.
   const cisT = useMemo(
-    () => computeQuoteTotals(quote.items || [], quote.settings, { applyOverheadAndProfit: false }),
+    () => computeQuoteTotals(quote.items || [], quote.settings),
     [quote.items, quote.settings]
   );
 

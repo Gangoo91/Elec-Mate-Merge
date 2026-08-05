@@ -12,9 +12,12 @@ import { computeQuoteTotals } from '@/utils/quote-calculations';
 
 // Shared calculation logic — single source of truth for all totals.
 // ELE-888 + ELE-891: per-item and per-category adjustments now applied
-// via the shared utility before discount/overhead/VAT.
+// via the shared utility before discount/VAT.
+// ELE-1473: no overhead/profit percentage is applied — profit lives in the
+// hourly rate and the material markup, both of which move the line prices the
+// customer can actually see.
 const calculateAllTotals = (items: InvoiceItem[], settings: InvoiceSettings) => {
-  const t = computeQuoteTotals(items, settings, { applyOverheadAndProfit: true });
+  const t = computeQuoteTotals(items, settings);
   return {
     subtotal: t.subtotal,
     overhead: t.overhead,

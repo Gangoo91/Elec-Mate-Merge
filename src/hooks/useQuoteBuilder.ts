@@ -107,8 +107,8 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
     const settings = quote.settings;
 
     // ELE-888 + ELE-891 — single source of truth for per-item, per-category,
-    // and global discount maths. Quote flow does not apply overhead+profit.
-    const totals = computeQuoteTotals(items, settings, { applyOverheadAndProfit: false });
+    // and global discount maths. ELE-1473 — no overhead/profit is applied.
+    const totals = computeQuoteTotals(items, settings);
 
     return {
       ...quote,

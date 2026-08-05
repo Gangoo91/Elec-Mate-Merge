@@ -364,12 +364,20 @@ const InvoiceViewPage = () => {
     return days > 0 ? days : null;
   };
 
+  // ELE-1473 — invoices raised today carry no overhead/profit, so CIS is taken
+  // from the plain labour share. Invoices raised before the removal have those
+  // amounts stored, and their CIS was withheld from a base that included them;
+  // gate on the STORED figures so a historic invoice still re-renders the
+  // deduction that was actually issued.
   const cisT = useMemo(
     () =>
       computeQuoteTotals(
         ((invoice?.items as any) || []) as any,
         (invoice?.settings as any) || null,
-        { applyOverheadAndProfit: true }
+        {
+          legacyOverheadAndProfit:
+            (invoice?.overhead ?? 0) > 0 || (invoice?.profit ?? 0) > 0,
+        }
       ),
     [invoice]
   );

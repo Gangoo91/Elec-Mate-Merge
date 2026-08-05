@@ -5,8 +5,12 @@
  *   1. Per-item adjustment   — `itemAdjustmentPercent` on each line
  *   2. Per-category adjustment — `settings.categoryAdjustments`
  *   3. Global discount         — `settings.discount{Enabled,Type,Value}`
- *   4. Overhead + profit (invoice flow only)
- *   5. VAT                     — applied on the net post-discount amount
+ *   4. VAT                     — applied on the net post-discount amount
+ *
+ * ELE-1473 — there is no overhead/profit step any more. Quotes and invoices
+ * both price off the line items alone, so the same job produces the same
+ * total in either. Profit is carried by the hourly rate and the material
+ * markup, both of which move the line prices the customer can see.
  *
  * Anything calling this should treat the returned values as the source of
  * truth. The hooks (useQuoteBuilder, useInvoiceBuilder) wrap this; UI
@@ -108,8 +112,26 @@ export function buildCategoryBreakdowns(
 }
 
 interface ComputeOptions {
-  /** Invoice flow uses overhead+profit; quote flow leaves them at 0. */
-  applyOverheadAndProfit?: boolean;
+  /**
+   * ELE-1473 — LEGACY ONLY. Do not set this on any new quote or invoice.
+   *
+   * Overhead and profit percentages are no longer applied to quotes or
+   * invoices. Profit belongs in what the electrician actually prices: their
+   * hourly rate and their material markup (see `categoryAdjustments` and the
+   * per-item markup in InvoiceItemsStep). Adding a further percentage on top
+   * of those double-counted it, and because there was no line item for it the
+   * customer-facing total silently disagreed with the quote for the same job.
+   *
+   * Reported three times before it was traced: ELE-326 (Mar 2026),
+   * ELE-1010 (May 2026), ELE-1473 (Aug 2026).
+   *
+   * This flag survives for ONE reason: invoices raised before the removal have
+   * `overhead`/`profit` amounts stored against them, and their CIS deduction
+   * was withheld from a labour share of a base that included those amounts.
+   * Re-rendering such an invoice must reproduce the figures that were issued.
+   * Gate it on stored values (`overhead > 0 || profit > 0`), never on settings.
+   */
+  legacyOverheadAndProfit?: boolean;
 }
 
 /**
@@ -160,10 +182,11 @@ export function computeQuoteTotals(
   );
   const subtotal = round2(itemAdjustedSubtotal + categoryAdjustmentDelta);
 
-  const overhead = options.applyOverheadAndProfit
+  // Always 0 for anything raised today — see `legacyOverheadAndProfit`.
+  const overhead = options.legacyOverheadAndProfit
     ? round2(subtotal * ((settings?.overheadPercentage || 0) / 100))
     : 0;
-  const profit = options.applyOverheadAndProfit
+  const profit = options.legacyOverheadAndProfit
     ? round2((subtotal + overhead) * ((settings?.profitMargin || 0) / 100))
     : 0;
 

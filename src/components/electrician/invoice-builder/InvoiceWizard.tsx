@@ -89,10 +89,13 @@ export const InvoiceWizard = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Get default settings from company profile
+  // Get default settings from company profile.
+  // ELE-1473 — overhead_percentage / profit_margin are deliberately NOT read
+  // here. ELE-326 tried to neutralise them with `?? 0`, but the columns carry
+  // a non-null DB default (15 / 20), so the fallback never fired and every
+  // cert-sourced invoice was silently inflated by 38%. Profit belongs in the
+  // hourly rate and the material markup, which move the visible line prices.
   const defaultLabourRate = companyProfile?.hourly_rate || 50;
-  const defaultOverhead = companyProfile?.overhead_percentage ?? 0;
-  const defaultProfitMargin = companyProfile?.profit_margin ?? 0;
   const defaultPaymentTerms = companyProfile?.payment_terms || '30 days';
 
   // Merge certificate data into existing invoice for proper initialization
@@ -107,8 +110,8 @@ export const InvoiceWizard = ({
           additional_invoice_items: [],
           settings: {
             labourRate: defaultLabourRate,
-            overheadPercentage: defaultOverhead,
-            profitMargin: defaultProfitMargin,
+            overheadPercentage: 0,
+            profitMargin: 0,
             vatRate: 20,
             vatRegistered: !!companyProfile?.vat_number,
             paymentTerms: defaultPaymentTerms,
