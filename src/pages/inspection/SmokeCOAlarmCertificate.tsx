@@ -30,6 +30,7 @@ import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
 import { draftStorage } from '@/utils/draftStorage';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
+import { scrollToTopForStepChange } from '@/utils/scroll';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -543,7 +544,7 @@ const {
     signoff: !!data.installerSignature,
   };
 
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  const scrollToTop = () => scrollToTopForStepChange();
 
   const goToStep = (step: string) => {
     setCurrentStep(step as StepId);
@@ -924,6 +925,9 @@ const {
 
       {/* Shell footer — Back + Continue, Generate on the last step */}
       <CertShellFooter
+        previewReportType="smoke-co-alarm"
+        previewReportId={savedReportId}
+        previewData={data as unknown as Record<string, unknown>}
         currentIndex={currentStepIndex}
         totalSteps={STEPS.length}
         canPrevious={currentStepIndex > 0}

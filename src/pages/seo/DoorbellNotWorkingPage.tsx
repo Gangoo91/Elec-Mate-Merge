@@ -315,14 +315,14 @@ const sections = [
       <>
         <p>Before calling an electrician, there are several things you can safely check:</p>
         <div className="space-y-3 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">For wireless doorbells</h4>
             <p className="text-white text-sm leading-relaxed">
               Replace batteries in both units. Re-pair the push button and chime. Move the chime
               closer to the push button to test range. Check for water damage on the push button.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">
               For wired doorbells (extra-low voltage side only)
             </h4>
@@ -332,7 +332,7 @@ const sections = [
               and switched on. Bell wire is extra-low voltage and safe to touch.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">For smart doorbells</h4>
             <p className="text-white text-sm leading-relaxed">
               Check Wi-Fi signal strength in the app. Reboot the doorbell (remove from mount and
@@ -350,7 +350,7 @@ const sections = [
     content: (
       <>
         <p>Call an electrician in these situations:</p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -398,7 +398,7 @@ const sections = [
           considerations:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -412,7 +412,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Cable className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -426,7 +426,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

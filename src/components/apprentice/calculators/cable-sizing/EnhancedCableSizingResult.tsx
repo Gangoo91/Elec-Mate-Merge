@@ -192,7 +192,11 @@ const EnhancedCableSizingResult: React.FC<EnhancedCableSizingResultProps> = ({
                 Zs calculation
               </div>
               <div className="text-[14px] font-mono text-white">
-                {result.zsCalculation.zs.toFixed(2)}Ω (Max: {result.zsCalculation.maxZs.toFixed(2)}Ω)
+                {result.zsCalculation.zs.toFixed(2)}Ω (Max:{' '}
+                {result.zsCalculation.maxZs !== null
+                  ? `${result.zsCalculation.maxZs.toFixed(2)}Ω`
+                  : '—'}
+                )
               </div>
             </div>
           </div>

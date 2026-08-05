@@ -239,7 +239,7 @@ const sections = [
           Bristol's older housing stock means that these warning signs are commonly found during
           electrical inspections across the inner suburbs:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />

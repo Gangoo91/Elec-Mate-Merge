@@ -795,8 +795,11 @@ serve(async (req: Request) => {
           itemCategory = 'labour',
           // Settings
           labourRate,
-          overheadPercentage = 10,
-          profitMargin = 15,
+          // ELE-1473 — default to 0. These used to default to 10% / 15%, so a
+          // voice-created quote was silently marked up with no line item to
+          // explain it. Profit belongs in the labour rate and material markup.
+          overheadPercentage = 0,
+          profitMargin = 0,
           vatRate = 20,
           vatRegistered = true,
           breakdownMaterials = false,
@@ -854,6 +857,7 @@ serve(async (req: Request) => {
         const subtotal = itemQuantity * itemUnitPrice;
         const overhead = subtotal * (overheadPercentage / 100);
         const profit = (subtotal + overhead) * (profitMargin / 100);
+        // Both are 0 unless a caller explicitly passes a percentage (ELE-1473).
         const netTotal = subtotal + overhead + profit;
         const vatAmount = vatRegistered ? netTotal * (vatRate / 100) : 0;
         const total = netTotal + vatAmount;

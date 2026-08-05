@@ -215,7 +215,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
             <div>
               <p className="font-bold text-white mb-1">
@@ -250,7 +250,7 @@ const sections = [
           applies:
         </p>
         {/* grounded: BS 7671:2018+A4:2026 Table 54.8 (standard PDF p.209), Reg 544.1.2 — PME main bonding vs PEN csa. */}
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-1">
             Table 54.8 — PME main bonding conductor sizing
           </h3>
@@ -487,7 +487,7 @@ const sections = [
           common mistakes helps electricians avoid them in new work and identify them correctly
           during inspections.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <span>
@@ -647,7 +647,7 @@ const sections = [
           parts and the main earthing terminal.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <div>
                 <h4 className="font-bold text-white mb-1">Record Bonding Results on Certificate</h4>

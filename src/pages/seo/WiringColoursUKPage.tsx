@@ -281,7 +281,7 @@ export default function WiringColoursUKPage() {
                 instantaneous. It was managed through a phased approach to allow the industry to
                 adjust.
               </p>
-              <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-6">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-6">
                 <h3 className="font-bold text-yellow-400 text-lg mb-3">
                   Timeline of the Colour Change
                 </h3>
@@ -386,7 +386,7 @@ export default function WiringColoursUKPage() {
                 identification.
               </p>
               <div className="space-y-4 my-6">
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-white text-lg mb-3">
                     Twin-and-Earth (T&E / 6242Y)
                   </h3>

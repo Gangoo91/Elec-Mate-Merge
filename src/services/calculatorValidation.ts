@@ -23,16 +23,14 @@ export class CalculatorValidator {
     },
     // Current carrying capacity safety margins
     currentSafetyMargin: 1.25, // 25% derating factor
-    // Maximum Zs values (Ohms) for common protection devices
-    maxZs: {
-      6: 7.67, // 6A MCB Type B
-      10: 4.6, // 10A MCB Type B
-      16: 2.87, // 16A MCB Type B
-      20: 2.3, // 20A MCB Type B
-      32: 1.44, // 32A MCB Type B
-      40: 1.15, // 40A MCB Type B
-      50: 0.92, // 50A MCB Type B
-    },
+    // Maximum Zs is deliberately NOT duplicated here. It lives in
+    // `@/data/zsLimits` (BS 7671 Table 41.3) — import `getMcbZsLimit` if this
+    // validator ever needs it.
+    //
+    // The table that was here read B32 = 1.44Ω, i.e. U0/Ia with no Cmin
+    // factor, where Table 41.3 gives 1.37Ω. It was never read by any code
+    // path, so it changed no result — but leaving a wrong BS 7671 table in a
+    // file called "BS7671_LIMITS" is a trap for whoever wires it up next.
     // Temperature correction factors
     temperatureCorrection: {
       30: 1.0, // Reference temperature

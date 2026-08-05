@@ -42,8 +42,6 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
   const [hourlyRate, setHourlyRate] = useState(45);
   const [dayRate, setDayRate] = useState<number | ''>('');
   const [paymentTerms, setPaymentTerms] = useState('30 days');
-  const [overheadPercentage, setOverheadPercentage] = useState(15);
-  const [profitMargin, setProfitMargin] = useState(20);
   const [workerRates, setWorkerRates] = useState<WorkerRates>(DEFAULT_WORKER_RATES);
 
   // Hydrate ONCE per open transition (see CompanySheet for rationale).
@@ -58,8 +56,6 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
     setHourlyRate(profile.hourly_rate || 45);
     setDayRate(profile.day_rate ?? '');
     setPaymentTerms(profile.payment_terms || '30 days');
-    setOverheadPercentage(profile.overhead_percentage ?? 15);
-    setProfitMargin(profile.profit_margin ?? 20);
     setWorkerRates(profile.worker_rates || DEFAULT_WORKER_RATES);
     hydratedForOpenRef.current = true;
   }, [profile, open]);
@@ -71,8 +67,6 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
         hourly_rate: hourlyRate,
         day_rate: dayRate === '' ? null : dayRate,
         payment_terms: paymentTerms,
-        overhead_percentage: overheadPercentage,
-        profit_margin: profitMargin,
         worker_rates: workerRates,
       });
       if (success) {
@@ -99,7 +93,7 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
             <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">
               Pricing & rates
             </h2>
-            <p className="mt-1 text-[13px] text-white">Hourly rates and profit margins</p>
+            <p className="mt-1 text-[13px] text-white">Hourly rates, day rate and payment terms</p>
           </header>
 
           <div className="flex-1 overflow-y-auto px-5 sm:px-6 pb-6 space-y-6">
@@ -146,48 +140,14 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
               </div>
             </div>
 
-            <div className="h-px bg-white/[0.06]" />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <Label className="text-white font-medium text-[13px]">Overhead (%)</Label>
-                <div className="relative">
-                  <Input
-                    type="number"
-                    step="1"
-                    min="0"
-                    max="100"
-                    value={overheadPercentage}
-                    onChange={(e) => setOverheadPercentage(parseFloat(e.target.value) || 0)}
-                    placeholder="15"
-                    className="h-11 bg-[hsl(0_0%_12%)] border-white/[0.08] text-white pr-8 focus:border-elec-yellow focus:ring-0 touch-manipulation"
-                  />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-[14px] pointer-events-none">
-                    %
-                  </span>
-                </div>
-                <p className="text-[11.5px] text-white">Applied to cover business running costs</p>
-              </div>
-              <div className="space-y-1.5">
-                <Label className="text-white font-medium text-[13px]">Profit margin (%)</Label>
-                <div className="relative">
-                  <Input
-                    type="number"
-                    step="1"
-                    min="0"
-                    max="100"
-                    value={profitMargin}
-                    onChange={(e) => setProfitMargin(parseFloat(e.target.value) || 0)}
-                    placeholder="20"
-                    className="h-11 bg-[hsl(0_0%_12%)] border-white/[0.08] text-white pr-8 focus:border-elec-yellow focus:ring-0 touch-manipulation"
-                  />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-[14px] pointer-events-none">
-                    %
-                  </span>
-                </div>
-                <p className="text-[11.5px] text-white">Your profit on each job</p>
-              </div>
-            </div>
+            {/*
+              ELE-1473 — the Overhead (%) and Profit margin (%) fields lived
+              here. They were added on top of the subtotal with no line item on
+              the invoice, so the customer-facing total silently disagreed with
+              the quote for the same job. Profit now belongs where the customer
+              can see it: the hourly rate above, and the material markup on each
+              line in the invoice builder.
+            */}
 
             <div className="h-px bg-white/[0.06]" />
 

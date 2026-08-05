@@ -312,7 +312,7 @@ export default function HowToPriceElectricalJobsPage() {
                 finance, for example), your prices need to be higher to maintain profitability.
               </p>
 
-              <div className="my-6 rounded-lg border border-yellow-500/30 bg-yellow-500/10 p-4">
+              <div className="my-6 rounded-lg border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4">
                 <p className="font-semibold text-yellow-300 mb-2">
                   BS 7671:2018+A4:2026 — Pricing Impact
                 </p>

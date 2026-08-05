@@ -202,7 +202,7 @@ const sections = [
           table maximum, the CPC or line conductor may need to be upsized, or the circuit length
           reduced by repositioning the distribution board.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h4 className="font-bold text-white mb-2">
             Temperature Correction and the GN3 0.80 Site-Test Factor
           </h4>
@@ -295,7 +295,7 @@ const sections = [
           installation does not provide adequate protection against electric shock from indirect
           contact.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -336,7 +336,7 @@ const sections = [
           Before taking any continuity measurement, two separate checks are required: proving the
           instrument is functioning correctly, and nulling out the test lead resistance.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 mb-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 mb-4">
           <h4 className="font-bold text-white mb-2">Prove the Instrument First</h4>
           <p className="text-white text-sm leading-relaxed">
             Use a proving unit (or a known good resistor) to verify that the continuity tester is
@@ -435,7 +435,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h4 className="font-bold text-white mb-2">GN3 0.80 Site-Test Factor</h4>
           <p className="text-white text-sm leading-relaxed">
             All BS 7671 Appendix 3 Zs limits are based on conductors at their maximum operating
@@ -468,7 +468,7 @@ const sections = [
           to work efficiently:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

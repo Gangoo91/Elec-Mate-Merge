@@ -255,7 +255,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
             <Lightbulb className="w-5 h-5 text-yellow-400 shrink-0" />
             18th Edition A4:2026 Key Changes — Live Exam Topics
@@ -610,7 +610,7 @@ const sections = [
           , structured revision courses, and progress tracking to give you a complete study system.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

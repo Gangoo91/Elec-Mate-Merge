@@ -211,13 +211,16 @@ export function useCreateCalendarEvent() {
 
       const syncStatus = tokenData?.sync_enabled ? 'pending_push' : 'local_only';
 
+      // `as never`: types.ts predates migration 20260805150000, so it does not
+      // know calendar_events.project_id exists (ELE-1472). Cast at the boundary
+      // rather than reaching for `any`. Drop when types.ts is regenerated.
       const { data, error } = await supabase
         .from('calendar_events')
         .insert({
           ...input,
           user_id: user.id,
           sync_status: syncStatus,
-        })
+        } as never)
         .select()
         .single();
 
@@ -265,9 +268,10 @@ export function useUpdateCalendarEvent() {
         extraFields.sync_status = 'pending_push';
       }
 
+      // Same stale-types cast as the insert above (ELE-1472).
       const { data, error } = await supabase
         .from('calendar_events')
-        .update({ ...updates, ...extraFields })
+        .update({ ...updates, ...extraFields } as never)
         .eq('id', id)
         .eq('user_id', user.id)
         .select()

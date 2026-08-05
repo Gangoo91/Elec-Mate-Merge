@@ -171,7 +171,7 @@ const sections = [
     content: (
       <>
         <p>Here is the full list of qualifications required:</p>
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
@@ -477,7 +477,7 @@ const sections = [
           but manageable alongside full-time work. The financial and career benefits make it one of
           the best investments you can make in your electrical career.
         </p>
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <p className="text-amber-300 font-semibold mb-3">
             Key A4:2026 changes Gold Card holders need to know
           </p>

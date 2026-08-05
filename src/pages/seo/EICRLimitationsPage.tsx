@@ -240,7 +240,7 @@ const sections = [
           of Inspections and Schedule of Test Results. Sampling is not simply a matter of agreeing a
           percentage with a client — the risk-assessment basis is a GN3 obligation.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-4">
             <Scan className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
             <div>
@@ -308,7 +308,7 @@ const sections = [
           EICR (for example: "IR test conducted at 250 V DC — sensitive equipment connected on
           lighting circuit 3").
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-4">
             <EyeOff className="w-6 h-6 text-red-400 mt-0.5 shrink-0" />
             <div>
@@ -429,7 +429,7 @@ const sections = [
           purpose. The limitations section should be specific, factual, and actionable.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Poor Examples</h3>
             <ul className="space-y-2 text-white text-sm leading-relaxed">
               <li>"Limited inspection."</li>

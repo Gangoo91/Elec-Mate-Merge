@@ -38,6 +38,9 @@ const BS_EN_OPTIONS = [
   { value: '61008', label: 'BS EN 61008 — RCD' },
   { value: '60947-3', label: 'BS EN 60947-3 — Switch-Disconnector' },
   { value: '60947', label: 'BS EN 60947 — Industrial (other)' },
+  // ELE-1436 — withdrawn, superseded by BS EN 60947-3, but still the standard
+  // cited on the main switch of many older UK boards being inspected.
+  { value: '5419', label: 'BS 5419 — Isolator/Switch' },
   { value: '88-2', label: 'BS 88-2 — HRC Fuse' },
   { value: '88-3', label: 'BS 88-3 — HRC Fuse' },
   { value: '1361', label: 'BS 1361 — Cartridge Fuse' },
@@ -70,6 +73,7 @@ const getTypeOptionsForBsEn = (bsEn: string) => {
       ];
     case '60947-3': // Switch-disconnectors / isolators (domestic + commercial)
     case '60947': // Industrial (other)
+    case '5419': // Withdrawn air-break switch/disconnector standard — same shapes
       return [
         { value: 'MCCB', label: 'MCCB' },
         { value: 'ACB', label: 'ACB' },

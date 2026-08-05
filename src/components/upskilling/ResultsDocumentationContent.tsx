@@ -174,26 +174,26 @@ export const ResultsDocumentationContent = () => {
                       <tr className="border-b border-gray-700">
                         <td className="py-2 px-3">Type B MCB</td>
                         <td className="py-2 px-3">6A</td>
-                        <td className="py-2 px-3 text-elec-yellow">7.67Ω</td>
-                        <td className="py-2 px-3">30.68Ω</td>
+                        <td className="py-2 px-3 text-elec-yellow">7.28Ω</td>
+                        <td className="py-2 px-3">7.28Ω</td>
                       </tr>
                       <tr className="border-b border-gray-700">
                         <td className="py-2 px-3">Type B MCB</td>
                         <td className="py-2 px-3">16A</td>
-                        <td className="py-2 px-3 text-elec-yellow">2.87Ω</td>
-                        <td className="py-2 px-3">11.50Ω</td>
+                        <td className="py-2 px-3 text-elec-yellow">2.73Ω</td>
+                        <td className="py-2 px-3">2.73Ω</td>
                       </tr>
                       <tr className="border-b border-gray-700">
                         <td className="py-2 px-3">Type B MCB</td>
                         <td className="py-2 px-3">32A</td>
-                        <td className="py-2 px-3 text-elec-yellow">1.44Ω</td>
-                        <td className="py-2 px-3">5.75Ω</td>
+                        <td className="py-2 px-3 text-elec-yellow">1.37Ω</td>
+                        <td className="py-2 px-3">1.37Ω</td>
                       </tr>
                       <tr>
                         <td className="py-2 px-3">Type B MCB</td>
                         <td className="py-2 px-3">40A</td>
-                        <td className="py-2 px-3 text-elec-yellow">1.15Ω</td>
-                        <td className="py-2 px-3">4.60Ω</td>
+                        <td className="py-2 px-3 text-elec-yellow">1.09Ω</td>
+                        <td className="py-2 px-3">1.09Ω</td>
                       </tr>
                     </tbody>
                   </table>

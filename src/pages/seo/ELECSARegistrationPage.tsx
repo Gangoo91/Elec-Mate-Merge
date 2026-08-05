@@ -408,7 +408,7 @@ const sections = [
           work:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3 mb-3">
               <Home className="w-6 h-6 text-yellow-400 shrink-0" />
               <h3 className="font-bold text-white text-lg">Domestic Installer</h3>

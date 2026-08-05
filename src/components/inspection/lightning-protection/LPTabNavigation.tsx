@@ -116,6 +116,9 @@ export default function LPTabNavigation({
   return (
     <>
       <CertShellFooter
+        previewReportType="lightning-protection"
+        previewReportId={reportId}
+        previewData={formData}
         currentIndex={currentTabIndex}
         totalSteps={totalTabs}
         canPrevious={canNavigatePrevious}

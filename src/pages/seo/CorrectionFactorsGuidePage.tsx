@@ -151,7 +151,7 @@ const sections = [
           their ability to dissipate heat is reduced, and the cable must be derated. Ca values are
           found in Table 4B1 of BS 7671 Appendix 4.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">
             Table 4B1 — Key Ca Values (70 degrees Celsius PVC)
           </h3>
@@ -196,7 +196,7 @@ const sections = [
           PVC. This means thermosetting cables are less affected by elevated ambient temperatures —
           the same Table 4B1 gives a separate column for 90&nbsp;&deg;C thermosetting insulation.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">
             Table 4B1 — Key Ca Values (90 degrees Celsius thermosetting / XLPE)
           </h3>
@@ -288,7 +288,7 @@ const sections = [
           directly in the ground, single cables in buried ducts, groups of multicore cables, groups
           of single-core cables, and cables in in-floor concrete troughs.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">
             Table 4C1 — Key Cg Values (Bunched or Same Conduit/Trunking)
           </h3>
@@ -359,7 +359,7 @@ const sections = [
           insulation. The correct reference is Reg 523.9 alone.
         </p>
         <div className="space-y-4 my-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">
               Cable touching insulation on one side only
             </h3>
@@ -371,7 +371,7 @@ const sections = [
               value in domestic installations.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">
               Cable totally surrounded by thermal insulation (&gt;0.5m)
             </h3>
@@ -418,7 +418,7 @@ const sections = [
             </p>
           </div>
         </div>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">
             Ci by Length in Insulation (&le;10&nbsp;mm&sup2;, Appendix 4 Section 2.6)
           </h3>
@@ -486,7 +486,7 @@ const sections = [
           overheating — hence the 0.725 derating factor (which is 1.45 / 2, restoring the same
           degree of protection afforded by other devices).
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">Cf by Protective Device Type</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="flex items-center justify-between p-3 rounded-lg bg-red-900/20 border border-red-700/40">
@@ -632,7 +632,7 @@ const sections = [
     content: (
       <>
         <div className="space-y-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">
               Example 1: Domestic Shower Circuit
             </h3>

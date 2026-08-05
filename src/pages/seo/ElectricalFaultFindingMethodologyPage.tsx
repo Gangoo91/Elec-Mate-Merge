@@ -302,7 +302,7 @@ const sections = [
               characteristics.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">MCB Tripping Under Load</h3>
             <p className="text-white text-sm leading-relaxed">
               Load current measurement with clamp meter to verify overload. Earth fault loop
@@ -310,7 +310,7 @@ const sections = [
               Insulation resistance to rule out insulation breakdown causing the fault.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Overheating / Burning Smell</h3>
             <p className="text-white text-sm leading-relaxed">
               Load current with clamp meter (overloading?). Thermal imaging to locate hot spots (see
@@ -428,7 +428,7 @@ const sections = [
           the majority of the evidence?
         </p>
         <p>Common diagnostic errors to avoid:</p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -554,7 +554,7 @@ const sections = [
           are taken. The procedure cannot be abbreviated, even for short tasks.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-3 mb-2">
               <span className="flex items-center justify-center w-7 h-7 rounded-full bg-red-500/20 text-red-300 font-bold text-sm shrink-0">
                 1
@@ -567,7 +567,7 @@ const sections = [
               be clearly marked to show the circuit it isolates (Regulation 537.2.7).
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-3 mb-2">
               <span className="flex items-center justify-center w-7 h-7 rounded-full bg-red-500/20 text-red-300 font-bold text-sm shrink-0">
                 2
@@ -580,7 +580,7 @@ const sections = [
               Apply a warning notice.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-3 mb-2">
               <span className="flex items-center justify-center w-7 h-7 rounded-full bg-red-500/20 text-red-300 font-bold text-sm shrink-0">
                 3
@@ -593,7 +593,7 @@ const sections = [
               testing the isolated circuit.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-3 mb-2">
               <span className="flex items-center justify-center w-7 h-7 rounded-full bg-red-500/20 text-red-300 font-bold text-sm shrink-0">
                 4
@@ -620,7 +620,7 @@ const sections = [
           systematically:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

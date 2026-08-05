@@ -83,7 +83,7 @@ const PolarityPracticeSection = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               Use this form to practise recording polarity test results. Enter the circuit reference, select your test method, and record the result for each type of accessory on the circuit.
             </p>

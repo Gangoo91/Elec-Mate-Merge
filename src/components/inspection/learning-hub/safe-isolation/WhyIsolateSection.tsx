@@ -38,7 +38,7 @@ const WhyIsolateSection = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               Safe isolation is the single most important procedure in electrical work. It must be carried out before ANY work on or near electrical circuits. There are no shortcuts and no exceptions — every time, every circuit, every job.
             </p>
@@ -46,14 +46,14 @@ const WhyIsolateSection = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Why It Matters</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Why It Matters</p>
         </motion.div>
 
         {reasons.map((r, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                   <r.icon className="h-5 w-5 text-yellow-400" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -66,14 +66,14 @@ const WhyIsolateSection = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Fatal Errors — What Gets People Killed</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Fatal Errors — What Gets People Killed</p>
         </motion.div>
 
         {fatalErrors.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-2">
               <p className="text-sm font-semibold text-white">{item.error}</p>
-              <div className="rounded-xl bg-orange-400/5 border border-orange-400/10 p-3">
+              <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/10 p-3">
                 <p className="text-sm text-white">{item.consequence}</p>
               </div>
             </div>

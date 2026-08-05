@@ -276,7 +276,7 @@ const sections = [
           Saturday are not price-shopping — they need the problem fixed and they will pay a premium
           for fast response.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Emergency Rate Structure</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">

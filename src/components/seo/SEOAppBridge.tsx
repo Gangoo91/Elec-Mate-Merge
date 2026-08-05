@@ -1,44 +1,51 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Zap, type LucideIcon } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { StoreBadges } from '@/components/seo/StoreBadges';
 import { trackSeoCtaClicked } from '@/lib/analytics-events';
+import { CARD, LABEL, BTN_PRIMARY } from '@/components/seo/seoSurface';
 
 interface SEOAppBridgeProps {
   title: string;
   description: string;
   ctaText?: string;
   ctaHref?: string;
+  /** @deprecated Icons were removed from this surface; accepted so the ~200
+   *  call sites that still pass one keep compiling. Ignored. */
   icon?: LucideIcon;
   showStoreBadges?: boolean;
 }
 
+/**
+ * Mid-article bridge from the content to the product.
+ *
+ * Was a yellow-washed panel with a 4px yellow left rail and an icon tile —
+ * over the near-black ground that wash rendered brown. Now a neutral cert
+ * card with a saturated cyan eyebrow; the only yellow left is the button,
+ * which is the thing we actually want looked at.
+ */
 export function SEOAppBridge({
   title,
   description,
   ctaText = 'Try it free for 7 days',
   ctaHref = '/auth/signup',
-  icon: Icon = Zap,
   showStoreBadges = true,
 }: SEOAppBridgeProps) {
   return (
-    <div className="rounded-2xl bg-gradient-to-r from-yellow-500/10 to-yellow-600/5 border-l-4 border-l-yellow-500 border border-yellow-500/20 p-5 my-8">
-      <div className="flex items-start gap-4">
-        <div className="w-11 h-11 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center shrink-0">
-          <Icon className="w-5 h-5 text-yellow-400" />
-        </div>
-        <div className="flex-1 min-w-0">
-          <h4 className="font-bold text-white text-base mb-1">{title}</h4>
-          <p className="text-sm text-white leading-relaxed mb-4">{description}</p>
-          <Link
-            to={ctaHref}
-            onClick={() => trackSeoCtaClicked({ page: window.location.pathname, cta: ctaText })}
-            className="inline-flex items-center justify-center gap-2 w-full sm:w-auto h-11 px-5 bg-yellow-500 hover:bg-yellow-400 text-black text-sm font-semibold rounded-lg touch-manipulation transition-colors active:scale-[0.97]"
-          >
-            {ctaText}
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-          {showStoreBadges && <StoreBadges size="sm" className="mt-3" />}
-        </div>
+    <div className={`${CARD} my-8 p-5 sm:p-6`}>
+      <p className={`${LABEL} text-sky-300`}>In the app</p>
+      <h4 className="mt-2.5 text-[18px] font-bold leading-snug tracking-[-0.015em] text-white sm:text-[20px]">
+        {title}
+      </h4>
+      <p className="mt-2 max-w-[58ch] text-[14.5px] leading-relaxed text-white">{description}</p>
+      <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
+        <Link
+          to={ctaHref}
+          onClick={() => trackSeoCtaClicked({ page: window.location.pathname, cta: ctaText })}
+          className={`${BTN_PRIMARY} w-full sm:w-auto`}
+        >
+          {ctaText}
+        </Link>
+        {showStoreBadges && <StoreBadges size="sm" />}
       </div>
     </div>
   );

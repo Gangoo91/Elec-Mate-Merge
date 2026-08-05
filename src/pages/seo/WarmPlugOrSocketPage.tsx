@@ -183,7 +183,7 @@ const sections = [
           the severity:
         </p>
         <div className="space-y-3 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">
               If the plug is slightly warm after prolonged use with a high-power appliance:
             </h4>
@@ -204,7 +204,7 @@ const sections = [
               connections behind it, and the circuit.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">
               If the socket is hot, discoloured, or smells of burning:
             </h4>
@@ -315,7 +315,7 @@ const sections = [
           can reach hundreds of degrees Celsius. If the connection is loose enough to intermittently
           make and break contact (arcing), temperatures at the arc point exceed 3,000°C.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-3">Why Loose Connections Get Worse</h3>
           <p className="text-white text-sm leading-relaxed mb-3">
             A loose connection is never stable. It follows a predictable deterioration cycle:
@@ -563,7 +563,7 @@ const sections = [
     content: (
       <>
         <p>A warm plug or socket should always be investigated. Here is the urgency scale:</p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -611,7 +611,7 @@ const sections = [
           approach:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Thermometer className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -625,7 +625,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -641,7 +641,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -656,7 +656,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

@@ -8,7 +8,13 @@ import { trackLead } from '@/lib/marketing-pixels';
 import { getStoredAttribution, fireServerCapi } from '@/lib/attribution';
 import { storageSetSync } from '@/utils/storage';
 
-type Source = 'landing_form' | 'exit_intent' | 'lead_magnet_cheatsheet' | 'footer' | 'other';
+type Source =
+  | 'landing_form'
+  | 'exit_intent'
+  | 'lead_magnet_cheatsheet'
+  | 'mock_exam_result'
+  | 'footer'
+  | 'other';
 
 interface Props {
   source: Source;
@@ -19,6 +25,14 @@ interface Props {
   includeName?: boolean;
   className?: string;
   compact?: boolean;
+  /**
+   * Extra body fields merged into the edge-function payload. Used by the
+   * mock exam results block to attach `mock_result` so the breakdown email
+   * has something to render. Sanitised server-side — never trusted there.
+   */
+  extraPayload?: Record<string, unknown>;
+  /** Replaces the default "we'll email it once" reassurance line. */
+  footnote?: string;
 }
 
 export function EmailCaptureForm({
@@ -30,6 +44,8 @@ export function EmailCaptureForm({
   includeName = false,
   className,
   compact = false,
+  extraPayload,
+  footnote,
 }: Props) {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -50,6 +66,7 @@ export function EmailCaptureForm({
     try {
       const { data, error } = await supabase.functions.invoke('newsletter-subscribe', {
         body: {
+          ...extraPayload,
           email,
           first_name: firstName || undefined,
           source,
@@ -149,7 +166,9 @@ export function EmailCaptureForm({
         </Button>
       </div>
       {errorMsg && <p className="text-sm text-red-400">{errorMsg}</p>}
-      <p className="text-xs text-white">We'll email it once. No spam — unsubscribe any time.</p>
+      <p className="text-xs text-white">
+        {footnote ?? "We'll email it once. No spam — unsubscribe any time."}
+      </p>
     </form>
   );
 }

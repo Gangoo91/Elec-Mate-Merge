@@ -6,19 +6,22 @@ import { supabase } from '@/integrations/supabase/client';
  * Format: {PREFIX}-{YEAR}-{SEQUENTIAL_NUMBER}
  * Example: EICR-2025-0001, EIC-2025-0042, MW-2025-0123
  */
-export const generateCertificateNumber = async (
-  reportType:
-    | 'eicr'
-    | 'eic'
-    | 'minor-works'
-    | 'fire-alarm'
-    | 'fire-alarm-design'
-    | 'fire-alarm-commissioning'
-    | 'fire-alarm-inspection'
-    | 'fire-alarm-modification'
-): Promise<string> => {
-  // Fire alarm types use fallback directly — RPC doesn't support hyphenated types
-  if (reportType.startsWith('fire-alarm')) {
+/**
+ * Report types the `generate_certificate_number` RPC can actually handle.
+ *
+ * ELE-1443 — the RPC maps ONLY these three to a prefix (everything else falls
+ * through to 'CERT') and interpolates the raw type into a sequence name:
+ *
+ *   certificate_seq_ev-charging_2026   →  syntax error at or near "-"
+ *
+ * So an unlisted type either errors outright or silently produces
+ * "CERT-2026-0001". Anything not named here MUST use the local fallback.
+ * Verified against pg_get_functiondef 2026-08-05.
+ */
+const RPC_SUPPORTED_TYPES = ['eicr', 'eic', 'minor-works'] as const;
+
+export const generateCertificateNumber = async (reportType: string): Promise<string> => {
+  if (!(RPC_SUPPORTED_TYPES as readonly string[]).includes(reportType)) {
     return generateFallbackCertificateNumber(reportType);
   }
 
@@ -55,6 +58,14 @@ const generateFallbackCertificateNumber = (reportType: string): string => {
     'fire-alarm-commissioning': 'FA/G3',
     'fire-alarm-inspection': 'FA/G6',
     'fire-alarm-modification': 'FA/G7',
+    // ELE-1443 — specialist certs whose live prefix does NOT match
+    // reportType.toUpperCase(). Verified against certificate_number on real
+    // rows 2026-08-05. The rest (EV-CHARGING, EMERGENCY-LIGHTING, SOLAR-PV,
+    // BESS, PAT-TESTING, TESTING-ONLY) already match the uppercase fallback,
+    // so they are deliberately absent rather than forgotten.
+    'g98-commissioning': 'G98',
+    'g99-commissioning': 'G99',
+    'smoke-co-alarm': 'SMOKE-CO',
   };
   const prefix = prefixMap[reportType] || reportType.toUpperCase();
 

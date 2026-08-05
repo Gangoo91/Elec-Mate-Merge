@@ -195,7 +195,7 @@ export default function EICCertificatePage() {
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
         <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
             <FileText className="w-4 h-4" />
             Part of 16 Certificate Types
           </div>
@@ -231,7 +231,7 @@ export default function EICCertificatePage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <BookOpen className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -288,7 +288,7 @@ export default function EICCertificatePage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Eye className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -304,7 +304,7 @@ export default function EICCertificatePage() {
               confusion.
             </p>
             <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+              <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                 <div className="flex items-center gap-2 mb-3">
                   <FileText className="w-5 h-5 text-yellow-400" />
                   <h3 className="font-bold text-white text-lg">EIC Required</h3>
@@ -390,7 +390,7 @@ export default function EICCertificatePage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Users className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -406,7 +406,7 @@ export default function EICCertificatePage() {
               certificate.
             </p>
             <div className="space-y-4 my-6">
-              <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+              <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                 <h3 className="font-bold text-yellow-400 text-lg mb-2">The Designer</h3>
                 <p className="text-white text-sm leading-relaxed">
                   The designer is responsible for the design of the electrical installation. By
@@ -466,7 +466,7 @@ export default function EICCertificatePage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <FileText className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -572,7 +572,7 @@ export default function EICCertificatePage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Shield className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -619,7 +619,7 @@ export default function EICCertificatePage() {
       <section id="how-it-works" className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <CheckCircle2 className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -632,7 +632,7 @@ export default function EICCertificatePage() {
                 key={index}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 flex-shrink-0">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
                   <span className="font-bold text-yellow-400">{index + 1}</span>
                 </div>
                 <div>
@@ -649,7 +649,7 @@ export default function EICCertificatePage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <ClipboardCheck className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -708,7 +708,7 @@ export default function EICCertificatePage() {
                 key={cert.name}
                 className={`p-5 rounded-2xl border ${
                   cert.highlight
-                    ? 'bg-yellow-500/5 border-yellow-500/30'
+                    ? 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14]'
                     : 'bg-white/[0.04] border-white/10'
                 }`}
               >
@@ -757,7 +757,7 @@ export default function EICCertificatePage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <HelpCircle className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -768,7 +768,7 @@ export default function EICCertificatePage() {
             {faqs.map((faq, index) => (
               <details
                 key={index}
-                className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-yellow-500/30 transition-colors"
+                className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/[0.14] transition-colors"
               >
                 <summary className="flex items-start gap-3 cursor-pointer touch-manipulation list-none [&::-webkit-details-marker]:hidden">
                   <ChevronRight className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
@@ -787,7 +787,7 @@ export default function EICCertificatePage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Zap className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">

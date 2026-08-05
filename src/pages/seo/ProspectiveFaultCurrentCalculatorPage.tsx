@@ -209,7 +209,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
       {/* Hero */}
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
             <Zap className="w-4 h-4 text-yellow-400" />
             <span className="text-sm font-medium text-yellow-400">
               BS 7671:2018+A4:2026 Regulation 434.5.1
@@ -332,7 +332,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
               and the conductors in the fault loop. The formula is:
             </p>
           </div>
-          <div className="rounded-2xl bg-white/[0.04] border border-yellow-500/20 p-6 my-6 text-center">
+          <div className="rounded-2xl bg-white/[0.04] border border-white/[0.14] p-6 my-6 text-center">
             <p className="text-2xl sm:text-3xl font-mono font-bold text-yellow-400 mb-3">
               Ipf = Uo / Zloop
             </p>
@@ -420,7 +420,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
             </div>
           </div>
           {/* GN3 0.8 temperature correction note */}
-          <div className="rounded-2xl bg-yellow-500/[0.06] border border-yellow-500/20 p-5 mt-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 mt-4">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
               <div className="space-y-2 text-white text-sm leading-relaxed">
@@ -537,7 +537,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
                 HRC fuses to BS&nbsp;88, often used as the high-rupturing protection at the origin.
               </p>
             </div>
-            <div className="rounded-2xl bg-yellow-500/[0.06] border border-yellow-500/20 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4">
               <p className="font-semibold text-yellow-400 text-sm">Rule</p>
               <p className="text-white text-sm mt-1">
                 Always: device breaking capacity ≥ measured PFC at that point (Reg&nbsp;434.5.1).
@@ -600,7 +600,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
                 key={step.name}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                   {index + 1}
                 </div>
                 <div>

@@ -163,7 +163,7 @@ const sections = [
           drawbacks.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-6">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Sole Trader</h3>
             <ul className="space-y-2 text-white text-sm">
               <li>

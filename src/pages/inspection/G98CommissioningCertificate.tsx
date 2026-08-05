@@ -46,6 +46,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { scrollToTopForStepChange } from '@/utils/scroll';
 import {
   Dialog,
   DialogContent,
@@ -1209,7 +1210,7 @@ const {
         currentTab={currentTab}
         onTabChange={(tab) => {
           setCurrentTab(tab as G98TabValue);
-          window.scrollTo({ top: 0 });
+          scrollToTopForStepChange();
         }}
         completedTabs={{
           details: !!isTabComplete('details'),
@@ -1245,6 +1246,9 @@ const {
       </main>
 
       <CertShellFooter
+        previewReportType="g98-commissioning"
+        previewReportId={savedReportId}
+        previewData={data as unknown as Record<string, unknown>}
         currentIndex={currentTabIndex}
         totalSteps={totalTabs}
         canPrevious={canNavigatePrevious}

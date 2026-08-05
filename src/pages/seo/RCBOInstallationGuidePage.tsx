@@ -475,7 +475,7 @@ const sections = [
             </div>
           </div>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <p className="flex items-start gap-3 text-white m-0">
             <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <span>
@@ -534,7 +534,7 @@ const sections = [
               Per device. Specify for heat pump, EV charger supply, or variable speed drive circuits.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-2 text-yellow-400 mb-1">
               <PoundSterling className="w-5 h-5 shrink-0" />
               <span className="text-2xl font-bold">£400–£900</span>

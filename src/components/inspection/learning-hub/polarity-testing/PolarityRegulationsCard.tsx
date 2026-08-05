@@ -102,14 +102,14 @@ const PolarityRegulationsCard = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* BS 7671 Core */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">BS 7671:2018+A3:2024</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">BS 7671:2018+A3:2024</p>
         </motion.div>
 
         {coreRegulations.map((reg, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 rounded-xl bg-yellow-400/10 border border-yellow-400/20 px-2.5 py-1.5">
+                <div className="flex-shrink-0 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 px-2.5 py-1.5">
                   <span className="text-xs font-bold text-yellow-400 whitespace-nowrap">{reg.number}</span>
                 </div>
                 <div className="flex-1 min-w-0">
@@ -123,12 +123,12 @@ const PolarityRegulationsCard = ({ onBack }: Props) => {
 
         {/* Other Standards */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Other Standards & Guidance</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Other Standards & Guidance</p>
         </motion.div>
 
         {otherStandards.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-sm font-semibold text-white">{item.standard}</p>
               <p className="text-sm text-white mt-1 leading-relaxed">{item.detail}</p>
             </div>
@@ -137,12 +137,12 @@ const PolarityRegulationsCard = ({ onBack }: Props) => {
 
         {/* Certification */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Certification Requirements</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Certification Requirements</p>
         </motion.div>
 
         {certificationRequirements.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-sm font-semibold text-white">{item.cert}</p>
               <p className="text-sm text-white mt-1 leading-relaxed">{item.requirement}</p>
             </div>
@@ -151,7 +151,7 @@ const PolarityRegulationsCard = ({ onBack }: Props) => {
 
         {/* EICR Coding */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-orange-400/10 border border-orange-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-2">EICR Observation Coding</p>
             <div className="space-y-2">
               <div className="flex items-start gap-3">
@@ -161,7 +161,7 @@ const PolarityRegulationsCard = ({ onBack }: Props) => {
                 <p className="text-sm text-white"><span className="font-medium">Danger present.</span> Reversed polarity at socket outlets or switches — immediate risk of electric shock. Requires urgent remedial action.</p>
               </div>
               <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 rounded-lg bg-orange-400/20 border border-orange-400/30 px-2 py-1">
+                <div className="flex-shrink-0 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/30 px-2 py-1">
                   <span className="text-xs font-bold text-orange-400">C2</span>
                 </div>
                 <p className="text-sm text-white"><span className="font-medium">Potentially dangerous.</span> Polarity issues on circuits with reduced risk (e.g., dedicated equipment circuits) — requires remedial action.</p>
@@ -172,7 +172,7 @@ const PolarityRegulationsCard = ({ onBack }: Props) => {
 
         {/* Professional standards */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Professional Standards</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Professional Standards</p>
         </motion.div>
 
         {[
@@ -182,7 +182,7 @@ const PolarityRegulationsCard = ({ onBack }: Props) => {
           { body: 'Health and Safety at Work Act 1974', detail: 'Duty of care requirements. An employer or self-employed person who fails to verify polarity may be liable for injuries caused by incorrect wiring.' },
         ].map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-sm font-semibold text-white">{item.body}</p>
               <p className="text-sm text-white mt-1 leading-relaxed">{item.detail}</p>
             </div>
@@ -191,11 +191,11 @@ const PolarityRegulationsCard = ({ onBack }: Props) => {
 
         {/* Special locations */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Special Locations</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Special Locations</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
             <p className="text-sm text-white leading-relaxed">
               Polarity testing is specifically required in commissioning tests for special locations under Part 7 of BS 7671:
             </p>

@@ -379,7 +379,7 @@ const sections = [
           increase of approximately 20%. The impedance of the earth fault loop therefore increases
           by the same proportion when the cables are at their operating temperature.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-3">Applying the 0.8 Factor</h3>
           <p className="text-white leading-relaxed mb-3">
             Multiply the tabulated maximum Zs by 0.8 to get the corrected ambient maximum. Your

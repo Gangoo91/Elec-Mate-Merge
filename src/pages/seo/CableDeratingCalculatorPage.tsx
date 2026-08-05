@@ -76,7 +76,7 @@ export default function CableDeratingCalculatorPage() {
                   Content verified against BS 7671:2018+A4:2026 by a JIB-registered electrician.
                 </span>
               </div>
-              <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 mb-4">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 mb-4">
                 <p className="font-semibold text-yellow-400 mb-2">How do you calculate cable derating?</p>
                 <p className="text-white text-sm">
                   Identify the four BS 7671 correction factors for your installation: Ca (ambient
@@ -151,7 +151,7 @@ export default function CableDeratingCalculatorPage() {
                 <div className="overflow-hidden rounded-xl border border-white/10">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="bg-yellow-500/10 text-yellow-400">
+                      <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-yellow-400">
                         <th className="text-left font-semibold px-3 py-2">Ambient temperature</th>
                         <th className="text-center font-semibold px-3 py-2">70°C thermoplastic</th>
                         <th className="text-center font-semibold px-3 py-2">90°C thermosetting</th>
@@ -194,7 +194,7 @@ export default function CableDeratingCalculatorPage() {
                 can also apply a temperature correction to the mV/A/m values for more accurate
                 results on lightly loaded cables.
               </p>
-              <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
                 <p className="font-semibold text-yellow-400 mb-2 flex items-center gap-2">
                   <Zap className="w-4 h-4 shrink-0" />
                   Solar PV installations — BS 7671 Reg 712.523.101 (A4:2026)
@@ -240,7 +240,7 @@ export default function CableDeratingCalculatorPage() {
                 <div className="overflow-hidden rounded-xl border border-white/10">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="bg-yellow-500/10 text-yellow-400">
+                      <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-yellow-400">
                         <th className="text-left font-semibold px-3 py-2">Circuits grouped</th>
                         <th className="text-center font-semibold px-3 py-2">
                           Bunched / enclosed
@@ -350,7 +350,7 @@ export default function CableDeratingCalculatorPage() {
                 <div className="overflow-hidden rounded-xl border border-white/10">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="bg-yellow-500/10 text-yellow-400">
+                      <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-yellow-400">
                         <th className="text-left font-semibold px-3 py-2">Length in insulation</th>
                         <th className="text-center font-semibold px-3 py-2">Derating factor</th>
                       </tr>
@@ -444,7 +444,7 @@ export default function CableDeratingCalculatorPage() {
                 real-world installation — the factors are multiplied together to give the overall
                 correction. The required tabulated current carrying capacity is then:
               </p>
-              <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4 text-center">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4 text-center">
                 <p className="text-xl font-mono font-bold text-yellow-400">
                   It = In / (Ca x Cg x Ci x Cf)
                 </p>

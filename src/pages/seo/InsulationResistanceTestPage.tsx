@@ -202,7 +202,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <div>
@@ -343,7 +343,7 @@ const sections = [
         <div className="grid sm:grid-cols-2 gap-4 my-4">
           <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-2 mb-3">
-              <span className="w-10 h-10 rounded-xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm">
+              <span className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm">
                 1
               </span>
               <h3 className="font-bold text-white text-lg">L+N Combined to Earth</h3>
@@ -356,9 +356,9 @@ const sections = [
               fixings, moisture ingress at junction boxes, or heat damage near downlighters.
             </p>
           </div>
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="flex items-center gap-2 mb-3">
-              <span className="w-10 h-10 rounded-xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm">
+              <span className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm">
                 2
               </span>
               <h3 className="font-bold text-white text-lg">Line to Neutral</h3>

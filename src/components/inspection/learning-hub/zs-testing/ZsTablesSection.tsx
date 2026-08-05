@@ -53,7 +53,7 @@ const fuseValues = [
 ];
 
 const ZsTable = ({ title, subtitle, rows }: { title: string; subtitle: string; rows: string[][] }) => (
-  <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
+  <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
     <div className="p-4 border-b border-white/[0.06]">
       <p className="text-sm font-semibold text-white">{title}</p>
       <p className="text-xs text-white mt-0.5">{subtitle}</p>
@@ -98,12 +98,12 @@ const ZsTablesSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* 80% Rule Explanation */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-2">The 80% Rule — Why Two Columns?</p>
             <p className="text-sm text-white leading-relaxed mb-3">
               BS 7671 Appendix 3 states maximum Zs values at <span className="font-semibold">conductor operating temperature (~70°C for PVC)</span>. When you measure on site, conductors are at ambient temperature (~20°C) so resistance is lower. The <span className="font-semibold text-yellow-400">80% test limit</span> accounts for this — your measured Zs must not exceed 80% of the BS 7671 maximum.
             </p>
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-sm text-white">
                 <span className="font-semibold text-yellow-400">Testing rule:</span> Measured Zs ≤ 80% value = PASS. If your reading is between 80% and 100%, apply full temperature correction to determine compliance.
               </p>
@@ -113,24 +113,24 @@ const ZsTablesSection = ({ onBack }: Props) => {
 
         {/* Quick reference */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Quick Reference — Common Circuits</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Quick Reference — Common Circuits</p>
           <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-xs text-white">Lighting (6A Type B)</p>
               <p className="text-lg font-bold text-white">5.82Ω</p>
               <p className="text-xs text-yellow-400">80% test limit</p>
             </div>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-xs text-white">Ring Main (32A Type B)</p>
               <p className="text-lg font-bold text-white">1.09Ω</p>
               <p className="text-xs text-yellow-400">80% test limit</p>
             </div>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-xs text-white">Cooker (32A Type B)</p>
               <p className="text-lg font-bold text-white">1.09Ω</p>
               <p className="text-xs text-yellow-400">80% test limit</p>
             </div>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-xs text-white">Shower (40A Type B)</p>
               <p className="text-lg font-bold text-white">0.87Ω</p>
               <p className="text-xs text-yellow-400">80% test limit</p>
@@ -140,7 +140,7 @@ const ZsTablesSection = ({ onBack }: Props) => {
 
         {/* Tables */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">MCB Tables — 0.4s Disconnection (Final Circuits)</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">MCB Tables — 0.4s Disconnection (Final Circuits)</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
@@ -156,7 +156,7 @@ const ZsTablesSection = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">BS 88-3 Fuses — 0.4s Disconnection</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">BS 88-3 Fuses — 0.4s Disconnection</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
@@ -165,7 +165,7 @@ const ZsTablesSection = ({ onBack }: Props) => {
 
         {/* RCD note */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm font-semibold text-white mb-2">RCD-Protected Circuits</p>
             <p className="text-sm text-white leading-relaxed">
               Where circuits are protected by an RCD, the maximum Zs is determined by the RCD operating current, not the MCB. For a 30mA RCD: Zs ≤ 50V ÷ 0.03A = 1667Ω. In practice, any Zs that gives a reading on your tester will be adequate for RCD operation. However, you should still verify the MCB Zs for overcurrent protection compliance.

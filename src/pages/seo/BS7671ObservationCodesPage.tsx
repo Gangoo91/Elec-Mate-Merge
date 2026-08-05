@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet';
+import { CARD, LABEL, BTN_PRIMARY, BTN_NEUTRAL } from '@/components/seo/seoSurface';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
@@ -159,72 +160,84 @@ export default function BS7671ObservationCodesPage() {
         </script>
       </Helmet>
 
-      {/* Hero */}
-      <section className="py-16 sm:py-24 px-5">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
-            <BookOpen className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">BS 7671:2018+A4:2026</span>
-          </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
-            EICR <span className="text-yellow-400">Observation Codes</span> Explained
+      {/* Hero — left-aligned editorial, matching the rest of the public site.
+          Was: a centred column with a rounded pill badge and a book icon, and
+          "Observation Codes" set in yellow mid-headline. Yellow is reserved for
+          section headings and the primary action now, so a part-coloured H1
+          fought them; the pill and icon are the decorative tells the house
+          rules rule out. */}
+      <section className="px-5 py-14 sm:py-20">
+        <div className="mx-auto max-w-5xl">
+          <p className={`${LABEL} text-white`}>BS 7671:2018+A4:2026</p>
+          <h1 className="mt-3 max-w-[20ch] text-[34px] font-bold leading-[1.02] tracking-[-0.035em] text-white sm:text-[44px] lg:text-[52px]">
+            EICR observation codes explained
           </h1>
-          <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed mb-8">
-            A complete guide to C1, C2, C3, and FI observation codes. Real examples, classification
+          <p className="mt-5 max-w-[62ch] text-[16px] leading-relaxed text-white sm:text-[17.5px]">
+            A complete guide to C1, C2, C3 and FI observation codes. Real examples, classification
             criteria, and how to write clear observations that stand up to scrutiny. For UK
             electricians.
           </p>
-          {/* Quick-reference table — targets featured-snippet for 'C1 C2 C3 observation codes' */}
-          <div className="w-full max-w-2xl mx-auto mb-8 rounded-2xl overflow-hidden border border-white/10">
-            <table className="w-full text-sm text-left">
-              <thead>
-                <tr className="bg-white/[0.06]">
-                  <th className="px-4 py-3 font-semibold text-white">Code</th>
-                  <th className="px-4 py-3 font-semibold text-white">Meaning</th>
-                  <th className="px-4 py-3 font-semibold text-white">Action required</th>
-                  <th className="px-4 py-3 font-semibold text-white">EICR outcome</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/5">
-                <tr>
-                  <td className="px-4 py-3 font-bold text-red-400">C1</td>
-                  <td className="px-4 py-3 text-white">Danger Present</td>
-                  <td className="px-4 py-3 text-white">Immediate</td>
-                  <td className="px-4 py-3 text-red-400 font-medium">Unsatisfactory</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 font-bold text-orange-400">C2</td>
-                  <td className="px-4 py-3 text-white">Potentially Dangerous</td>
-                  <td className="px-4 py-3 text-white">Urgent</td>
-                  <td className="px-4 py-3 text-red-400 font-medium">Unsatisfactory</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 font-bold text-blue-400">C3</td>
-                  <td className="px-4 py-3 text-white">Improvement Recommended</td>
-                  <td className="px-4 py-3 text-white">Advisory</td>
-                  <td className="px-4 py-3 text-green-400 font-medium">Satisfactory</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 font-bold text-purple-400">FI</td>
-                  <td className="px-4 py-3 text-white">Further Investigation</td>
-                  <td className="px-4 py-3 text-white">Without delay</td>
-                  <td className="px-4 py-3 text-red-400 font-medium">Unsatisfactory</td>
-                </tr>
-              </tbody>
-            </table>
+
+          {/* Quick-reference table — targets the featured snippet for
+              'C1 C2 C3 observation codes'. Scrolls inside its own container so
+              four columns never push the page sideways on a phone. */}
+          <div className={`${CARD} mt-9 overflow-hidden`}>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[560px] text-left text-sm">
+                <thead>
+                  <tr className="bg-[hsl(0_0%_13%)]">
+                    <th className="px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
+                      Code
+                    </th>
+                    <th className="px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
+                      Meaning
+                    </th>
+                    <th className="px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
+                      Action required
+                    </th>
+                    <th className="px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
+                      EICR outcome
+                    </th>
+                  </tr>
+                </thead>
+                {/* The code colours stay: they carry the real severity meaning
+                    an inspector already reads, so this is semantic, not decor. */}
+                <tbody className="divide-y divide-white/[0.08]">
+                  <tr>
+                    <td className="px-4 py-3.5 font-bold text-red-400">C1</td>
+                    <td className="px-4 py-3.5 text-white">Danger present</td>
+                    <td className="px-4 py-3.5 text-white">Immediate</td>
+                    <td className="px-4 py-3.5 font-medium text-red-400">Unsatisfactory</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3.5 font-bold text-orange-400">C2</td>
+                    <td className="px-4 py-3.5 text-white">Potentially dangerous</td>
+                    <td className="px-4 py-3.5 text-white">Urgent</td>
+                    <td className="px-4 py-3.5 font-medium text-red-400">Unsatisfactory</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3.5 font-bold text-sky-400">C3</td>
+                    <td className="px-4 py-3.5 text-white">Improvement recommended</td>
+                    <td className="px-4 py-3.5 text-white">Advisory</td>
+                    <td className="px-4 py-3.5 font-medium text-emerald-400">Satisfactory</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3.5 font-bold text-violet-400">FI</td>
+                    <td className="px-4 py-3.5 text-white">Further investigation</td>
+                    <td className="px-4 py-3.5 text-white">Without delay</td>
+                    <td className="px-4 py-3.5 font-medium text-red-400">Unsatisfactory</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-          <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href="/auth/signup"
-              className="inline-flex items-center h-14 px-8 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl touch-manipulation transition-colors"
-            >
-              Start 7-Day Free Trial
+
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a href="/auth/signup" className={`${BTN_PRIMARY} h-14 w-full sm:w-auto`}>
+              Start 7-day free trial
             </a>
-            <a
-              href="#observation-codes"
-              className="inline-flex items-center h-14 px-8 border border-white/20 hover:border-yellow-500/40 text-white font-semibold rounded-xl touch-manipulation transition-colors"
-            >
-              Jump to Codes
+            <a href="#observation-codes" className={`${BTN_NEUTRAL} h-14 w-full sm:w-auto`}>
+              Jump to the codes
             </a>
           </div>
         </div>
@@ -283,7 +296,7 @@ export default function BS7671ObservationCodesPage() {
       {/* C1 — Danger Present */}
       <section id="observation-codes" className="py-12 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 sm:p-8">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 sm:p-8">
             <div className="flex items-center gap-4 mb-6">
               <span className="w-14 h-14 rounded-xl bg-red-500/20 flex items-center justify-center font-bold text-2xl text-red-400">
                 C1
@@ -657,7 +670,7 @@ export default function BS7671ObservationCodesPage() {
             </p>
           </div>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
               <h3 className="font-bold text-white mb-3 flex items-center gap-2">
                 <AlertCircle className="w-5 h-5 text-red-400" />
                 Poor Observations
@@ -725,7 +738,7 @@ export default function BS7671ObservationCodesPage() {
                 confidence.
               </p>
             </div>
-            <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
               <div className="flex items-center gap-3 mb-3">
                 <AlertCircle className="w-6 h-6 text-red-400" />
                 <h3 className="font-bold text-white text-lg">Unsatisfactory</h3>

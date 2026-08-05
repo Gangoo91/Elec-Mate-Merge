@@ -287,7 +287,7 @@ const sections = [
       <>
         <p>Smoke alarms and CO alarms must comply with the relevant British Standards:</p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Bell className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -361,7 +361,7 @@ const sections = [
         </p>
         <p>There are two methods of interlinking:</p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Hard-Wired Interlinking</h3>
             <p className="text-white text-sm leading-relaxed">
               A dedicated interconnect wire runs between all alarms — typically a 3-core and earth
@@ -551,7 +551,7 @@ const sections = [
           authority (the district or borough council). The enforcement process follows a structured
           escalation:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />

@@ -285,7 +285,7 @@ const sections = [
           causes the most confusion. It restricts the use of PME (TN-C-S) earthing for EV charging
           installations.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-3">The PME Problem</h3>
           <p className="text-white text-sm leading-relaxed mb-4">
             Most UK domestic supplies are TN-C-S (PME). The combined PEN conductor in the DNO supply
@@ -368,7 +368,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-white text-base mb-2">
             70 V RMS Design Criterion (Reg 722.411.4(b))
           </h3>
@@ -607,7 +607,7 @@ const sections = [
           person scheme for Part P self-certification.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

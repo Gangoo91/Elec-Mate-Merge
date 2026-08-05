@@ -244,7 +244,7 @@ const sections = [
               completed in 2 to 4 weeks. Required for all nuclear site workers without exception.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">CTC</h3>
             <p className="text-white text-sm leading-relaxed">
               Counter-Terrorism Check. Required for roles with access to sensitive areas or
@@ -252,7 +252,7 @@ const sections = [
               at Sellafield for many contractor roles and at AWE sites.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">SC</h3>
             <p className="text-white text-sm leading-relaxed">
               Security Check. The most common clearance for long-term nuclear site contractors. Ten
@@ -333,7 +333,7 @@ const sections = [
           look right. This is not optional on nuclear sites. The ONR judges site licence compliance
           in part on the health of the site safety culture.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />

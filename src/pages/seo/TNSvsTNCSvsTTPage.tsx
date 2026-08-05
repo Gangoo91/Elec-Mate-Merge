@@ -189,7 +189,7 @@ const sections = [
           conductor is split into separate neutral (N) and protective earth (PE) conductors for the
           installation.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-white text-base mb-3">TN-C-S (PME) Characteristics</h3>
           <ul className="space-y-2 text-white text-sm">
             <li>• Earth provided by DNO PEN conductor, split at cut-out</li>
@@ -227,7 +227,7 @@ const sections = [
           earth. This high-resistance path results in much higher earth fault loop impedance than TN
           systems.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
             <div>
@@ -319,7 +319,7 @@ const sections = [
           neutral is lost, the return current must flow through the earth conductor — and the full
           line voltage can appear on metal enclosures.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />

@@ -350,7 +350,7 @@ export default function WhenIsEICRequiredPage() {
               </p>
               <div className="space-y-3 mt-4">
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                     1
                   </span>
                   <div>
@@ -363,7 +363,7 @@ export default function WhenIsEICRequiredPage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                     2
                   </span>
                   <div>
@@ -377,7 +377,7 @@ export default function WhenIsEICRequiredPage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                     3
                   </span>
                   <div>
@@ -390,7 +390,7 @@ export default function WhenIsEICRequiredPage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                     4
                   </span>
                   <div>
@@ -404,7 +404,7 @@ export default function WhenIsEICRequiredPage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                     5
                   </span>
                   <div>
@@ -418,7 +418,7 @@ export default function WhenIsEICRequiredPage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                     6
                   </span>
                   <div>

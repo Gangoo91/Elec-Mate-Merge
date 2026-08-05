@@ -52,7 +52,7 @@ const TestSequencePage = ({ onBack }: Props) => {
         <motion.div variants={itemVariants}>
           <div className="flex items-center gap-3">
             <div className="h-px flex-1 bg-yellow-400/20" />
-            <span className="text-xs font-bold text-yellow-400 uppercase tracking-widest px-3">Dead Tests — Circuit Isolated</span>
+            <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-white px-3">Dead Tests — Circuit Isolated</span>
             <div className="h-px flex-1 bg-yellow-400/20" />
           </div>
         </motion.div>
@@ -94,7 +94,7 @@ const TestSequencePage = ({ onBack }: Props) => {
         <motion.div variants={itemVariants}>
           <div className="flex items-center gap-3">
             <div className="h-px flex-1 bg-orange-400/20" />
-            <span className="text-xs font-bold text-orange-400 uppercase tracking-widest px-3">Live Tests — Circuit Energised</span>
+            <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-white px-3">Live Tests — Circuit Energised</span>
             <div className="h-px flex-1 bg-orange-400/20" />
           </div>
         </motion.div>

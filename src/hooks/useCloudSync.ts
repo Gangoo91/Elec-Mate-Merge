@@ -116,6 +116,12 @@ export const useCloudSync = ({
 
   return {
     syncState,
+    // ELE-1446 — the raw useReportSync status, unflattened.
+    // `syncState.status` above collapses unsaved / queued / offline / conflict
+    // into a single 'queued', which is lossy: a never-saved draft and work that
+    // failed to reach the cloud become indistinguishable. Consumers that want
+    // to tell those apart (the cert shell header) read this instead.
+    cloudStatus: status,
     syncToCloud,
     loadFromCloud,
     isOnline,

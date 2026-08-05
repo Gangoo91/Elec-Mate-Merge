@@ -153,7 +153,7 @@ const sections = [
           risk to life, property, or safety. Knowing how to recognise one — and what to do in the
           first few seconds — can prevent injury, death, or a house fire.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -255,7 +255,7 @@ const sections = [
           serious warning signs. These indicate an active fault — typically an arcing connection,
           overloaded circuit, or damaged cable — that can cause a fire.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -317,7 +317,7 @@ const sections = [
           through their body. The severity depends on the voltage, the current, the duration of
           contact, and the path the current takes through the body. Mains voltage (230V) can kill.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">If Someone Is Receiving a Shock</h3>
           <ol className="space-y-4 text-white list-decimal list-inside">
             <li>
@@ -432,7 +432,7 @@ const sections = [
           save lives.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Phone className="w-6 h-6 text-red-400 mt-0.5 shrink-0" />
               <div>
@@ -445,7 +445,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Power className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -599,7 +599,7 @@ const sections = [
         </p>
         <p>Elec-Mate streamlines the entire emergency call-out workflow:</p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Camera className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

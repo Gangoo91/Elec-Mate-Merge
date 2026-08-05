@@ -156,7 +156,7 @@ export default function ElectricalBIMGuidePage() {
                     </div>
                     <span className="font-bold text-white text-sm">RIBA Stage 4</span>
                   </div>
-                  <div className="flex items-center justify-between p-4 rounded-xl bg-yellow-500/5 border border-yellow-500/20">
+                  <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                     <div>
                       <h4 className="font-bold text-white">LOD 350 — Coordination</h4>
                       <p className="text-white text-sm">
@@ -554,7 +554,7 @@ export default function ElectricalBIMGuidePage() {
               </p>
               <div className="space-y-3 mt-4">
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                     1
                   </span>
                   <div>
@@ -569,7 +569,7 @@ export default function ElectricalBIMGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                     2
                   </span>
                   <div>
@@ -585,7 +585,7 @@ export default function ElectricalBIMGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                     3
                   </span>
                   <div>

@@ -33,7 +33,7 @@ const ContinuityTestProcedureCard = ({ onBack }: Props) => {
     return (
       <div className="space-y-1.5">
         {steps.map((step) => (
-          <div key={step.number} className="relative rounded-xl bg-white/[0.05] p-3 overflow-hidden">
+          <div key={step.number} className="relative rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 overflow-hidden">
             <div className={`absolute left-0 top-0 bottom-0 w-1 ${barColour[accent]} rounded-l-xl`} />
             <div className="flex items-start gap-3 pl-2">
               <span className={`text-2xl font-bold ${numColour[accent]} shrink-0 w-8 text-center`}>{step.number}</span>
@@ -70,7 +70,7 @@ const ContinuityTestProcedureCard = ({ onBack }: Props) => {
         {/* R1+R2 Method */}
         <motion.div variants={itemVariants}>
           <div className="flex items-center justify-between mb-2">
-            <p className="text-xs font-medium text-amber-400 uppercase tracking-wider px-0.5">R1+R2 Method (Preferred)</p>
+            <p className="mb-3 text-[15px] font-semibold tracking-tight text-white">R1+R2 Method (Preferred)</p>
             <span className="text-[10px] font-semibold text-green-400 bg-green-500/10 border border-green-500/20 rounded-full px-2 py-0.5">Recommended</span>
           </div>
           {renderSteps(r1r2Steps, 'amber')}
@@ -79,15 +79,15 @@ const ContinuityTestProcedureCard = ({ onBack }: Props) => {
         {/* R2 Method */}
         <motion.div variants={itemVariants}>
           <div className="flex items-center justify-between mb-2">
-            <p className="text-xs font-medium text-blue-400 uppercase tracking-wider px-0.5">R2 Method (Alternative)</p>
-            <span className="text-[10px] font-semibold text-white bg-white/[0.07] border border-white/[0.1] rounded-full px-2 py-0.5">Alternative</span>
+            <p className="mb-3 text-[15px] font-semibold tracking-tight text-white">R2 Method (Alternative)</p>
+            <span className="text-[10px] font-semibold text-white bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.1] rounded-full px-2 py-0.5">Alternative</span>
           </div>
           {renderSteps(r2Steps, 'blue')}
         </motion.div>
 
         {/* Critical Requirements */}
         <motion.div variants={itemVariants}>
-          <div className="relative rounded-2xl bg-white/[0.07] border border-white/[0.08] overflow-hidden p-4">
+          <div className="relative rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.08] overflow-hidden p-4">
             <div className="absolute inset-x-0 top-0 h-[2px] bg-yellow-500" />
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-yellow-500/50 rounded-l-2xl" />
             <p className="text-[15px] font-bold text-yellow-400 mb-3">Critical Test Requirements</p>

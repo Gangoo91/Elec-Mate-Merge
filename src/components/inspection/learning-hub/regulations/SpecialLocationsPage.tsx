@@ -114,7 +114,7 @@ const SpecialLocationsPage = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               Part 7 of BS 7671 covers special installations and locations that require additional or modified rules beyond the general requirements. These are the locations electricians encounter most often.
             </p>
@@ -123,8 +123,8 @@ const SpecialLocationsPage = ({ onBack }: Props) => {
 
         {locations.map((loc, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
-              <div className="px-4 py-3 bg-yellow-400/5 border-b border-white/[0.06]">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
+              <div className="px-4 py-3 bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-b border-white/[0.06]">
                 <p className="text-sm font-semibold text-white">{loc.title}</p>
               </div>
               <div className="p-4 space-y-3">
@@ -133,7 +133,7 @@ const SpecialLocationsPage = ({ onBack }: Props) => {
                   <div className="space-y-1.5">
                     <p className="text-xs font-semibold text-white mb-2">Zones</p>
                     {loc.zones.map((z, j) => (
-                      <div key={j} className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
+                      <div key={j} className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] p-3">
                         <div className="flex items-center justify-between mb-1">
                           <p className="text-xs font-bold text-yellow-400">{z.zone}</p>
                           <p className="text-[10px] text-white">{z.area}</p>

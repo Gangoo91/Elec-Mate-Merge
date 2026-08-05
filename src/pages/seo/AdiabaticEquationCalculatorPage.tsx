@@ -221,7 +221,7 @@ export default function AdiabaticEquationCalculatorPage() {
       {/* Hero */}
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
             <span className="text-sm font-medium text-yellow-400">
               BS 7671:2018+A4:2026 Regulation 543.1
             </span>
@@ -344,7 +344,7 @@ export default function AdiabaticEquationCalculatorPage() {
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
             The Adiabatic Equation Formula
           </h2>
-          <div className="rounded-2xl bg-white/[0.04] border border-yellow-500/20 p-6 my-6 text-center">
+          <div className="rounded-2xl bg-white/[0.04] border border-white/[0.14] p-6 my-6 text-center">
             <p className="text-2xl sm:text-3xl font-mono font-bold text-yellow-400 mb-4">
               S = √(I²t) / k
             </p>
@@ -367,7 +367,7 @@ export default function AdiabaticEquationCalculatorPage() {
             </div>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
-            <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-300">
+            <div className="rounded-xl border border-amber-500/30 bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 text-sm text-amber-300">
               <strong>5-second limit (Reg 543.1.3):</strong> The adiabatic equation is only valid
               for disconnection times not exceeding 5 seconds. Where the disconnection time exceeds
               5 s, the adiabatic assumption breaks down — heat begins to escape the conductor — so
@@ -600,7 +600,7 @@ export default function AdiabaticEquationCalculatorPage() {
                 key={step.name}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                   {index + 1}
                 </div>
                 <div>

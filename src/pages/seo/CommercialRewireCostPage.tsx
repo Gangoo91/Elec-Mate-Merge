@@ -180,7 +180,7 @@ const sections = [
                 refurbishments under 300m².
               </p>
             </div>
-            <div className="p-5 bg-yellow-500/[0.06]">
+            <div className="p-5 bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
               <div className="text-xs font-semibold uppercase tracking-wide text-yellow-300/80">
                 Mid · Most common
               </div>
@@ -222,7 +222,7 @@ const sections = [
                 <td className="px-5 py-3 text-white/80">Basic office</td>
                 <td className="px-5 py-3 text-right font-medium">£6,000–£9,000</td>
               </tr>
-              <tr className="border-b border-white/5 bg-yellow-500/[0.04]">
+              <tr className="border-b border-white/5 bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                 <td className="px-5 py-3">500m²</td>
                 <td className="px-5 py-3 text-white/80">Mid spec</td>
                 <td className="px-5 py-3 text-right font-medium">£22,500–£30,000</td>
@@ -586,7 +586,7 @@ const sections = [
           electrical work:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

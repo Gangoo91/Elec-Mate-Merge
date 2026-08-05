@@ -246,7 +246,7 @@ const sections = [
 
         {/* Reportable vs not reportable — quick decision grid */}
         <div className="grid sm:grid-cols-2 gap-4 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-3 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5 text-red-400 shrink-0" />
               Typically reportable
@@ -290,7 +290,7 @@ const sections = [
           incidents with the potential to cause death or serious injury — that must be reported even
           if no injury occurs. Several are directly relevant to electrical work.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -488,7 +488,7 @@ const sections = [
 
         {/* Accident ratio stat grid (safety-pyramid model) */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-4 text-center">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4 text-center">
             <div className="text-2xl font-bold text-red-400">1</div>
             <div className="text-white/80 text-xs mt-1 leading-snug">Fatal accident</div>
           </div>
@@ -496,7 +496,7 @@ const sections = [
             <div className="text-2xl font-bold text-orange-400">29</div>
             <div className="text-white/80 text-xs mt-1 leading-snug">Serious injuries</div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-4 text-center">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4 text-center">
             <div className="text-2xl font-bold text-yellow-400">300</div>
             <div className="text-white/80 text-xs mt-1 leading-snug">Minor injuries</div>
           </div>
@@ -671,7 +671,7 @@ const sections = [
           and safe working procedures — including safe isolation, LOTO, and RAMS — are the most
           effective way to prevent reportable accidents.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-4">
             <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
             <div>

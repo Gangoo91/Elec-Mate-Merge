@@ -244,7 +244,7 @@ const sections = [
           and in good condition, rewirable fuse boxes cannot provide modern RCD protection and are a
           consistent source of EICR observations.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -519,7 +519,7 @@ const sections = [
           electricians nationwide.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

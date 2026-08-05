@@ -37,9 +37,9 @@ export const InvoiceSettingsStep = ({
   onUpdateNotes,
 }: InvoiceSettingsStepProps) => {
   // Live CIS preview — so the deduction can never silently come out as £0.
-  // Mirrors the invoice calc (applyOverheadAndProfit: true).
+  // Mirrors the invoice calc exactly (ELE-1473: no overhead/profit applied).
   const cisPreview = useMemo(
-    () => computeQuoteTotals((items || []) as QuoteItem[], settings as any, { applyOverheadAndProfit: true }),
+    () => computeQuoteTotals((items || []) as QuoteItem[], settings as any),
     [items, settings]
   );
 

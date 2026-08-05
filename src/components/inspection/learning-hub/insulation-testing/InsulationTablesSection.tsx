@@ -44,19 +44,19 @@ const InsulationTablesSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* Quick reference */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Quick Reference</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Quick Reference</p>
           <div className="grid grid-cols-3 gap-2">
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-3 text-center">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-3 text-center">
               <p className="text-xs text-white">New installation</p>
               <p className="text-lg font-bold text-white">&gt;200MΩ</p>
               <p className="text-xs text-green-400">Excellent</p>
             </div>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-3 text-center">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-3 text-center">
               <p className="text-xs text-white">Existing (good)</p>
               <p className="text-lg font-bold text-white">2-200MΩ</p>
               <p className="text-xs text-yellow-400">Acceptable</p>
             </div>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-3 text-center">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-3 text-center">
               <p className="text-xs text-white">Investigate</p>
               <p className="text-lg font-bold text-white">&lt;1MΩ</p>
               <p className="text-xs text-red-400">Below minimum</p>
@@ -66,8 +66,8 @@ const InsulationTablesSection = ({ onBack }: Props) => {
 
         {/* BS 7671 minimum values */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">BS 7671 Minimum Values — Table 61</p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">BS 7671 Minimum Values — Table 61</p>
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -93,7 +93,7 @@ const InsulationTablesSection = ({ onBack }: Props) => {
 
         {/* Important notes */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
             <p className="text-sm font-semibold text-white">Important Notes</p>
             <div className="space-y-1.5">
               <div className="flex items-start gap-3">
@@ -118,11 +118,11 @@ const InsulationTablesSection = ({ onBack }: Props) => {
 
         {/* Temperature correction */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Temperature Correction Factors</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Temperature Correction Factors</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 mb-3">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 mb-3">
             <p className="text-sm text-white leading-relaxed">
               Insulation resistance <span className="font-semibold">decreases</span> as temperature increases (opposite to conductor resistance). BS 7671 values are referenced to 20°C. If testing in cold conditions, the reading will be artificially high — apply the correction factor to see the true 20°C value.
             </p>
@@ -130,7 +130,7 @@ const InsulationTablesSection = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
             <div className="p-4 border-b border-white/[0.06]">
               <p className="text-sm font-semibold text-white">IR corrected = IR measured × correction factor</p>
               <p className="text-xs text-white mt-0.5">Multiply your reading by the factor to get the equivalent value at 20°C</p>
@@ -160,7 +160,7 @@ const InsulationTablesSection = ({ onBack }: Props) => {
 
         {/* Worked example */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-2">Worked Example</p>
             <p className="text-sm text-white leading-relaxed">
               Measured IR = 2.5MΩ at 5°C ambient. Correction factor at 5°C = 2.11.

@@ -188,7 +188,7 @@ const sections = [
           them affects the installation approach:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Heating Cables (Loose Wire)</h3>
             <p className="text-white text-sm leading-relaxed">
               Individual heating cables that are laid in a serpentine pattern across the floor, held
@@ -372,7 +372,7 @@ const sections = [
           subsequent building work, making RCD protection essential regardless of the specific
           regulatory route.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -408,7 +408,7 @@ const sections = [
           not have spare RCD-protected ways, an RCBO is the simplest solution — it fits into any
           spare MCB way and provides both overcurrent and RCD protection in a single device.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <p className="text-white text-sm leading-relaxed">
             <strong>A4:2026 — Lighting circuits in domestic premises (Reg 411.3.4):</strong> If the
             UFH installation involves replacing or modifying the consumer unit, be aware that
@@ -548,7 +548,7 @@ const sections = [
           tools and completing all the paperwork on site.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

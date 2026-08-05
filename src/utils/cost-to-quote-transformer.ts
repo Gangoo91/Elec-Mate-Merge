@@ -84,21 +84,25 @@ export function createQuoteFromCostOutput(
 
   const subtotal = items.reduce((sum, item) => sum + item.totalPrice, 0);
 
+  // ELE-1473 — no overhead/profit percentage is added here. The Cost Engineer
+  // already prices to sell: its own margin settings (target/min/max margin and
+  // per-job overhead, set in BusinessSettingsDialog) shape the rates and prices
+  // in `costOutput`. Adding a further 15% + 20% on top double-counted the
+  // margin and produced a quote total the electrician could not account for.
   const defaultSettings: QuoteSettings = {
     labourRate: costOutput.labour.rate || 45,
-    overheadPercentage: settings.overheadPercentage || 15,
-    profitMargin: settings.profitMargin || 20,
+    overheadPercentage: 0,
+    profitMargin: 0,
     vatRate: settings.vatRate || 20,
     vatRegistered: settings.vatRegistered ?? true,
   };
 
-  const overhead = subtotal * (defaultSettings.overheadPercentage / 100);
-  const profit = subtotal * (defaultSettings.profitMargin / 100);
-  const subtotalWithMargins = subtotal + overhead + profit;
+  const overhead = 0;
+  const profit = 0;
   const vatAmount = defaultSettings.vatRegistered
-    ? subtotalWithMargins * (defaultSettings.vatRate / 100)
+    ? subtotal * (defaultSettings.vatRate / 100)
     : 0;
-  const total = subtotalWithMargins + vatAmount;
+  const total = subtotal + vatAmount;
 
   return {
     quoteNumber: generateQuoteNumber(),

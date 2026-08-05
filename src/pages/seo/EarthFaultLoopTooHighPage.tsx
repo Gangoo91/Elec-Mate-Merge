@@ -151,7 +151,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-center gap-2 mb-2">
             <ShieldCheck className="w-5 h-5 text-yellow-400 flex-shrink-0" />
             <h3 className="font-bold text-white text-base">
@@ -189,7 +189,7 @@ const sections = [
           figure for your device, the circuit is non-compliant.
         </p>
         {/* grounded: bs7671_facets — Table 41.3(a) Type B, 41.3(b) Type C, 41.3(c) Type D, Reg 411.4.204, 230V 0.4s. Every value sourced from a per-device facet. */}
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-1">
             Maximum Zs (&Omega;) — 230 V, 0.4 s disconnection
           </h3>
@@ -416,7 +416,7 @@ const sections = [
             </p>
           </div>
 
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="flex items-center gap-2 mb-2">
               <Globe className="w-5 h-5 text-yellow-400" />
               <h3 className="font-bold text-white text-lg">Add a Local Earth Rod (TT Systems)</h3>

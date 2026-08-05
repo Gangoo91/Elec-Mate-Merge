@@ -234,7 +234,7 @@ const sections = [
                 <span className="text-white text-sm block">Min: 0.5 megohms</span>
               </div>
             </div>
-            <div className="flex items-center justify-between p-4 rounded-xl bg-yellow-500/5 border border-yellow-500/20">
+            <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <div>
                 <span className="text-white font-bold">Low Voltage (up to 500V)</span>
                 <span className="text-white text-sm block">Including 230V and 400V circuits</span>

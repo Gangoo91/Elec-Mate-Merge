@@ -182,7 +182,7 @@ const sections = [
           difference because they serve different purposes and have different requirements.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Main Protective Bonding</h3>
             <p className="text-white text-sm leading-relaxed">
               Main bonding (Regulation 411.3.1.2) connects the main earthing terminal of the
@@ -228,7 +228,7 @@ const sections = [
           omission under Regulation 701.415.2 cannot be confirmed. If you cannot verify all three
           conditions, supplementary bonding must be installed.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <span>
@@ -526,7 +526,7 @@ const sections = [
           findings.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <div>
                 <h4 className="font-bold text-white mb-1">AI Observation Coding</h4>

@@ -182,6 +182,9 @@ const EmergencyLightingTabNavigation: React.FC<EmergencyLightingTabNavigationPro
   return (
     <>
       <CertShellFooter
+        previewReportType="emergency-lighting"
+        previewReportId={reportId}
+        previewData={formData}
         currentIndex={currentTabIndex}
         totalSteps={totalTabs}
         canPrevious={canNavigatePrevious}

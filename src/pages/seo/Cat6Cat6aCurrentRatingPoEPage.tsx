@@ -62,7 +62,7 @@ function DataTable({
       {title && <h3 className="font-bold text-white text-lg mb-4">{title}</h3>}
       <table className="w-full text-sm border-collapse min-w-[34rem]">
         <thead>
-          <tr className="bg-yellow-500/10">
+          <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
             {headers.map((h) => (
               <th
                 key={h}
@@ -105,9 +105,9 @@ function Callout({
 }) {
   const map = {
     info: { box: 'bg-blue-500/10 border-blue-500/20', title: 'text-blue-300' },
-    warning: { box: 'bg-red-500/10 border-red-500/20', title: 'text-red-300' },
+    warning: { box: 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14]', title: 'text-red-300' },
     success: { box: 'bg-emerald-500/10 border-emerald-500/20', title: 'text-emerald-300' },
-    pricing: { box: 'bg-yellow-500/10 border-yellow-500/20', title: 'text-yellow-300' },
+    pricing: { box: 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14]', title: 'text-yellow-300' },
   } as const;
   const styles = map[tone];
   return (

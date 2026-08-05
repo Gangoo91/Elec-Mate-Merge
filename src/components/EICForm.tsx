@@ -16,6 +16,7 @@ import { BoardScannerOverlay } from './testing/BoardScannerOverlay';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { scrollToTopForStepChange } from '@/utils/scroll';
 
 // v3 cert shell — five steps across the top, matching the MW/EV pattern.
 const EIC_STEPS: CertShellStep[] = [
@@ -42,6 +43,7 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
     handleManualSave,
     handleGenerateCertificate,
     syncState,
+    cloudStatus,
     isOnline,
     onTabChange,
     showStartNewDialog,
@@ -118,7 +120,7 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
       // The explicit `behavior` beats the global `scroll-behavior: smooth` in
       // index.css, so this really is instant. Scrolling first means the new
       // step mounts already at the top and only the slide animates.
-      window.scrollTo({ top: 0, behavior: 'auto' });
+      scrollToTopForStepChange();
     onTabChange?.();
     setCurrentTab(tab as EICTabValue);
   };
@@ -129,13 +131,16 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
   // offline state instead (MW parity — MWShellHeader takes isOnline). 'queued'
   // otherwise covers unsaved/pending states, which must read as the neutral
   // 'Save' word — only a genuine 'synced' shows the green 'Saved'.
-  const shellSyncStatus = {
-    cloud: !isOnline
-      ? 'offline'
-      : syncState?.status === 'queued'
-        ? 'unsaved'
-        : syncState?.status || 'unsaved',
-  } as SyncStatus;
+  // ELE-1446 — pass the RAW cloud state through. This previously mapped
+  // 'queued' to 'unsaved' because the header had no word for queued, so work
+  // that failed to reach the cloud looked identical to a never-saved draft.
+  // The header now says "Pending" for queued and uses queuedChanges for the
+  // count, so flattening here would throw that away.
+  const shellSyncStatus = (
+    cloudStatus
+      ? { ...cloudStatus, cloud: !isOnline ? 'offline' : cloudStatus.cloud }
+      : { cloud: !isOnline ? 'offline' : 'unsaved' }
+  ) as SyncStatus;
 
   // Last-cert prompt — soft suggestion to copy supply / earthing / BS amendment
   // from the user's most recent EIC at the same address. User applies on tap.
@@ -299,7 +304,7 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
       // The explicit `behavior` beats the global `scroll-behavior: smooth` in
       // index.css, so this really is instant. Scrolling first means the new
       // step mounts already at the top and only the slide animates.
-      window.scrollTo({ top: 0, behavior: 'auto' });
+      scrollToTopForStepChange();
             navigatePrevious();
             onTabChange?.();
           }}
@@ -316,7 +321,7 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
       // The explicit `behavior` beats the global `scroll-behavior: smooth` in
       // index.css, so this really is instant. Scrolling first means the new
       // step mounts already at the top and only the slide animates.
-      window.scrollTo({ top: 0, behavior: 'auto' });
+      scrollToTopForStepChange();
             navigateNext();
             onTabChange?.();
           }}
@@ -331,6 +336,9 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
           }}
           canGenerate={canGenerate}
           generateLabel="Generate certificate"
+          previewReportType="eic"
+          previewReportId={currentReportId}
+          previewData={formData}
           lastStepActions={
             <>
               {/* ELE-1460 — Email + Invoice live here, not duplicated inside
@@ -355,6 +363,7 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
           }
         />
       )}
+
 
       <StartNewEICRDialog
         isOpen={showStartNewDialog}

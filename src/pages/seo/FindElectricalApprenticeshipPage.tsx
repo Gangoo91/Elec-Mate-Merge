@@ -175,7 +175,7 @@ const sections = [
           one-or-two-van firm decides they could use an apprentice when the work is piling up — and
           hires whoever asked most recently and most credibly. That is a market you can walk into:
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-2.5 text-white text-[14px]">
             <li>• <strong>Build a list of 20–30 local firms</strong> — competent-person scheme registers (NICEIC, NAPIT), Google Maps, and the vans you see around your area.</li>
             <li>• <strong>Send a short, personal email</strong> — who you are, one line on why the trade, your grades, your availability for a trial day, phone number. Five sentences, no attachment-heavy CV essay.</li>

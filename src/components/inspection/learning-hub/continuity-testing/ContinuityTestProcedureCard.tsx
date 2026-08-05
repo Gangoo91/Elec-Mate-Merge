@@ -70,7 +70,7 @@ const ContinuityTestProcedureCard = ({ onBack }: Props) => {
         {/* R1+R2 Method */}
         <motion.div variants={itemVariants}>
           <div className="flex items-center justify-between mb-2">
-            <p className="text-xs font-medium text-amber-400 uppercase tracking-wider px-0.5">R1+R2 Method (Preferred)</p>
+            <p className="mb-3 text-[15px] font-semibold tracking-tight text-white">R1+R2 Method (Preferred)</p>
             <span className="text-[10px] font-semibold text-green-400 bg-green-500/10 border border-green-500/20 rounded-full px-2 py-0.5">Recommended</span>
           </div>
           {renderSteps(r1r2Steps, 'amber')}
@@ -79,7 +79,7 @@ const ContinuityTestProcedureCard = ({ onBack }: Props) => {
         {/* R2 Method */}
         <motion.div variants={itemVariants}>
           <div className="flex items-center justify-between mb-2">
-            <p className="text-xs font-medium text-blue-400 uppercase tracking-wider px-0.5">R2 Method (Alternative)</p>
+            <p className="mb-3 text-[15px] font-semibold tracking-tight text-white">R2 Method (Alternative)</p>
             <span className="text-[10px] font-semibold text-white bg-white/[0.07] border border-white/[0.1] rounded-full px-2 py-0.5">Alternative</span>
           </div>
           {renderSteps(r2Steps, 'blue')}

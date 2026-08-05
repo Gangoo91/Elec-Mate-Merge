@@ -1,5 +1,11 @@
 // EIC Expected Test Values Calculator
-// BS 7671:2018+A3:2024 - Testing and Verification
+// BS 7671 - Testing and Verification
+
+import {
+  getMcbZsLimit,
+  type MCBCurve,
+  type DisconnectionTime,
+} from '@/data/zsLimits';
 
 export interface ExpectedTestValues {
   r1r2: {
@@ -10,8 +16,10 @@ export interface ExpectedTestValues {
   };
   zs: {
     value: number;
-    maxPermitted: number;
-    compliant: boolean;
+    /** null when the device is not in BS 7671 Table 41.3 — see getMaxZsForDevice. */
+    maxPermitted: number | null;
+    /** null means "not determined", which is not the same as "fails". */
+    compliant: boolean | null;
     regulation: string;
   };
   insulationResistance: {
@@ -21,7 +29,8 @@ export interface ExpectedTestValues {
   };
   earthFaultLoopImpedance: {
     measured: string;
-    maximum: number;
+    maximum: number | null;
+    /** Empty when there is no limit to measure against. */
     margin: string;
   };
 }
@@ -84,18 +93,18 @@ export function calculateExpectedZs(ze: number, r1r2: number): number {
 
 /**
  * Determine insulation resistance test requirements based on voltage
- * BS 7671 Table 61 - Minimum insulation resistance values
+ * BS 7671 Table 64 - Minimum insulation resistance values and DC test voltages
  */
 export function getExpectedInsulationResistance(
   voltage: number,
   circuitType: 'SELV' | 'standard' = 'standard'
 ): { testVoltage: string; minResistance: string; regulation: string } {
-  // BS 7671 Table 61
+  // BS 7671 Table 64
   if (circuitType === 'SELV' && voltage <= 50) {
     return {
       testVoltage: '250V DC',
       minResistance: '≥0.5 MΩ',
-      regulation: 'BS 7671 Table 61 (SELV/PELV)',
+      regulation: 'BS 7671 Table 64 (SELV/PELV)',
     };
   }
 
@@ -103,14 +112,14 @@ export function getExpectedInsulationResistance(
     return {
       testVoltage: '500V DC',
       minResistance: '≥1.0 MΩ',
-      regulation: 'BS 7671 Table 61 (LV up to 500V)',
+      regulation: 'BS 7671 Table 64 (LV up to 500V)',
     };
   }
 
   return {
     testVoltage: '1000V DC',
     minResistance: '≥1.0 MΩ',
-    regulation: 'BS 7671 Table 61 (LV above 500V)',
+    regulation: 'BS 7671 Table 64 (LV above 500V)',
   };
 }
 
@@ -132,32 +141,30 @@ export function getMaxZsForDevice(params: {
   curve?: string;
   voltage: number;
   disconnectionTime: number;
-}): number {
-  const { deviceType, rating, curve, voltage, disconnectionTime } = params;
+}): number | null {
+  const { deviceType, rating, curve, disconnectionTime } = params;
 
-  // Simplified lookup - in production, use full BS 7671 Appendix 3 tables
-  // Maximum Zs = (0.8 × Uo) / Ia
-  // Where Ia is current causing disconnection in required time
-
-  let ia: number;
+  // Looked up from BS 7671 Table 41.3 rather than re-derived.
+  //
+  // This used to compute (0.8 × Uo) / Ia, which conflates two different
+  // factors and lands on neither. The published table applies Cmin = 0.95, so
+  // a B32 is 1.37Ω. GN3's 0.80 is a separate allowance for measuring on a cold
+  // conductor, and it applies to the table value (1.37 × 0.8 = 1.10Ω), not to
+  // Uo. Multiplying Uo by 0.8 gave 1.15Ω — stricter than the real limit and
+  // looser than the real site limit, so it could fail a compliant design and
+  // pass a marginal measurement.
+  const time: DisconnectionTime = disconnectionTime >= 5 ? '5s' : '0.4s';
 
   if (deviceType === 'MCB' || deviceType === 'RCBO') {
-    // For MCBs: Ia typically 5× In for Type B, 10× In for Type C, 20× In for Type D
-    const multipliers = { B: 5, C: 10, D: 20 };
-    const multiplier = multipliers[curve as keyof typeof multipliers] || 5;
-    ia = rating * multiplier;
-  } else if (deviceType === 'fuse') {
-    // For fuses: Ia typically 2× In for 0.4s disconnection
-    ia = rating * 2;
-  } else {
-    ia = rating * 5; // Default
+    const curveKey = `type${(curve ?? 'B').toUpperCase()}` as MCBCurve;
+    return getMcbZsLimit(curveKey, rating, time)?.maxZs ?? null;
   }
 
-  // Calculate maximum Zs
-  const uo = voltage; // Phase-earth voltage
-  const maxZs = (0.8 * uo) / ia;
-
-  return Number(maxZs.toFixed(3));
+  // "fuse" alone does not identify a table: BS 88-2, BS 88-3, BS 3036 and
+  // BS 1362 each have their own Zs limits at the same rating. Guessing one
+  // (the old code assumed Ia = 2 × In for every fuse) prints a limit that
+  // belongs to no real device, so defer instead.
+  return null;
 }
 
 /**
@@ -172,7 +179,11 @@ export function getExpectedRCDTripTime(params: {
   const { testCurrent, rcdRating } = params;
   const testMultiplier = testCurrent / rcdRating;
 
-  // BS 7671 Table 61 - RCD trip time requirements
+  // BS 7671 Reg 643.8 — verification of RCDs providing additional protection,
+  // using equipment to BS EN 61557-6 (Reg 643.1). Not a table: 300 ms for a
+  // general non-delay type at 1x IΔn, and the 40 ms figure belongs to the 5x
+  // test. (643.10 is functional testing — the test button — which proves the
+  // mechanism moves, not that it disconnects in time.)
   if (testMultiplier === 1) {
     // Test at 1× IΔn
     return {
@@ -232,14 +243,17 @@ export function generateExpectedValues(circuit: {
     zs: {
       value: expectedZs,
       maxPermitted: maxZs,
-      compliant: expectedZs <= maxZs,
+      // Deliberately null rather than false when no limit was found. Reporting
+      // an unknown device as non-compliant reads as a real failure the
+      // designer then chases; null lets the caller say "check this by hand".
+      compliant: maxZs === null ? null : expectedZs <= maxZs,
       regulation: 'BS 7671 Reg 643.7.3',
     },
     insulationResistance: insulationRequirements,
     earthFaultLoopImpedance: {
       measured: 'To be tested',
       maximum: maxZs,
-      margin: `${(((maxZs - expectedZs) / maxZs) * 100).toFixed(1)}%`,
+      margin: maxZs === null ? '' : `${(((maxZs - expectedZs) / maxZs) * 100).toFixed(1)}%`,
     },
   };
 }

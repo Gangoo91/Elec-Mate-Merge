@@ -176,7 +176,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <p className="text-white text-sm">
             <strong>Disclaimer:</strong> This guide provides general information about CIS. The
             rules are complex, and your specific circumstances — particularly whether you are
@@ -483,7 +483,7 @@ const sections = [
           invoice ensures contractors deduct CIS on the right amount and protects your cash flow.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileText className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

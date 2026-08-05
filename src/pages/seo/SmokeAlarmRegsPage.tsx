@@ -166,7 +166,7 @@ export default function SmokeAlarmRegsPage() {
                 correct system.
               </p>
               <div className="space-y-4 my-6">
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-xl mb-1">Grade A</h3>
                   <p className="text-white text-sm leading-relaxed">
                     A system incorporating a fire alarm control panel, detectors, and sounders
@@ -199,7 +199,7 @@ export default function SmokeAlarmRegsPage() {
                     all alarm positions.
                   </p>
                 </div>
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-xl mb-1">Grade D</h3>
                   <p className="text-white text-sm leading-relaxed">
                     A system of one or more mains-powered fire alarm devices, each with an integral
@@ -260,7 +260,7 @@ export default function SmokeAlarmRegsPage() {
                     detect fires originating in rooms before they spread to the circulation space.
                   </p>
                 </div>
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-2xl mb-1">LD2</h3>
                   <h4 className="font-bold text-white mb-3">Escape Routes + High-Risk Rooms</h4>
                   <p className="text-white text-sm leading-relaxed">
@@ -363,7 +363,7 @@ export default function SmokeAlarmRegsPage() {
                 practical considerations.
               </p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-3">
                     Mains-Powered (Grade C/D)
                   </h3>

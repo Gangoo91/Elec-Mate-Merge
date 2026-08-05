@@ -212,7 +212,7 @@ const sections = [
             ))}
           </div>
         </div>
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-amber-500/30 p-5 my-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
             <p className="text-sm text-white/80 leading-relaxed">
@@ -508,7 +508,7 @@ const sections = [
           <SEOInternalLink href="/how-to-fill-in-eicr">EICR</SEOInternalLink> as a C1 or C2
           observation.
         </p>
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-amber-500/30 p-5 my-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
             <div>
@@ -636,7 +636,7 @@ const sections = [
               </span>
             </li>
           </ul>
-          <div className="mt-4 rounded-xl bg-amber-500/10 border border-amber-500/30 px-4 py-3">
+          <div className="mt-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-amber-500/30 px-4 py-3">
             <p className="text-sm text-amber-200 leading-relaxed">
               <strong className="text-amber-300">Common mistake:</strong> Do not test continuity
               without fully isolating adjacent live circuits. Energised parallel paths — for

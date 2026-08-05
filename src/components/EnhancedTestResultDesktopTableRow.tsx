@@ -15,6 +15,7 @@ import { validateTestResult } from '@/utils/testValidation';
 import EnhancedRegulationWarningDialog from './EnhancedRegulationWarningDialog';
 import { checkRegulationCompliance } from '@/utils/autoRegChecker';
 import { getSpareCircuitFields } from '@/utils/spareCircuitFields';
+import { isSpareCircuit } from '@/utils/spareWays';
 
 // Import all the cell components
 import { TypeOfWiringCell } from './table-cells/TypeOfWiringCell';
@@ -235,8 +236,8 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
               // Typing "spare" in the description cascades N/A to every
               // test + detail field — saves hunting for the Spare button
               // on the right-hand side of a 30-column table.
-              const normalised = (value || '').trim().toLowerCase();
-              if ((normalised === 'spare' || normalised === 'spare way') && onBulkUpdate) {
+              // Shared definition — see utils/spareWays.
+              if (isSpareCircuit({ circuitDescription: value }) && onBulkUpdate) {
                 onBulkUpdate(result.id, getSpareCircuitFields());
               }
             }}

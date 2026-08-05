@@ -149,7 +149,7 @@ const sections = [
           limit, the cable and socket can overheat. This is one of the leading causes of electrical
           fires in UK homes.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -245,7 +245,7 @@ const sections = [
           and Wales. Not all electrical work requires notification — but the most important and
           risky work does.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -343,7 +343,7 @@ const sections = [
           Some electrical issues require immediate professional attention. Do not attempt to
           investigate or repair these yourself.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />

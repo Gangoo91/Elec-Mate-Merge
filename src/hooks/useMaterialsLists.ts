@@ -3,6 +3,13 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
+/**
+ * Canonical form for matching item names on import — trimmed, lower-cased,
+ * whitespace collapsed. Exported so the import preview and the write path
+ * cannot drift into disagreeing about what counts as the same product.
+ */
+export const normaliseItemName = (n: string) => n.trim().toLowerCase().replace(/\s+/g, ' ');
+
 export interface MaterialsListItem {
   id: string;
   product_id?: string;
@@ -15,6 +22,13 @@ export interface MaterialsListItem {
   cost_price?: number;
   /** Per-item markup override (%). Falls back to global setting if absent. */
   markup_percent?: number;
+  /**
+   * Labour allowance in hours to install one unit — the Spons-style time guide
+   * (ELE-1470/ELE-1445). Multiplied by the company hourly rate when the item is
+   * added to a quote, so a 0.5h isolator at £60/hr adds £30 of labour on its own
+   * line. Absent means the item carries no labour and quotes materials only.
+   */
+  labour_hours?: number;
   /** ISO timestamp of when the price was last set/updated */
   price_updated_at?: string;
   supplier?: string;
@@ -153,6 +167,8 @@ export function useMaterialsLists() {
         cost_price?: number;
         /** Per-item markup % override */
         markup_percent?: number;
+        /** Labour allowance in hours per unit (ELE-1470) */
+        labour_hours?: number;
       }
     ) => {
       try {
@@ -177,6 +193,7 @@ export function useMaterialsLists() {
           estimated_price: product.current_price,
           cost_price: product.cost_price,
           markup_percent: product.markup_percent,
+          labour_hours: product.labour_hours,
           supplier: product.supplier_name,
           product_url: product.product_url,
           image_url: product.image_url || undefined,
@@ -204,6 +221,110 @@ export function useMaterialsLists() {
       } catch (err) {
         console.error('Failed to add item:', err);
         toast({ title: 'Error', description: 'Could not add item.', variant: 'destructive' });
+      }
+    },
+    [toast]
+  );
+
+  /**
+   * Import many rows in one write, matching existing items by name (ELE-1470).
+   *
+   * Two problems with looping `addItem`, both of which bite on a real import:
+   *
+   * 1. It always appends. Import a price list, add labour times to the
+   *    spreadsheet, import again — and the electrician now owns two of
+   *    everything. Re-importing a price list should refresh it, not double it.
+   * 2. Every call re-fetched and rewrote the whole jsonb array, so a 500-row
+   *    CSV meant 500 sequential round trips over a growing array. This reads
+   *    once and writes once.
+   *
+   * Matching is on a normalised name — trimmed, lower-cased, whitespace
+   * collapsed — because "2.5mm T&E  100m" and "2.5mm t&e 100m" are the same
+   * product to everyone except a string comparison.
+   */
+  const bulkUpsertItems = useCallback(
+    async (
+      listId: string,
+      rows: {
+        name: string;
+        cost_price?: number;
+        current_price?: number;
+        markup_percent?: number;
+        supplier_name?: string;
+        labour_hours?: number;
+        /** Unit of sale. A price is meaningless without it — £45.99 per roll
+         *  is not £45.99 each, and defaulting to 'each' mis-prices the item
+         *  every time it is quoted afterwards. */
+        unit?: string;
+      }[]
+    ): Promise<{ added: number; updated: number }> => {
+      try {
+        const { data: currentList, error: fetchError } = await (supabase as any)
+          .from('materials_lists')
+          .select('*')
+          .eq('id', listId)
+          .single();
+        if (fetchError || !currentList) return { added: 0, updated: 0 };
+
+        const items = [...((currentList.items || []) as MaterialsListItem[])];
+        const indexByName = new Map(items.map((it, i) => [normaliseItemName(it.name), i]));
+        const now = new Date().toISOString();
+        let added = 0;
+        let updated = 0;
+
+        for (const row of rows) {
+          const key = normaliseItemName(row.name);
+          const existingIdx = indexByName.get(key);
+          if (existingIdx !== undefined) {
+            const prev = items[existingIdx];
+            items[existingIdx] = {
+              ...prev,
+              estimated_price: row.current_price ?? prev.estimated_price,
+              cost_price: row.cost_price ?? prev.cost_price,
+              markup_percent: row.markup_percent ?? prev.markup_percent,
+              supplier: row.supplier_name || prev.supplier,
+              unit: row.unit || prev.unit,
+              // Only overwrite a labour time when the import carries one, so a
+              // price-only refresh cannot silently wipe times already set.
+              labour_hours: row.labour_hours ?? prev.labour_hours,
+              price_updated_at: now,
+            };
+            updated++;
+          } else {
+            const item: MaterialsListItem = {
+              id: crypto.randomUUID(),
+              name: row.name,
+              quantity: 1,
+              unit: row.unit || 'each',
+              estimated_price: row.current_price,
+              cost_price: row.cost_price,
+              markup_percent: row.markup_percent,
+              labour_hours: row.labour_hours,
+              supplier: row.supplier_name,
+              price_updated_at: now,
+              matched: false,
+              added_at: now,
+            };
+            indexByName.set(key, items.length);
+            items.push(item);
+            added++;
+          }
+        }
+
+        const { error } = await (supabase as any)
+          .from('materials_lists')
+          .update({ items })
+          .eq('id', listId);
+        if (error) throw error;
+
+        setLists((prev) =>
+          prev.map((l) => (l.id === listId ? { ...l, items, updated_at: now } : l))
+        );
+        return { added, updated };
+      } catch (err) {
+        console.error('Bulk import failed:', err);
+        toast({ title: 'Error', description: 'Could not import items.', variant: 'destructive' });
+        return { added: 0, updated: 0 };
       }
     },
     [toast]
@@ -410,6 +531,7 @@ export function useMaterialsLists() {
     createList,
     deleteList,
     addItem,
+    bulkUpsertItems,
     removeItem,
     updateItemQuantity,
     updateItemPrice,

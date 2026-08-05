@@ -220,7 +220,7 @@ const sections = [
               GSK (Stevenage, Barnard Castle), Pfizer (Sandwich).
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-base mb-3">Semiconductor Fabrication</h3>
             <p className="text-white text-sm leading-relaxed">
               Contamination risk is particulate — a single dust particle can destroy a microchip
@@ -350,7 +350,7 @@ const sections = [
               responsibility.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-base mb-2">OQ</h3>
             <p className="text-white text-sm leading-relaxed">
               Operational Qualification. Documents that electrical systems operate as intended.

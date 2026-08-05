@@ -173,7 +173,7 @@ const sections = [
           Each targets a different budget and requirement.
         </p>
         <div className="grid gap-4 sm:grid-cols-3 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Sortimo</h3>
             <p className="text-white text-sm leading-relaxed">
               <strong>Price:</strong> £2,500 to £5,000+
@@ -339,7 +339,7 @@ const sections = [
           expensive and most fragile items in your van. A Megger MFT1845 costs over £1,000 to
           replace. Protecting these instruments is not optional.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -515,7 +515,7 @@ const sections = [
           residential street, it is advertising your business to the neighbours.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Magnetic Signs (Budget)</h3>
             <p className="text-white text-sm leading-relaxed">
               <strong>Cost:</strong> £50 to £100 for a pair.

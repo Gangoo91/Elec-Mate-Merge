@@ -241,7 +241,7 @@ const sections = [
           into plain English. Here is how the AI translates typical observations:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">C1 — Danger Present</h4>
             <p className="text-white text-sm leading-relaxed mb-2">
               <strong>Technical:</strong> "Exposed live conductors at light fitting in bedroom 2. No
@@ -257,7 +257,7 @@ const sections = [
               is a straightforward repair."
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">C2 — Potentially Dangerous</h4>
             <p className="text-white text-sm leading-relaxed mb-2">
               <strong>Technical:</strong> "Lack of RCD protection for socket outlets. Regulation

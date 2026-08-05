@@ -208,7 +208,7 @@ const sections = [
           electrode resistance and the rated residual operating current of the RCD must not exceed
           50V:
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-bold text-yellow-400 text-xl mb-2">RA x IΔn ≤ 50V</h3>
           <p className="text-white leading-relaxed">
             Where RA is the earth electrode resistance (ohms) and IΔn is the rated residual
@@ -222,7 +222,7 @@ const sections = [
           resistance is too high, the touch voltage under fault conditions exceeds this limit, and
           the RCD may not trip quickly enough to prevent a dangerous shock.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
             <div>
@@ -402,7 +402,7 @@ const sections = [
           and the required earth resistance value.
         </p>
         <div className="grid sm:grid-cols-3 gap-4 my-6">
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <Wrench className="w-6 h-6 text-yellow-400 mb-3" />
             <h3 className="font-bold text-white text-lg mb-2">Driven Rods</h3>
             <p className="text-white text-sm leading-relaxed">
@@ -561,7 +561,7 @@ const sections = [
             </li>
           </ol>
         </div>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
             <div>
@@ -601,7 +601,7 @@ const sections = [
           (EIC) or the electrical installation condition report (EICR) in the section for supply
           characteristics and earthing arrangements.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h4 className="font-bold text-yellow-400 mb-2">Legal Mandate to Measure and Record RA</h4>
           <p className="text-white text-sm leading-relaxed">
             BS 7671 Regulation 643.7.3 (Part 6 — Inspection and Testing) requires that where the

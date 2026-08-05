@@ -32,7 +32,7 @@ const DiagnosticsSection = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               Each diagnostic test reveals specific fault types. Choosing the right test first saves time — match the test to the symptom before you start.
             </p>
@@ -41,20 +41,20 @@ const DiagnosticsSection = ({ onBack }: Props) => {
 
         {diagnosticTests.map((dt, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
               <p className="text-sm font-semibold text-white">{dt.test}</p>
               <p className="text-xs text-yellow-400/80">{dt.diagnoses}</p>
 
               <div className="space-y-2">
-                <div className="rounded-xl bg-white/[0.05] p-3">
+                <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
                   <p className="text-xs font-semibold text-white mb-1">When to Use</p>
                   <p className="text-sm text-white">{dt.when}</p>
                 </div>
-                <div className="rounded-xl bg-white/[0.05] p-3">
+                <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
                   <p className="text-xs font-semibold text-white mb-1">Procedure</p>
                   <p className="text-sm text-white">{dt.procedure}</p>
                 </div>
-                <div className="rounded-xl bg-yellow-400/5 border border-yellow-400/10 p-3">
+                <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/10 p-3">
                   <p className="text-xs font-semibold text-yellow-400 mb-1">How to Interpret</p>
                   <p className="text-sm text-white">{dt.interpretation}</p>
                 </div>
@@ -65,8 +65,8 @@ const DiagnosticsSection = ({ onBack }: Props) => {
 
         {/* Consumer unit visual inspection */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Consumer Unit Visual Inspection</p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Consumer Unit Visual Inspection</p>
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
             <p className="text-sm text-white leading-relaxed">Before connecting any test instrument, open the consumer unit and look. Visual inspection finds 80% of faults faster than any instrument. Check for these signs:</p>
             <div className="space-y-2">
               {[
@@ -81,7 +81,7 @@ const DiagnosticsSection = ({ onBack }: Props) => {
                 { check: 'Signs of moisture or condensation', indicates: 'Water ingress — can cause insulation breakdown, corrosion, and earth faults. Identify and fix the source.' },
                 { check: 'Tripped MCBs or RCDs', indicates: 'A device has operated — investigate the cause before resetting. Do not just reset and walk away.' },
               ].map((item, i) => (
-                <div key={i} className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
+                <div key={i} className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] p-3">
                   <p className="text-sm font-medium text-white">{item.check}</p>
                   <p className="text-xs text-yellow-400/80 mt-1">{item.indicates}</p>
                 </div>
@@ -92,8 +92,8 @@ const DiagnosticsSection = ({ onBack }: Props) => {
 
         {/* When to use which instrument */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Which Instrument First?</p>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Which Instrument First?</p>
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4">
             <p className="text-sm text-white mb-3">Match the symptom to the instrument — the right first test saves time:</p>
             <div className="space-y-1.5">
               {[

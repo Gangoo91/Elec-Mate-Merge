@@ -144,7 +144,7 @@ const sections = [
           relationship between the three phases. It is a mathematical constant that relates the line
           values (measured between phases) to the individual phase contributions.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">Related formulae</h3>
           <div className="space-y-3">
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10">
@@ -200,7 +200,7 @@ const sections = [
           dangerously undersized.
         </p>
         <div className="space-y-4 my-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">Line Values</h3>
             <p className="text-white text-sm leading-relaxed">
               <strong className="text-yellow-400">Line voltage (VL)</strong> is measured between any
@@ -265,7 +265,7 @@ const sections = [
           connections, and three-phase load analysis.
         </p>
         <div className="space-y-4 my-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">Star (Y) Configuration</h3>
             <p className="text-white text-sm leading-relaxed mb-3">
               In a star configuration, one end of each of the three load elements (or windings) is
@@ -360,7 +360,7 @@ const sections = [
             I<sub>L</sub> = P &divide; (&radic;3 &times; V<sub>L</sub> &times; cos&phi;)
           </p>
         </div>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">
             Quick reference: current per kW at different power factors
           </h3>
@@ -487,7 +487,7 @@ const sections = [
           resistive loads, a reasonable approximation is that the neutral current does not exceed
           the current of the most heavily loaded phase.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">Phase balancing in practice</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
@@ -583,7 +583,7 @@ const sections = [
           You must always use the three-phase column when calculating voltage drop for a three-phase
           circuit — using the single-phase values would give an incorrect result.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">
             BS 7671 voltage drop limits (three-phase 400V)
           </h3>
@@ -657,7 +657,7 @@ const sections = [
               because three current-carrying conductors generate more heat than two.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4">
             <p className="text-white text-sm leading-relaxed">
               <strong className="text-yellow-400">A4:2026 note — buried cables:</strong> Tables 4A2,
               4D4A, 4E4A, 4H4A, and 4J4A in Appendix 4 were revised in A4:2026 to reflect updated
@@ -726,7 +726,7 @@ const sections = [
     content: (
       <>
         <div className="space-y-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Example 1: Three-Phase Motor</h3>
             <p className="text-white text-sm leading-relaxed mb-3">
               An 11kW three-phase induction motor with a power factor of 0.85 at full load. 400V
@@ -806,7 +806,7 @@ const sections = [
             </div>
           </div>
 
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">
               Example 3: Three-Phase Heating Load
             </h3>

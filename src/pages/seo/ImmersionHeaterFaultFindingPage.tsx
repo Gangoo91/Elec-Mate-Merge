@@ -182,7 +182,7 @@ const sections = [
     heading: 'Safe Isolation Before Any Work',
     content: (
       <>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-6 h-6 text-red-400 mt-0.5 shrink-0" />
             <div className="space-y-2 text-white">
@@ -202,7 +202,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-none">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-sm font-bold">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 text-sm font-bold">
                 1
               </span>
               <span>
@@ -211,7 +211,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-sm font-bold">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 text-sm font-bold">
                 2
               </span>
               <span>
@@ -221,7 +221,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-sm font-bold">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 text-sm font-bold">
                 3
               </span>
               <span>
@@ -231,7 +231,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-sm font-bold">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 text-sm font-bold">
                 4
               </span>
               <span>
@@ -533,7 +533,7 @@ const sections = [
           notification.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

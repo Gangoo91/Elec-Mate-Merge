@@ -43,7 +43,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               Functional testing is the final step in the verification sequence. After all dead tests (continuity, IR, polarity) and live tests (Zs, PFC, RCD) are complete, functional testing confirms that every assembly, component and control system actually works as intended when operated by the user.
             </p>
@@ -51,9 +51,9 @@ const WhyTestSection = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4">
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs font-bold text-yellow-400 bg-yellow-400/20 px-2 py-0.5 rounded-lg">Reg 643.10</span>
+              <span className="text-xs font-bold text-yellow-400 bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-2 py-0.5 rounded-lg">Reg 643.10</span>
             </div>
             <p className="text-sm text-white leading-relaxed">
               "Assemblies, including switchgear and controlgear assemblies, and components of the electrical installation shall be subjected to a functional test to show that they are properly mounted, adjusted and installed in accordance with BS 7671."
@@ -62,14 +62,14 @@ const WhyTestSection = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Why It Matters</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Why It Matters</p>
         </motion.div>
 
         {reasons.map((r, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                   <r.icon className="h-5 w-5 text-yellow-400" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -82,8 +82,8 @@ const WhyTestSection = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">What Functional Testing Covers</p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">What Functional Testing Covers</p>
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <div className="space-y-1.5">
               {whatItCovers.map((item, i) => (
                 <div key={i} className="flex items-start gap-3">

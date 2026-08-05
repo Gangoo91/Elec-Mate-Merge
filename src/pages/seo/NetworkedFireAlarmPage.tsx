@@ -412,7 +412,7 @@ export default function NetworkedFireAlarmPage() {
                       Addressable
                     </span>
                   </div>
-                  <div className="flex items-center justify-between p-4 rounded-xl bg-yellow-500/5 border border-yellow-500/20">
+                  <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                     <div>
                       <h4 className="font-bold text-white">Large commercial / hospital / hotel</h4>
                       <p className="text-white text-sm">

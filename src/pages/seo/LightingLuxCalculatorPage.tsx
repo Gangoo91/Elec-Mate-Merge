@@ -120,13 +120,13 @@ export default function LightingLuxCalculatorPage() {
               </p>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
                 <div className="grid grid-cols-3 gap-px bg-white/10">
-                  <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                     Room Type
                   </div>
-                  <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                     Lux Level
                   </div>
-                  <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                     Notes
                   </div>
                 </div>
@@ -182,7 +182,7 @@ export default function LightingLuxCalculatorPage() {
                 The lumen method is the standard approach for calculating the number of luminaires
                 needed to achieve a target lux level. The formula is:
               </p>
-              <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 text-center my-6">
+              <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
                 <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
                   N = (E x A) / (F x UF x MF)
                 </p>
@@ -224,7 +224,7 @@ export default function LightingLuxCalculatorPage() {
                 the room relative to the mounting height of the luminaires. It directly affects how
                 efficiently the light from the luminaires reaches the working plane:
               </p>
-              <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 text-center my-6">
+              <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
                 <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
                   K = (L x W) / (Hm x (L + W))
                 </p>
@@ -318,7 +318,7 @@ export default function LightingLuxCalculatorPage() {
           heading: 'BS 7671 Compliance for Lighting Circuits',
           content: (
             <>
-              <div className="p-5 rounded-2xl bg-yellow-500/10 border border-yellow-500/30 my-4">
+              <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] my-4">
                 <p className="text-sm font-bold text-yellow-400 uppercase tracking-wide mb-2">
                   BS 7671 Compliance Note
                 </p>

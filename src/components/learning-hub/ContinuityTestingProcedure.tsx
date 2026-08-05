@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Shield, Wrench, Calculator, BookOpen, ListChecks, FileText } from 'lucide-react';
-import { BusinessCard } from '@/components/business-hub';
+import { HubTile as BusinessCard } from '@/components/learning-hub/HubTile';
 import { motion } from 'framer-motion';
 import ContinuityWhyTestSection from './continuity-testing/ContinuityWhyTestSection';
 import ContinuityHowToTestSection from './continuity-testing/ContinuityHowToTestSection';
@@ -58,8 +58,8 @@ const ContinuityTestingProcedure = ({ onBack }: ContinuityTestingProcedureProps)
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="relative rounded-2xl bg-white/[0.07] border border-red-500/20 p-4 overflow-hidden">
-            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-red-500 via-rose-400 to-red-500 opacity-60" />
+          <div className="relative rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-red-500/20 p-4 overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-[2px] opacity-60" />
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-red-500/60 rounded-l-2xl" />
             <p className="text-[15px] font-bold text-red-400">Safety Critical Testing</p>
             <p className="text-[12px] text-white mt-1 leading-relaxed">

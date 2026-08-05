@@ -62,7 +62,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               Residual Current Devices are the last line of defence against electric shock. They detect current leaking to earth — a sign that someone may be in contact with a live conductor — and disconnect the supply in milliseconds. Testing proves they will actually work when needed.
             </p>
@@ -71,14 +71,14 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* What RCDs protect against */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">What RCDs Protect Against</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">What RCDs Protect Against</p>
         </motion.div>
 
         {hazards.map((h, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                   <h.icon className="h-5 w-5 text-yellow-400" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -92,13 +92,13 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* How it works */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">How an RCD Works</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">How an RCD Works</p>
         </motion.div>
 
         {howItWorks.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="flex items-start gap-3 rounded-2xl bg-white/[0.03] border border-white/10 p-4">
-              <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+            <div className="flex items-start gap-3 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
+              <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                 <span className="text-sm font-bold text-yellow-400">{i + 1}</span>
               </div>
               <div>
@@ -111,8 +111,8 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Current effects on the body */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Electric Current Effects on the Human Body</p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Electric Current Effects on the Human Body</p>
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -139,14 +139,14 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Real-world scenarios */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">What Happens With and Without a Working RCD</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">What Happens With and Without a Working RCD</p>
         </motion.div>
 
         {failureScenarios.map((s, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
               <p className="text-sm font-semibold text-white">{s.title}</p>
-              <div className="rounded-xl bg-green-400/5 border border-green-400/10 p-3">
+              <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-green-400/10 p-3">
                 <p className="text-xs font-semibold text-green-400 mb-1">With working RCD</p>
                 <p className="text-sm text-white">{s.withRcd}</p>
               </div>
@@ -160,7 +160,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Why test regularly */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-3">Why Regular Testing is Essential</p>
             <div className="space-y-1.5">
               {whyTestRegularly.map((item, i) => (

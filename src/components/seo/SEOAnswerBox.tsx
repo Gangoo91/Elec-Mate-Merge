@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet';
-import { CheckCircle2 } from 'lucide-react';
+import { PANEL, LABEL } from '@/components/seo/seoSurface';
 
 interface SEOAnswerBoxProps {
   /** The exact question searchers/AI engines ask — rendered as an H2 heading. */
@@ -21,10 +21,15 @@ interface SEOAnswerBoxProps {
  *     and AI Overview citation (lifts CTR on page-1 results).
  *  2. GEO — the `question` heading + concise `answer` is the exact shape LLM answer
  *     engines quote. Speakable schema marks it up for voice/AI extraction.
+ *
+ * Design: this is the most authoritative thing on the page, so it reads as a
+ * stated answer, not a tip card — a labelled panel with the answer set larger
+ * than body copy. No icon: the "The short answer" label does that job in type
+ * and doubles as a scent marker for someone skimming in from a SERP.
  */
 export function SEOAnswerBox({ question, answer, detail, speakable = true }: SEOAnswerBoxProps) {
   return (
-    <div className="seo-answer-box rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 sm:p-6">
+    <div className={`seo-answer-box ${PANEL} px-4 py-6 sm:px-7 sm:py-7`}>
       {speakable && (
         <Helmet>
           <script type="application/ld+json">
@@ -39,20 +44,18 @@ export function SEOAnswerBox({ question, answer, detail, speakable = true }: SEO
           </script>
         </Helmet>
       )}
-      <div className="flex items-start gap-2.5">
-        <CheckCircle2 className="w-5 h-5 text-yellow-400 shrink-0 mt-1" />
-        <div className="flex-1 min-w-0">
-          <h2 className="seo-answer-box__q font-bold text-white text-lg sm:text-xl leading-snug text-left">
-            {question}
-          </h2>
-          <p className="seo-answer-box__a mt-2.5 text-white/90 text-base leading-relaxed text-left">
-            {answer}
-          </p>
-          {detail && (
-            <p className="mt-2 text-white/70 text-sm leading-relaxed text-left">{detail}</p>
-          )}
-        </div>
-      </div>
+      <p className={`${LABEL} text-white`}>The short answer</p>
+      <h2 className="seo-answer-box__q mt-3 text-left text-[21px] font-bold leading-[1.2] tracking-[-0.02em] text-white sm:text-[25px]">
+        {question}
+      </h2>
+      <p className="seo-answer-box__a mt-4 max-w-[62ch] text-left text-[16.5px] leading-relaxed text-white sm:text-[17.5px]">
+        {answer}
+      </p>
+      {detail && (
+        <p className="mt-4 max-w-[62ch] border-t border-white/[0.08] pt-4 text-left text-[14.5px] leading-relaxed text-white">
+          {detail}
+        </p>
+      )}
     </div>
   );
 }

@@ -161,7 +161,7 @@ export default function ElectricianInvoiceAppPage() {
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
         <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
             <Zap className="w-4 h-4" />
             Part of the Complete Elec-Mate Platform
           </div>
@@ -205,7 +205,7 @@ export default function ElectricianInvoiceAppPage() {
       <section id="why-digital" className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <FileText className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -254,7 +254,7 @@ export default function ElectricianInvoiceAppPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <CreditCard className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -303,7 +303,7 @@ export default function ElectricianInvoiceAppPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <BookOpen className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Xero and QuickBooks Sync</h2>
@@ -351,7 +351,7 @@ export default function ElectricianInvoiceAppPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Shield className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -398,7 +398,7 @@ export default function ElectricianInvoiceAppPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Clock className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -449,7 +449,7 @@ export default function ElectricianInvoiceAppPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <TrendingUp className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -493,7 +493,7 @@ export default function ElectricianInvoiceAppPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <CheckCircle2 className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -588,7 +588,7 @@ export default function ElectricianInvoiceAppPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <HelpCircle className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">

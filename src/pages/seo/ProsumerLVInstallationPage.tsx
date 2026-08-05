@@ -129,7 +129,7 @@ const prosumerSources = [
   {
     name: 'Photovoltaic (PV) generators',
     note: 'The most common UK prosumer source. The grid supplies what the PV cannot; the system exports surplus.',
-    tint: 'bg-yellow-500/10 border-yellow-500/20',
+    tint: 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14]',
   },
   {
     name: 'Battery energy storage (BESS)',
@@ -183,7 +183,7 @@ const defects = [
   {
     title: 'Anti-islanding test failure (still exporting)',
     code: 'C1',
-    codeTint: 'bg-red-500/10 border-red-500/20 text-red-300',
+    codeTint: 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14] text-red-300',
     detail: 'If the inverter continues to energise the network on simulated grid failure this is a live-island hazard. C2 if it disconnects but slower than required.',
   },
   {
@@ -195,13 +195,13 @@ const defects = [
   {
     title: 'Missing or incorrect labelling',
     code: 'C2 / C3',
-    codeTint: 'bg-yellow-500/10 border-yellow-500/20 text-yellow-300',
+    codeTint: 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14] text-yellow-300',
     detail: 'No warning notice indicating PV/battery presence per Reg 514.15.1. Severity depends on whether other warning provisions exist.',
   },
   {
     title: 'Earthing conflicts (earth loop)',
     code: 'C3',
-    codeTint: 'bg-yellow-500/10 border-yellow-500/20 text-yellow-300',
+    codeTint: 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14] text-yellow-300',
     detail: 'PV DC string earthed both at the inverter and at the array. C2/C1 only if symptoms of fault current circulation are present.',
   },
   {
@@ -247,7 +247,7 @@ const sections = [
               <p className="text-yellow-400 font-bold mb-1">Generator</p>
               <p className="text-white text-sm">Feeds power to the supply only.</p>
             </div>
-            <div className="p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/20">
+            <div className="p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <p className="text-yellow-400 font-bold mb-1">Prosumer (PEI)</p>
               <p className="text-white text-sm">Does both — consumes and produces / stores.</p>
             </div>
@@ -467,7 +467,7 @@ const sections = [
             </ul>
           </div>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-yellow-300 mb-2">Check the type-approval database first</h3>
           <p className="text-white leading-relaxed">
             The ENA maintains a published list of type-approved G98/G99 inverters. Confirm the
@@ -540,7 +540,7 @@ const sections = [
             </div>
           ))}
         </div>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-red-300 mb-2">Record prosumer results clearly</h3>
           <p className="text-white leading-relaxed">
             Prosumer inspection items should be recorded clearly within the electrical installation

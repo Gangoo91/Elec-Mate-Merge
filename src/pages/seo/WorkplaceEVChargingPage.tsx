@@ -144,7 +144,7 @@ const sections = [
           <strong>£350 per socket</strong>, with a maximum of{' '}
           <strong>40 sockets per business</strong> (£14,000 maximum per applicant).
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-4 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4 my-4">
           <p className="text-white text-sm leading-relaxed">
             <strong>2026 status:</strong> The Workplace Charging Scheme is open to applications in
             2026. Applicants should confirm current availability and deadline dates with the Office
@@ -498,7 +498,7 @@ const sections = [
           significant competitive advantage.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

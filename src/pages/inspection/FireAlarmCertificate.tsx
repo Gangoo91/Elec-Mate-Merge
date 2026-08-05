@@ -49,6 +49,7 @@ import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
 import { generateCertificateNumber } from '@/utils/certificateNumbering';
+import { scrollToTopForStepChange } from '@/utils/scroll';
 
 const REPORT_TYPE = 'fire-alarm' as const;
 
@@ -570,7 +571,7 @@ const {
         onTabChange={(tab) => {
           tabProps.setCurrentTab(tab as FireAlarmTabValue);
           syncOnTabChange();
-          window.scrollTo({ top: 0 });
+          scrollToTopForStepChange();
         }}
         completedTabs={{
           client: !!tabProps.isTabComplete('client'),

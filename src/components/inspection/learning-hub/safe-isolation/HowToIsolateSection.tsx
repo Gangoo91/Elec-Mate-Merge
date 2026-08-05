@@ -46,7 +46,7 @@ const HowToIsolateSection = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-2">The "SAFELY" Mnemonic</p>
             <div className="grid grid-cols-2 gap-1">
               {[
@@ -68,12 +68,12 @@ const HowToIsolateSection = ({ onBack }: Props) => {
 
         {/* Six steps */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">The Six-Step Safe Isolation Procedure</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">The Six-Step Safe Isolation Procedure</p>
         </motion.div>
 
         {sixSteps.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-2">
               <div className="flex items-center gap-3">
                 <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-red-400/10 border border-red-400/20 flex items-center justify-center">
                   <span className="text-sm font-bold text-red-400">{i + 1}</span>
@@ -81,7 +81,7 @@ const HowToIsolateSection = ({ onBack }: Props) => {
                 <p className="text-sm font-semibold text-white">{item.step}</p>
               </div>
               <p className="text-sm text-white leading-relaxed pl-12">{item.detail}</p>
-              <div className="rounded-xl bg-orange-400/5 border border-orange-400/10 p-2.5 ml-12">
+              <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/10 p-2.5 ml-12">
                 <p className="text-xs text-orange-400">{item.critical}</p>
               </div>
             </div>
@@ -90,13 +90,13 @@ const HowToIsolateSection = ({ onBack }: Props) => {
 
         {/* Three-phase 10-point test */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Three-Phase: The 10-Point Prove Dead Test</p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Three-Phase: The 10-Point Prove Dead Test</p>
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white mb-3">For three-phase supplies, prove dead between ALL combinations of conductors:</p>
             <div className="grid grid-cols-2 gap-1.5">
               {threePhaseTest.map((test, i) => (
-                <div key={i} className="flex items-center gap-3 rounded-xl bg-white/[0.03] border border-white/[0.06] p-2.5">
-                  <div className="flex-shrink-0 w-6 h-6 rounded-md bg-yellow-400/10 flex items-center justify-center">
+                <div key={i} className="flex items-center gap-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] p-2.5">
+                  <div className="flex-shrink-0 w-6 h-6 rounded-md bg-gradient-to-b from-white/[0.08] to-white/[0.04] flex items-center justify-center">
                     <span className="text-[10px] font-bold text-yellow-400">{i + 1}</span>
                   </div>
                   <p className="text-sm text-white">{test}</p>
@@ -109,11 +109,11 @@ const HowToIsolateSection = ({ onBack }: Props) => {
 
         {/* Common mistakes */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Common Mistakes That Kill</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Mistakes That Kill</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <div className="space-y-3">
               {commonMistakes.map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
@@ -132,7 +132,7 @@ const HowToIsolateSection = ({ onBack }: Props) => {
 
         {/* Stored energy */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-orange-400/10 border border-orange-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-2">Stored Energy — Don't Assume Dead Means Safe</p>
             <p className="text-sm text-white leading-relaxed mb-3">
               Some equipment retains dangerous energy even after isolation. Capacitors, UPS batteries, DC bus bars, and motor flywheels can deliver lethal shocks or cause injury after the supply is disconnected.
@@ -156,7 +156,7 @@ const HowToIsolateSection = ({ onBack }: Props) => {
 
         {/* Backfeed prevention */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm font-semibold text-white mb-2">Backfeed Prevention</p>
             <p className="text-sm text-white leading-relaxed mb-3">
               Generators, solar PV, and battery storage can backfeed through the installation and energise conductors you believe are dead — including the DNO supply cables.
@@ -180,7 +180,7 @@ const HowToIsolateSection = ({ onBack }: Props) => {
 
         {/* Permit to work */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm font-semibold text-white mb-2">When a Permit-to-Work Is Required</p>
             <div className="space-y-1.5">
               {[

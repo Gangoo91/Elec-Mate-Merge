@@ -229,7 +229,7 @@ const sections = [
           categories:
         </p>
         <div className="space-y-3 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">1. Overload</h4>
             <p className="text-white text-sm leading-relaxed">
               Too many appliances drawing more current than the fuse rating. The current exceeds the
@@ -246,7 +246,7 @@ const sections = [
               or at faulty connections.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">3. Earth fault</h4>
             <p className="text-white text-sm leading-relaxed">
               Current leaks from a live conductor to earth — typically through damaged insulation
@@ -421,7 +421,7 @@ const sections = [
       <>
         <p>When a fuse blows, follow this systematic process to identify the cause safely:</p>
         <div className="space-y-3 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">Step 1: Switch off and unplug</h4>
             <p className="text-white text-sm leading-relaxed">
               Turn off the main switch at the consumer unit if the fuse is a circuit fuse. Unplug
@@ -429,7 +429,7 @@ const sections = [
               appliance.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">
               Step 2: Replace the fuse with the correct rating
             </h4>
@@ -439,7 +439,7 @@ const sections = [
               use the exact same type and rating.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">Step 3: Switch on without any appliances</h4>
             <p className="text-white text-sm leading-relaxed">
               Restore power to the circuit with all appliances still unplugged. If the fuse blows
@@ -447,7 +447,7 @@ const sections = [
               to step 4.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">
               Step 4: Reconnect appliances one at a time
             </h4>
@@ -471,7 +471,7 @@ const sections = [
           reducing the load on a circuit. Others require professional investigation. Call an
           electrician in these situations:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -538,7 +538,7 @@ const sections = [
           approach:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Search className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -551,7 +551,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -564,7 +564,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -578,7 +578,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

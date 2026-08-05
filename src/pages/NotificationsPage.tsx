@@ -1,11 +1,16 @@
 import React, { useMemo, useState } from 'react';
 import { useUserNotifications, type UserNotification } from '@/hooks/useUserNotifications';
 import { format, isToday, isYesterday, formatDistanceToNow } from 'date-fns';
-import { Bell, CheckCheck, Trash2, X, ArrowLeft } from 'lucide-react';
+import { Bell, CheckCheck, Trash2, X, ArrowLeft, FolderPlus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
 import { categoryTone } from '@/lib/notificationCategory';
+import {
+  bookingProjectUrl,
+  isBookingNotification,
+  type BookingNotificationMetadata,
+} from '@/lib/bookingToProject';
 
 const formatTime = (date: string) => {
   const d = new Date(date);
@@ -18,13 +23,17 @@ const NotificationCard = ({
   n,
   onOpen,
   onDelete,
+  onConvertToProject,
 }: {
   n: UserNotification;
   onOpen: () => void;
   onDelete: () => void;
+  onConvertToProject: () => void;
 }) => {
   const tone = categoryTone(n.type, n.title, n.message);
   const actionable = !!n.link;
+  // ELE-1471 — a booking used to arrive with nowhere to go but the calendar.
+  const isBooking = isBookingNotification(n.type);
   return (
     <motion.div layout exit={{ opacity: 0, x: 60, height: 0 }} transition={{ duration: 0.2 }}>
       <div
@@ -40,11 +49,15 @@ const NotificationCard = ({
         )}
       >
         {/* Category accent — colour varies by type; only shown while unread */}
-        {!n.is_read && <div className={cn('absolute left-0 top-3 bottom-3 w-[3px] rounded-full', tone.bar)} />}
+        {!n.is_read && (
+          <div className={cn('absolute left-0 top-3 bottom-3 w-[3px] rounded-full', tone.bar)} />
+        )}
 
         <div className="pl-4 pr-3 py-3.5">
           <div className="flex items-center justify-between gap-3">
-            <span className={cn('text-[10px] font-semibold uppercase tracking-[0.14em]', tone.text)}>
+            <span
+              className={cn('text-[10px] font-semibold uppercase tracking-[0.14em]', tone.text)}
+            >
               {tone.label}
             </span>
             <div className="flex items-center gap-2 shrink-0">
@@ -62,18 +75,58 @@ const NotificationCard = ({
             </div>
           </div>
 
-          <h3 className={cn('mt-1 text-[14px] leading-snug', n.is_read ? 'font-medium text-white/85' : 'font-semibold text-white')}>
+          <h3
+            className={cn(
+              'mt-1 text-[14px] leading-snug',
+              n.is_read ? 'font-medium text-white/85' : 'font-semibold text-white'
+            )}
+          >
             {n.title}
           </h3>
-          {n.message && <p className="mt-0.5 text-[12.5px] text-white/60 line-clamp-2 leading-relaxed">{n.message}</p>}
+          {n.message && (
+            <p className="mt-0.5 text-[12.5px] text-white/60 line-clamp-2 leading-relaxed">
+              {n.message}
+            </p>
+          )}
 
-          {actionable && (
-            <div className={cn('mt-2 inline-flex items-center gap-1 text-[11.5px] font-medium', tone.text)}>
-              Open
-              <span aria-hidden className="transition-transform group-hover:translate-x-0.5">
-                →
-              </span>
+          {isBooking ? (
+            <div className="mt-2.5 flex items-center gap-2">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onConvertToProject();
+                }}
+                className="h-9 px-3 inline-flex items-center gap-1.5 rounded-lg bg-elec-yellow text-black text-[12px] font-semibold touch-manipulation active:scale-95 transition-transform"
+              >
+                <FolderPlus className="h-3.5 w-3.5" />
+                Convert to project
+              </button>
+              {actionable && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onOpen();
+                  }}
+                  className="h-9 px-3 inline-flex items-center rounded-lg border border-white/[0.12] bg-white/[0.06] text-white text-[12px] font-medium touch-manipulation active:scale-95 transition-transform"
+                >
+                  View in calendar
+                </button>
+              )}
             </div>
+          ) : (
+            actionable && (
+              <div
+                className={cn(
+                  'mt-2 inline-flex items-center gap-1 text-[11.5px] font-medium',
+                  tone.text
+                )}
+              >
+                Open
+                <span aria-hidden className="transition-transform group-hover:translate-x-0.5">
+                  →
+                </span>
+              </div>
+            )
           )}
         </div>
       </div>
@@ -89,7 +142,8 @@ const NotificationsPage = () => {
 
   // Only offer filter chips for categories that are actually present.
   const categoriesPresent = useMemo(
-    () => Array.from(new Set(notifications.map((n) => categoryTone(n.type, n.title, n.message).label))),
+    () =>
+      Array.from(new Set(notifications.map((n) => categoryTone(n.type, n.title, n.message).label))),
     [notifications]
   );
   const chips = useMemo(() => {
@@ -107,6 +161,14 @@ const NotificationsPage = () => {
   const handleOpen = (n: UserNotification) => {
     if (!n.is_read) markAsRead.mutate(n.id);
     if (n.link) navigate(n.link);
+  };
+
+  // ELE-1471 — carry the booking's details into a pre-filled new-project sheet
+  // instead of dropping the electrician on the calendar with nothing to act on.
+  const handleConvertToProject = (n: UserNotification) => {
+    if (!n.is_read) markAsRead.mutate(n.id);
+    const meta = (n.metadata || {}) as BookingNotificationMetadata;
+    navigate(bookingProjectUrl(meta));
   };
 
   return (
@@ -196,6 +258,7 @@ const NotificationsPage = () => {
                   n={n}
                   onOpen={() => handleOpen(n)}
                   onDelete={() => deleteNotification.mutate(n.id)}
+                  onConvertToProject={() => handleConvertToProject(n)}
                 />
               ))}
             </AnimatePresence>

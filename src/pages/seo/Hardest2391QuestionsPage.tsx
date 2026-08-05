@@ -227,7 +227,7 @@ const sections = [
                 <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/55">
                   #{q.rank} · {q.topic}
                 </span>
-                <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-red-500/15 border border-red-500/30 text-[12px] font-bold text-red-300 tabular-nums">
+                <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-red-500/15 border border-white/[0.14] text-[12px] font-bold text-red-300 tabular-nums">
                   {q.failPct}% get this wrong
                 </span>
               </div>
@@ -286,7 +286,7 @@ const sections = [
     heading: 'How to Prepare',
     content: (
       <>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-2.5 text-white text-[14px]">
             <li>
               1. Take the{' '}

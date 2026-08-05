@@ -346,7 +346,7 @@ export default function FutureOfElectricalTradePage() {
                     </span>
                     <span className="text-yellow-400 font-bold">~5,500</span>
                   </div>
-                  <div className="flex items-center justify-between p-4 rounded-xl bg-yellow-500/5 border border-yellow-500/20">
+                  <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                     <span className="text-white font-bold">Annual shortfall (before growth)</span>
                     <span className="text-yellow-400 font-bold">~2,500+</span>
                   </div>

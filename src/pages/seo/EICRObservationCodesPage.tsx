@@ -183,8 +183,8 @@ const sections = [
               code: 'C1',
               label: 'Danger Present',
               colour: 'text-red-400',
-              bg: 'bg-red-500/10',
-              border: 'border-red-500/20',
+              bg: 'bg-gradient-to-b from-white/[0.08] to-white/[0.04]',
+              border: 'border-white/[0.14]',
             },
             {
               code: 'C2',
@@ -272,7 +272,7 @@ const sections = [
     heading: 'C1 — Danger Present',
     content: (
       <>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 mb-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 mb-4">
           <div className="flex items-center gap-3 mb-4">
             <span className="w-12 h-12 rounded-xl bg-red-500/20 flex items-center justify-center font-bold text-red-400 text-xl">
               C1
@@ -516,7 +516,7 @@ const sections = [
               </li>
             </ul>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-3 mb-3">
               <XCircle className="w-8 h-8 text-red-400" />
               <h4 className="font-bold text-white text-lg">Unsatisfactory</h4>

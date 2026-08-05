@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Zap, Shield, Eye, RotateCcw, Target, Settings, Activity, Wrench, Search, AlertTriangle } from 'lucide-react';
-import { BusinessCard } from '@/components/business-hub';
+import { HubTile as BusinessCard } from '@/components/learning-hub/HubTile';
 import { getAllAssessments } from '@/data/quizAssessments';
 
 interface QuizAssessmentSectionProps {
@@ -53,7 +53,7 @@ const QuizAssessmentSection = ({ onBack }: QuizAssessmentSectionProps) => {
     return (
       <>
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-bold text-white uppercase tracking-widest px-0.5 mb-2 mt-2">
+          <p className="mb-3 text-[15px] font-semibold tracking-tight text-white mb-2 mt-2">
             {title}
           </p>
         </motion.div>
@@ -101,7 +101,7 @@ const QuizAssessmentSection = ({ onBack }: QuizAssessmentSectionProps) => {
         className="space-y-4"
       >
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.06] border border-white/[0.12] p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4">
             <p className="text-sm text-white leading-relaxed">
               Test your inspection and testing knowledge with 2391-style questions. Each quiz randomly selects 20 questions from a bank of 50. Explanations shown after every answer.
             </p>
@@ -110,15 +110,15 @@ const QuizAssessmentSection = ({ onBack }: QuizAssessmentSectionProps) => {
 
         <motion.div variants={itemVariants}>
           <div className="grid grid-cols-3 gap-3">
-            <div className="rounded-2xl bg-white/[0.06] border border-white/[0.12] p-3 text-center">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-3 text-center">
               <p className="text-lg font-black text-yellow-400">460</p>
               <p className="text-[10px] text-white">Questions</p>
             </div>
-            <div className="rounded-2xl bg-white/[0.06] border border-white/[0.12] p-3 text-center">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-3 text-center">
               <p className="text-lg font-black text-white">10</p>
               <p className="text-[10px] text-white">Topics</p>
             </div>
-            <div className="rounded-2xl bg-white/[0.06] border border-white/[0.12] p-3 text-center">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-3 text-center">
               <p className="text-lg font-black text-white">70%</p>
               <p className="text-[10px] text-white">Pass Mark</p>
             </div>

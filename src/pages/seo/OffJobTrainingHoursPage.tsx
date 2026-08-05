@@ -37,9 +37,9 @@ function OTJHoursCalculator() {
   const suggestedWeekly = totalOTJHours / workingWeeks;
 
   return (
-    <div className="rounded-2xl border border-yellow-500/30 bg-yellow-500/5 p-5 sm:p-7">
+    <div className="rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-5 sm:p-7">
       <div className="flex items-center gap-3 mb-5">
-        <div className="w-9 h-9 rounded-lg bg-yellow-500/15 flex items-center justify-center shrink-0">
+        <div className="w-9 h-9 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] flex items-center justify-center shrink-0">
           <Calculator className="w-5 h-5 text-yellow-400" />
         </div>
         <div>
@@ -359,7 +359,7 @@ const sections = [
               </tr>
             </thead>
             <tbody className="divide-y divide-white/10">
-              <tr className="bg-yellow-500/[0.06]">
+              <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                 <td className="px-4 py-3 text-white font-medium">
                   Installation &amp; Maintenance Electrician
                 </td>
@@ -533,7 +533,7 @@ const sections = [
           excluded from the off-the-job training calculation:
         </p>
         <div className="space-y-3 my-6">
-          <div className="flex items-start gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/20">
+          <div className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <AlertTriangle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">Normal Work Duties</h3>
@@ -545,7 +545,7 @@ const sections = [
               </p>
             </div>
           </div>
-          <div className="flex items-start gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/20">
+          <div className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <AlertTriangle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">English and Maths Study</h3>
@@ -556,7 +556,7 @@ const sections = [
               </p>
             </div>
           </div>
-          <div className="flex items-start gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/20">
+          <div className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <AlertTriangle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">
@@ -569,7 +569,7 @@ const sections = [
               </p>
             </div>
           </div>
-          <div className="flex items-start gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/20">
+          <div className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <AlertTriangle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
             <div>
               <h3 className="font-bold text-white text-base mb-1">Progress Reviews</h3>

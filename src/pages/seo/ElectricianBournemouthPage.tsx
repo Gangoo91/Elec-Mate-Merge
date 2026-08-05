@@ -303,7 +303,7 @@ const sections = [
               heating circuits. Upgrading these properties to modern standards is a growing market.
             </p>
           </div>
-          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">New-Build Estates</h3>
             <p className="text-white text-sm leading-relaxed">
               New housing in areas like West Howe, Throop, and the BH postcode fringes is typically
@@ -415,7 +415,7 @@ const sections = [
           growing residential population, and increasing demand for renewable energy installations.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Home className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

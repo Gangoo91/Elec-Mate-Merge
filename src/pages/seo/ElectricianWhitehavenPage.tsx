@@ -182,7 +182,7 @@ const sections = [
           contract opportunity in the UK electrical market. At just 9 miles and approximately 15
           minutes' drive, Sellafield is genuinely local work — not a long commute or an away job.
         </p>
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
@@ -355,7 +355,7 @@ const sections = [
               carefully and always survey in person before quoting.
             </p>
           </div>
-          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Victorian and Inter-War Housing</h3>
             <p className="text-white text-sm leading-relaxed">
               Terrace and semi-detached housing from the Victorian, Edwardian, and inter-war periods
@@ -477,7 +477,7 @@ const sections = [
           can create an exceptionally productive working week.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

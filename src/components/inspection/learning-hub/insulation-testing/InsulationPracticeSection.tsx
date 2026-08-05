@@ -79,7 +79,7 @@ const InsulationPracticeSection = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               Use this form to practise recording insulation resistance test results. Enter the circuit reference, select test voltage, and record your L-E, N-E, and L-N readings. The form automatically determines pass/fail based on BS 7671 minimum values.
             </p>

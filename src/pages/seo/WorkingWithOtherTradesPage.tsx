@@ -249,7 +249,7 @@ const sections = [
               <li>Outside tap — may need a frost thermostat or trace heating connection</li>
             </ul>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5 text-yellow-400" /> Watch Out For
             </h3>
@@ -463,7 +463,7 @@ const sections = [
               <li>Keep records for every project — they protect you</li>
             </ul>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Do Not</h3>
             <ul className="space-y-2 text-white text-sm">
               <li>Fix damage silently and absorb the cost</li>

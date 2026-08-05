@@ -296,7 +296,7 @@ const sections = [
           unit, at every junction box, at every socket, at every switch, and at every light fitting.
           Any one of these could be the faulty connection.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white text-base mb-3">Prioritise your search</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">

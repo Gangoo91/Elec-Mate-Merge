@@ -451,7 +451,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Action Plan for Career Changers</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
                 1
               </span>
               <span className="flex-1 text-left">
@@ -464,7 +464,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
                 2
               </span>
               <span className="flex-1 text-left">
@@ -474,7 +474,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
                 3
               </span>
               <span className="flex-1 text-left">
@@ -484,7 +484,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
                 4
               </span>
               <span className="flex-1 text-left">
@@ -494,7 +494,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
                 5
               </span>
               <span className="flex-1 text-left">

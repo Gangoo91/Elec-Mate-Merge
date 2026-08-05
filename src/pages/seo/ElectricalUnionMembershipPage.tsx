@@ -132,7 +132,7 @@ const sections = [
           specifically represents the interests of electricians, electrical technicians, and
           electrical apprentices.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-4">Key Unite Benefits for Electricians</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -257,7 +257,7 @@ const sections = [
           progression in the electrical contracting industry. Understanding the JIB is essential for
           every electrician working in the sector.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-4">JIB Grading System</h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
@@ -351,7 +351,7 @@ const sections = [
           membership an extraordinarily cost-effective form of legal insurance.
         </p>
         <div className="space-y-4 mt-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-2 mb-3">
               <Scale className="w-5 h-5 text-yellow-400" />
               <h3 className="font-bold text-white text-lg">Employment Disputes</h3>

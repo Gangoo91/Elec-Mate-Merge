@@ -65,13 +65,13 @@ const fusedSpurChecklist = [
 const ChecklistSection = ({ title, items }: { title: string; items: string[] }) => (
   <>
     <motion.div variants={itemVariants}>
-      <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">{title}</p>
+      <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">{title}</p>
     </motion.div>
     <motion.div variants={itemVariants}>
       <div className="space-y-1.5">
         {items.map((item, i) => (
-          <div key={i} className="flex items-start gap-3 rounded-xl bg-white/[0.03] border border-white/10 p-3.5">
-            <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center mt-0.5">
+          <div key={i} className="flex items-start gap-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-3.5">
+            <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center mt-0.5">
               <Check className="h-3.5 w-3.5 text-yellow-400" />
             </div>
             <p className="text-sm text-white leading-relaxed">{item}</p>
@@ -103,7 +103,7 @@ const PolarityChecklistsSection = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               Use these checklists to ensure thorough polarity verification at every point in the installation. Work through each item systematically — do not skip accessories.
             </p>
@@ -118,7 +118,7 @@ const PolarityChecklistsSection = ({ onBack }: Props) => {
 
         {/* Recording reminder */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-2">Recording Results</p>
             <p className="text-sm text-white leading-relaxed">
               Record polarity as correct (tick) or incorrect (cross) on the Schedule of Test Results for each circuit. Any incorrect polarity must be rectified before the installation can be certified. Note the fault and remedial action taken in the comments section.

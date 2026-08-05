@@ -5,15 +5,32 @@
  *   1. PRE-START  — what crawlers index + what visitors see first.
  *                   No nested H1/eyebrow chrome — the H1 lives on the
  *                   wrapper page (<PublicMockExamPage>). This component
- *                   contributes: stats line, Start button, sample
+ *                   contributes: spec rows, Start button, sample
  *                   questions (as <details> so they're indexable but
  *                   don't dominate the viewport).
- *   2. ACTIVE     — minimal progress bar + question + options.
- *   3. RESULTS    — score card, weak areas, per-topic breakdown, retake,
- *                   then the "Come to Elec-Mate" conversion block.
+ *   2. ACTIVE     — question + options, sticky timer strip on mobile,
+ *                   sticky thumb-reachable nav, sidebar grid on desktop.
+ *   3. RESULTS    — score + retake (secondary), the breakdown-by-email
+ *                   capture, weak areas, per-topic breakdown, the "Come to
+ *                   Elec-Mate" conversion block, then the full answer review.
  *
- * Mobile-flat per CLAUDE.md memory rule: no card chrome below sm:, edge-
- * to-edge via px-4 on the page wrapper.
+ * Results order is deliberate and was changed 2026-08-05 off live data:
+ * 2,789 people completed an exam in 28 days and 36 signed up. The retake
+ * button was primary and sat above a 25-item review list, with the offer
+ * dead last — so on mobile nobody ever reached it. Small ask (email) at
+ * peak emotion, evidence, bigger ask (trial), then the free value. Don't
+ * push the review back above the conversion block.
+ *
+ * Design language (2026-08-05 pass) — matches the house rules:
+ *   - NO icons, NO emoji. State is carried by type weight, size and the
+ *     word itself ("Pass" / "Not yet"), plus control-primitive geometry
+ *     (progress bars, option letters, meters). Never decoration.
+ *   - All text is text-white. Hierarchy comes from size/weight/tracking,
+ *     never from low-opacity greys.
+ *   - Mobile is flat and edge-to-edge: panels are `-mx-4` with border-y
+ *     only, gaining rounding and side borders at sm:.
+ *   - Hairline rules (white/12) separate; ONE yellow accent per zone. No
+ *     gradients, no glow, no pills.
  *
  * Phase 1 option shuffle is wired here — per-attempt salt so retakes
  * feel fresh; fixed salt for the SSR sample questions so crawl HTML is
@@ -21,21 +38,11 @@
  */
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import {
-  Clock,
-  CheckCircle2,
-  XCircle,
-  RotateCcw,
-  Play,
-  Award,
-  AlertTriangle,
-  Target,
-  ChevronRight,
-  Flag,
-} from 'lucide-react';
 import { shuffleAllQuestionOptions, createShuffleSalt } from '@/utils/shuffleOptions';
 import { supabase } from '@/integrations/supabase/client';
 import { recordMiss } from '@/lib/missedQuestions';
+import { EmailCaptureForm } from '@/components/landing/EmailCaptureForm';
+import { PANEL, LABEL } from '@/components/seo/seoSurface';
 
 export interface SEOMockExamQuestion {
   id: number | string;
@@ -46,6 +53,15 @@ export interface SEOMockExamQuestion {
   topic?: string;
   section?: string;
   category?: string;
+  /**
+   * Banks carry extra per-exam fields (difficulty, reference, unit…) and this
+   * type is handed straight to `shuffleAllQuestionOptions`, whose
+   * `ShuffleableQuestion` constraint declares an index signature. Without a
+   * matching one here the generic constraint fails and TS silently widens the
+   * result, which then makes every rendered `q.explanation` an `unknown` and
+   * unassignable to ReactNode. Pre-existing; fixed 2026-08-05.
+   */
+  [key: string]: unknown;
 }
 
 interface SEOMockExamProps {
@@ -62,6 +78,18 @@ interface SEOMockExamProps {
   passThreshold?: number;
   /** Sign-up CTA shown in the conversion block AFTER results. */
   signupCta?: { label: string; href: string; subline?: string };
+  /**
+   * Fired when an attempt is submitted. The wrapper page uses this to reveal
+   * the sticky mobile CTA only once the exam is done — showing it mid-exam
+   * would pester someone during the 13 minutes that make this page valuable.
+   */
+  onSubmitted?: () => void;
+  /**
+   * Fired when an attempt starts. The wrapper page uses this to hide the
+   * page furniture (topic nav, FAQ, related exams) for the duration — a
+   * timed exam should not be sitting next to a list of links out.
+   */
+  onStarted?: () => void;
 }
 
 function shuffle<T>(arr: T[]): T[] {
@@ -73,6 +101,80 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
+/**
+ * Share of each attempt drawn from each difficulty tier.
+ *
+ * Why this exists: the draw used to be `shuffle(bank).slice(0, n)`, uniformly
+ * at random. The 2391 bank is 96 basic / 162 intermediate / 42 advanced, so a
+ * candidate could be handed a soft 30 and pass comfortably, or an unusually
+ * hard 30 and fail — the same score meant different things on different
+ * attempts. Live data showed the consequence: an 82% pass rate on 2391 and 29
+ * AM2 questions that essentially nobody ever got wrong.
+ *
+ * A fixed mix makes the score comparable between attempts, which now matters
+ * more than it used to because we email people their result and invite them
+ * to retake. It also stops the mock being materially easier than the real
+ * assessment, which is what makes a pass here worth anything.
+ */
+const DIFFICULTY_MIX: Record<string, number> = {
+  basic: 0.2,
+  intermediate: 0.5,
+  advanced: 0.3,
+};
+
+/**
+ * Draw `count` questions with a consistent difficulty profile.
+ *
+ * Degrades safely: banks with no `difficulty` on their questions (or too few
+ * in a tier to fill its quota) fall back to filling from whatever is left, so
+ * every exam still gets a full paper. Never returns duplicates.
+ */
+function drawStratified(
+  bank: SEOMockExamQuestion[],
+  count: number
+): SEOMockExamQuestion[] {
+  const tiers = new Map<string, SEOMockExamQuestion[]>();
+  bank.forEach((q) => {
+    const tier = typeof q.difficulty === 'string' ? q.difficulty : '';
+    if (!tier || !(tier in DIFFICULTY_MIX)) return;
+    const list = tiers.get(tier) ?? [];
+    list.push(q);
+    tiers.set(tier, list);
+  });
+
+  // No usable difficulty metadata — behave exactly as before.
+  if (tiers.size === 0) return shuffle(bank).slice(0, count);
+
+  const picked: SEOMockExamQuestion[] = [];
+  const takenIds = new Set<SEOMockExamQuestion['id']>();
+  Object.entries(DIFFICULTY_MIX).forEach(([tier, share]) => {
+    const want = Math.round(count * share);
+    shuffle(tiers.get(tier) ?? [])
+      .slice(0, want)
+      .forEach((q) => {
+        picked.push(q);
+        takenIds.add(q.id);
+      });
+  });
+
+  // Top up (or trim) to the exact paper length from everything not yet used.
+  if (picked.length < count) {
+    shuffle(bank.filter((q) => !takenIds.has(q.id)))
+      .slice(0, count - picked.length)
+      .forEach((q) => picked.push(q));
+  }
+  return shuffle(picked).slice(0, count);
+}
+
+/** Two-digit row number — the house spec-row signature. */
+function RowNumber({ n }: { n: number }) {
+  return (
+    <span className="shrink-0 text-[11px] font-semibold tabular-nums text-white pt-[3px] w-5">
+      {String(n).padStart(2, '0')}
+    </span>
+  );
+}
+
 export function SEOMockExam({
   examName,
   questionBank,
@@ -80,6 +182,8 @@ export function SEOMockExam({
   timeLimitMinutes = 30,
   passThreshold = 70,
   signupCta,
+  onSubmitted,
+  onStarted,
 }: SEOMockExamProps) {
   const location = useLocation();
   const [started, setStarted] = useState(false);
@@ -97,6 +201,21 @@ export function SEOMockExam({
   // a duplicate attempt row.
   const submitGuardRef = useRef(false);
 
+  /** Questions the candidate marked to come back to. Real papers let you do
+   *  this, and without it people either guess early or lose their place. */
+  const [flagged, setFlagged] = useState<Set<number>>(new Set());
+  /** Shown when Submit is pressed with questions still blank. Submitting by
+   *  accident scores every blank as wrong, which is how you end up with a 0%. */
+  const [confirmingSubmit, setConfirmingSubmit] = useState(false);
+  /**
+   * How often everyone else gets each question wrong, keyed by question id.
+   * Pulled from `seo_mock_question_stats` (public-read) after submitting, and
+   * shown on the review rows. It is the one thing on this page a competitor
+   * cannot copy — it comes from ~55,000 real answers on our own exams — and it
+   * turns "you got this wrong" into "so does everyone, here is why".
+   */
+  const [failureRates, setFailureRates] = useState<Record<string, number>>({});
+
   // 3 sample questions rendered server-side for SEO. Picked deterministically
   // and shuffled with a fixed salt so crawl HTML is identical between crawls.
   const sampleQuestions = useMemo(
@@ -106,7 +225,7 @@ export function SEOMockExam({
 
   const start = useCallback(() => {
     const picked = shuffleAllQuestionOptions(
-      shuffle(questionBank).slice(0, questionsPerExam),
+      drawStratified(questionBank, questionsPerExam),
       createShuffleSalt()
     );
     setQuestions(picked);
@@ -119,20 +238,53 @@ export function SEOMockExam({
     setAttempt((n) => n + 1);
     setStartedAt(Date.now());
     setFinishedAt(null);
+    onStarted?.();
     // Scroll the exam into view so the user lands at the first question
-    // rather than scrolling back to the now-hidden hero.
+    // rather than scrolling back to the now-hidden hero. scrollIntoView is
+    // no good here: the app nav (4rem) AND the exam's own sticky status
+    // strip both overlay the top of the container, so block:'start' buries
+    // the question stem behind them. Offset manually instead.
     requestAnimationFrame(() => {
-      document.getElementById('mock-exam')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const el = document.getElementById('mock-exam');
+      if (!el) return;
+      const STICKY_OFFSET = 116; // 4rem app nav + ~44px status strip + breathing room
+      const top = el.getBoundingClientRect().top + window.scrollY - STICKY_OFFSET;
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
     });
-  }, [questionBank, questionsPerExam, timeLimitMinutes]);
+  }, [questionBank, questionsPerExam, timeLimitMinutes, onStarted]);
 
   const submit = useCallback(() => {
     if (submitGuardRef.current) return;
     submitGuardRef.current = true;
     setSubmitted(true);
     setStarted(false);
+    setConfirmingSubmit(false);
     const finished = Date.now();
     setFinishedAt(finished);
+
+    // Pull the real-world failure rate for the questions just sat, so the
+    // review rows can say how many other people miss each one. Public-read
+    // table, fire-and-forget: if it fails the review simply omits the line.
+    const ids = questions.map((q) => q.id);
+    if (ids.length > 0) {
+      void supabase
+        .from('seo_mock_question_stats')
+        .select('question_id,times_shown,times_wrong')
+        .eq('exam_slug', location.pathname.split('/').filter(Boolean)[1] ?? '')
+        .in('question_id', ids as (string | number)[])
+        .then(({ data }) => {
+          if (!data) return;
+          const map: Record<string, number> = {};
+          data.forEach((r: { question_id: number; times_shown: number; times_wrong: number }) => {
+            // Ignore thin samples — a 1-of-2 wrong rate is noise, not insight.
+            if (r.times_shown >= 25) {
+              map[String(r.question_id)] = Math.round((100 * r.times_wrong) / r.times_shown);
+            }
+          });
+          setFailureRates(map);
+        });
+    }
+    onSubmitted?.();
 
     // Anonymous attempt logging — fire-and-forget, never blocks UI. Used
     // to surface social-proof stats ("X attempts this week") on these
@@ -145,9 +297,7 @@ export function SEOMockExam({
     // public/anonymous). Each answered-but-wrong question lands in the
     // personal missed pile that powers /apprentice/revision. Fire-and-
     // forget; zero UI change to the exam flow.
-    const missed = questions.filter(
-      (q, i) => answers[i] !== null && answers[i] !== q.correctAnswer
-    );
+    const missed = questions.filter((q, i) => answers[i] !== null && answers[i] !== q.correctAnswer);
     if (missed.length > 0) {
       void supabase.auth.getSession().then(({ data }) => {
         const uid = data.session?.user?.id;
@@ -176,11 +326,11 @@ export function SEOMockExam({
     const finalPct = Math.round((finalCorrect / questions.length) * 100);
     // Path is /mock-exams/<exam>[/<topic>]
     const parts = location.pathname.split('/').filter(Boolean);
-    const examSlug = parts[1];
+    const examSlugPart = parts[1];
     const topicSlug = parts[2] ?? null;
-    if (!examSlug) return;
+    if (!examSlugPart) return;
     const payload = {
-      exam_slug: examSlug,
+      exam_slug: examSlugPart,
       topic_slug: topicSlug,
       score: finalCorrect,
       total_questions: questions.length,
@@ -203,18 +353,41 @@ export function SEOMockExam({
     // "questions electricians actually fail" first-party data content.
     const shownIds = questions.map((q) => q.id);
     const wrongIds = questions.filter((q, i) => answers[i] !== q.correctAnswer).map((q) => q.id);
+
+    // WHICH option they picked, mapped back to the bank's ORIGINAL ordering.
+    //
+    // This mapping is the whole point. Options are reshuffled every attempt
+    // (per-attempt salt), so the index the candidate clicked is meaningless
+    // across attempts — "option 1" is a different answer each time. shuffle
+    // Options() reports its permutation as `optionOrder`, where
+    // optionOrder[displayedIndex] = originalIndex. Send anything else and the
+    // table fills with noise that looks like data.
+    //
+    // -1 marks a skipped question; the RPC discards those rather than counting
+    // them as a pick.
+    const chosen = questions.map((q, i) => {
+      const displayed = answers[i];
+      if (displayed === null || displayed === undefined) return -1;
+      const order = q.optionOrder;
+      if (Array.isArray(order) && typeof order[displayed] === 'number') {
+        return order[displayed] as number;
+      }
+      return -1; // no mapping available — record nothing rather than something wrong
+    });
+
     void supabase
       .rpc('log_mock_question_results', {
-        p_exam_slug: examSlug,
+        p_exam_slug: examSlugPart,
         p_shown_ids: shownIds,
         p_wrong_ids: wrongIds,
+        p_chosen: chosen,
       })
       .then(({ error }) => {
         if (error && import.meta.env.DEV) {
           console.warn('[log_mock_question_results failed]', error.message);
         }
       });
-  }, [startedAt, questions, answers, passThreshold, location.pathname, examName]);
+  }, [startedAt, questions, answers, passThreshold, location.pathname, examName, onSubmitted]);
 
   useEffect(() => {
     if (!started || submitted) return;
@@ -267,6 +440,28 @@ export function SEOMockExam({
     [categoryBreakdown]
   );
 
+  // Every question they got wrong or skipped, flattened for the breakdown
+  // email. The edge function caps this at 10 and bounds every string, so
+  // sending the lot here is safe — `missedTotal` carries the real count so
+  // the email can say "and N more".
+  const missedForEmail = useMemo(
+    () =>
+      questions
+        .filter((q, i) => answers[i] !== q.correctAnswer)
+        .map((q) => ({
+          question: q.question,
+          correctAnswer: q.options[q.correctAnswer],
+          explanation: q.explanation,
+        })),
+    [questions, answers]
+  );
+
+  // Path is /mock-exams/<exam>[/<topic>] — the slug the email links back to.
+  const examSlug = useMemo(
+    () => location.pathname.split('/').filter(Boolean).slice(1).join('/'),
+    [location.pathname]
+  );
+
   const timeTakenSec = startedAt && finishedAt ? Math.round((finishedAt - startedAt) / 1000) : 0;
   const formatDuration = (s: number) => {
     const mm = Math.floor(s / 60);
@@ -276,118 +471,149 @@ export function SEOMockExam({
 
   const answeredCount = answers.filter((a) => a !== null).length;
   const progressPct = questions.length > 0 ? (answeredCount / questions.length) * 100 : 0;
+  const mmss = `${Math.floor(secondsLeft / 60)}:${String(secondsLeft % 60).padStart(2, '0')}`;
+  const lowTime = secondsLeft < 300;
+  const unanswered = questions.length - answeredCount;
+
+  const toggleFlag = useCallback((i: number) => {
+    setFlagged((prev) => {
+      const next = new Set(prev);
+      if (next.has(i)) next.delete(i);
+      else next.add(i);
+      return next;
+    });
+  }, []);
+
+  /** Submit, but stop first if anything is still blank. */
+  const requestSubmit = useCallback(() => {
+    if (unanswered > 0) {
+      setConfirmingSubmit(true);
+      return;
+    }
+    submit();
+  }, [unanswered, submit]);
+
+  /**
+   * Keyboard control. A candidate working through 30 questions on a laptop
+   * should not have to reach for the mouse on every one: A–D picks an answer,
+   * arrows move, F flags. Ignored while focus is in a field so the email
+   * capture on the results screen still types normally.
+   */
+  useEffect(() => {
+    if (!started) return;
+    const onKey = (e: KeyboardEvent) => {
+      const t = e.target as HTMLElement | null;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const q = questions[current];
+      if (!q) return;
+      const key = e.key.toLowerCase();
+      const letter = 'abcdefgh'.indexOf(key);
+      if (letter >= 0 && letter < q.options.length) {
+        e.preventDefault();
+        setAnswers((prev) => {
+          const a = [...prev];
+          a[current] = letter;
+          return a;
+        });
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        setCurrent((c) => Math.min(questions.length - 1, c + 1));
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        setCurrent((c) => Math.max(0, c - 1));
+      } else if (key === 'f') {
+        e.preventDefault();
+        toggleFlag(current);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [started, current, questions, toggleFlag]);
+
+  const specRows: Array<[string, string]> = [
+    ['Questions', String(questionsPerExam)],
+    ['Time limit', `${timeLimitMinutes} min`],
+    ['Pass mark', `${passThreshold}% · ${passMarkAbs}/${questionsPerExam}`],
+    ['Question bank', String(questionBank.length)],
+  ];
 
   return (
     <>
-      {/* PRE-START — stats line + CTA + sample questions */}
+      {/* ============================ PRE-START ============================ */}
+      {/* No max-width here: the wrapper page puts this beside the H1 in a
+          two-column grid before the exam starts, so the column already sets
+          the measure. Constraining again would strand the spec rows. */}
       {!started && !submitted && (
-        <div className="space-y-8">
-          {/* Stats line — one row, no card chrome */}
-          <dl
-            aria-label="Exam at a glance"
-            className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-white/75"
-          >
-            <div className="inline-flex items-baseline gap-1.5">
-              <dt className="sr-only">Questions</dt>
-              <dd className="font-semibold text-white tabular-nums">{questionsPerExam}</dd>
-              <span>questions</span>
-            </div>
-            <span aria-hidden className="text-white/25">
-              ·
-            </span>
-            <div className="inline-flex items-baseline gap-1.5">
-              <dt className="sr-only">Time limit</dt>
-              <dd className="font-semibold text-white tabular-nums">{timeLimitMinutes}</dd>
-              <span>min</span>
-            </div>
-            <span aria-hidden className="text-white/25">
-              ·
-            </span>
-            <div className="inline-flex items-baseline gap-1.5">
-              <dt className="sr-only">Pass mark</dt>
-              <dd className="font-semibold text-white tabular-nums">{passThreshold}%</dd>
-              <span>
-                to pass{' '}
-                <span className="text-white/55">
-                  ({passMarkAbs}/{questionsPerExam})
-                </span>
-              </span>
-            </div>
-            <span aria-hidden className="text-white/25">
-              ·
-            </span>
-            <div className="inline-flex items-baseline gap-1.5">
-              <dt className="sr-only">Bank size</dt>
-              <dd className="font-semibold text-white tabular-nums">{questionBank.length}</dd>
-              <span>question bank</span>
-            </div>
+        <div className="space-y-9">
+          {/* Spec rows — hairline table, flat on mobile. Replaces the old
+              inline dot-separated stats line. */}
+          <dl className={`${PANEL} divide-y divide-white/[0.08]`} aria-label="Exam at a glance">
+            {specRows.map(([k, v]) => (
+              <div key={k} className="flex items-baseline justify-between gap-4 px-4 py-3 sm:px-5">
+                <dt className="text-[13.5px] text-white">{k}</dt>
+                <dd className="text-[14px] font-semibold tabular-nums text-white">{v}</dd>
+              </div>
+            ))}
           </dl>
 
-          {/* The CTA. The whole page's job. */}
+          {/* The CTA. The whole page's job. Full-width thumb target on phones. */}
           <div>
             <button
               type="button"
               onClick={start}
-              className="group w-full sm:w-auto inline-flex items-center justify-center gap-3 h-14 px-7 rounded-2xl bg-yellow-500 hover:bg-yellow-400 active:scale-[0.99] text-black font-bold text-base sm:text-[17px] touch-manipulation transition-all shadow-lg shadow-yellow-500/20"
+              className="h-14 w-full touch-manipulation rounded-xl bg-elec-yellow px-8 text-[16px] font-bold tracking-[-0.01em] text-black transition-colors hover:brightness-95 active:scale-[0.995] sm:w-auto"
               aria-label={`Start ${examName}`}
             >
-              <Play className="w-5 h-5" />
               Start the mock exam
-              <ChevronRight className="w-5 h-5 -mr-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
             </button>
-            <p className="mt-3 text-[13px] text-white/55">
-              Free · no sign-up · timer can be ignored · retake as many times as you want
+            <p className="mt-3 text-[13.5px] leading-relaxed text-white">
+              Free, no sign-up. Retake as many times as you like — different questions each time.
             </p>
           </div>
 
-          {/* Sample questions — collapsed by default. <details> is native,
-              indexed by Google when expanded HTML is in the source. Two-
-              column grid on lg:+ so the section doesn't run as a thin
-              ribbon on desktop monitors. */}
-          <section aria-labelledby="sample-q-heading" className="pt-2">
-            <h2
-              id="sample-q-heading"
-              className="text-[13px] font-semibold uppercase tracking-[0.18em] text-yellow-400 mb-4"
-            >
+          {/* Sample questions — numbered spec rows. <details> is native and
+              indexable when the expanded HTML is in the source. */}
+          <section aria-labelledby="sample-q-heading">
+            <h2 id="sample-q-heading" className={`${LABEL} mb-3 text-white`}>
               Sample questions
             </h2>
-            <ol className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-3">
+            <ol className={`${PANEL} divide-y divide-white/[0.08]`}>
               {sampleQuestions.map((q, idx) => (
                 <li key={q.id}>
-                  <details className="group h-full rounded-xl bg-white/[0.03] border border-white/[0.08] open:bg-white/[0.05]">
-                    <summary className="cursor-pointer list-none px-4 py-3 sm:px-5 sm:py-4 flex items-start gap-3 touch-manipulation">
-                      <span className="text-[11px] font-semibold text-yellow-400/85 tabular-nums shrink-0 mt-0.5">
-                        {String(idx + 1).padStart(2, '0')}
-                      </span>
-                      <span className="text-white text-[14.5px] leading-snug flex-1">
+                  <details className="group">
+                    <summary className="flex cursor-pointer list-none touch-manipulation items-start gap-3 px-4 py-3.5 sm:px-5">
+                      <RowNumber n={idx + 1} />
+                      <span className="flex-1 text-[15px] font-medium leading-snug text-white">
                         {q.question}
                       </span>
-                      <ChevronRight className="w-4 h-4 text-white/40 shrink-0 mt-0.5 group-open:rotate-90 transition-transform" />
+                      <span
+                        aria-hidden
+                        className="mt-[7px] h-[7px] w-[7px] shrink-0 rotate-45 border-b border-r border-white transition-transform group-open:-rotate-[135deg]"
+                      />
                     </summary>
-                    <div className="px-4 pb-4 sm:px-5 sm:pb-5 pl-[3.25rem] sm:pl-[3.5rem]">
-                      <ul className="space-y-1.5 mt-1">
+                    <div className="px-4 pb-4 pl-[2.9rem] sm:px-5 sm:pb-5 sm:pl-[3.1rem]">
+                      <ul className="space-y-1.5">
                         {q.options.map((opt, i) => (
                           <li
                             key={i}
-                            className={`text-[13.5px] leading-snug px-3 py-2 rounded-lg ${
+                            className={`rounded-lg px-3 py-2 text-[13.5px] leading-snug text-white ${
                               i === q.correctAnswer
-                                ? 'bg-emerald-500/10 text-emerald-200 border border-emerald-500/30'
-                                : 'bg-white/[0.02] text-white/70 border border-white/[0.05]'
+                                ? 'border border-emerald-400/40 bg-emerald-400/[0.08]'
+                                : 'border border-white/[0.08]'
                             }`}
                           >
-                            <span className="font-medium mr-2 text-white/55">
-                              {String.fromCharCode(65 + i)}.
+                            <span className="mr-2 font-semibold">
+                              {String.fromCharCode(65 + i)}
                             </span>
                             {opt}
-                            {i === q.correctAnswer && (
-                              <CheckCircle2 className="w-3.5 h-3.5 inline ml-1.5 -mt-0.5 text-emerald-300" />
-                            )}
                           </li>
                         ))}
                       </ul>
                       {q.explanation && (
-                        <p className="mt-3 text-[13px] text-white/65 leading-relaxed">
-                          <span className="font-semibold text-white/80">Why:</span> {q.explanation}
+                        <p className="mt-3 text-[13.5px] leading-relaxed text-white">
+                          <span className="font-semibold">Why: </span>
+                          {q.explanation}
                         </p>
                       )}
                     </div>
@@ -399,111 +625,129 @@ export function SEOMockExam({
         </div>
       )}
 
-      {/* ACTIVE EXAM — mobile-flat, desktop two-column with sidebar.
-          Desktop sidebar (lg:+) shows timer + question grid so the user
-          can hop between questions without scrolling, matching the
-          in-app StandardMockExam pattern. */}
+      {/* ============================= ACTIVE ============================== */}
       {started && questions.length > 0 && (
-        <div id="mock-exam" className="lg:grid lg:grid-cols-[1fr_18rem] lg:gap-8">
-          {/* Mobile sticky header — hidden on lg:+ where the sidebar takes over */}
-          <div className="lg:hidden sticky top-[4.5rem] z-10 -mx-4 sm:mx-0 bg-[#0a0a0a]/95 backdrop-blur-md border-b border-white/10 sm:border sm:rounded-xl sm:border-white/15 mb-4">
-            <div className="px-4 sm:px-4 py-2.5 flex items-center justify-between gap-3 text-[13px]">
-              <div className="flex items-center gap-2 text-white/80">
-                <Clock className="w-3.5 h-3.5 text-yellow-400" />
-                <span className="tabular-nums font-semibold">
-                  {Math.floor(secondsLeft / 60)}:{String(secondsLeft % 60).padStart(2, '0')}
-                </span>
-              </div>
-              <div className="text-white/65 tabular-nums">
-                {current + 1} <span className="text-white/35">/ {questions.length}</span>
-              </div>
+        <div id="mock-exam" className="lg:grid lg:grid-cols-[1fr_17rem] lg:items-start lg:gap-8">
+          {/* Mobile sticky status strip — flat, no card chrome. */}
+          <div className="sticky top-[3.75rem] z-20 -mx-4 border-b border-white/[0.12] bg-elec-dark/95 backdrop-blur-md lg:hidden">
+            <div className="flex items-center justify-between gap-4 px-4 py-2.5">
+              <span
+                className={`text-[15px] font-bold tabular-nums tracking-[-0.01em] text-white ${
+                  lowTime ? 'text-orange-300' : ''
+                }`}
+              >
+                {mmss}
+              </span>
+              <span className="text-[13px] tabular-nums text-white">
+                {current + 1} of {questions.length}
+              </span>
               <button
                 type="button"
-                onClick={submit}
-                className="text-[12.5px] font-medium text-yellow-400 hover:text-yellow-300 touch-manipulation"
+                onClick={requestSubmit}
+                className="touch-manipulation text-[13px] font-semibold text-elec-yellow"
               >
-                Submit early
+                Submit
               </button>
             </div>
-            <div className="h-0.5 bg-white/10 sm:rounded-b-xl overflow-hidden">
+            <div className="h-px w-full bg-white/[0.12]">
               <div
-                className="h-full bg-yellow-400 transition-all duration-300"
+                className="h-px bg-elec-yellow transition-all duration-300"
                 style={{ width: `${progressPct}%` }}
               />
             </div>
           </div>
 
           {/* Question column */}
-          <div className="lg:rounded-2xl lg:bg-white/[0.02] lg:border lg:border-white/[0.06] lg:p-8">
-            <div className="hidden lg:flex items-center justify-between mb-6 pb-5 border-b border-white/[0.06]">
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-yellow-400">
-                  Question {current + 1} of {questions.length}
-                </p>
-                <h2 className="sr-only">Question {current + 1}</h2>
-              </div>
-              <div className="text-[12.5px] text-white/65 tabular-nums">
-                {answeredCount} answered
-              </div>
+          <div className="pb-24 pt-6 lg:rounded-2xl lg:border lg:border-white/[0.08] lg:bg-[hsl(0_0%_9%)] lg:p-8 lg:pb-8 lg:pt-8">
+            <div className="mb-5 hidden items-baseline justify-between lg:flex">
+              <p className={`${LABEL} text-white`}>
+                Question {current + 1} of {questions.length}
+              </p>
+              <p className="text-[13px] tabular-nums text-white">{answeredCount} answered</p>
             </div>
-            <p className="text-white text-[16px] sm:text-[17px] lg:text-[19px] font-semibold leading-relaxed">
+            <h2 className="sr-only">Question {current + 1}</h2>
+            <p className="text-[18px] font-semibold leading-[1.35] tracking-[-0.015em] text-white sm:text-[20px] lg:text-[22px]">
               {questions[current].question}
             </p>
-            <ul className="mt-5 lg:mt-7 space-y-2.5 lg:space-y-3">
-              {questions[current].options.map((opt, i) => (
-                <li key={i}>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const a = [...answers];
-                      a[current] = i;
-                      setAnswers(a);
-                    }}
-                    className={`group w-full text-left rounded-xl px-4 py-3.5 lg:px-5 lg:py-4 min-h-[56px] lg:min-h-[64px] flex items-start gap-3 lg:gap-4 transition-colors touch-manipulation active:scale-[0.99] ${
-                      answers[current] === i
-                        ? 'bg-yellow-500/15 ring-1 ring-yellow-500/50 text-white'
-                        : 'bg-white/[0.03] border border-white/[0.08] text-white/85 hover:bg-white/[0.06] hover:border-white/[0.15]'
-                    }`}
-                  >
-                    <span
-                      className={`shrink-0 inline-flex items-center justify-center h-7 w-7 lg:h-8 lg:w-8 rounded-lg text-[12px] lg:text-[13px] font-bold transition-colors ${
-                        answers[current] === i
-                          ? 'bg-yellow-500 text-black'
-                          : 'bg-white/[0.06] text-white/70 group-hover:text-white'
+            <ul className="mt-6 space-y-2.5">
+              {questions[current].options.map((opt, i) => {
+                const selected = answers[current] === i;
+                return (
+                  <li key={i}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const a = [...answers];
+                        a[current] = i;
+                        setAnswers(a);
+                      }}
+                      aria-pressed={selected}
+                      className={`flex min-h-[60px] w-full touch-manipulation items-start gap-3.5 rounded-xl px-4 py-3.5 text-left transition-colors active:scale-[0.995] lg:min-h-[64px] lg:px-5 ${
+                        selected
+                          ? 'border border-elec-yellow bg-elec-yellow/[0.14]'
+                          : 'border border-white/[0.08] bg-[hsl(0_0%_11%)] hover:bg-[hsl(0_0%_13%)]'
                       }`}
                     >
-                      {String.fromCharCode(65 + i)}
-                    </span>
-                    <span className="text-[14.5px] sm:text-[15px] lg:text-[16px] leading-snug pt-0.5">
-                      {opt}
-                    </span>
-                  </button>
-                </li>
-              ))}
+                      <span
+                        className={`inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-[12.5px] font-bold ${
+                          selected
+                            ? 'bg-elec-yellow text-black'
+                            : 'bg-[hsl(0_0%_16%)] text-white'
+                        }`}
+                      >
+                        {String.fromCharCode(65 + i)}
+                      </span>
+                      <span className="pt-[3px] text-[15px] leading-snug text-white lg:text-[16px]">
+                        {opt}
+                      </span>
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
 
-            <div className="flex items-center justify-between gap-3 mt-6 lg:mt-8 lg:pt-6 lg:border-t lg:border-white/[0.06]">
+            {/* Flag for review + keyboard hint */}
+            <div className="mt-6 flex items-center justify-between gap-4 border-t border-white/[0.12] pt-4">
+              <button
+                type="button"
+                onClick={() => toggleFlag(current)}
+                aria-pressed={flagged.has(current)}
+                className={`h-11 touch-manipulation rounded-xl border px-4 text-[13.5px] font-medium transition-colors ${
+                  flagged.has(current)
+                    ? 'border-amber-300 bg-amber-300/[0.10] text-amber-300'
+                    : 'border-white/[0.08] bg-[hsl(0_0%_13%)] text-white hover:bg-[hsl(0_0%_16%)]'
+                }`}
+              >
+                {flagged.has(current) ? 'Flagged for review' : 'Flag for review'}
+              </button>
+              <p className="hidden text-[12.5px] text-white lg:block">
+                Keys: A–D to answer · ← → to move · F to flag
+              </p>
+            </div>
+
+            {/* Desktop nav — mobile gets the sticky bar below instead */}
+            <div className="mt-8 hidden items-center justify-between gap-3 border-t border-white/[0.12] pt-6 lg:flex">
               <button
                 type="button"
                 onClick={() => setCurrent((c) => Math.max(0, c - 1))}
                 disabled={current === 0}
-                className="h-11 lg:h-12 px-4 lg:px-5 rounded-xl border border-white/15 text-white/80 hover:bg-white/[0.05] disabled:opacity-30 disabled:pointer-events-none touch-manipulation text-[14px] lg:text-[15px]"
+                className="h-12 touch-manipulation rounded-xl border border-white/[0.08] bg-[hsl(0_0%_13%)] px-5 text-[15px] font-medium text-white transition-colors hover:bg-[hsl(0_0%_16%)] disabled:pointer-events-none disabled:opacity-30"
               >
-                ← Previous
+                Previous
               </button>
               {current < questions.length - 1 ? (
                 <button
                   type="button"
                   onClick={() => setCurrent((c) => Math.min(questions.length - 1, c + 1))}
-                  className="h-11 lg:h-12 px-5 lg:px-6 rounded-xl bg-yellow-500 hover:bg-yellow-400 text-black font-semibold touch-manipulation text-[14px] lg:text-[15px]"
+                  className="h-12 touch-manipulation rounded-xl bg-elec-yellow px-6 text-[15px] font-bold text-black transition-colors hover:brightness-95"
                 >
-                  Next →
+                  Next
                 </button>
               ) : (
                 <button
                   type="button"
-                  onClick={submit}
-                  className="h-11 lg:h-12 px-5 lg:px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-semibold touch-manipulation text-[14px] lg:text-[15px]"
+                  onClick={requestSubmit}
+                  className="h-12 touch-manipulation rounded-xl bg-elec-yellow px-6 text-[15px] font-bold text-black transition-colors hover:brightness-95"
                 >
                   Submit answers
                 </button>
@@ -511,64 +755,139 @@ export function SEOMockExam({
             </div>
           </div>
 
-          {/* Desktop sidebar — timer, progress, question grid, submit */}
-          <aside className="hidden lg:block sticky top-[5rem] self-start space-y-4">
-            <div className="rounded-2xl bg-gradient-to-br from-yellow-500/[0.08] to-transparent border border-yellow-500/30 p-5">
-              <div className="flex items-center gap-2 mb-2">
-                <Clock className="w-4 h-4 text-yellow-400" />
-                <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-yellow-400">
-                  Time remaining
-                </span>
+          {/* Mobile sticky nav — thumb-reachable, flat strip per house rules */}
+          <div
+            className="fixed inset-x-0 bottom-0 z-30 border-t border-white/[0.12] bg-elec-dark/95 backdrop-blur-md lg:hidden"
+            style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+          >
+            <div className="flex items-center gap-3 px-4 py-3">
+              <button
+                type="button"
+                onClick={() => setCurrent((c) => Math.max(0, c - 1))}
+                disabled={current === 0}
+                className="h-12 touch-manipulation rounded-xl border border-white/[0.08] bg-[hsl(0_0%_13%)] px-5 text-[15px] font-medium text-white disabled:pointer-events-none disabled:opacity-30"
+              >
+                Back
+              </button>
+              {current < questions.length - 1 ? (
+                <button
+                  type="button"
+                  onClick={() => setCurrent((c) => Math.min(questions.length - 1, c + 1))}
+                  className="h-12 flex-1 touch-manipulation rounded-xl bg-elec-yellow text-[15px] font-bold text-black"
+                >
+                  Next
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={requestSubmit}
+                  className="h-12 flex-1 touch-manipulation rounded-xl bg-elec-yellow text-[15px] font-bold text-black"
+                >
+                  Submit answers
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Unanswered guard. Submitting with blanks scores every one wrong,
+              which is how people ended up with 0% results they did not intend. */}
+          {confirmingSubmit && (
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="confirm-submit-heading"
+              className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-0 sm:items-center sm:p-6"
+            >
+              <div className="w-full max-w-md border-t border-white/[0.14] bg-[#0e0e0e] p-6 sm:rounded-2xl sm:border">
+                <h2
+                  id="confirm-submit-heading"
+                  className="text-[19px] font-bold tracking-[-0.015em] text-white"
+                >
+                  {unanswered} question{unanswered === 1 ? '' : 's'} still blank
+                </h2>
+                <p className="mt-2 text-[14.5px] leading-relaxed text-white">
+                  Blank answers are marked wrong. You have{' '}
+                  <span className="font-semibold tabular-nums">{mmss}</span> left — go back and
+                  finish them, or submit as it stands.
+                </p>
+                <div className="mt-6 flex flex-col gap-2.5 sm:flex-row-reverse">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const firstBlank = answers.findIndex((a) => a === null);
+                      if (firstBlank >= 0) setCurrent(firstBlank);
+                      setConfirmingSubmit(false);
+                    }}
+                    className="h-12 flex-1 touch-manipulation rounded-xl bg-elec-yellow text-[15px] font-bold text-black"
+                  >
+                    Go to first blank
+                  </button>
+                  <button
+                    type="button"
+                    onClick={submit}
+                    className="h-12 flex-1 touch-manipulation rounded-xl border border-white/25 text-[15px] font-medium text-white hover:bg-white/[0.06]"
+                  >
+                    Submit anyway
+                  </button>
+                </div>
               </div>
-              <div
-                className={`font-mono text-3xl font-bold tabular-nums leading-none ${
-                  secondsLeft < 300 ? 'text-red-400 animate-pulse' : 'text-white'
+            </div>
+          )}
+
+          {/* Desktop sidebar — timer, progress, question grid */}
+          <aside className="sticky top-[5rem] hidden self-start lg:block">
+            <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_9%)] p-5">
+              <p className={`${LABEL} text-white`}>Time remaining</p>
+              <p
+                className={`mt-2 text-[38px] font-bold leading-none tabular-nums tracking-[-0.03em] ${
+                  lowTime ? 'text-orange-300' : 'text-white'
                 }`}
               >
-                {Math.floor(secondsLeft / 60)}:{String(secondsLeft % 60).padStart(2, '0')}
-              </div>
-              <div className="mt-3 h-1.5 bg-white/[0.08] rounded-full overflow-hidden">
+                {mmss}
+              </p>
+              <div className="mt-4 h-px w-full bg-white/[0.12]">
                 <div
-                  className="h-full bg-yellow-400 transition-all duration-300"
+                  className="h-px bg-elec-yellow transition-all duration-300"
                   style={{ width: `${progressPct}%` }}
                 />
               </div>
-              <p className="mt-2 text-[12px] text-white/65 tabular-nums">
-                {answeredCount} / {questions.length} answered
+              <p className="mt-2.5 text-[12.5px] tabular-nums text-white">
+                {answeredCount} of {questions.length} answered
               </p>
-            </div>
 
-            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-5">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/65 mb-3">
-                Questions
-              </p>
-              <div className="grid grid-cols-5 gap-1.5">
+              <div className="mt-6 grid grid-cols-5 gap-1.5">
                 {questions.map((_, i) => {
-                  const answered = answers[i] !== null;
+                  const isAnswered = answers[i] !== null;
                   const isCurrent = i === current;
                   return (
                     <button
                       key={i}
                       type="button"
                       onClick={() => setCurrent(i)}
-                      className={`h-9 rounded-lg text-[12px] font-semibold tabular-nums transition-colors touch-manipulation ${
+                      className={`h-9 touch-manipulation rounded-md text-[12px] font-semibold tabular-nums transition-colors ${
                         isCurrent
-                          ? 'bg-yellow-500 text-black shadow-lg shadow-yellow-500/30 scale-105'
-                          : answered
-                            ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/25'
-                            : 'bg-white/[0.04] text-white/55 border border-white/[0.06] hover:bg-white/[0.08]'
+                          ? 'bg-elec-yellow text-black'
+                          : flagged.has(i)
+                            ? 'border border-amber-300 text-amber-300'
+                            : isAnswered
+                              ? 'border border-white/25 bg-[hsl(0_0%_18%)] text-white'
+                              : 'border border-white/[0.08] bg-[hsl(0_0%_13%)] text-white hover:bg-[hsl(0_0%_16%)]'
                       }`}
-                      aria-label={`Go to question ${i + 1}${answered ? ' (answered)' : ''}`}
+                      aria-label={`Go to question ${i + 1}${isAnswered ? ' (answered)' : ''}${
+                        flagged.has(i) ? ' (flagged)' : ''
+                      }`}
+                      aria-current={isCurrent ? 'true' : undefined}
                     >
                       {i + 1}
                     </button>
                   );
                 })}
               </div>
+
               <button
                 type="button"
-                onClick={submit}
-                className="mt-4 w-full h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/25 text-[13px] font-semibold touch-manipulation"
+                onClick={requestSubmit}
+                className="mt-5 h-11 w-full touch-manipulation rounded-xl border border-white/[0.08] bg-[hsl(0_0%_13%)] text-[13.5px] font-semibold text-white transition-colors hover:bg-[hsl(0_0%_16%)]"
               >
                 Submit early
               </button>
@@ -577,71 +896,121 @@ export function SEOMockExam({
         </div>
       )}
 
-      {/* RESULTS — score + breakdown + conversion */}
+      {/* ============================= RESULTS ============================= */}
       {submitted && (
-        <div className="space-y-8">
-          {/* Score card */}
-          <div
-            className={`rounded-2xl border p-5 sm:p-7 ${
-              passed
-                ? 'bg-emerald-500/[0.08] border-emerald-500/30'
-                : 'bg-orange-500/[0.08] border-orange-500/30'
-            }`}
-            role="status"
-            aria-live="polite"
-          >
-            <div className="flex items-start gap-3">
-              {passed ? (
-                <Award className="w-7 h-7 text-emerald-400 shrink-0 mt-0.5" />
-              ) : (
-                <RotateCcw className="w-7 h-7 text-orange-400 shrink-0 mt-0.5" />
-              )}
-              <div className="min-w-0">
-                <p
-                  className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${
-                    passed ? 'text-emerald-300' : 'text-orange-300'
-                  }`}
-                >
-                  {passed ? 'Pass' : 'Not yet'}
-                </p>
-                <p className="text-3xl sm:text-4xl font-bold text-white tabular-nums leading-none mt-1">
-                  {percent}%
-                </p>
-                <p className="mt-2 text-[14px] text-white/80 leading-relaxed">
-                  {correctCount} of {questions.length} correct · {formatDuration(timeTakenSec)} ·
-                  pass mark {passThreshold}%
-                </p>
-              </div>
+        <div className="space-y-10">
+          {/* Score — big tabular figure, verdict as a word. No badge, no icon. */}
+          <div className={`${PANEL} px-4 py-6 sm:px-7 sm:py-7`} role="status" aria-live="polite">
+            <p
+              className={`text-[11px] font-semibold uppercase tracking-[0.2em] ${
+                passed ? 'text-emerald-300' : 'text-orange-300'
+              }`}
+            >
+              {passed ? 'Pass' : 'Not yet'}
+            </p>
+            <p className="mt-2 text-[64px] font-bold leading-[0.9] tabular-nums tracking-[-0.045em] text-white sm:text-[76px]">
+              {percent}
+              <span className="text-[32px] tracking-[-0.02em] sm:text-[38px]">%</span>
+            </p>
+
+            {/* Score meter with the pass mark marked on it — control primitive,
+                not decoration: it shows how far off the pass they are. */}
+            <div className="relative mt-5 h-1 w-full bg-white/[0.14]">
+              <div
+                className={`h-1 ${passed ? 'bg-emerald-400' : 'bg-orange-400'}`}
+                style={{ width: `${percent}%` }}
+              />
+              <span
+                aria-hidden
+                className="absolute -top-1 h-3 w-px bg-white"
+                style={{ left: `${passThreshold}%` }}
+              />
             </div>
+            <p className="mt-3 text-[14px] leading-relaxed text-white">
+              {correctCount} of {questions.length} correct · {formatDuration(timeTakenSec)} · pass
+              mark {passThreshold}%
+            </p>
+
+            {/* Secondary, deliberately. Retaking is free and unlimited and
+                people do it happily — it doesn't need to be the loudest
+                thing on the page, and when it was, it ate the conversion. */}
             <button
               type="button"
               onClick={start}
-              className="mt-5 inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl bg-yellow-500 hover:bg-yellow-400 text-black font-semibold touch-manipulation text-[14px]"
+              className="mt-6 h-11 w-full touch-manipulation rounded-xl border border-white/[0.08] bg-[hsl(0_0%_13%)] px-5 text-[14px] font-semibold text-white transition-colors hover:bg-[hsl(0_0%_16%)] sm:w-auto"
             >
-              <RotateCcw className="w-4 h-4" />
               Try again with fresh questions
             </button>
           </div>
 
+          {/* Breakdown by email — the low-friction ask, placed at the exact
+              moment they care most. Deliberately does NOT gate the on-page
+              result: everything below is visible whether they hand over an
+              email or not, so the "free, no sign-up" promise in the page
+              copy stays true. */}
+          <section
+            aria-labelledby="breakdown-email-heading"
+            className={`${PANEL} px-4 py-6 sm:px-7`}
+          >
+            <h2
+              id="breakdown-email-heading"
+              className="text-[19px] font-bold leading-snug tracking-[-0.015em] text-white sm:text-[21px]"
+            >
+              {missedForEmail.length > 0
+                ? `Want the ${missedForEmail.length} you got wrong, explained?`
+                : 'Want this result saved to read later?'}
+            </h2>
+            <p className="mt-2 max-w-[52ch] text-[14.5px] leading-relaxed text-white">
+              {missedForEmail.length > 0
+                ? 'We’ll email your score, your weak topics, and every question you missed with the right answer and the reasoning behind it.'
+                : 'We’ll email your score and the full topic breakdown so you can come back to it before the real thing.'}
+            </p>
+            <div className="mt-5">
+              <EmailCaptureForm
+                source="mock_exam_result"
+                placeholder="you@email.com"
+                buttonLabel="Email my breakdown"
+                successMessage="Sent — check your inbox. Your result is still below."
+                footnote="Your result stays on this page either way. No spam, unsubscribe any time."
+                compact
+                extraPayload={{
+                  mock_result: {
+                    examName,
+                    examSlug,
+                    score: correctCount,
+                    total: questions.length,
+                    percentage: percent,
+                    passed,
+                    passThreshold,
+                    weakAreas: weakAreas.map((c) => ({
+                      name: c.name,
+                      correct: c.correct,
+                      total: c.total,
+                    })),
+                    missed: missedForEmail,
+                    missedTotal: missedForEmail.length,
+                  },
+                }}
+              />
+            </div>
+          </section>
+
           {/* Weak areas — only if there are sub-60% topics with ≥2 Qs */}
           {weakAreas.length > 0 && (
-            <section
-              aria-labelledby="weak-heading"
-              className="rounded-2xl bg-orange-500/[0.05] border border-orange-500/20 p-5 sm:p-6"
-            >
-              <h2
-                id="weak-heading"
-                className="text-white font-semibold flex items-center gap-2 text-[15px]"
-              >
-                <AlertTriangle className="w-4 h-4 text-orange-400" />
+            <section aria-labelledby="weak-heading">
+              <h2 id="weak-heading" className={`${LABEL} mb-3 text-white`}>
                 Topics to revise
               </h2>
-              <ul className="mt-3 space-y-2">
-                {weakAreas.map((c) => (
-                  <li key={c.name} className="flex items-center justify-between gap-3 text-[14px]">
-                    <span className="text-white/85">{c.name}</span>
-                    <span className="text-orange-300 tabular-nums font-medium shrink-0">
-                      {c.correct}/{c.total} · {c.percent}%
+              <ul className={`${PANEL} divide-y divide-white/[0.08]`}>
+                {weakAreas.map((c, i) => (
+                  <li
+                    key={c.name}
+                    className="flex items-baseline gap-3 px-4 py-3 sm:px-5"
+                  >
+                    <RowNumber n={i + 1} />
+                    <span className="flex-1 text-[14.5px] text-white">{c.name}</span>
+                    <span className="shrink-0 text-[14px] font-semibold tabular-nums text-orange-300">
+                      {c.correct}/{c.total}
                     </span>
                   </li>
                 ))}
@@ -649,113 +1018,161 @@ export function SEOMockExam({
             </section>
           )}
 
-          {/* Per-topic breakdown */}
+          {/* Per-topic breakdown — hairline rows with a thin fill per row */}
           {categoryBreakdown.length > 0 && (
-            <section
-              aria-labelledby="breakdown-heading"
-              className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-5 sm:p-6"
-            >
-              <h2
-                id="breakdown-heading"
-                className="text-white font-semibold flex items-center gap-2 text-[15px]"
-              >
-                <Target className="w-4 h-4 text-yellow-400" />
+            <section aria-labelledby="breakdown-heading">
+              <h2 id="breakdown-heading" className={`${LABEL} mb-3 text-white`}>
                 Score by topic
               </h2>
-              <ul className="mt-4 space-y-3">
-                {categoryBreakdown.map((c) => {
-                  const tone =
-                    c.percent >= passThreshold
-                      ? 'bg-emerald-500'
-                      : c.percent >= 50
-                        ? 'bg-yellow-500'
-                        : 'bg-orange-500';
-                  return (
-                    <li key={c.name}>
-                      <div className="flex items-center justify-between text-[13.5px] mb-1.5">
-                        <span className="text-white/85">{c.name}</span>
-                        <span className="text-white/55 tabular-nums">
-                          {c.correct}/{c.total} · {c.percent}%
-                        </span>
-                      </div>
-                      <div className="h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
-                        <div className={`h-full ${tone}`} style={{ width: `${c.percent}%` }} />
-                      </div>
-                    </li>
-                  );
-                })}
+              <ul className={`${PANEL} divide-y divide-white/[0.08]`}>
+                {categoryBreakdown.map((c) => (
+                  <li key={c.name} className="px-4 py-3.5 sm:px-5">
+                    <div className="mb-2 flex items-baseline justify-between gap-4">
+                      <span className="text-[14.5px] text-white">{c.name}</span>
+                      <span className="shrink-0 text-[13.5px] tabular-nums text-white">
+                        {c.correct}/{c.total} · {c.percent}%
+                      </span>
+                    </div>
+                    <div className="h-px w-full bg-white/[0.14]">
+                      <div
+                        className={`h-px ${
+                          c.percent >= passThreshold
+                            ? 'bg-emerald-400'
+                            : c.percent >= 50
+                              ? 'bg-elec-yellow'
+                              : 'bg-orange-400'
+                        }`}
+                        style={{ width: `${c.percent}%` }}
+                      />
+                    </div>
+                  </li>
+                ))}
               </ul>
             </section>
           )}
 
-          {/* Review — collapsed details so the page doesn't blow up below */}
-          <section aria-labelledby="review-heading">
-            <h2
-              id="review-heading"
-              className="text-[13px] font-semibold uppercase tracking-[0.18em] text-yellow-400 mb-3"
+          {/* Conversion — personalised to the result they just scored.
+              Flat panel, numbered rows, ONE yellow (the button). */}
+          {signupCta && (
+            <section
+              aria-labelledby="convert-heading"
+              className={`${PANEL} px-4 py-6 sm:px-7 sm:py-7`}
             >
+              <h2
+                id="convert-heading"
+                className="max-w-[24ch] text-[22px] font-bold leading-[1.15] tracking-[-0.02em] text-white sm:text-[26px]"
+              >
+                {passed
+                  ? `${percent}% today — now make sure it holds on exam day.`
+                  : `${percent}% today. The full app is built to get you to a pass.`}
+              </h2>
+              <ol className="mt-6 divide-y divide-white/[0.08] border-y border-white/[0.08]">
+                {[
+                  weakAreas.length > 0
+                    ? `Practice sets built from your weak topics — ${weakAreas
+                        .slice(0, 2)
+                        .map((c) => c.name)
+                        .join(' and ')} — until they stop costing you marks`
+                    : 'The full question bank, not just the rotation you see here',
+                  'An explanation on every wrong answer, grounded in BS 7671',
+                  'Progress tracked across attempts, so retakes here become scores there',
+                  'AM2 practical simulator and every certificate you need on site',
+                ].map((line, i) => (
+                  <li key={i} className="flex items-start gap-3 py-3">
+                    <RowNumber n={i + 1} />
+                    <span className="flex-1 text-[14.5px] leading-relaxed text-white">{line}</span>
+                  </li>
+                ))}
+              </ol>
+              <Link
+                to={signupCta.href}
+                className="mt-6 flex h-14 w-full touch-manipulation items-center justify-center rounded-xl bg-elec-yellow px-7 text-[15.5px] font-bold tracking-[-0.01em] text-black transition-colors hover:brightness-95 sm:inline-flex sm:w-auto"
+              >
+                {signupCta.label}
+              </Link>
+              {signupCta.subline && (
+                <p className="mt-3 text-[13px] text-white">{signupCta.subline}</p>
+              )}
+            </section>
+          )}
+
+          {/* Review — collapsed rows so the page doesn't blow up below.
+              Correct/wrong is carried by the word, not a coloured icon. */}
+          <section aria-labelledby="review-heading">
+            <h2 id="review-heading" className={`${LABEL} mb-3 text-white`}>
               Review your answers
             </h2>
-            <ol className="space-y-2">
+            <ol className={`${PANEL} divide-y divide-white/[0.08]`}>
               {questions.map((q, idx) => {
                 const userAnswer = answers[idx];
                 const isCorrect = userAnswer === q.correctAnswer;
+                const verdict =
+                  userAnswer === null ? 'Skipped' : isCorrect ? 'Correct' : 'Wrong';
+                const verdictTone =
+                  userAnswer === null
+                    ? 'text-white'
+                    : isCorrect
+                      ? 'text-emerald-300'
+                      : 'text-orange-300';
                 return (
                   <li key={`${attempt}-${q.id}`}>
-                    <details
-                      className={`group rounded-xl border ${
-                        userAnswer === null
-                          ? 'bg-white/[0.03] border-white/[0.08]'
-                          : isCorrect
-                            ? 'bg-emerald-500/[0.05] border-emerald-500/20'
-                            : 'bg-red-500/[0.05] border-red-500/20'
-                      }`}
-                    >
-                      <summary className="cursor-pointer list-none px-4 py-3 sm:px-5 sm:py-3.5 flex items-start gap-3 touch-manipulation">
-                        <span className="text-[11px] font-semibold text-white/45 tabular-nums shrink-0 mt-0.5">
-                          {String(idx + 1).padStart(2, '0')}
-                        </span>
-                        {userAnswer === null ? (
-                          <span className="text-[11px] font-semibold text-white/55 shrink-0 mt-0.5">
-                            Skipped
-                          </span>
-                        ) : isCorrect ? (
-                          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                        ) : (
-                          <XCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
-                        )}
-                        <span className="text-white text-[14px] leading-snug flex-1">
+                    <details className="group">
+                      <summary className="flex cursor-pointer list-none touch-manipulation items-start gap-3 px-4 py-3.5 sm:px-5">
+                        <RowNumber n={idx + 1} />
+                        <span className="flex-1 text-[14.5px] leading-snug text-white">
                           {q.question}
                         </span>
-                        <ChevronRight className="w-4 h-4 text-white/40 shrink-0 mt-0.5 group-open:rotate-90 transition-transform" />
+                        <span className="flex shrink-0 flex-col items-end gap-0.5 pt-[2px]">
+                          <span
+                            className={`text-[11px] font-semibold uppercase tracking-[0.1em] ${verdictTone}`}
+                          >
+                            {verdict}
+                          </span>
+                          {/* First-party difficulty: how many other people miss
+                              this one. Only shown where the sample is real. */}
+                          {failureRates[String(q.id)] !== undefined && (
+                            <span className="whitespace-nowrap text-[11px] tabular-nums text-white">
+                              {failureRates[String(q.id)]}% get this wrong
+                            </span>
+                          )}
+                        </span>
+                        <span
+                          aria-hidden
+                          className="mt-[7px] h-[7px] w-[7px] shrink-0 rotate-45 border-b border-r border-white transition-transform group-open:-rotate-[135deg]"
+                        />
                       </summary>
-                      <div className="px-4 pb-4 sm:px-5 sm:pb-5 pl-[3.25rem] sm:pl-[3.5rem]">
-                        <ul className="space-y-1.5 mt-1">
+                      <div className="px-4 pb-4 pl-[2.9rem] sm:px-5 sm:pb-5 sm:pl-[3.1rem]">
+                        <ul className="space-y-1.5">
                           {q.options.map((opt, i) => {
                             const isUserPick = userAnswer === i;
                             const isCorrectOpt = i === q.correctAnswer;
                             return (
                               <li
                                 key={i}
-                                className={`text-[13px] leading-snug px-3 py-2 rounded-lg ${
+                                className={`rounded-lg px-3 py-2 text-[13.5px] leading-snug text-white ${
                                   isCorrectOpt
-                                    ? 'bg-emerald-500/10 text-emerald-200 border border-emerald-500/30'
+                                    ? 'border border-emerald-400/40 bg-emerald-400/[0.08]'
                                     : isUserPick
-                                      ? 'bg-red-500/10 text-red-200 border border-red-500/30'
-                                      : 'bg-white/[0.02] text-white/60 border border-white/[0.05]'
+                                      ? 'border border-orange-400/40 bg-orange-400/[0.08]'
+                                      : 'border border-white/[0.08]'
                                 }`}
                               >
-                                <span className="font-medium mr-2 text-white/55">
-                                  {String.fromCharCode(65 + i)}.
+                                <span className="mr-2 font-semibold">
+                                  {String.fromCharCode(65 + i)}
                                 </span>
                                 {opt}
+                                {isCorrectOpt && (
+                                  <span className="ml-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-emerald-300">
+                                    Correct
+                                  </span>
+                                )}
                               </li>
                             );
                           })}
                         </ul>
                         {q.explanation && (
-                          <p className="mt-3 text-[13px] text-white/65 leading-relaxed">
-                            <span className="font-semibold text-white/80">Why:</span>{' '}
+                          <p className="mt-3 text-[13.5px] leading-relaxed text-white">
+                            <span className="font-semibold">Why: </span>
                             {q.explanation}
                           </p>
                         )}
@@ -766,67 +1183,6 @@ export function SEOMockExam({
               })}
             </ol>
           </section>
-
-          {/* Conversion — personalised to the result they just scored. */}
-          {signupCta && (
-            <section
-              aria-labelledby="convert-heading"
-              className="rounded-2xl bg-gradient-to-br from-yellow-500/[0.08] via-yellow-500/[0.04] to-transparent border border-yellow-500/25 p-5 sm:p-7"
-            >
-              <h2
-                id="convert-heading"
-                className="text-white text-[18px] sm:text-[20px] font-bold leading-tight"
-              >
-                {passed
-                  ? `${percent}% today — now make sure it holds on exam day.`
-                  : `${percent}% today. The full app is built to get you to a pass.`}
-              </h2>
-              <ul className="mt-4 space-y-2.5 text-[14px] text-white/85">
-                {weakAreas.length > 0 ? (
-                  <li className="flex items-start gap-2.5">
-                    <span className="text-yellow-400 mt-0.5 shrink-0">→</span>
-                    <span>
-                      Practice sets built from your weak topics —{' '}
-                      <span className="text-white font-medium">
-                        {weakAreas
-                          .slice(0, 2)
-                          .map((c) => c.name)
-                          .join(', ')}
-                      </span>{' '}
-                      — until they stop costing you marks
-                    </span>
-                  </li>
-                ) : (
-                  <li className="flex items-start gap-2.5">
-                    <span className="text-yellow-400 mt-0.5 shrink-0">→</span>
-                    <span>Full question bank, not just the rotation you see here</span>
-                  </li>
-                )}
-                <li className="flex items-start gap-2.5">
-                  <span className="text-yellow-400 mt-0.5 shrink-0">→</span>
-                  <span>AI explanation on every wrong answer, grounded in BS 7671</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="text-yellow-400 mt-0.5 shrink-0">→</span>
-                  <span>Progress tracking across attempts, so retakes here become scores there</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="text-yellow-400 mt-0.5 shrink-0">→</span>
-                  <span>AM2 practical simulator + every cert you need on site</span>
-                </li>
-              </ul>
-              <Link
-                to={signupCta.href}
-                className="mt-6 inline-flex items-center justify-center gap-2 h-12 px-6 rounded-xl bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-[15px] touch-manipulation"
-              >
-                {signupCta.label}
-                <ChevronRight className="w-4 h-4" />
-              </Link>
-              {signupCta.subline && (
-                <p className="mt-3 text-[12.5px] text-white/55">{signupCta.subline}</p>
-              )}
-            </section>
-          )}
         </div>
       )}
     </>

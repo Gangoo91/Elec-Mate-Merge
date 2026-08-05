@@ -69,7 +69,7 @@ export default function ElectricalCustomerServicePage() {
                 you in their home.
               </p>
               <div className="space-y-4 mt-6">
-                <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+                <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
                   <div className="flex items-center gap-2 mb-3">
                     <Sparkles className="w-5 h-5 text-yellow-400" />
                     <h3 className="font-bold text-white text-lg">The First 30 Seconds</h3>
@@ -237,7 +237,7 @@ export default function ElectricalCustomerServicePage() {
                 payment signal "established professional."
               </p>
               <div className="grid gap-4 sm:grid-cols-2 mt-6">
-                <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+                <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
                   <h3 className="font-bold text-white text-lg mb-3">What Customers Expect</h3>
                   <ul className="space-y-2 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-3">
@@ -397,7 +397,7 @@ export default function ElectricalCustomerServicePage() {
                 customer sees that you take responsibility and fix problems.
               </p>
               <div className="space-y-4 mt-6">
-                <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+                <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
                   <div className="flex items-center gap-2 mb-3">
                     <MessageSquare className="w-5 h-5 text-yellow-400" />
                     <h3 className="font-bold text-white text-lg">The LAST Framework</h3>

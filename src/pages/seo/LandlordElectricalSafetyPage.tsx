@@ -170,7 +170,7 @@ export default function LandlordElectricalSafetyPage() {
                 The regulations require a valid EICR to be in place at all times during a tenancy.
                 The timeline works as follows:
               </p>
-              <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-6">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-6">
                 <h3 className="font-bold text-yellow-400 text-lg mb-3">EICR Timeline</h3>
                 <div className="space-y-4">
                   <div className="flex gap-4">
@@ -302,7 +302,7 @@ export default function LandlordElectricalSafetyPage() {
               </p>
               <div className="space-y-4 my-4">
                 <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                  <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                     1
                   </div>
                   <div>
@@ -318,7 +318,7 @@ export default function LandlordElectricalSafetyPage() {
                   </div>
                 </div>
                 <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                  <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                     2
                   </div>
                   <div>
@@ -333,7 +333,7 @@ export default function LandlordElectricalSafetyPage() {
                   </div>
                 </div>
                 <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                  <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                     3
                   </div>
                   <div>
@@ -349,7 +349,7 @@ export default function LandlordElectricalSafetyPage() {
                   </div>
                 </div>
                 <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                  <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                     4
                   </div>
                   <div>
@@ -366,7 +366,7 @@ export default function LandlordElectricalSafetyPage() {
                   </div>
                 </div>
                 <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-                  <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                     5
                   </div>
                   <div>
@@ -535,7 +535,7 @@ export default function LandlordElectricalSafetyPage() {
                 2020 apply only to England. Scotland and Wales have their own regulatory frameworks.
               </p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-3">Scotland</h3>
                   <p className="text-white text-sm leading-relaxed mb-3">
                     Scotland has had electrical safety requirements for private rented properties

@@ -58,14 +58,14 @@ const RcdRegulationsCard = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">BS 7671:2018+A3:2024</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">BS 7671:2018+A3:2024</p>
         </motion.div>
 
         {coreRegulations.map((reg, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 rounded-xl bg-yellow-400/10 border border-yellow-400/20 px-2.5 py-1.5">
+                <div className="flex-shrink-0 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 px-2.5 py-1.5">
                   <span className="text-xs font-bold text-yellow-400 whitespace-nowrap">{reg.number}</span>
                 </div>
                 <div className="flex-1 min-w-0">
@@ -78,12 +78,12 @@ const RcdRegulationsCard = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Other Standards</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Other Standards</p>
         </motion.div>
 
         {otherStandards.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-sm font-semibold text-white">{item.standard}</p>
               <p className="text-sm text-white mt-1 leading-relaxed">{item.detail}</p>
             </div>
@@ -92,8 +92,8 @@ const RcdRegulationsCard = ({ onBack }: Props) => {
 
         {/* Special locations */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Special Locations Requiring RCD Protection</p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Special Locations Requiring RCD Protection</p>
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <div className="space-y-1.5">
               {specialLocations.map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
@@ -107,13 +107,13 @@ const RcdRegulationsCard = ({ onBack }: Props) => {
 
         {/* Periodic verification */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Periodic Verification (Reg 643.11)</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Periodic Verification (Reg 643.11)</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <div className="flex items-start gap-3 mb-3">
-              <div className="flex-shrink-0 rounded-xl bg-yellow-400/10 border border-yellow-400/20 px-2.5 py-1.5">
+              <div className="flex-shrink-0 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 px-2.5 py-1.5">
                 <span className="text-xs font-bold text-yellow-400">Reg 643.11</span>
               </div>
               <div>
@@ -140,7 +140,7 @@ const RcdRegulationsCard = ({ onBack }: Props) => {
 
         {/* Non-compliance */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-orange-400/10 border border-orange-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-2">Consequences of Non-Compliance</p>
             <div className="space-y-1.5">
               {[

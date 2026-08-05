@@ -281,7 +281,7 @@ const sections = [
             conditions per BS 7671 Appendix 4.
           </p>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <span>

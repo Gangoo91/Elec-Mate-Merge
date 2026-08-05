@@ -144,7 +144,7 @@ export default function VoltageDropGuideBS7671Page() {
                 may be relaxed — BS 7671 permits up to 6% for lighting and 8% for other circuits in
                 these cases (Regulation 525.1.1).
               </p>
-              <div className="p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/20 my-4">
+              <div className="p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] my-4">
                 <p className="text-white text-sm leading-relaxed">
                   <strong className="text-yellow-400">Important:</strong> The voltage drop values of
                   6.9V and 11.5V assume a nominal supply voltage of 230V. The actual UK supply
@@ -210,7 +210,7 @@ export default function VoltageDropGuideBS7671Page() {
           content: (
             <>
               <div className="space-y-6">
-                <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6">
+                <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6">
                   <h3 className="font-bold text-yellow-400 text-lg mb-4">
                     Example 1: Domestic Ring Circuit
                   </h3>

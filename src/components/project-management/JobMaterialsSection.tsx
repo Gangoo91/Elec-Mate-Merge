@@ -314,6 +314,7 @@ export const JobMaterialsSection = ({
               {stockOpen && (
                 <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-2 space-y-2">
                   <input
+                    autoFocus
                     value={stockQuery}
                     onChange={(e) => runStockSearch(e.target.value)}
                     placeholder="Search your stock…"

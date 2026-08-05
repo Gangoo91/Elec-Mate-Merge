@@ -39,6 +39,7 @@ import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
 import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
+import { scrollToTopForStepChange } from '@/utils/scroll';
 
 const REPORT_TYPE = 'bess' as const;
 
@@ -276,7 +277,7 @@ const {
         currentTab={currentTab}
         onTabChange={(tab) => {
           handleTabChange(tab);
-          window.scrollTo({ top: 0 });
+          scrollToTopForStepChange();
         }}
         completedTabs={{
           installation: !!isTabComplete('installation'),

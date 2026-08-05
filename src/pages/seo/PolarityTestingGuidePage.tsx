@@ -232,7 +232,7 @@ const sections = [
           continuity test, supplemented by visual inspection and instrument testing.
         </p>
         <div className="grid sm:grid-cols-3 gap-4 my-6">
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <Eye className="w-6 h-6 text-yellow-400 mb-3" />
             <h3 className="font-bold text-white text-lg mb-2">Visual Inspection</h3>
             <p className="text-white text-sm leading-relaxed">
@@ -391,7 +391,7 @@ const sections = [
             </li>
           </ol>
         </div>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
             <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
             <div>
@@ -562,7 +562,7 @@ const sections = [
           you identify problems more efficiently during inspection.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
               <div>
@@ -577,7 +577,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
               <div>

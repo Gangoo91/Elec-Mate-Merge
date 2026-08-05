@@ -346,7 +346,7 @@ const sections = [
           Based on NICEIC assessment feedback across the industry, the most common certificate
           issues are:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -505,7 +505,7 @@ const sections = [
               </div>
             </div>
             <div className="contents">
-              <div className="px-4 py-4 border-b border-white/10 bg-red-500/10">
+              <div className="px-4 py-4 border-b border-white/10 bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                 <span className="font-bold text-red-400">C1</span>
               </div>
               <div className="px-4 py-4 border-b border-white/10 text-white text-sm">
@@ -527,7 +527,7 @@ const sections = [
               </div>
             </div>
             <div className="contents">
-              <div className="px-4 py-4 border-b border-white/10 bg-yellow-500/10">
+              <div className="px-4 py-4 border-b border-white/10 bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                 <span className="font-bold text-yellow-400">C3</span>
               </div>
               <div className="px-4 py-4 border-b border-white/10 text-white text-sm">
@@ -760,7 +760,7 @@ const sections = [
           raised at your next assessment visit.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Camera className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

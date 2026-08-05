@@ -188,7 +188,7 @@ export default function VoltageDropCalculatorPage() {
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
         <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
             <Zap className="w-4 h-4" />
             Part of 70 Electrical Calculators
           </div>
@@ -230,7 +230,7 @@ export default function VoltageDropCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Lightbulb className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">What Is Voltage Drop?</h2>
@@ -278,7 +278,7 @@ export default function VoltageDropCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <BookOpen className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -299,7 +299,7 @@ export default function VoltageDropCalculatorPage() {
               limits in Table 4Ab are:
             </p>
             <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+              <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                 <div className="flex items-center gap-2 mb-2">
                   <Lightbulb className="w-5 h-5 text-yellow-400" />
                   <h3 className="font-bold text-white text-lg">Lighting Circuits</h3>
@@ -307,7 +307,7 @@ export default function VoltageDropCalculatorPage() {
                 <p className="text-3xl font-bold text-yellow-400 mb-1">3%</p>
                 <p className="text-white text-sm">of nominal voltage = 6.9 V on a 230 V supply</p>
               </div>
-              <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+              <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                 <div className="flex items-center gap-2 mb-2">
                   <Zap className="w-5 h-5 text-yellow-400" />
                   <h3 className="font-bold text-white text-lg">Power Circuits</h3>
@@ -337,14 +337,14 @@ export default function VoltageDropCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Calculator className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">The Voltage Drop Formula</h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>The standard voltage drop formula used with BS 7671 tables is straightforward:</p>
-            <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 text-center my-6">
+            <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
               <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
                 VD = (mV/A/m × I<sub>b</sub> × L) ÷ 1000
               </p>
@@ -403,7 +403,7 @@ export default function VoltageDropCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <BookOpen className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -471,7 +471,7 @@ export default function VoltageDropCalculatorPage() {
       <section id="how-it-works" className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <CheckCircle2 className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -484,7 +484,7 @@ export default function VoltageDropCalculatorPage() {
                 key={index}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 flex-shrink-0">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
                   <span className="font-bold text-yellow-400">{index + 1}</span>
                 </div>
                 <div>
@@ -501,7 +501,7 @@ export default function VoltageDropCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <BarChart3 className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Worked Examples</h2>
@@ -616,7 +616,7 @@ export default function VoltageDropCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <HelpCircle className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -627,7 +627,7 @@ export default function VoltageDropCalculatorPage() {
             {faqs.map((faq, index) => (
               <details
                 key={index}
-                className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-yellow-500/30 transition-colors"
+                className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/[0.14] transition-colors"
               >
                 <summary className="flex items-start gap-3 cursor-pointer touch-manipulation list-none [&::-webkit-details-marker]:hidden">
                   <ChevronRight className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />
@@ -646,7 +646,7 @@ export default function VoltageDropCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Cable className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -660,13 +660,13 @@ export default function VoltageDropCalculatorPage() {
           </p>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden">
             <div className="grid grid-cols-3 gap-px bg-white/10">
-              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                 Cable Size
               </div>
-              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                 mV/A/m (1-phase)
               </div>
-              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                 Typical Use
               </div>
             </div>

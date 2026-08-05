@@ -315,7 +315,7 @@ const sections = [
           electrical practice and different levels of protection.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">BS 3036 Rewireable Fuses</h3>
             <p className="text-white text-sm text-white mb-2 leading-relaxed">
               Very old. Fuse elements made of fuse wire that must be replaced manually when blown.
@@ -343,7 +343,7 @@ const sections = [
               </span>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">Split-Load with One RCD</h3>
             <p className="text-white text-sm text-white mb-2 leading-relaxed">
               Consumer unit with a main switch and one RCD protecting some circuits. Common from
@@ -382,7 +382,7 @@ const sections = [
           These are the specific electrical red flags that warrant immediate investigation and
           remediation in a property being purchased or recently purchased:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -519,7 +519,7 @@ const sections = [
           who will need electrical work for years to come.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

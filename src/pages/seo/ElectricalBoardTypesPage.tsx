@@ -272,7 +272,7 @@ export default function ElectricalBoardTypesPage() {
                 with no other circuits to cause a trip, the risk of nuisance disconnection is
                 virtually eliminated for those critical services.
               </p>
-              <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-6">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-6">
                 <h3 className="font-bold text-yellow-400 text-lg mb-3">
                   Typical High Integrity Board Layout
                 </h3>
@@ -332,7 +332,7 @@ export default function ElectricalBoardTypesPage() {
                 disruption, and the electrician can immediately identify which circuit has the fault
                 simply by looking at which RCBO has tripped.
               </p>
-              <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-6">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-6">
                 <h3 className="font-bold text-yellow-400 text-lg mb-4">
                   Why All-RCBO Boards Are the Professional Choice
                 </h3>

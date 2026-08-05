@@ -215,7 +215,7 @@ const sections = [
           between notifiable and non-notifiable work is defined in the Building Regulations 2010 (as
           amended) and the Approved Document P.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="text-lg font-semibold text-white mb-3">
             Notifiable Work (Part P, England)
           </h3>
@@ -424,7 +424,7 @@ const sections = [
           Part P is one of the most misunderstood aspects of UK building regulations among both the
           public and some electricians. The following misconceptions are frequently encountered.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />

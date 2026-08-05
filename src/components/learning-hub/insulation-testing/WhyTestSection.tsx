@@ -245,7 +245,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Real-World Failure Scenarios */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-amber-400 uppercase tracking-wider px-0.5 mb-2 mt-4">Real-World Failure Scenarios</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white px-0.5 mb-2 mt-4">Real-World Failure Scenarios</p>
         </motion.div>
         {failureScenarios.map((scenario, i) => {
           const isOpen = expanded === `scenario-${i}`;

@@ -520,56 +520,56 @@ export const EarthFaultLoopContent = () => {
                 <tr className="border-b border-gray-700 hover:bg-elec-gray/50">
                   <td className="p-3 font-medium">Type B MCB</td>
                   <td className="p-3">6A</td>
-                  <td className="p-3 text-green-400 font-bold">7.67</td>
+                  <td className="p-3 text-green-400 font-bold">7.28</td>
                   <td className="p-3">0.4s</td>
                   <td className="p-3 text-foreground">Lighting circuits</td>
                 </tr>
                 <tr className="border-b border-gray-700 hover:bg-elec-gray/50">
                   <td className="p-3 font-medium">Type B MCB</td>
                   <td className="p-3">16A</td>
-                  <td className="p-3 text-green-400 font-bold">2.88</td>
+                  <td className="p-3 text-green-400 font-bold">2.73</td>
                   <td className="p-3">0.4s</td>
                   <td className="p-3 text-foreground">Small power circuits</td>
                 </tr>
                 <tr className="border-b border-gray-700 hover:bg-elec-gray/50 bg-blue-900/20">
                   <td className="p-3 font-medium">Type B MCB</td>
                   <td className="p-3">32A</td>
-                  <td className="p-3 text-yellow-400 font-bold">1.44</td>
+                  <td className="p-3 text-yellow-400 font-bold">1.37</td>
                   <td className="p-3">0.4s</td>
                   <td className="p-3 text-foreground">Ring final/radial circuits</td>
                 </tr>
                 <tr className="border-b border-gray-700 hover:bg-elec-gray/50">
                   <td className="p-3 font-medium">Type C MCB</td>
                   <td className="p-3">16A</td>
-                  <td className="p-3 text-orange-400 font-bold">1.44</td>
+                  <td className="p-3 text-orange-400 font-bold">1.37</td>
                   <td className="p-3">0.4s</td>
                   <td className="p-3 text-foreground">Motor circuits</td>
                 </tr>
                 <tr className="border-b border-gray-700 hover:bg-elec-gray/50 bg-orange-900/20">
                   <td className="p-3 font-medium">Type C MCB</td>
                   <td className="p-3">32A</td>
-                  <td className="p-3 text-red-400 font-bold">0.72</td>
+                  <td className="p-3 text-red-400 font-bold">0.68</td>
                   <td className="p-3">0.4s</td>
                   <td className="p-3 text-foreground">High inrush equipment</td>
                 </tr>
                 <tr className="border-b border-gray-700 hover:bg-elec-gray/50">
                   <td className="p-3 font-medium">BS 88 Fuse</td>
                   <td className="p-3">16A</td>
-                  <td className="p-3 text-green-400 font-bold">2.19</td>
+                  <td className="p-3 text-green-400 font-bold">4.00</td>
                   <td className="p-3">5s</td>
                   <td className="p-3 text-foreground">Fixed equipment</td>
                 </tr>
                 <tr className="border-b border-gray-700 hover:bg-elec-gray/50">
                   <td className="p-3 font-medium">BS 88 Fuse</td>
                   <td className="p-3">32A</td>
-                  <td className="p-3 text-yellow-400 font-bold">1.09</td>
+                  <td className="p-3 text-yellow-400 font-bold">1.70</td>
                   <td className="p-3">5s</td>
                   <td className="p-3 text-foreground">Distribution circuits</td>
                 </tr>
                 <tr className="border-b border-gray-700 hover:bg-elec-gray/50">
                   <td className="p-3 font-medium">BS 3036 Fuse</td>
                   <td className="p-3">30A</td>
-                  <td className="p-3 text-red-400 font-bold">1.04</td>
+                  <td className="p-3 text-red-400 font-bold">2.51</td>
                   <td className="p-3">5s</td>
                   <td className="p-3 text-foreground">Older installations</td>
                 </tr>

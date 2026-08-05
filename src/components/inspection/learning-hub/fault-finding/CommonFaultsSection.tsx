@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ArrowLeft, Zap, Shield, Flame, AlertTriangle, Activity } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { BusinessCard } from '@/components/business-hub';
+import { HubTile as BusinessCard } from '@/components/learning-hub/HubTile';
 import { motion } from 'framer-motion';
 import ShortCircuitPage from './faults/ShortCircuitPage';
 import EarthFaultPage from './faults/EarthFaultPage';
@@ -42,7 +42,7 @@ const CommonFaultsSection = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               Every electrical fault falls into one of these six categories. Understanding each type — how it behaves electrically, what symptoms it produces, and which test reveals it — is the foundation of effective fault finding.
             </p>

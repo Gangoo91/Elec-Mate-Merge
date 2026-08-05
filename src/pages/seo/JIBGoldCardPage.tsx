@@ -236,7 +236,7 @@ const sections = [
           demonstrate them.
         </p>
         <div className="grid sm:grid-cols-2 gap-4 my-6">
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <h3 className="font-bold text-yellow-400 text-lg mb-3">Route 1 — Apprenticeship</h3>
             <ul className="space-y-2 text-white text-sm">
               <li>
@@ -381,7 +381,7 @@ const sections = [
                 key={`${row.card}-${row.grade}`}
                 className={`grid grid-cols-1 sm:grid-cols-12 gap-1 sm:gap-3 p-3 rounded-xl border ${
                   row.highlight
-                    ? 'bg-yellow-500/10 border-yellow-500/30'
+                    ? 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14]'
                     : 'bg-white/[0.03] border-white/10'
                 }`}
               >
@@ -592,7 +592,7 @@ const sections = [
           provider.
         </p>
         <div className="grid sm:grid-cols-3 gap-4 my-6">
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="text-[11px] uppercase tracking-wide text-white/50 font-semibold mb-1">
               The ECS card
             </div>

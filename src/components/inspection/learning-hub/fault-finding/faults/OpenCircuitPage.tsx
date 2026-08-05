@@ -18,15 +18,15 @@ const OpenCircuitPage = ({ onBack }: Props) => (
 
     <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
       <motion.div variants={itemVariants}>
-        <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-2">What Is It</p>
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-2">What Is It</p>
           <p className="text-sm text-white leading-relaxed">An open circuit is a break in the conductive path — the circuit is incomplete, so no current can flow. The circuit appears dead even though the MCB is on and the supply is present. Open circuits are frustrating because there is no dramatic symptom — just silence where there should be power.</p>
         </div>
       </motion.div>
 
       <motion.div variants={itemVariants}>
-        <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Symptoms</p>
-        <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Symptoms</p>
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
           <div className="space-y-2">
             {['No power at one or more accessories — but MCB is ON', 'Partial power loss on a ring circuit — some sockets work, others do not', 'Lights not working despite switch being on and MCB being on', 'Intermittent power — works sometimes, fails other times (loose connection)', 'No voltage at the accessory when tested with a voltage indicator', 'Continuity test shows infinite resistance on one or more conductors'].map((s, i) => (
               <div key={i} className="flex items-start gap-3">
@@ -39,7 +39,7 @@ const OpenCircuitPage = ({ onBack }: Props) => (
       </motion.div>
 
       <motion.div variants={itemVariants}>
-        <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Common Causes</p>
+        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Causes</p>
       </motion.div>
 
       {[
@@ -50,10 +50,10 @@ const OpenCircuitPage = ({ onBack }: Props) => (
         { cause: 'Blown fuse not identified', detail: 'A blown fuse in an FCU, main fuse, or older rewireable fuse board can appear as an open circuit. The circuit is dead but the switch/fuse carrier appears normal from the outside.', tip: 'Always check fuses before complex testing. Remove and inspect. Use a continuity tester to confirm the fuse element is intact.' },
       ].map((item, i) => (
         <motion.div key={i} variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-2">
             <p className="text-sm font-semibold text-white">{item.cause}</p>
             <p className="text-sm text-white leading-relaxed">{item.detail}</p>
-            <div className="rounded-xl bg-yellow-400/5 border border-yellow-400/10 p-2.5">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/10 p-2.5">
               <p className="text-xs text-yellow-400/80">{item.tip}</p>
             </div>
           </div>
@@ -61,13 +61,13 @@ const OpenCircuitPage = ({ onBack }: Props) => (
       ))}
 
       <motion.div variants={itemVariants}>
-        <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">How to Diagnose</p>
+        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">How to Diagnose</p>
       </motion.div>
 
       {['Confirm the MCB/fuse is ON and intact. Check for tripped RCDs. Check for blown fuses in FCUs.', 'Test for voltage at the dead accessory using a voltage indicator. No voltage confirms open circuit (not a load fault).', 'Isolate the circuit and prove dead for safe testing.', 'Perform continuity test from the board to the dead accessory — L, N and E individually. The conductor showing infinite resistance has the break.', 'If all three conductors show infinite: the break is before the first junction point. If only one: trace that specific conductor.', 'Section the circuit at junction boxes. Test continuity of each section individually. The section showing infinite contains the break.', 'For ring circuits: test end-to-end continuity of each leg. Cross-connect and test at each socket to find the break location.', 'Re-terminate the loose connection or replace the broken cable section. Retest continuity, IR and polarity. Energise and verify.'].map((step, i) => (
         <motion.div key={i} variants={itemVariants}>
-          <div className="flex items-start gap-3 rounded-xl bg-white/[0.03] border border-white/10 p-3.5">
-            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+          <div className="flex items-start gap-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-3.5">
+            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
               <span className="text-sm font-bold text-yellow-400">{i + 1}</span>
             </div>
             <p className="text-sm text-white leading-relaxed pt-1">{step}</p>
@@ -76,14 +76,14 @@ const OpenCircuitPage = ({ onBack }: Props) => (
       ))}
 
       <motion.div variants={itemVariants}>
-        <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider">Real-World Case</p>
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Real-World Case</p>
           <p className="text-sm font-semibold text-white">Landing Light — Intermittent Open Circuit</p>
           <p className="text-sm text-white">Landing light works sometimes and fails other times. No pattern. Lamp is fine. Switch clicks normally.</p>
-          <div className="rounded-xl bg-white/[0.05] p-3">
+          <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
             <p className="text-xs text-white">Continuity test with switch ON: 0.3Ω (good). But when the switch faceplate was disturbed during testing, the reading jumped to infinity. The switched live conductor was barely held by the terminal screw — making contact under some conditions and losing contact when the faceplate was slightly moved. Years of thermal cycling had loosened the screw.</p>
           </div>
-          <div className="rounded-xl bg-green-400/5 border border-green-400/10 p-3">
+          <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-green-400/10 p-3">
             <p className="text-xs text-white">Stripped, re-terminated and torqued the conductor. Checked all other terminals in the same switch — two others were also loose. Retested: solid continuity in all switch positions. Advised client that all switches of this age should have terminal tightness checked.</p>
           </div>
         </div>

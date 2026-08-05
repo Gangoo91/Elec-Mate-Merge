@@ -210,7 +210,7 @@ const sections = [
     content: (
       <>
         <p>The playbook career changers actually use:</p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-2.5 text-white text-[14px]">
             <li>• <strong>Overlap the transition:</strong> study the Level 2 while still in your current job; only switch income when the apprenticeship is signed.</li>
             <li>• <strong>Target JIB and larger employers</strong> for the better stage rates — and remember the year-two NLW floor is law, not negotiation.</li>

@@ -240,7 +240,7 @@ const sections = [
           both homeowners and electricians.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Zone 0</h3>
             <p className="text-white text-sm leading-relaxed">
               Inside the bath tub or shower basin itself. Only SELV (Separated Extra-Low Voltage)
@@ -258,7 +258,7 @@ const sections = [
               instantaneous water heaters. No socket outlets.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Zone 2</h3>
             <p className="text-white text-sm leading-relaxed">
               Extends 0.6m horizontally beyond Zone 1 and to 2.25m height. Equipment must be rated
@@ -484,7 +484,7 @@ const sections = [
           electrician. Here are tips for quoting bathroom jobs effectively:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { BOOKING_PROJECT_PARAM } from '@/lib/bookingToProject';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowLeft,
@@ -202,8 +203,7 @@ const ProjectsPage = () => {
       if (p.stage === 'cancelled' || p.stage === 'paid') continue;
       const booked = p.bookedSlot ? new Date(p.bookedSlot) : null;
       if (booked && booked >= startOfToday && booked < endOfTomorrow) {
-        const when =
-          booked < new Date(startOfToday.getTime() + 86400000) ? 'today' : 'tomorrow';
+        const when = booked < new Date(startOfToday.getTime() + 86400000) ? 'today' : 'tomorrow';
         items.push({
           project: p,
           reason: `On site ${when} · ${booked.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`,
@@ -223,12 +223,12 @@ const ProjectsPage = () => {
         });
       } else if (p.stage === 'awaiting_payment') {
         items.push({ project: p, reason: 'Invoice out — chase payment', tone: 'text-white/60' });
-      } else if (
-        p.dueDate &&
-        p.status !== 'completed' &&
-        new Date(p.dueDate) < startOfToday
-      ) {
-        items.push({ project: p, reason: `Past due date (${formatDate(p.dueDate)})`, tone: 'text-red-300' });
+      } else if (p.dueDate && p.status !== 'completed' && new Date(p.dueDate) < startOfToday) {
+        items.push({
+          project: p,
+          reason: `Past due date (${formatDate(p.dueDate)})`,
+          tone: 'text-red-300',
+        });
       }
     }
     return items;
@@ -236,14 +236,23 @@ const ProjectsPage = () => {
 
   const stageChips = useMemo(() => {
     const order: JobStage[] = [
-      'enquiry', 'quoted', 'won', 'booked', 'in_progress', 'awaiting_payment', 'bill_it', 'paid',
+      'enquiry',
+      'quoted',
+      'won',
+      'booked',
+      'in_progress',
+      'awaiting_payment',
+      'bill_it',
+      'paid',
     ];
     const byStage = new Map<JobStage, number>();
     for (const p of projects) byStage.set(p.stage, (byStage.get(p.stage) || 0) + 1);
-    return order.filter((s) => (byStage.get(s) || 0) > 0).map((s) => ({
-      stage: s,
-      count: byStage.get(s) || 0,
-    }));
+    return order
+      .filter((s) => (byStage.get(s) || 0) > 0)
+      .map((s) => ({
+        stage: s,
+        count: byStage.get(s) || 0,
+      }));
   }, [projects]);
 
   const visibleProjects = useMemo(() => {
@@ -318,10 +327,7 @@ const ProjectsPage = () => {
     () => (isCompletedView ? projects.filter((p) => p.status === 'completed') : []),
     [isCompletedView, projects]
   );
-  const completedIds = useMemo(
-    () => completedProjects.map((p) => p.id),
-    [completedProjects]
-  );
+  const completedIds = useMemo(() => completedProjects.map((p) => p.id), [completedProjects]);
   const completedEstimatedValues = useMemo(() => {
     const map: Record<string, number | undefined> = {};
     for (const p of completedProjects) map[p.id] = p.estimatedValue;
@@ -361,6 +367,27 @@ const ProjectsPage = () => {
   const [newDueDate, setNewDueDate] = useState('');
   const [newEstimatedValue, setNewEstimatedValue] = useState('');
   const [creating, setCreating] = useState(false);
+
+  // ELE-1471 — arriving from a booking notification's "Convert to project".
+  // The booking's details come in on the query string (see bookingToProject.ts)
+  // so the link survives a push notification, a refresh or a new tab. Params
+  // are stripped once consumed, otherwise a back-navigation would reopen the
+  // sheet and the electrician could create the same job twice.
+  const [searchParams, setSearchParams] = useSearchParams();
+  useEffect(() => {
+    if (searchParams.get(BOOKING_PROJECT_PARAM) !== '1') return;
+
+    setNewTitle(searchParams.get('title') || '');
+    setNewDescription(searchParams.get('description') || '');
+    setNewCustomerId(searchParams.get('customerId') || '');
+    setNewDueDate(searchParams.get('dueDate') || '');
+    const bookedLocation = searchParams.get('location');
+    if (bookedLocation) setNewLocation(bookedLocation);
+    setShowCreate(true);
+
+    setSearchParams({}, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   // ELE-1122: addresses already on file for the selected customer — their saved
   // address plus any addresses used on their previous projects (distinct).
@@ -442,7 +469,10 @@ const ProjectsPage = () => {
                   {metrics.toBillCount > 0 && (
                     <>
                       <span className="mx-1 text-white/30">·</span>
-                      <span className="font-semibold text-white tabular-nums">{metrics.toBillCount}</span> to bill
+                      <span className="font-semibold text-white tabular-nums">
+                        {metrics.toBillCount}
+                      </span>{' '}
+                      to bill
                     </>
                   )}
                 </p>
@@ -464,8 +494,12 @@ const ProjectsPage = () => {
       {/* 01 · WORKLOAD — elevated panel, mirrors the quotes pipeline */}
       <div className="px-4 lg:px-6 pt-4 space-y-2.5">
         <div className="flex items-baseline gap-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">01</span>
-          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/65">· Workload</span>
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
+            01
+          </span>
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/65">
+            · Workload
+          </span>
         </div>
         <div className={cn(PANEL, 'overflow-hidden')}>
           <div className="grid grid-cols-3 divide-x divide-white/[0.06]">
@@ -499,7 +533,8 @@ const ProjectsPage = () => {
                 {formatCurrency(metrics.wonThisMonthValue)}
               </p>
               <p className="text-[11px] text-white/80 mt-1.5">
-                This month · <span className="text-white tabular-nums">{metrics.wonThisMonthCount}</span>
+                This month ·{' '}
+                <span className="text-white tabular-nums">{metrics.wonThisMonthCount}</span>
               </p>
             </div>
           </div>
@@ -510,7 +545,9 @@ const ProjectsPage = () => {
               className="w-full flex items-center justify-between px-3.5 sm:px-5 py-2.5 border-t border-white/[0.06] touch-manipulation active:bg-white/[0.03] transition-colors"
             >
               <span className="text-[12px] text-white/80">
-                <span className="font-semibold text-elec-yellow tabular-nums">{formatCurrency(metrics.toBillValue)}</span>{' '}
+                <span className="font-semibold text-elec-yellow tabular-nums">
+                  {formatCurrency(metrics.toBillValue)}
+                </span>{' '}
                 of finished work hasn’t been invoiced yet
               </span>
               <ChevronRight className="h-4 w-4 text-white/40" />
@@ -523,8 +560,12 @@ const ProjectsPage = () => {
       {attention.length > 0 && (
         <div className="px-4 lg:px-6 pt-4 space-y-2.5">
           <div className="flex items-baseline gap-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">02</span>
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/65">· Needs you</span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
+              02
+            </span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/65">
+              · Needs you
+            </span>
             <span className="text-[10px] text-white/40 tabular-nums">{attention.length}</span>
           </div>
           <div className={cn(PANEL, 'overflow-hidden divide-y divide-white/[0.06]')}>
@@ -537,7 +578,10 @@ const ProjectsPage = () => {
               >
                 <span
                   aria-hidden="true"
-                  className={cn('h-1.5 w-1.5 rounded-full shrink-0', JOB_STAGE_META[project.stage].dot)}
+                  className={cn(
+                    'h-1.5 w-1.5 rounded-full shrink-0',
+                    JOB_STAGE_META[project.stage].dot
+                  )}
                 />
                 <span className="flex-1 min-w-0">
                   <span className="block text-[13px] font-semibold text-white truncate">
@@ -716,12 +760,10 @@ const ProjectsPage = () => {
               <div className="w-14 h-14 rounded-2xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center mb-4">
                 <FolderKanban className="h-6 w-6 text-white/55" />
               </div>
-              <h2 className="text-[18px] font-semibold text-white mb-1.5">
-                No jobs yet
-              </h2>
+              <h2 className="text-[18px] font-semibold text-white mb-1.5">No jobs yet</h2>
               <p className="text-[13.5px] text-white/55 leading-relaxed mb-6 max-w-[360px]">
-                Every job keeps its quotes, certs, invoices, tasks and time in one place —
-                and when a client accepts a quote, the job sets itself up.
+                Every job keeps its quotes, certs, invoices, tasks and time in one place — and when
+                a client accepts a quote, the job sets itself up.
               </p>
               <div className="flex flex-col sm:flex-row gap-2 w-full max-w-[360px]">
                 <Button
@@ -748,367 +790,384 @@ const ProjectsPage = () => {
             </div>
           ) : (
             <>
-            {boardMode && (
-              /* ── Pipeline board — one column per live stage (desktop) ── */
-              <div className="hidden lg:flex gap-3 overflow-x-auto pb-4 items-start">
-                {(
-                  ['enquiry', 'quoted', 'won', 'booked', 'in_progress', 'awaiting_payment', 'bill_it', 'paid', 'cancelled'] as JobStage[]
-                )
-                  .map((stage) => ({
-                    stage,
-                    jobs: visibleProjects.filter((pr) => pr.stage === stage),
-                  }))
-                  .filter((col) => col.jobs.length > 0)
-                  .map(({ stage, jobs }) => (
-                    <div key={stage} className="w-64 flex-shrink-0">
-                      <div className="flex items-center gap-1.5 px-1 mb-2">
-                        <span
-                          aria-hidden="true"
-                          className={cn('h-1.5 w-1.5 rounded-full', JOB_STAGE_META[stage].dot)}
-                        />
-                        <span className="text-[10px] font-semibold uppercase tracking-[0.1em] text-white/60">
-                          {JOB_STAGE_META[stage].label}
-                        </span>
-                        <span className="text-[10px] text-white/40 tabular-nums ml-auto">
-                          {jobs.length}
-                          {(() => {
-                            const v = jobs.reduce((s, j) => s + (j.estimatedValue || 0), 0);
-                            return v > 0 ? ` · ${formatCurrency(v)}` : '';
-                          })()}
-                        </span>
-                      </div>
-                      <div className="space-y-2">
-                        {jobs.map((pr) => (
-                          <button
-                            key={pr.id}
-                            type="button"
-                            onClick={() => navigate(`/electrician/projects/${pr.id}`)}
-                            className={cn(
-                              PANEL,
-                              'w-full p-3 text-left touch-manipulation hover:bg-white/[0.04] active:scale-[0.99] transition-all'
-                            )}
-                          >
-                            <p className="text-[13px] font-semibold text-white line-clamp-2 leading-snug">
-                              {pr.title}
-                            </p>
-                            {(pr.customerName || pr.location) && (
-                              <p className="mt-0.5 text-[11px] text-white/45 truncate">
-                                {[pr.customerName, pr.location].filter(Boolean).join(' · ')}
-                              </p>
-                            )}
-                            <div className="mt-1.5 flex items-center justify-between">
-                              {pr.estimatedValue ? (
-                                <span className="text-[12px] font-bold text-elec-yellow tabular-nums">
-                                  {formatCurrency(pr.estimatedValue)}
-                                </span>
-                              ) : (
-                                <span />
-                              )}
-                              {pr.dueDate && (
-                                <span className="text-[10.5px] text-white/40">
-                                  Due {formatDate(pr.dueDate)}
-                                </span>
-                              )}
-                            </div>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            )}
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className={cn(
-                'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3',
-                boardMode && visibleProjects.length > 0 && 'lg:hidden'
-              )}
-            >
-              <AnimatePresence mode="popLayout">
-                {visibleProjects.length === 0 && (
-                  <p className="col-span-full text-center text-[13px] text-white/50 py-10">
-                    No jobs match{search ? ` “${search.trim()}”` : ' this stage'} — clear the
-                    filter to see everything.
-                  </p>
-                )}
-                {visibleProjects.map((project) => {
-                  const isCompleted = project.status === 'completed';
-                  const fin = isCompleted ? completedFinancials.get(project.id) : undefined;
-                  return (
-                    <motion.div
-                      key={project.id}
-                      variants={itemVariants}
-                      layout
-                      exit={{ opacity: 0, scale: 0.97 }}
-                      className={cn(PANEL, 'group relative overflow-hidden touch-manipulation h-full flex flex-col')}
-                    >
-                      <div
-                        className={cn(
-                          'absolute inset-x-0 top-0 h-14 bg-gradient-to-b to-transparent pointer-events-none',
-                          isCompleted
-                            ? 'from-emerald-500/[0.07]'
-                            : project.priority === 'urgent'
-                              ? 'from-red-500/[0.08]'
-                              : project.priority === 'high'
-                                ? 'from-orange-500/[0.07]'
-                                : 'from-white/[0.04]'
-                        )}
-                      />
-                      {/* Tappable body — opens the project detail */}
-                      <button
-                        type="button"
-                        onClick={() => navigate(`/electrician/projects/${project.id}`)}
-                        className="relative w-full flex-1 flex flex-col text-left p-4 active:bg-white/[0.04] transition-colors"
-                      >
-                        {/* Title row — priority dot · title · value */}
-                        <div className="flex items-start gap-3">
+              {boardMode && (
+                /* ── Pipeline board — one column per live stage (desktop) ── */
+                <div className="hidden lg:flex gap-3 overflow-x-auto pb-4 items-start">
+                  {(
+                    [
+                      'enquiry',
+                      'quoted',
+                      'won',
+                      'booked',
+                      'in_progress',
+                      'awaiting_payment',
+                      'bill_it',
+                      'paid',
+                      'cancelled',
+                    ] as JobStage[]
+                  )
+                    .map((stage) => ({
+                      stage,
+                      jobs: visibleProjects.filter((pr) => pr.stage === stage),
+                    }))
+                    .filter((col) => col.jobs.length > 0)
+                    .map(({ stage, jobs }) => (
+                      <div key={stage} className="w-64 flex-shrink-0">
+                        <div className="flex items-center gap-1.5 px-1 mb-2">
                           <span
                             aria-hidden="true"
-                            className={cn(
-                              'w-2 h-2 rounded-full shrink-0 mt-2',
-                              PRIORITY_COLOURS[project.priority]
-                            )}
+                            className={cn('h-1.5 w-1.5 rounded-full', JOB_STAGE_META[stage].dot)}
                           />
-                          <div className="flex-1 min-w-0">
-                            <h3
-                              className={cn(
-                                'text-[15px] font-semibold text-white leading-snug line-clamp-2',
-                                isCompleted && 'text-white/60'
-                              )}
-                            >
-                              {project.title}
-                            </h3>
-                            {(project.customerName || project.location) && (
-                              <p className="mt-0.5 text-[12.5px] text-white/50 truncate leading-snug">
-                                {[project.customerName, project.location]
-                                  .filter(Boolean)
-                                  .join(' · ')}
-                              </p>
-                            )}
-                          </div>
-                          {project.estimatedValue ? (
-                            <span
-                              className={cn(
-                                'text-[13.5px] sm:text-[15px] font-bold tabular-nums shrink-0 pt-0.5 tracking-tight',
-                                isCompleted ? 'text-white/50' : 'text-elec-yellow'
-                              )}
-                            >
-                              {formatCurrency(project.estimatedValue)}
-                            </span>
-                          ) : null}
+                          <span className="text-[10px] font-semibold uppercase tracking-[0.1em] text-white/60">
+                            {JOB_STAGE_META[stage].label}
+                          </span>
+                          <span className="text-[10px] text-white/40 tabular-nums ml-auto">
+                            {jobs.length}
+                            {(() => {
+                              const v = jobs.reduce((s, j) => s + (j.estimatedValue || 0), 0);
+                              return v > 0 ? ` · ${formatCurrency(v)}` : '';
+                            })()}
+                          </span>
                         </div>
-
-                        {/* Meta row — derived stage · type · due date */}
-                        <div className="mt-2.5 ml-5 flex items-center gap-3 text-[11px] text-white/40">
-                          <span className="inline-flex items-center gap-1.5">
+                        <div className="space-y-2">
+                          {jobs.map((pr) => (
+                            <button
+                              key={pr.id}
+                              type="button"
+                              onClick={() => navigate(`/electrician/projects/${pr.id}`)}
+                              className={cn(
+                                PANEL,
+                                'w-full p-3 text-left touch-manipulation hover:bg-white/[0.04] active:scale-[0.99] transition-all'
+                              )}
+                            >
+                              <p className="text-[13px] font-semibold text-white line-clamp-2 leading-snug">
+                                {pr.title}
+                              </p>
+                              {(pr.customerName || pr.location) && (
+                                <p className="mt-0.5 text-[11px] text-white/45 truncate">
+                                  {[pr.customerName, pr.location].filter(Boolean).join(' · ')}
+                                </p>
+                              )}
+                              <div className="mt-1.5 flex items-center justify-between">
+                                {pr.estimatedValue ? (
+                                  <span className="text-[12px] font-bold text-elec-yellow tabular-nums">
+                                    {formatCurrency(pr.estimatedValue)}
+                                  </span>
+                                ) : (
+                                  <span />
+                                )}
+                                {pr.dueDate && (
+                                  <span className="text-[10.5px] text-white/40">
+                                    Due {formatDate(pr.dueDate)}
+                                  </span>
+                                )}
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              )}
+              <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className={cn(
+                  'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3',
+                  boardMode && visibleProjects.length > 0 && 'lg:hidden'
+                )}
+              >
+                <AnimatePresence mode="popLayout">
+                  {visibleProjects.length === 0 && (
+                    <p className="col-span-full text-center text-[13px] text-white/50 py-10">
+                      No jobs match{search ? ` “${search.trim()}”` : ' this stage'} — clear the
+                      filter to see everything.
+                    </p>
+                  )}
+                  {visibleProjects.map((project) => {
+                    const isCompleted = project.status === 'completed';
+                    const fin = isCompleted ? completedFinancials.get(project.id) : undefined;
+                    return (
+                      <motion.div
+                        key={project.id}
+                        variants={itemVariants}
+                        layout
+                        exit={{ opacity: 0, scale: 0.97 }}
+                        className={cn(
+                          PANEL,
+                          'group relative overflow-hidden touch-manipulation h-full flex flex-col'
+                        )}
+                      >
+                        <div
+                          className={cn(
+                            'absolute inset-x-0 top-0 h-14 bg-gradient-to-b to-transparent pointer-events-none',
+                            isCompleted
+                              ? 'from-emerald-500/[0.07]'
+                              : project.priority === 'urgent'
+                                ? 'from-red-500/[0.08]'
+                                : project.priority === 'high'
+                                  ? 'from-orange-500/[0.07]'
+                                  : 'from-white/[0.04]'
+                          )}
+                        />
+                        {/* Tappable body — opens the project detail */}
+                        <button
+                          type="button"
+                          onClick={() => navigate(`/electrician/projects/${project.id}`)}
+                          className="relative w-full flex-1 flex flex-col text-left p-4 active:bg-white/[0.04] transition-colors"
+                        >
+                          {/* Title row — priority dot · title · value */}
+                          <div className="flex items-start gap-3">
                             <span
                               aria-hidden="true"
                               className={cn(
-                                'h-1.5 w-1.5 rounded-full',
-                                JOB_STAGE_META[project.stage].dot
+                                'w-2 h-2 rounded-full shrink-0 mt-2',
+                                PRIORITY_COLOURS[project.priority]
                               )}
                             />
-                            <span
-                              className={cn(
-                                'font-semibold uppercase tracking-[0.06em] text-[10px]',
-                                JOB_STAGE_META[project.stage].text
+                            <div className="flex-1 min-w-0">
+                              <h3
+                                className={cn(
+                                  'text-[15px] font-semibold text-white leading-snug line-clamp-2',
+                                  isCompleted && 'text-white/60'
+                                )}
+                              >
+                                {project.title}
+                              </h3>
+                              {(project.customerName || project.location) && (
+                                <p className="mt-0.5 text-[12.5px] text-white/50 truncate leading-snug">
+                                  {[project.customerName, project.location]
+                                    .filter(Boolean)
+                                    .join(' · ')}
+                                </p>
                               )}
-                            >
-                              {JOB_STAGE_META[project.stage].label}
-                            </span>
-                          </span>
-                          {project.projectType && (
-                            <span className="capitalize">{project.projectType}</span>
-                          )}
-                          {project.dueDate && (
-                            <span className="flex items-center gap-1">
-                              <Calendar className="h-3 w-3" />
-                              Due {formatDate(project.dueDate)}
-                              {(() => {
-                                const days = Math.ceil(
-                                  (new Date(project.dueDate).getTime() - Date.now()) / 86400000
-                                );
-                                if (project.status === 'completed') return null;
-                                return (
-                                  <span
-                                    className={cn(
-                                      'ml-0.5 tabular-nums',
-                                      days < 0
-                                        ? 'text-red-300'
-                                        : days <= 2
-                                          ? 'text-amber-300'
-                                          : 'text-white/40'
-                                    )}
-                                  >
-                                    {days < 0
-                                      ? `· ${Math.abs(days)}d over`
-                                      : `· ${days}d left`}
-                                  </span>
-                                );
-                              })()}
-                            </span>
-                          )}
-                        </div>
+                            </div>
+                            {project.estimatedValue ? (
+                              <span
+                                className={cn(
+                                  'text-[13.5px] sm:text-[15px] font-bold tabular-nums shrink-0 pt-0.5 tracking-tight',
+                                  isCompleted ? 'text-white/50' : 'text-elec-yellow'
+                                )}
+                              >
+                                {formatCurrency(project.estimatedValue)}
+                              </span>
+                            ) : null}
+                          </div>
 
-                        {/* time-elapsed track when both dates known */}
-                        {project.startDate &&
-                          project.dueDate &&
-                          project.status !== 'completed' &&
-                          (() => {
-                            const start = new Date(project.startDate).getTime();
-                            const end = new Date(project.dueDate).getTime();
-                            if (end <= start) return null;
-                            const t = Math.min(
-                              1,
-                              Math.max(0, (Date.now() - start) / (end - start))
-                            );
-                            return (
-                              <div className="mt-2 ml-5 h-1 rounded-full bg-white/[0.06] overflow-hidden">
+                          {/* Meta row — derived stage · type · due date */}
+                          <div className="mt-2.5 ml-5 flex items-center gap-3 text-[11px] text-white/40">
+                            <span className="inline-flex items-center gap-1.5">
+                              <span
+                                aria-hidden="true"
+                                className={cn(
+                                  'h-1.5 w-1.5 rounded-full',
+                                  JOB_STAGE_META[project.stage].dot
+                                )}
+                              />
+                              <span
+                                className={cn(
+                                  'font-semibold uppercase tracking-[0.06em] text-[10px]',
+                                  JOB_STAGE_META[project.stage].text
+                                )}
+                              >
+                                {JOB_STAGE_META[project.stage].label}
+                              </span>
+                            </span>
+                            {project.projectType && (
+                              <span className="capitalize">{project.projectType}</span>
+                            )}
+                            {project.dueDate && (
+                              <span className="flex items-center gap-1">
+                                <Calendar className="h-3 w-3" />
+                                Due {formatDate(project.dueDate)}
+                                {(() => {
+                                  const days = Math.ceil(
+                                    (new Date(project.dueDate).getTime() - Date.now()) / 86400000
+                                  );
+                                  if (project.status === 'completed') return null;
+                                  return (
+                                    <span
+                                      className={cn(
+                                        'ml-0.5 tabular-nums',
+                                        days < 0
+                                          ? 'text-red-300'
+                                          : days <= 2
+                                            ? 'text-amber-300'
+                                            : 'text-white/40'
+                                      )}
+                                    >
+                                      {days < 0 ? `· ${Math.abs(days)}d over` : `· ${days}d left`}
+                                    </span>
+                                  );
+                                })()}
+                              </span>
+                            )}
+                          </div>
+
+                          {/* time-elapsed track when both dates known */}
+                          {project.startDate &&
+                            project.dueDate &&
+                            project.status !== 'completed' &&
+                            (() => {
+                              const start = new Date(project.startDate).getTime();
+                              const end = new Date(project.dueDate).getTime();
+                              if (end <= start) return null;
+                              const t = Math.min(
+                                1,
+                                Math.max(0, (Date.now() - start) / (end - start))
+                              );
+                              return (
+                                <div className="mt-2 ml-5 h-1 rounded-full bg-white/[0.06] overflow-hidden">
+                                  <div
+                                    className={cn(
+                                      'h-full rounded-full',
+                                      t >= 1
+                                        ? 'bg-red-400'
+                                        : t > 0.75
+                                          ? 'bg-amber-400'
+                                          : 'bg-white/25'
+                                    )}
+                                    style={{ width: `${Math.round(t * 100)}%` }}
+                                  />
+                                </div>
+                              );
+                            })()}
+
+                          {/* Profit chip — completed view only, from shared calc */}
+                          {fin && (
+                            <div className="mt-2.5 ml-5 flex items-center gap-1.5">
+                              <span
+                                className={cn(
+                                  'inline-flex items-center gap-1 rounded-md px-2 py-1 text-[12px] font-semibold tabular-nums',
+                                  fin.grossProfit >= 0
+                                    ? 'bg-emerald-500/12 text-emerald-400'
+                                    : 'bg-red-500/12 text-red-400'
+                                )}
+                              >
+                                {fin.grossProfit >= 0 ? '+' : '−'}
+                                {formatCurrency(Math.abs(fin.grossProfit))}
+                                {fin.marginPct !== null && (
+                                  <span className="text-white/45 font-medium">
+                                    · {Math.round(fin.marginPct)}%
+                                  </span>
+                                )}
+                              </span>
+                              <span className="text-[10.5px] text-white/40">profit</span>
+                            </div>
+                          )}
+
+                          {/* Progress — only render if there are tasks */}
+                          {project.totalTasks > 0 ? (
+                            <div className="mt-auto pt-3 ml-5">
+                              <div className="flex items-center justify-between mb-1">
+                                <span className="text-[11px] text-white/45 tabular-nums">
+                                  {project.completedTasks}/{project.totalTasks} tasks
+                                </span>
+                                <span className="text-[11px] font-semibold text-white/70 tabular-nums">
+                                  {project.progress}%
+                                </span>
+                              </div>
+                              <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
                                 <div
                                   className={cn(
-                                    'h-full rounded-full',
-                                    t >= 1 ? 'bg-red-400' : t > 0.75 ? 'bg-amber-400' : 'bg-white/25'
+                                    'h-full rounded-full transition-all duration-500',
+                                    project.progress === 100
+                                      ? 'bg-emerald-400'
+                                      : project.progress >= 50
+                                        ? 'bg-elec-yellow'
+                                        : 'bg-white/35'
                                   )}
-                                  style={{ width: `${Math.round(t * 100)}%` }}
+                                  style={{ width: `${project.progress}%` }}
                                 />
                               </div>
-                            );
-                          })()}
-
-                        {/* Profit chip — completed view only, from shared calc */}
-                        {fin && (
-                          <div className="mt-2.5 ml-5 flex items-center gap-1.5">
-                            <span
-                              className={cn(
-                                'inline-flex items-center gap-1 rounded-md px-2 py-1 text-[12px] font-semibold tabular-nums',
-                                fin.grossProfit >= 0
-                                  ? 'bg-emerald-500/12 text-emerald-400'
-                                  : 'bg-red-500/12 text-red-400'
-                              )}
-                            >
-                              {fin.grossProfit >= 0 ? '+' : '−'}
-                              {formatCurrency(Math.abs(fin.grossProfit))}
-                              {fin.marginPct !== null && (
-                                <span className="text-white/45 font-medium">
-                                  · {Math.round(fin.marginPct)}%
-                                </span>
-                              )}
-                            </span>
-                            <span className="text-[10.5px] text-white/40">profit</span>
-                          </div>
-                        )}
-
-                        {/* Progress — only render if there are tasks */}
-                        {project.totalTasks > 0 ? (
-                          <div className="mt-auto pt-3 ml-5">
-                            <div className="flex items-center justify-between mb-1">
-                              <span className="text-[11px] text-white/45 tabular-nums">
-                                {project.completedTasks}/{project.totalTasks} tasks
-                              </span>
-                              <span className="text-[11px] font-semibold text-white/70 tabular-nums">
-                                {project.progress}%
-                              </span>
                             </div>
-                            <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
-                              <div
-                                className={cn(
-                                  'h-full rounded-full transition-all duration-500',
-                                  project.progress === 100
-                                    ? 'bg-emerald-400'
-                                    : project.progress >= 50
-                                      ? 'bg-elec-yellow'
-                                      : 'bg-white/35'
-                                )}
-                                style={{ width: `${project.progress}%` }}
-                              />
-                            </div>
-                          </div>
-                        ) : (
-                          <p className="mt-auto pt-3 ml-5 text-[11px] text-white/35">No tasks yet</p>
-                        )}
-                      </button>
+                          ) : (
+                            <p className="mt-auto pt-3 ml-5 text-[11px] text-white/35">
+                              No tasks yet
+                            </p>
+                          )}
+                        </button>
 
-                      {/* Action row — start timer · ask Mate · kebab */}
-                      <div className="px-3 py-2 border-t border-white/[0.10] flex items-center gap-1">
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            startTimerForProject(project);
-                          }}
-                          disabled={isCompleted}
-                          className="flex-1 flex items-center justify-center gap-1.5 h-9 rounded-lg text-[12.5px] font-medium text-white/70 hover:text-white hover:bg-white/[0.06] active:bg-white/[0.08] touch-manipulation transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
-                        >
-                          <Timer className="h-3.5 w-3.5" />
-                          Start timer
-                        </button>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            openAiForProject(project);
-                          }}
-                          className="flex-1 flex items-center justify-center gap-1.5 h-9 rounded-lg text-[12.5px] font-medium text-elec-yellow hover:text-yellow-300 hover:bg-elec-yellow/[0.06] active:bg-elec-yellow/[0.10] touch-manipulation transition-colors"
-                        >
-                          <Sparkles className="h-3.5 w-3.5" />
-                          Ask Mate
-                        </button>
-                        <button
-                          type="button"
-                          aria-label="Project actions"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setActionsTarget(project);
-                          }}
-                          className="h-9 w-9 flex items-center justify-center text-white/55 hover:text-white hover:bg-white/[0.06] rounded-lg shrink-0 touch-manipulation"
-                        >
-                          <LayoutGrid className="h-4 w-4" />
-                        </button>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              aria-label="More actions"
-                              className="h-9 w-9 text-white/55 hover:text-white hover:bg-white/[0.06] rounded-lg shrink-0"
+                        {/* Action row — start timer · ask Mate · kebab */}
+                        <div className="px-3 py-2 border-t border-white/[0.10] flex items-center gap-1">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              startTimerForProject(project);
+                            }}
+                            disabled={isCompleted}
+                            className="flex-1 flex items-center justify-center gap-1.5 h-9 rounded-lg text-[12.5px] font-medium text-white/70 hover:text-white hover:bg-white/[0.06] active:bg-white/[0.08] touch-manipulation transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
+                          >
+                            <Timer className="h-3.5 w-3.5" />
+                            Start timer
+                          </button>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              openAiForProject(project);
+                            }}
+                            className="flex-1 flex items-center justify-center gap-1.5 h-9 rounded-lg text-[12.5px] font-medium text-elec-yellow hover:text-yellow-300 hover:bg-elec-yellow/[0.06] active:bg-elec-yellow/[0.10] touch-manipulation transition-colors"
+                          >
+                            <Sparkles className="h-3.5 w-3.5" />
+                            Ask Mate
+                          </button>
+                          <button
+                            type="button"
+                            aria-label="Project actions"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setActionsTarget(project);
+                            }}
+                            className="h-9 w-9 flex items-center justify-center text-white/55 hover:text-white hover:bg-white/[0.06] rounded-lg shrink-0 touch-manipulation"
+                          >
+                            <LayoutGrid className="h-4 w-4" />
+                          </button>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                aria-label="More actions"
+                                className="h-9 w-9 text-white/55 hover:text-white hover:bg-white/[0.06] rounded-lg shrink-0"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <MoreVertical className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent
+                              align="end"
+                              className="bg-elec-gray border-white/10"
                               onClick={(e) => e.stopPropagation()}
                             >
-                              <MoreVertical className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent
-                            align="end"
-                            className="bg-elec-gray border-white/10"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            {!isCompleted && (
+                              {!isCompleted && (
+                                <DropdownMenuItem
+                                  className="text-white focus:bg-white/10 focus:text-white"
+                                  onClick={() => completeProject(project.id)}
+                                >
+                                  <CheckCircle2 className="h-4 w-4 mr-2 text-emerald-400" />
+                                  Mark complete
+                                </DropdownMenuItem>
+                              )}
                               <DropdownMenuItem
-                                className="text-white focus:bg-white/10 focus:text-white"
-                                onClick={() => completeProject(project.id)}
+                                className="text-red-400 focus:bg-red-500/10 focus:text-red-400"
+                                onClick={() =>
+                                  setDeleteTarget({ id: project.id, title: project.title })
+                                }
                               >
-                                <CheckCircle2 className="h-4 w-4 mr-2 text-emerald-400" />
-                                Mark complete
+                                <Trash2 className="h-4 w-4 mr-2" />
+                                Delete
                               </DropdownMenuItem>
-                            )}
-                            <DropdownMenuItem
-                              className="text-red-400 focus:bg-red-500/10 focus:text-red-400"
-                              onClick={() =>
-                                setDeleteTarget({ id: project.id, title: project.title })
-                              }
-                            >
-                              <Trash2 className="h-4 w-4 mr-2" />
-                              Delete
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </AnimatePresence>
-            </motion.div>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </AnimatePresence>
+              </motion.div>
             </>
           )}
         </div>
@@ -1162,9 +1221,7 @@ const ProjectsPage = () => {
               ? undefined
               : () => completeProject(actionsTarget.id)
           }
-          onDelete={() =>
-            setDeleteTarget({ id: actionsTarget.id, title: actionsTarget.title })
-          }
+          onDelete={() => setDeleteTarget({ id: actionsTarget.id, title: actionsTarget.title })}
         />
       )}
 
@@ -1209,12 +1266,18 @@ const ProjectsPage = () => {
               {/* ── Job Details ── */}
               <div className="space-y-3">
                 <div className="flex items-baseline gap-2 mb-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">01</span>
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· Job details</span>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
+                    01
+                  </span>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">
+                    · Job details
+                  </span>
                 </div>
 
                 <div>
-                  <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block">Title</label>
+                  <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block">
+                    Title
+                  </label>
                   <Input
                     value={newTitle}
                     onChange={(e) => setNewTitle(e.target.value)}
@@ -1224,7 +1287,9 @@ const ProjectsPage = () => {
                 </div>
 
                 <div>
-                  <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block">Description</label>
+                  <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block">
+                    Description
+                  </label>
                   <Input
                     value={newDescription}
                     onChange={(e) => setNewDescription(e.target.value)}
@@ -1234,7 +1299,9 @@ const ProjectsPage = () => {
                 </div>
 
                 <div>
-                  <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-2 block">Type</label>
+                  <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-2 block">
+                    Type
+                  </label>
                   <div className="grid grid-cols-3 gap-2">
                     {PROJECT_TYPES.map(({ key, label }) => (
                       <button
@@ -1257,13 +1324,19 @@ const ProjectsPage = () => {
               {/* ── Customer & Location ── */}
               <div className="space-y-3">
                 <div className="flex items-baseline gap-2 mb-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">02</span>
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· Customer & Location</span>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
+                    02
+                  </span>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">
+                    · Customer & Location
+                  </span>
                 </div>
 
                 {customers.length > 0 && (
                   <div>
-                    <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block">Customer</label>
+                    <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block">
+                      Customer
+                    </label>
                     <select
                       value={newCustomerId}
                       onChange={(e) => setNewCustomerId(e.target.value)}
@@ -1280,7 +1353,9 @@ const ProjectsPage = () => {
                 )}
 
                 <div>
-                  <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block">Location</label>
+                  <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block">
+                    Location
+                  </label>
                   {customerAddresses.length > 0 && (
                     <div className="mb-2 flex flex-wrap gap-1.5">
                       {customerAddresses.map((addr) => (
@@ -1312,12 +1387,18 @@ const ProjectsPage = () => {
               {/* ── Priority & Schedule ── */}
               <div className="space-y-3">
                 <div className="flex items-baseline gap-2 mb-1">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">03</span>
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· Priority & Schedule</span>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
+                    03
+                  </span>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">
+                    · Priority & Schedule
+                  </span>
                 </div>
 
                 <div>
-                  <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-2 block">Priority</label>
+                  <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-2 block">
+                    Priority
+                  </label>
                   <div className="grid grid-cols-4 gap-2">
                     {(['low', 'normal', 'high', 'urgent'] as ProjectPriority[]).map((p) => (
                       <button
@@ -1339,7 +1420,9 @@ const ProjectsPage = () => {
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block">Due Date</label>
+                    <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block">
+                      Due Date
+                    </label>
                     <Input
                       type="date"
                       value={newDueDate}

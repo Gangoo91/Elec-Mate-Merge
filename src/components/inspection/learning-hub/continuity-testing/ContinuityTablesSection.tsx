@@ -171,7 +171,7 @@ const ContinuityTablesSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-3">
         {/* Quick Reference - always visible */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-emerald-400 uppercase tracking-wider px-0.5 mb-2">Quick Reference</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white px-0.5 mb-2">Quick Reference</p>
           <div className="grid grid-cols-3 gap-2">
             <div className="rounded-2xl bg-white/[0.07] border border-white/[0.08] p-3 overflow-hidden relative">
               <div className="absolute left-0 top-0 bottom-0 w-1 bg-green-500/50 rounded-l-2xl" />

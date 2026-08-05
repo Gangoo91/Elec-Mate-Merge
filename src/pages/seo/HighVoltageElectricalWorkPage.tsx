@@ -272,7 +272,7 @@ const sections = [
               system established by an AP.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">AP</h3>
             <p className="text-white text-sm leading-relaxed">
               Authorised Person. Responsible for establishing and maintaining safe working
@@ -280,7 +280,7 @@ const sections = [
               plant. Can carry out switching operations per the switching programme.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">SAP</h3>
             <p className="text-white text-sm leading-relaxed">
               Senior Authorised Person. Manages complex switching operations, prepares switching
@@ -387,7 +387,7 @@ const sections = [
           overvoltages that arise from earth faults on the HV supply system — typically the 11kV
           network feeding the substation.
         </p>
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-bold text-white text-base mb-3">What Section 442 Requires</h3>
           <ul className="space-y-3 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
@@ -531,7 +531,7 @@ const sections = [
           Regulation 14 of the Electricity at Work Regulations 1989 is the legal provision that
           governs live working. It states:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <p className="text-white italic">
             "No person shall be engaged in any work activity on or so near any live conductor (other
             than one suitably covered with insulating material so as to prevent danger) that danger

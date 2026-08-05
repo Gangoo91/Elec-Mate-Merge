@@ -431,7 +431,7 @@ const sections = [
           create a direct hazard to the safety of the occupants. This applies to any work activity
           that involves a significant risk of injury if the lights go out — for example:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -686,7 +686,7 @@ const sections = [
           can request evidence of regular testing at any time. Elec-Mate provides everything you
           need to manage emergency lighting work efficiently:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-red-400 mt-1 shrink-0" />
             <div>
@@ -716,7 +716,7 @@ const sections = [
           </div>
         </div>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

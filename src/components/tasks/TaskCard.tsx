@@ -71,11 +71,13 @@ function timeAgo(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
 
+// Colour carries urgency; anything not urgent is plain white rather than a
+// dimmer shade of it. Fading future dates made them read as disabled.
 const TONE_TEXT: Record<DueMeta['tone'], string> = {
   overdue: 'text-red-400',
   today: 'text-amber-400',
-  soon: 'text-white/70',
-  future: 'text-white/40',
+  soon: 'text-white',
+  future: 'text-white',
 };
 
 export function TaskCard({ task, onTap, onSwipeComplete }: TaskCardProps) {
@@ -108,12 +110,12 @@ export function TaskCard({ task, onTap, onSwipeComplete }: TaskCardProps) {
   const subLine = subParts.join(' · ');
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative h-full overflow-hidden rounded-2xl">
       {/* Swipe reveal — emerald wash with check */}
       {canSwipe && (
         <motion.div
           style={{ opacity: bgOpacity }}
-          className="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-600 flex items-center pl-5"
+          className="absolute inset-0 flex items-center bg-gradient-to-r from-green-500 to-emerald-600 pl-5"
         >
           <motion.div style={{ scale: checkScale }}>
             <CheckCircle2 className="h-6 w-6 text-white" />
@@ -121,7 +123,9 @@ export function TaskCard({ task, onTap, onSwipeComplete }: TaskCardProps) {
         </motion.div>
       )}
 
-      {/* Row — flat, no card chrome. Hover/active is the only chrome. */}
+      {/* A card, not a row. Brighter than the page so a task reads as an
+          object you can pick up, and tall enough that the title has room
+          instead of being clipped between two hairlines. */}
       <motion.div
         role="button"
         tabIndex={0}
@@ -139,98 +143,82 @@ export function TaskCard({ task, onTap, onSwipeComplete }: TaskCardProps) {
         onDragEnd={handleDragEnd}
         style={canSwipe ? { x } : undefined}
         className={cn(
-          'relative w-full text-left cursor-pointer touch-manipulation',
-          'bg-background hover:bg-white/[0.03] active:bg-white/[0.05] transition-colors',
-          'focus:outline-none focus-visible:bg-white/[0.04]',
-          'flex items-start gap-3 px-4 py-3',
-          isDone && 'opacity-50'
+          'relative flex h-full cursor-pointer flex-col rounded-2xl border p-4 text-left transition-colors touch-manipulation',
+          'border-white/[0.16] bg-gradient-to-b from-white/[0.13] to-white/[0.07]',
+          'hover:from-white/[0.17] hover:to-white/[0.10] active:from-white/[0.20]',
+          'focus:outline-none focus-visible:border-elec-yellow',
+          isSnag && 'border-orange-500/40',
+          due?.tone === 'overdue' && !isDone && 'border-red-500/40',
+          isDone && 'opacity-60'
         )}
       >
-        {/* Leading control — checkbox when swipeable, dot otherwise. Same width
-            either way so titles align. */}
-        {canSwipe ? (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              onSwipeComplete(task.id);
-            }}
-            aria-label="Mark complete"
-            className={cn(
-              'relative w-5 h-5 rounded-full shrink-0 mt-0.5',
-              'border-2 border-white/25 hover:border-white/45 active:border-green-400 active:bg-green-500/20 transition-colors',
-              isSnag && 'ring-2 ring-orange-500/40 ring-offset-2 ring-offset-background'
-            )}
-          >
-            {/* Priority colour as a tiny inner pip */}
-            <span
-              className={cn(
-                'absolute inset-1 rounded-full',
-                PRIORITY_DOT[task.priority] || PRIORITY_DOT.normal,
-                task.priority === 'normal' || task.priority === 'low' ? 'opacity-0' : 'opacity-100'
-              )}
-            />
-          </button>
-        ) : isDone ? (
-          <div className="w-5 h-5 rounded-full bg-emerald-500 shrink-0 mt-0.5 flex items-center justify-center">
-            <Check className="h-3 w-3 text-white" strokeWidth={3} />
-          </div>
-        ) : (
-          <div className="w-5 h-5 shrink-0 mt-0.5" />
-        )}
-
-        {/* Body — title + sub-line */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-start gap-2">
-            <h3
-              className={cn(
-                'flex-1 min-w-0 text-[15px] font-medium text-white leading-snug line-clamp-2',
-                isDone && 'line-through text-white/60'
-              )}
+        <div className="flex items-start gap-3">
+          {/* 20px circle in a 44px hit area. */}
+          {canSwipe ? (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onSwipeComplete(task.id);
+              }}
+              aria-label="Mark complete"
+              className="relative -m-3 box-content shrink-0 p-3 touch-manipulation"
             >
-              {task.title}
-            </h3>
-            {/* Right-aligned due meta — single label, tone-coloured */}
-            {due && !isDone && (
               <span
                 className={cn(
-                  'text-[12px] font-semibold tabular-nums shrink-0 leading-tight pt-0.5',
-                  TONE_TEXT[due.tone]
+                  'block h-5 w-5 rounded-full border-2 border-white/50 transition-colors',
+                  'hover:border-white active:border-green-400 active:bg-green-500/20'
                 )}
-              >
-                {due.label}
-              </span>
-            )}
-            {isDone && task.completedAt && (
-              <span className="text-[11px] text-emerald-400/80 shrink-0 leading-tight pt-0.5">
-                {timeAgo(task.completedAt)}
-              </span>
-            )}
-          </div>
-
-          {/* Sub-line — customer · location · snoozed. One subtle row, no pills. */}
-          {subLine && (
-            <p
-              className={cn(
-                'mt-0.5 text-[12.5px] leading-snug truncate',
-                isDone ? 'text-white/35' : 'text-white/50'
+              />
+              {(task.priority === 'urgent' || task.priority === 'high') && (
+                <span
+                  className={cn(
+                    'absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full',
+                    PRIORITY_DOT[task.priority]
+                  )}
+                />
               )}
-            >
-              {isSnoozed && <AlarmClock className="inline h-3 w-3 mr-1 -mt-0.5 text-blue-400" />}
-              {subLine}
-            </p>
+            </button>
+          ) : isDone ? (
+            <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-500">
+              <Check className="h-3 w-3 text-white" strokeWidth={3} />
+            </div>
+          ) : null}
+
+          <h3
+            className={cn(
+              'min-w-0 flex-1 text-[15px] font-semibold leading-snug tracking-tight text-white',
+              isDone && 'line-through'
+            )}
+          >
+            {task.title}
+          </h3>
+        </div>
+
+        {/* Site and customer. */}
+        {subLine && (
+          <p className="mt-2 line-clamp-2 text-[12.5px] leading-snug text-white">
+            {isSnoozed && <AlarmClock className="-mt-0.5 mr-1 inline h-3 w-3 text-blue-400" />}
+            {subLine}
+          </p>
+        )}
+
+        {/* Due sits at the foot of the card, so it lands in the same place on
+            every card in a row regardless of how long the title ran. */}
+        <div className="mt-auto flex items-center justify-between gap-2 pt-3">
+          {due && !isDone ? (
+            <span className={cn('text-[12px] font-semibold tabular-nums', TONE_TEXT[due.tone])}>
+              {due.tone === 'overdue' ? `${due.label} overdue` : due.label}
+            </span>
+          ) : isDone && task.completedAt ? (
+            <span className="text-[12px] text-emerald-400">Done {timeAgo(task.completedAt)}</span>
+          ) : (
+            <span className="text-[12px] text-white">No date</span>
           )}
-
-          {/* Optional detail preview — only when present and short */}
-          {task.details && (
-            <p
-              className={cn(
-                'mt-0.5 text-[12.5px] leading-snug line-clamp-1',
-                isDone ? 'text-white/30' : 'text-white/45'
-              )}
-            >
-              {task.details}
-            </p>
+          {isSnag && (
+            <span className="rounded-full border border-orange-500/40 bg-orange-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-orange-300">
+              Snag
+            </span>
           )}
         </div>
       </motion.div>

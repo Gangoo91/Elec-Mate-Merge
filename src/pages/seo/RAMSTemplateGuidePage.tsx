@@ -456,7 +456,7 @@ const sections = [
             download from the HSE website.
           </p>
         </div>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/30 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <p className="text-sm font-semibold text-red-300 mb-1">
             Permit to Work (PTW) — When RAMS Alone Is Not Sufficient
           </p>

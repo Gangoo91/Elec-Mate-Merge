@@ -69,8 +69,8 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* Pre-test */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Before You Start</p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Before You Start</p>
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <div className="space-y-1.5">
               {preTestChecks.map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
@@ -84,13 +84,13 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Ring circuit strategy */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Ring Circuit Testing Strategy</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Ring Circuit Testing Strategy</p>
         </motion.div>
 
         {ringCircuitStrategy.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="flex items-start gap-3 rounded-2xl bg-white/[0.03] border border-white/10 p-4">
-              <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+            <div className="flex items-start gap-3 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
+              <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                 <span className="text-sm font-bold text-yellow-400">{i + 1}</span>
               </div>
               <div>
@@ -103,13 +103,13 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Common defects */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Common Defects Found</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Defects Found</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-2">
             {commonDefects.map((item, i) => (
-              <div key={i} className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
+              <div key={i} className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] p-3">
                 <p className="text-sm font-medium text-white">{item.defect}</p>
                 <p className="text-sm text-white mt-1">{item.detail}</p>
               </div>
@@ -119,12 +119,12 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Troubleshooting */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Troubleshooting</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Troubleshooting</p>
         </motion.div>
 
         {troubleshooting.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-2">
               <p className="text-sm font-semibold text-white">{item.problem}</p>
               <div className="space-y-1">
                 {item.actions.map((action, j) => (
@@ -140,11 +140,11 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Pro tips */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Professional Tips</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Professional Tips</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4 space-y-3">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4 space-y-3">
             {proTips.map((item, i) => (
               <div key={i} className="flex items-start gap-3">
                 <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" />
@@ -159,15 +159,15 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* TT System specifics */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">TT Systems — Additional Considerations</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">TT Systems — Additional Considerations</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
             <p className="text-sm text-white leading-relaxed">
               TT installations have unique Zs testing requirements because the earth return path goes through the ground via the earth electrode. Ze is much higher than TN systems, so RCDs are mandatory for fault protection.
             </p>
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-sm font-semibold text-white mb-1">TT Acceptance Formula</p>
               <p className="text-sm text-white">Ra × IΔn ≤ 50V — where Ra is the total earth electrode resistance and IΔn is the RCD rated residual current.</p>
               <p className="text-sm text-white mt-1">For a 30mA RCD: Ra ≤ 50 ÷ 0.03 = 1,667Ω. In practice, aim for Ra below 200Ω for reliability.</p>
@@ -176,7 +176,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
             <p className="text-sm font-semibold text-white mb-1">TT Troubleshooting — Persistent RCD Tripping</p>
             <p className="text-sm text-white mb-2">Diagnostic workflow from IET/BS 7430 guidance:</p>
             <div className="space-y-2">
@@ -188,8 +188,8 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
                 'Measure earth loop impedance (Zs) on representative circuits and compare with RCD characteristics.',
                 'If resistance is excessive, consider additional rods, alternative electrode types (tape/plate), or improving connections and soil contact.',
               ].map((step, i) => (
-                <div key={i} className="flex items-start gap-3 rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
-                  <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                <div key={i} className="flex items-start gap-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] p-3">
+                  <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                     <span className="text-xs font-bold text-yellow-400">{i + 1}</span>
                   </div>
                   <p className="text-sm text-white leading-relaxed">{step}</p>
@@ -200,7 +200,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm font-semibold text-white mb-2">Earth Electrode Common Defects</p>
             <div className="space-y-1.5">
               {[

@@ -216,7 +216,7 @@ const sections = [
           circuit will not trip it. Across an installation with 10 or 12 circuits, these small
           leakage currents add up.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white text-base mb-3">How to detect earth leakage</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -335,7 +335,7 @@ const sections = [
           degrees Celsius. But even with the high-limit cycling, the water is being heated far
           beyond the normal 60 degrees, wasting energy.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white text-base mb-3">
             Signs of a stuck immersion thermostat
           </h4>

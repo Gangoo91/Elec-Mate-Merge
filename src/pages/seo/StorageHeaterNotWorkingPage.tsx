@@ -229,7 +229,7 @@ const sections = [
           problems with the off-peak supply.
         </p>
         <div className="space-y-3 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">Input dial set to zero</h4>
             <p className="text-white text-sm leading-relaxed">
               The single most common cause of a cold storage heater. If the input is at zero, no
@@ -237,7 +237,7 @@ const sections = [
               bedtime.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">Off-peak circuit MCB tripped</h4>
             <p className="text-white text-sm leading-relaxed">
               The circuit breaker for the off-peak supply may have tripped. Check the consumer unit
@@ -252,7 +252,7 @@ const sections = [
               electrician or your energy supplier.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">Element failure</h4>
             <p className="text-white text-sm leading-relaxed">
               Elements are embedded in the thermal bricks and fail over time. A heater with one
@@ -307,7 +307,7 @@ const sections = [
           up in the morning does nothing for that day.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Settings className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -321,7 +321,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Thermometer className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -335,7 +335,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -437,8 +437,8 @@ const sections = [
             <div className="bg-white/[0.02] p-3 text-white/90">One heater cold, others fine</div>
             <div className="bg-white/[0.02] p-3 text-white/90">That heater's input dial, then element/thermostat — call an electrician to test</div>
 
-            <div className="bg-red-500/10 p-3 text-white/90">All heaters cold, rest of the home has power</div>
-            <div className="bg-red-500/10 p-3 text-white/90">Off-peak supply: off-peak MCB, time switch or teleswitch</div>
+            <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 text-white/90">All heaters cold, rest of the home has power</div>
+            <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 text-white/90">Off-peak supply: off-peak MCB, time switch or teleswitch</div>
 
             <div className="bg-white/[0.02] p-3 text-white/90">Warm by morning, cold by afternoon</div>
             <div className="bg-white/[0.02] p-3 text-white/90">Input set too low, or output opened too far too early</div>
@@ -446,19 +446,19 @@ const sections = [
             <div className="bg-white/[0.02] p-3 text-white/90">Never warm despite high input setting</div>
             <div className="bg-white/[0.02] p-3 text-white/90">Charge thermostat or element failure, or no off-peak charge reaching the heater</div>
 
-            <div className="bg-red-500/10 p-3 text-white/90">Off-peak MCB trips when reset</div>
-            <div className="bg-red-500/10 p-3 text-white/90">Circuit fault — stop and call an electrician</div>
+            <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 text-white/90">Off-peak MCB trips when reset</div>
+            <div className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 text-white/90">Circuit fault — stop and call an electrician</div>
           </div>
         </div>
         <div className="space-y-3 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">1. Input dial setting</h4>
             <p className="text-white text-sm leading-relaxed">
               Check that the input is turned up. In winter, set it to 4 or 5. Wait for the next
               overnight charge period before concluding there is a fault.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">2. Consumer unit</h4>
             <p className="text-white text-sm leading-relaxed">
               Check the off-peak circuit MCB. It may be labelled "off-peak", "storage heaters", or
@@ -470,14 +470,14 @@ const sections = [
               fault, not a nuisance.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">3. Time switch</h4>
             <p className="text-white text-sm leading-relaxed">
               If visible, check that the time switch clock shows the correct time. After power cuts,
               the clock may need resetting. Some time switches have a manual override — try it.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">4. Individual heater check</h4>
             <p className="text-white text-sm leading-relaxed">
               If some heaters work but one does not, the fault is with that individual heater
@@ -494,7 +494,7 @@ const sections = [
     content: (
       <>
         <p>Call an electrician if:</p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -547,7 +547,7 @@ const sections = [
           installations:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Search className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -561,7 +561,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -575,7 +575,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -599,7 +599,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <ShieldCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -620,7 +620,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

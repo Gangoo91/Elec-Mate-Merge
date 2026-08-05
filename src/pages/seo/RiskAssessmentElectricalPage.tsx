@@ -230,7 +230,7 @@ const sections = [
           from the HSE website and provides the safe working procedures that underpin any compliant
           risk assessment for electrical work.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/30 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-yellow-400 text-lg mb-3">
             BS&nbsp;7671:2018+A4:2026 Regulatory Changes Relevant to Risk Assessment
           </h3>
@@ -321,7 +321,7 @@ const sections = [
               key={item.step}
               className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
             >
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 shrink-0">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
                 <span className="font-bold text-yellow-400">{item.step}</span>
               </div>
               <div>
@@ -346,7 +346,7 @@ const sections = [
           work).
         </p>
         <div className="grid sm:grid-cols-2 gap-4 my-6">
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="flex items-center gap-2 mb-3">
               <Zap className="w-5 h-5 text-yellow-400" />
               <h3 className="font-bold text-white text-lg">Electric Shock</h3>
@@ -435,7 +435,7 @@ const sections = [
               assessments under the Control of Noise at Work Regulations 2005.
             </p>
           </div>
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 sm:col-span-2">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] sm:col-span-2">
             <div className="flex items-center gap-2 mb-3">
               <Zap className="w-5 h-5 text-yellow-400" />
               <h3 className="font-bold text-white text-lg">
@@ -578,7 +578,7 @@ const sections = [
               key={item.level}
               className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
             >
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 shrink-0">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
                 <span className="font-bold text-yellow-400">{item.level}</span>
               </div>
               <div>

@@ -5,6 +5,10 @@ import CertShellFooter, {
 } from '@/components/inspection/shared/CertShellFooter';
 
 interface FireAlarmTabNavigationProps {
+  /** ELE-1477 — cert type + live data for the footer's Preview sheet. */
+  previewReportType?: string;
+  previewData?: Record<string, unknown>;
+  previewReportId?: string | null;
   currentTab: string;
   currentTabIndex: number;
   totalTabs: number;
@@ -30,6 +34,9 @@ interface FireAlarmTabNavigationProps {
  * Back / Continue bar, with Email / Invoice as neutral last-step actions.
  */
 const FireAlarmTabNavigation: React.FC<FireAlarmTabNavigationProps> = ({
+  previewReportType,
+  previewData,
+  previewReportId,
   currentTabIndex,
   totalTabs,
   canNavigateNext,
@@ -68,6 +75,9 @@ const FireAlarmTabNavigation: React.FC<FireAlarmTabNavigationProps> = ({
 
   return (
     <CertShellFooter
+      previewReportType={previewReportType}
+      previewData={previewData}
+      previewReportId={previewReportId}
       currentIndex={currentTabIndex}
       totalSteps={totalTabs}
       canPrevious={canNavigatePrevious}

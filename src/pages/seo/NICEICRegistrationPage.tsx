@@ -132,7 +132,7 @@ const sections = [
           NICEIC offers two main registration types for electrical contractors. The choice between
           them depends on the type of work you carry out and the markets you serve.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">Domestic Installer Scheme</h3>
           <p className="text-white text-sm leading-relaxed mb-3">
             The Domestic Installer scheme is designed for electricians who work exclusively on
@@ -289,7 +289,7 @@ const sections = [
           following gives a realistic guide for 2026.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">Domestic Installer</h3>
             <ul className="space-y-2 text-white text-sm leading-relaxed">
               <li>
@@ -464,7 +464,7 @@ const sections = [
           P. The choice between them depends on your priorities.
         </p>
         <div className="grid gap-4 sm:grid-cols-3 my-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">NICEIC</h3>
             <p className="text-white text-sm leading-relaxed">
               The largest and most recognised scheme. Highest consumer awareness. Premium pricing.

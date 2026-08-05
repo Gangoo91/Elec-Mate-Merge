@@ -264,7 +264,7 @@ const sections = [
             </div>
           </div>
           <div className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10">
-            <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
               3
             </div>
             <div>

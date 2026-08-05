@@ -26,6 +26,7 @@ import OfflineBanner from '@/components/OfflineBanner';
 import { CreateCustomerDialog } from '@/components/CreateCustomerDialog';
 import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
 import { type SyncState } from '@/components/ui/SyncStatusIndicator';
+import type { SyncStatus } from '@/hooks/useReportSync';
 import {
   findCustomerByName,
   createCustomerFromCertificate,
@@ -50,6 +51,8 @@ interface EICRFormContextType {
   handleLoadSavePoint: (data: any) => void;
   handleManualSave: () => Promise<void>;
   syncState: any;
+  /** Raw useReportSync status — see useCloudSync.cloudStatus (ELE-1446). */
+  cloudStatus: SyncStatus | undefined;
   isOnline: boolean;
   isAuthenticated: boolean;
   isLoadingReport: boolean;
@@ -360,6 +363,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   // Cloud sync integration - primary persistence layer
   const {
     syncState,
+    cloudStatus,
     syncToCloud,
     loadFromCloud,
     isOnline,
@@ -1212,6 +1216,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     handleLoadSavePoint,
     handleManualSave,
     syncState,
+    cloudStatus,
     isOnline,
     isAuthenticated,
     isLoadingReport,

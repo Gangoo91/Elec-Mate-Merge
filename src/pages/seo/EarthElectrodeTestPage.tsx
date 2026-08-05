@@ -309,7 +309,7 @@ const sections = [
           and C, while the voltage measurement is taken independently at P. This eliminates the test
           spike resistance from the reading.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <p className="text-white">
@@ -429,14 +429,14 @@ const sections = [
               limits and hold its value through dry spells.
             </p>
           </div>
-          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-1">Sandy &amp; gravelly</h4>
             <p className="text-white text-sm leading-relaxed">
               Higher resistivity and drains quickly, so readings swing with the weather. Expect to
               need a longer rod or two rods in parallel.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-1">Chalk &amp; rock</h4>
             <p className="text-white text-sm leading-relaxed">
               Highest resistivity and hardest to drive into. Multiple electrodes, deep driving, or
@@ -537,7 +537,7 @@ const sections = [
           Earth electrode testing seems straightforward, but several common mistakes can produce
           inaccurate or misleading results:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />

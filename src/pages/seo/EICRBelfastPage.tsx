@@ -303,7 +303,7 @@ const sections = [
           and 1960s social housing that has been transferred to the private sector or housing
           associations. These property types each have characteristic EICR findings:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -363,7 +363,7 @@ const sections = [
           . These codes apply throughout the UK including Northern Ireland:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">C1 — Danger Present</h3>
             <p className="text-white text-sm leading-relaxed">
               Risk of injury exists. Immediate remedial action is required. The inspector may
@@ -379,7 +379,7 @@ const sections = [
               earthing, and deteriorated wiring insulation.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">C3 — Improvement Recommended</h3>
             <p className="text-white text-sm leading-relaxed">
               Not immediately dangerous. C3 observations do not make the EICR Unsatisfactory. Common
@@ -542,7 +542,7 @@ const sections = [
           opportunities.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

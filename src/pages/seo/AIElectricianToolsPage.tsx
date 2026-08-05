@@ -222,7 +222,7 @@ export default function AIElectricianToolsPage() {
       {/* Hero */}
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
             <Brain className="w-4 h-4 text-yellow-400" />
             <span className="text-sm font-medium text-yellow-400">
               8 Elec-AI Specialists Trained on BS 7671
@@ -261,7 +261,7 @@ export default function AIElectricianToolsPage() {
       <section className="py-16 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <CircuitBoard className="w-6 h-6 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -314,7 +314,7 @@ export default function AIElectricianToolsPage() {
       <section className="py-16 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <PoundSterling className="w-6 h-6 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -357,7 +357,7 @@ export default function AIElectricianToolsPage() {
       <section className="py-16 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Wrench className="w-6 h-6 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -408,7 +408,7 @@ export default function AIElectricianToolsPage() {
       <section className="py-16 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <CalendarCheck className="w-6 h-6 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -495,7 +495,7 @@ export default function AIElectricianToolsPage() {
               },
             ].map((item) => (
               <div key={item.step} className="flex gap-5 items-start">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 flex-shrink-0">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
                   <span className="text-yellow-400 font-bold text-lg">{item.step}</span>
                 </div>
                 <div>

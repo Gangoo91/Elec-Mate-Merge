@@ -219,7 +219,7 @@ const sections = [
           </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Zone 0</h3>
             <p className="text-white text-sm leading-relaxed">
               The interior of the bath or shower tray. For showers without a tray, Zone 0 is the
@@ -241,7 +241,7 @@ const sections = [
               outside Zones 0, 1, and 2.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Zone 2</h3>
             <p className="text-white text-sm leading-relaxed">
               Extends 0.6m horizontally beyond Zone 1, from the finished floor level up to 2.25m.
@@ -773,7 +773,7 @@ const sections = [
         </p>
         <p>Common pitfalls on bathroom installations include:</p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <AlertTriangle className="w-6 h-6 text-red-400 mt-0.5 shrink-0" />
               <div>
@@ -786,7 +786,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <AlertTriangle className="w-6 h-6 text-red-400 mt-0.5 shrink-0" />
               <div>

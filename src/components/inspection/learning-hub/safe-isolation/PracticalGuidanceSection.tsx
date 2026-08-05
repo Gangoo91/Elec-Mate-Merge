@@ -45,18 +45,18 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Real-World Scenarios</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Real-World Scenarios</p>
         </motion.div>
 
         {scenarios.map((s, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
               <p className="text-sm font-semibold text-white">{s.title}</p>
               <p className="text-sm text-white">{s.scenario}</p>
               <div className="space-y-1.5">
                 {s.steps.map((step, j) => (
                   <div key={j} className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                    <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                       <span className="text-xs font-bold text-yellow-400">{j + 1}</span>
                     </div>
                     <p className="text-sm text-white pt-1">{step}</p>
@@ -68,12 +68,12 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Troubleshooting</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Troubleshooting</p>
         </motion.div>
 
         {troubleshooting.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-2">
               <p className="text-sm font-semibold text-white">{item.problem}</p>
               <div className="space-y-1">
                 {item.actions.map((action, j) => (
@@ -88,11 +88,11 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Professional Tips</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Professional Tips</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4 space-y-3">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4 space-y-3">
             {proTips.map((item, i) => (
               <div key={i} className="flex items-start gap-3">
                 <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" />

@@ -14,6 +14,9 @@ import { BulkActionsBar } from './reports/BulkActionsBar';
 import { reportCloud, CloudReport, ReportsResponse, LibraryScope } from '@/utils/reportCloud';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+// ELE-1443 — needed at render time to decide whether to OFFER the duplicate
+// action. The heavy duplicateCertificate() stays lazily imported below.
+import { isDuplicable } from '@/utils/duplicateCertificate';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { cn } from '@/lib/utils';
@@ -2244,11 +2247,17 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             handleDeleteReport(selectedCertificate.report_id);
           }
         }}
-        onDuplicate={() => {
-          if (selectedCertificate) {
-            handleDuplicate(selectedCertificate.report_id, selectedCertificate.report_type);
-          }
-        }}
+        onDuplicate={
+          // ELE-1443 — only offer the action on types that support it. It used
+          // to be shown unconditionally, so tapping it on an EV cert (or a PAT
+          // test, or a notice) surfaced a red "not available yet" error.
+          // Passing undefined hides the row entirely.
+          selectedCertificate && isDuplicable(selectedCertificate.report_type)
+            ? () => {
+                handleDuplicate(selectedCertificate.report_id, selectedCertificate.report_type);
+              }
+            : undefined
+        }
       />
 
       {/* ELE-881 — Confirmation for duplicating large certs */}

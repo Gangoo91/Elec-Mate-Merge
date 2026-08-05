@@ -228,7 +228,7 @@ const sections = [
           installation. It includes everything in Ze, plus the impedance of the installation wiring
           from the distribution board to the point of measurement. The relationship is:
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4 text-center">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4 text-center">
           <p className="text-2xl font-bold text-yellow-400">Zs = Ze + (R1 + R2)</p>
           <p className="text-white text-sm mt-2">
             Where R1 = line conductor resistance, R2 = CPC resistance
@@ -405,7 +405,7 @@ const sections = [
           energised at mains voltage. They can only be performed safely after all dead tests
           (continuity, insulation resistance, polarity) have been completed satisfactorily.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Measuring Ze</h3>
           <p className="text-white leading-relaxed mb-3">
             Ze is measured at the origin of the installation. Temporarily disconnect the main
@@ -471,7 +471,7 @@ const sections = [
           ambient temperature is no more than 80% of the tabulated maximum, the actual Zs under load
           (when conductors are hot) should still be within the tabulated maximum.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-3">Example Calculation</h3>
           <p className="text-white leading-relaxed">
             For a B32 MCB, the tabulated maximum Zs is 1.37 ohms (at 70 degrees Celsius). Applying

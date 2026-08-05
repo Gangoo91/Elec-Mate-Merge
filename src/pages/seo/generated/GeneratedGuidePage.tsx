@@ -208,13 +208,13 @@ function getToneClasses(tone: BlockTone) {
       };
     case 'warning':
       return {
-        box: 'bg-red-500/10 border-red-500/20',
+        box: 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14]',
         title: 'text-red-300',
         icon: 'text-red-400',
       };
     case 'pricing':
       return {
-        box: 'bg-yellow-500/10 border-yellow-500/20',
+        box: 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14]',
         title: 'text-yellow-300',
         icon: 'text-yellow-400',
       };

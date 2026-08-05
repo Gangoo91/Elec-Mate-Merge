@@ -155,7 +155,7 @@ const sections = [
           investigation may reveal a dangerous condition, they should note this clearly and advise
           the responsible person accordingly.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
             <div>
@@ -223,7 +223,7 @@ const sections = [
               local authority within 28 days of the work being completed if requested.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-red-400 text-lg mb-2">Penalties for Non-Compliance</h3>
             <p className="text-white text-sm leading-relaxed">
               Local authorities can impose civil penalties of up to{' '}
@@ -451,7 +451,7 @@ const sections = [
           the defects to pricing the remedial work and generating the quote.
         </p>
         <div className="space-y-4 my-6">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <ShieldAlert className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -464,7 +464,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <Brain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -477,7 +477,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <Receipt className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>

@@ -110,8 +110,6 @@ export function PriceBookSection() {
   const { companyProfile, saveCompanyProfile, loading: profileLoading } = useCompanyProfile();
   const [dayRate, setDayRate] = useState('');
   const [hourlyRate, setHourlyRate] = useState('');
-  const [overhead, setOverhead] = useState('');
-  const [profit, setProfit] = useState('');
   const [markup, setMarkup] = useState('');
   const [savingRates, setSavingRates] = useState(false);
 
@@ -123,10 +121,6 @@ export function PriceBookSection() {
     if (!companyProfile) return;
     setDayRate(companyProfile.day_rate != null ? String(companyProfile.day_rate) : '');
     setHourlyRate(companyProfile.hourly_rate != null ? String(companyProfile.hourly_rate) : '');
-    setOverhead(
-      companyProfile.overhead_percentage != null ? String(companyProfile.overhead_percentage) : ''
-    );
-    setProfit(companyProfile.profit_margin != null ? String(companyProfile.profit_margin) : '');
     setMarkup(companyMarkup != null ? String(companyMarkup) : '');
   }, [companyProfile, companyMarkup]);
 
@@ -449,39 +443,9 @@ className={`${inputClass} pl-7`}
         ) : tab === 'markup' ? (
           <div className="p-5 sm:p-6 space-y-5">
             <p className="text-[13px] text-white/70">
-              Default commercials applied across quotes. Per-item markup lives on each material.
+              Default markup applied across quotes. Per-item markup lives on each material.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label className="text-[12px] text-white/70 mb-1.5 block">Overhead %</label>
-                <div className="relative">
-                  <Input
-                    type="number"
-                    inputMode="decimal"
-                    placeholder="0"
-                    value={overhead}
-                    onChange={(e) => setOverhead(e.target.value)}
-                    className={`${inputClass} pr-7`}
-                    step="0.5"
-                  />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white">%</span>
-                </div>
-              </div>
-              <div>
-                <label className="text-[12px] text-white/70 mb-1.5 block">Profit margin %</label>
-                <div className="relative">
-                  <Input
-                    type="number"
-                    inputMode="decimal"
-                    placeholder="0"
-                    value={profit}
-                    onChange={(e) => setProfit(e.target.value)}
-                    className={`${inputClass} pr-7`}
-                    step="0.5"
-                  />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white">%</span>
-                </div>
-              </div>
               <div>
                 <label className="text-[12px] text-white/70 mb-1.5 block">Default markup %</label>
                 <div className="relative">
@@ -504,8 +468,9 @@ className={`${inputClass} pl-7`}
             <PrimaryButton
               onClick={() =>
                 saveRates({
-                  overhead_percentage: overhead === '' ? null : parseFloat(overhead),
-                  profit_margin: profit === '' ? null : parseFloat(profit),
+                  // ELE-1473 — overhead_percentage / profit_margin are no
+                  // longer applied to quotes or invoices and are not written
+                  // here any more. Materials markup is the visible mechanism.
                   markup: markup === '' ? null : parseFloat(markup),
                 })
               }

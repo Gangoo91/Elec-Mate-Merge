@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
+import { scrollToTopForStepChange } from '@/utils/scroll';
+import { CertPreviewSheet } from './CertPreviewSheet';
+import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
 
 interface CertShellFooterProps {
   currentIndex: number;
@@ -18,6 +21,21 @@ interface CertShellFooterProps {
   /** Cert-specific neutral actions rendered beside Back on the last step
       (e.g. Email / Invoice buttons). Style them with certFooterNeutralButton. */
   lastStepActions?: React.ReactNode;
+  /**
+   * ELE-1477 — supply both to get a Preview button on the last step. Living
+   * here rather than in each cert means every certificate on the shared shell
+   * gains a preview from one line, instead of ~14 near-identical wirings.
+   */
+  previewReportType?: string;
+  previewData?: Record<string, unknown>;
+  /**
+   * Saved report id. When present a "View PDF" button appears alongside
+   * Preview, opening the same ReportPdfViewer the QS review flow uses — it
+   * generates the real certificate on demand, so this is the exact document
+   * the customer receives, branding and template included. Absent on a cert
+   * that has never been saved, since there is nothing to render yet.
+   */
+  previewReportId?: string | null;
 }
 
 /** Neutral footer button recipe for lastStepActions children. */
@@ -65,10 +83,20 @@ const CertShellFooter: React.FC<CertShellFooterProps> = ({
   canGenerate = true,
   generateLabel = 'Generate certificate',
   lastStepActions,
+  previewReportType,
+  previewData,
+  previewReportId,
 }) => {
   const haptic = useHaptic();
+  const [showPreview, setShowPreview] = useState(false);
+  const canPreview = !!previewReportType && !!previewData;
+  const [showPdf, setShowPdf] = useState(false);
+  const canViewPdf = !!previewReportId;
   const typing = useTypingFocus();
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  // ELE-1464 — shared utility. Instant, not smooth: a ~300ms smooth scroll
+  // races the 260ms step-in animation and produces the jolt reported on the
+  // EICR. See src/utils/scroll.ts.
+  const scrollToTop = () => scrollToTopForStepChange();
 
   // No spacer here — consumers carry their own bottom padding on <main>
   // (pb-32/pb-36/pb-48), matching the MW ground truth (MWStickyFooter).
@@ -98,6 +126,30 @@ const CertShellFooter: React.FC<CertShellFooterProps> = ({
                 >
                   Back
                 </button>
+                {canPreview && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      haptic.light();
+                      setShowPreview(true);
+                    }}
+                    className={certFooterNeutralButton}
+                  >
+                    Preview
+                  </button>
+                )}
+                {canViewPdf && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      haptic.light();
+                      setShowPdf(true);
+                    }}
+                    className={certFooterNeutralButton}
+                  >
+                    View PDF
+                  </button>
+                )}
                 {lastStepActions}
               </div>
               <button
@@ -138,6 +190,22 @@ const CertShellFooter: React.FC<CertShellFooterProps> = ({
             </div>
           )}
         </div>
+
+      {canViewPdf && (
+        <ReportPdfViewer
+          reportId={previewReportId as string}
+          open={showPdf}
+          onOpenChange={setShowPdf}
+        />
+      )}
+      {canPreview && (
+        <CertPreviewSheet
+          open={showPreview}
+          onOpenChange={setShowPreview}
+          reportType={previewReportType as string}
+          data={previewData as Record<string, unknown>}
+        />
+      )}
     </div>
   );
 };

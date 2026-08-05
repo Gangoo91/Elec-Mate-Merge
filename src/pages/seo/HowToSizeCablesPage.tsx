@@ -211,7 +211,7 @@ export default function HowToSizeCablesPage() {
       <section className="pt-12 sm:pt-16 pb-10 px-5">
         <div className="max-w-4xl mx-auto text-center">
           <div className="flex flex-wrap justify-center gap-3 mb-6">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-sm font-medium text-yellow-400">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-sm font-medium text-yellow-400">
               <ShieldCheck className="w-3.5 h-3.5" />
               BS 7671:2018+A4:2026
             </span>
@@ -286,7 +286,7 @@ export default function HowToSizeCablesPage() {
                   For our 32.2A shower: the next standard rating up is{' '}
                   <strong>40A Type B MCB</strong>.
                 </p>
-                <div className="p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/20">
+                <div className="p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <p className="text-white text-sm leading-relaxed">
                     <strong className="text-yellow-400">Tip:</strong> Select the MCB type based on
                     the load. Type B for general circuits (trips at 3-5&times; rated current). Type
@@ -423,7 +423,7 @@ export default function HowToSizeCablesPage() {
                   <sub>z</sub> = 52A for that method.
                 </p>
 
-                <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 mt-4">
+                <div className="p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mt-4">
                   <p className="text-white text-sm leading-relaxed">
                     <strong className="text-red-400">
                       <AlertTriangle className="w-4 h-4 inline mr-1" />

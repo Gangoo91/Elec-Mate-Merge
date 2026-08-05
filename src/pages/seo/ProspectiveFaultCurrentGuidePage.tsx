@@ -137,7 +137,7 @@ const sections = [
           without fire, explosion, or danger to persons. If the fault current exceeds the device's
           rated breaking capacity, the device may fail catastrophically.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <div>
@@ -211,7 +211,7 @@ const sections = [
           </div>
         </div>
         <div className="space-y-4 my-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">At the Origin</h3>
             <p className="text-white text-sm leading-relaxed">
               PFC is measured at the origin of the installation — typically at the consumer unit or
@@ -258,7 +258,7 @@ const sections = [
           PFC values vary widely depending on the supply characteristics, the distance from the
           transformer, and the type of installation. Here are typical ranges for UK installations.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">
             Typical PFC ranges by installation type
           </h3>
@@ -317,7 +317,7 @@ const sections = [
           capacities.
         </p>
         <div className="space-y-4 my-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Common device breaking capacities</h3>
             <div className="space-y-3">
               <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10">
@@ -382,7 +382,7 @@ const sections = [
           prospective short-circuit current (line-to-neutral) is typically higher still because the
           neutral impedance is lower than the earth fault loop impedance.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">
             Ze and corresponding earth fault PFC
           </h3>
@@ -495,7 +495,7 @@ const sections = [
           regulations are:
         </p>
         <div className="space-y-4 my-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">Regulation 434.5.1</h3>
             <p className="text-white text-sm leading-relaxed">
               The rated short-circuit capacity of each protective device shall be not less than the
@@ -518,7 +518,7 @@ const sections = [
               example an HRC BS 88 fuse upstream of standard 6kA MCBs.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">
               Reg 643.7.3.201 — Testing-Stage Determination of PFC
             </h3>

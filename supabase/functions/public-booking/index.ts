@@ -15,7 +15,8 @@ import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const SLOT_DURATION_MINUTES = 60;
@@ -63,7 +64,11 @@ serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (err) {
-    await captureException(err, { functionName: 'public-booking', requestUrl: req.url, requestMethod: req.method });
+    await captureException(err, {
+      functionName: 'public-booking',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     console.error('public-booking error:', err);
     return new Response(
       JSON.stringify({ error: err instanceof Error ? err.message : 'Internal error' }),
@@ -119,16 +124,16 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
     ...DEFAULT_WORKING_HOURS,
     ...((profile.scheduling_working_hours as Partial<WorkingHours>) || {}),
   };
-  const bufferMinutes: number =
-    Number(profile.scheduling_buffer_minutes) || DEFAULT_BUFFER_MINUTES;
+  const bufferMinutes: number = Number(profile.scheduling_buffer_minutes) || DEFAULT_BUFFER_MINUTES;
   const maxBookingsPerDay: number =
     Number(profile.scheduling_max_bookings_per_day) || DEFAULT_MAX_BOOKINGS_PER_DAY;
   const minNoticeHours: number =
     Number(profile.scheduling_min_notice_hours) || DEFAULT_MIN_NOTICE_HOURS;
-  const blackoutDates = (profile.scheduling_blackout_dates as Array<{
-    start?: string;
-    end?: string;
-  }>) || [];
+  const blackoutDates =
+    (profile.scheduling_blackout_dates as Array<{
+      start?: string;
+      end?: string;
+    }>) || [];
 
   // company_profiles is keyed by user_id, not id (long-standing bug
   // returning null here — preserved profile lookup above is what
@@ -186,7 +191,7 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
 
     // Apply min-notice for today (or future days within notice window)
     const earliestBookable = now.getTime() + minNoticeMs;
-    let effectiveStart = Math.max(dayStartMs, earliestBookable);
+    const effectiveStart = Math.max(dayStartMs, earliestBookable);
     // If even the day end is before the notice cutoff, skip the day
     if (effectiveStart >= dayEndMs) continue;
 
@@ -210,7 +215,10 @@ async function handleGetSlots(req: Request, supabase: ReturnType<typeof createCl
 
     // Daily booking cap — if the day already has the max number of
     // calendar events, surface zero slots for it.
-    if ((events || []).filter((e) => (e.start_at as string).startsWith(dateStr)).length >= maxBookingsPerDay) {
+    if (
+      (events || []).filter((e) => (e.start_at as string).startsWith(dateStr)).length >=
+      maxBookingsPerDay
+    ) {
       continue;
     }
 
@@ -475,6 +483,10 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
         client_email: client_email || null,
         date,
         start_time,
+        // ELE-1471 — carried so the "Convert to project" action on the
+        // notification can pre-fill the new-project sheet without another
+        // round trip. See src/lib/bookingToProject.ts.
+        job_description: job_description || null,
       },
       is_read: false,
     });
@@ -486,34 +498,31 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
   // because a new booking is time-sensitive (client is waiting for confirmation).
   try {
     const jobLine = job_description ? `\n${job_description}` : '';
-    await fetch(
-      `${Deno.env.get('SUPABASE_URL')}/functions/v1/send-push-notification`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
+    await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/send-push-notification`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
+      },
+      body: JSON.stringify({
+        userId: electrician_id,
+        // ELE-955 — quote-context push title is more useful for the
+        // sparky than a generic "New booking" when this came from
+        // a quote-acceptance handoff.
+        title: quoteForPush?.quote_number
+          ? `📅 Quote ${quoteForPush.quote_number} — booked`
+          : `📅 New booking — ${client_name}`,
+        body: `${client_name} · ${formattedDate} at ${start_time}${jobLine}`,
+        type: 'default',
+        data: {
+          deep_link: '/electrician?tab=calendar',
+          category: 'booking_received',
+          event_id: event.id,
+          quote_id: quote_id || null,
         },
-        body: JSON.stringify({
-          userId: electrician_id,
-          // ELE-955 — quote-context push title is more useful for the
-          // sparky than a generic "New booking" when this came from
-          // a quote-acceptance handoff.
-          title: quoteForPush?.quote_number
-            ? `📅 Quote ${quoteForPush.quote_number} — booked`
-            : `📅 New booking — ${client_name}`,
-          body: `${client_name} · ${formattedDate} at ${start_time}${jobLine}`,
-          type: 'default',
-          data: {
-            deep_link: '/electrician?tab=calendar',
-            category: 'booking_received',
-            event_id: event.id,
-            quote_id: quote_id || null,
-          },
-          skipQuietHours: true,
-        }),
-      }
-    );
+        skipQuietHours: true,
+      }),
+    });
   } catch {
     /* non-critical — booking is confirmed regardless */
   }

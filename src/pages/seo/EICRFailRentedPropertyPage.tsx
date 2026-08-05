@@ -191,7 +191,7 @@ const sections = [
           difference between C1 and C2 codes is essential for prioritising the remedial work:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">C1 — Danger Present</h3>
             <div className="space-y-3 text-white text-sm leading-relaxed">
               <p>
@@ -568,7 +568,7 @@ const sections = [
           fails to provide the required documentation, the local authority can take the following
           actions:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -750,7 +750,7 @@ const sections = [
         </p>
         <p>Elec-Mate makes this workflow seamless:</p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <AlertTriangle className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -763,7 +763,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Receipt className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -777,7 +777,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Send className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

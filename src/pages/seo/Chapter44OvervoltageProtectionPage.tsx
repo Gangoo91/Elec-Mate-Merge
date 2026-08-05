@@ -236,7 +236,7 @@ const sections = [
           is required. The only compliant route to omit SPDs in a non-critical installation is a
           formal written <strong>owner declaration</strong>.
         </p>
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
             <div>
@@ -284,7 +284,7 @@ const sections = [
           and their intended position in the installation:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
               <CloudLightning className="w-5 h-5 text-red-400" />
               Type 1 SPD
@@ -481,7 +481,7 @@ const sections = [
           with domestic SPD practice may apply the Reg 443.4.1 framework and overlook the separate
           switching-overvoltage assessment entirely.
         </p>
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
             <p className="text-white text-sm">

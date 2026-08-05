@@ -131,7 +131,7 @@ const sections = [
           completing a safety audit — all in the same morning.
         </p>
         <div className="space-y-4 mt-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-2 mb-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400" />
               <h3 className="font-bold text-white text-lg">Programme and Progress Management</h3>
@@ -345,7 +345,7 @@ const sections = [
           compliance is not optional — failure to comply is a criminal offence that can result in
           prosecution, fines, and imprisonment.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-4">Contractor Duties under CDM 2015</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -449,7 +449,7 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-4">Typical Career Progression</h3>
           <div className="space-y-3">
-            <div className="flex items-center justify-between p-3 rounded-xl bg-yellow-500/5 border border-yellow-500/20">
+            <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <span className="text-white font-medium">Apprentice Electrician</span>
               <span className="text-yellow-400 font-bold">Years 1-4</span>
             </div>
@@ -465,7 +465,7 @@ const sections = [
               <span className="text-white font-medium">Foreman / Supervisor</span>
               <span className="text-yellow-400 font-bold">Years 8-12</span>
             </div>
-            <div className="flex items-center justify-between p-3 rounded-xl bg-yellow-500/5 border border-yellow-500/20">
+            <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <span className="text-white font-medium">Electrical Site Manager</span>
               <span className="text-yellow-400 font-bold">Years 10-15+</span>
             </div>
@@ -499,7 +499,7 @@ const sections = [
           conscious effort.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 mt-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Communication</h3>
             <p className="text-white text-sm leading-relaxed">
               The ability to communicate clearly with your team, other trades, the principal

@@ -39,7 +39,7 @@ const EarthElectrodeSection = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               Earth electrode resistance testing is required for all TT installations. The electrode must provide a low enough resistance for the RCD to operate within required disconnection times. Testing uses the 3-point fall-of-potential method.
             </p>
@@ -47,14 +47,14 @@ const EarthElectrodeSection = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-2">Acceptance Criteria</p>
             <div className="grid grid-cols-2 gap-3">
-              <div className="rounded-xl bg-white/[0.05] p-3 text-center">
+              <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 text-center">
                 <p className="text-xs text-white">Formula</p>
                 <p className="text-sm font-bold text-white">Ra ≤ U₀ ÷ IΔn</p>
               </div>
-              <div className="rounded-xl bg-white/[0.05] p-3 text-center">
+              <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 text-center">
                 <p className="text-xs text-white">30mA RCD target</p>
                 <p className="text-sm font-bold text-yellow-400">&lt;200Ω</p>
               </div>
@@ -63,14 +63,14 @@ const EarthElectrodeSection = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Test Procedure</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Test Procedure</p>
         </motion.div>
 
         {testProcedure.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-1">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-1">
               <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                   <span className="text-sm font-bold text-yellow-400">{i + 1}</span>
                 </div>
                 <div>
@@ -83,10 +83,10 @@ const EarthElectrodeSection = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Common Defects</p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Defects</p>
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-2">
             {commonDefects.map((item, i) => (
-              <div key={i} className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
+              <div key={i} className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] p-3">
                 <p className="text-sm font-medium text-white">{item.defect}</p>
                 <p className="text-sm text-white mt-1">{item.detail}</p>
               </div>
@@ -96,8 +96,8 @@ const EarthElectrodeSection = ({ onBack }: Props) => {
 
         {/* Alternative electrode types */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Alternative Electrode Types</p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Alternative Electrode Types</p>
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
             <p className="text-sm text-white mb-2">Where driven rods cannot achieve adequate resistance (e.g., rocky ground, high-resistivity soil), consider:</p>
             {[
               { type: 'Copper earth tape', detail: 'Buried horizontally at 600mm depth. Effective in shallow topsoil over rock. Requires conductive backfill in high-resistivity soils.' },
@@ -106,7 +106,7 @@ const EarthElectrodeSection = ({ onBack }: Props) => {
               { type: 'Multiple rod electrodes', detail: 'Additional rods connected in parallel reduce combined resistance. Maintain separation ≥ combined driven depth between rods.' },
               { type: 'Foundation electrodes', detail: 'Steel reinforcement in concrete foundations (BS 7430). Very low resistance but requires planning during construction.' },
             ].map((item, i) => (
-              <div key={i} className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
+              <div key={i} className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] p-3">
                 <p className="text-sm font-medium text-white">{item.type}</p>
                 <p className="text-sm text-white mt-1">{item.detail}</p>
               </div>
@@ -116,7 +116,7 @@ const EarthElectrodeSection = ({ onBack }: Props) => {
 
         {/* Labelling */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-2">Earth Connection Labels (BS 951)</p>
             <p className="text-sm text-white leading-relaxed">
               A permanent brass or plastic label to BS 951 format must be fixed at every earth electrode connection, protective bonding point, and main earth terminal. Labels must be durable, legible and fixed to the permanent structure — not to removable covers. Use corrosion-resistant fixings for external electrodes.

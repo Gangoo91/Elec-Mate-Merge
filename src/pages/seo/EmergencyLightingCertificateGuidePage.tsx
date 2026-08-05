@@ -341,7 +341,7 @@ const sections = [
           confirms that each luminaire switches to battery power when the mains supply is
           interrupted and that it produces light.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-3">Monthly Test Procedure</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -660,7 +660,7 @@ const sections = [
           places a duty on the Responsible Person to provide and maintain emergency lighting as part
           of the fire safety measures for the premises.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-3">Legal Framework</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">

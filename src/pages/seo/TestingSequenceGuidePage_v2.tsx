@@ -202,9 +202,9 @@ const sections = [
     heading: 'Test 1: Continuity of Protective Conductors',
     content: (
       <>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 shrink-0">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
               <span className="font-bold text-yellow-400">1</span>
             </div>
             <h3 className="font-bold text-white text-xl">Continuity of Protective Conductors</h3>
@@ -250,9 +250,9 @@ const sections = [
     heading: 'Test 2: Continuity of Ring Final Circuit Conductors',
     content: (
       <>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 shrink-0">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
               <span className="font-bold text-yellow-400">2</span>
             </div>
             <h3 className="font-bold text-white text-xl">
@@ -305,9 +305,9 @@ const sections = [
     heading: 'Test 3: Insulation Resistance',
     content: (
       <>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 shrink-0">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
               <span className="font-bold text-yellow-400">3</span>
             </div>
             <h3 className="font-bold text-white text-xl">Insulation Resistance</h3>
@@ -372,7 +372,7 @@ const sections = [
       <>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 shrink-0">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
               <span className="font-bold text-yellow-400">4</span>
             </div>
             <h3 className="font-bold text-white text-xl">Polarity Verification</h3>
@@ -415,9 +415,9 @@ const sections = [
     heading: 'Test 5: Earth Electrode Resistance (Where Applicable)',
     content: (
       <>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 shrink-0">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
               <span className="font-bold text-yellow-400">5</span>
             </div>
             <h3 className="font-bold text-white text-xl">Earth Electrode Resistance</h3>
@@ -485,9 +485,9 @@ const sections = [
     heading: 'Test 6: Earth Fault Loop Impedance (Zs and Ze)',
     content: (
       <>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 shrink-0">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
               <span className="font-bold text-yellow-400">6</span>
             </div>
             <h3 className="font-bold text-white text-xl">Earth Fault Loop Impedance</h3>
@@ -541,7 +541,7 @@ const sections = [
       <>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 shrink-0">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
               <span className="font-bold text-yellow-400">7</span>
             </div>
             <h3 className="font-bold text-white text-xl">Prospective Fault Current</h3>
@@ -587,9 +587,9 @@ const sections = [
     heading: 'Test 8: Functional Testing (Including RCD Operation)',
     content: (
       <>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 shrink-0">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
               <span className="font-bold text-yellow-400">8</span>
             </div>
             <h3 className="font-bold text-white text-xl">Functional Testing</h3>

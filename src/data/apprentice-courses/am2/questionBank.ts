@@ -57,7 +57,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Section 2 of HASAWA places the primary duty on employers to ensure, so far as reasonably practicable, the health, safety and welfare of employees.',
     section: 'HASAWA 1974',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Employer Duties',
     category: 'Health & Safety',
   },
@@ -74,7 +74,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Section 7 requires employees to take reasonable care of their own health and safety and that of others who may be affected by their acts or omissions.',
     section: 'HASAWA 1974',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'Employee Duties',
     category: 'Health & Safety',
   },
@@ -91,7 +91,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Reasonably practicable means weighing the risk against the sacrifice (time, trouble, cost) needed to avert or reduce it - not just cost alone.',
     section: 'HASAWA 1974',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Legal Terms',
     category: 'Health & Safety',
   },
@@ -125,7 +125,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Serious breaches can result in unlimited fines and/or imprisonment for up to 2 years (or more for certain offences causing death).',
     section: 'HASAWA 1974',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Penalties',
     category: 'Health & Safety',
   },
@@ -142,7 +142,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Employers must consult employees on health and safety matters, either directly or through elected safety representatives.',
     section: 'HASAWA 1974',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Consultation',
     category: 'Health & Safety',
   },
@@ -161,7 +161,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'EAW Regulations apply to all electrical systems and equipment in workplaces to prevent danger from electricity.',
     section: 'EAW 1989',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Scope',
     category: 'Health & Safety',
   },
@@ -195,7 +195,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Regulation 14 states live work is permitted only when unreasonable to work dead and suitable precautions are taken to prevent injury.',
     section: 'EAW 1989',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Live Working',
     category: 'Health & Safety',
   },
@@ -213,7 +213,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Regulation 16 requires persons working on electrical systems to be competent, or if not, to be supervised by a competent person.',
     section: 'EAW 1989',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Competence',
     category: 'Health & Safety',
   },
@@ -230,7 +230,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Regulation 13 requires precautions to prevent electrical equipment that has been made dead from being charged (re-energised) accidentally.',
     section: 'EAW 1989',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Isolation',
     category: 'Health & Safety',
   },
@@ -300,7 +300,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Risk assessments should be reviewed when significant changes occur, after incidents, when new information emerges, or periodically to ensure they remain valid.',
     section: 'Risk Assessment',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Review',
     category: 'Health & Safety',
   },
@@ -317,7 +317,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'The hierarchy: elimination (remove hazard), substitution (use less hazardous), engineering controls, administrative controls, PPE (last resort).',
     section: 'Risk Assessment',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Control Measures',
     category: 'Health & Safety',
   },
@@ -353,7 +353,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'RIDDOR stands for Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013.',
     section: 'RIDDOR',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Definition',
     category: 'Health & Safety',
   },
@@ -370,7 +370,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Electrical incidents causing death, specified injuries, or over-7-day incapacitation must be reported. Dangerous occurrences involving electricity are also reportable.',
     section: 'RIDDOR',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Reportable Incidents',
     category: 'Health & Safety',
   },
@@ -404,7 +404,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Dangerous occurrences are specific near-miss events that had the potential to cause death or serious injury, listed in Schedule 2 of RIDDOR.',
     section: 'RIDDOR',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Dangerous Occurrences',
     category: 'Health & Safety',
   },
@@ -421,7 +421,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'The responsible person, usually the employer or person in control of the premises, must report RIDDOR incidents.',
     section: 'RIDDOR',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'Responsibility',
     category: 'Health & Safety',
   },
@@ -440,7 +440,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'PPE should be used as a last resort, after elimination, substitution, engineering and administrative controls have been considered.',
     section: 'PPE',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'Hierarchy',
     category: 'Health & Safety',
   },
@@ -491,7 +491,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Arc-rated safety glasses or face shields protect against arc flash, which can cause severe burns and eye damage from intense light and heat.',
     section: 'PPE',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Eye Protection',
     category: 'Health & Safety',
   },
@@ -508,7 +508,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Employees must use PPE properly as trained, report defects or damage, and store it correctly when not in use.',
     section: 'PPE',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Employee Duties',
     category: 'Health & Safety',
   },
@@ -527,7 +527,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'CDM 2015 applies to all construction work, including electrical installation, maintenance and repair work.',
     section: 'CDM Regulations',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Scope',
     category: 'Health & Safety',
   },
@@ -544,7 +544,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'CDM places duties on all duty holders: clients, principal designers, principal contractors, designers, contractors and workers.',
     section: 'CDM Regulations',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Duty Holders',
     category: 'Health & Safety',
   },
@@ -561,7 +561,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'A principal contractor must be appointed when there is more than one contractor working on a construction project.',
     section: 'CDM Regulations',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Principal Contractor',
     category: 'Health & Safety',
   },
@@ -580,7 +580,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Work at height means work in any place where a person could fall a distance liable to cause personal injury, including at ground level near holes.',
     section: 'Working at Height',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Definition',
     category: 'Health & Safety',
   },
@@ -597,7 +597,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'The hierarchy: avoid work at height where possible, prevent falls using suitable equipment, minimise fall distance/consequences.',
     section: 'Working at Height',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Hierarchy',
     category: 'Health & Safety',
   },
@@ -654,7 +654,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Low voltage for AC is defined as exceeding 50V but not exceeding 1000V AC rms (or 1500V DC).',
     section: 'Definitions',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'Voltage Bands',
     category: 'BS7671 Fundamentals',
   },
@@ -688,7 +688,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'An extraneous-conductive-part is a conductive part liable to introduce a potential, generally earth potential, and is not part of the electrical installation (e.g., metal pipes, structural steelwork).',
     section: 'Definitions',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Conductive Parts',
     category: 'BS7671 Fundamentals',
   },
@@ -705,7 +705,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'The nominal voltage is 230V AC for single-phase supplies, with a tolerance of +10%/-6% giving 216.2V to 253V.',
     section: 'Supply Systems',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Voltage Levels',
     category: 'BS7671 Fundamentals',
   },
@@ -724,7 +724,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Protection against electric shock consists of basic protection (protection against contact with live parts) and fault protection (protection against contact with exposed-conductive-parts made live by a fault).',
     section: 'Electric Shock',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Protection Types',
     category: 'BS7671 Fundamentals',
   },
@@ -741,7 +741,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'ADS is a protective measure combining basic protection (insulation, barriers) with fault protection by automatic disconnection in the event of a fault.',
     section: 'Electric Shock',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'ADS',
     category: 'BS7671 Fundamentals',
   },
@@ -775,7 +775,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Under BS 7671 Table 41.1, a 230V TT final circuit must disconnect within 0.2 seconds. The old 1.0s value no longer applies; where ADS relies on an RCD this short time is readily achieved.',
     section: 'Electric Shock',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Disconnection Times',
     category: 'BS7671 Fundamentals',
   },
@@ -792,7 +792,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Supplementary bonding reduces potential difference between simultaneously accessible exposed and extraneous-conductive-parts.',
     section: 'Electric Shock',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Bonding',
     category: 'BS7671 Fundamentals',
   },
@@ -828,7 +828,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'TN-C-S has combined neutral and earth (PEN) in the supply, separated at the origin into neutral and protective conductors in the installation.',
     section: 'Earthing Systems',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'TN-C-S',
     category: 'BS7671 Fundamentals',
   },
@@ -845,7 +845,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       "TT systems use a local earth electrode (e.g., earth rod) as the installation has no connection to the distributor's earth.",
     section: 'Earthing Systems',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'TT System',
     category: 'BS7671 Fundamentals',
   },
@@ -898,7 +898,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Overcurrent includes overload current (excess current in a circuit that is electrically sound) and fault current (from a short-circuit or earth fault).',
     section: 'Overcurrent',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Types',
     category: 'BS7671 Fundamentals',
   },
@@ -949,7 +949,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Type B MCBs trip magnetically between 3 and 5 times their rated current, suitable for resistive loads.',
     section: 'Overcurrent',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'MCB Types',
     category: 'BS7671 Fundamentals',
   },
@@ -1025,7 +1025,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Current-carrying capacity depends on installation method (Appendix 4), ambient temperature (Ca), grouping (Cg), and thermal insulation (Ci).',
     section: 'Cable Selection',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Current Capacity',
     category: 'BS7671 Selection & Erection',
   },
@@ -1077,7 +1077,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Voltage drop should not exceed 3% for lighting and 5% for other uses of the nominal voltage (BS 7671 Appendix 4).',
     section: 'Cable Selection',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Voltage Drop',
     category: 'BS7671 Selection & Erection',
   },
@@ -1128,7 +1128,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Ci applies when cables are installed in or surrounded by thermal insulation, typically 0.5 for cables totally surrounded.',
     section: 'Cable Selection',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Thermal Insulation',
     category: 'BS7671 Selection & Erection',
   },
@@ -1165,7 +1165,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Additional protection requires RCDs with rated residual operating current (IΔn) not exceeding 30mA and operating time not exceeding 40ms at 5×IΔn.',
     section: 'Protective Devices',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'RCD Rating',
     category: 'BS7671 Selection & Erection',
   },
@@ -1216,7 +1216,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Type D MCBs (trip at 10-20 × In) are for circuits with very high inrush currents like transformers, welding equipment, X-ray machines.',
     section: 'Protective Devices',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'MCB Types',
     category: 'BS7671 Selection & Erection',
   },
@@ -1235,7 +1235,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Main earthing conductor size is determined from the line conductor size using the adiabatic method or Table 54.7 (54.8 in A4).',
     section: 'Earthing',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Conductor Sizing',
     category: 'BS7671 Selection & Erection',
   },
@@ -1253,7 +1253,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'For supply conductors up to and including 35mm² copper, main bonding conductors must be at least 10mm² copper.',
     section: 'Bonding',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Bonding Size',
     category: 'BS7671 Selection & Erection',
   },
@@ -1270,7 +1270,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Main bonding is required to gas, water, oil pipes, structural metalwork, and metallic service pipes (411.3.1.2).',
     section: 'Bonding',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'What to Bond',
     category: 'BS7671 Selection & Erection',
   },
@@ -1287,7 +1287,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Main bonding connections should be made as close as practicable to the point of entry of the service into the building.',
     section: 'Bonding',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Bonding Location',
     category: 'BS7671 Selection & Erection',
   },
@@ -1380,7 +1380,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'The sequence per GN3: continuity of protective/bonding conductors, ring continuity, insulation resistance, polarity, Zs, functional tests (RCDs).',
     section: 'Testing Sequence',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Test Order',
     category: 'BS7671 Inspection & Testing',
   },
@@ -1448,7 +1448,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Disconnect/isolate sensitive electronic equipment that could be damaged by 500V test voltage, and ensure the circuit is de-energised.',
     section: 'Insulation Testing',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Safety Precautions',
     category: 'BS7671 Inspection & Testing',
   },
@@ -1467,7 +1467,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Zs = Ze + (R1 + R2), where Ze is external loop impedance, R1 is line conductor resistance, R2 is cpc resistance.',
     section: 'Loop Impedance',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Zs Formula',
     category: 'BS7671 Inspection & Testing',
   },
@@ -1518,7 +1518,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Connect line and cpc together at the origin, measure resistance at the furthest point. This gives R1+R2 directly.',
     section: 'Loop Impedance',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'R1+R2 Measurement',
     category: 'BS7671 Inspection & Testing',
   },
@@ -1535,7 +1535,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Zs can be measured directly with a loop impedance tester on a live circuit, or calculated from Ze + (R1+R2) measured separately.',
     section: 'Loop Impedance',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Test Methods',
     category: 'BS7671 Inspection & Testing',
   },
@@ -1554,7 +1554,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'An RCD should trip between 50% and 100% of its rated residual current - for 30mA, between 15mA and 30mA.',
     section: 'RCD Testing',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Trip Current',
     category: 'BS7671 Inspection & Testing',
   },
@@ -1588,7 +1588,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'For additional protection (30mA RCDs), maximum trip time at 5×IΔn (150mA) is 40ms.',
     section: 'RCD Testing',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Additional Protection',
     category: 'BS7671 Inspection & Testing',
   },
@@ -1605,7 +1605,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Users should operate the test button quarterly (every 3 months) to confirm the RCD trips correctly.',
     section: 'RCD Testing',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'User Testing',
     category: 'BS7671 Inspection & Testing',
   },
@@ -1641,7 +1641,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'First measure the end-to-end resistance of each conductor by temporarily linking L-L, N-N, E-E at the consumer unit.',
     section: 'Ring Circuits',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Test Procedure',
     category: 'BS7671 Inspection & Testing',
   },
@@ -1659,7 +1659,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Line and neutral should have substantially the same resistance as they are the same size conductor in the same cable.',
     section: 'Ring Circuits',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Expected Values',
     category: 'BS7671 Inspection & Testing',
   },
@@ -1677,7 +1677,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'In twin and earth cable, the cpc is often smaller (e.g., 1.5mm² with 2.5mm² L/N), giving higher resistance.',
     section: 'Ring Circuits',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Conductor Sizes',
     category: 'BS7671 Inspection & Testing',
   },
@@ -1694,7 +1694,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Cross-connect conductors at consumer unit (L1-N2, N1-L2, E1-E2), then measure at each socket to verify ring continuity.',
     section: 'Ring Circuits',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Cross-Connection',
     category: 'BS7671 Inspection & Testing',
   },
@@ -1711,7 +1711,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Each socket should read approximately the same, equal to (r1+rn)/4 or (r1+r2)/4 due to the parallel paths.',
     section: 'Ring Circuits',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Expected Values',
     category: 'BS7671 Inspection & Testing',
   },
@@ -1747,7 +1747,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'A Minor Works Certificate is for additions/alterations that do not involve adding a new circuit to the installation.',
     section: 'Documentation',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Certificates',
     category: 'BS7671 Inspection & Testing',
   },
@@ -1787,7 +1787,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Part P applies to dwellings, including dwelling houses, flats, and associated land and outbuildings/garden structures.',
     section: 'Part P',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Application',
     category: 'Building Regulations',
   },
@@ -1839,7 +1839,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Special locations include rooms with a bath or shower, swimming pool/paddling pool areas, and hot tub areas where all electrical work is notifiable.',
     section: 'Part P',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Special Locations',
     category: 'Building Regulations',
   },
@@ -1858,7 +1858,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Competent person schemes allow registered installers to self-certify their work as compliant without building control involvement.',
     section: 'CPS',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Definition',
     category: 'Building Regulations',
   },
@@ -1875,7 +1875,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Electrical competent person schemes include NAPIT, NICEIC, ELECSA, and several others approved by government.',
     section: 'CPS',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Scheme Names',
     category: 'Building Regulations',
   },
@@ -1892,7 +1892,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Members must notify their scheme, provide a Building Regulations Compliance Certificate, and the scheme notifies the local authority.',
     section: 'CPS',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Requirements',
     category: 'Building Regulations',
   },
@@ -1946,7 +1946,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Adding a socket to an existing circuit outside special locations is non-notifiable (but must still comply with BS 7671).',
     section: 'Non-notifiable',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Examples',
     category: 'Building Regulations',
   },
@@ -1980,7 +1980,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Consumer unit replacement is notifiable work as it involves work at the origin of the installation.',
     section: 'Notifiable Work',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Consumer Units',
     category: 'Building Regulations',
   },
@@ -2003,7 +2003,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'GS38 procedure: identify circuit, isolate, secure against re-energisation, test voltage indicator on known live source, prove circuit dead, re-test indicator on live source.',
     section: 'GS38',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Procedure',
     category: 'Safe Isolation',
   },
@@ -2071,7 +2071,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'GS38 specifies maximum 4mm exposed probe tip length, with 2mm being preferred to minimise arc flash risk.',
     section: 'GS38',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Test Equipment',
     category: 'Safe Isolation',
   },
@@ -2088,7 +2088,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'GS38 requires finger barriers or shrouded probes, fused leads, maximum 4mm exposed tip, and appropriate CAT rating.',
     section: 'GS38',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Test Equipment',
     category: 'Safe Isolation',
   },
@@ -2105,7 +2105,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Testing at origin requires CAT III (distribution level) or CAT IV (service entrance), depending on location.',
     section: 'GS38',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'CAT Ratings',
     category: 'Safe Isolation',
   },
@@ -2122,7 +2122,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'All three phases and the neutral must be proven dead as any could be energised due to faults or backfeed.',
     section: 'Three Phase',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Three-Phase Isolation',
     category: 'Safe Isolation',
   },
@@ -2141,7 +2141,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Two-pole testers measure voltage between two points (L-N, L-E), providing reliable detection unlike neon testers that can give false readings.',
     section: 'Test Equipment',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Voltage Testers',
     category: 'Safe Isolation',
   },
@@ -2175,7 +2175,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'GS38 recommends fused leads with fuses rated at 500mA or less to limit energy in case of flashover.',
     section: 'Test Equipment',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Fused Leads',
     category: 'Safe Isolation',
   },
@@ -2230,7 +2230,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Permit to work systems are used for high-risk activities, including HV systems, complex isolations, or where multiple teams work.',
     section: 'Permits',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'When Required',
     category: 'Safe Isolation',
   },
@@ -2248,7 +2248,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Only the person who applied their personal lock should remove it, or formal handover procedures must be followed.',
     section: 'Lock-off',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Removal',
     category: 'Safe Isolation',
   },
@@ -2288,7 +2288,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Six-point approach: gather information, analyse symptoms, identify probable causes, test to locate fault, rectify, verify operation.',
     section: 'Methodology',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Six-Point Plan',
     category: 'Fault Finding',
   },
@@ -2341,7 +2341,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Immediate tripping indicates a short circuit (L-N or L-E), causing high fault current and magnetic trip operation.',
     section: 'Common Faults',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'MCB Tripping',
     category: 'Fault Finding',
   },
@@ -2375,7 +2375,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'RCDs trip on current imbalance, typically caused by earth leakage, N-E cross connections, moisture, or faulty equipment.',
     section: 'Common Faults',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'RCD Tripping',
     category: 'Fault Finding',
   },
@@ -2392,7 +2392,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'High resistance joints result from loose connections, corrosion, incorrect termination, or damage, causing heat and potential fire risk.',
     section: 'Common Faults',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'High Resistance',
     category: 'Fault Finding',
   },
@@ -2409,7 +2409,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Signs include discoloration, smell, heat detected by thermal imaging, or voltage drop measurements across connections.',
     section: 'Common Faults',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'High Resistance',
     category: 'Fault Finding',
   },
@@ -2460,7 +2460,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Flickering can indicate loose connections, failing lamp/driver, incompatible dimmer with LED lamps, or supply voltage fluctuations.',
     section: 'Common Faults',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Lighting Faults',
     category: 'Fault Finding',
   },
@@ -2567,7 +2567,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 0,
     explanation: 'UK supply is 230V +10%/-6%, giving acceptable range of 216.2V to 253V.',
     section: 'Supply',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Voltage',
     category: 'BS7671 Fundamentals',
   },
@@ -2600,7 +2600,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 2,
     explanation: 'AMD refers to Amendments to BS 7671, which update the standard between editions.',
     section: 'Standards',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'Amendments',
     category: 'BS7671 Fundamentals',
   },
@@ -2635,7 +2635,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'RCDs detect current imbalance (earth leakage) and disconnect quickly, providing additional protection against electric shock.',
     section: 'Protection',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'RCD Purpose',
     category: 'BS7671 Fundamentals',
   },
@@ -2720,7 +2720,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'SELV (Separated Extra-Low Voltage) is a system where live parts are isolated from earth and other systems.',
     section: 'Protection',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'SELV',
     category: 'BS7671 Fundamentals',
   },
@@ -2737,7 +2737,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Extra-low voltage does not exceed 50V AC rms or 120V ripple-free DC between conductors or to earth.',
     section: 'Definitions',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'ELV',
     category: 'BS7671 Fundamentals',
   },
@@ -2772,7 +2772,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Domestic installations should be inspected every 10 years or at change of occupancy, whichever is sooner (IET Guidance Note 3).',
     section: 'Inspection',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'Periodic Inspection',
     category: 'BS7671 Inspection & Testing',
   },
@@ -2791,7 +2791,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Approved Document M recommends 450mm-1200mm above floor level for accessibility in new dwellings.',
     section: 'Accessibility',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Socket Heights',
     category: 'Building Regulations',
   },
@@ -2876,7 +2876,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'EIC must include full installation details, extent covered, declaration, schedule of inspections, test results, and circuit schedules.',
     section: 'Certification',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'EIC Requirements',
     category: 'BS7671 Inspection & Testing',
   },
@@ -2908,7 +2908,7 @@ export const am2QuestionBank: AM2Question[] = [
     correctAnswer: 0,
     explanation: 'C2 = Potentially dangerous. Urgent remedial action required.',
     section: 'EICR',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Classification Codes',
     category: 'BS7671 Inspection & Testing',
   },
@@ -2941,7 +2941,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'FI = Further Investigation required without delay. Used when testing could not be completed or further examination needed.',
     section: 'EICR',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Classification Codes',
     category: 'BS7671 Inspection & Testing',
   },
@@ -2958,7 +2958,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'PFC testing ensures protective devices can safely interrupt the maximum fault current available at that point.',
     section: 'Testing',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'PFC',
     category: 'BS7671 Inspection & Testing',
   },
@@ -2975,7 +2975,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'PFC should be measured at the origin (highest value) and verified at the furthest point of the installation.',
     section: 'Testing',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'PFC Location',
     category: 'BS7671 Inspection & Testing',
   },
@@ -3110,7 +3110,7 @@ export const am2QuestionBank: AM2Question[] = [
     explanation:
       'Terminations must not exceed temperatures that would degrade conductor insulation or adjacent materials.',
     section: 'Terminations',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Temperature Limits',
     category: 'BS7671 Selection & Erection',
   },

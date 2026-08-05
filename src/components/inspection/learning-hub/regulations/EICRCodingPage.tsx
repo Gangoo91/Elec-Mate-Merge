@@ -97,7 +97,7 @@ const EICRCodingPage = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               EICR observation codes classify the severity of defects found during periodic inspection. Getting the coding right is essential — it determines the urgency of remedial action and has legal implications for the duty holder.
             </p>
@@ -106,7 +106,7 @@ const EICRCodingPage = ({ onBack }: Props) => {
 
         {codes.map((c, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className={`rounded-2xl bg-white/[0.03] border ${c.colour === 'red' ? 'border-red-400/20' : c.colour === 'orange' ? 'border-orange-400/20' : c.colour === 'yellow' ? 'border-yellow-400/20' : 'border-blue-400/20'} overflow-hidden`}>
+            <div className={`rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border ${c.colour === 'red' ? 'border-red-400/20' : c.colour === 'orange' ? 'border-orange-400/20' : c.colour === 'yellow' ? 'border-yellow-400/20' : 'border-blue-400/20'} overflow-hidden`}>
               <div className={`px-4 py-3 ${c.colour === 'red' ? 'bg-red-400/10' : c.colour === 'orange' ? 'bg-orange-400/10' : c.colour === 'yellow' ? 'bg-yellow-400/10' : 'bg-blue-400/10'} border-b border-white/[0.06]`}>
                 <div className="flex items-center gap-3">
                   <div className={`rounded-lg px-3 py-1 ${c.colour === 'red' ? 'bg-red-400/20' : c.colour === 'orange' ? 'bg-orange-400/20' : c.colour === 'yellow' ? 'bg-yellow-400/20' : 'bg-blue-400/20'}`}>
@@ -119,7 +119,7 @@ const EICRCodingPage = ({ onBack }: Props) => {
                 </div>
               </div>
               <div className="p-4 space-y-3">
-                <div className="rounded-xl bg-white/[0.05] p-3">
+                <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
                   <p className="text-xs font-semibold text-white mb-1">Required Action</p>
                   <p className="text-sm text-white">{c.action}</p>
                 </div>
@@ -141,10 +141,10 @@ const EICRCodingPage = ({ onBack }: Props) => {
 
         {/* Overall assessment */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Overall Assessment</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Overall Assessment</p>
           <div className="grid grid-cols-2 gap-3">
             {overallAssessment.map((a, i) => (
-              <div key={i} className={`rounded-2xl p-4 ${a.colour === 'green' ? 'bg-green-400/10 border border-green-400/20' : 'bg-red-400/10 border border-red-400/20'}`}>
+              <div key={i} className={`rounded-2xl p-4 ${a.colour === 'green' ? 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-green-400/20' : 'bg-red-400/10 border border-red-400/20'}`}>
                 <p className={`text-sm font-bold ${a.colour === 'green' ? 'text-green-400' : 'text-red-400'}`}>{a.result}</p>
                 <p className="text-xs text-white mt-1">{a.meaning}</p>
               </div>
@@ -153,7 +153,7 @@ const EICRCodingPage = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-2">Professional Tip</p>
             <p className="text-sm text-white leading-relaxed">
               If you are unsure between C2 and C3, ask yourself: "Could this defect cause injury or damage if left unaddressed?" If yes, it is C2. If it is simply not to current standards but poses no immediate or foreseeable risk, it is C3. When in doubt, code higher — it is better to over-report than under-report.

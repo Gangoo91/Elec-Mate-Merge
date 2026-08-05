@@ -185,7 +185,7 @@ const sections = [
               systems, and ELV lighting.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">500V DC</h3>
             <p className="text-white text-sm leading-relaxed">
               Used for circuits up to 500V nominal. This covers all standard UK domestic and
@@ -193,7 +193,7 @@ const sections = [
               This is the most commonly used test voltage for electricians.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">1000V DC</h3>
             <p className="text-white text-sm leading-relaxed">
               Used for circuits above 500V nominal (high-voltage systems). Minimum IR value: 1 MΩ.
@@ -222,7 +222,7 @@ const sections = [
           design target.
         </p>
         {/* grounded: BS 7671:2018+A4:2026 Table 64 (Minimum values of insulation resistance) — confirmed in bs7671_facets + the standard PDF p.249. */}
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-1">BS 7671 Table 64 — at a glance</h3>
           <p className="text-white/60 text-xs mb-4">
             Minimum insulation resistance and DC test voltage by circuit type
@@ -381,7 +381,7 @@ const sections = [
           When carrying out IR testing as part of an EICR on an occupied installation, additional
           precautions are required:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -487,7 +487,7 @@ const sections = [
           tips from experienced inspection electricians:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

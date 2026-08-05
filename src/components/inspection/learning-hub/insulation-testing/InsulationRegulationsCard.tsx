@@ -50,14 +50,14 @@ const InsulationRegulationsCard = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">BS 7671:2018+A4:2026</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">BS 7671:2018+A4:2026</p>
         </motion.div>
 
         {coreRegulations.map((reg, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 rounded-xl bg-yellow-400/10 border border-yellow-400/20 px-2.5 py-1.5">
+                <div className="flex-shrink-0 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 px-2.5 py-1.5">
                   <span className="text-xs font-bold text-yellow-400 whitespace-nowrap">{reg.number}</span>
                 </div>
                 <div className="flex-1 min-w-0">
@@ -70,12 +70,12 @@ const InsulationRegulationsCard = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Other Standards & Guidance</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Other Standards & Guidance</p>
         </motion.div>
 
         {otherStandards.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-sm font-semibold text-white">{item.standard}</p>
               <p className="text-sm text-white mt-1 leading-relaxed">{item.detail}</p>
             </div>
@@ -83,12 +83,12 @@ const InsulationRegulationsCard = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Certification Requirements</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Certification Requirements</p>
         </motion.div>
 
         {certificationRequirements.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-sm font-semibold text-white">{item.cert}</p>
               <p className="text-sm text-white mt-1 leading-relaxed">{item.requirement}</p>
             </div>
@@ -96,7 +96,7 @@ const InsulationRegulationsCard = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-orange-400/10 border border-orange-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-2">EICR Observation Coding</p>
             <div className="space-y-2">
               <div className="flex items-start gap-3">
@@ -106,13 +106,13 @@ const InsulationRegulationsCard = ({ onBack }: Props) => {
                 <p className="text-sm text-white"><span className="font-medium">Danger present.</span> IR so low that there is immediate risk of electric shock or fire. Circuit must be isolated immediately.</p>
               </div>
               <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 rounded-lg bg-orange-400/20 border border-orange-400/30 px-2 py-1">
+                <div className="flex-shrink-0 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/30 px-2 py-1">
                   <span className="text-xs font-bold text-orange-400">C2</span>
                 </div>
                 <p className="text-sm text-white"><span className="font-medium">Potentially dangerous.</span> IR below 1MΩ minimum — insulation is compromised but not an immediate emergency. Requires remedial action.</p>
               </div>
               <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 rounded-lg bg-yellow-400/20 border border-yellow-400/30 px-2 py-1">
+                <div className="flex-shrink-0 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/30 px-2 py-1">
                   <span className="text-xs font-bold text-yellow-400">C3</span>
                 </div>
                 <p className="text-sm text-white"><span className="font-medium">Improvement recommended.</span> IR above minimum but significantly deteriorated from expected values. Monitor at next inspection.</p>
@@ -123,7 +123,7 @@ const InsulationRegulationsCard = ({ onBack }: Props) => {
 
         {/* Vulnerable equipment notice */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm font-semibold text-white mb-2">Vulnerable Equipment Notice (BS 7671)</p>
             <p className="text-sm text-white leading-relaxed">
               A durable diagram, chart or schedule at or within the distribution board must identify circuits and equipment vulnerable to insulation resistance testing. This prevents damage to SPDs, electronic equipment and sensitive devices during future testing. If this notice is missing, create one during your inspection.

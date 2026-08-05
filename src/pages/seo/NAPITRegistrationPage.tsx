@@ -202,7 +202,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">Step-by-Step Application</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
                 1
               </span>
               <span className="flex-1 text-left">
@@ -212,7 +212,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
                 2
               </span>
               <span className="flex-1 text-left">
@@ -225,7 +225,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
                 3
               </span>
               <span className="flex-1 text-left">
@@ -235,7 +235,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
                 4
               </span>
               <span className="flex-1 text-left">
@@ -245,7 +245,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
                 5
               </span>
               <span className="flex-1 text-left">
@@ -254,7 +254,7 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
+              <span className="w-7 h-7 rounded-full bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center shrink-0 text-sm font-bold text-yellow-400">
                 6
               </span>
               <span className="flex-1 text-left">
@@ -334,7 +334,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-6 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-6">
           <h3 className="font-bold text-yellow-300 text-lg mb-3">
             A4:2026 Updates You Must Know for Your NAPIT Assessment
           </h3>

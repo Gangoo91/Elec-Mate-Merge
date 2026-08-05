@@ -205,7 +205,7 @@ const sections = [
           Sustained overvoltage — readings consistently above 253V — is less common than
           undervoltage but can cause significant damage to appliances and increase energy costs.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -325,7 +325,7 @@ const sections = [
           shared between all properties on the same phase and returns current to the transformer.
         </p>
         <p>If the neutral conductor develops a high-resistance joint or breaks entirely:</p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -498,7 +498,7 @@ const sections = [
               Properties receiving consistently high voltage (above 245V) benefit most.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Where It Does Not Help</h3>
             <p className="text-white text-sm leading-relaxed">
               Resistive loads (heaters, kettles, ovens) use less power at lower voltage but also
@@ -533,7 +533,7 @@ const sections = [
           installation or the supply side.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Gauge className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

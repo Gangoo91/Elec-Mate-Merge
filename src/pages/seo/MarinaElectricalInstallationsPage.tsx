@@ -168,7 +168,7 @@ const sections = [
           a documented cause of death in marinas worldwide. Every design decision in a marina
           electrical installation must be made with this risk in mind.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -404,7 +404,7 @@ const sections = [
               quickly enough. This is why individual 30mA RCDs on each socket outlet are mandatory.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">PME (TN-C-S) — Not Permitted</h3>
             <p className="text-white text-sm leading-relaxed">
               PME must not be used for the supply to boats (Regulation 709.411.4). The risk of a
@@ -728,7 +728,7 @@ const sections = [
           mechanical challenges:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Cable className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -807,7 +807,7 @@ const sections = [
               Visual checks of pillars, cables and connections; RCD test-button operation.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4">
             <div className="text-2xl font-bold text-yellow-300">After storms</div>
             <p className="text-white/90 text-sm mt-1">
               Inspection after any flooding, extreme tide or severe weather event.

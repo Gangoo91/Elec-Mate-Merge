@@ -23,6 +23,19 @@ export interface TestingInstrument {
   serial_number: string;
   calibration_date: string;
   calibration_due?: string;
+  /**
+   * Maximum insulation-resistance reading this instrument can display, per test
+   * voltage (ELE-1438 / ELE-1467). Stored as the electrician writes it on the
+   * cert — e.g. ">209.9" or ">1049" — because the ">" is part of the reading,
+   * not decoration: it records that the true value exceeded the meter's range.
+   *
+   * These belong to the instrument, not the company: a Kewtech KT66DL tops out
+   * at >209.9 MΩ on 250V and >1049 MΩ on 500V, and a different MFT on the same
+   * van will differ. Only meaningful for multifunction / insulation testers.
+   */
+  ir_max_250v?: string;
+  ir_max_500v?: string;
+  ir_max_1000v?: string;
 }
 
 export interface CompanyProfile {

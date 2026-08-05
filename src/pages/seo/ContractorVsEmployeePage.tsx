@@ -320,7 +320,7 @@ const sections = [
           "disguised employment" — situations where a worker operates through a limited company or
           as a sole trader but is effectively an employee of a single client.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Key IR35 Indicators</h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">

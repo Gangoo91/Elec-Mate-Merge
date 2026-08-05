@@ -98,6 +98,9 @@ const SolarPVFormTabs: React.FC<SolarPVFormTabsProps> = ({
         {content[currentTab]}
       </div>
       <CertShellFooter
+        previewReportType="solar-pv"
+        previewReportId={reportId}
+        previewData={formData}
         currentIndex={tabNavigationProps.currentTabIndex}
         totalSteps={tabNavigationProps.totalTabs}
         canPrevious={tabNavigationProps.canNavigatePrevious}

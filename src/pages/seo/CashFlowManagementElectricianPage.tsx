@@ -330,7 +330,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <AlertTriangle className="w-6 h-6 text-red-400 mt-0.5 shrink-0" />
               <div>
@@ -417,7 +417,7 @@ const sections = [
           HMRC does not deduct tax from your earnings like an employer does — you receive the full
           amount and must save the tax portion yourself.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white mb-4 flex items-center gap-2">
             <AlertTriangle className="w-4 h-4 text-red-400" /> First Year Tax Shock
           </h4>

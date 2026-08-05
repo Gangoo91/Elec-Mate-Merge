@@ -242,7 +242,7 @@ export default function TrainingHubPage() {
     <PublicPageLayout>
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
             <BookOpen className="w-4 h-4 text-yellow-400" />
             <span className="text-sm font-medium text-yellow-400">Training and Study</span>
           </div>
@@ -279,7 +279,7 @@ export default function TrainingHubPage() {
 
       <section className="py-12 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto mb-12">
-          <div className="rounded-2xl border border-yellow-500/20 bg-yellow-500/[0.06] p-6 sm:p-8">
+          <div className="rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-6 sm:p-8">
             <h2 className="text-lg sm:text-xl font-bold text-yellow-300 mb-3">
               Which electrical training course do I need?
             </h2>
@@ -323,7 +323,7 @@ export default function TrainingHubPage() {
                 className="rounded-2xl border border-white/10 bg-white/[0.04] p-5"
               >
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/15 text-yellow-300 text-sm font-bold">
+                  <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-yellow-300 text-sm font-bold">
                     {i + 1}
                   </span>
                   <span className="text-lg font-bold text-white">{s.stage}</span>
@@ -390,7 +390,7 @@ export default function TrainingHubPage() {
                     <Link
                       key={link.href}
                       to={link.href}
-                      className="block rounded-xl border border-white/8 bg-black/20 px-4 py-3 text-white hover:border-yellow-500/30 hover:text-yellow-300 transition-colors"
+                      className="block rounded-xl border border-white/8 bg-black/20 px-4 py-3 text-white hover:border-white/[0.14] hover:text-yellow-300 transition-colors"
                     >
                       {link.label}
                     </Link>

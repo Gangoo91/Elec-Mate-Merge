@@ -274,7 +274,7 @@ const sections = [
           qualified electrician for a definitive assessment. These warning signs suggest urgent
           action:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -429,7 +429,7 @@ const sections = [
           </SEOInternalLink>{' '}
           on completion.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <p className="text-white text-sm leading-relaxed">
             <strong className="text-yellow-300">A4:2026 change — lighting circuits:</strong>{' '}
             Regulation 411.3.4 (A4:2026) now requires that all AC final circuits supplying

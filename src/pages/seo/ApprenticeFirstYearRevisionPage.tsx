@@ -212,7 +212,7 @@ const sections = [
           Simon Ohm in 1827, it defines the relationship between voltage, current, and resistance in
           a conductor at constant temperature.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -402,7 +402,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <p className="text-white font-semibold mb-2">New in BS 7671:2018+A4:2026</p>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li>
@@ -493,7 +493,7 @@ const sections = [
           followed. The following legislation is examinable in Year 1 and applies to your work every
           day.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -620,7 +620,7 @@ const sections = [
           practical knowledge you need for your end-point assessment.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <BookOpen className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

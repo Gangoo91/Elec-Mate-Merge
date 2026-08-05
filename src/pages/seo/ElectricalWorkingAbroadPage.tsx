@@ -140,7 +140,7 @@ const sections = [
               <span>Assessing body</span>
               <span>Local standard</span>
             </div>
-            <div className="grid grid-cols-3 gap-2 p-3 rounded-xl bg-yellow-500/5 border border-yellow-500/20 text-sm">
+            <div className="grid grid-cols-3 gap-2 p-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-sm">
               <span className="text-white font-medium">Australia</span>
               <span className="text-white/80">Trades Recognition Australia (TRA), then state licensing</span>
               <span className="text-yellow-400">AS/NZS 3000</span>
@@ -167,7 +167,7 @@ const sections = [
           </p>
         </div>
         <div className="space-y-4 mt-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-2 mb-3">
               <MapPin className="w-5 h-5 text-yellow-400" />
               <h3 className="font-bold text-white text-lg">Australia</h3>
@@ -254,7 +254,7 @@ const sections = [
           to work.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 mt-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Australia</h3>
             <p className="text-white text-sm leading-relaxed">
               The most popular destination overall. Strong demand in construction, mining, and

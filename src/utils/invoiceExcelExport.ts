@@ -119,7 +119,8 @@ export async function fetchAllInvoicesForExport(): Promise<ExportInvoiceRow[]> {
           const totals = computeQuoteTotals(
             (r.items ?? []) as QuoteItem[],
             settings as unknown as QuoteSettings,
-            { applyOverheadAndProfit: money(r.overhead) > 0 || money(r.profit) > 0 }
+            // ELE-1473 — legacy invoices only; nothing raised today sets these.
+            { legacyOverheadAndProfit: money(r.overhead) > 0 || money(r.profit) > 0 }
           );
           cisRate = totals.cisRate;
           cisDeducted = totals.cisAmount;

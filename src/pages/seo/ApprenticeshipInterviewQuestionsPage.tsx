@@ -213,7 +213,7 @@ const sections = [
     content: (
       <>
         <p>Two or three of these, chosen honestly:</p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-2.5 text-white text-[14px]">
             <li>• "What kind of work would I be on in the first few months?"</li>
             <li>• "Which college or training provider do your apprentices attend?"</li>

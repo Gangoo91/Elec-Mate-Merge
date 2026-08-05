@@ -80,7 +80,7 @@ export default function AFDDGuidePage() {
               </p>
               <p>There are two types of arc fault that AFDDs protect against:</p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-3">Series Arc Faults</h3>
                   <p className="text-white text-sm leading-relaxed">
                     Occur when a conductor breaks or a connection loosens within the circuit,
@@ -316,7 +316,7 @@ export default function AFDDGuidePage() {
                     leakage
                   </div>
                 </div>
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-3">AFDD/RCBO</h3>
                   <p className="text-white text-sm leading-relaxed mb-3">
                     Combines all three functions — arc fault detection, RCD, and MCB. Protects

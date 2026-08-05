@@ -159,6 +159,88 @@ export const useTimeTracker = () => {
     },
   });
 
+  // Log a diary block as a completed session (ELE-1472).
+  //
+  // Ian Mills is on one site all week and was keeping a calendar entry AND a
+  // separate timer. This turns the entry he already made into billable time.
+  //
+  // The session is written COMPLETE — started_at/ended_at come from the event,
+  // not from now() — so it never collides with a running timer and never shows
+  // up as "active". `hourly_rate` is stamped at import for the same reason the
+  // live timer stamps it: a rate change next month must not silently rewrite
+  // what past work was worth.
+  //
+  // Double-logging is prevented by a unique index on
+  // time_sessions.calendar_event_id, not by the button being disabled — a
+  // double-tap, a retry or a second device would all defeat the button.
+  const logCalendarEventMutation = useMutation({
+    mutationFn: async (args: {
+      eventId: string;
+      projectId: string;
+      startedAt: string;
+      endedAt: string;
+      label?: string | null;
+      notes?: string | null;
+    }): Promise<TimeSession> => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      const start = new Date(args.startedAt);
+      const end = new Date(args.endedAt);
+      if (isNaN(start.getTime()) || isNaN(end.getTime())) throw new Error('Invalid date');
+      if (end <= start) throw new Error('End time must be after start time');
+
+      const durationSeconds = Math.floor((end.getTime() - start.getTime()) / 1000);
+
+      // `as never`: types.ts predates migration 20260805150000, so
+      // calendar_event_id is not in the generated Insert type yet. Cast at the
+      // boundary rather than reaching for `any`, which would add to the
+      // no-explicit-any debt. Drop both casts when types.ts is regenerated.
+      const { data, error } = await supabase
+        .from('time_sessions')
+        .insert({
+          user_id: user.id,
+          project_id: args.projectId,
+          calendar_event_id: args.eventId,
+          label: args.label || null,
+          notes: args.notes || null,
+          started_at: start.toISOString(),
+          ended_at: end.toISOString(),
+          duration_seconds: durationSeconds,
+          hourly_rate: hourlyRate,
+        } as never)
+        .select()
+        .single();
+
+      if (error) {
+        // 23505 = the unique index fired: this block is already on the project.
+        // Report it as the harmless duplicate it is rather than a failure.
+        if ((error as { code?: string }).code === '23505') {
+          throw new Error('That diary entry has already been logged.');
+        }
+        throw error;
+      }
+
+      // Attribute the event to the project so it reads as logged next time and
+      // does not reappear in the unlogged list. Best-effort: the time is
+      // already safely recorded, and failing here must not lose it.
+      await supabase
+        .from('calendar_events')
+        .update({ project_id: args.projectId } as never)
+        .eq('id', args.eventId)
+        .eq('user_id', user.id);
+
+      return data as TimeSession;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY_SESSIONS });
+      queryClient.invalidateQueries({ queryKey: ['calendar-events'] });
+      queryClient.invalidateQueries({ queryKey: ['project-diary-blocks'] });
+    },
+  });
+
   // Stop session
   const stopMutation = useMutation({
     mutationFn: async (): Promise<TimeSession> => {
@@ -382,6 +464,18 @@ export const useTimeTracker = () => {
     [deleteMutation]
   );
 
+  const logCalendarEvent = useCallback(
+    (args: {
+      eventId: string;
+      projectId: string;
+      startedAt: string;
+      endedAt: string;
+      label?: string | null;
+      notes?: string | null;
+    }) => logCalendarEventMutation.mutateAsync(args),
+    [logCalendarEventMutation]
+  );
+
   return {
     activeSession: activeSession ?? null,
     sessions,
@@ -395,6 +489,8 @@ export const useTimeTracker = () => {
     updateProject,
     markInvoiced,
     deleteSession,
+    logCalendarEvent,
+    isLoggingCalendarEvent: logCalendarEventMutation.isPending,
     isLoading: isLoadingActive || isLoadingSessions,
     isStarting: startMutation.isPending,
     error: activeError || sessionsError,

@@ -129,7 +129,7 @@ const sections = [
           electrical emergency helps you respond appropriately — and avoid paying emergency rates
           for non-urgent work.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <p className="font-semibold text-white mb-3">Genuine electrical emergencies:</p>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -392,7 +392,7 @@ const sections = [
           Electrical emergencies create vulnerability to unscrupulous traders who charge high rates
           for poor or dangerous work. These are the warning signs to watch for.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -496,7 +496,7 @@ const sections = [
           Emergency electrical work commands premium rates and can be a lucrative part of an
           electrician's business. Here is how to position yourself effectively.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-4">
             <Phone className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
             <div>

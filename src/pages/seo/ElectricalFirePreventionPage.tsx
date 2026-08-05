@@ -146,7 +146,7 @@ const sections = [
           damage annually.
         </p>
         <div className="grid gap-4 sm:grid-cols-3 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 text-centre">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 text-centre">
             <div className="text-3xl font-bold text-red-400 mb-2">~20,000</div>
             <p className="text-white text-sm">Electrical fires in UK dwellings each year</p>
           </div>
@@ -154,7 +154,7 @@ const sections = [
             <div className="text-3xl font-bold text-orange-400 mb-2">~50%</div>
             <p className="text-white text-sm">Of accidental house fires are electrical in origin</p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 text-centre">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 text-centre">
             <div className="text-3xl font-bold text-yellow-400 mb-2">~70%</div>
             <p className="text-white text-sm">Caused by faulty wiring or appliances</p>
           </div>
@@ -184,7 +184,7 @@ const sections = [
           misused appliances, and poor installation workmanship. Understanding these causes helps
           electricians identify and remediate risks during EICR inspections and new installation work.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -277,7 +277,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4 flex items-start gap-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4 flex items-start gap-4">
           <AlertTriangle className="w-6 h-6 text-yellow-400 shrink-0 mt-0.5" />
           <div>
             <p className="text-white text-sm leading-relaxed">
@@ -439,7 +439,7 @@ const sections = [
           or deteriorating electrical wiring. Early identification of these signs can prevent
           an electrical fire.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -561,7 +561,7 @@ const sections = [
           AFDDs, smoke alarm placement, RCD protection, and the condition of existing wiring.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

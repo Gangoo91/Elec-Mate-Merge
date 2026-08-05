@@ -225,7 +225,7 @@ const sections = [
           new colours (Black and Grey) and reassigns existing colours (Blue) to different functions.
         </p>
         <div className="grid sm:grid-cols-2 gap-4 my-6">
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <h3 className="font-bold text-yellow-400 text-lg mb-3">Current Three-Phase Colours</h3>
             <ul className="space-y-2 text-white text-sm">
               <li>
@@ -418,7 +418,7 @@ const sections = [
           The On-Site Guide (OSG Reg 6.12) continues to recommend affixing a caution notice at or
           near the appropriate distribution board in a mixed-colour installation:
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-bold text-yellow-400 mb-3">
             Recommended Caution Notice Text (OSG Reg 6.12)
           </h3>
@@ -569,7 +569,7 @@ const sections = [
           inspection.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <div>
                 <h4 className="font-bold text-white mb-2">Missing Earth Sleeving</h4>
@@ -582,7 +582,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <div>
                 <h4 className="font-bold text-white mb-2">Missing Switch Wire Sleeving</h4>

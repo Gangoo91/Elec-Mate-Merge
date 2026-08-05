@@ -184,7 +184,7 @@ const sections = [
           levy. This is determined by their annual payroll.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6">
             <div className="flex items-center gap-3 mb-4">
               <Building2 className="w-6 h-6 text-yellow-400" />
               <h3 className="font-bold text-white text-lg">Levy-Paying Employers</h3>
@@ -432,7 +432,7 @@ const sections = [
             </table>
           </div>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-4 my-4 text-sm text-white leading-relaxed">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4 my-4 text-sm text-white leading-relaxed">
           <strong className="text-yellow-400">Important — buy the current edition:</strong> The live
           wiring regulations are <strong>BS 7671:2018+A4:2026</strong> (Amendment 4, April 2026 —
           orange cover). Apprentices sitting the EPA knowledge test are examined on the current
@@ -532,7 +532,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <Wallet className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>

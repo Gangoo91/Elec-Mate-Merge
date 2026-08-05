@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ArrowLeft, FileText, FileCheck, Settings, Lightbulb } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { BusinessCard } from '@/components/business-hub';
+import { HubTile as BusinessCard } from '@/components/learning-hub/HubTile';
 import { motion } from 'framer-motion';
 import EICCompletionTab from './certificate-guide/EICCompletionTab';
 import EICRCompletionTab from './certificate-guide/EICRCompletionTab';
@@ -42,8 +42,8 @@ const CertificateGuideProcedure = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="relative rounded-2xl bg-white/[0.03] border border-white/10 p-4 overflow-hidden">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-yellow-400/60 rounded-l-2xl" />
+          <div className="relative rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 overflow-hidden">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-white/[0.08] to-white/[0.04] rounded-l-2xl" />
             <p className="text-[12px] text-white">
               Electrical certificates are legal documents. Falsifying them is a criminal offence. Only complete certificates for work you have personally designed, installed, inspected and tested.
             </p>

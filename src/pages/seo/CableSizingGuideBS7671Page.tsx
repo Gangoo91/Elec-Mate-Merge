@@ -101,9 +101,9 @@ export default function CableSizingGuideBS7671Page() {
           content: (
             <>
               <div className="space-y-6">
-                <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6">
+                <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6">
                   <div className="flex items-center gap-3 mb-3">
-                    <span className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400">
+                    <span className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400">
                       1
                     </span>
                     <h3 className="font-bold text-white text-lg">
@@ -123,7 +123,7 @@ export default function CableSizingGuideBS7671Page() {
 
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
                   <div className="flex items-center gap-3 mb-3">
-                    <span className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400">
+                    <span className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400">
                       2
                     </span>
                     <h3 className="font-bold text-white text-lg">
@@ -142,7 +142,7 @@ export default function CableSizingGuideBS7671Page() {
 
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
                   <div className="flex items-center gap-3 mb-3">
-                    <span className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400">
+                    <span className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400">
                       3
                     </span>
                     <h3 className="font-bold text-white text-lg">
@@ -164,7 +164,7 @@ export default function CableSizingGuideBS7671Page() {
 
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
                   <div className="flex items-center gap-3 mb-3">
-                    <span className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400">
+                    <span className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400">
                       4
                     </span>
                     <h3 className="font-bold text-white text-lg">Select Cable from Appendix 4</h3>
@@ -179,7 +179,7 @@ export default function CableSizingGuideBS7671Page() {
 
                 <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
                   <div className="flex items-center gap-3 mb-3">
-                    <span className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400">
+                    <span className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400">
                       5
                     </span>
                     <h3 className="font-bold text-white text-lg">Verify Voltage Drop</h3>
@@ -220,7 +220,7 @@ export default function CableSizingGuideBS7671Page() {
                 <h3 className="font-bold text-white text-lg mb-4">Reference Methods</h3>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
-                    <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                    <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                       A
                     </span>
                     <div>
@@ -235,7 +235,7 @@ export default function CableSizingGuideBS7671Page() {
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                    <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                       B
                     </span>
                     <div>
@@ -249,7 +249,7 @@ export default function CableSizingGuideBS7671Page() {
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                    <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                       C
                     </span>
                     <div>
@@ -262,7 +262,7 @@ export default function CableSizingGuideBS7671Page() {
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                    <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                       D
                     </span>
                     <div>
@@ -275,7 +275,7 @@ export default function CableSizingGuideBS7671Page() {
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                    <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                       E
                     </span>
                     <div>
@@ -289,7 +289,7 @@ export default function CableSizingGuideBS7671Page() {
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                    <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                       F
                     </span>
                     <div>
@@ -301,7 +301,7 @@ export default function CableSizingGuideBS7671Page() {
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                    <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                       G
                     </span>
                     <div>
@@ -314,7 +314,7 @@ export default function CableSizingGuideBS7671Page() {
                   </div>
                 </div>
               </div>
-              <div className="p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/20 my-4">
+              <div className="p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] my-4">
                 <p className="text-white text-sm leading-relaxed">
                   <strong className="text-yellow-400">Important:</strong> If a cable run uses
                   multiple installation methods along its route, you must use the worst-case (lowest
@@ -364,7 +364,7 @@ export default function CableSizingGuideBS7671Page() {
                           <td className="py-2 pr-4">1.03</td>
                           <td className="py-2">1.02</td>
                         </tr>
-                        <tr className="border-b border-white/5 bg-yellow-500/5">
+                        <tr className="border-b border-white/5 bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                           <td className="py-2 pr-4 font-semibold">30C</td>
                           <td className="py-2 pr-4 font-semibold">1.00</td>
                           <td className="py-2 font-semibold">1.00</td>
@@ -499,7 +499,7 @@ export default function CableSizingGuideBS7671Page() {
           content: (
             <>
               <div className="space-y-6">
-                <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6">
+                <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6">
                   <h3 className="font-bold text-yellow-400 text-lg mb-4">
                     Example 1: 32A Ring Final Circuit
                   </h3>
@@ -665,7 +665,7 @@ export default function CableSizingGuideBS7671Page() {
                 essential check on commercial and industrial installations where fault levels can be
                 significantly higher.
               </p>
-              <div className="p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/20 my-4">
+              <div className="p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] my-4">
                 <p className="text-white text-sm leading-relaxed">
                   <strong className="text-yellow-400">
                     Site verification — Zs and the 0.8 factor:

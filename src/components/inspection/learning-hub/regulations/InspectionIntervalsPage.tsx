@@ -42,7 +42,7 @@ const InspectionIntervalsPage = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-4">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               IET recommended maximum intervals between periodic inspections. These are recommendations — not legal requirements (except rental properties). Insurance policies, local authority requirements, and risk assessments may require more frequent inspection.
             </p>
@@ -50,7 +50,7 @@ const InspectionIntervalsPage = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-xs">
                 <thead>
@@ -76,15 +76,15 @@ const InspectionIntervalsPage = ({ onBack }: Props) => {
 
         {/* Details for key premises */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Notes</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Notes</p>
         </motion.div>
 
         {intervals.filter(i => i.notes.length > 50).map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-center justify-between mb-1">
                 <p className="text-sm font-semibold text-white">{item.premises}</p>
-                <span className="text-[10px] font-bold text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded-lg">{item.interval}</span>
+                <span className="text-[10px] font-bold text-yellow-400 bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-2 py-0.5 rounded-lg">{item.interval}</span>
               </div>
               <p className="text-xs text-white">{item.notes}</p>
             </div>
@@ -92,7 +92,7 @@ const InspectionIntervalsPage = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-orange-400/10 border border-orange-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-2">Legal Requirement — Rental Properties</p>
             <p className="text-sm text-white leading-relaxed">
               The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 require landlords to have the electrical installation inspected and tested by a qualified person at least every 5 years, or on change of tenancy. A valid EICR must be provided to tenants within 28 days. Failure to comply can result in fines up to £30,000.

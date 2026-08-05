@@ -50,11 +50,11 @@ const industrialChecklist = [
 const ChecklistSection = ({ title, items }: { title: string; items: { item: string; check: string }[] }) => (
   <>
     <motion.div variants={itemVariants}>
-      <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">{title}</p>
+      <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">{title}</p>
     </motion.div>
     {items.map((item, i) => (
       <motion.div key={i} variants={itemVariants}>
-        <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
           <p className="text-sm font-semibold text-white">{item.item}</p>
           <p className="text-sm text-white mt-1">{item.check}</p>
         </div>
@@ -79,7 +79,7 @@ const WhatToTestSection = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               Use these checklists as a starting point. Every installation is different — add site-specific items based on the equipment installed. The key principle: if it switches, controls, interlocks, or indicates, it needs a functional test.
             </p>
@@ -92,11 +92,11 @@ const WhatToTestSection = ({ onBack }: Props) => {
 
         {/* Phase sequence verification */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Phase Sequence Verification (Three-Phase)</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Phase Sequence Verification (Three-Phase)</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
             <p className="text-sm text-white leading-relaxed">
               For any three-phase installation, phase sequence must be verified to prevent motor reversal and sensitive equipment malfunction. Use a phase rotation meter — never assume correct rotation after reconnecting cables.
             </p>
@@ -108,8 +108,8 @@ const WhatToTestSection = ({ onBack }: Props) => {
                 { step: 'If sequence is incorrect, trace and correct the phasing at the termination point', note: 'Swap any two phases to reverse the rotation' },
                 { step: 'For motors, verify rotation direction under low-load conditions before coupling to driven equipment', note: 'Wrong rotation can destroy pumps, compressors and conveyors within seconds' },
               ].map((item, i) => (
-                <div key={i} className="flex items-start gap-3 rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
-                  <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                <div key={i} className="flex items-start gap-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] p-3">
+                  <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                     <span className="text-xs font-bold text-yellow-400">{i + 1}</span>
                   </div>
                   <div>
@@ -119,7 +119,7 @@ const WhatToTestSection = ({ onBack }: Props) => {
                 </div>
               ))}
             </div>
-            <div className="rounded-xl bg-orange-400/5 border border-orange-400/10 p-3 mt-2">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/10 p-3 mt-2">
               <p className="text-xs text-white"><span className="font-semibold text-orange-400">Common defect:</span> Phase interchanges at termination points — especially after maintenance where cables have been disconnected and reconnected. Always verify sequence after any three-phase work.</p>
             </div>
           </div>
@@ -127,11 +127,11 @@ const WhatToTestSection = ({ onBack }: Props) => {
 
         {/* Emergency lighting functional test */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Emergency Lighting Functional Test (BS 5266)</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Emergency Lighting Functional Test (BS 5266)</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
             <p className="text-sm text-white leading-relaxed">
               Emergency lighting must be functionally tested to confirm changeover, illumination and battery performance. Monthly tests are short-duration; annual tests are full-duration discharge.
             </p>
@@ -145,8 +145,8 @@ const WhatToTestSection = ({ onBack }: Props) => {
                 { step: 'Restore mains supply and verify all charge indicators return to normal', note: 'A failed charge indicator means the battery will not recharge — the fitting is out of service' },
                 { step: 'Record all results including any failed fittings and remedial actions taken', note: 'BS 5266 requires a log book with test dates, results, and signatures' },
               ].map((item, i) => (
-                <div key={i} className="flex items-start gap-3 rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
-                  <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                <div key={i} className="flex items-start gap-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] p-3">
+                  <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                     <span className="text-xs font-bold text-yellow-400">{i + 1}</span>
                   </div>
                   <div>
@@ -156,7 +156,7 @@ const WhatToTestSection = ({ onBack }: Props) => {
                 </div>
               ))}
             </div>
-            <div className="rounded-xl bg-white/[0.05] p-3 mt-2">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 mt-2">
               <p className="text-sm text-white"><span className="font-semibold text-yellow-400">Common mistakes:</span> Not notifying occupants before test. Failing to record results in the log book. Not performing the full annual discharge test — monthly short tests do not verify battery capacity.</p>
             </div>
           </div>

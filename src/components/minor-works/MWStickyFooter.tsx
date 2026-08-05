@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
+import { CertPreviewSheet } from '@/components/inspection/shared/CertPreviewSheet';
 
 interface MWStickyFooterProps {
+  /**
+   * ELE-1477 — supply to get a Preview button in the sign-off row. Minor Works
+   * has its own footer rather than CertShellFooter, so the sheet is mounted
+   * here instead of inherited.
+   */
+  previewData?: Record<string, unknown>;
   currentTabIndex: number;
   totalTabs: number;
   canNavigatePrevious: boolean;
@@ -58,14 +65,25 @@ const MWStickyFooter: React.FC<MWStickyFooterProps> = ({
   navigatePrevious,
   onEmail,
   onInvoice,
+  previewData,
   onGenerate,
 }) => {
   const haptic = useHaptic();
+  const [showPreview, setShowPreview] = React.useState(false);
   const typing = useTypingFocus();
   const isLastTab = currentTabIndex === totalTabs - 1;
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
+    <>
+      {previewData && (
+        <CertPreviewSheet
+          open={showPreview}
+          onOpenChange={setShowPreview}
+          reportType="minor-works"
+          data={previewData}
+        />
+      )}
     <div
       className={cn(
         'fixed bottom-0 right-0 z-40 px-4 pt-8 pointer-events-none',
@@ -98,6 +116,18 @@ const MWStickyFooter: React.FC<MWStickyFooterProps> = ({
                 className="h-[52px] flex-1 rounded-xl bg-white/[0.09] border border-white/[0.14] text-sm font-semibold text-white touch-manipulation active:scale-[0.97] transition-transform lg:flex-none lg:px-5"
               >
                 Back
+              </button>
+            )}
+            {previewData && (
+              <button
+                type="button"
+                onClick={() => {
+                  haptic.light();
+                  setShowPreview(true);
+                }}
+                className="h-[52px] flex-1 rounded-xl bg-white/[0.09] border border-white/[0.14] text-sm font-semibold text-white touch-manipulation active:scale-[0.97] transition-transform lg:flex-none lg:px-5"
+              >
+                Preview
               </button>
             )}
             {onEmail && (
@@ -181,6 +211,7 @@ const MWStickyFooter: React.FC<MWStickyFooterProps> = ({
         </div>
       )}
     </div>
+    </>
   );
 };
 

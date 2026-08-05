@@ -175,7 +175,7 @@ const sections = [
             <li>• Minimum installation temperature: −5°C (cable becomes brittle below this)</li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
             <div>
@@ -233,7 +233,7 @@ const sections = [
           minimal visible smoke and does not release corrosive halogen gases. This is critical in
           enclosed public spaces where dense toxic smoke would impede evacuation.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-white text-base mb-3">LSOH Cable Properties</h3>
           <ul className="space-y-2 text-white text-sm">
             <li>• Maximum conductor temperature: typically 70°C or 90°C depending on compound</li>
@@ -372,7 +372,7 @@ const sections = [
               <li>• Industrial power cables and motor feeds</li>
             </ul>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-base mb-2">Use LSOH Cable For:</h3>
             <ul className="space-y-1 text-white text-sm">
               <li>• Public buildings (hospitals, schools, shopping centres, airports)</li>

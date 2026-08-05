@@ -246,7 +246,22 @@ const calculateReportStatus = ({
   if (reportType === 'smoke-co-alarm' && data.installerSignature) return 'completed';
   if (reportType === 'heat-pump' && data.engineerSignature && data.commissioningDate)
     return 'completed';
-  if (reportType === 'testing-only' && data.testerSignature) return 'completed';
+  // Needs someone to have identified WHO the results belong to, not just a
+  // signature. `testerSignature` alone flipped a cert to 'completed' as soon as
+  // signature autofill populated it, which happens without the user finishing
+  // anything: 33 of 36 'completed' testing-only certs carry neither a client
+  // name nor an address, and 31 have no PDF.
+  //
+  // testDate and testerName are deliberately NOT the second condition even
+  // though pat-testing pairs on testDate — both are present on all 36,
+  // hollow and genuine alike, so neither discriminates. Client name or address
+  // is what actually separates the three real certificates from the rest.
+  if (
+    reportType === 'testing-only' &&
+    data.testerSignature &&
+    (data.clientName || data.installationAddress)
+  )
+    return 'completed';
   if (reportType === 'disconnection' && data.inspectorSignature && data.workDate)
     return 'completed';
   if (reportType === 'danger-notice' && data.contractorSignature) return 'completed';

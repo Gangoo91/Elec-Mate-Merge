@@ -211,7 +211,7 @@ export default function BusbarSizingCalculatorPage() {
                 required cross-sectional area is calculated by dividing the design current by the
                 allowable current density for the busbar material and installation conditions.
               </p>
-              <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4 text-center">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4 text-center">
                 <p className="text-xl font-mono font-bold text-yellow-400">A = I / J</p>
                 <div className="mt-4 text-left max-w-md mx-auto space-y-1 text-sm text-white">
                   <p>
@@ -288,7 +288,7 @@ export default function BusbarSizingCalculatorPage() {
                 temperature to rise above ambient. The temperature must not exceed the limits set by
                 the enclosure standard.
               </p>
-              <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
                 <h3 className="font-bold text-white text-lg mb-3">
                   BS EN 61439-1 Temperature Limits
                 </h3>
@@ -343,7 +343,7 @@ export default function BusbarSizingCalculatorPage() {
                 voltage drop — the current flowing through the resistance of the conductor produces
                 a voltage drop proportional to the current and the conductor length.
               </p>
-              <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4 text-center">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4 text-center">
                 <p className="text-xl font-mono font-bold text-yellow-400">Vd = I x R x L</p>
                 <div className="mt-4 text-left max-w-md mx-auto space-y-1 text-sm text-white">
                   <p>

@@ -267,14 +267,14 @@ const sections = [
                 On dividends within the basic rate band (income up to £50,270)
               </p>
             </div>
-            <div className="rounded-xl bg-yellow-500/10 border border-yellow-500/20 p-4">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4">
               <h4 className="font-bold text-white mb-2">Higher Rate</h4>
               <p className="text-yellow-400 text-2xl font-bold">33.75%</p>
               <p className="text-white text-xs mt-2">
                 On dividends within the higher rate band (£50,270–£125,140)
               </p>
             </div>
-            <div className="rounded-xl bg-red-500/10 border border-red-500/20 p-4">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4">
               <h4 className="font-bold text-white mb-2">Additional Rate</h4>
               <p className="text-yellow-400 text-2xl font-bold">39.35%</p>
               <p className="text-white text-xs mt-2">On dividends above £125,140 total income</p>
@@ -317,7 +317,7 @@ const sections = [
               expenses, and pension contributions.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Main Rate</h3>
             <p className="text-yellow-400 text-2xl font-bold mb-2">25%</p>
             <p className="text-white text-sm leading-relaxed">
@@ -397,7 +397,7 @@ const sections = [
             </div>
           </div>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white mb-3">Comparison: Same Income as Sole Trader</h4>
           <div className="space-y-2 text-white text-sm">
             <p>Sole trader with £60,000 profit:</p>
@@ -522,7 +522,7 @@ const sections = [
                 </li>
               </ul>
             </div>
-            <div className="rounded-xl bg-red-500/10 border border-red-500/20 p-4">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4">
               <h4 className="font-bold text-white mb-3">Likely Inside IR35</h4>
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
@@ -593,7 +593,7 @@ const sections = [
               </li>
             </ul>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">DIY with Software</h3>
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">

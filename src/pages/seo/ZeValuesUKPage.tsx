@@ -253,7 +253,7 @@ const sections = [
           supply cable. The PEN conductor is earthed at multiple points along the DNO network and at
           the supply transformer.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-3">
             <div>
               <h4 className="font-bold text-white mb-2">TN-C-S (PME) Ze Characteristics</h4>
@@ -305,7 +305,7 @@ const sections = [
           fault current returns to the supply transformer via the general mass of earth. The
           transformer has its own separate earth electrode.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-3">
             <div>
               <h4 className="font-bold text-white mb-2">TT Ze Characteristics</h4>
@@ -401,7 +401,7 @@ const sections = [
             </li>
           </ol>
         </div>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-3">
             <div>
               <h4 className="font-bold text-white mb-2">Safety Warning</h4>

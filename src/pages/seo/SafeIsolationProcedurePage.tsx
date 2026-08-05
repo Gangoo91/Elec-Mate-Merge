@@ -184,7 +184,7 @@ const sections = [
                 n: '2',
                 t: 'Isolate',
                 d: 'Switch off, then lock off the means of isolation with your personal padlock.',
-                tint: 'bg-yellow-500/10 border-yellow-500/30',
+                tint: 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14]',
               },
               {
                 n: '3',
@@ -234,7 +234,7 @@ const sections = [
           which apply to all workplaces and all work activities involving electricity.
         </p>
         <div className="space-y-4 mt-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">
               Regulation 12 — Means of Cutting Off Supply and Isolation
             </h3>
@@ -258,7 +258,7 @@ const sections = [
               padlock — not just switching off and hoping no one turns it back on.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">
               Regulation 14 — Work on or Near Live Conductors
             </h3>
@@ -398,7 +398,7 @@ const sections = [
               </li>
             </ul>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Multimeter Risks</h3>
             <ul className="space-y-2 text-white text-sm leading-relaxed">
               <li className="flex items-start gap-2">
@@ -511,7 +511,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -545,7 +545,7 @@ const sections = [
           follow the full procedure. These are the mistakes that kill electricians.
         </p>
         <div className="space-y-4 mt-6">
-          <div className="rounded-2xl bg-red-500/5 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <div>
@@ -560,7 +560,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-red-500/5 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <div>
@@ -574,7 +574,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-red-500/5 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <div>
@@ -588,7 +588,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-red-500/5 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <div>
@@ -602,7 +602,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-red-500/5 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <div>
@@ -741,7 +741,7 @@ const sections = [
           for full DC-side isolation detail.
         </p>
         <div className="space-y-4 mt-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -760,7 +760,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-red-500/5 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <ShieldAlert className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <div>
@@ -814,7 +814,7 @@ const sections = [
           switching device is a semiconductor-based module rather than a mechanical switch. These
           devices cannot legally serve as the means of isolation.
         </p>
-        <div className="rounded-2xl bg-red-500/5 border border-red-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
             <div>

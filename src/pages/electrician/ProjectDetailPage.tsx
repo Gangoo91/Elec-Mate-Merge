@@ -84,6 +84,9 @@ import { ProjectSafetyPack } from '@/components/electrician/project-detail/Proje
 import { useVoiceDictation } from '@/components/business-hub/assistant/useVoiceDictation';
 import JobMaterialsSection from '@/components/project-management/JobMaterialsSection';
 import BookJobSheet from '@/components/project-management/BookJobSheet';
+import { LogTimeFromDiarySheet } from '@/components/project-management/LogTimeFromDiarySheet';
+import { GenerateTasksSheet } from '@/components/tasks/GenerateTasksSheet';
+import { useUnloggedDiaryBlocks } from '@/hooks/useUnloggedDiaryBlocks';
 import JobMilestones from '@/components/project-management/JobMilestones';
 import { ProjectSuggestedLinks } from '@/components/project-management/ProjectSuggestedLinks';
 import { supabase } from '@/integrations/supabase/client';
@@ -193,7 +196,7 @@ const ProjectDetailPage = () => {
   const { updateProject } = useSparkProjects('all');
 
   // Task operations via the shared hook
-  const { saveTask, updateTask, markDone, reopenTask, snoozeTask, deleteTask } =
+  const { saveTask, saveTasks, updateTask, markDone, reopenTask, snoozeTask, deleteTask } =
     useSparkTasks('all');
 
   // Customers for edit form
@@ -293,6 +296,10 @@ const ProjectDetailPage = () => {
     unbilledSec: number;
     unbilledValue: number;
   }>({ totalSec: 0, unbilledSec: 0, unbilledValue: 0 });
+  // The summary below is a bare effect with no query cache behind it, so a
+  // newly logged session would not appear until tasks or invoices happened to
+  // change. Bumping this is how logging diary time refreshes the tile.
+  const [timeRefreshKey, setTimeRefreshKey] = useState(0);
   useEffect(() => {
     if (!id) return;
     let cancelled = false;
@@ -329,7 +336,20 @@ const ProjectDetailPage = () => {
       cancelled = true;
     };
     // Re-fetch when tasks/invoices change in case an invoice was just attached
-  }, [id, tasks.length, invoices.length]);
+  }, [id, tasks.length, invoices.length, timeRefreshKey]);
+
+  // ─── Diary blocks not yet logged as time (ELE-1472) ──────────────────
+  // The sheet also offers blocks attached to no project yet, so they can be
+  // attributed here. The NUDGE deliberately counts only blocks already on this
+  // project: an unattached day is not this project's outstanding work until
+  // someone says so, and counting it would nag identically on every open
+  // project at once.
+  const { data: unloggedDiaryBlocks = [] } = useUnloggedDiaryBlocks(id);
+  const diaryBlocksOnThisProject = useMemo(
+    () => unloggedDiaryBlocks.filter((b) => b.project_id === id),
+    [unloggedDiaryBlocks, id]
+  );
+  const [diarySheetOpen, setDiarySheetOpen] = useState(false);
 
   // ─── Project economics — one source of truth (revenue / cost / profit) ───
   // Server truth (S9): get_job_financials adds real material costs from the
@@ -657,6 +677,10 @@ const ProjectDetailPage = () => {
 
   // Sheet states
   const [taskFormOpen, setTaskFormOpen] = useState(false);
+  // Plan-with-AI, opened from the project so everything it creates is attached
+  // to this job — which is the whole point: 224 of 265 open tasks have no
+  // project, and that is why the task list cannot be organised by job.
+  const [generateTasksOpen, setGenerateTasksOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<SparkTask | null>(null);
   const [detailTask, setDetailTask] = useState<SparkTask | null>(null);
   const [detailSheetOpen, setDetailSheetOpen] = useState(false);
@@ -903,6 +927,19 @@ const ProjectDetailPage = () => {
     onClick: () => void;
   };
   const attentionFlags: AttentionFlag[] = [];
+  // Diary blocks worked but never logged. Surfaced only when there is
+  // something to log, so it stays a prompt rather than permanent furniture —
+  // and it leads with the count, because "2 days" is what makes someone tap.
+  if (diaryBlocksOnThisProject.length > 0 && !isCompleted) {
+    attentionFlags.push({
+      key: 'diary-time',
+      label: `${diaryBlocksOnThisProject.length} ${diaryBlocksOnThisProject.length === 1 ? 'day' : 'days'} in your diary`,
+      sub: 'Worked but not logged — turn them into billable time',
+      icon: Timer,
+      tint: 'text-white/70',
+      onClick: () => setDiarySheetOpen(true),
+    });
+  }
   if (hasUnbilledTime) {
     attentionFlags.push({
       key: 'unbilled',
@@ -3093,6 +3130,39 @@ const ProjectDetailPage = () => {
         onBooked={refresh}
       />
 
+      <GenerateTasksSheet
+        open={generateTasksOpen}
+        onOpenChange={setGenerateTasksOpen}
+        projectId={project.id}
+        projectTitle={project.title}
+        initialDescription={[project.title, project.description].filter(Boolean).join(' — ')}
+        jobContext={[
+          project.customer_name ? `Customer: ${project.customer_name}` : null,
+          project.location ? `Site: ${project.location}` : null,
+          project.project_type ? `Type: ${project.project_type}` : null,
+          project.start_date ? `Starts: ${project.start_date}` : null,
+          project.due_date ? `Due: ${project.due_date}` : null,
+          tasks.length > 0
+            ? `Already planned (do not repeat): ${tasks.map((t) => t.title).slice(0, 20).join('; ')}`
+            : null,
+        ]
+          .filter(Boolean)
+          .join('\n')}
+        onCreate={async (list) => {
+          await saveTasks(list);
+          refresh();
+        }}
+      />
+
+      {/* Log diary blocks as time on this project (ELE-1472) */}
+      <LogTimeFromDiarySheet
+        open={diarySheetOpen}
+        onOpenChange={setDiarySheetOpen}
+        projectId={project.id}
+        projectTitle={project.title}
+        onLogged={() => setTimeRefreshKey((k) => k + 1)}
+      />
+
       {/* Edit Job Sheet */}
       <Sheet open={editProjectOpen} onOpenChange={setEditProjectOpen}>
         <SheetContent
@@ -3514,6 +3584,8 @@ const ProjectDetailPage = () => {
         location={project.location}
         status={project.status}
         onAddExpense={() => setExpenseSheetOpen(true)}
+        onLogDiaryTime={() => setDiarySheetOpen(true)}
+        onPlanWithAi={() => setGenerateTasksOpen(true)}
         onAddTask={() => {
           setEditingTask(null);
           setTaskFormOpen(true);

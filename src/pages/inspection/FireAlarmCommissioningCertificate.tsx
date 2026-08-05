@@ -38,6 +38,7 @@ import { formatFireAlarmG3Json } from '@/utils/fireAlarmG3JsonFormatter';
 import { createInvoiceFromCertificate } from '@/utils/certificateToQuote';
 import { useCertificateEmail } from '@/hooks/useCertificateEmail';
 import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
+import { scrollToTopForStepChange } from '@/utils/scroll';
 
 const REPORT_TYPE = 'fire-alarm-commissioning' as const;
 
@@ -383,7 +384,7 @@ const {
         onTabChange={(tab) => {
           tabProps.setCurrentTab(tab as FAG3TabValue);
           syncOnTabChange();
-          window.scrollTo({ top: 0 });
+          scrollToTopForStepChange();
         }}
         completedTabs={{
           project: !!tabProps.isTabComplete('project'),

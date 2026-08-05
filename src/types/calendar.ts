@@ -20,7 +20,14 @@ export interface CalendarEvent {
   all_day: boolean;
   location?: string;
   client_id?: string;
+  /** Employer Hub job (`employer_jobs`). Unused in practice — see project_id. */
   job_id?: string;
+  /**
+   * Electrician Hub project (`spark_projects`). The bridge that lets a diary
+   * block be logged as billable time against a project (ELE-1472). Deliberately
+   * separate from job_id, which points at a different hub's table.
+   */
+  project_id?: string;
   event_type: CalendarEventType;
   colour: string;
   recurring: boolean;
@@ -38,6 +45,7 @@ export interface CalendarEvent {
   // Joined data
   customer?: { id: string; name: string };
   job?: { id: string; title: string };
+  project?: { id: string; title: string };
 }
 
 export type CreateCalendarEventInput = Omit<
@@ -48,6 +56,9 @@ export type CreateCalendarEventInput = Omit<
   | 'updated_at'
   | 'customer'
   | 'job'
+  // Joined for display only — never part of an insert payload, same as
+  // `customer` and `job` above.
+  | 'project'
   | 'sync_status'
   | 'last_synced_at'
   | 'google_event_id'

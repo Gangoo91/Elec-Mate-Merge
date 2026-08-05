@@ -426,7 +426,7 @@ export default function BMSCoursePage() {
                 key={item.module}
                 className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 shrink-0">
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
                   <GraduationCap className="w-5 h-5 text-yellow-400" />
                 </div>
                 <div>

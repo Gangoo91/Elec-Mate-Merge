@@ -1,6 +1,7 @@
 import { TestResult } from '@/types/testResult';
 import { protectiveDeviceOptions } from '@/types/protectiveDeviceTypes';
 import { ZS_TEMP_FACTOR_GN3 } from '@/data/zsLimits';
+import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
 
 // BS 7671 limits and validation rules
 // Table 41.3 - MCBs to BS EN 60898 and RCBOs to BS EN 61009. The table's values
@@ -126,7 +127,7 @@ export const validateTestResult = (result: TestResult, earthingArrangement?: str
     insulationLiveEarth: validateInsulationResistance(result.insulationLiveEarth),
     insulationNeutralEarth: validateInsulationResistance(result.insulationNeutralEarth),
     polarity: validatePolarity(result.polarity),
-    zs: validateZs(result.zs, result.protectiveDevice, earthingArrangement, result.rcdRating),
+    zs: validateZs(result.zs, result.protectiveDevice, earthingArrangement, result.rcdRating, result),
     rcdTiming: validateRCDTiming(result.rcdRating, result.rcdOneX),
     pfcLiveNeutral: validatePFC(result.pfcLiveNeutral),
     pfcLiveEarth: validatePFC(result.pfcLiveEarth),
@@ -291,11 +292,39 @@ const isTTArrangement = (arr?: string): boolean => {
   return s === 'tt';
 };
 
+/**
+ * Resolve the Max Zs this circuit is actually judged against.
+ *
+ * ELE-1477 audit — the lookup below used to be the only source, matching the
+ * free-text `protectiveDevice` against option values like 'B32'. That field
+ * holds "MCB B32", "MCB 32" or a bare "32" depending on which code path wrote
+ * it, so the find() never matched and EVERY TN circuit fell through to a
+ * generic `> 1.67` check. A B32 reading 1.60 Ω — against a RAG-verified limit
+ * of 1.37 Ω — was reported as a pass.
+ *
+ * `result.maxZs` is the value the schedule computes and PRINTS on the
+ * certificate, so judging against it means the verdict and the printed limit
+ * can never disagree. `getMaxZsFromDeviceDetails` is the same function that
+ * populates it, used here as the fallback when the column is still empty.
+ */
+const resolveMaxZs = (result?: TestResult): number | null => {
+  if (!result) return null;
+  const printed = parseFloat(String(result.maxZs ?? ''));
+  if (Number.isFinite(printed) && printed > 0) return printed;
+  return getMaxZsFromDeviceDetails(
+    result.bsStandard || '',
+    result.protectiveDeviceCurve || '',
+    result.protectiveDeviceRating || '',
+    result.circuitDescription || ''
+  );
+};
+
 const validateZs = (
   value: string,
   protectiveDevice: string,
   earthingArrangement?: string,
-  rcdRating?: string
+  rcdRating?: string,
+  result?: TestResult
 ): ValidationResult => {
   if (!value || value.trim() === '') {
     return { isValid: false, level: 'warning', message: 'Zs measurement required' };
@@ -348,6 +377,27 @@ const validateZs = (
   // was validated against 50/IΔn (1667 Ω for a 30 mA device) and a B32 RCBO
   // reading 5.0 Ω passed. Same bug, same fix as `getMaxZsWithRcd` in
   // src/utils/zsCalculations.ts.
+  // Judge against the limit the certificate prints, before falling back to the
+  // legacy option lookup (which only matches a bare 'B32'-style value).
+  const resolvedMax = resolveMaxZs(result);
+  if (resolvedMax !== null && resolvedMax > 0) {
+    if (numValue > resolvedMax) {
+      return {
+        isValid: false,
+        level: 'fail',
+        message: `Zs ${numValue}Ω exceeds the ${resolvedMax}Ω limit for this device`,
+      };
+    }
+    if (numValue > resolvedMax * 0.8) {
+      return {
+        isValid: true,
+        level: 'warning',
+        message: `Zs ${numValue}Ω is close to the ${resolvedMax}Ω limit`,
+      };
+    }
+    return { isValid: true, level: 'pass', message: `Zs within limit (max ${resolvedMax}Ω)` };
+  }
+
   const deviceOption = protectiveDeviceOptions.find((option) => option.value === protectiveDevice);
 
   if (deviceOption) {

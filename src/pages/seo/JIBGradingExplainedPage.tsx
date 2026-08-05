@@ -219,7 +219,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Award className="w-6 h-6 text-amber-400 mt-0.5 shrink-0" />
               <div>
@@ -266,7 +266,7 @@ const sections = [
                 <td className="py-2 px-3">Yes (if competent)</td>
                 <td className="py-2 px-3">Gold</td>
               </tr>
-              <tr className="bg-amber-500/10">
+              <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                 <td className="py-2 px-3 font-medium">Technician</td>
                 <td className="py-2 px-3">Approved + design (C&amp;G 2396)</td>
                 <td className="py-2 px-3">Yes (if competent)</td>
@@ -317,7 +317,7 @@ const sections = [
                 <td className="py-2 px-3 text-right">~£19.67/hr</td>
                 <td className="py-2 px-3 text-right">~£21.34/hr</td>
               </tr>
-              <tr className="bg-amber-500/10">
+              <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                 <td className="py-2 px-3 font-medium">Technician</td>
                 <td className="py-2 px-3 text-right">~£21.13/hr</td>
                 <td className="py-2 px-3 text-right">~£22.80/hr</td>
@@ -411,7 +411,7 @@ const sections = [
                 <td className="py-2 px-3 text-right">1–2 years</td>
                 <td className="py-2 px-3 text-right">~£1.46/hr more</td>
               </tr>
-              <tr className="bg-amber-500/10">
+              <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                 <td className="py-2 px-3 font-medium">Approved → Technician</td>
                 <td className="py-2 px-3">C&amp;G 2396 (Design) or equivalent</td>
                 <td className="py-2 px-3 text-right">1–2 years</td>

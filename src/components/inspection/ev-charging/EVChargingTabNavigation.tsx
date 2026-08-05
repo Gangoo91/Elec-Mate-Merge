@@ -16,6 +16,9 @@ import { supabase } from '@/integrations/supabase/client';
 import { createInvoiceFromCertificate } from '@/utils/certificateToQuote';
 import { formatEVChargingJson } from '@/utils/evChargingJsonFormatter';
 import { cn } from '@/lib/utils';
+import { scrollToTopForStepChange } from '@/utils/scroll';
+import { CertPreviewSheet } from '@/components/inspection/shared/CertPreviewSheet';
+import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
 
 interface EVChargingTabNavigationProps {
   currentTab: string;
@@ -82,7 +85,13 @@ const EVChargingTabNavigation: React.FC<EVChargingTabNavigationProps> = ({
   const [emailRecipient, setEmailRecipient] = useState('');
   const [isSendingEmail, setIsSendingEmail] = useState(false);
 
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  // ELE-1464 — shared utility; instant so it cannot race the step-in
+  // animation. See src/utils/scroll.ts.
+  const scrollToTop = () => scrollToTopForStepChange();
+  // ELE-1477 — EV has its own footer rather than CertShellFooter, so the
+  // preview sheet is mounted here instead of inherited.
+  const [showPreview, setShowPreview] = useState(false);
+  const [showPdf, setShowPdf] = useState(false);
 
   const handleNavigateNext = () => { navigateNext(); scrollToTop(); };
   const handleNavigatePrevious = () => { navigatePrevious(); scrollToTop(); };
@@ -164,6 +173,15 @@ const EVChargingTabNavigation: React.FC<EVChargingTabNavigationProps> = ({
 
   return (
     <>
+      {reportId && (
+        <ReportPdfViewer reportId={reportId} open={showPdf} onOpenChange={setShowPdf} />
+      )}
+      <CertPreviewSheet
+        open={showPreview}
+        onOpenChange={setShowPreview}
+        reportType="ev-charging"
+        data={formData as Record<string, unknown>}
+      />
       {/* Fixed footer — slides away while typing so it never covers a field. */}
       <div
         className={cn(
@@ -186,6 +204,22 @@ const EVChargingTabNavigation: React.FC<EVChargingTabNavigationProps> = ({
                 >
                   Back
                 </button>
+                <button
+                  type="button"
+                  onClick={() => setShowPreview(true)}
+                  className="h-12 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation active:scale-[0.98] lg:flex-none lg:px-6"
+                >
+                  Preview
+                </button>
+                {reportId && (
+                  <button
+                    type="button"
+                    onClick={() => setShowPdf(true)}
+                    className="h-12 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation active:scale-[0.98] lg:flex-none lg:px-6"
+                  >
+                    View PDF
+                  </button>
+                )}
                 <button
                   onClick={handleEmailCertificate}
                   className="h-12 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation active:scale-[0.98] lg:flex-none lg:px-6"

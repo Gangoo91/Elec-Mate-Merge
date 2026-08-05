@@ -164,7 +164,7 @@ const sections = [
           large construction sites) and extended separation from family.
         </p>
         <div className="grid gap-4 sm:grid-cols-3 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">UAE</h3>
             <p className="text-white text-sm leading-relaxed mb-2">
               Salary range: £45,000–£90,000 equivalent (tax-free)
@@ -196,7 +196,7 @@ const sections = [
             </p>
           </div>
         </div>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
             <p className="text-white text-sm">
@@ -415,7 +415,7 @@ const sections = [
           Before making the move to work abroad, UK electricians should consider:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <PoundSterling className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

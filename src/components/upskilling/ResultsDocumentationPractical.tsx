@@ -87,7 +87,7 @@ export const ResultsDocumentationPractical = () => {
                   Scenario: High Loop Impedance
                 </h4>
                 <p className="text-foreground text-xs sm:text-sm leading-relaxed">
-                  A 16A Type B MCB circuit shows Zs = 3.2Ω (limit is 2.87Ω). What actions are
+                  A 16A Type B MCB circuit shows Zs = 3.2Ω (limit is 2.73Ω). What actions are
                   required?
                 </p>
 

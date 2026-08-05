@@ -53,7 +53,7 @@ const ContinuityPracticalGuidanceSection = ({ onBack }: Props) => {
           onClick={() => toggle(id)}
           className="w-full text-left touch-manipulation active:scale-[0.99] transition-transform"
         >
-          <div className={`relative rounded-2xl bg-white/[0.07] border ${isOpen ? borderActiveMap[accent] : 'border-white/[0.08]'} overflow-hidden transition-colors`}>
+          <div className={`relative rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border ${isOpen ? borderActiveMap[accent] : 'border-white/[0.08]'} overflow-hidden transition-colors`}>
             <div className={`absolute inset-x-0 top-0 h-[2px] ${topAccentMap[accent]}`} />
             <div className={`absolute left-0 top-0 bottom-0 w-1 ${barMap[accent]} rounded-l-2xl`} />
             <div className="p-4 flex items-center gap-3">
@@ -103,7 +103,7 @@ const ContinuityPracticalGuidanceSection = ({ onBack }: Props) => {
         {/* Best Practice */}
         {renderExpandable('best-practice', 'Best Practice Testing Procedures', 'green', (
           <div className="space-y-2">
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-green-400 mb-1.5">Pre-Test Preparation:</p>
               <div className="space-y-1">
                 <p className="text-[12px] text-white">- Document the circuit: Sketch layout and identify all outlets</p>
@@ -114,7 +114,7 @@ const ContinuityPracticalGuidanceSection = ({ onBack }: Props) => {
                 <p className="text-[12px] text-white">- Plan test sequence: Logical order to minimise errors</p>
               </div>
             </div>
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-green-400 mb-1.5">During Testing:</p>
               <div className="space-y-1">
                 <p className="text-[12px] text-white">- Good connections: Clean terminals and ensure secure contact</p>
@@ -131,7 +131,7 @@ const ContinuityPracticalGuidanceSection = ({ onBack }: Props) => {
         {/* Practical Techniques */}
         {renderExpandable('techniques', 'Practical Testing Techniques', 'blue', (
           <div className="space-y-2">
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-blue-400 mb-1.5">Efficient Test Routing:</p>
               <p className="text-[12px] text-white font-semibold mb-0.5">Radial circuits:</p>
               <div className="space-y-0.5 mb-2">
@@ -148,7 +148,7 @@ const ContinuityPracticalGuidanceSection = ({ onBack }: Props) => {
                 <p className="text-[12px] text-white">- Verify readings are consistent</p>
               </div>
             </div>
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-blue-400 mb-1.5">Professional Tips:</p>
               <div className="space-y-1">
                 <p className="text-[12px] text-white">- Use quality test leads: Low resistance and good durability</p>
@@ -159,7 +159,7 @@ const ContinuityPracticalGuidanceSection = ({ onBack }: Props) => {
                 <p className="text-[12px] text-white">- Photo document issues: Visual record of problems found</p>
               </div>
             </div>
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-yellow-400 mb-1.5">Time-Saving Techniques:</p>
               <div className="space-y-2">
                 <div>
@@ -197,7 +197,7 @@ const ContinuityPracticalGuidanceSection = ({ onBack }: Props) => {
         {/* Troubleshooting */}
         {renderExpandable('troubleshooting', 'Troubleshooting Common Problems', 'orange', (
           <div className="space-y-2">
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-orange-400 mb-1.5">High Resistance Readings:</p>
               <p className="text-[12px] text-white font-semibold mb-0.5">Possible Causes:</p>
               <div className="space-y-0.5 mb-2">
@@ -219,7 +219,7 @@ const ContinuityPracticalGuidanceSection = ({ onBack }: Props) => {
                 <p className="text-[12px] text-white">- Tighten all bolted connections and retest</p>
               </div>
             </div>
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-orange-400 mb-1.5">Infinite Resistance Readings:</p>
               <p className="text-[12px] text-white font-semibold mb-0.5">Possible Causes:</p>
               <div className="space-y-0.5 mb-2">
@@ -237,7 +237,7 @@ const ContinuityPracticalGuidanceSection = ({ onBack }: Props) => {
                 <p className="text-[12px] text-white">- Test sections systematically</p>
               </div>
             </div>
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-red-400 mb-1.5">Inconsistent Ring Circuit Readings:</p>
               <p className="text-[12px] text-white font-semibold mb-0.5">Symptoms:</p>
               <div className="space-y-0.5 mb-2">
@@ -260,7 +260,7 @@ const ContinuityPracticalGuidanceSection = ({ onBack }: Props) => {
         {/* Quality Assurance */}
         {renderExpandable('qa', 'Quality Assurance and Verification', 'purple', (
           <div className="space-y-2">
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-purple-400 mb-1.5">Result Verification:</p>
               <div className="space-y-1">
                 <p className="text-[12px] text-white">- Sanity checks: Do results make sense for cable type/length?</p>
@@ -271,7 +271,7 @@ const ContinuityPracticalGuidanceSection = ({ onBack }: Props) => {
                 <p className="text-[12px] text-white">- Documentation: Complete and accurate test records</p>
               </div>
             </div>
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-purple-400 mb-1.5">Professional Standards:</p>
               <div className="space-y-1">
                 <p className="text-[12px] text-white">- Competency: Ensure tester has appropriate qualifications</p>
@@ -288,7 +288,7 @@ const ContinuityPracticalGuidanceSection = ({ onBack }: Props) => {
         {/* Record Keeping */}
         {renderExpandable('records', 'Record Keeping and Documentation', 'cyan', (
           <div className="space-y-2">
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-cyan-400 mb-1.5">Essential Records:</p>
               <div className="space-y-1">
                 <p className="text-[12px] text-white">- Test results: All measured values with units</p>
@@ -299,7 +299,7 @@ const ContinuityPracticalGuidanceSection = ({ onBack }: Props) => {
                 <p className="text-[12px] text-white">- Tester signature: Qualified person responsible for testing</p>
               </div>
             </div>
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-cyan-400 mb-1.5">Digital Record Keeping:</p>
               <div className="space-y-1">
                 <p className="text-[12px] text-white">- Electronic forms: Reduce errors and improve legibility</p>
@@ -310,7 +310,7 @@ const ContinuityPracticalGuidanceSection = ({ onBack }: Props) => {
                 <p className="text-[12px] text-white">- Audit trails: Complete history of all changes</p>
               </div>
             </div>
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-green-400 mb-1.5">Long-term Value of Good Records:</p>
               <div className="space-y-2">
                 <div>

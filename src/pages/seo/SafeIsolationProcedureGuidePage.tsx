@@ -172,7 +172,7 @@ const sections = [
               of being secured against unintentional re-energisation.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">
               Regulation 13 — Precautions for Dead Working
             </h3>
@@ -482,7 +482,7 @@ const sections = [
           Substandard test leads are one of the most common causes of electrical accidents in the
           trade.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -530,7 +530,7 @@ const sections = [
           correct instrument. A multimeter can be used as a secondary check but should not be the
           primary proving instrument. The reasons are:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -598,7 +598,7 @@ const sections = [
             </div>
           ))}
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h4 className="font-bold text-white mb-2">Prove dead on every conductor combination</h4>
           <p className="text-white text-sm mb-3 leading-relaxed">
             At the point of work, test every combination — a single test is not enough. For a
@@ -608,7 +608,7 @@ const sections = [
             {['Line to neutral', 'Line to earth', 'Neutral to earth'].map((combo) => (
               <div
                 key={combo}
-                className="rounded-xl bg-black/30 border border-yellow-500/30 px-2 py-3 text-center text-sm font-semibold text-white"
+                className="rounded-xl bg-black/30 border border-white/[0.14] px-2 py-3 text-center text-sm font-semibold text-white"
               >
                 {combo}
               </div>
@@ -828,7 +828,7 @@ const sections = [
           Always prove dead before touching.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <ShieldAlert className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

@@ -333,7 +333,7 @@ const sections = [
           overcurrent protection, and RCD protection. The consumer unit must comply with current
           regulations regarding enclosure type:
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-4">
             <AlertTriangle className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
             <div>
@@ -418,7 +418,7 @@ const sections = [
           options depend on the supply type at the house:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">TN-C-S (PME) Supply</h3>
             <p className="text-white text-sm leading-relaxed">
               Most UK homes have a PME supply. Extending the PME earth to an outbuilding introduces
@@ -613,7 +613,7 @@ const sections = [
           on the first visit, and efficient on-site execution.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

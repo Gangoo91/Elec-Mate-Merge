@@ -33,7 +33,7 @@ const EquipmentSection = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               The right instrument for the right fault. Choosing the correct test tool first saves time and gives you reliable diagnostic data. Always prove instruments before use and check calibration certificates.
             </p>
@@ -42,7 +42,7 @@ const EquipmentSection = ({ onBack }: Props) => {
 
         {instruments.map((inst, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
               <p className="text-sm font-semibold text-white">{inst.name}</p>
               <p className="text-xs text-yellow-400/80">{inst.faults}</p>
               <p className="text-sm text-white leading-relaxed">{inst.description}</p>

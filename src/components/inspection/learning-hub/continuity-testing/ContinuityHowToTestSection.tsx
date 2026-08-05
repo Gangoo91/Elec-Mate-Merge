@@ -281,7 +281,7 @@ const ContinuityHowToTestSection = ({ onBack }: Props) => {
         ))}
 
         {/* R1+R2 Method */}
-        <p className="text-xs font-medium text-amber-400 uppercase tracking-wider px-0.5 mt-4">R1+R2 Method (Preferred)</p>
+        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white px-0.5 mt-4">R1+R2 Method (Preferred)</p>
         {renderExpandable('r1r2', 'R1+R2 Step-by-Step Procedure', 'amber', (
           <div className="space-y-3">
             {renderStepCards(r1r2Steps, 'amber')}

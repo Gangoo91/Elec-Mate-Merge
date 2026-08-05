@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { TestingInstrument, CompanyProfile } from '@/types/company';
+import { isIrCapable } from '@/utils/irDefaults';
 import { toast } from 'sonner';
 import { Eyebrow, EmptyState } from '@/components/college/primitives';
 
@@ -213,6 +214,44 @@ const InstrumentsSheet = ({ open, onOpenChange, profile, onSave }: InstrumentsSh
                       />
                     </div>
                   </div>
+
+                  {/* ELE-1438/1467 — a healthy circuit reads at the meter's
+                      ceiling, so this same value gets typed into every IR cell
+                      on every cert. Record it once here and the schedule fills
+                      it in when the test voltage is chosen. */}
+                  {isIrCapable(instrument.instrument_type) && (
+                    <div className="mt-4 border-t border-white/[0.08] pt-4">
+                      <Label className="text-white font-medium text-[12px]">
+                        Maximum insulation reading
+                      </Label>
+                      <p className="mt-1 text-[12px] leading-snug text-white">
+                        What this tester displays when a circuit reads off the scale. Include the
+                        &gt; sign, exactly as you write it on a certificate.
+                      </p>
+                      <div className="mt-3 grid grid-cols-3 gap-3">
+                        {(
+                          [
+                            ['250V', 'ir_max_250v', '>209.9'],
+                            ['500V', 'ir_max_500v', '>1049'],
+                            ['1000V', 'ir_max_1000v', '>999'],
+                          ] as const
+                        ).map(([label, field, example]) => (
+                          <div key={field} className="space-y-1.5">
+                            <Label className="text-white font-medium text-[12px]">{label}</Label>
+                            <Input
+                              inputMode="text"
+                              value={instrument[field] || ''}
+                              onChange={(e) =>
+                                handleInstrumentChange(instrument.id, field, e.target.value)
+                              }
+                              placeholder={example}
+                              className="h-11 bg-white/[0.06] border-white/[0.12] text-white placeholder:text-white/40 focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))
             )}

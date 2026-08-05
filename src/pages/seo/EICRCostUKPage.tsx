@@ -336,7 +336,7 @@ const sections = [
             </p>
           </div>
 
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6">
             <div className="flex items-center gap-3 mb-4">
               <Building2 className="w-6 h-6 text-yellow-400" />
               <h3 className="font-bold text-white text-lg">HMO (House in Multiple Occupation)</h3>
@@ -521,7 +521,7 @@ const sections = [
             <Link
               key={city.slug}
               to={`/guides/eicr-cost-${city.slug}`}
-              className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 text-sm text-white hover:border-yellow-500/30 hover:text-yellow-300 transition-colors touch-manipulation"
+              className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 text-sm text-white hover:border-white/[0.14] hover:text-yellow-300 transition-colors touch-manipulation"
             >
               EICR cost in {city.name}
             </Link>
@@ -585,7 +585,7 @@ const sections = [
             report = 4.5 hours at £55/hour = £247.50. Round up to £250.
           </p>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white text-lg mb-4">Step 3: Eliminate Post-Site Admin</h4>
           <p className="text-white text-sm leading-relaxed">
             The single biggest way to increase your EICR profitability is to eliminate the time
@@ -769,7 +769,7 @@ const sections = [
           two changes that directly affect the scope and pricing of domestic EICRs:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -847,7 +847,7 @@ const sections = [
           Here is how all the pieces fit together:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Camera className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -901,7 +901,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Send className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

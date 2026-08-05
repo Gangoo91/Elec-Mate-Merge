@@ -63,8 +63,8 @@ const commonMistakes = [
 const StepList = ({ steps }: { steps: string[] }) => (
   <div className="space-y-2">
     {steps.map((step, i) => (
-      <div key={i} className="flex items-start gap-3 rounded-xl bg-white/[0.03] border border-white/10 p-3.5">
-        <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+      <div key={i} className="flex items-start gap-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-3.5">
+        <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
           <span className="text-sm font-bold text-yellow-400">{i + 1}</span>
         </div>
         <p className="text-sm text-white leading-relaxed pt-1">{step}</p>
@@ -90,8 +90,8 @@ const HowToTestSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* PPE */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">PPE Required</p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">PPE Required</p>
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <div className="space-y-1.5">
               {ppeRequired.map((item, i) => (
                 <div key={i} className="flex items-center gap-3">
@@ -105,11 +105,11 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* Equipment */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Test Equipment</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Test Equipment</p>
           <div className="space-y-2">
             {equipment.map((item, i) => (
-              <div key={i} className="flex items-start gap-3 rounded-2xl bg-white/[0.03] border border-white/10 p-4">
-                <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+              <div key={i} className="flex items-start gap-3 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
+                <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                   <span className="text-xs font-bold text-yellow-400">{i + 1}</span>
                 </div>
                 <div className="flex-1 min-w-0">
@@ -123,7 +123,7 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* Ze first */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm font-semibold text-white mb-2">Step 1: Measure Ze First</p>
             <p className="text-sm text-white leading-relaxed mb-3">
               Before testing individual circuits, measure the external earth fault loop impedance (Ze) at the main board. This is the impedance of the supply transformer, supply cables, and earthing arrangement — everything upstream of your installation.
@@ -151,7 +151,7 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* Socket outlet method */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4 mb-3">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4 mb-3">
             <p className="text-sm font-semibold text-white">Step 2: Socket Outlet Method (Most Common)</p>
             <p className="text-sm text-white mt-1">Plug the tester directly into the socket. Quick, safe, and tests the complete installation as the end user experiences it.</p>
           </div>
@@ -163,7 +163,7 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* Test lead method */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-orange-400/10 border border-orange-400/20 p-4 mb-3">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/20 p-4 mb-3">
             <p className="text-sm font-semibold text-white">Test Lead Method (Lighting, Fixed Equipment, DBs)</p>
             <p className="text-sm text-white mt-1">Used where plug-in testing is not possible. Requires extra care — you are working on exposed live terminals.</p>
           </div>
@@ -175,8 +175,8 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* RCD-protected circuits */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">RCD-Protected Circuits</p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">RCD-Protected Circuits</p>
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <div className="space-y-2">
               {rcdProtectedCircuits.map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
@@ -190,15 +190,15 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* Common mistakes */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Common Mistakes to Avoid</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Mistakes to Avoid</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <div className="space-y-3">
               {commonMistakes.map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
-                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-orange-400/10 border border-orange-400/20 flex items-center justify-center mt-0.5">
+                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/20 flex items-center justify-center mt-0.5">
                     <span className="text-xs font-bold text-orange-400">{i + 1}</span>
                   </div>
                   <div className="flex-1 min-w-0">

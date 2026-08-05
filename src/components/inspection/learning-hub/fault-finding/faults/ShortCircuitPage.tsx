@@ -19,16 +19,16 @@ const ShortCircuitPage = ({ onBack }: Props) => (
     <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
       {/* What is it */}
       <motion.div variants={itemVariants}>
-        <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-2">What Is It</p>
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-2">What Is It</p>
           <p className="text-sm text-white leading-relaxed">A short circuit is a direct, low-impedance connection between two live conductors (usually line and neutral). This creates an extremely high fault current — potentially thousands of amps — that should trip the protective device instantaneously. The fault current is limited only by the supply impedance and the resistance of the conductors to the fault point.</p>
         </div>
       </motion.div>
 
       {/* Symptoms */}
       <motion.div variants={itemVariants}>
-        <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Symptoms</p>
-        <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Symptoms</p>
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
           <div className="space-y-2">
             {['MCB trips immediately on reset — cannot hold in the ON position', 'Fuse blows instantly when replaced', 'Audible bang, flash, or arc at the moment of fault', 'Burning smell — charred insulation at the fault point', 'Visible damage: melted cable, blackened terminals, arc marks', 'Zero or very low insulation resistance between L and N (0Ω = dead short)'].map((s, i) => (
               <div key={i} className="flex items-start gap-3">
@@ -42,7 +42,7 @@ const ShortCircuitPage = ({ onBack }: Props) => (
 
       {/* Common causes */}
       <motion.div variants={itemVariants}>
-        <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Common Causes</p>
+        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Causes</p>
       </motion.div>
 
       {[
@@ -53,10 +53,10 @@ const ShortCircuitPage = ({ onBack }: Props) => (
         { cause: 'Rodent damage', detail: 'Rats and mice gnaw cable sheaths and insulation, exposing bare conductors that can touch. Common in loft spaces, underfloor voids, and rural properties.', tip: 'Look for gnaw marks on cables during visual inspection. Recommend pest control and mechanical cable protection.' },
       ].map((item, i) => (
         <motion.div key={i} variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-2">
             <p className="text-sm font-semibold text-white">{item.cause}</p>
             <p className="text-sm text-white leading-relaxed">{item.detail}</p>
-            <div className="rounded-xl bg-yellow-400/5 border border-yellow-400/10 p-2.5">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/10 p-2.5">
               <p className="text-xs text-yellow-400/80">{item.tip}</p>
             </div>
           </div>
@@ -65,7 +65,7 @@ const ShortCircuitPage = ({ onBack }: Props) => (
 
       {/* How to diagnose */}
       <motion.div variants={itemVariants}>
-        <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">How to Diagnose</p>
+        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">How to Diagnose</p>
       </motion.div>
 
       {[
@@ -79,8 +79,8 @@ const ShortCircuitPage = ({ onBack }: Props) => (
         'After repair: retest IR (all three — L-E, N-E, L-N), continuity, polarity. Energise and verify functional operation.',
       ].map((step, i) => (
         <motion.div key={i} variants={itemVariants}>
-          <div className="flex items-start gap-3 rounded-xl bg-white/[0.03] border border-white/10 p-3.5">
-            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+          <div className="flex items-start gap-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-3.5">
+            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
               <span className="text-sm font-bold text-yellow-400">{i + 1}</span>
             </div>
             <p className="text-sm text-white leading-relaxed pt-1">{step}</p>
@@ -90,15 +90,15 @@ const ShortCircuitPage = ({ onBack }: Props) => (
 
       {/* Real-world case */}
       <motion.div variants={itemVariants}>
-        <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider">Real-World Case</p>
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Real-World Case</p>
           <p className="text-sm font-semibold text-white">Bedroom Socket Circuit — Shelf Installation</p>
           <p className="text-sm text-white">Client installed floating shelves in the bedroom. 32A ring circuit MCB tripped and will not reset.</p>
-          <div className="rounded-xl bg-white/[0.05] p-3">
+          <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
             <p className="text-xs font-semibold text-white mb-1">Investigation</p>
             <p className="text-xs text-white">IR test L-N: 0Ω. L-E: &gt;999MΩ. N-E: &gt;999MΩ. Dead short between L and N only — no earth involvement. Sectioned circuit at junction box behind headboard. Fault isolated to cable between JB and socket behind bed. Removed socket faceplate — drill hole visible in backbox where shelf bracket screw had penetrated the cable.</p>
           </div>
-          <div className="rounded-xl bg-green-400/5 border border-green-400/10 p-3">
+          <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-green-400/10 p-3">
             <p className="text-xs font-semibold text-green-400 mb-1">Resolution</p>
             <p className="text-xs text-white">Replaced cable run from JB to socket. Installed cable protection plate at the drill point to prevent recurrence. Retested: IR &gt;999MΩ all tests. Advised client about safe zones for future fixings.</p>
           </div>
@@ -107,8 +107,8 @@ const ShortCircuitPage = ({ onBack }: Props) => (
 
       {/* Regulations */}
       <motion.div variants={itemVariants}>
-        <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4 space-y-2">
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider">Regulations</p>
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4 space-y-2">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Regulations</p>
           <div className="space-y-1.5">
             {[
               'Reg 434 — Protection against fault current. Protective devices must disconnect within the time required to prevent conductor damage.',

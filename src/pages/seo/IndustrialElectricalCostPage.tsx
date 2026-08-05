@@ -516,7 +516,7 @@ const sections = [
           Substances and Explosive Atmospheres Regulations 2002 (DSEAR) require employers to
           classify hazardous zones and use equipment with the appropriate ATEX/UKCA marking.
         </p>
-        <div className="overflow-x-auto my-4 rounded-2xl border border-red-500/20">
+        <div className="overflow-x-auto my-4 rounded-2xl border border-white/[0.14]">
           <table className="w-full text-sm text-white">
             <thead>
               <tr className="bg-red-500/15 text-left">
@@ -527,18 +527,18 @@ const sections = [
               </tr>
             </thead>
             <tbody className="divide-y divide-red-500/15">
-              <tr className="bg-red-500/[0.06]">
+              <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                 <td className="px-4 py-3" rowSpan={3}><strong>Gas / vapour / mist</strong></td>
                 <td className="px-4 py-3 whitespace-nowrap">Zone 0</td>
                 <td className="px-4 py-3">Present continuously or for long periods</td>
                 <td className="px-4 py-3">Inside tanks and vessels (relatively rare)</td>
               </tr>
-              <tr className="bg-red-500/[0.06]">
+              <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                 <td className="px-4 py-3 whitespace-nowrap">Zone 1</td>
                 <td className="px-4 py-3">Likely in normal operation</td>
                 <td className="px-4 py-3">Spray booths, solvent handling areas</td>
               </tr>
-              <tr className="bg-red-500/[0.06]">
+              <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                 <td className="px-4 py-3 whitespace-nowrap">Zone 2</td>
                 <td className="px-4 py-3">Unlikely, and only briefly if it occurs</td>
                 <td className="px-4 py-3">Areas around flanges and pumps</td>
@@ -567,7 +567,7 @@ const sections = [
           erection, and inspection of installations in these areas are governed by the BS EN IEC
           60079 series.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -757,7 +757,7 @@ const sections = [
           contracts.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

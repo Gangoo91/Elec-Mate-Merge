@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, CheckCircle2, Download, PoundSterling } from 'lucide-react';
+import { scrollToTopForStepChange } from '@/utils/scroll';
 
 interface SolarPVTabNavigationProps {
   currentTab: string;
@@ -34,7 +35,9 @@ const SolarPVTabNavigation: React.FC<SolarPVTabNavigationProps> = ({
   const progress = getProgressPercentage();
   const isLastTab = currentTabIndex === totalTabs - 1;
 
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  // ELE-1464 — shared utility; instant so it cannot race the step-in
+  // animation. See src/utils/scroll.ts.
+  const scrollToTop = () => scrollToTopForStepChange();
 
   return (
     <div className="sticky bottom-0 left-0 right-0 bg-background border-t border-white/[0.06] p-4">

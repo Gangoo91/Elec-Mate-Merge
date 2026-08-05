@@ -27,6 +27,7 @@ import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { reportCloud } from '@/utils/reportCloud';
 import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
+import { scrollToTopForStepChange } from '@/utils/scroll';
 import {
   HeatPumpFormData,
   getDefaultHeatPumpFormData,
@@ -259,7 +260,7 @@ export default function HeatPumpCertificate() {
   const isBack = currentIndex < prevIndexRef.current;
   prevIndexRef.current = currentIndex;
 
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  const scrollToTop = () => scrollToTopForStepChange();
 
   const goToTab = (tab: HeatPumpTab) => {
     setCurrentTab(tab);
@@ -602,6 +603,9 @@ export default function HeatPumpCertificate() {
 
       {/* Shell footer — Back + Continue, Save on the last step */}
       <CertShellFooter
+        previewReportType="heat-pump"
+        previewReportId={existingReportId}
+        previewData={data as unknown as Record<string, unknown>}
         currentIndex={currentIndex}
         totalSteps={TAB_ORDER.length}
         canPrevious={currentIndex > 0}

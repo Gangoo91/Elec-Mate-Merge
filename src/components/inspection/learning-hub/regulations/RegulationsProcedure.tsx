@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ArrowLeft, BookOpen, Search, FileText, Zap, HelpCircle, ClipboardList, AlertTriangle, MapPin, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { BusinessCard } from '@/components/business-hub';
+import { HubTile as BusinessCard } from '@/components/learning-hub/HubTile';
 import { motion } from 'framer-motion';
 import BS7671StructurePage from './BS7671StructurePage';
 import A3ChangesPage from './A3ChangesPage';
@@ -51,8 +51,8 @@ const RegulationsProcedure = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="relative rounded-2xl bg-white/[0.03] border border-yellow-400/20 p-4 overflow-hidden">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-yellow-400/60 rounded-l-2xl" />
+          <div className="relative rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4 overflow-hidden">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-white/[0.08] to-white/[0.04] rounded-l-2xl" />
             <p className="text-[13px] font-semibold text-yellow-400">Current Edition: BS 7671:2018+A3:2024</p>
             <p className="text-[12px] text-white mt-1">
               Amendment 3 came into effect on 2 April 2024. All new work must comply. A4 is expected in due course — we will update the app when it is published.
@@ -62,7 +62,7 @@ const RegulationsProcedure = ({ onBack }: Props) => {
 
         {/* Most useful first */}
         <motion.section variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Most Used</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Most Used</p>
           <div className="grid grid-cols-2 gap-3">
             <BusinessCard title="Common Questions" description="20 plain-English answers" icon={HelpCircle} onClick={() => setView('scenarios')} variant="hero" />
             <BusinessCard title="EICR Coding" description="C1, C2, C3, FI guide" icon={AlertTriangle} onClick={() => setView('eicr')} variant="hero" />
@@ -72,7 +72,7 @@ const RegulationsProcedure = ({ onBack }: Props) => {
         </motion.section>
 
         <motion.section variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Practical Reference</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Practical Reference</p>
           <div className="grid grid-cols-2 gap-3">
             <BusinessCard title="Special Locations" description="Bathrooms, EV, pools" icon={MapPin} onClick={() => setView('locations')} variant="hero" />
             <BusinessCard title="Inspection Intervals" description="16 premises types" icon={Clock} onClick={() => setView('intervals')} variant="hero" />

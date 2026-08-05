@@ -293,7 +293,7 @@ const sections = [
           You do NOT need explicit consent to hold data for performing a contract, legal
           obligations, or legitimate interests. However, you DO need consent for:
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -386,7 +386,7 @@ const sections = [
           A data breach is any event where personal data is accidentally or unlawfully accessed,
           lost, destroyed, or disclosed. Common examples for electricians:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />

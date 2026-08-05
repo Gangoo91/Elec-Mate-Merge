@@ -34,7 +34,7 @@ const BS7671StructurePage = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               BS 7671 is organised into 8 Parts, each covering a different aspect of electrical installation. Parts 1-6 are general requirements. Part 7 covers special locations. Part 8 (new in A3) covers prosumer installations.
             </p>
@@ -43,7 +43,7 @@ const BS7671StructurePage = ({ onBack }: Props) => {
 
         {parts.map((p, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
               <div className="flex items-stretch">
                 <div className={`w-14 ${i === 7 ? 'bg-yellow-400/15' : 'bg-white/[0.04]'} flex items-center justify-center border-r border-white/[0.06] shrink-0`}>
                   <span className={`text-lg font-black ${i === 7 ? 'text-yellow-400' : 'text-white'}`}>{i + 1}</span>

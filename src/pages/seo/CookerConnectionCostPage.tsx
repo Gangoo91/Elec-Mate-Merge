@@ -255,7 +255,7 @@ const sections = [
               £500 if a new circuit is needed.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Induction Hob (Separate)</h3>
             <p className="text-white text-sm leading-relaxed">
               Typically 3kW to 7.4kW. Can be connected to a 32A cooker circuit via the cooker
@@ -356,7 +356,7 @@ const sections = [
           connection — loose terminals, wrong polarity, inadequate earth — include fire risk and
           electric shock.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
             <div className="text-white">
@@ -386,7 +386,7 @@ const sections = [
           circuit and represent excellent use of call-out time.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

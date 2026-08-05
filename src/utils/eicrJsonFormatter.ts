@@ -1713,11 +1713,26 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     test_instrument_serial: get('testInstrumentSerial'),
     calibration_date: get('calibrationDate'),
 
-    // Main Switch fields (flat) — handle custom values
-    main_switch_rating:
-      get('mainSwitchRating') === '__custom__' ? get('fuseDeviceRating') : get('mainSwitchRating'),
-    main_switch_poles: get('mainSwitchPoles'),
+    // Main Switch fields (flat) — handle custom values.
+    //
+    // ELE-1436 — all four of these print blank on a cert whose main switch was
+    // entered through BoardSetupCard, which writes ONLY to
+    // distributionBoards[0]. bs_en/type had no flat root key at all; rating and
+    // poles had keys but read `get()`, which reads the flat formData that card
+    // never populates. Verified in prod: of 810 EICRs, 126 have a board-level
+    // mainSwitchBsEn and all 126 have the flat key empty.
+    // Board first, then the legacy flat field (SupplyCharacteristicsSection).
+    main_switch_rating: (() => {
+      const raw = formData.distributionBoards?.[0]?.mainSwitchRating || get('mainSwitchRating');
+      return raw === '__custom__' ? get('fuseDeviceRating') : raw || '';
+    })(),
+    main_switch_poles:
+      formData.distributionBoards?.[0]?.mainSwitchPoles || get('mainSwitchPoles') || '',
     main_switch_voltage_rating: get('mainSwitchVoltageRating'),
+    main_switch_bs_en:
+      formData.distributionBoards?.[0]?.mainSwitchBsEn || get('mainSwitchBsEn') || '',
+    main_switch_type:
+      formData.distributionBoards?.[0]?.mainSwitchType || get('mainSwitchType') || '',
     fuse_device_rating: get('fuseDeviceRating'),
     fuse_sub_type: get('fuseSubType'),
     breaking_capacity:

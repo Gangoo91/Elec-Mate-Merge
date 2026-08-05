@@ -115,7 +115,7 @@ const PublicQuoteView = () => {
   const cisT = useMemo(
     () =>
       quote
-        ? computeQuoteTotals(quote.items || [], quote.settings, { applyOverheadAndProfit: false })
+        ? computeQuoteTotals(quote.items || [], quote.settings)
         : null,
     [quote]
   );
@@ -911,17 +911,15 @@ const PublicQuoteView = () => {
                           <p className="text-[12px] text-slate-500 mt-0.5">
                             {item.quantity} {item.unit} × {formatCurrency(item.unitPrice)}
                           </p>
+                          {/* Only a reduction is shown. A positive adjustment
+                              is the electrician's margin — printing it on the
+                              page their customer reads hands over the one
+                              number they should not see. The unit price
+                              already includes it, so nothing here changes the
+                              figures. Same rule as the PDF. */}
                           {typeof item.itemAdjustmentPercent === 'number' &&
-                            item.itemAdjustmentPercent !== 0 && (
-                              <span
-                                className={cn(
-                                  'inline-flex items-center gap-1 mt-1 text-[10px] font-semibold px-1.5 py-0.5 rounded tabular-nums',
-                                  item.itemAdjustmentPercent > 0
-                                    ? 'bg-amber-100 text-amber-800'
-                                    : 'bg-emerald-100 text-emerald-800'
-                                )}
-                              >
-                                {item.itemAdjustmentPercent > 0 ? '+' : ''}
+                            item.itemAdjustmentPercent < 0 && (
+                              <span className="inline-flex items-center gap-1 mt-1 text-[10px] font-semibold px-1.5 py-0.5 rounded tabular-nums bg-emerald-100 text-emerald-800">
                                 {item.itemAdjustmentPercent}%
                                 {item.itemAdjustmentLabel && (
                                   <span className="text-slate-500 font-normal">

@@ -230,7 +230,7 @@ const sections = [
             </p>
           </div>
         </div>
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-amber-500/30 p-5 my-4">
           <h3 className="font-bold text-amber-300 text-base mb-2">
             A4:2026 Updates — Exam-Relevant for Level 3
           </h3>
@@ -486,7 +486,7 @@ const sections = [
           workplace, and the AM2 tests it all under controlled conditions. They are designed to work
           together — what you learn in college should directly relate to what you do on site.
         </p>
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-amber-500/30 p-5 my-4">
           <h3 className="font-bold text-amber-300 text-base mb-2">
             Off-the-job training hours
           </h3>
@@ -660,7 +660,7 @@ const sections = [
           success:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Target className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

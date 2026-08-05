@@ -10,6 +10,15 @@ interface SEOStickyMobileCTAProps {
   appearAfterScroll?: number;
   /** Storage key for dismiss state — namespaced per CTA variant. */
   dismissKey?: string;
+  /**
+   * CSS selector for the page's main conversion block. While that block is on
+   * screen this bar hides itself.
+   *
+   * Without it the sticky bar sits yellow-on-yellow over the full-bleed CTA
+   * band, giving two competing primary actions in the same viewport — which
+   * reads as a mistake and splits the click.
+   */
+  hideWhileVisible?: string;
 }
 
 /**
@@ -29,6 +38,7 @@ export function SEOStickyMobileCTA({
   href = '/auth/signup',
   appearAfterScroll = 600,
   dismissKey = 'seo-sticky-cta-v1',
+  hideWhileVisible,
 }: SEOStickyMobileCTAProps) {
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
@@ -85,6 +95,20 @@ export function SEOStickyMobileCTA({
     };
   }, []);
 
+  // Hide while the page's main conversion block is on screen.
+  const [mainCtaOnScreen, setMainCtaOnScreen] = useState(false);
+  useEffect(() => {
+    if (!hideWhileVisible) return;
+    const el = document.querySelector(hideWhileVisible);
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setMainCtaOnScreen(entry.isIntersecting),
+      { threshold: 0 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [hideWhileVisible]);
+
   const handleDismiss = () => {
     setDismissed(true);
     try {
@@ -94,7 +118,7 @@ export function SEOStickyMobileCTA({
     }
   };
 
-  if (dismissed || !visible || inputFocused) return null;
+  if (dismissed || !visible || inputFocused || mainCtaOnScreen) return null;
 
   return (
     <div

@@ -186,7 +186,7 @@ export default function MICCCableGuidePage() {
                 on fire. The relevant standards and regulations define specific applications:
               </p>
               <div className="space-y-4 my-6">
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-2">
                     Fire Detection and Alarm Systems
                   </h3>
@@ -203,7 +203,7 @@ export default function MICCCableGuidePage() {
                     category.
                   </p>
                 </div>
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-2">Emergency Lighting</h3>
                   <p className="text-white text-sm leading-relaxed">
                     <SEOInternalLink href="/guides/bs-5266-emergency-lighting-standard">
@@ -258,7 +258,7 @@ export default function MICCCableGuidePage() {
               </p>
               <p>There are two main termination methods for MICC cable:</p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-3">Pot Seal (Traditional)</h3>
                   <p className="text-white text-sm leading-relaxed mb-3">
                     The traditional pot seal consists of a brass pot (disc) that is soldered or
@@ -291,7 +291,7 @@ export default function MICCCableGuidePage() {
                   </p>
                 </div>
               </div>
-              <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-6">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-6">
                 <h3 className="font-bold text-yellow-400 text-lg mb-3">
                   Critical Sealing Precautions
                 </h3>
@@ -483,7 +483,7 @@ export default function MICCCableGuidePage() {
                 characteristics, installation requirements, and costs.
               </p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-3">MICC Cable</h3>
                   <ul className="space-y-2 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-2">

@@ -99,6 +99,17 @@ export function shuffleQuestionOptions<T extends ShuffleableQuestion>(
     ...question,
     options: order.map((i) => opts[i]),
     correctAnswer: order.indexOf(correctIdx),
+    /**
+     * Shuffled position -> original position in the bank.
+     * `optionOrder[displayedIndex]` is the index that option occupies in the
+     * source question.
+     *
+     * Without this, any analytics on which option a candidate picked is
+     * worthless: the salt changes per attempt, so "they chose option 1" refers
+     * to a different answer every time. Answer-choice capture maps back through
+     * this before recording, so counts aggregate against a stable identity.
+     */
+    optionOrder: order,
   };
 }
 

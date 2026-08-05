@@ -288,7 +288,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-4">
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
               1
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -300,7 +300,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
               2
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -313,7 +313,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
               3
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -325,7 +325,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
               4
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -335,7 +335,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
               5
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -346,7 +346,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
               6
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -359,7 +359,7 @@ const sections = [
             </p>
           </div>
         </div>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
             <div>
@@ -432,7 +432,7 @@ const sections = [
             </p>
           </div>
 
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="flex items-center gap-2 mb-2">
               <AlertTriangle className="w-5 h-5 text-yellow-400" />
               <h3 className="font-bold text-white text-lg">

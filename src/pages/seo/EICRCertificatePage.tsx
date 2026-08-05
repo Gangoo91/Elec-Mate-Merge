@@ -347,7 +347,7 @@ export default function EICRCertificatePage() {
     <SEOPageShell breadcrumbs={breadcrumbs} tocItems={tocItems}>
       {/* Hero — stronger, feature-led */}
       <section className="pb-8">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-5">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-5">
           <FileCheck2 className="w-4 h-4 text-yellow-400" />
           <span className="text-sm font-medium text-yellow-400">
             BS 7671:2018+A4:2026 Compliant
@@ -587,7 +587,7 @@ export default function EICRCertificatePage() {
           </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-3 mb-3">
               <span className="w-10 h-10 rounded-xl bg-red-500/20 flex items-center justify-center font-bold text-red-400">
                 C1
@@ -656,7 +656,7 @@ export default function EICRCertificatePage() {
         </div>
 
         {/* A4:2026 changes relevant to EICR inspectors */}
-        <div className="mt-6 rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+        <div className="mt-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
           <h3 className="font-bold text-white text-base mb-3 flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-yellow-400 shrink-0" />
             New A4:2026 Rules That Generate EICR Observations
@@ -775,8 +775,8 @@ export default function EICRCertificatePage() {
 
       {/* ===== WHY ELECTRICIANS SWITCH ===== */}
       <section id="why-electricians-switch" className="pb-10 scroll-mt-24">
-        <div className="rounded-2xl bg-gradient-to-br from-yellow-500/10 via-yellow-600/5 to-transparent border border-yellow-500/20 p-6 sm:p-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-yellow-500/15 border border-yellow-500/25 mb-5">
+        <div className="rounded-2xl bg-gradient-to-br from-yellow-500/10 via-yellow-600/5 to-transparent border border-white/[0.14] p-6 sm:p-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-5">
             <Zap className="w-3.5 h-3.5 text-yellow-400" />
             <span className="text-xs font-semibold text-yellow-400 uppercase tracking-wider">
               Why Electricians Switch
@@ -826,7 +826,7 @@ export default function EICRCertificatePage() {
                 { step: '5', label: 'Send + invoice', desc: 'Email, WhatsApp, PDF', icon: Send },
               ].map((s) => (
                 <div key={s.step} className="text-center">
-                  <div className="w-12 h-12 rounded-2xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center mx-auto mb-3">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center mx-auto mb-3">
                     <s.icon className="w-5 h-5 text-yellow-400" />
                   </div>
                   <div className="text-xs font-bold text-yellow-400 mb-1">Step {s.step}</div>
@@ -867,8 +867,8 @@ export default function EICRCertificatePage() {
               { bg: string; border: string; icon: string; glow: string }
             > = {
               yellow: {
-                bg: 'bg-yellow-500/10',
-                border: 'border-yellow-500/20',
+                bg: 'bg-gradient-to-b from-white/[0.08] to-white/[0.04]',
+                border: 'border-white/[0.14]',
                 icon: 'text-yellow-400',
                 glow: 'from-yellow-500/10',
               },
@@ -918,7 +918,7 @@ export default function EICRCertificatePage() {
         </div>
 
         {/* Delivery methods callout */}
-        <div className="rounded-2xl bg-gradient-to-r from-yellow-500/10 to-yellow-600/5 border border-yellow-500/20 p-6 mb-10">
+        <div className="rounded-2xl bg-gradient-to-r from-yellow-500/10 to-yellow-600/5 border border-white/[0.14] p-6 mb-10">
           <h3 className="font-bold text-white text-lg mb-4">
             Send the Finished EICR However Your Client Wants It
           </h3>
@@ -930,7 +930,7 @@ export default function EICRCertificatePage() {
               { icon: Cloud, label: 'Cloud Link' },
             ].map((method) => (
               <div key={method.label} className="flex flex-col items-center gap-2 text-center">
-                <div className="w-11 h-11 rounded-xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center">
+                <div className="w-11 h-11 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center">
                   <method.icon className="w-5 h-5 text-yellow-400" />
                 </div>
                 <span className="text-sm font-medium text-white">{method.label}</span>

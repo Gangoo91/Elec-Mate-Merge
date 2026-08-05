@@ -359,7 +359,7 @@ const sections = [
           you will not sit it until year 4 or later, year 3 is when preparation should begin in
           earnest.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-3">AM2 at a Glance</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -384,7 +384,7 @@ const sections = [
           The best way to prepare is to practise under timed conditions. On site, pay attention to
           how quickly you work and where you lose time. Common AM2 failure points include:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -591,7 +591,7 @@ const sections = [
           finish to your apprenticeship:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Target className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

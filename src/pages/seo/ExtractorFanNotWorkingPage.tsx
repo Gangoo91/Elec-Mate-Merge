@@ -172,7 +172,7 @@ const sections = [
           and could save you a call-out fee:
         </p>
         <div className="space-y-3 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">1. Check the isolator switch</h4>
             <p className="text-white text-sm leading-relaxed">
               Every extractor fan should have an isolator switch. In bathrooms, this is usually a
@@ -182,7 +182,7 @@ const sections = [
               fan.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">2. Check the consumer unit</h4>
             <p className="text-white text-sm leading-relaxed">
               Look at the consumer unit (fuse board) and check whether any circuit breakers have
@@ -191,7 +191,7 @@ const sections = [
               there is a fault — do not keep resetting it.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">3. Check the fused connection unit</h4>
             <p className="text-white text-sm leading-relaxed">
               If the fan is supplied through a fused connection unit (FCU), check the fuse inside
@@ -199,7 +199,7 @@ const sections = [
               The FCU is usually mounted on the wall near the fan or just outside the bathroom door.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">4. Listen for a hum</h4>
             <p className="text-white text-sm leading-relaxed">
               With the fan switched on, listen carefully at the fan grille. If you can hear a faint
@@ -498,7 +498,7 @@ const sections = [
           If the quick checks (isolator, consumer unit, fuse) have not resolved the problem, you
           need an electrician. Here is the urgency scale:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -547,7 +547,7 @@ const sections = [
           ensures you catch the actual fault first time:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Zap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -563,7 +563,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -578,7 +578,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Cable className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -596,7 +596,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

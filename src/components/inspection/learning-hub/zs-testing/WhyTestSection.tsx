@@ -76,7 +76,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               Earth fault loop impedance (Zs) testing verifies that the complete fault current path has low enough impedance to ensure protective devices disconnect within the required time during an earth fault. Without this test, there is no guarantee that ADS will work.
             </p>
@@ -85,21 +85,21 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* What is Zs */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">What Is Zs?</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">What Is Zs?</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4">
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs font-bold text-yellow-400 bg-yellow-400/20 px-2 py-0.5 rounded-lg">Reg 134.2.2</span>
+              <span className="text-xs font-bold text-yellow-400 bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-2 py-0.5 rounded-lg">Reg 134.2.2</span>
             </div>
             <p className="text-sm text-white leading-relaxed mb-3">
               Zs is the total impedance of the earth fault loop — from the point of the fault, through the protective conductor, earthing arrangement, transformer winding and line conductor back to the fault point.
             </p>
             <div className="space-y-2">
               {whatIsZs.map((item, i) => (
-                <div key={i} className="flex items-start gap-3 rounded-xl bg-white/[0.05] p-3">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                <div key={i} className="flex items-start gap-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                     <span className="text-sm font-bold text-yellow-400">{i + 1}</span>
                   </div>
                   <div>
@@ -109,7 +109,7 @@ const WhyTestSection = ({ onBack }: Props) => {
                 </div>
               ))}
             </div>
-            <div className="mt-3 rounded-xl bg-white/[0.05] p-3">
+            <div className="mt-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-sm text-white"><span className="font-semibold text-yellow-400">Key formula:</span> Fault current I = U₀ ÷ Zs (where U₀ = 230V). Lower Zs = higher fault current = faster disconnection.</p>
             </div>
           </div>
@@ -117,14 +117,14 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Why it matters */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Why It Matters</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Why It Matters</p>
         </motion.div>
 
         {hazards.map((hazard, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                   <hazard.icon className="h-5 w-5 text-yellow-400" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -138,15 +138,15 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* System types */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Zs by Earthing System</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Zs by Earthing System</p>
         </motion.div>
 
         {systemTypes.map((sys, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-center justify-between mb-2">
                 <p className="text-sm font-semibold text-white">{sys.system}</p>
-                <span className="text-xs font-bold text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded-lg">Ze: {sys.typical}</span>
+                <span className="text-xs font-bold text-yellow-400 bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-2 py-0.5 rounded-lg">Ze: {sys.typical}</span>
               </div>
               <p className="text-sm text-white leading-relaxed">{sys.path}</p>
             </div>
@@ -155,12 +155,12 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* TT System — special consideration */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-2">TT Systems — Why RCDs Are Essential</p>
             <p className="text-sm text-white leading-relaxed mb-3">
               In TT systems, the fault current returns through the earth electrode and ground — a high-impedance path. The loop impedance is so high that MCBs and fuses cannot disconnect fast enough. RCDs must be used instead.
             </p>
-            <div className="rounded-xl bg-white/[0.05] p-3 mb-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 mb-3">
               <p className="text-sm text-white"><span className="font-semibold text-yellow-400">TT Formula:</span> Ra ≤ U₀ ÷ IΔn</p>
               <p className="text-sm text-white mt-1">For a 30mA RCD: Ra ≤ 230 ÷ 0.03 = 7,667Ω. In practice, aim for Ra below 200Ω for service reliability.</p>
             </div>
@@ -183,22 +183,22 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Disconnection times detail */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm font-semibold text-white mb-3">Disconnection Times — Reg 411.3.2</p>
             <div className="space-y-2">
               <div className="grid grid-cols-2 gap-2">
-                <div className="rounded-xl bg-white/[0.05] p-3">
+                <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
                   <p className="text-xs text-white">Final circuits ≤63A (sockets)</p>
                   <p className="text-lg font-bold text-white">0.4s</p>
                   <p className="text-xs text-white">Maximum disconnection time</p>
                 </div>
-                <div className="rounded-xl bg-white/[0.05] p-3">
+                <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
                   <p className="text-xs text-white">Distribution circuits & fixed equipment</p>
                   <p className="text-lg font-bold text-white">5s</p>
                   <p className="text-xs text-white">Maximum disconnection time</p>
                 </div>
               </div>
-              <div className="rounded-xl bg-white/[0.05] p-3">
+              <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
                 <p className="text-sm text-white"><span className="font-semibold text-yellow-400">Important:</span> The 5-second time applies to distribution circuits and circuits supplying fixed equipment only. All socket outlet circuits and circuits likely to supply portable equipment must disconnect in 0.4 seconds.</p>
               </div>
             </div>
@@ -207,16 +207,16 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Real-world examples */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Real-World Examples</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Real-World Examples</p>
         </motion.div>
 
         {realWorldExamples.map((example, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
               <p className="text-sm font-semibold text-white">{example.title}</p>
               <div className="space-y-2">
                 <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                     <span className="text-xs font-bold text-yellow-400">F</span>
                   </div>
                   <div>
@@ -225,7 +225,7 @@ const WhyTestSection = ({ onBack }: Props) => {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-orange-400/10 border border-orange-400/20 flex items-center justify-center">
+                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/20 flex items-center justify-center">
                     <span className="text-xs font-bold text-orange-400">C</span>
                   </div>
                   <div>
@@ -234,7 +234,7 @@ const WhyTestSection = ({ onBack }: Props) => {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-green-400/10 border border-green-400/20 flex items-center justify-center">
+                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-green-400/20 flex items-center justify-center">
                     <span className="text-xs font-bold text-green-400">R</span>
                   </div>
                   <div>

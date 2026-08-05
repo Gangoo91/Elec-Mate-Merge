@@ -12,6 +12,8 @@ import { insulationTestVoltageOptions } from '@/types/testOptions';
 import { TestValidationResults } from '@/utils/testValidation';
 import { EnhancedValidatedInput } from './EnhancedValidatedInput';
 import { BulkPasteButton } from './BulkPasteButton';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { getIrMaxForVoltage, isBlankReading } from '@/utils/irDefaults';
 
 interface InsulationCellsProps {
   result: TestResult;
@@ -20,6 +22,24 @@ interface InsulationCellsProps {
   allResults?: TestResult[];
   onBulkUpdate?: (field: keyof TestResult, value: string) => void;
 }
+
+/**
+ * One-tap fill with the tester's ceiling reading (ELE-1438/1467).
+ *
+ * Declared at module scope on purpose: defined inside the cell it would get a
+ * fresh component identity on every render and remount on each keystroke.
+ */
+const FillMaxButton: React.FC<{ value: string; onFill: () => void }> = ({ value, onFill }) => (
+  <button
+    type="button"
+    onClick={onFill}
+    title={`Fill with your tester's maximum (${value})`}
+    aria-label={`Fill with tester maximum ${value}`}
+    className="shrink-0 rounded px-1 text-[11px] font-semibold leading-none text-elec-yellow hover:bg-white/[0.08] touch-manipulation"
+  >
+    Max
+  </button>
+);
 
 const InsulationCellsComponent: React.FC<InsulationCellsProps> = ({
   result,
@@ -31,6 +51,20 @@ const InsulationCellsComponent: React.FC<InsulationCellsProps> = ({
   // Live-Live and Live-Earth only — A4:2026 model form has no N-E column (ELE-1226)
   const liveLiveValue = result.insulationLiveNeutral || '';
   const liveEarthValue = result.insulationLiveEarth || '';
+
+  // ELE-1438/1467 — the tester's ceiling reading for the voltage on THIS row,
+  // from Settings → Business → Instruments. A healthy circuit reads off the
+  // scale, so this is the same value over and over; offering it as one tap
+  // beats typing ">1049" on every circuit. Shown only when a max is saved and
+  // the cell is still empty — never overwrites a real reading.
+  // useCompanyProfile is React-Query cached on a shared key, so the rows all
+  // read one fetch rather than one each.
+  const { companyProfile } = useCompanyProfile();
+  const irMax = getIrMaxForVoltage(
+    companyProfile?.testing_instruments,
+    result.insulationTestVoltage
+  );
+
 
   return (
     <>
@@ -67,6 +101,7 @@ const InsulationCellsComponent: React.FC<InsulationCellsProps> = ({
             validation={validation.insulationLiveNeutral}
             placeholder="—"
           />
+          {irMax && isBlankReading(liveLiveValue) && <FillMaxButton value={irMax} onFill={() => onUpdate(result.id, 'insulationLiveNeutral', irMax)} />}
           {allResults && onBulkUpdate && liveLiveValue && (
             <BulkPasteButton
               value={liveLiveValue}
@@ -89,6 +124,7 @@ const InsulationCellsComponent: React.FC<InsulationCellsProps> = ({
             validation={validation.insulationLiveEarth}
             placeholder="—"
           />
+          {irMax && isBlankReading(liveEarthValue) && <FillMaxButton value={irMax} onFill={() => onUpdate(result.id, 'insulationLiveEarth', irMax)} />}
           {allResults && onBulkUpdate && liveEarthValue && (
             <BulkPasteButton
               value={liveEarthValue}

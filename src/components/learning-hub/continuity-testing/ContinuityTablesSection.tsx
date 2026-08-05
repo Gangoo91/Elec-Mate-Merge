@@ -135,7 +135,7 @@ const ContinuityTablesSection = ({ onBack }: Props) => {
           onClick={() => toggle(id)}
           className="w-full text-left touch-manipulation active:scale-[0.99] transition-transform"
         >
-          <div className={`relative rounded-2xl bg-white/[0.07] border ${isOpen ? borderActiveMap[accent] : 'border-white/[0.08]'} overflow-hidden transition-colors`}>
+          <div className={`relative rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border ${isOpen ? borderActiveMap[accent] : 'border-white/[0.08]'} overflow-hidden transition-colors`}>
             <div className={`absolute inset-x-0 top-0 h-[2px] ${topAccentMap[accent]}`} />
             <div className={`absolute left-0 top-0 bottom-0 w-1 ${barMap[accent]} rounded-l-2xl`} />
             <div className="p-4 flex items-center gap-3">
@@ -184,33 +184,33 @@ const ContinuityTablesSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-4">
         {/* Quick Reference - always visible */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-emerald-400 uppercase tracking-wider px-0.5 mb-2">Quick Reference</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white px-0.5 mb-2">Quick Reference</p>
           <div className="grid grid-cols-3 gap-2">
-            <div className="rounded-2xl bg-white/[0.07] border border-white/[0.08] p-3 overflow-hidden relative">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.08] p-3 overflow-hidden relative">
               <div className="absolute left-0 top-0 bottom-0 w-1 bg-green-500/50 rounded-l-2xl" />
               <p className="text-[12px] font-semibold text-green-400">Good</p>
               <p className="text-lg font-bold text-white">&le;0.5&Omega;</p>
               <p className="text-[10px] text-white mt-0.5">Verify CPC continuity per BS 7671 guidance</p>
             </div>
-            <div className="rounded-2xl bg-white/[0.07] border border-white/[0.08] p-3 overflow-hidden relative">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.08] p-3 overflow-hidden relative">
               <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500/50 rounded-l-2xl" />
               <p className="text-[12px] font-semibold text-amber-400">Acceptable</p>
               <p className="text-lg font-bold text-white">0.5-1.0&Omega;</p>
               <p className="text-[10px] text-white mt-0.5">Longer cable runs</p>
             </div>
-            <div className="rounded-2xl bg-white/[0.07] border border-white/[0.08] p-3 overflow-hidden relative">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.08] p-3 overflow-hidden relative">
               <div className="absolute left-0 top-0 bottom-0 w-1 bg-red-500/50 rounded-l-2xl" />
               <p className="text-[12px] font-semibold text-red-400">Investigate</p>
               <p className="text-lg font-bold text-white">&gt;1.0&Omega;</p>
               <p className="text-[10px] text-white mt-0.5">Check connections</p>
             </div>
           </div>
-          <div className="rounded-xl bg-white/[0.05] p-3 mt-2">
+          <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 mt-2">
             <p className="text-[12px] text-white">
               <span className="font-semibold text-blue-400">Note:</span> These are typical guidance values. Always compare measured R1+R2 against the maximum value permitted for your specific protective device using the tables below.
             </p>
           </div>
-          <div className="rounded-xl bg-white/[0.05] p-3 mt-2">
+          <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 mt-2">
             <p className="text-[12px] text-white">
               <span className="font-semibold text-green-400">Protective bonding continuity:</span> Typical acceptance &le;0.5&Omega; with good mechanical connection (BS 7671 guidance).
             </p>
@@ -220,21 +220,21 @@ const ContinuityTablesSection = ({ onBack }: Props) => {
         {/* Cable Resistance Table */}
         {renderExpandable('cable', 'Cable Resistance Values (BS 7671 Table 9A)', 'blue', (
           <div className="space-y-3">
-            <div className="rounded-xl bg-white/[0.05] border border-white/[0.08] overflow-hidden">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.08] overflow-hidden">
               <div className="h-1 bg-blue-500/50" />
               <div className="p-3">
                 <p className="text-[12px] font-semibold text-white mb-2">Copper Conductors (m&Omega;/m at 20&deg;C):</p>
                 <GlassTable headers={['Size (mm\u00B2)', 'Resistance']} rows={cableResistance} />
               </div>
             </div>
-            <div className="rounded-xl bg-white/[0.05] border border-white/[0.08] overflow-hidden">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.08] overflow-hidden">
               <div className="h-1 bg-blue-500/50" />
               <div className="p-3">
                 <p className="text-[12px] font-semibold text-white mb-2">Temperature Correction Factors:</p>
                 <GlassTable headers={['Temp (\u00B0C)', 'Factor']} rows={tempCorrection} />
               </div>
             </div>
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-yellow-400">
                 Formula: R&#8322;&#8320; &times; (230 + T&#8321;) &divide; (230 + T&#8322;)
               </p>
@@ -245,21 +245,21 @@ const ContinuityTablesSection = ({ onBack }: Props) => {
         {/* MCB Values */}
         {renderExpandable('mcb', 'Maximum R1+R2 for Automatic Disconnection', 'green', (
           <div className="space-y-3">
-            <div className="rounded-xl bg-white/[0.05] border border-white/[0.08] overflow-hidden">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.08] overflow-hidden">
               <div className="h-1 bg-green-500/50" />
               <div className="p-3">
                 <p className="text-[12px] font-semibold text-white mb-2">Type B MCBs (0.4s disconnection) - BS 7671 Table 41.3(a):</p>
                 <GlassTable headers={['Rating (A)', 'Max Zs (\u03A9)']} rows={typeBMcb} />
               </div>
             </div>
-            <div className="rounded-xl bg-white/[0.05] border border-white/[0.08] overflow-hidden">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.08] overflow-hidden">
               <div className="h-1 bg-green-500/50" />
               <div className="p-3">
                 <p className="text-[12px] font-semibold text-white mb-2">Type C MCBs (0.4s disconnection) - BS 7671 Table 41.3(b):</p>
                 <GlassTable headers={['Rating (A)', 'Max Zs (\u03A9)']} rows={typeCMcb} />
               </div>
             </div>
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-blue-400 mb-1.5">Calculation Method:</p>
               <div className="space-y-1">
                 <p className="text-[12px] text-white"><span className="font-semibold">Formula:</span> Maximum R1+R2 = U&#8320; &divide; (Ia &times; &radic;3) for TN systems</p>
@@ -274,7 +274,7 @@ const ContinuityTablesSection = ({ onBack }: Props) => {
         {/* Ring Circuit Values */}
         {renderExpandable('ring', 'Ring Circuit Specific Values', 'orange', (
           <div className="space-y-2">
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-white mb-1.5">Ring Final Circuit Limits:</p>
               <div className="space-y-1">
                 <p className="text-[12px] text-white">- <span className="font-semibold">Maximum R1+R2:</span> 1.67&Omega; (BS 7671 Reg 543.1.4)</p>
@@ -284,7 +284,7 @@ const ContinuityTablesSection = ({ onBack }: Props) => {
                 <p className="text-[12px] text-white">- <span className="font-semibold">Typical cable length:</span> 106m maximum loop</p>
               </div>
             </div>
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-white mb-1.5">Expected Test Results:</p>
               <p className="text-[12px] text-white font-semibold">2.5mm&sup2; ring (both legs):</p>
               <div className="space-y-0.5 ml-2 mb-1">
@@ -298,7 +298,7 @@ const ContinuityTablesSection = ({ onBack }: Props) => {
                 <p className="text-[12px] text-white">- Socket test: (0.4+0.6)/4 = 0.25&Omega;</p>
               </div>
             </div>
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-orange-400 mb-1.5">Ring Circuit Test Sequence:</p>
               <div className="space-y-2">
                 <div>
@@ -336,25 +336,25 @@ const ContinuityTablesSection = ({ onBack }: Props) => {
         {/* Bonding Values */}
         {renderExpandable('bonding', 'Main Protective Bonding Conductor Values', 'amber', (
           <div className="space-y-3">
-            <div className="rounded-xl bg-white/[0.05] border border-white/[0.08] overflow-hidden">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.08] overflow-hidden">
               <div className="h-1 bg-amber-500/50" />
               <div className="p-3">
                 <p className="text-[12px] font-semibold text-white mb-2">Bonding Conductor Sizing (BS 7671 Table 54.8):</p>
                 <GlassTable headers={['Supply Conductor (mm\u00B2)', 'Min Bonding (mm\u00B2)']} rows={bondingSizing} />
               </div>
             </div>
-            <div className="rounded-xl bg-white/[0.05] border border-white/[0.08] overflow-hidden">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.08] overflow-hidden">
               <div className="h-1 bg-amber-500/50" />
               <div className="p-3">
                 <p className="text-[12px] font-semibold text-white mb-2">Expected Resistance Values:</p>
                 <GlassTable headers={['Installation', 'Resistance']} rows={bondingResistance} />
               </div>
             </div>
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] text-white"><span className="font-semibold text-green-400">Acceptable range:</span> 0.001&Omega; to 0.05&Omega; typically</p>
               <p className="text-[12px] text-white mt-1"><span className="font-semibold text-red-400">Investigate if:</span> &gt;0.1&Omega; or infinite reading</p>
             </div>
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-red-400 mb-1.5">Bonding Conductor Test Requirements:</p>
               <p className="text-[12px] font-semibold text-white mb-1">Test Method:</p>
               <div className="space-y-0.5 mb-2">

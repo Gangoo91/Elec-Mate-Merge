@@ -182,7 +182,7 @@ const sections = [
               local authority through your scheme provider. No Building Control involvement needed.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Without CPS Membership</h3>
             <p className="text-white text-sm leading-relaxed">
               The homeowner (or you on their behalf) must notify Building Control before starting

@@ -82,6 +82,7 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { toast } from '@/hooks/use-toast';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useMaterialsLists, MaterialsListItem } from '@/hooks/useMaterialsLists';
+import { useSaveToPriceBook } from '@/hooks/useSaveToPriceBook';
 import { usePriceBookBundles } from '@/hooks/usePriceBookBundles';
 import { usePriceList } from '@/hooks/usePriceList';
 import { useInvoiceScanner } from '@/hooks/useInvoiceScanner';
@@ -114,6 +115,10 @@ export const EnhancedQuoteItemsStep = ({
   // Get user's company profile for custom worker rates
   const { companyProfile } = useCompanyProfile();
 
+  // Rate a price-book item's labour allowance is costed at (ELE-1470). Same
+  // source as the preview shown in the Price Book, so the two always agree.
+  const priceBookHourlyRate = companyProfile?.hourly_rate ?? 0;
+
   // Price Book data
   const { lists: materialsLists } = useMaterialsLists();
   // Live stock for price-book items linked to a `personal_inventory` row (ELE-1014).
@@ -136,6 +141,25 @@ export const EnhancedQuoteItemsStep = ({
   const { items: rateCardItems } = usePriceList();
   const [showRateCard, setShowRateCard] = useState(false);
   const [rateCardSearch, setRateCardSearch] = useState('');
+
+  // Price book capture — shared with the invoice wizard so the two cannot
+  // drift on what "already saved" means.
+  const {
+    save: saveToPriceBook,
+    saving: savingToPriceBook,
+    isInPriceBook,
+    unsavedItems: unsavedPriceBookItems,
+  } = useSaveToPriceBook(items);
+  const [savingItemId, setSavingItemId] = useState<string | null>(null);
+
+  const handleSaveToPriceBook = async (item: QuoteItem) => {
+    setSavingItemId(item.id);
+    try {
+      await saveToPriceBook([item]);
+    } finally {
+      setSavingItemId(null);
+    }
+  };
 
   const pricedBookItems = useMemo(() => {
     const result: { item: MaterialsListItem; listName: string }[] = [];
@@ -746,6 +770,7 @@ export const EnhancedQuoteItemsStep = ({
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
               <input
                 type="text"
+                autoFocus
                 placeholder="Search price book..."
                 value={priceBookSearch}
                 onChange={(e) => setPriceBookSearch(e.target.value)}
@@ -769,9 +794,10 @@ export const EnhancedQuoteItemsStep = ({
                       // second time — the price-book item quoted higher than shown.
                       // Use it directly. (ELE-1010)
                       const sellPrice = p.item.estimated_price || 0;
+                      const qty = p.item.quantity || 1;
                       onAdd({
                         description: p.item.name,
-                        quantity: p.item.quantity || 1,
+                        quantity: qty,
                         unit: p.item.unit || 'each',
                         unitPrice: Math.round(sellPrice * 100) / 100,
                         category: 'materials',
@@ -779,9 +805,31 @@ export const EnhancedQuoteItemsStep = ({
                         inventoryItemId: p.item.personal_inventory_id,
                         notes: p.item.supplier ? `Supplier: ${p.item.supplier}` : undefined,
                       });
+
+                      // Spons-style time guide: the item's labour allowance becomes
+                      // its own labour line, costed at the hourly rate (ELE-1470).
+                      // A separate line rather than folding it into the material
+                      // price so the quote still shows what is material and what is
+                      // labour, and the labour category adjustment still applies.
+                      const labourHours = p.item.labour_hours ?? 0;
+                      const addedLabour = labourHours > 0 && priceBookHourlyRate > 0;
+                      if (addedLabour) {
+                        onAdd({
+                          description: `Labour — ${p.item.name}`,
+                          quantity: Math.round(labourHours * qty * 100) / 100,
+                          unit: 'hour',
+                          unitPrice: Math.round(priceBookHourlyRate * 100) / 100,
+                          category: 'labour',
+                          hours: Math.round(labourHours * qty * 100) / 100,
+                          hourlyRate: priceBookHourlyRate,
+                        });
+                      }
+
                       toast({
                         title: 'Added to quote',
-                        description: p.item.name,
+                        description: addedLabour
+                          ? `${p.item.name} + ${Math.round(labourHours * qty * 100) / 100}h labour`
+                          : p.item.name,
                       });
                     }}
                     className="flex flex-col text-left p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:bg-white/[0.08] transition-all touch-manipulation active:scale-[0.98] select-none"
@@ -804,6 +852,11 @@ export const EnhancedQuoteItemsStep = ({
                           </span>
                         );
                       })()}
+                      {(p.item.labour_hours ?? 0) > 0 && (
+                        <span className="px-1.5 py-0.5 rounded text-[10px] font-medium border bg-blue-500/10 text-blue-300 border-blue-500/20">
+                          +{p.item.labour_hours}h labour
+                        </span>
+                      )}
                       {p.item.supplier && (
                         <span className="text-[10px] text-white/55 truncate">{p.item.supplier}</span>
                       )}
@@ -1745,6 +1798,35 @@ export const EnhancedQuoteItemsStep = ({
                           )}
                         />
                       </button>
+                      {/* Save a typed line into the price book. Materials and
+                          equipment only — a labour line belongs on the rate
+                          card, not in a materials list. */}
+                      {(item.category === 'materials' || item.category === 'equipment') &&
+                        !!item.description?.trim() &&
+                        (() => {
+                          const inBook = isInPriceBook(item.description);
+                          return (
+                            <button
+                              type="button"
+                              onClick={() => handleSaveToPriceBook(item)}
+                              disabled={savingItemId === item.id}
+                              className={cn(
+                                'w-9 h-9 rounded-lg flex items-center justify-center touch-manipulation active:scale-95 transition-transform',
+                                inBook ? 'bg-white/[0.04]' : 'bg-elec-yellow/10 active:bg-elec-yellow/20'
+                              )}
+                              aria-label={inBook ? 'Update price in price book' : 'Save to price book'}
+                              title={inBook ? 'In your price book — tap to update the price' : 'Save to price book'}
+                            >
+                              {savingItemId === item.id ? (
+                                <Loader2 className="h-4 w-4 animate-spin text-white" />
+                              ) : inBook ? (
+                                <Check className="h-4 w-4 text-white" />
+                              ) : (
+                                <BookOpen className="h-4 w-4 text-elec-yellow" />
+                              )}
+                            </button>
+                          );
+                        })()}
                       <button
                         type="button"
                         onClick={() => onRemove(item.id)}
@@ -1823,6 +1905,31 @@ export const EnhancedQuoteItemsStep = ({
               );
             })}
           </div>
+
+          {/* One press to bank the whole job. Saving line by line means a
+              fifteen-item quote is fifteen taps, which is why almost nobody
+              builds a price book. Only shown when there is something to save. */}
+          {unsavedPriceBookItems.length > 0 && (
+            <button
+              type="button"
+              onClick={() => saveToPriceBook(unsavedPriceBookItems)}
+              disabled={savingToPriceBook}
+              className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-elec-yellow/30 bg-elec-yellow/10 text-[13px] font-semibold text-elec-yellow transition-colors hover:bg-elec-yellow/15 disabled:opacity-50 touch-manipulation active:scale-[0.99]"
+            >
+              {savingToPriceBook ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Saving…
+                </>
+              ) : (
+                <>
+                  <BookOpen className="h-4 w-4" />
+                  Save {unsavedPriceBookItems.length} new{' '}
+                  {unsavedPriceBookItems.length === 1 ? 'item' : 'items'} to my price book
+                </>
+              )}
+            </button>
+          )}
         </div>
       )}
 

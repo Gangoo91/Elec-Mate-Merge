@@ -50,12 +50,12 @@ const SafetySection = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Safety Rules for Fault Finding</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Safety Rules for Fault Finding</p>
         </motion.div>
 
         {safetyRules.map((r, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-sm font-semibold text-white">{r.title}</p>
               <p className="text-sm text-white mt-1 leading-relaxed">{r.detail}</p>
             </div>
@@ -63,7 +63,7 @@ const SafetySection = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-orange-400/10 border border-orange-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-3">Live Working Justification — EAW Reg 14</p>
             <div className="space-y-1.5">
               {liveWorkingJustification.map((item, i) => (
@@ -77,13 +77,13 @@ const SafetySection = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">PPE for Fault Finding</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">PPE for Fault Finding</p>
         </motion.div>
 
         {ppeForFaultFinding.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="flex items-start gap-3 rounded-2xl bg-white/[0.03] border border-white/10 p-4">
-              <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+            <div className="flex items-start gap-3 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
+              <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                 <span className="text-xs font-bold text-yellow-400">{i + 1}</span>
               </div>
               <div>

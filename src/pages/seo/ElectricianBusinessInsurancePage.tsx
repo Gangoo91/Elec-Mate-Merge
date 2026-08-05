@@ -280,7 +280,7 @@ const sections = [
               </li>
             </ul>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Example Scenarios</h3>
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
@@ -324,7 +324,7 @@ const sections = [
           in the UK. If you employ anyone — even one person, even part-time — you must have
           employers liability insurance with a minimum of £5 million cover.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
             <Scale className="w-5 h-5 text-red-400" /> Legal Requirements
           </h4>
@@ -434,7 +434,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Scale className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -448,7 +448,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Monitor className="w-6 h-6 text-red-400 mt-0.5 shrink-0" />
               <div>
@@ -594,7 +594,7 @@ const sections = [
           business. Get it right from the start and it protects you silently in the background.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Shield className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

@@ -121,7 +121,7 @@ const CommonScenariosPage = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-4">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               Plain-English answers to the questions electricians ask most. Each answer includes the regulation reference so you can verify it yourself.
             </p>
@@ -130,12 +130,12 @@ const CommonScenariosPage = ({ onBack }: Props) => {
 
         {scenarios.map((s, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
               <p className="text-sm font-semibold text-white">{s.question}</p>
               <p className="text-sm text-white leading-relaxed">{s.answer}</p>
               <div className="flex flex-wrap gap-1.5">
                 {s.regs.map((reg, j) => (
-                  <span key={j} className="text-[10px] font-bold text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded-lg">{reg}</span>
+                  <span key={j} className="text-[10px] font-bold text-yellow-400 bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-2 py-0.5 rounded-lg">{reg}</span>
                 ))}
               </div>
             </div>

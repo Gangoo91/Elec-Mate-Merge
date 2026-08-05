@@ -137,7 +137,7 @@ const sections = [
           NAPIT offers several registration categories for electricians, structured to match the
           scope of work you undertake.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">Electrical Competent Person Scheme</h3>
           <p className="text-white text-sm leading-relaxed">
             This is the core registration for electricians. It provides self-certification ability
@@ -242,7 +242,7 @@ const sections = [
           main reasons electricians choose NAPIT — particularly sole traders and smaller firms where
           cost control is important.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">Typical NAPIT Costs (2026)</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li>
@@ -375,7 +375,7 @@ const sections = [
           . When you complete notifiable work, you notify NAPIT through their online portal rather
           than notifying the local authority building control department.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-base mb-3">
             What is and is not notifiable under Part P?
           </h3>
@@ -544,7 +544,7 @@ const sections = [
           </table>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 my-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">Choose NAPIT if...</h3>
             <ul className="space-y-2 text-white text-sm leading-relaxed">
               <li>Cost is a priority — NAPIT is typically cheaper than NICEIC</li>

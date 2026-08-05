@@ -20,14 +20,14 @@ export function SEOJumpNav({ items }: SEOJumpNavProps) {
   }, []);
 
   return (
-    <div className="sticky top-[calc(4rem+env(safe-area-inset-top,0px))] z-30 bg-[#0a0a0a]/95 backdrop-blur-sm border-b border-white/5">
-      <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
-        <nav className="flex gap-1 overflow-x-auto scrollbar-hide py-3 -mx-1">
+    <div className="sticky top-[calc(4rem+env(safe-area-inset-top,0px))] z-30 border-b border-white/[0.12] bg-[#0a0a0a]/95 backdrop-blur-md">
+      <div className="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8">
+        <nav aria-label="Jump to section" className="-mx-1 flex gap-1 overflow-x-auto scrollbar-hide py-2">
           {items.map((item) => (
             <button
               key={item.id}
               onClick={() => scrollTo(item.id)}
-              className="whitespace-nowrap px-3.5 py-2 text-sm font-medium text-white hover:text-yellow-400 hover:bg-white/5 rounded-lg transition-colors touch-manipulation shrink-0"
+              className="h-11 shrink-0 touch-manipulation whitespace-nowrap rounded-lg px-3.5 text-[14px] font-medium text-white transition-colors hover:bg-white/[0.06]"
             >
               {item.label}
             </button>

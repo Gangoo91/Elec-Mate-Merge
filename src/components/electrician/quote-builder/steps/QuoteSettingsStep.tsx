@@ -125,8 +125,7 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
       computeQuoteTotals(
         (items || []) as QuoteItem[],
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        { ...(settings as any), cisEnabled: isCisEnabled, cisRate: watchedCisRate },
-        { applyOverheadAndProfit: false }
+        { ...(settings as any), cisEnabled: isCisEnabled, cisRate: watchedCisRate }
       ),
     [items, settings, isCisEnabled, watchedCisRate]
   );

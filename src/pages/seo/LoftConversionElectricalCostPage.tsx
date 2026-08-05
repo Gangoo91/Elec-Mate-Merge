@@ -268,7 +268,7 @@ const sections = [
           A typical single-bedroom loft conversion requires the following circuits as a minimum:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <Lightbulb className="w-6 h-6 text-yellow-400 mb-3" />
             <h3 className="font-bold text-white text-base mb-2">Lighting</h3>
             <p className="text-white text-sm leading-relaxed">
@@ -284,7 +284,7 @@ const sections = [
               Additional USB combination sockets at bedside positions if used as a bedroom.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <Zap className="w-6 h-6 text-red-400 mb-3" />
             <h3 className="font-bold text-white text-base mb-2">Heating</h3>
             <p className="text-white text-sm leading-relaxed">
@@ -376,7 +376,7 @@ const sections = [
           Fire safety is a critical element of loft conversion Building Regulations approval. The
           requirements are:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -424,7 +424,7 @@ const sections = [
           differentiators:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

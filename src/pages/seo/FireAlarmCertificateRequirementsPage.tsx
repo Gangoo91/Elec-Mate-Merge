@@ -399,7 +399,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-3">
             Common Installation Certificate Failures
           </h3>
@@ -458,7 +458,7 @@ const sections = [
           carried out when the system is first put into service. BS 5839-1 sets out detailed
           commissioning requirements that must all be completed and documented.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-3">
             Commissioning Tests Required by BS 5839-1
           </h3>

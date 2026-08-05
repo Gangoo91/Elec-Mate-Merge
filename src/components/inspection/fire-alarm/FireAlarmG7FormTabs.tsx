@@ -66,6 +66,9 @@ const FireAlarmG7FormTabs: React.FC<Props> = ({
         {content[currentTab]}
       </div>
       <FireAlarmTabNavigation
+        previewReportType="fire-alarm-modification"
+        previewData={formData}
+        previewReportId={reportId}
         nextLabels={NEXT_LABELS}
         {...tabNavigationProps}
         onGenerateCertificate={

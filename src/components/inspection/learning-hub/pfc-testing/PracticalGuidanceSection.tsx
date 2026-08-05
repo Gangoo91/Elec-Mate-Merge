@@ -49,12 +49,12 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* Troubleshooting */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Troubleshooting</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Troubleshooting</p>
         </motion.div>
 
         {troubleshooting.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-2">
               <p className="text-sm font-semibold text-white">{item.problem}</p>
               <div className="space-y-1">
                 {item.actions.map((action, j) => (
@@ -70,13 +70,13 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Common defects */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Common Defects Found</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Defects Found</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-2">
             {commonDefects.map((item, i) => (
-              <div key={i} className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
+              <div key={i} className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] p-3">
                 <p className="text-sm font-medium text-white">{item.defect}</p>
                 <p className="text-sm text-white mt-1">{item.detail}</p>
               </div>
@@ -86,8 +86,8 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Remedial options */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">When PFC is Inadequate — Remedial Options</p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">When PFC is Inadequate — Remedial Options</p>
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
             {[
               { option: 'Reduce MCB rating', detail: 'A lower-rated MCB needs less PFC for magnetic operation. 32A → 20A reduces minimum PFC from 160A to 100A (Type B). Only viable if the circuit load allows it.' },
               { option: 'Change MCB type', detail: 'Switch from Type C to Type B where possible. Type B needs 5×In vs Type C at 10×In — halving the PFC requirement.' },
@@ -97,7 +97,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
               { option: 'Install local sub-distribution', detail: 'Shorter circuit runs from a local DB reduce R1+R2 and increase PFC at the point of use.' },
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-3">
-                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                   <span className="text-sm font-bold text-yellow-400">{i + 1}</span>
                 </div>
                 <div>
@@ -111,11 +111,11 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Pro tips */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Professional Tips</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Professional Tips</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4 space-y-3">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4 space-y-3">
             {proTips.map((item, i) => (
               <div key={i} className="flex items-start gap-3">
                 <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" />

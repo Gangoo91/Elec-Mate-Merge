@@ -11,7 +11,14 @@ import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { useQuoteStorage } from '@/hooks/useQuoteStorage';
 import { Quote } from '@/types/quote';
 import { filterQuotesByStatus } from '@/utils/quote-analytics';
-import { isQuoteWon, isQuoteLost, isQuoteAwaiting, isQuoteOpen } from '@/utils/quote-status';
+import {
+  isQuoteWon,
+  isQuoteLost,
+  isQuoteAwaiting,
+  isQuoteOpen,
+  isQuoteLive,
+  isQuoteExpired,
+} from '@/utils/quote-status';
 import { useMemo, useState, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 import { EmptyStateGuide } from '@/components/electrician/shared/EmptyStateGuide';
@@ -22,7 +29,14 @@ import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { toast } from '@/hooks/use-toast';
 import { createQuickTaskBatch } from '@/utils/createQuickTask';
 
-const statusFilters: Quote['status'][] = ['draft', 'sent', 'pending', 'approved', 'rejected'];
+const statusFilters: (Quote['status'] | 'expired')[] = [
+  'draft',
+  'sent',
+  'pending',
+  'approved',
+  'rejected',
+  'expired',
+];
 
 type SortKey = 'newest' | 'oldest' | 'value-high' | 'value-low' | 'expiry';
 type QuickFilter = 'viewed' | 'unviewed' | 'expiring' | null;
@@ -95,8 +109,8 @@ const QuotesPage = () => {
       filtered = invoicedQuotes;
     } else {
       filtered = savedQuotes;
-      if (statusFilters.includes(filter as Quote['status'])) {
-        filtered = filterQuotesByStatus(filtered, filter as Quote['status']);
+      if (statusFilters.includes(filter as Quote['status'] | 'expired')) {
+        filtered = filterQuotesByStatus(filtered, filter as Quote['status'] | 'expired');
       }
     }
 
@@ -172,8 +186,11 @@ const QuotesPage = () => {
     const approvedValue = savedQuotes
       .filter(isQuoteWon)
       .reduce((acc, q) => acc + (q.total || 0), 0);
+    // Live pipeline only — this tile links to the Sent tab and must agree with
+    // it, and a pipeline figure propped up by lapsed quotes overstates what is
+    // actually still winnable (ELE-1072).
     const pendingValue = savedQuotes
-      .filter(isQuoteAwaiting)
+      .filter(isQuoteLive)
       .reduce((acc, q) => acc + (q.total || 0), 0);
     const draftValue = savedQuotes
       .filter((q) => q.status === 'draft')
@@ -194,7 +211,8 @@ const QuotesPage = () => {
       counts: {
         all: savedQuotes.length,
         draft: savedQuotes.filter((q) => q.status === 'draft').length,
-        sent: savedQuotes.filter(isQuoteAwaiting).length,
+        sent: savedQuotes.filter(isQuoteLive).length,
+        expired: savedQuotes.filter(isQuoteExpired).length,
         invoiced: invoicedQuotes.length,
         approved: savedQuotes.filter(isQuoteWon).length,
         rejected: savedQuotes.filter(isQuoteLost).length,
@@ -253,6 +271,7 @@ const QuotesPage = () => {
     { id: 'all', label: 'All', count: stats.counts.all },
     { id: 'draft', label: 'Draft', count: stats.counts.draft },
     { id: 'sent', label: 'Sent', count: stats.counts.sent },
+    { id: 'expired', label: 'Expired', count: stats.counts.expired },
     { id: 'approved', label: 'Won', count: stats.counts.approved },
     { id: 'rejected', label: 'Declined', count: stats.counts.rejected },
     { id: 'invoiced', label: 'Invoiced', count: stats.counts.invoiced },

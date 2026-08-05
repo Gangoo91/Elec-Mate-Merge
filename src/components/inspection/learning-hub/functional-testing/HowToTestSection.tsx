@@ -56,8 +56,8 @@ const HowToTestSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* Pre-test */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Before You Start</p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Before You Start</p>
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <div className="space-y-1.5">
               {preTestSteps.map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
@@ -71,14 +71,14 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* Test sequence */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Functional Test Sequence</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Functional Test Sequence</p>
         </motion.div>
 
         {testSequence.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                   <span className="text-sm font-bold text-yellow-400">{i + 1}</span>
                 </div>
                 <div className="flex-1 min-w-0">
@@ -92,15 +92,15 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* Common mistakes */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Common Mistakes to Avoid</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Mistakes to Avoid</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <div className="space-y-3">
               {commonMistakes.map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
-                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-orange-400/10 border border-orange-400/20 flex items-center justify-center mt-0.5">
+                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/20 flex items-center justify-center mt-0.5">
                     <span className="text-xs font-bold text-orange-400">{i + 1}</span>
                   </div>
                   <div className="flex-1 min-w-0">

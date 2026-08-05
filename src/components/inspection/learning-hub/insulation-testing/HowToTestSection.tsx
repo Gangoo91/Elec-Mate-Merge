@@ -61,8 +61,8 @@ const commonMistakes = [
 const StepList = ({ steps }: { steps: string[] }) => (
   <div className="space-y-2">
     {steps.map((step, i) => (
-      <div key={i} className="flex items-start gap-3 rounded-xl bg-white/[0.03] border border-white/10 p-3.5">
-        <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+      <div key={i} className="flex items-start gap-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-3.5">
+        <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
           <span className="text-sm font-bold text-yellow-400">{i + 1}</span>
         </div>
         <p className="text-sm text-white leading-relaxed pt-1">{step}</p>
@@ -104,8 +104,8 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* PPE */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">PPE Required</p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">PPE Required</p>
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <div className="space-y-1.5">
               {['Safety glasses', 'Insulated gloves — handling charged conductors after testing', 'Safety boots with insulated soles', 'Electrical rated footwear'].map((item, i) => (
                 <div key={i} className="flex items-center gap-3">
@@ -119,11 +119,11 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* Equipment */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Test Equipment</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Test Equipment</p>
           <div className="space-y-2">
             {equipment.map((item, i) => (
-              <div key={i} className="flex items-start gap-3 rounded-2xl bg-white/[0.03] border border-white/10 p-4">
-                <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+              <div key={i} className="flex items-start gap-3 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
+                <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                   <span className="text-xs font-bold text-yellow-400">{i + 1}</span>
                 </div>
                 <div className="flex-1 min-w-0">
@@ -137,21 +137,21 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* Test voltage selection */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-3">Test Voltage Selection</p>
             <div className="space-y-2">
               <div className="grid grid-cols-3 gap-2">
-                <div className="rounded-xl bg-white/[0.05] p-3 text-center">
+                <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 text-center">
                   <p className="text-lg font-bold text-white">250V</p>
                   <p className="text-xs text-white">SELV/PELV</p>
                   <p className="text-xs text-white">≤50V circuits</p>
                 </div>
-                <div className="rounded-xl bg-white/[0.05] p-3 text-center border border-yellow-400/30">
+                <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 text-center border border-yellow-400/30">
                   <p className="text-lg font-bold text-yellow-400">500V</p>
                   <p className="text-xs text-white">Standard LV</p>
                   <p className="text-xs text-yellow-400">Most common</p>
                 </div>
-                <div className="rounded-xl bg-white/[0.05] p-3 text-center">
+                <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 text-center">
                   <p className="text-lg font-bold text-white">1000V</p>
                   <p className="text-xs text-white">500V-1000V</p>
                   <p className="text-xs text-white">HV circuits</p>
@@ -164,7 +164,7 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* Step-by-step procedure */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Step-by-Step Procedure</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Step-by-Step Procedure</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
@@ -173,12 +173,12 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* The three tests explained */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">The Three Tests Explained</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">The Three Tests Explained</p>
         </motion.div>
 
         {threeTests.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-sm font-semibold text-white">{item.test}</p>
               <p className="text-sm text-white mt-1 leading-relaxed">{item.purpose}</p>
               <p className="text-xs text-yellow-400/80 mt-2">{item.typical}</p>
@@ -188,15 +188,15 @@ const HowToTestSection = ({ onBack }: Props) => {
 
         {/* Common mistakes */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Common Mistakes to Avoid</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Mistakes to Avoid</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <div className="space-y-3">
               {commonMistakes.map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
-                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-orange-400/10 border border-orange-400/20 flex items-center justify-center mt-0.5">
+                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/20 flex items-center justify-center mt-0.5">
                     <span className="text-xs font-bold text-orange-400">{i + 1}</span>
                   </div>
                   <div className="flex-1 min-w-0">

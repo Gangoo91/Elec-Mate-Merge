@@ -370,7 +370,7 @@ export default function FlukeVsMeggerPage() {
                 providers (NICEIC, NAPIT, ELECSA, STROMA). Using an instrument with expired
                 calibration invalidates your test results and can lead to scheme sanctions.
               </p>
-              <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
                 <h3 className="font-bold text-white text-lg mb-4">Calibration Comparison</h3>
                 <ul className="space-y-3 text-white leading-relaxed">
                   <li className="flex items-start gap-3">

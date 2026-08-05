@@ -225,7 +225,7 @@ export default function AM2ExamPreparationPage() {
       {/* Hero */}
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
             <GraduationCap className="w-4 h-4 text-yellow-400" />
             <span className="text-sm font-medium text-yellow-400">
               JIB/JTL AM2 Assessment Practice
@@ -322,7 +322,7 @@ export default function AM2ExamPreparationPage() {
           <div className="space-y-4">
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                   1
                 </div>
                 <div>
@@ -340,7 +340,7 @@ export default function AM2ExamPreparationPage() {
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                   2
                 </div>
                 <div>
@@ -358,7 +358,7 @@ export default function AM2ExamPreparationPage() {
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                   3
                 </div>
                 <div>
@@ -379,7 +379,7 @@ export default function AM2ExamPreparationPage() {
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                   4
                 </div>
                 <div>
@@ -483,7 +483,7 @@ export default function AM2ExamPreparationPage() {
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
               <div className="flex items-center gap-3 mb-3">
                 <AlertTriangle className="w-5 h-5 text-red-400" />
                 <h3 className="font-bold text-white">Time Management</h3>
@@ -494,7 +494,7 @@ export default function AM2ExamPreparationPage() {
                 finish each task with time to spare.
               </p>
             </div>
-            <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
               <div className="flex items-center gap-3 mb-3">
                 <AlertTriangle className="w-5 h-5 text-red-400" />
                 <h3 className="font-bold text-white">Loose Terminations</h3>
@@ -505,7 +505,7 @@ export default function AM2ExamPreparationPage() {
                 insulation. Use a torque screwdriver and check every connection.
               </p>
             </div>
-            <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
               <div className="flex items-center gap-3 mb-3">
                 <AlertTriangle className="w-5 h-5 text-red-400" />
                 <h3 className="font-bold text-white">Two-Way Switching Errors</h3>
@@ -516,7 +516,7 @@ export default function AM2ExamPreparationPage() {
                 diagram from memory before you start wiring.
               </p>
             </div>
-            <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
               <div className="flex items-center gap-3 mb-3">
                 <AlertTriangle className="w-5 h-5 text-red-400" />
                 <h3 className="font-bold text-white">Safe Isolation Errors</h3>
@@ -584,7 +584,7 @@ export default function AM2ExamPreparationPage() {
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
             How Elec-Mate Helps You Prepare for the AM2
           </h2>
-          <div className="mb-6 flex items-start gap-3 px-4 py-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20">
+          <div className="mb-6 flex items-start gap-3 px-4 py-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <p className="text-white text-sm leading-relaxed">
               <strong>Written by JIB-qualified electricians</strong> who have completed the AM2
@@ -701,7 +701,7 @@ export default function AM2ExamPreparationPage() {
                 key={step.name}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                   {index + 1}
                 </div>
                 <div>

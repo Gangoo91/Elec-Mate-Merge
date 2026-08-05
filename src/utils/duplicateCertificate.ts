@@ -23,13 +23,43 @@ export type DuplicableReportType =
   | 'fire-alarm-design'
   | 'fire-alarm-commissioning'
   | 'fire-alarm-inspection'
-  | 'fire-alarm-modification';
+  | 'fire-alarm-modification'
+  | 'ev-charging'
+  | 'emergency-lighting'
+  | 'testing-only'
+  | 'solar-pv'
+  | 'bess'
+  | 'smoke-co-alarm'
+  | 'lightning-protection'
+  | 'g98-commissioning'
+  | 'g99-commissioning';
+
+const DUPLICABLE_TYPES: readonly string[] = [
+  'eicr', 'eic', 'minor-works',
+  'fire-alarm', 'fire-alarm-design', 'fire-alarm-commissioning',
+  'fire-alarm-inspection', 'fire-alarm-modification',
+  'ev-charging', 'emergency-lighting', 'testing-only', 'solar-pv', 'bess',
+  'smoke-co-alarm', 'lightning-protection', 'g98-commissioning', 'g99-commissioning',
+];
 
 /** Quick check — is this a type the duplicate flow accepts? */
 export const isDuplicable = (type: string): type is DuplicableReportType =>
-  ['eicr', 'eic', 'minor-works', 'fire-alarm', 'fire-alarm-design',
-   'fire-alarm-commissioning', 'fire-alarm-inspection', 'fire-alarm-modification']
-    .includes(type);
+  DUPLICABLE_TYPES.includes(type);
+
+/**
+ * ⚠️ Adding a type here is NOT a one-line change (ELE-1443).
+ *
+ * Duplication keeps everything it doesn't explicitly strip, so a cert type
+ * whose per-installation identity fields aren't listed in
+ * TYPE_SPECIFIC_FIELDS_TO_STRIP will carry the PREVIOUS job's data onto a new
+ * certificate — a serial number or DNO reference reaching a real cert is a
+ * compliance problem, not a cosmetic one. Audit the type's fields against live
+ * data first, add its strip list below, then add it here.
+ *
+ * Still to audit: emergency-lighting, solar-pv, bess, smoke-co-alarm,
+ * lightning-protection, g98/g99-commissioning, testing-only.
+ * pat-testing stays excluded — its per-appliance data is inherently per-cert.
+ */
 
 /**
  * Best-in-class threshold for the "this is a big cert, are you sure?"
@@ -104,7 +134,116 @@ const IDENTITY_FIELDS_TO_STRIP = [
   // Photos — uploaded to that specific cert
   'inspectionPhotos',
   'photos',
+  // ELE-1443 — gaps found auditing live data. The specialist certs use their
+  // own names for these, and a couple of snake_case variants exist on older
+  // rows, so they were surviving the strip.
+  'clientTelephone',
+  'client_name',
+  'installation_address',
+  // Every role's sign-off date and signature. Universally per-job across the
+  // specialist certs — signatures re-populate from the profile on load.
+  'installerSignature',
+  'testerSignature',
+  'responsiblePersonSignature',
+  'scheduleTestedBySignature',
+  'installationDate',
+  'installerDate',
+  'testDate',
+  'testerDate',
+  'commissioningDate',
+  'notificationDate',
+  'clientDate',
+  'inspectorDate',
+  'responsiblePersonDate',
+  'reportAuthorisedByDate',
+  'scheduleTestedByDate',
+  // Per-certificate / per-job references. `referenceNumber` is the cert's own
+  // auto-generated ref (e.g. testing-only "TOC-MNUCVRJT"); the rest point at
+  // this job's paperwork.
+  'referenceNumber',
+  'reportReference',
+  'jobReference',
+  'previousCertificateNumber',
+  'eicReference',
+  'linkedEicReference',
+  'riskAssessmentReference',
+  'fraReference',
+  'drawingReference',
+  'designReference',
+  'designDocReference',
+  'designCertReference',
+  'causeEffectReference',
+  // DNO paperwork raised for THIS installation (EV, BESS, solar, G98/G99).
+  'dnoReference',
+  'dnoNotificationDate',
+  'applicationReference',
+  'approvalReference',
+  'dnoApplicationRef',
+  'dnoApprovalRef',
+  'dnoApprovalDate',
 ] as const;
+
+/**
+ * Serial numbers of equipment INSTALLED AT THE PROPERTY. Audited from the
+ * specialist form field definitions, 2026-08-05.
+ *
+ * The distinction that matters: an instrument serial (`testInstrumentSerial`,
+ * `mftSerial`, `loopSerial`, `rcdTesterSerial`, `luxMeterSerial`,
+ * `instrumentSerial`, `continuityTesterSerial`, `insulationTesterSerial`)
+ * belongs to the ENGINEER and must carry — retyping your own MFT serial on
+ * every cert is exactly the tedium this feature exists to remove. A serial for
+ * kit bolted to the customer's wall must never carry.
+ */
+const TYPE_SPECIFIC_FIELDS_TO_STRIP: Partial<Record<DuplicableReportType, readonly string[]>> = {
+  // Audited against all 31 live EV certs. CARRY: chargerMake/Model/Type/
+  // Connection, installerCompany/Scheme/SchemeNumber, ozevScheme,
+  // buildingRegsViaScheme — the point of the feature for an installer fitting
+  // the same charger 30–40 times a month.
+  'ev-charging': ['chargerSerial', 'openPENSerial', 'ozevGrantRef'],
+  // src/types/solar-pv.ts. CARRY: MCS installerNumber (the installer's own),
+  // arrayNumber (spec).
+  'solar-pv': ['meterSerial', 'equipmentSerial'],
+  // src/types/bess.ts. `batterySerials` is a comma-separated list of the module
+  // serials in that battery stack — the single worst field to carry.
+  // CARRY: mcsInstallerNumber, mcsBatteryProductCert, mcsInverterProductCert,
+  // manufacturerCommRef — all identify the PRODUCT, not the installation.
+  bess: [
+    'batterySerials',
+    'inverterSerial',
+    'commModuleSerial',
+    'exportMeterSerial',
+    'smartMeterSerial',
+    'associatedPVRef',
+    'buildingControlRef',
+  ],
+  // CARRY: luxMeterSerial + luxMeterCalibrationDate (the engineer's meter).
+  'emergency-lighting': [],
+  // CARRY: mftSerial, loopSerial, rcdTesterSerial, testInstrumentSerial,
+  // calibrationDate, mftCalDate, dbReference ("Main CU" / "DB1" — generic
+  // board naming, identical across a block of flats).
+  'testing-only': [],
+  // CARRY: registrationNumber ("Niceic domestic installer Epp22499" — the
+  // installer's own), testInstrumentSerial, calibrationDate.
+  'smoke-co-alarm': [],
+  // CARRY: instrumentSerial (the engineer's test set).
+  'lightning-protection': [],
+  // src/types/g99-commissioning.ts. CARRY: typeTestCertRef — the equipment
+  // TYPE-test certificate, a property of the product model.
+  'g98-commissioning': ['equipmentSerial', 'exportMeterSerial', 'associatedCertRef', 'prevIndexRef'],
+  'g99-commissioning': ['equipmentSerial', 'exportMeterSerial', 'associatedCertRef', 'prevIndexRef'],
+};
+
+/**
+ * ⚠️ Known limitation — this strips TOP-LEVEL keys only.
+ *
+ * A cert that nests identity data (e.g. solar-pv's `MCSDetails.installationNumber`,
+ * the MCS certificate number for that specific installation) will carry it if
+ * the form stores it nested rather than flattened. Every field listed above was
+ * verified as top-level against live rows or the type definitions; nested
+ * shapes were not exhaustively audited because most specialist types have only
+ * one or two live certs to check against. Worth revisiting once those types
+ * have real volume.
+ */
 
 /**
  * Top-level row metadata fields (not formData) that must be reset.
@@ -167,6 +306,10 @@ export const duplicateCertificate = async (
   }
   // Strip row-level metadata that may have been spread into formData
   for (const field of ROW_METADATA_TO_STRIP) {
+    delete cloned[field];
+  }
+  // ELE-1443 — per-installation fields unique to this cert type
+  for (const field of TYPE_SPECIFIC_FIELDS_TO_STRIP[reportType] ?? []) {
     delete cloned[field];
   }
 

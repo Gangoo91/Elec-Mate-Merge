@@ -99,19 +99,19 @@ const RealWorldCasesSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {cases.map((c, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
               <div className="flex items-center justify-between">
                 <p className="text-sm font-semibold text-white">{c.title}</p>
-                <span className="text-[10px] font-bold text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded-lg">{c.type}</span>
+                <span className="text-[10px] font-bold text-yellow-400 bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-2 py-0.5 rounded-lg">{c.type}</span>
               </div>
               <p className="text-sm text-white">{c.scenario}</p>
 
-              <div className="rounded-xl bg-white/[0.05] p-3">
+              <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
                 <p className="text-xs font-semibold text-white mb-1.5">Investigation</p>
                 <div className="space-y-1">
                   {c.investigation.map((step, j) => (
                     <div key={j} className="flex items-start gap-2">
-                      <div className="flex-shrink-0 w-5 h-5 rounded bg-yellow-400/10 flex items-center justify-center mt-0.5">
+                      <div className="flex-shrink-0 w-5 h-5 rounded bg-gradient-to-b from-white/[0.08] to-white/[0.04] flex items-center justify-center mt-0.5">
                         <span className="text-[9px] font-bold text-yellow-400">{j + 1}</span>
                       </div>
                       <p className="text-xs text-white">{step}</p>
@@ -120,17 +120,17 @@ const RealWorldCasesSection = ({ onBack }: Props) => {
                 </div>
               </div>
 
-              <div className="rounded-xl bg-orange-400/5 border border-orange-400/10 p-3">
+              <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/10 p-3">
                 <p className="text-xs font-semibold text-orange-400 mb-1">Diagnosis</p>
                 <p className="text-xs text-white">{c.diagnosis}</p>
               </div>
 
-              <div className="rounded-xl bg-green-400/5 border border-green-400/10 p-3">
+              <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-green-400/10 p-3">
                 <p className="text-xs font-semibold text-green-400 mb-1">Resolution</p>
                 <p className="text-xs text-white">{c.resolution}</p>
               </div>
 
-              <div className="rounded-xl bg-yellow-400/5 border border-yellow-400/10 p-3">
+              <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/10 p-3">
                 <p className="text-xs font-semibold text-yellow-400 mb-1">Lesson</p>
                 <p className="text-xs text-white">{c.lesson}</p>
               </div>

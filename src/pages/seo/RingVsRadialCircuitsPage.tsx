@@ -203,7 +203,7 @@ const sections = [
           circuit.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-base mb-3">20A Radial Circuit</h3>
             <ul className="space-y-2 text-white text-sm">
               <li>Cable: 2.5mm² twin and earth</li>
@@ -330,7 +330,7 @@ const sections = [
             </li>
           </ol>
         </div>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
             <div>
               <p className="font-bold text-white mb-1">Common Failure: The Figure-of-Eight Spur</p>

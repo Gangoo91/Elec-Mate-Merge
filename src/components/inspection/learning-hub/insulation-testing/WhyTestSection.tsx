@@ -78,7 +78,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               Insulation resistance (IR) testing applies a DC voltage between conductors to measure how effectively the insulation prevents current leakage. It detects deterioration, damage and contamination that could cause electric shock, fire, or equipment failure.
             </p>
@@ -87,10 +87,10 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Core regulations */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4 space-y-3">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4 space-y-3">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs font-bold text-yellow-400 bg-yellow-400/20 px-2 py-0.5 rounded-lg">Reg 643.3</span>
+                <span className="text-xs font-bold text-yellow-400 bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-2 py-0.5 rounded-lg">Reg 643.3</span>
               </div>
               <p className="text-sm text-white leading-relaxed">
                 Insulation resistance shall be measured between live conductors and between live conductors and the protective conductor connected to earth. The test shall be carried out with the installation isolated from the supply.
@@ -98,7 +98,7 @@ const WhyTestSection = ({ onBack }: Props) => {
             </div>
             <div className="border-t border-yellow-400/20 pt-3">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs font-bold text-yellow-400 bg-yellow-400/20 px-2 py-0.5 rounded-lg">Reg 643.3</span>
+                <span className="text-xs font-bold text-yellow-400 bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-2 py-0.5 rounded-lg">Reg 643.3</span>
               </div>
               <p className="text-sm text-white leading-relaxed">
                 Initial insulation resistance measurements must be taken prior to energisation of new installations using appropriate test voltages. Minimum acceptable value for final circuits up to 500V is 1.0MΩ at 500V DC test voltage.
@@ -109,14 +109,14 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Hazards */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">What IR Testing Prevents</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">What IR Testing Prevents</p>
         </motion.div>
 
         {hazards.map((hazard, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                   <hazard.icon className="h-5 w-5 text-yellow-400" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -130,12 +130,12 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Causes of low IR */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">What Causes Low Insulation Resistance</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">What Causes Low Insulation Resistance</p>
         </motion.div>
 
         {causes.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-sm font-semibold text-white">{item.cause}</p>
               <p className="text-sm text-white mt-1 leading-relaxed">{item.detail}</p>
             </div>
@@ -144,16 +144,16 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Real-world examples */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Real-World Examples</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Real-World Examples</p>
         </motion.div>
 
         {realWorldExamples.map((example, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
               <p className="text-sm font-semibold text-white">{example.title}</p>
               <div className="space-y-2">
                 <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                     <span className="text-xs font-bold text-yellow-400">F</span>
                   </div>
                   <div>
@@ -162,7 +162,7 @@ const WhyTestSection = ({ onBack }: Props) => {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-orange-400/10 border border-orange-400/20 flex items-center justify-center">
+                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/20 flex items-center justify-center">
                     <span className="text-xs font-bold text-orange-400">C</span>
                   </div>
                   <div>
@@ -171,7 +171,7 @@ const WhyTestSection = ({ onBack }: Props) => {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-green-400/10 border border-green-400/20 flex items-center justify-center">
+                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-green-400/20 flex items-center justify-center">
                     <span className="text-xs font-bold text-green-400">R</span>
                   </div>
                   <div>

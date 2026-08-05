@@ -196,7 +196,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 px-5 py-3 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] px-5 py-3 my-4">
           <p className="text-sm text-white/80 leading-relaxed">
             <strong className="text-yellow-400">
               BS&nbsp;7671:2018+A4:2026 — current edition.
@@ -739,7 +739,7 @@ const sections = [
           professional development and client-facing work easier.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

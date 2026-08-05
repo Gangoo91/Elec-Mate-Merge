@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Trash2, ChevronDown, ChevronUp, Check, Pencil, Copy, Percent, Zap, PenLine, LayoutTemplate, ScanLine, Loader2, BookOpen, PoundSterling, Search, AlertTriangle } from 'lucide-react';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useMaterialsLists, type MaterialsListItem } from '@/hooks/useMaterialsLists';
+import { useSaveToPriceBook } from '@/hooks/useSaveToPriceBook';
 import { usePriceList } from '@/hooks/usePriceList';
 import { supabase } from '@/integrations/supabase/client';
 import { PANEL } from '@/components/electrician/shared/surfaces';
@@ -197,6 +198,15 @@ export const InvoiceItemsStep = ({
 
   // Price Book + Rate Card + live stock (parity with the quote wizard, ELE-1014).
   const { lists: materialsLists } = useMaterialsLists();
+
+  // Price book capture — same hook as the quote wizard, so both agree on what
+  // "already saved" means. Both lists count: an invoice raised straight from a
+  // certificate has all its lines in additionalItems.
+  const {
+    save: saveToPriceBook,
+    saving: savingToPriceBook,
+    unsavedItems: unsavedPriceBookItems,
+  } = useSaveToPriceBook([...originalItems, ...additionalItems]);
   const { items: rateCardItems } = usePriceList();
   const [priceBookSearch, setPriceBookSearch] = useState('');
   const [rateCardSearch, setRateCardSearch] = useState('');
@@ -1688,6 +1698,20 @@ export const InvoiceItemsStep = ({
               </motion.div>
             ))}
           </AnimatePresence>
+
+          {/* One press to bank the whole job into the price book. */}
+          {unsavedPriceBookItems.length > 0 && (
+            <button
+              type="button"
+              onClick={() => saveToPriceBook(unsavedPriceBookItems)}
+              disabled={savingToPriceBook}
+              className="mt-3 flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-elec-yellow/30 bg-elec-yellow/10 text-[13px] font-semibold text-elec-yellow transition-colors hover:bg-elec-yellow/15 disabled:opacity-50 touch-manipulation active:scale-[0.99]"
+            >
+              {savingToPriceBook
+                ? 'Saving…'
+                : `Save ${unsavedPriceBookItems.length} new ${unsavedPriceBookItems.length === 1 ? 'item' : 'items'} to my price book`}
+            </button>
+          )}
         </div>
       )}
 

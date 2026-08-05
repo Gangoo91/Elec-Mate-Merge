@@ -111,13 +111,13 @@ export default function IPRatingGuidePage() {
               </p>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
                 <div className="grid grid-cols-3 gap-px bg-white/10">
-                  <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                     Digit
                   </div>
-                  <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                     Object Size
                   </div>
-                  <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                     Description
                   </div>
                 </div>
@@ -193,13 +193,13 @@ export default function IPRatingGuidePage() {
               </p>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
                 <div className="grid grid-cols-3 gap-px bg-white/10">
-                  <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                     Digit
                   </div>
-                  <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                     Water Test
                   </div>
-                  <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                     Description
                   </div>
                 </div>

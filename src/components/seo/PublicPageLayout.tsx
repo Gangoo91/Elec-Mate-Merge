@@ -1,18 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { Button } from '@/components/ui/button';
-import {
-  ArrowRight,
-  Zap,
-  BookOpen,
-  Shield,
-  Calculator,
-  FileCheck,
-  Brain,
-  Wrench,
-  Menu,
-  X,
-} from 'lucide-react';
+import { ArrowRight, Menu, X } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -20,6 +9,14 @@ import { useLocation } from 'react-router-dom';
 interface PublicPageLayoutProps {
   children: React.ReactNode;
 }
+
+/**
+ * Footer column heading — type only, no icon. Deliberately carries NO colour:
+ * every caller supplies one. Baking `text-white` in here silently beat the
+ * per-column accents, because Tailwind resolves two competing `text-*`
+ * utilities by stylesheet order, not by the order they appear in className.
+ */
+const FOOTER_LABEL = 'text-[11px] font-semibold uppercase tracking-[0.2em]';
 
 const navSections = [
   {
@@ -240,17 +237,17 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
 
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-50 pt-[env(safe-area-inset-top,0px)]">
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/95 to-black/80 backdrop-blur-xl" />
-        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-yellow-500/30 to-transparent" />
+        {/* Flat ground + a straight hairline. The old bar had a yellow glow
+            blurred behind the logo and a gradient-fade rule — both read as
+            generic/AI. Quiet separators, no decoration. */}
+        <div className="absolute inset-0 bg-[#0a0a0a]/95 backdrop-blur-xl" />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-white/[0.12]" />
 
-        <div className="relative max-w-6xl mx-auto px-5 lg:px-8 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2.5 group touch-manipulation">
-            <div className="relative">
-              <div className="absolute inset-0 bg-yellow-500/20 rounded-xl blur-md group-hover:bg-yellow-500/30 transition-all" />
-              <img src="/logo.jpg" alt="Elec-Mate" className="relative w-9 h-9 rounded-xl" />
-            </div>
-            <span className="font-bold text-lg">
-              Elec-<span className="text-yellow-400">Mate</span>
+        <div className="relative mx-auto flex h-16 max-w-6xl items-center justify-between px-5 lg:px-8">
+          <Link to="/" className="flex touch-manipulation items-center gap-2.5">
+            <img src="/logo.jpg" alt="" className="h-9 w-9 rounded-xl" />
+            <span className="text-[17px] font-bold tracking-[-0.02em]">
+              Elec-<span className="text-elec-yellow">Mate</span>
             </span>
           </Link>
 
@@ -298,9 +295,9 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
                 <Button
                   asChild
                   size="sm"
-                  className="hidden sm:inline-flex h-11 px-5 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl shadow-lg shadow-yellow-500/20 touch-manipulation"
+                  className="hidden h-11 touch-manipulation rounded-xl bg-elec-yellow px-5 font-semibold text-black hover:brightness-95 sm:inline-flex"
                 >
-                  <Link to="/auth/signup">Start Free Trial</Link>
+                  <Link to="/auth/signup">Start free trial</Link>
                 </Button>
               </>
             )}
@@ -318,43 +315,42 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
 
         {/* Mobile menu drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden relative bg-[#0a0a0a] border-t border-white/10 max-h-[calc(100vh-4rem)] overflow-y-auto">
-            <div className="px-5 py-4 space-y-4">
-              {navSections.map((section) => (
-                <div key={section.label}>
-                  <div className="text-xs font-semibold text-yellow-400 uppercase tracking-wider mb-2">
-                    {section.label}
-                  </div>
-                  <div className="space-y-1">
-                    {section.links.map((link) => (
+          <div className="relative max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-white/[0.12] bg-[#0a0a0a] md:hidden">
+            {navSections.map((section) => (
+              <div key={section.label} className="border-b border-white/[0.12]">
+                <p className="px-5 pb-2 pt-5 text-[11px] font-semibold uppercase tracking-[0.2em] text-white">
+                  {section.label}
+                </p>
+                <ul className="divide-y divide-white/[0.08]">
+                  {section.links.map((link) => (
+                    <li key={link.to}>
                       <Link
-                        key={link.to}
                         to={link.to}
-                        className="block px-3 py-3 text-sm text-white hover:text-yellow-400 hover:bg-white/5 rounded-lg transition-colors touch-manipulation min-h-[44px] flex items-center"
+                        className="flex min-h-[52px] touch-manipulation items-center px-5 text-[15px] text-white transition-colors hover:bg-white/[0.04]"
                       >
                         {link.label}
                       </Link>
-                    ))}
-                  </div>
-                </div>
-              ))}
-              {!user && (
-                <div className="pt-2 space-y-2">
-                  <Link
-                    to="/auth/signup"
-                    className="block w-full h-11 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl text-center leading-[2.75rem] touch-manipulation"
-                  >
-                    Start Free Trial
-                  </Link>
-                  <Link
-                    to="/auth/signin"
-                    className="block w-full h-11 border border-white/20 text-white font-medium rounded-xl text-center leading-[2.75rem] touch-manipulation"
-                  >
-                    Sign in
-                  </Link>
-                </div>
-              )}
-            </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+            {!user && (
+              <div className="space-y-2.5 px-5 py-5">
+                <Link
+                  to="/auth/signup"
+                  className="flex h-12 w-full touch-manipulation items-center justify-center rounded-xl bg-elec-yellow text-[15px] font-bold text-black"
+                >
+                  Start free trial
+                </Link>
+                <Link
+                  to="/auth/signin"
+                  className="flex h-12 w-full touch-manipulation items-center justify-center rounded-xl border border-white/25 text-[15px] font-medium text-white"
+                >
+                  Sign in
+                </Link>
+              </div>
+            )}
           </div>
         )}
       </nav>
@@ -362,223 +358,164 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
       {/* Content */}
       <main className="pt-[calc(4rem+env(safe-area-inset-top,0px))]">{children}</main>
 
-      {/* Pre-footer stats bar */}
-      <section className="border-t border-white/5">
-        <div className="max-w-6xl mx-auto px-5 py-10">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
-            <div>
-              <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">16</div>
-              <div className="text-sm text-white">Certificate Types</div>
-            </div>
-            <div>
-              <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">70+</div>
-              <div className="text-sm text-white">Calculators</div>
-            </div>
-            <div>
-              <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">46+</div>
-              <div className="text-sm text-white">Training Courses</div>
-            </div>
-            <div>
-              <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">8</div>
-              <div className="text-sm text-white">AI Agents</div>
-            </div>
-          </div>
+      {/* Pre-footer figures — raised onto the neutral card ground so the page
+          ends on two distinct bands (light strip, then the dark footer) rather
+          than one flat run of black. Figures carry the emphasis. */}
+      <section
+        className="border-t border-white/[0.12] bg-gradient-to-b from-white/[0.06] to-white/[0.02]"
+        aria-label="What's in Elec-Mate"
+      >
+        <div className="mx-auto max-w-6xl px-5 py-9 sm:px-6 lg:px-8">
+          <dl className="grid grid-cols-2 gap-y-7 sm:grid-cols-4 sm:gap-y-0">
+            {[
+              ['16', 'Certificate types'],
+              ['70+', 'Calculators'],
+              ['46+', 'Training courses'],
+              ['8', 'AI specialists'],
+            ].map(([figure, label], i) => (
+              <div
+                key={label}
+                className={
+                  i > 0
+                    ? 'sm:border-l sm:border-white/[0.12] sm:pl-7'
+                    : ''
+                }
+              >
+                <dt className="sr-only">{label}</dt>
+                <dd>
+                  <span className="block text-[32px] font-bold leading-none tracking-[-0.035em] tabular-nums text-white sm:text-[36px]">
+                    {figure}
+                  </span>
+                  <span className="mt-2 block text-[13px] text-white">{label}</span>
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-white/5 bg-[#080808]">
-        {/* Main footer links */}
-        <div className="max-w-6xl mx-auto px-5 pt-12 pb-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-6">
-            {/* Certificates */}
-            <div>
-              <h4 className="font-semibold text-yellow-400 text-sm uppercase tracking-wider mb-4 flex items-center gap-2">
-                <FileCheck className="w-4 h-4" />
-                Certificates
-              </h4>
-              <ul className="space-y-2.5">
-                {footerCertificates.map((link) => (
-                  <li key={link.to}>
-                    <Link
-                      to={link.to}
-                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation inline-block py-1"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Calculators */}
-            <div>
-              <h4 className="font-semibold text-yellow-400 text-sm uppercase tracking-wider mb-4 flex items-center gap-2">
-                <Calculator className="w-4 h-4" />
-                Calculators
-              </h4>
-              <ul className="space-y-2.5">
-                {footerCalculators.map((link) => (
-                  <li key={link.to}>
-                    <Link
-                      to={link.to}
-                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation inline-block py-1"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Training */}
-            <div>
-              <h4 className="font-semibold text-yellow-400 text-sm uppercase tracking-wider mb-4 flex items-center gap-2">
-                <BookOpen className="w-4 h-4" />
-                Training
-              </h4>
-              <ul className="space-y-2.5">
-                {footerTraining.map((link) => (
-                  <li key={link.to}>
-                    <Link
-                      to={link.to}
-                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation inline-block py-1"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* AI Tools & Guides */}
-            <div>
-              <h4 className="font-semibold text-yellow-400 text-sm uppercase tracking-wider mb-4 flex items-center gap-2">
-                <Brain className="w-4 h-4" />
-                AI & Guides
-              </h4>
-              <ul className="space-y-2.5">
-                {footerAIAndGuides.map((link) => (
-                  <li key={link.to}>
-                    <Link
-                      to={link.to}
-                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation inline-block py-1"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Company & Legal */}
-            <div>
-              <h4 className="font-semibold text-yellow-400 text-sm uppercase tracking-wider mb-4 flex items-center gap-2">
-                <Zap className="w-4 h-4" />
-                Company
-              </h4>
-              <div className="space-y-6">
-                <div>
-                  <div className="flex items-center gap-2.5 mb-3">
-                    <img src="/logo.jpg" alt="Elec-Mate" className="w-8 h-8 rounded-lg" />
-                    <span className="font-bold text-white">
-                      Elec-<span className="text-yellow-400">Mate</span>
-                    </span>
-                  </div>
-                  <p className="text-sm text-white leading-relaxed mb-4">
-                    The complete platform for UK electricians. Certificates, calculators, AI tools,
-                    training, and business management.
-                  </p>
-                </div>
-
-                {/* Social Links */}
-                <div>
-                  <div className="flex flex-wrap gap-2">
-                    {socialLinks.map((social) => (
-                      <a
-                        key={social.label}
-                        href={social.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-white/5 border border-white/10 hover:border-yellow-500/30 hover:bg-yellow-500/10 text-white hover:text-yellow-400 transition-all touch-manipulation"
-                        aria-label={social.label}
+      {/* Footer — typographic only, no icon headings, no pills. Column
+          headings carry the SAME category accents used on the related-page
+          cards and the component eyebrows, so a colour means the same thing
+          everywhere on the site. Surfaces stay neutral; only type is coloured. */}
+      <footer className="border-t border-white/[0.12] bg-[#070707]">
+        <div className="mx-auto max-w-6xl px-5 pb-12 pt-14 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-11 md:grid-cols-3 lg:grid-cols-12 lg:gap-x-8">
+            {[
+              { heading: 'Certificates', links: footerCertificates, accent: 'text-violet-300' },
+              { heading: 'Calculators', links: footerCalculators, accent: 'text-sky-300' },
+              { heading: 'Training', links: footerTraining, accent: 'text-emerald-300' },
+              { heading: 'AI and guides', links: footerAIAndGuides, accent: 'text-amber-300' },
+            ].map((col) => (
+              <div key={col.heading} className="lg:col-span-2">
+                <h4 className={`${FOOTER_LABEL} ${col.accent}`}>{col.heading}</h4>
+                <ul className="mt-4 space-y-0.5">
+                  {col.links.map((link) => (
+                    <li key={link.to}>
+                      <Link
+                        to={link.to}
+                        className="inline-block touch-manipulation py-1.5 text-[13.5px] text-white transition-colors hover:text-elec-yellow"
                       >
-                        {social.icon}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Legal */}
-                <ul className="space-y-2.5">
-                  <li>
-                    <Link
-                      to="/privacy"
-                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation inline-block py-1"
-                    >
-                      Privacy Policy
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/terms"
-                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation inline-block py-1"
-                    >
-                      Terms of Service
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/cookies"
-                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation inline-block py-1"
-                    >
-                      Cookie Policy
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/acceptable-use"
-                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation inline-block py-1"
-                    >
-                      Acceptable Use
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/dpa"
-                      className="text-sm text-white hover:text-yellow-400 transition-colors touch-manipulation inline-block py-1"
-                    >
-                      Data Processing
-                    </Link>
-                  </li>
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
+              </div>
+            ))}
+
+            {/* Brand block — given real width so the footer has a masthead
+                rather than five identical columns of links. */}
+            <div className="col-span-2 md:col-span-3 lg:col-span-4 lg:border-l lg:border-white/[0.12] lg:pl-10">
+              <div className="flex items-center gap-2.5">
+                <img src="/logo.jpg" alt="" className="h-9 w-9 rounded-lg" />
+                <span className="text-[17px] font-bold tracking-[-0.02em] text-white">
+                  Elec-<span className="text-elec-yellow">Mate</span>
+                </span>
+              </div>
+              <p className="mt-4 max-w-[36ch] text-[14px] leading-relaxed text-white">
+                The complete platform for UK electricians. Certificates, calculators, AI tools,
+                training and business management.
+              </p>
+
+              <div className="mt-7 grid grid-cols-2 gap-x-6">
+                <div>
+                  <h4 className={`${FOOTER_LABEL} text-white`}>Legal</h4>
+                  <ul className="mt-3 space-y-0.5">
+                    {[
+                      { to: '/privacy', label: 'Privacy policy' },
+                      { to: '/terms', label: 'Terms of service' },
+                      { to: '/cookies', label: 'Cookie policy' },
+                      { to: '/acceptable-use', label: 'Acceptable use' },
+                      { to: '/dpa', label: 'Data processing' },
+                    ].map((l) => (
+                      <li key={l.to}>
+                        <Link
+                          to={l.to}
+                          className="inline-block touch-manipulation py-1.5 text-[13.5px] text-white transition-colors hover:text-elec-yellow"
+                        >
+                          {l.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h4 className={`${FOOTER_LABEL} text-white`}>Follow</h4>
+                  <ul className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-3">
+                    {socialLinks.map((social) => (
+                      <li key={social.label}>
+                        <a
+                          href={social.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="-my-2 inline-flex h-11 items-center text-white transition-colors hover:text-elec-yellow touch-manipulation"
+                          aria-label={social.label}
+                          title={social.label}
+                        >
+                          {social.icon}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Compliance bar */}
-        <div className="border-t border-white/5">
-          <div className="max-w-6xl mx-auto px-5 py-5">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex flex-wrap items-center justify-center gap-3 text-xs text-white">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
-                  <Shield className="w-3 h-3 text-yellow-400" />
-                  BS 7671:2018+A3:2024
-                </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
-                  <Shield className="w-3 h-3 text-green-400" />
-                  GDPR Compliant
-                </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
-                  <Wrench className="w-3 h-3 text-blue-400" />
-                  Built for UK Electricians
-                </span>
-              </div>
-              <p className="text-xs text-white">
-                Elec-Mate &copy; {new Date().getFullYear()}. All rights reserved.
-              </p>
-            </div>
+        {/* Compliance bar, set as a rating plate — the labelled-fact strip you
+            find on the side of a consumer unit or a test instrument. Suits the
+            product, and it turns three facts that were running together behind
+            middots into something scannable.
+
+            The standard reference is the CURRENT edition, verified against
+            bs7671_editions (the RAG), where 2018+A4:2026 is the active
+            edition. Do not let this drift. */}
+        <div className="border-t border-white/[0.12] bg-black">
+          <div className="mx-auto flex max-w-6xl flex-col gap-5 px-5 py-6 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:gap-8 lg:px-8">
+            <dl className="grid grid-cols-2 gap-x-8 gap-y-4 sm:flex sm:flex-wrap sm:items-start sm:gap-0">
+              {[
+                ['Built to', 'BS 7671:2018+A4:2026'],
+                ['Data', 'GDPR compliant'],
+                ['Origin', 'Made in the UK'],
+              ].map(([label, value], i) => (
+                <div
+                  key={label}
+                  className={
+                    i > 0 ? 'sm:ml-7 sm:border-l sm:border-white/[0.14] sm:pl-7' : ''
+                  }
+                >
+                  <dt className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white">
+                    {label}
+                  </dt>
+                  <dd className="mt-1 text-[13px] font-medium tabular-nums text-white">{value}</dd>
+                </div>
+              ))}
+            </dl>
+            <p className="text-[12.5px] text-white lg:shrink-0 lg:text-right">
+              Elec-Mate &copy; {new Date().getFullYear()}. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>

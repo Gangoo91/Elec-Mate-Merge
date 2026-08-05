@@ -378,7 +378,7 @@ const sections = [
           </table>
         </div>
         {/* Typical job value reference — helps readers calculate their own ROI */}
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
             <PoundSterling className="w-4 h-4 text-yellow-400" /> Typical Job Values for
             Electricians
@@ -530,7 +530,7 @@ const sections = [
           and what type of work you want.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Brand New Business</h3>
             <p className="text-white text-sm leading-relaxed">
               <strong>Recommendation: Checkatrade + MyBuilder.</strong> Use Checkatrade for the

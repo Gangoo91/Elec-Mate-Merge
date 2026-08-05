@@ -307,6 +307,54 @@ export const useSparkTasks = (view: TaskView = 'all') => {
     }
   };
 
+  /**
+   * Insert many tasks in one round trip.
+   *
+   * The AI planner was looping saveTask, so a nine-task plan meant nine
+   * sequential inserts, nine state updates and nine renders — the list
+   * visibly filled in one row at a time and the user waited through all of
+   * it. One insert, one state update, one render.
+   */
+  const saveTasks = async (inputs: SaveTaskInput[]): Promise<number> => {
+    if (inputs.length === 0) return 0;
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('User not authenticated');
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data, error } = await (supabase as any)
+        .from('spark_tasks')
+        .insert(
+          inputs.map((input) => ({
+            user_id: user.id,
+            title: input.title.trim(),
+            details: input.details?.trim() || null,
+            priority: input.priority || 'normal',
+            due_at: input.dueAt || null,
+            customer_id: input.customerId || null,
+            location: input.location?.trim() || null,
+            tags: input.tags || [],
+            project_id: input.projectId || null,
+          }))
+        )
+        .select('*, customers(name)');
+
+      if (error) throw error;
+
+      const created = (data ?? []).map(mapRow);
+      setAllTasks((prev) => [...prev, ...created]);
+      // Events are per-task but fire-and-forget, so they never hold up the UI.
+      for (const row of data ?? []) logEvent(user.id, row.id, 'created');
+      return created.length;
+    } catch (err) {
+      console.error('Failed to save tasks:', err);
+      toast({ title: 'Could not add those tasks', variant: 'destructive' });
+      return 0;
+    }
+  };
+
   const saveTask = async (input: SaveTaskInput) => {
     try {
       const {
@@ -566,6 +614,7 @@ export const useSparkTasks = (view: TaskView = 'all') => {
     counts,
     isLoading,
     saveTask,
+    saveTasks,
     updateTask,
     deleteTask,
     markDone,

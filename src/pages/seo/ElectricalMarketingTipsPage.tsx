@@ -171,7 +171,7 @@ export default function ElectricalMarketingTipsPage() {
                 come from mobile devices. If your site does not load in under 3 seconds on a phone,
                 you are losing enquiries.
               </p>
-              <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
                 <h3 className="font-bold text-white text-lg mb-2">
                   Why Your NICEIC or NAPIT Badge Matters Beyond Trust
                 </h3>
@@ -250,7 +250,7 @@ export default function ElectricalMarketingTipsPage() {
                 marketing opportunity.
               </p>
               <div className="space-y-4 mt-6">
-                <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+                <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
                   <div className="flex items-center gap-2 mb-3">
                     <Star className="w-5 h-5 text-yellow-400" />
                     <h3 className="font-bold text-white text-lg">How to Generate Referrals</h3>
@@ -337,7 +337,7 @@ export default function ElectricalMarketingTipsPage() {
                 that builds trust before you even ring the doorbell.
               </p>
               <div className="grid gap-4 sm:grid-cols-2 mt-6">
-                <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+                <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
                   <div className="flex items-center gap-2 mb-3">
                     <Truck className="w-5 h-5 text-yellow-400" />
                     <h3 className="font-bold text-white text-lg">What to Include</h3>
@@ -456,7 +456,7 @@ export default function ElectricalMarketingTipsPage() {
                 immediately — without waiting months to build organic rankings. For electricians
                 targeting high-value jobs, the return on investment can be significant.
               </p>
-              <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
                 <div className="flex items-center gap-2 mb-3">
                   <TrendingUp className="w-5 h-5 text-yellow-400" />
                   <h3 className="font-bold text-white text-lg">A Simple ROI Example</h3>

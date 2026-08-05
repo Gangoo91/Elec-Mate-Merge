@@ -112,7 +112,7 @@ export default function DisconnectionTimeCalculatorPage() {
                 nominal voltage and earthing system. For a 230V single-phase supply — the standard
                 UK domestic supply — the requirements are:
               </p>
-              <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
                     <div>
@@ -299,7 +299,7 @@ export default function DisconnectionTimeCalculatorPage() {
                   </li>
                 </ul>
               </div>
-              <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-5 my-4">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
                 <div className="flex items-start gap-3">
                   <div>
                     <p className="font-semibold text-white">

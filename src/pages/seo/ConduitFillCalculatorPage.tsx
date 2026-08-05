@@ -171,7 +171,7 @@ export default function ConduitFillCalculatorPage() {
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
         <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
             Part of 70 Electrical Calculators
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
@@ -211,7 +211,7 @@ export default function ConduitFillCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               What Is Conduit Fill and Why Does It Matter?
             </h2>
@@ -274,7 +274,7 @@ export default function ConduitFillCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               The Cable Factor Method Explained
             </h2>
@@ -292,7 +292,7 @@ export default function ConduitFillCalculatorPage() {
               available. If the sum of all cable factors is less than or equal to the conduit
               factor, the cables will fit with adequate clearance for heat dissipation and pulling.
             </p>
-            <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 text-center my-6">
+            <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
               <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
                 Sum of cable factors ≤ Conduit factor
               </p>
@@ -315,7 +315,7 @@ export default function ConduitFillCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Cable Factor Tables</h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
@@ -329,13 +329,13 @@ export default function ConduitFillCalculatorPage() {
 
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
             <div className="grid grid-cols-3 gap-px bg-white/10">
-              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                 Conductor CSA
               </div>
-              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                 Cable Factor
               </div>
-              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                 Typical Use
               </div>
             </div>
@@ -371,7 +371,7 @@ export default function ConduitFillCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Conduit Factor Tables</h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
@@ -385,16 +385,16 @@ export default function ConduitFillCalculatorPage() {
 
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
             <div className="grid grid-cols-4 gap-px bg-white/10">
-              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                 Conduit Size
               </div>
-              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                 Straight Run
               </div>
-              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                 With Bends
               </div>
-              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                 Internal Diameter
               </div>
             </div>
@@ -428,7 +428,7 @@ export default function ConduitFillCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Worked Examples</h2>
           </div>
           <div className="space-y-6">
@@ -492,7 +492,7 @@ export default function ConduitFillCalculatorPage() {
             </div>
 
             {/* Band I / Band II segregation warning */}
-            <div className="p-5 rounded-2xl border border-amber-500/30 bg-amber-500/5">
+            <div className="p-5 rounded-2xl border border-amber-500/30 bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
               <h3 className="font-bold text-amber-400 text-base mb-2">
                 Band I / Band II Segregation (OSG 7.4.1)
               </h3>
@@ -565,7 +565,7 @@ export default function ConduitFillCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Bends, Long Runs, and Difficulty Factors
             </h2>
@@ -600,7 +600,7 @@ export default function ConduitFillCalculatorPage() {
               factor calculation, but it makes the practical installation easier and reduces the
               risk of cable damage.
             </p>
-            <div className="p-4 rounded-xl border border-yellow-500/20 bg-yellow-500/5 text-sm text-white leading-relaxed">
+            <div className="p-4 rounded-xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-sm text-white leading-relaxed">
               <strong className="text-yellow-400">Reg 522.8.2 — buried conduit:</strong> Where a
               conduit system is buried in the structure, cables shall not be drawn in until the
               conduit is completely erected between access points. This is a frequently overlooked
@@ -616,7 +616,7 @@ export default function ConduitFillCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Trunking Fill — The 45% Rule
             </h2>
@@ -668,7 +668,7 @@ export default function ConduitFillCalculatorPage() {
       <section id="how-it-works" className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               How to Calculate Conduit Fill — Step by Step
             </h2>
@@ -679,7 +679,7 @@ export default function ConduitFillCalculatorPage() {
                 key={index}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 flex-shrink-0">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
                   <span className="font-bold text-yellow-400">{index + 1}</span>
                 </div>
                 <div>
@@ -722,7 +722,7 @@ export default function ConduitFillCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
             </h2>

@@ -1,108 +1,102 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Check, Shield, Smartphone, Zap, Star } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { StoreBadges } from '@/components/seo/StoreBadges';
 import { USER_COUNT_LABEL, TESTIMONIALS } from '@/constants/social-proof';
+import { CARD, DIVIDE } from '@/components/seo/seoSurface';
 
 interface SEOCTASectionProps {
   heading?: string;
   subheading?: string;
 }
 
+/**
+ * End-of-page conversion block — and the one block of colour on the page.
+ *
+ * A guide runs long on near-black. Rather than sprinkle tint around (which is
+ * what produced the muddy brown panels), the page stays neutral throughout and
+ * then commits completely here: a full-bleed elec-yellow band with black type.
+ * It breaks the black-and-white, it lands exactly where we want the eye to
+ * stop, and it uses the brand colour at full strength — the opposite of a 10%
+ * wash. Yellow appears nowhere else on the page as a surface, so this reads as
+ * deliberate rather than decorative.
+ *
+ * Full-bleed via the left-1/2 + -ml-[50vw] technique because this renders
+ * inside SEOPageShell's max-w-6xl container.
+ *
+ * Rebuilt 2026-08-05. The previous version stacked most of the house's
+ * "looks AI-generated" tells into one component: an outer blurred glow, a
+ * yellow→amber→orange gradient wash, a rounded pill badge with a lightning
+ * icon, star glyphs, green ticks, a blue phone and a yellow shield, all
+ * centred.
+ */
 export function SEOCTASection({
   heading = 'Ready to work smarter?',
   subheading = `Join ${USER_COUNT_LABEL} saving hours every week with 16 certificate types, 70+ calculators, RAMS, quoting, invoicing, AI agents, and 46+ training courses.`,
 }: SEOCTASectionProps) {
-  // Pick a testimonial for the CTA
   const t = TESTIMONIALS[0];
 
+  const terms = [
+    '7 days free, then from £6.99/mo',
+    'Cancel in one tap — no calls, no hassle',
+    'iOS, Android and web',
+    'Built to BS 7671:2018+A4:2026',
+  ];
+
   return (
-    <section className="py-16 sm:py-20 px-5">
-      <div className="max-w-3xl mx-auto">
-        {/* Outer glow */}
-        <div className="relative">
-          <div className="absolute -inset-1 bg-gradient-to-r from-yellow-500/20 via-amber-500/10 to-yellow-500/20 rounded-3xl blur-xl" />
+    <>
+      {/* THE ASK — a tight full-bleed yellow stripe.
+          Deliberately short. The first version put the proof column inside the
+          yellow too, which on desktop read as a confident band but on a phone
+          became three screens of unbroken yellow you had to scroll through —
+          at which point it is not an accent, it is the page, and there is
+          nothing left for it to contrast against. Keeping only the ask in
+          colour holds it to roughly one screen on mobile. */}
+      <section className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen bg-elec-yellow text-black">
+        <div className="mx-auto max-w-3xl px-5 py-12 sm:px-6 sm:py-16 lg:px-8">
+          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-black">
+            7-day free trial
+          </p>
+          <h2 className="mt-3 max-w-[16ch] text-[32px] font-bold leading-[1.02] tracking-[-0.04em] text-black sm:text-[42px] lg:text-[48px]">
+            {heading}
+          </h2>
+          <p className="mt-4 max-w-[50ch] text-[15.5px] font-medium leading-relaxed text-black sm:text-[16px]">
+            {subheading}
+          </p>
+          <Link
+            to="/auth/signup"
+            className="mt-7 inline-flex h-14 w-full touch-manipulation items-center justify-center rounded-xl bg-black px-8 text-[16px] font-bold text-elec-yellow transition-opacity hover:opacity-90 sm:w-auto"
+          >
+            Start your free trial
+          </Link>
+          <p className="mt-3 text-[13.5px] font-medium text-black">
+            From <span className="font-bold">£6.99/mo</span> after the trial — no charge until day 8.
+          </p>
+        </div>
+      </section>
 
-          <div className="relative rounded-2xl bg-gradient-to-br from-yellow-500/15 via-amber-500/10 to-orange-500/5 border border-yellow-500/20 p-8 sm:p-12">
-            {/* Badge */}
-            <div className="flex justify-center mb-6">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-500/15 border border-yellow-500/25 text-sm font-medium text-yellow-400">
-                <Zap className="w-3.5 h-3.5" />
-                7-Day Free Trial — Cancel Anytime, No Hassle
-              </span>
-            </div>
+      {/* THE PROOF — back on the dark ground, so the yellow stays a stripe. */}
+      <section className="px-4 py-12 sm:px-5 sm:py-14">
+        <div className={`${CARD} mx-auto max-w-3xl p-5 sm:p-7`}>
+          <blockquote>
+            <p className="text-[16px] leading-relaxed text-white">&ldquo;{t.quote}&rdquo;</p>
+            <footer className="mt-2.5 text-[13px] text-white">
+              {t.name}, {t.company} · {t.stars} out of 5
+            </footer>
+          </blockquote>
 
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white text-center mb-4 leading-tight">
-              {heading}
-            </h2>
-            <p className="text-white text-center mb-6 max-w-xl mx-auto leading-relaxed">
-              {subheading}
-            </p>
+          <ul className={`mt-6 border-y border-white/[0.08] ${DIVIDE}`}>
+            {terms.map((line) => (
+              <li key={line} className="py-2.5 text-[13.5px] leading-snug text-white">
+                {line}
+              </li>
+            ))}
+          </ul>
 
-            {/* Testimonial quote */}
-            <div className="flex flex-col items-center mb-6">
-              <div className="flex items-center gap-0.5 mb-2">
-                {Array.from({ length: t.stars }).map((_, i) => (
-                  <Star key={i} className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
-                ))}
-              </div>
-              <p className="text-sm text-white italic text-center max-w-md">
-                &ldquo;{t.quote}&rdquo;
-              </p>
-              <p className="text-[11px] text-white mt-1">
-                {t.name}, {t.company}
-              </p>
-            </div>
-
-            {/* Primary CTA */}
-            <div className="flex justify-center mb-6">
-              <Link to="/auth/signup" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto h-14 px-10 text-base font-semibold bg-yellow-500 hover:bg-yellow-400 active:scale-[0.97] text-black rounded-xl shadow-lg shadow-yellow-500/25 touch-manipulation transition-all">
-                  Start Your Free Trial
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
-            </div>
-
-            {/* Price anchor */}
-            <p className="text-center text-sm text-white/50 mb-6">
-              From <span className="text-white font-semibold">£6.99/mo</span> after trial — less
-              than a coffee a week
-            </p>
-
-            {/* Divider */}
-            <div className="flex items-center gap-3 max-w-xs mx-auto mb-6">
-              <div className="flex-1 h-px bg-white/10" />
-              <span className="text-xs text-white/50 font-medium whitespace-nowrap">
-                or download the app
-              </span>
-              <div className="flex-1 h-px bg-white/10" />
-            </div>
-
-            {/* Store badges */}
-            <StoreBadges size="md" className="mb-8" />
-
-            {/* Trust signals */}
-            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-sm text-white">
-              <span className="flex items-center gap-1.5">
-                <Check className="w-4 h-4 text-green-400 shrink-0" />7 days free, then from £6.99/mo
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Check className="w-4 h-4 text-green-400 shrink-0" />
-                Cancel in one tap — no calls, no hassle
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Smartphone className="w-4 h-4 text-blue-400 shrink-0" />
-                iOS, Android & Web
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Shield className="w-4 h-4 text-yellow-400 shrink-0" />
-                BS 7671 compliant
-              </span>
-            </div>
+          <div className="mt-6">
+            <p className="mb-3 text-[12.5px] text-white">Or download the app</p>
+            <StoreBadges size="md" />
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

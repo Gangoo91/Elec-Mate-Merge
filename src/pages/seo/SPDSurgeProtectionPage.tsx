@@ -188,7 +188,7 @@ export default function SPDSurgeProtectionPage() {
                 specific test categories defined in BS EN 61643-11.
               </p>
               <div className="space-y-4 my-6">
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-3">
                     Type 1 SPD (Class I Test)
                   </h3>
@@ -207,7 +207,7 @@ export default function SPDSurgeProtectionPage() {
                     location or use.
                   </p>
                 </div>
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-3">
                     Type 2 SPD (Class II Test)
                   </h3>
@@ -266,7 +266,7 @@ export default function SPDSurgeProtectionPage() {
                 type of earth connection directly affects their performance.
               </p>
               <div className="grid sm:grid-cols-3 gap-4 my-6">
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-3">TN-C-S (PME)</h3>
                   <p className="text-white text-sm leading-relaxed">
                     The most common domestic earthing arrangement. SPDs are connected between line

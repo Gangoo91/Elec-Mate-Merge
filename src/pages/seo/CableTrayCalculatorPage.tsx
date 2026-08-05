@@ -179,7 +179,7 @@ export default function CableTrayCalculatorPage() {
                 Single-layer installation ensures maximum heat dissipation and avoids the derating
                 factors that apply when cables are stacked in multiple layers.
               </p>
-              <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 text-center my-6">
+              <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
                 <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
                   Tray Width = Sum of cable diameters + spacing allowances
                 </p>
@@ -220,13 +220,13 @@ export default function CableTrayCalculatorPage() {
               </p>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
                 <div className="grid grid-cols-3 gap-px bg-white/10">
-                  <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                     Cable Type
                   </div>
-                  <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                     Overall Diameter (mm)
                   </div>
-                  <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                     CSA (mm²)
                   </div>
                 </div>

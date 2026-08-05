@@ -292,7 +292,7 @@ const sections = [
           practicable. The TILE assessment framework helps you evaluate manual handling risks:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">T — Task</h3>
             <p className="text-white text-sm leading-relaxed">
               Does the task involve twisting, bending, reaching, pushing, pulling, or holding the

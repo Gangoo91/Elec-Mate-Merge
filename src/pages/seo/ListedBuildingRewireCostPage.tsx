@@ -208,7 +208,7 @@ const sections = [
           requirement for any work that alters the character of a listed building — and this
           includes most rewiring work.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">
             What Requires Listed Building Consent
           </h3>
@@ -435,7 +435,7 @@ const sections = [
           practical tips for pricing these projects profitably:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Landmark className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

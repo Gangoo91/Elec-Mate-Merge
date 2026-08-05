@@ -15,40 +15,42 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
   const { saveQuote } = useQuoteStorage();
   const { companyProfile } = useCompanyProfile();
 
-  const [quote, setQuote] = useState<Partial<Quote>>(
-    initialQuote || {
-      id: uuidv4(),
-      quoteNumber: '', // Will be generated when needed
-      items: [],
-      status: 'draft',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }
-  );
+  // ELE-1469 + ELE-1474 — the defaults are merged UNDER initialQuote, not
+  // replaced by it. This used to be `initialQuote || { ... }`, so any seeded
+  // quote — duplicate, project, customer, certificate, site visit, materials —
+  // started with no `id`, because every seeding path builds a plain object and
+  // the duplicate flows deliberately strip the source id. With no id the
+  // autosave upsert (`onConflict: 'id'`) failed on every tick, so the footer
+  // sat on "Retrying" and edited client details were never written, and
+  // generateQuote() then hard-aborted on its `!finalQuote.id` guard with
+  // "Could not generate quote — Please refresh the page and try again".
+  const [quote, setQuote] = useState<Partial<Quote>>(() => ({
+    quoteNumber: '', // Will be generated when needed
+    items: [],
+    status: 'draft',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    ...initialQuote,
+    // A seeded quote carries no id of its own — it must still get one.
+    id: initialQuote?.id || uuidv4(),
+  }));
 
   const [currentStep, setCurrentStep] = useState(0);
   const [priceAdjustment, setPriceAdjustment] = useState(0); // Percentage adjustment (0-20)
   const [isGenerating, setIsGenerating] = useState(false);
 
-  // Generate quote number when quote is first created
-  useEffect(() => {
-    const initializeQuoteNumber = async () => {
-      if (!quote.quoteNumber) {
-        try {
-          const newQuoteNumber = await generateSequentialQuoteNumber();
-          setQuote((prev) => ({ ...prev, quoteNumber: newQuoteNumber }));
-        } catch (error) {
-          console.warn('Failed to generate sequential quote number, using fallback');
-          setQuote((prev) => ({
-            ...prev,
-            quoteNumber: `${new Date().getFullYear()}/T${Date.now().toString().slice(-6)}`,
-          }));
-        }
-      }
-    };
-
-    initializeQuoteNumber();
-  }, [quote.quoteNumber]);
+  // ELE-1466 — the quote number is NOT minted here any more.
+  //
+  // This used to allocate one as soon as the builder mounted. Under the old
+  // client-side count(*)+1 that was free, because nothing was consumed until a
+  // row existed. Numbers now come from an atomic per-user counter, so minting
+  // on mount would burn one every time somebody opened the builder and backed
+  // out — and the whole point of the ticket is that the sequence has no
+  // unexplained jumps in it.
+  //
+  // The number is instead assigned by the database when the row is first
+  // written (persistDraft below, or saveQuote), and read back into state. The
+  // wizard does not display it, so there is nothing to show in the meantime.
 
   const updateClient = useCallback((client: QuoteClient) => {
     setQuote((prev) => ({ ...prev, client, updatedAt: new Date() }));
@@ -107,8 +109,8 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
     const settings = quote.settings;
 
     // ELE-888 + ELE-891 — single source of truth for per-item, per-category,
-    // and global discount maths. Quote flow does not apply overhead+profit.
-    const totals = computeQuoteTotals(items, settings, { applyOverheadAndProfit: false });
+    // and global discount maths. ELE-1473 — no overhead/profit is applied.
+    const totals = computeQuoteTotals(items, settings);
 
     return {
       ...quote,
@@ -192,8 +194,20 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
         dbData.expiry_date = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
       }
 
-      const { error } = await supabase.from('quotes').upsert(dbData, { onConflict: 'id' });
+      // ELE-1466 — take back whatever number the DB assigned. quote_number is
+      // sent as null until a row exists; the assign_document_numbers trigger
+      // allocates it from the per-user counter on that first write, so this is
+      // where the builder learns its own number.
+      const { data: saved, error } = await supabase
+        .from('quotes')
+        .upsert(dbData, { onConflict: 'id' })
+        .select('quote_number')
+        .maybeSingle();
       if (error) throw error;
+
+      if (saved?.quote_number && saved.quote_number !== quote.quoteNumber) {
+        setQuote((prev) => ({ ...prev, quoteNumber: saved.quote_number as string }));
+      }
 
       lastSavedRef.current = snapshot;
       setCloudSaveStatus('saved');
@@ -319,6 +333,17 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
           itemCount: finalQuote.items.length,
         });
         return;
+      }
+
+      // ELE-1466 — allocate the number here if the autosave has not already
+      // been given one by the trigger. Generation is the right moment to
+      // consume one: the PDF below is stamped with it, and a user who reaches
+      // this point is producing a real document. Allocating on mount instead
+      // put a gap in the sequence every time somebody opened the builder and
+      // changed their mind.
+      if (!finalQuote.quoteNumber) {
+        finalQuote.quoteNumber = await generateSequentialQuoteNumber();
+        setQuote((prev) => ({ ...prev, quoteNumber: finalQuote.quoteNumber }));
       }
 
       logger.info('Quote generation started', {
@@ -489,27 +514,17 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
   }, [quote, isGenerating, onQuoteGenerated, saveQuote, companyProfile, calculateTotals]);
 
   const resetQuote = useCallback(async () => {
-    try {
-      const newQuoteNumber = await generateSequentialQuoteNumber();
-      setQuote({
-        id: uuidv4(),
-        quoteNumber: newQuoteNumber,
-        items: [],
-        status: 'draft',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      });
-    } catch (error) {
-      console.warn('Failed to generate sequential quote number for reset, using fallback');
-      setQuote({
-        id: uuidv4(),
-        quoteNumber: `${new Date().getFullYear()}/T${Date.now().toString().slice(-6)}`,
-        items: [],
-        status: 'draft',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      });
-    }
+    // ELE-1466 — no number is allocated for an empty quote. The database
+    // assigns one when the row is first written, so starting a fresh quote
+    // and abandoning it leaves no gap in the sequence.
+    setQuote({
+      id: uuidv4(),
+      quoteNumber: '',
+      items: [],
+      status: 'draft',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
     setCurrentStep(0);
   }, []);
 

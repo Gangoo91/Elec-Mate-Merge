@@ -16,7 +16,7 @@ const bs88Fuse = [['6', '43'], ['10', '72'], ['16', '115'], ['20', '144'], ['25'
 const bs1361Fuse = [['5', '23'], ['15', '69'], ['20', '92'], ['30', '138'], ['45', '207'], ['60', '276'], ['80', '368'], ['100', '460']];
 
 const PfcTable = ({ title, subtitle, rows, multiplier }: { title: string; subtitle: string; rows: string[][]; multiplier: string }) => (
-  <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
+  <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
     <div className="p-4 border-b border-white/[0.06]">
       <p className="text-sm font-semibold text-white">{title}</p>
       <p className="text-xs text-white mt-0.5">{subtitle} — Magnetic trip at {multiplier}</p>
@@ -59,24 +59,24 @@ const PfcTablesSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* Quick reference */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Quick Reference — Common Domestic Circuits</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Quick Reference — Common Domestic Circuits</p>
           <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-xs text-white">Lighting (6A Type B)</p>
               <p className="text-lg font-bold text-white">30A</p>
               <p className="text-xs text-yellow-400">minimum PFC</p>
             </div>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-xs text-white">Ring Main (32A Type B)</p>
               <p className="text-lg font-bold text-white">160A</p>
               <p className="text-xs text-yellow-400">minimum PFC</p>
             </div>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-xs text-white">Shower (40A Type B)</p>
               <p className="text-lg font-bold text-white">200A</p>
               <p className="text-xs text-yellow-400">minimum PFC</p>
             </div>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-xs text-white">Cooker (32A Type C)</p>
               <p className="text-lg font-bold text-white">320A</p>
               <p className="text-xs text-yellow-400">minimum PFC</p>
@@ -86,7 +86,7 @@ const PfcTablesSection = ({ onBack }: Props) => {
 
         {/* Explanation */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-2">Understanding These Values</p>
             <p className="text-sm text-white leading-relaxed">
               These are the <span className="font-semibold">minimum fault currents</span> required for the MCB to trip magnetically (instantaneously). If the measured PFC is below these values, the MCB will operate in its thermal zone — taking seconds or minutes instead of milliseconds. The PFC must also not exceed the device's <span className="font-semibold">breaking capacity</span> (typically 6kA or 10kA for domestic MCBs).
@@ -96,7 +96,7 @@ const PfcTablesSection = ({ onBack }: Props) => {
 
         {/* MCB Tables */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">MCB Minimum PFC for Magnetic Operation</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">MCB Minimum PFC for Magnetic Operation</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
@@ -113,7 +113,7 @@ const PfcTablesSection = ({ onBack }: Props) => {
 
         {/* Fuse tables */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Fuse Minimum PFC (0.4s Disconnection)</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Fuse Minimum PFC (0.4s Disconnection)</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
@@ -126,19 +126,19 @@ const PfcTablesSection = ({ onBack }: Props) => {
 
         {/* Assessment guide */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Assessment Guide</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Assessment Guide</p>
           <div className="grid grid-cols-3 gap-2">
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-3">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-3">
               <p className="text-xs text-green-400 font-semibold">Excellent</p>
               <p className="text-sm font-bold text-white">&gt;10× min</p>
               <p className="text-[10px] text-white mt-1">Large safety margin. Future-proof.</p>
             </div>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-3">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-3">
               <p className="text-xs text-yellow-400 font-semibold">Acceptable</p>
               <p className="text-sm font-bold text-white">2-10× min</p>
               <p className="text-[10px] text-white mt-1">Meets BS 7671. Monitor.</p>
             </div>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-3">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-3">
               <p className="text-xs text-red-400 font-semibold">Investigate</p>
               <p className="text-sm font-bold text-white">&lt;2× min</p>
               <p className="text-[10px] text-white mt-1">Marginal. Remedial action.</p>
@@ -148,7 +148,7 @@ const PfcTablesSection = ({ onBack }: Props) => {
 
         {/* Breaking capacity */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-orange-400/10 border border-orange-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-2">Breaking Capacity — The Upper Limit</p>
             <p className="text-sm text-white leading-relaxed mb-3">
               While PFC must exceed the minimum for magnetic trip, it must NOT exceed the device's breaking capacity. If PFC &gt; breaking capacity, the device will fail catastrophically during a fault.

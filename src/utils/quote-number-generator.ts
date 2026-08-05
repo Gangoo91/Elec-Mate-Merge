@@ -3,47 +3,37 @@ import { supabase } from '@/integrations/supabase/client';
 /**
  * Generates a sequential quote number in the format YYYY/XXX
  * e.g., 2025/001, 2025/002, etc.
+ *
+ * ELE-1466 — allocated by the database, per user, via an atomic counter.
+ *
+ * This used to be `count(*) of the user's quotes + 1`, computed client-side.
+ * That reused a number the moment a quote was deleted (count drops, the next
+ * quote takes a number already sent to a customer), and handed the same
+ * number to two quotes created at the same time, since the count and the
+ * insert were separate round trips. It also counted autosaved drafts, so an
+ * abandoned draft still consumed a number.
+ *
+ * `generate_quote_number()` increments a per-user counter row and returns the
+ * new value in one statement, so neither race is possible.
  */
 export const generateSequentialQuoteNumber = async (): Promise<string> => {
-  const currentYear = new Date().getFullYear();
-  const yearPrefix = currentYear.toString();
+  const yearPrefix = new Date().getFullYear().toString();
 
   try {
-    // Get user ID for user-specific counting - retry a few times if not ready
-    let user = null;
-    for (let attempt = 0; attempt < 3; attempt++) {
-      const { data } = await supabase.auth.getUser();
-      user = data.user;
-      if (user) break;
-      // Wait a bit before retrying
-      await new Promise((resolve) => setTimeout(resolve, 500));
-    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data, error } = await (supabase.rpc as any)('generate_quote_number');
 
-    if (!user) {
-      console.warn('No authenticated user after retries, using timestamp fallback');
+    if (error) {
+      console.warn('Error calling generate_quote_number function:', error);
       return `${yearPrefix}/T${Date.now().toString().slice(-6)}`;
     }
 
-    // Count ALL quotes for this user (any format: YYYY/XXX, QTE-YYMM-XXX, etc.)
-    // This ensures we don't restart numbering when quotes come from different sources
-    const { count, error: countError } = await supabase
-      .from('quotes')
-      .select('*', { count: 'exact', head: true })
-      .eq('user_id', user.id);
-
-    if (countError) {
-      console.warn('Error counting quotes:', countError);
-      return `${yearPrefix}/T${Date.now().toString().slice(-6)}`;
-    }
-
-    // Next number is total count + 1
-    const nextSequence = (count || 0) + 1;
-    const sequenceString = nextSequence.toString().padStart(3, '0');
-
-    return `${yearPrefix}/${sequenceString}`;
+    return data as string;
   } catch (error) {
     console.warn('Error generating sequential quote number, using fallback:', error);
-    // Fallback to timestamp-based if anything goes wrong
+    // Fallback to timestamp-based if anything goes wrong. The DB trigger
+    // (assign_document_numbers) leaves a T-number alone — it only fills a
+    // genuinely empty column — so a fallback number still saves cleanly.
     return `${yearPrefix}/T${Date.now().toString().slice(-6)}`;
   }
 };

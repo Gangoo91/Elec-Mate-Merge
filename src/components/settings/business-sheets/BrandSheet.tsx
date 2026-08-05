@@ -65,10 +65,31 @@ const BrandSheet = ({ open, onOpenChange, profile, onSave }: BrandSheetProps) =>
     }
   };
 
+  // ELE-1444 — three unlabelled swatches meant a user put his brand white into
+  // Secondary and Accent and left Primary on an old colour, so his
+  // certificates kept coming out in the wrong colour. Each row now says what
+  // it actually affects. Verified against the real consumers: certBranding
+  // reads primary_color then accent_color; secondary_color is quotes and
+  // company pages only.
   const colours = [
-    { label: 'Primary', value: primaryColor, setter: setPrimaryColor },
-    { label: 'Secondary', value: secondaryColor, setter: setSecondaryColor },
-    { label: 'Accent', value: accentColor, setter: setAccentColor },
+    {
+      label: 'Primary',
+      hint: 'Your main brand colour — certificates, quotes and invoices',
+      value: primaryColor,
+      setter: setPrimaryColor,
+    },
+    {
+      label: 'Secondary',
+      hint: 'Supporting colour on quotes and your company pages',
+      value: secondaryColor,
+      setter: setSecondaryColor,
+    },
+    {
+      label: 'Accent',
+      hint: 'Used on certificates only if Primary is not set',
+      value: accentColor,
+      setter: setAccentColor,
+    },
   ];
 
   return (
@@ -88,10 +109,11 @@ const BrandSheet = ({ open, onOpenChange, profile, onSave }: BrandSheetProps) =>
           </header>
 
           <div className="flex-1 overflow-y-auto px-5 sm:px-6 pb-6 space-y-5">
-            <div className="grid grid-cols-3 gap-4">
-              {colours.map(({ label, value, setter }) => (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              {colours.map(({ label, hint, value, setter }) => (
                 <div key={label} className="space-y-2">
                   <Label className="text-white font-medium text-[13px]">{label}</Label>
+                  <p className="text-[12px] leading-snug text-white">{hint}</p>
                   <div className="flex items-center gap-2">
                     <input
                       type="color"

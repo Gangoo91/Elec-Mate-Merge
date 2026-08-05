@@ -167,13 +167,15 @@ const QUOTE_INVOICE_TOOLS = [
         name: 'overheadPercentage',
         type: 'number',
         required: false,
-        description: 'Overhead percentage. Default 10',
+        description:
+          'Overhead percentage. Defaults to 0 — do not set unless the user explicitly asks for a separate overhead line (ELE-1473).',
       },
       {
         name: 'profitMargin',
         type: 'number',
         required: false,
-        description: 'Profit margin percentage. Default 15',
+        description:
+          'Profit margin percentage. Defaults to 0 — profit belongs in the labour rate and material markup, not a hidden percentage (ELE-1473).',
       },
       {
         name: 'vatRate',

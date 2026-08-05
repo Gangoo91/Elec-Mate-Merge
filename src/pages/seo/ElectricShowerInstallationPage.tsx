@@ -233,7 +233,7 @@ const sections = [
           apply to electric shower circuits because the full load operates whenever the shower is in
           use.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-3">Quick Reference: Shower Cable Sizes</h3>
           <div className="space-y-3 text-white text-sm">
             <p>
@@ -517,7 +517,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-white text-base mb-2">
             Walk-in showers and wet rooms (no fixed basin)
           </h3>
@@ -550,7 +550,7 @@ const sections = [
     heading: 'Common Electric Shower Installation Mistakes',
     content: (
       <>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <span>

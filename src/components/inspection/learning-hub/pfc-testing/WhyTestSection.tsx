@@ -50,7 +50,7 @@ const WhyTestSection = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               Prospective Fault Current testing measures the maximum current that would flow during a fault. This confirms two critical things: that protective devices will trip fast enough to prevent electric shock, and that they have adequate breaking capacity to safely interrupt the fault without failing.
             </p>
@@ -59,12 +59,12 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* What is PFC */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">What Is PFC?</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">What Is PFC?</p>
         </motion.div>
 
         {whatIsPfc.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-sm font-semibold text-white">{item.term}</p>
               <p className="text-sm text-white mt-1 leading-relaxed">{item.definition}</p>
             </div>
@@ -73,9 +73,9 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Key formula */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-3">The Key Formula</p>
-            <div className="rounded-xl bg-white/[0.05] p-4 text-center mb-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 text-center mb-3">
               <p className="text-lg font-bold text-white">Ipf = U₀ ÷ Zs</p>
               <p className="text-xs text-white mt-2">Prospective fault current = Supply voltage ÷ Loop impedance</p>
             </div>
@@ -87,14 +87,14 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Why it matters */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Why It Matters</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Why It Matters</p>
         </motion.div>
 
         {hazards.map((h, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                   <h.icon className="h-5 w-5 text-yellow-400" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -108,15 +108,15 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* MCB operation zones */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">MCB Operation — Why PFC Determines Trip Speed</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">MCB Operation — Why PFC Determines Trip Speed</p>
         </motion.div>
 
         {mcbOperationZones.map((zone, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-center justify-between mb-2">
                 <p className="text-sm font-semibold text-white">{zone.zone}</p>
-                <span className="text-xs font-bold text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded-lg">{zone.time}</span>
+                <span className="text-xs font-bold text-yellow-400 bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-2 py-0.5 rounded-lg">{zone.time}</span>
               </div>
               <p className="text-sm text-white leading-relaxed">{zone.description}</p>
             </div>
@@ -125,12 +125,12 @@ const WhyTestSection = ({ onBack }: Props) => {
 
         {/* Real-world examples */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Real-World Examples</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Real-World Examples</p>
         </motion.div>
 
         {realWorldExamples.map((ex, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-2">
               <div className="flex items-center justify-between">
                 <p className="text-sm font-semibold text-white">{ex.title}</p>
                 <span className={`text-[10px] font-bold px-2 py-0.5 rounded-lg ${ex.result === 'PASS' ? 'text-green-400 bg-green-400/10' : ex.result === 'MARGINAL' ? 'text-yellow-400 bg-yellow-400/10' : 'text-orange-400 bg-orange-400/10'}`}>{ex.result}</span>

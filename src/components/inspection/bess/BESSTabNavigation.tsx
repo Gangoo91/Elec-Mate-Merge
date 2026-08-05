@@ -145,6 +145,9 @@ export default function BESSTabNavigation({
   return (
     <>
       <CertShellFooter
+        previewReportType="bess"
+        previewReportId={reportId}
+        previewData={formData}
         currentIndex={currentTabIndex}
         totalSteps={totalTabs}
         canPrevious={canNavigatePrevious}

@@ -114,7 +114,7 @@ const sections = [
           Meanwhile, circuit B's neutral is carrying current from both circuits, which it was not
           designed to do.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
             <GitBranch className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
             <div>
@@ -316,7 +316,7 @@ const sections = [
               </tr>
             </thead>
             <tbody>
-              <tr className="bg-yellow-500/10">
+              <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                 <td className="p-3 border border-white/10 text-white">
                   Trips only when two specific circuits are on together; each holds alone
                 </td>
@@ -400,7 +400,7 @@ const sections = [
         </p>
         <div className="space-y-3 my-4">
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
               1
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -413,7 +413,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
               2
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -426,7 +426,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
               3
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -440,7 +440,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
               4
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -452,7 +452,7 @@ const sections = [
             </p>
           </div>
           <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-            <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
               5
             </span>
             <p className="text-white text-sm leading-relaxed">
@@ -591,7 +591,7 @@ const sections = [
           safety risks that make it a serious defect requiring remediation.
         </p>
         <div className="space-y-4 mt-4">
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="flex items-center gap-2 mb-2">
               <ShieldCheck className="w-5 h-5 text-yellow-400" />
               <h3 className="font-bold text-white text-lg">RCD Protection Is Compromised</h3>
@@ -672,7 +672,7 @@ const sections = [
               affected circuit is isolated, presenting an immediate shock risk.
             </p>
           </div>
-          <div className="p-4 rounded-2xl bg-yellow-500/10 border border-yellow-500/30">
+          <div className="p-4 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="flex items-center gap-2 mb-1">
               <AlertTriangle className="w-4 h-4 text-yellow-400" />
               <span className="font-bold text-white">C2</span>

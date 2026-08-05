@@ -15,6 +15,8 @@ import {
   ChevronLeft,
   LayoutGrid,
   Package,
+  Timer,
+  Sparkles,
 } from 'lucide-react';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 
@@ -53,6 +55,10 @@ export interface ProjectActionsSheetProps {
 
   /** Detail-mode handlers. Optional — when absent we fall back to `?action=` navigation. */
   onAddExpense?: () => void;
+  /** Opens the diary-time sheet (ELE-1472). Detail mode only. */
+  onLogDiaryTime?: () => void;
+  /** Opens the AI job planner, which attaches its tasks to this project. */
+  onPlanWithAi?: () => void;
   onAddTask?: () => void;
   onLink?: (type: ProjectLinkType) => void;
   onComplete?: () => void;
@@ -87,6 +93,8 @@ const ProjectActionsSheet = ({
   status,
   mode,
   onAddExpense,
+  onLogDiaryTime,
+  onPlanWithAi,
   onAddTask,
   onLink,
   onComplete,
@@ -267,6 +275,48 @@ const ProjectActionsSheet = ({
                     <span className="block text-[11px] text-white/55 mt-0.5">Log a cost</span>
                   </span>
                 </button>
+
+                {onPlanWithAi && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      close();
+                      onPlanWithAi();
+                    }}
+                    className={tileClass}
+                  >
+                    <span className={tileIconClass}>
+                      <Sparkles className="h-4 w-4 text-elec-yellow" />
+                    </span>
+                    <span>
+                      <span className="block text-[13px] font-semibold text-white">Plan with AI</span>
+                      <span className="block text-[11px] text-white/55 mt-0.5">Break the job into tasks</span>
+                    </span>
+                  </button>
+                )}
+
+                {/* Permanent way in to diary time. The project page also nudges
+                    when there is something to log, but that nudge only counts
+                    blocks already on this project — blocks attached to nothing
+                    yet are reachable here. (ELE-1472) */}
+                {onLogDiaryTime && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      close();
+                      onLogDiaryTime();
+                    }}
+                    className={tileClass}
+                  >
+                    <span className={tileIconClass}>
+                      <Timer className="h-4 w-4 text-white/85" />
+                    </span>
+                    <span>
+                      <span className="block text-[13px] font-semibold text-white">Diary time</span>
+                      <span className="block text-[11px] text-white/55 mt-0.5">Log days worked</span>
+                    </span>
+                  </button>
+                )}
 
                 <button type="button" onClick={() => go(siteVisitUrl)} className={tileClass}>
                   <span className={tileIconClass}>

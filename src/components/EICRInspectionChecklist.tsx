@@ -20,6 +20,18 @@ const inputCn =
 
 const labelCn = 'text-[12px] font-medium text-white mb-1 block';
 
+/**
+ * Outcomes that record a defect, and so carry a linked observation.
+ *
+ * An item holding one of these and an observation pointing back at it are two
+ * halves of the same finding. Separating them is what produces a certificate
+ * that says Satisfactory on the front and prints a C2 in the observations
+ * table: the gate in useEICRValidation counts checklist outcomes, while the
+ * formatter prints observations, so clearing the outcome without clearing the
+ * observation hides the finding from the gate but not from the document.
+ */
+const DEFECT_OUTCOMES = ['C1', 'C2', 'C3', 'FI'];
+
 interface InspectionItem {
   id: string;
   section: string;
@@ -194,12 +206,57 @@ const EICRInspectionChecklist = ({
     }
   }, [formData.inspectionItems]);
 
+  /**
+   * Drop observations whose linked inspection item has just lost its defect
+   * outcome.
+   *
+   * `autoCreateObservation` already does this for a single-item edit — set an
+   * item back to satisfactory and its observation goes with it. The bulk paths
+   * write straight to `inspectionItems` and never call it, so an observation
+   * could outlive the outcome it was raised from. See DEFECT_OUTCOMES for why
+   * that combination is dangerous rather than merely untidy.
+   *
+   * Manually-added observations have no `inspectionItemId` and are never
+   * touched here — they are not tied to a checklist item.
+   *
+   * Two sequential field writes are safe: `updateFormData` in EICRFormProvider
+   * sets state functionally (`setFormData(prev => ...)`), so the observations
+   * write cannot clobber the items write that precedes it.
+   */
+  const pruneObservationsForItems = (clearedItemIds: Set<string>) => {
+    if (clearedItemIds.size === 0) return;
+    const observations = getDefectObservations();
+    const remaining = observations.filter(
+      (obs) => !obs.inspectionItemId || !clearedItemIds.has(obs.inspectionItemId)
+    );
+    const removed = observations.length - remaining.length;
+    if (removed === 0) return;
+
+    scrollSafeUpdate('defectObservations', remaining);
+    toast.info(`${removed} observation${removed === 1 ? '' : 's'} removed`, {
+      description: 'Cleared along with the inspection items they were raised from',
+    });
+  };
+
   const updateInspectionItem = (
     id: string,
     field: keyof InspectionItem | '__BULK_UPDATE__',
     value: any
   ) => {
-    // Handle bulk update for atomic operations
+    // Handle bulk update for atomic operations.
+    //
+    // Deliberately does NOT prune observations here. Every single-item outcome
+    // tap reaches this branch (EnhancedInspectionSectionCard passes the whole
+    // array) and then calls onAutoCreateObservation, which already reconciles
+    // that item's observation. Pruning here as well would be both harmful and
+    // useless: harmful because a draft carrying an already-stranded observation
+    // would lose it on the next unrelated tap, with nothing to tell the
+    // electrician their written finding had gone; useless because the two
+    // writes read the same formData snapshot, so autoCreateObservation's write
+    // lands last and restores whatever this removed.
+    //
+    // Stranded observations are caught by the gate in useEICRValidation, which
+    // surfaces them for the user to resolve rather than deleting them.
     if (id === '__BULK_UPDATE__' && field === '__BULK_UPDATE__') {
       scrollSafeUpdate('inspectionItems', value);
       return;
@@ -259,7 +316,7 @@ const EICRInspectionChecklist = ({
     // FI included — an FI item needs an observation describing what to investigate
     // (BS 7671 A4:2026 Appendix 6; FI remains advisory and does not force an
     // unsatisfactory report).
-    if (!['C1', 'C2', 'C3', 'FI'].includes(inspectionItem.outcome)) {
+    if (!DEFECT_OUTCOMES.includes(inspectionItem.outcome)) {
       // If there's an existing observation linked to this item, remove it
       const linkedObservation = existingObservations.find(
         (obs) => obs.inspectionItemId === inspectionItem.id
@@ -429,7 +486,23 @@ const EICRInspectionChecklist = ({
     }));
   };
 
-  const bulkMarkSatisfactory = (sectionId: string) => {
+  /**
+   * The section "All OK" and "All N/A" chips.
+   *
+   * Items already carrying a defect code are left as they are. These are
+   * one-tap chips with no confirmation step, and letting one overwrite a
+   * recorded C1 or C2 is wrong twice over: it silently discards what the
+   * electrician found on site, and it strands that item's observation, which
+   * is the state DEFECT_OUTCOMES describes.
+   *
+   * Skips are reported rather than silent, so "All OK" never quietly means
+   * "all except the two I didn't mention". Same rule the global
+   * `markAllRemainingSatisfactory` already follows.
+   */
+  const bulkSetSectionOutcome = (
+    sectionId: string,
+    outcome: 'satisfactory' | 'not-applicable'
+  ) => {
     const items = getInspectionItems();
     const section = bs7671InspectionSections.find((s) => s.id === sectionId);
 
@@ -438,20 +511,42 @@ const EICRInspectionChecklist = ({
       return;
     }
 
+    let changed = 0;
+    let skipped = 0;
+
     const updatedItems = items.map((item) => {
       const isInSection = section.items.some((sItem) => sItem.id === item.id);
-      if (isInSection) {
-        return {
-          ...item,
-          outcome: 'satisfactory' as const,
-          inspected: true,
-        };
+      if (!isInSection) return item;
+
+      if (DEFECT_OUTCOMES.includes(item.outcome)) {
+        skipped += 1;
+        return item;
       }
-      return item;
+
+      changed += 1;
+      return {
+        ...item,
+        outcome,
+        // Mirrors updateInspectionItem: N/A is a decision not to inspect.
+        inspected: outcome !== 'not-applicable',
+      };
     });
 
     scrollSafeUpdate('inspectionItems', updatedItems);
+
+    if (skipped > 0) {
+      const label = outcome === 'satisfactory' ? 'satisfactory' : 'N/A';
+      toast.info(`${changed} item${changed === 1 ? '' : 's'} marked ${label}`, {
+        description: `${skipped} item${skipped === 1 ? '' : 's'} with a recorded defect left unchanged`,
+      });
+    }
   };
+
+  const bulkMarkSatisfactory = (sectionId: string) =>
+    bulkSetSectionOutcome(sectionId, 'satisfactory');
+
+  const bulkMarkNotApplicable = (sectionId: string) =>
+    bulkSetSectionOutcome(sectionId, 'not-applicable');
 
   // Global bulk action — fills ONLY items with no outcome yet. Never touches
   // C1/C2/C3/FI/N-A/LIM/N-V/satisfactory already recorded, so it is
@@ -489,9 +584,16 @@ const EICRInspectionChecklist = ({
       return;
     }
 
+    // Clear genuinely means clear, defects included — unlike "All OK" this
+    // chip is an explicit reset. So the observations raised from those items
+    // go with them, rather than being left behind with nothing on the
+    // checklist to explain them.
+    const clearedIds = new Set<string>();
+
     const updatedItems = items.map((item) => {
       const isInSection = section.items.some((sItem) => sItem.id === item.id);
       if (isInSection) {
+        clearedIds.add(item.id);
         return {
           ...item,
           outcome: '' as const, // Clear to empty string
@@ -503,6 +605,7 @@ const EICRInspectionChecklist = ({
     });
 
     scrollSafeUpdate('inspectionItems', updatedItems);
+    pruneObservationsForItems(clearedIds);
   };
 
   // Initialize inspection items if not already present or if count mismatch
@@ -628,6 +731,7 @@ const EICRInspectionChecklist = ({
           onNavigateToObservations={handleNavigateToObservations}
           onAutoCreateObservation={autoCreateObservation}
           onBulkMarkSatisfactory={bulkMarkSatisfactory}
+          onBulkMarkNotApplicable={bulkMarkNotApplicable}
           onBulkClearSection={bulkClearSection}
           quickMarkMode={quickMarkMode}
         />

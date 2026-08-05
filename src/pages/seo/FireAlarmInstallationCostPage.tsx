@@ -192,7 +192,7 @@ const sections = [
               occupants to evacuate — there is no control panel in the simplest systems.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Commercial (BS 5839 Part 1)</h3>
             <p className="text-white text-sm leading-relaxed">
               Covers all non-domestic premises including offices, shops, factories, hotels, and care
@@ -470,7 +470,7 @@ const sections = [
           in two main parts relevant to electrical contractors:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Part 1: Non-Domestic Premises</h3>
             <p className="text-white text-sm leading-relaxed">
               Covers the design, installation, commissioning, and maintenance of fire detection and
@@ -565,7 +565,7 @@ const sections = [
           for compliance and life safety — not just a few smoke detectors.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

@@ -328,7 +328,7 @@ const sections = [
           Elec-Mate's Defect Code AI makes this instant and accurate. Describe the defect in plain
           English:
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <p className="text-white text-sm leading-relaxed italic">
             "No RCD protection on socket circuit in the kitchen"
           </p>
@@ -339,7 +339,7 @@ const sections = [
             not exceeding 32 A.
           </p>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <p className="text-white text-sm leading-relaxed italic">
             "Domestic property — lighting circuit has no RCD protection"
           </p>

@@ -115,7 +115,7 @@ export default function BathroomElectricalRegsPage() {
                     Zone 0 — underwater lighting in whirlpool baths is the most common example.
                   </p>
                 </div>
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-2xl mb-1">Zone 1</h3>
                   <h4 className="font-bold text-white mb-3">
                     Above the Bath/Shower to 2.25m Height
@@ -194,7 +194,7 @@ export default function BathroomElectricalRegsPage() {
                     </div>
                     <span className="font-bold text-yellow-400 text-lg">IPX7</span>
                   </div>
-                  <div className="flex items-center justify-between p-4 rounded-xl bg-yellow-500/5 border border-yellow-500/20">
+                  <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                     <div>
                       <h4 className="font-bold text-white">Zone 1</h4>
                       <p className="text-white text-sm">Above bath/shower to 2.25m</p>
@@ -367,7 +367,7 @@ export default function BathroomElectricalRegsPage() {
                   </span>
                 </li>
               </ul>
-              <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                   <div>
@@ -518,7 +518,7 @@ export default function BathroomElectricalRegsPage() {
                     approximately 18m) or 10mm² for longer runs. Adequate flow rate for most users.
                   </p>
                 </div>
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-2xl mb-1">9.5 kW</h3>
                   <h4 className="font-bold text-white mb-3">41A at 230V</h4>
                   <p className="text-white text-sm leading-relaxed">

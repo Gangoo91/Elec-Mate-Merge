@@ -91,7 +91,7 @@ export function TaskQuickAdd({ onQuickSave, onExpandForm, onShowTemplates }: Tas
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           placeholder="Add a task…"
-          className="flex-1 h-full bg-transparent text-[15px] text-white placeholder:text-white/40 outline-none touch-manipulation"
+          className="flex-1 h-full bg-transparent text-[15px] text-white placeholder:text-white/25 outline-none touch-manipulation"
         />
 
         {speechSupported && (
@@ -103,7 +103,7 @@ export function TaskQuickAdd({ onQuickSave, onExpandForm, onShowTemplates }: Tas
               'h-9 w-9 flex items-center justify-center rounded-lg touch-manipulation transition-colors shrink-0',
               isListening
                 ? 'bg-red-500 text-white animate-pulse'
-                : 'text-white/55 hover:text-white hover:bg-white/[0.06] active:bg-white/10'
+                : 'text-white hover:bg-white/[0.06] active:bg-white/10'
             )}
           >
             {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
@@ -174,7 +174,7 @@ export function TaskQuickAdd({ onQuickSave, onExpandForm, onShowTemplates }: Tas
                 type="button"
                 onMouseDown={(e) => e.preventDefault()}
                 onClick={onExpandForm}
-                className="text-[12px] font-medium text-white/55 hover:text-white touch-manipulation"
+                className="text-[12px] font-medium text-white hover:text-white touch-manipulation"
               >
                 Full form
               </button>
@@ -183,7 +183,7 @@ export function TaskQuickAdd({ onQuickSave, onExpandForm, onShowTemplates }: Tas
                 type="button"
                 onMouseDown={(e) => e.preventDefault()}
                 onClick={onShowTemplates}
-                className="text-[12px] font-medium text-white/55 hover:text-white touch-manipulation"
+                className="text-[12px] font-medium text-white hover:text-white touch-manipulation"
               >
                 Templates
               </button>

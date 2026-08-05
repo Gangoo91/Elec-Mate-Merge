@@ -44,10 +44,10 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
     [quote.items, quote.settings]
   );
 
-  // CIS / VAT reverse charge figures. Quotes don't apply overhead/profit
-  // (see useQuoteBuilder), so match that here to keep cisT.total === quote.total.
+  // CIS / VAT reverse charge figures. Nothing applies overhead/profit any
+  // more (ELE-1473), so cisT.total === quote.total.
   const cisT = useMemo(
-    () => computeQuoteTotals(quote.items || [], quote.settings, { applyOverheadAndProfit: false }),
+    () => computeQuoteTotals(quote.items || [], quote.settings),
     [quote.items, quote.settings]
   );
 
@@ -533,6 +533,19 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
       {/* Pricing Summary Card */}
       <Card className="glass-premium p-6">
         <div className="space-y-3">
+          {/* ELE-1470 — what is materials and what is labour. Only worth showing
+              once a quote actually mixes the two; a materials-only quote would
+              just be repeating the subtotal back. */}
+          {categoryBreakdowns.filter((b) => b.finalSubtotal !== 0).length > 1 &&
+            categoryBreakdowns
+              .filter((b) => b.finalSubtotal !== 0)
+              .map((b) => (
+                <div key={`sub-${b.category}`} className="flex justify-between text-[12px] text-white">
+                  <span className="capitalize">{b.category}</span>
+                  <span className="tabular-nums">£{b.finalSubtotal.toFixed(2)}</span>
+                </div>
+              ))}
+
           <div className="flex justify-between text-white">
             <span>Subtotal</span>
             <span className="font-medium">£{(quote.subtotal || 0).toFixed(2)}</span>

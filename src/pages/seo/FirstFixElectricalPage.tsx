@@ -194,7 +194,7 @@ const sections = [
           safe zone requirements, and allows the cable to carry its design current without
           overheating.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white mb-3">BS 7671 Safe Zones (Regulation 522.6.202)</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -375,7 +375,7 @@ const sections = [
               to check the cable count does not exceed the 45% fill rate.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Cable Tray and Basket</h3>
             <p className="text-white text-sm leading-relaxed">
               Cable tray (perforated or ladder type) and cable basket are used in commercial and
@@ -537,7 +537,7 @@ const sections = [
           time a mistake is discovered, it often requires opening up walls or ceilings to fix. These
           are the most common first fix errors:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />

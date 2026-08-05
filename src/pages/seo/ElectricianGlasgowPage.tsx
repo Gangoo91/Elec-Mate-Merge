@@ -178,7 +178,7 @@ const sections = [
           <SEOInternalLink href="/part-p-building-regulations">Part P</SEOInternalLink> does
           not apply in Scotland. The regulatory framework is different:
         </p>
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
@@ -401,7 +401,7 @@ const sections = [
               initial survey (ideally an EICR) before any additional work is strongly recommended.
             </p>
           </div>
-          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Modern Developments</h3>
             <p className="text-white text-sm leading-relaxed">
               New-build apartments and houses along the Clyde waterfront (Pacific Quay, Finnieston),
@@ -530,7 +530,7 @@ const sections = [
           experience command a premium.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Users className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

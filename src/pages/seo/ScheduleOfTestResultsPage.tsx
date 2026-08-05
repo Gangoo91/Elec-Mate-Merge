@@ -61,7 +61,7 @@ const sections = [
           </SEOInternalLink>{' '}
           to show both what was observed visually and what was measured by test.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <p className="text-yellow-300 font-semibold mb-2">
             A4:2026 Change — Two Separate Schedules
           </p>
@@ -174,7 +174,7 @@ const sections = [
           The schedule of test results is one of the easiest places for bad habits to show up. Small
           errors here can make an otherwise decent certificate look weak.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />

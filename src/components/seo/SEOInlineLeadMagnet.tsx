@@ -1,5 +1,5 @@
-import { Download, FileText, ShieldCheck } from 'lucide-react';
 import { EmailCaptureForm } from '@/components/landing/EmailCaptureForm';
+import { CARD, LABEL, DIVIDE } from '@/components/seo/seoSurface';
 
 interface SEOInlineLeadMagnetProps {
   /** Headline above the form. Defaults to the BS 7671 A4:2026 cheatsheet offer. */
@@ -36,43 +36,34 @@ export function SEOInlineLeadMagnet({
   };
 
   return (
-    <section
-      aria-labelledby="seo-lead-magnet-heading"
-      className="my-10 rounded-2xl border border-yellow-500/25 bg-gradient-to-br from-yellow-500/[0.06] via-white/[0.02] to-yellow-500/[0.04] p-5 sm:p-7"
-    >
-      <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-yellow-500/15 border border-yellow-500/30">
-          <FileText className="h-5 w-5 text-yellow-400" />
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className="inline-flex items-center gap-2 mb-2 text-[11px] font-medium uppercase tracking-wider text-yellow-300">
-            <Download className="h-3 w-3" />
-            Free download
-          </div>
-          <h3
-            id="seo-lead-magnet-heading"
-            className="text-lg sm:text-xl font-bold text-white leading-snug mb-2"
-          >
-            {headline}
-          </h3>
-          <p className="text-sm text-white/80 leading-relaxed mb-3">{description}</p>
-          <ul className="space-y-1 mb-4">
-            {bullets.map((b) => (
-              <li key={b} className="flex items-start gap-2 text-sm text-white/80">
-                <ShieldCheck className="h-3.5 w-3.5 text-yellow-400 mt-0.5 shrink-0" />
-                <span>{b}</span>
-              </li>
-            ))}
-          </ul>
-          <EmailCaptureForm
-            source="lead_magnet_cheatsheet"
-            placeholder="you@email.com"
-            buttonLabel="Send me the PDF"
-            successMessage="Check your email — the PDF is on its way."
-            onSuccess={handleSuccess}
-            compact
-          />
-        </div>
+    <section aria-labelledby="seo-lead-magnet-heading" className={`${CARD} my-10 p-5 sm:p-7`}>
+      <p className={`${LABEL} text-amber-300`}>Free download</p>
+      <h3
+        id="seo-lead-magnet-heading"
+        className="mt-2.5 text-[20px] font-bold leading-snug tracking-[-0.015em] text-white sm:text-[23px]"
+      >
+        {headline}
+      </h3>
+      <p className="mt-2 max-w-[58ch] text-[14.5px] leading-relaxed text-white">{description}</p>
+
+      {/* What you get — hairline rows, no tick icons. */}
+      <ul className={`mt-5 border-y border-white/[0.08] ${DIVIDE}`}>
+        {bullets.map((b) => (
+          <li key={b} className="py-2.5 text-[14px] leading-relaxed text-white">
+            {b}
+          </li>
+        ))}
+      </ul>
+
+      <div className="mt-5">
+        <EmailCaptureForm
+          source="lead_magnet_cheatsheet"
+          placeholder="you@email.com"
+          buttonLabel="Send me the PDF"
+          successMessage="Check your email — the PDF is on its way."
+          onSuccess={handleSuccess}
+          compact
+        />
       </div>
     </section>
   );

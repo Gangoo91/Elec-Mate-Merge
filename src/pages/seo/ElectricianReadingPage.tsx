@@ -346,7 +346,7 @@ const sections = [
               checks and 5-yearly EICRs are mandatory.
             </p>
           </div>
-          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">New-Build Estates</h3>
             <p className="text-white text-sm leading-relaxed">
               Reading is expanding with new-build developments in Shinfield, south of the M4, and in
@@ -471,7 +471,7 @@ const sections = [
           Reading has several conservation areas and a major regeneration zone where electrical work
           requires additional consideration:
         </p>
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
@@ -522,7 +522,7 @@ const sections = [
           outstripping supply for qualified electricians.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Briefcase className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

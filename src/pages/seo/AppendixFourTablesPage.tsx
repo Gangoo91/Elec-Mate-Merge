@@ -86,7 +86,7 @@ const sections = [
     heading: 'What Is Appendix 4?',
     content: (
       <>
-        <p className="rounded-xl border border-yellow-500/20 bg-yellow-500/[0.06] px-4 py-3 text-sm">
+        <p className="rounded-xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-4 py-3 text-sm">
           Looking for <strong>Amendment 4</strong> (the A4:2026 update to BS 7671) rather than
           Appendix 4 (the cable tables)? See the{' '}
           <SEOInternalLink href="/guides/bs-7671-amendment-4-2026">
@@ -163,7 +163,7 @@ const sections = [
           &ldquo;4D&rdquo;. Pick the table by what is printed in its heading.
         </p>
         {/* grounded: bs7671_facets context_prefix — Table 4D1A (PVC T+E 70C), 4D5A (XLPE T+E 90C), Reg 521.201 installation method per Table 4A1. */}
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">The tables you will actually use</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li>
@@ -206,7 +206,7 @@ const sections = [
           that differs.
         </p>
         {/* grounded: bs7671_facets — BS 7671:2018+A4:2026 Appendix 4, Table 4D1A (PVC T+E 70°C, Method C) and Table 4D5A (XLPE T+E 90°C, Method C). Iz in amperes. Every value sourced from a per-cable facet. */}
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-1">
             Iz (A) — Method C, two loaded conductors
           </h3>
@@ -294,7 +294,7 @@ const sections = [
           Table 4A2 illustrates each numbered method. The two methods you will meet most often are:
         </p>
         <div className="space-y-4 my-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white mb-1">Method C — clipped direct</h3>
             <p className="text-white text-sm leading-relaxed">
               Cable clipped direct to a non-metallic surface, or run on a cable tray. This is the
@@ -341,7 +341,7 @@ const sections = [
           conductor does not exceed this temperature under sustained full-load conditions at an
           ambient temperature of 30 degrees Celsius.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">Most commonly used PVC tables</h3>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
@@ -376,7 +376,7 @@ const sections = [
           . Column 6 (two loaded conductors) is the standard column for single-phase circuits in
           twin and earth cable under the various reference methods.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
             <div>
               <h3 className="font-bold text-white mb-1">
@@ -434,7 +434,7 @@ const sections = [
               <p className="text-white text-sm font-bold">XLPE 90&deg;C</p>
               <p className="text-white text-xs mt-1">Table 4D5A</p>
             </div>
-            <div className="p-3 rounded-lg bg-yellow-500/5 border border-yellow-500/20 text-center">
+            <div className="p-3 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center">
               <p className="text-yellow-400 font-bold">2.5</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
@@ -443,7 +443,7 @@ const sections = [
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white font-bold">30</p>
             </div>
-            <div className="p-3 rounded-lg bg-yellow-500/5 border border-yellow-500/20 text-center">
+            <div className="p-3 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center">
               <p className="text-yellow-400 font-bold">4.0</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
@@ -452,7 +452,7 @@ const sections = [
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
               <p className="text-white font-bold">40</p>
             </div>
-            <div className="p-3 rounded-lg bg-yellow-500/5 border border-yellow-500/20 text-center">
+            <div className="p-3 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center">
               <p className="text-yellow-400 font-bold">6.0</p>
             </div>
             <div className="p-3 rounded-lg bg-white/[0.04] border border-white/10 text-center">
@@ -491,7 +491,7 @@ const sections = [
             VD = voltage drop (volts) | I<sub>b</sub> = design current (A) | L = cable length (m)
           </p>
         </div>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <div className="flex items-start gap-3">
             <div>
               {/* grounded: bs7671_facets — Reg 525.202/525.203 (A4:2026) cite "Appendix 4, Section 6.4" for voltage drop. */}
@@ -541,7 +541,7 @@ const sections = [
           Appendix 4 tables.
         </p>
         <div className="space-y-4 my-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <div>
                 <h3 className="font-bold text-white mb-1">Twin and Earth (T&amp;E)</h3>
@@ -573,7 +573,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <div>
                 <h3 className="font-bold text-white mb-1">SWA (Steel Wire Armoured)</h3>
@@ -704,7 +704,7 @@ const sections = [
           Reference Method C (clipped direct), two loaded conductors. For PVC (70&deg;C) T+E use
           Table 4D1A — values are lower (e.g. 2.5mm&sup2;=24A, 4mm&sup2;=32A, 6mm&sup2;=41A).
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">
             Table 4D5A — XLPE T+E 90&deg;C, Method C, 2 Loaded Conductors
           </h3>

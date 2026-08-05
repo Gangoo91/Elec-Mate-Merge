@@ -117,7 +117,7 @@ export default function PowerConsumptionCalculatorPage() {
                 The conversion from wattage to kilowatt-hours is straightforward but is the most
                 commonly requested calculation in energy assessment:
               </p>
-              <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4 text-center">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4 text-center">
                 <p className="text-xl font-mono font-bold text-yellow-400">
                   kWh = (Watts x Hours) / 1000
                 </p>

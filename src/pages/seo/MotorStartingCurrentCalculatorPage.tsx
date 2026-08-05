@@ -118,7 +118,7 @@ export default function MotorStartingCurrentCalculatorPage() {
                 motor terminals through a contactor. The motor draws its full starting current and
                 produces its full starting torque.
               </p>
-              <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
                 <h3 className="font-bold text-white text-lg mb-3">DOL Starting Characteristics</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
@@ -288,7 +288,7 @@ export default function MotorStartingCurrentCalculatorPage() {
                 fixed-frequency mains supply to a variable-frequency, variable-voltage output,
                 allowing the motor speed to be controlled from zero to full speed and beyond.
               </p>
-              <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
                 <h3 className="font-bold text-white text-lg mb-3">VFD Starting Characteristics</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">

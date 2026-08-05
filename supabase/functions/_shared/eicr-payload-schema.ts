@@ -863,6 +863,10 @@ export const eicrPayloadSchema = z
     main_switch_rating: s,
     main_switch_poles: s,
     main_switch_voltage_rating: s,
+    // ELE-1436 — these two had no flat root entry, so the BS EN and Type the
+    // electrician entered never reached the template.
+    main_switch_bs_en: s,
+    main_switch_type: s,
     fuse_device_rating: s,
     breaking_capacity: s,
     service_entry: s,

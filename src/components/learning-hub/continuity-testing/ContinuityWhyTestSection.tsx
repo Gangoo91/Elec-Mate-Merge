@@ -187,7 +187,7 @@ const ContinuityWhyTestSection = ({ onBack }: Props) => {
                 onClick={() => toggle(section.id)}
                 className="w-full text-left touch-manipulation active:scale-[0.99] transition-transform"
               >
-                <div className={`relative rounded-2xl bg-white/[0.07] border ${isOpen ? colours.border : 'border-white/[0.08]'} overflow-hidden transition-colors`}>
+                <div className={`relative rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border ${isOpen ? colours.border : 'border-white/[0.08]'} overflow-hidden transition-colors`}>
                   <div className={`absolute inset-x-0 top-0 h-[2px] ${colours.bar}`} />
                   <div className={`absolute left-0 top-0 bottom-0 w-1 ${colours.bar} rounded-l-2xl`} />
                   <div className="p-4 flex items-center gap-3">
@@ -232,7 +232,7 @@ const ContinuityWhyTestSection = ({ onBack }: Props) => {
                 onClick={() => toggleCase(i)}
                 className="w-full text-left touch-manipulation active:scale-[0.99] transition-transform"
               >
-                <div className={`relative rounded-2xl bg-white/[0.07] border ${isOpen ? 'border-white/[0.15]' : 'border-white/[0.08]'} overflow-hidden transition-colors`}>
+                <div className={`relative rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border ${isOpen ? 'border-white/[0.15]' : 'border-white/[0.08]'} overflow-hidden transition-colors`}>
                   <div className="absolute left-0 top-0 bottom-0 w-1 bg-purple-500/50 rounded-l-2xl" />
                   <div className="p-4 flex items-center gap-3">
                     <div className="flex-1 min-w-0">
@@ -255,16 +255,16 @@ const ContinuityWhyTestSection = ({ onBack }: Props) => {
                     className="overflow-hidden"
                   >
                     <div className="pt-2 px-1 pb-1 space-y-1.5">
-                      <div className="rounded-xl bg-white/[0.05] p-3">
+                      <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
                         <p className="text-[12px] text-red-400"><span className="font-semibold">Fault:</span> {cs.fault}</p>
                       </div>
-                      <div className="rounded-xl bg-white/[0.05] p-3">
+                      <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
                         <p className="text-[12px] text-red-400"><span className="font-semibold">Consequence:</span> {cs.consequence}</p>
                       </div>
-                      <div className="rounded-xl bg-white/[0.05] p-3">
+                      <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
                         <p className="text-[12px] text-green-400"><span className="font-semibold">Detection:</span> {cs.detection}</p>
                       </div>
-                      <div className="rounded-xl bg-white/[0.05] p-3">
+                      <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
                         <p className="text-[12px] text-blue-400"><span className="font-semibold">Outcome:</span> {cs.outcome}</p>
                       </div>
                     </div>
@@ -285,7 +285,7 @@ function renderSectionContent(section: any, colours: { bar: string; heading: str
     return (
       <div className="space-y-2">
         {section.items.map((item: any, i: number) => (
-          <div key={i} className="rounded-xl bg-white/[0.05] p-3">
+          <div key={i} className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
             <p className="text-[13px] font-semibold text-white">{item.heading}</p>
             <p className="text-[12px] text-white mt-1 leading-relaxed">{item.body}</p>
           </div>
@@ -300,7 +300,7 @@ function renderSectionContent(section: any, colours: { bar: string; heading: str
       <div className="space-y-2">
         <p className="text-[12px] text-white font-medium px-1">{c.intro}</p>
         {c.columns.map((col, i) => (
-          <div key={i} className="rounded-xl bg-white/[0.05] p-3">
+          <div key={i} className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
             <p className="text-[12px] font-semibold text-blue-400 mb-1.5">{col.heading}</p>
             <div className="space-y-1">
               {col.items.map((item, j) => (
@@ -309,7 +309,7 @@ function renderSectionContent(section: any, colours: { bar: string; heading: str
             </div>
           </div>
         ))}
-        <div className="rounded-xl bg-white/[0.05] p-3">
+        <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
           <p className="text-[12px] font-semibold text-green-400 mb-2">{c.physics.heading}</p>
           {c.physics.columns.map((col, i) => (
             <div key={i} className="mb-2 last:mb-0">
@@ -331,12 +331,12 @@ function renderSectionContent(section: any, colours: { bar: string; heading: str
     return (
       <div className="space-y-2">
         <p className="text-[12px] text-white font-medium px-1">{c.intro}</p>
-        <div className="rounded-xl bg-white/[0.05] p-3 space-y-1">
+        <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 space-y-1">
           {c.failureModes.map((mode, i) => (
             <p key={i} className="text-[12px] text-white">- {mode}</p>
           ))}
         </div>
-        <div className="rounded-xl bg-white/[0.05] p-3">
+        <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
           <p className="text-[12px] font-semibold text-red-400 mb-1.5">Consequences of Inadequate Continuity</p>
           <p className="text-[12px] font-semibold text-white mb-1">Immediate Dangers:</p>
           <div className="space-y-0.5 mb-2">
@@ -359,7 +359,7 @@ function renderSectionContent(section: any, colours: { bar: string; heading: str
     const c = section.content;
     return (
       <div className="space-y-2">
-        <div className="rounded-xl bg-white/[0.05] p-3">
+        <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
           <p className="text-[12px] font-semibold text-amber-400 mb-1.5">Bonding Defects:</p>
           <div className="space-y-0.5">
             {c.defects.bonding.map((item: string, i: number) => (
@@ -367,7 +367,7 @@ function renderSectionContent(section: any, colours: { bar: string; heading: str
             ))}
           </div>
         </div>
-        <div className="rounded-xl bg-white/[0.05] p-3">
+        <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
           <p className="text-[12px] font-semibold text-orange-400 mb-1.5">Ring Circuit Defects:</p>
           <div className="space-y-0.5">
             {c.defects.ring.map((item: string, i: number) => (
@@ -375,7 +375,7 @@ function renderSectionContent(section: any, colours: { bar: string; heading: str
             ))}
           </div>
         </div>
-        <div className="rounded-xl bg-white/[0.05] p-3">
+        <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
           <p className="text-[12px] font-semibold text-red-400 mb-1.5">Radial Circuit Defects:</p>
           <div className="space-y-0.5">
             {c.defects.radial.map((item: string, i: number) => (
@@ -391,7 +391,7 @@ function renderSectionContent(section: any, colours: { bar: string; heading: str
     const c = section.content;
     return (
       <div className="space-y-2">
-        <div className="rounded-xl bg-white/[0.05] p-3">
+        <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
           <p className="text-[12px] font-semibold text-white mb-1.5">UK Legal and Standards Framework:</p>
           <div className="space-y-1">
             {c.legal.map((item, i) => (
@@ -399,7 +399,7 @@ function renderSectionContent(section: any, colours: { bar: string; heading: str
             ))}
           </div>
         </div>
-        <div className="rounded-xl bg-white/[0.05] p-3">
+        <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
           <p className="text-[12px] font-semibold text-white mb-1.5">Professional Standards:</p>
           <div className="space-y-1">
             {c.professional.map((item, i) => (
@@ -407,7 +407,7 @@ function renderSectionContent(section: any, colours: { bar: string; heading: str
             ))}
           </div>
         </div>
-        <div className="rounded-xl bg-white/[0.05] p-3">
+        <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
           <p className="text-[12px] font-semibold text-yellow-400 mb-1.5">Certification Requirements:</p>
           <p className="text-[12px] font-semibold text-white mb-1">Initial Verification:</p>
           <div className="space-y-0.5 mb-2">

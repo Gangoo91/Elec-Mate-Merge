@@ -133,7 +133,7 @@ const sections = [
           situations.
         </p>
         <div className="space-y-4 my-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">
               Construction Sites (110V and 230V)
             </h3>
@@ -300,7 +300,7 @@ const sections = [
           fundamentally different ways they provide protection against electric shock.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">Class I (Earthed)</h3>
             <p className="text-white text-sm leading-relaxed">
               Class I equipment has a metal enclosure (or accessible metal parts) connected to earth
@@ -399,7 +399,7 @@ const sections = [
       <>
         <p>The IET Code of Practice distinguishes between three levels of inspection:</p>
         <div className="space-y-4 my-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">User Check</h3>
             <p className="text-white text-sm leading-relaxed">
               A simple visual check carried out by the person using the equipment. No training is

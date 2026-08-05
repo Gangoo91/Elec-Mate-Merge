@@ -275,7 +275,7 @@ const sections = [
           In practice, Regulation 314.2 is the one that drives the everyday separation decisions
           below — the situations where giving a load its own circuit is not optional:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -480,7 +480,7 @@ const sections = [
             </div>
           </div>
         </div>
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
             <p className="text-white text-sm">

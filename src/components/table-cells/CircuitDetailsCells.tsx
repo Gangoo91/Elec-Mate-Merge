@@ -11,6 +11,7 @@ import { TestResult } from '@/types/testResult';
 import { referenceMethodOptions } from '@/types/cableTypes';
 import { EnhancedValidatedInput } from './EnhancedValidatedInput';
 import { getSpareCircuitFields } from '@/utils/spareCircuitFields';
+import { isSpareCircuit } from '@/utils/spareWays';
 
 interface CircuitDetailsCellsProps {
   result: TestResult;
@@ -29,8 +30,10 @@ const CircuitDetailsCellsComponent: React.FC<CircuitDetailsCellsProps> = ({
   // so they don't have to find the right-hand "Spare" button on a 30-col table.
   const handleDescriptionCommit = React.useCallback(
     (value: string) => {
-      const normalised = (value || '').trim().toLowerCase();
-      if (normalised !== 'spare' && normalised !== 'spare way') return;
+      // One definition of "spare" (utils/spareWays) — this used to be an exact
+      // match on 'spare'/'spare way', so "Spare - future use" or "Spare 8" did
+      // not cascade the N/As, and bulk fill treated them differently again.
+      if (!isSpareCircuit({ circuitDescription: value })) return;
       if (!onBulkUpdate) return;
       onBulkUpdate(result.id, getSpareCircuitFields() as Partial<TestResult>);
     },

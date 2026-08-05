@@ -45,7 +45,7 @@ const QuickLinksPage = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               Key regulations grouped by test type and special location. Each test page in the I&amp;T Hub has its own detailed regulations section — these links show which regulations apply to each test at a glance.
             </p>
@@ -53,12 +53,12 @@ const QuickLinksPage = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Regulations by Test Type</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Regulations by Test Type</p>
         </motion.div>
 
         {testRegLinks.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-sm font-semibold text-white mb-2">{item.test}</p>
               <div className="space-y-1">
                 {item.regs.map((reg, j) => (
@@ -73,12 +73,12 @@ const QuickLinksPage = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Special Locations — Part 7 &amp; 8</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Special Locations — Part 7 &amp; 8</p>
         </motion.div>
 
         {specialLocationRegs.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-sm font-semibold text-white">{item.location}</p>
               <p className="text-sm text-white mt-1">{item.key}</p>
             </div>

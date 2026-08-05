@@ -183,7 +183,7 @@ const sections = [
           on any UK construction site, and the principal contractor has a legal duty under CDM 2015
           to ensure they are applied.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <p className="text-white text-sm leading-relaxed">
             <strong>BS 7671:2018+A4:2026.</strong> The current edition of the wiring regulations is
             BS 7671:2018+A4:2026 — not A2:2022. Key A4:2026 changes relevant to construction sites
@@ -536,7 +536,7 @@ const sections = [
           Construction site temporary installations are subject to constant abuse, modification, and
           environmental exposure. Common defects found during quarterly inspections include:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -608,7 +608,7 @@ const sections = [
         </p>
         <p>Elec-Mate is designed for exactly this workflow:</p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

@@ -139,7 +139,7 @@ export default function SolarPanelSizingCalculatorPage() {
                 The kWp calculation starts with either the available roof space or the desired
                 annual generation. Working from roof space:
               </p>
-              <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4 text-center">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4 text-center">
                 <p className="text-xl font-mono font-bold text-yellow-400">
                   Number of panels = Available area / Panel area
                 </p>
@@ -361,7 +361,7 @@ export default function SolarPanelSizingCalculatorPage() {
                 total generation capacity:
               </p>
               <div className="grid gap-4 sm:grid-cols-2 my-4">
-                <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+                <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
                   <h4 className="font-bold text-yellow-400 text-lg mb-2">G98 — Simplified</h4>
                   <p className="text-white text-sm mb-2">For systems up to and including:</p>
                   <ul className="space-y-1 text-white text-sm">
@@ -373,7 +373,7 @@ export default function SolarPanelSizingCalculatorPage() {
                     pre-approval required.
                   </p>
                 </div>
-                <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+                <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
                   <h4 className="font-bold text-yellow-400 text-lg mb-2">G99 — Full Application</h4>
                   <p className="text-white text-sm mb-2">For systems exceeding:</p>
                   <ul className="space-y-1 text-white text-sm">
@@ -409,7 +409,7 @@ export default function SolarPanelSizingCalculatorPage() {
           heading: 'DC-Side Safety — Critical Considerations for Electricians',
           content: (
             <>
-              <div className="rounded-2xl bg-red-500/10 border border-red-500/30 p-5 mb-4">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 mb-4">
                 <p className="font-semibold text-red-300 mb-2">
                   Safety Warning — DC Strings Remain Live After AC Isolation
                 </p>

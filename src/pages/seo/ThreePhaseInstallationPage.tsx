@@ -254,7 +254,7 @@ const sections = [
           particularly dangerous in older installations where the neutral may be undersized relative
           to the phase conductors.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white mb-3">Practical Load Balancing Strategy</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">

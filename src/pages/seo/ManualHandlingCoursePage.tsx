@@ -212,7 +212,7 @@ export default function ManualHandlingCoursePage() {
       <section className="relative py-16 sm:py-24 px-5 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
             <ShieldCheck className="w-4 h-4 text-yellow-400" />
             <span className="text-sm font-medium text-yellow-400">
               Manual Handling Operations Regulations 1992
@@ -293,7 +293,7 @@ export default function ManualHandlingCoursePage() {
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-              <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 mb-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 mb-3">
                 T
               </div>
               <h3 className="font-bold text-white text-lg mb-2">Task</h3>
@@ -306,7 +306,7 @@ export default function ManualHandlingCoursePage() {
               </p>
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-              <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 mb-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 mb-3">
                 I
               </div>
               <h3 className="font-bold text-white text-lg mb-2">Individual</h3>
@@ -319,7 +319,7 @@ export default function ManualHandlingCoursePage() {
               </p>
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-              <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 mb-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 mb-3">
                 L
               </div>
               <h3 className="font-bold text-white text-lg mb-2">Load</h3>
@@ -332,7 +332,7 @@ export default function ManualHandlingCoursePage() {
               </p>
             </div>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-              <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 mb-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 mb-3">
                 E
               </div>
               <h3 className="font-bold text-white text-lg mb-2">Environment</h3>
@@ -398,7 +398,7 @@ export default function ManualHandlingCoursePage() {
                 key={item.step}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                   {index + 1}
                 </div>
                 <div>
@@ -486,7 +486,7 @@ export default function ManualHandlingCoursePage() {
                 key={mod.number}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                   {mod.number}
                 </div>
                 <div>

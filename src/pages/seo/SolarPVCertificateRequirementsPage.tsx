@@ -403,7 +403,7 @@ const sections = [
           MCS installation certification).
         </p>
         <p>The MCS certificate is critical because it enables the customer to:</p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -595,14 +595,14 @@ const sections = [
                 <td className="px-4 py-3">Earthing &amp; bonding verification</td>
                 <td className="px-4 py-3">Main earthing terminal; bonding of metallic mounting frame where required</td>
               </tr>
-              <tr className="bg-yellow-500/[0.06]">
+              <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                 <td className="px-4 py-3 font-medium text-yellow-300 align-top" rowSpan={2}>
                   Inverter
                 </td>
                 <td className="px-4 py-3">Grid protection settings</td>
                 <td className="px-4 py-3">Verify voltage/frequency trip limits and anti-islanding; factory defaults may not match UK requirements</td>
               </tr>
-              <tr className="bg-yellow-500/[0.06]">
+              <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                 <td className="px-4 py-3">Record serial number &amp; firmware</td>
                 <td className="px-4 py-3">For warranty, traceability and future settings audits</td>
               </tr>
@@ -767,7 +767,7 @@ const sections = [
                 <td className="px-4 py-3">2–10 years</td>
                 <td className="px-4 py-3">The installation work, set by the installer</td>
               </tr>
-              <tr className="bg-yellow-500/[0.06]">
+              <tr className="bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                 <td className="px-4 py-3 font-medium">Insurance-backed guarantee (IBG)</td>
                 <td className="px-4 py-3">Matches workmanship term</td>
                 <td className="px-4 py-3">Honours the workmanship warranty if the installer ceases to trade — an MCS benefit</td>

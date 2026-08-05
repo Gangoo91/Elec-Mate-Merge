@@ -309,7 +309,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <p className="font-semibold text-white mb-3">Disadvantages of tethered chargers</p>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -380,7 +380,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <p className="font-semibold text-white mb-3">Disadvantages of untethered chargers</p>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -601,7 +601,7 @@ const sections = [
           knowledgeable installer rather than just a fitter.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

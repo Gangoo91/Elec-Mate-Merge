@@ -436,7 +436,7 @@ const sections = [
           unidirectional devices — but its implications are significant for everyday installation
           work.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-4">
             <div>
               <h4 className="font-bold text-white mb-2">
@@ -623,7 +623,7 @@ const sections = [
           Elec-Mate helps you stay current:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <div>
                 <h4 className="font-bold text-white mb-1">AI Regulation Lookup</h4>

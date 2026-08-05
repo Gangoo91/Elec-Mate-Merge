@@ -106,7 +106,7 @@ export default function ElectricalSafetyAuditPage() {
                 workplace electrical safety.
               </p>
               <div className="grid gap-4 sm:grid-cols-2 mt-6">
-                <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+                <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
                   <div className="flex items-center gap-2 mb-3">
                     <Search className="w-5 h-5 text-yellow-400" />
                     <h3 className="font-bold text-white text-lg">Inspection</h3>
@@ -377,7 +377,7 @@ export default function ElectricalSafetyAuditPage() {
                 date.
               </p>
               <div className="space-y-4 mt-6">
-                <div className="rounded-2xl bg-red-500/5 border border-red-500/20 p-5">
+                <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
                   <div className="flex items-center gap-2 mb-3">
                     <AlertTriangle className="w-5 h-5 text-red-400" />
                     <h3 className="font-bold text-white text-lg">Critical (Immediate Action)</h3>
@@ -390,7 +390,7 @@ export default function ElectricalSafetyAuditPage() {
                     equipment or restricting access.
                   </p>
                 </div>
-                <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+                <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
                   <div className="flex items-center gap-2 mb-3">
                     <AlertTriangle className="w-5 h-5 text-yellow-400" />
                     <h3 className="font-bold text-white text-lg">Major (Urgent Action)</h3>

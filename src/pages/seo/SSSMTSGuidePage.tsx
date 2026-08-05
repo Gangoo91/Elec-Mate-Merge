@@ -256,7 +256,7 @@ const sections = [
               <li>Group exercises and continuous assessment</li>
             </ul>
           </div>
-          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">SMSTS</h3>
             <ul className="space-y-2 text-white text-sm">
               <li>5-day course</li>
@@ -394,11 +394,11 @@ const sections = [
               <span className="text-white font-medium">SSSTS-R (refresher)</span>
               <span className="text-white">1 day | 150-250 pounds</span>
             </div>
-            <div className="flex items-center justify-between p-3 rounded-lg bg-amber-500/10">
+            <div className="flex items-center justify-between p-3 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
               <span className="text-white font-medium">SMSTS (full course)</span>
               <span className="text-white">5 days | 400-700 pounds</span>
             </div>
-            <div className="flex items-center justify-between p-3 rounded-lg bg-amber-500/10">
+            <div className="flex items-center justify-between p-3 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
               <span className="text-white font-medium">SMSTS-R (refresher)</span>
               <span className="text-white">2 days | 250-400 pounds</span>
             </div>

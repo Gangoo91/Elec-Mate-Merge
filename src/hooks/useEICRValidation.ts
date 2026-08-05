@@ -178,9 +178,22 @@ export const useEICRValidation = (formData: any): EICRValidationResult => {
     const observationC1C2 = observations.filter(
       (o) => o.defectCode === 'C1' || o.defectCode === 'C2'
     );
-    const blockingCount = c1Items.length + c2Items.length + observationC1C2.filter(
-      (o) => !o.inspectionItemId
-    ).length;
+    // A linked observation is normally the same finding as its checklist item,
+    // so counting both would double-report it. It stops being a duplicate the
+    // moment the item no longer carries C1/C2 — a bulk action that overwrites
+    // the outcome leaves the observation behind, and the formatter still prints
+    // it. Filtering purely on `!inspectionItemId` made that orphan invisible
+    // here while it stayed visible on the certificate, which is how an EICR can
+    // read Satisfactory on the front page and list a C2 in the observations
+    // table. Dedupe against the outcomes that actually exist, not against the
+    // presence of a link.
+    const codedItemIds = new Set([...c1Items, ...c2Items].map((i) => i.id));
+    const blockingCount =
+      c1Items.length +
+      c2Items.length +
+      observationC1C2.filter(
+        (o) => !o.inspectionItemId || !codedItemIds.has(o.inspectionItemId)
+      ).length;
     if (blockingCount > 0 && formData.overallAssessment === 'satisfactory') {
       errors.push({
         field: 'overallAssessment',

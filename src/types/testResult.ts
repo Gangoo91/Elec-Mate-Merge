@@ -95,6 +95,11 @@ export interface TestResult {
    * For 1P boards, null.
    */
   phaseAssignment?: 'L1' | 'L2' | 'L3' | 'L1,L2,L3' | null;
+  /**
+   * True when this row is a spare way — an empty position with no circuit in
+   * it. Set by the board scanner; bulk fill skips these (see utils/spareWays).
+   */
+  isSpare?: boolean;
   /** Per-board way number — independent of the global circuitNumber. */
   wayNumber?: number | null;
   phaseRotation?: string; // Phase sequence test (L1-L2-L3 clockwise)

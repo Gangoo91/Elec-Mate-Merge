@@ -172,7 +172,7 @@ const sections = [
           Ohm's law is the foundation of electrical science. It describes the relationship between
           three quantities that you will work with every day:
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4 text-center">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4 text-center">
           <p className="text-2xl font-bold text-white mb-2">V = I x R</p>
           <p className="text-white text-sm">
             Voltage (V, volts) = Current (I, amps) x Resistance (R, ohms)
@@ -225,7 +225,7 @@ const sections = [
           consumes. Combined with Ohm's law, it gives you a complete toolkit for analysing any
           circuit.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4 text-center">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4 text-center">
           <p className="text-2xl font-bold text-white mb-2">P = V x I</p>
           <p className="text-white text-sm">
             Power (P, watts) = Voltage (V, volts) x Current (I, amps)
@@ -355,7 +355,7 @@ const sections = [
           across the cable, meaning the voltage at the load is lower than the voltage at the supply.
           This is voltage drop, and it is calculated using a version of Ohm's law:
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4 text-center">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4 text-center">
           <p className="text-xl font-bold text-white mb-2">
             Voltage Drop = (mV/A/m x Ib x L) / 1000
           </p>
@@ -567,7 +567,7 @@ const sections = [
           pace.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

@@ -346,7 +346,7 @@ const sections = [
               and which meter serves which flat is often the first challenge.
             </p>
           </div>
-          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Basement Conversions</h3>
             <p className="text-white text-sm leading-relaxed">
               Basement and cellar conversions are increasingly popular in London (especially in
@@ -421,7 +421,7 @@ const sections = [
           London has over 1,000 conservation areas and thousands of listed buildings. Electrical
           work in these properties requires additional planning:
         </p>
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
@@ -519,7 +519,7 @@ const sections = [
           are significant and must be factored into your pricing.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <PoundSterling className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

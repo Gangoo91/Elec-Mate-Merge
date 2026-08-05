@@ -99,7 +99,7 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-4">The Two Main Routes</h3>
           <div className="space-y-4">
             <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center shrink-0">
                 <GraduationCap className="w-5 h-5 text-yellow-400" />
               </div>
               <div>
@@ -542,7 +542,7 @@ const sections = [
           depending on the route you choose. Here is a direct comparison.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-6">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Apprenticeship Route</h3>
             <ul className="space-y-2 text-white text-sm">
               <li>

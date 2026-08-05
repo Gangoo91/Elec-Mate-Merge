@@ -22,10 +22,11 @@ import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOMockExam, type SEOMockExamQuestion } from '@/components/seo/SEOMockExam';
 import useSEO from '@/hooks/useSEO';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ChevronRight, ChevronDown } from 'lucide-react';
 import { getRelatedMockExams, MOCK_EXAM_CATALOG } from '@/components/seo/mockExamCatalog';
 import { getTopicsForExam } from '@/components/seo/mockExamTopicRegistry';
-import { useMemo } from 'react';
+import { SEOStickyMobileCTA } from '@/components/seo/SEOStickyMobileCTA';
+import { PANEL, LABEL } from '@/components/seo/seoSurface';
+import { useCallback, useMemo, useState } from 'react';
 
 interface PublicMockExamPageProps {
   /** SEO <title> — appended with " | Elec-Mate" by useSEO. */
@@ -49,7 +50,7 @@ interface PublicMockExamPageProps {
 
 // Last edit of this template — bumps date-modified on every page that
 // uses it. Update when the schema or template structure changes.
-const TEMPLATE_DATE_MODIFIED = '2026-05-25';
+const TEMPLATE_DATE_MODIFIED = '2026-08-05';
 
 // Evergreen 3-Q FAQ — visible AND emitted as JSON-LD. Same 3 Qs across
 // every page is fine because the schema's content reflects what's on
@@ -86,6 +87,24 @@ export function PublicMockExamPage({
   breadcrumbLabel = 'Mock exam',
 }: PublicMockExamPageProps) {
   const canonical = `https://www.elec-mate.com/mock-exams/${slug}`;
+
+  // Sticky mobile CTA is held back until the exam is submitted — mid-exam it
+  // would be pestering someone through the most valuable minutes on the site.
+  // Stable identity so it doesn't re-create the exam's submit callback (and
+  // with it the countdown timeout) on every parent render.
+  const [examSubmitted, setExamSubmitted] = useState(false);
+  const [examActive, setExamActive] = useState(false);
+  const handleExamSubmitted = useCallback(() => {
+    setExamSubmitted(true);
+    setExamActive(false);
+  }, []);
+  // While the clock is running, everything below the exam is hidden. A timed
+  // assessment should not share the page with a list of links out of it.
+  const handleExamStarted = useCallback(() => {
+    setExamActive(true);
+    setExamSubmitted(false);
+  }, []);
+  const preStart = !examActive && !examSubmitted;
 
   // Topic pages get a 4-level breadcrumb (Home → Mock Exams → Exam →
   // Topic). The exam name comes from the catalog so we don't pass it
@@ -234,146 +253,161 @@ export function PublicMockExamPage({
           {/* Breadcrumb back link — goes to parent exam on topic pages,
               hub otherwise. Single line; the JSON-LD breadcrumb above
               carries the full hierarchy for crawlers. */}
-          <nav aria-label="Breadcrumb" className="mb-6 sm:mb-8">
+          <nav aria-label="Breadcrumb" className="mb-7 sm:mb-9">
             <Link
               to={parentExam ? `/mock-exams/${parentExamSlug}` : '/mock-exams'}
-              className="inline-flex items-center gap-1.5 text-[13px] font-medium text-yellow-400 hover:text-yellow-300 touch-manipulation"
+              className="inline-flex h-11 touch-manipulation items-center text-[13px] font-semibold text-elec-yellow"
             >
-              <ArrowLeft className="w-3.5 h-3.5" />
               {parentExam ? `Back to ${parentExam.title}` : 'All free mock exams'}
             </Link>
           </nav>
 
-          {/* Header — eyebrow + H1 + intro. Constrain the text column to
-              max-w-3xl so the intro paragraph stays readable on desktop
-              even though the page wrapper is 5xl wide. Bigger H1 on lg+
-              so it has presence on big monitors without sprawling. */}
-          <header className="mb-10 sm:mb-12 max-w-3xl">
-            <p className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-yellow-400">
-              Free mock exam
-            </p>
-            <h1 className="mt-2 text-[28px] sm:text-[40px] lg:text-[48px] font-bold text-white leading-[1.05] tracking-tight">
-              {heading}
-            </h1>
-            <p className="mt-5 text-[15px] sm:text-[17px] text-white/75 leading-relaxed">{intro}</p>
-          </header>
+          {/* Header + exam sit side by side on desktop BEFORE the exam starts.
+              Stacked, the header left a dead right-hand column on every wide
+              screen and pushed the Start button below the fold. Once an
+              attempt is running (or finished) the exam takes the full width —
+              a question paper and a results breakdown both need it. */}
+          <div
+            className={
+              preStart
+                ? 'lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-start lg:gap-14'
+                : ''
+            }
+          >
+            <header className={preStart ? 'mb-11 sm:mb-12 lg:mb-0' : 'mb-11 max-w-3xl sm:mb-14'}>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-elec-yellow">
+                Free mock exam
+              </p>
+              <h1 className="mt-3 text-[32px] font-bold leading-[1.02] tracking-[-0.035em] text-white sm:text-[44px] lg:text-[52px]">
+                {heading}
+              </h1>
+              <p className="mt-5 max-w-[58ch] text-[15.5px] leading-relaxed text-white sm:text-[17px]">
+                {intro}
+              </p>
+            </header>
 
-          {/* The exam — stats, CTA, sample Qs, active state, results, conversion */}
-          <SEOMockExam
-            examName={heading}
-            questionBank={questionBank}
-            questionsPerExam={questionsPerExam}
-            timeLimitMinutes={timeLimitMinutes}
-            passThreshold={passThreshold}
-            signupCta={{
-              label: 'Start Free Trial',
-              href: `/auth/signup?ref=mock-exam-${slug.replace(/\//g, '-')}`,
-              subline: 'Free trial · no charge until day 8 · cancel anytime',
-            }}
-          />
+            {/* The exam — spec rows, CTA, sample Qs, active state, results */}
+            <div className="min-w-0">
+              <SEOMockExam
+                examName={heading}
+                questionBank={questionBank}
+                questionsPerExam={questionsPerExam}
+                timeLimitMinutes={timeLimitMinutes}
+                passThreshold={passThreshold}
+                signupCta={{
+                  label: 'Start Free Trial',
+                  href: `/auth/signup?ref=mock-exam-${slug.replace(/\//g, '-')}`,
+                  subline: 'Free trial · no charge until day 8 · cancel anytime',
+                }}
+                onSubmitted={handleExamSubmitted}
+                onStarted={handleExamStarted}
+              />
+            </div>
+          </div>
+
+          {/* Post-result sticky CTA — mobile only, 58% of our search clicks.
+              appearAfterScroll 0 because by submit time the user is already
+              deep in the page and we want it immediately. */}
+          {examSubmitted && (
+            <SEOStickyMobileCTA
+              label="Practise your weak topics"
+              href={`/auth/signup?ref=mock-exam-${slug.replace(/\//g, '-')}`}
+              appearAfterScroll={0}
+              dismissKey="seo-sticky-cta-mock-exam-v1"
+            />
+          )}
 
           {/* Practice by topic — only on the parent exam page. Links to
               /mock-exams/<slug>/<topic-slug> drill-down landings. These
               are real indexable pages with topic-specific copy + a
               filtered bank, so they catch long-tail SERP queries like
               "AM2 safe isolation practice questions". */}
-          {topics.length > 0 && (
-            <nav
-              aria-labelledby="topic-heading"
-              className="mt-10 pt-8 border-t border-white/[0.08]"
-            >
-              <h2
-                id="topic-heading"
-                className="text-[13px] font-semibold uppercase tracking-[0.18em] text-yellow-400 mb-3"
-              >
-                Practice by topic
+          {/* Page furniture — hidden while an attempt is in progress so the
+              exam is the only thing on screen. Restored on submit. */}
+          {!examActive && (
+            <>
+            {topics.length > 0 && (
+              <nav aria-labelledby="topic-heading" className="mt-14">
+                <h2 id="topic-heading" className={`${LABEL} mb-3 text-white`}>
+                  Practice by topic
+                </h2>
+                <p className="mb-4 max-w-[60ch] text-[14px] leading-relaxed text-white">
+                  Drill a single topic from this exam — same bank, filtered to one area.
+                </p>
+                <ul className={`${PANEL} divide-y divide-white/[0.08]`}>
+                  {topics.map((t) => (
+                    <li key={t.slug}>
+                      <Link
+                        to={`/mock-exams/${baseExamSlug}/${t.slug}`}
+                        className="flex min-h-[52px] touch-manipulation items-center justify-between gap-4 px-4 py-3 text-white transition-colors hover:bg-white/[0.04] sm:px-5"
+                      >
+                        <span className="text-[15px] font-medium">{t.category}</span>
+                        <span className="shrink-0 text-[13px] tabular-nums text-white">
+                          {t.qCount}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            )}
+
+            {/* Compact FAQ — 3 Qs in a native accordion. Schema above
+                already emits FAQPage so we get the rich-result eligibility
+                without the page bloat. */}
+            <section aria-labelledby="faq-heading" className="mt-14">
+              <h2 id="faq-heading" className={`${LABEL} mb-3 text-white`}>
+                Common questions
               </h2>
-              <p className="text-[13.5px] text-white/65 mb-4 leading-relaxed">
-                Drill a single topic from this exam — same bank, filtered to one area.
-              </p>
-              <ul className="flex flex-wrap gap-2">
-                {topics.map((t) => (
-                  <li key={t.slug}>
+              <div className={`${PANEL} divide-y divide-white/[0.08]`}>
+                {faq.map((f, i) => (
+                  <details key={i} className="group">
+                    <summary className="flex min-h-[52px] cursor-pointer list-none touch-manipulation items-center justify-between gap-4 px-4 py-3.5 sm:px-5">
+                      <span className="flex-1 text-[15px] font-medium leading-snug text-white">
+                        {f.q}
+                      </span>
+                      <span
+                        aria-hidden
+                        className="h-[7px] w-[7px] shrink-0 rotate-45 border-b border-r border-white transition-transform group-open:-rotate-[135deg]"
+                      />
+                    </summary>
+                    <p className="max-w-[62ch] px-4 pb-4 text-[14px] leading-relaxed text-white sm:px-5">
+                      {f.a}
+                    </p>
+                  </details>
+                ))}
+              </div>
+            </section>
+
+            {/* Related strip — internal linking without the section sprawl */}
+            <nav aria-labelledby="related-heading" className="mt-14">
+              <h2 id="related-heading" className={`${LABEL} mb-3 text-white`}>
+                More free mock exams
+              </h2>
+              <ul className={`${PANEL} divide-y divide-white/[0.08]`}>
+                {getRelatedMockExams(slug, 4).map((m) => (
+                  <li key={m.slug}>
                     <Link
-                      to={`/mock-exams/${baseExamSlug}/${t.slug}`}
-                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/[0.04] border border-white/[0.08] hover:border-yellow-500/40 hover:bg-yellow-500/[0.06] text-[13px] font-medium text-white/85 hover:text-yellow-300 transition-colors touch-manipulation"
+                      to={`/mock-exams/${m.slug}`}
+                      className="flex min-h-[52px] touch-manipulation items-center px-4 py-3 text-[15px] font-medium text-white transition-colors hover:bg-white/[0.04] sm:px-5"
                     >
-                      {t.category}
-                      <span className="text-[11px] text-white/40 tabular-nums">{t.qCount}</span>
+                      {m.title}
                     </Link>
                   </li>
                 ))}
-              </ul>
-            </nav>
-          )}
-
-          {/* Compact FAQ — 3 Qs in a native accordion. Schema above
-              already emits FAQPage so we get the rich-result eligibility
-              without the page bloat. */}
-          <section
-            aria-labelledby="faq-heading"
-            className="mt-12 pt-8 border-t border-white/[0.08]"
-          >
-            <h2
-              id="faq-heading"
-              className="text-[13px] font-semibold uppercase tracking-[0.18em] text-yellow-400 mb-3"
-            >
-              FAQ
-            </h2>
-            <div className="space-y-1.5">
-              {faq.map((f, i) => (
-                <details
-                  key={i}
-                  className="group rounded-xl bg-white/[0.03] border border-white/[0.06] open:bg-white/[0.05]"
-                >
-                  <summary className="cursor-pointer list-none px-4 py-3 sm:px-5 sm:py-3.5 flex items-start justify-between gap-3 touch-manipulation">
-                    <span className="text-white text-[14.5px] font-medium leading-snug flex-1">
-                      {f.q}
-                    </span>
-                    <ChevronDown className="w-4 h-4 text-white/40 shrink-0 mt-0.5 group-open:rotate-180 transition-transform" />
-                  </summary>
-                  <p className="px-4 pb-4 sm:px-5 sm:pb-4 text-[13.5px] text-white/70 leading-relaxed">
-                    {f.a}
-                  </p>
-                </details>
-              ))}
-            </div>
-          </section>
-
-          {/* Related strip — internal linking without the section sprawl */}
-          <nav
-            aria-labelledby="related-heading"
-            className="mt-10 pt-8 border-t border-white/[0.08]"
-          >
-            <h2
-              id="related-heading"
-              className="text-[13px] font-semibold uppercase tracking-[0.18em] text-yellow-400 mb-3"
-            >
-              More free mock exams
-            </h2>
-            <ul className="flex flex-wrap gap-2">
-              {getRelatedMockExams(slug, 4).map((m) => (
-                <li key={m.slug}>
+                <li>
                   <Link
-                    to={`/mock-exams/${m.slug}`}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/[0.04] border border-white/[0.08] hover:border-yellow-500/40 hover:bg-yellow-500/[0.06] text-[13px] font-medium text-white/85 hover:text-yellow-300 transition-colors touch-manipulation"
+                    to="/mock-exams"
+                    className="flex min-h-[52px] touch-manipulation items-center px-4 py-3 text-[15px] font-semibold text-elec-yellow transition-colors hover:bg-white/[0.04] sm:px-5"
                   >
-                    {m.title}
-                    <ChevronRight className="w-3 h-3" />
+                    See every free mock exam
                   </Link>
                 </li>
-              ))}
-              <li>
-                <Link
-                  to="/mock-exams"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/40 text-[13px] font-semibold text-yellow-300 hover:bg-yellow-500/15 transition-colors touch-manipulation"
-                >
-                  See all 25
-                  <ChevronRight className="w-3 h-3" />
-                </Link>
-              </li>
-            </ul>
-          </nav>
+              </ul>
+            </nav>
+            </>
+          )}
+
         </div>
       </article>
     </PublicPageLayout>

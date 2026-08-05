@@ -164,9 +164,9 @@ export default function RCDTypesExplainedPage() {
           heading: 'Type A — AC + Pulsating DC (The Standard)',
           content: (
             <>
-              <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-4">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
                 <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 rounded-xl bg-yellow-500/10 border border-yellow-500/25 flex items-center justify-center shrink-0">
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center shrink-0">
                     <span className="font-bold text-yellow-400 text-lg">A</span>
                   </div>
                   <div>
@@ -391,7 +391,7 @@ export default function RCDTypesExplainedPage() {
                 split-load arrangement).
               </p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-3">RCBO (Per Circuit)</h3>
                   <ul className="space-y-3 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-3">
@@ -490,7 +490,7 @@ export default function RCDTypesExplainedPage() {
                 fundamentally different functions and are not interchangeable.
               </p>
               <div className="grid sm:grid-cols-3 gap-4 my-6">
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-2xl mb-1">30mA</h3>
                   <h4 className="font-bold text-white mb-3">Personal Protection</h4>
                   <p className="text-white text-sm leading-relaxed">
@@ -535,7 +535,7 @@ export default function RCDTypesExplainedPage() {
                   </p>
                 </div>
               </div>
-              <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-5 my-4">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                   <div>

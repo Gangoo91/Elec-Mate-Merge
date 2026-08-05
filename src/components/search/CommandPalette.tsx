@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import {
@@ -21,6 +21,7 @@ interface CommandPaletteProps {
 
 export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
   const navigate = useNavigate();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSelect = useCallback(
     (path: string) => {
@@ -39,12 +40,21 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="top-[10%] translate-y-0 p-0 gap-0 overflow-hidden border-white/[0.08] bg-background shadow-2xl shadow-black/40 data-[state=closed]:slide-out-to-top-[10%] data-[state=open]:slide-in-from-top-[10%]">
+      <DialogContent
+        // Search opens ready to type — otherwise it is tap the icon, tap the
+        // field, then type, and users type into nothing (ELE-1433).
+        onOpenAutoFocus={(e) => {
+          e.preventDefault();
+          inputRef.current?.focus();
+        }}
+        className="top-[10%] translate-y-0 p-0 gap-0 overflow-hidden border-white/[0.08] bg-background shadow-2xl shadow-black/40 data-[state=closed]:slide-out-to-top-[10%] data-[state=open]:slide-in-from-top-[10%]"
+      >
         <VisuallyHidden>
           <DialogTitle>Search pages</DialogTitle>
         </VisuallyHidden>
         <Command className="rounded-lg">
           <CommandInput
+            ref={inputRef}
             placeholder="Where do you want to go?"
             className="h-13 text-base border-b border-white/[0.06]"
           />

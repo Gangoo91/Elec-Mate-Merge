@@ -217,11 +217,19 @@ function applyItemAdjustment(item: any) {
   const effectiveUnit = adj !== 0 ? rawUnit * (1 + adj / 100) : rawUnit;
   const effectiveTotal = qty * effectiveUnit;
   let description = item.description || item.name || '';
-  if (adj !== 0) {
-    const sign = adj > 0 ? '+' : '';
+  // A MARKUP is never annotated on a customer-facing document. It used to be
+  // appended here as "(+20%)", which printed the electrician's margin on the
+  // quote their client reads — Sean Mulcahy's Libbi quote showed "+20%" against
+  // every line. The price already carries it via effectiveUnit, so dropping the
+  // note changes no figure; it only stops disclosing the margin.
+  //
+  // A DISCOUNT is the opposite: the customer benefits from seeing it, and a
+  // quote that silently absorbed a reduction would undersell the gesture. So
+  // negative adjustments are still annotated.
+  if (adj < 0) {
     const note = item.itemAdjustmentLabel
-      ? `${sign}${adj}% · ${item.itemAdjustmentLabel}`
-      : `${sign}${adj}%`;
+      ? `${adj}% · ${item.itemAdjustmentLabel}`
+      : `${adj}%`;
     description = `${description}\n(${note})`;
   }
   return { effectiveUnit, effectiveTotal, description, adj, label: item.itemAdjustmentLabel };
@@ -780,8 +788,12 @@ serve(async (req) => {
           workerType: it.raw.workerType || it.raw.worker_type || '',
           hours: parseFloat(it.raw.hours) || 0,
           hourlyRate: parseFloat(it.raw.hourlyRate) || parseFloat(it.raw.hourly_rate) || 0,
-          itemAdjustmentPercent: it.adjustmentPercent || 0,
-          itemAdjustmentLabel: it.adjustmentLabel || '',
+          // Only surface a reduction. A positive adjustment is the
+          // electrician's margin and must not reach the customer's PDF — the
+          // template renders these as a "+20% MARKUP" badge. Zeroed rather
+          // than removed so the template's own conditional simply never fires.
+          itemAdjustmentPercent: (it.adjustmentPercent || 0) < 0 ? it.adjustmentPercent : 0,
+          itemAdjustmentLabel: (it.adjustmentPercent || 0) < 0 ? it.adjustmentLabel || '' : '',
         }));
       }
 
@@ -1261,8 +1273,9 @@ serve(async (req) => {
           hours: parseFloat(item.hours) || 0,
           hourlyRate: parseFloat(item.hourlyRate) || parseFloat(item.hourly_rate) || 0,
           notes: item.notes || '',
-          itemAdjustmentPercent: a.adj || 0,
-          itemAdjustmentLabel: a.label || '',
+          // Markup stays off the customer's copy; only a reduction is shown.
+          itemAdjustmentPercent: (a.adj || 0) < 0 ? a.adj : 0,
+          itemAdjustmentLabel: (a.adj || 0) < 0 ? a.label || '' : '',
         };
       });
 

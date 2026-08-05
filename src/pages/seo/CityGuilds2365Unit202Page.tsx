@@ -245,7 +245,7 @@ const sections = [
           Ohm's law is the most important single relationship in electrical engineering. It states
           that the voltage across a conductor is proportional to the current flowing through it:
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4 text-center">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4 text-center">
           <p className="text-white text-3xl font-bold mb-2">V = I × R</p>
           <p className="text-white text-sm">Voltage (V) = Current (A) × Resistance (Ω)</p>
           <div className="grid grid-cols-3 gap-4 mt-4">
@@ -507,7 +507,7 @@ const sections = [
               <li>Voltage divider and current divider analysis</li>
             </ul>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white mb-2">Calculation Technique Tips</h3>
             <ul className="space-y-2 text-white text-sm">
               <li>Always convert prefixes to base units before calculating (30mA = 0.030A)</li>

@@ -168,7 +168,7 @@ const sections = [
           majority of partial power loss situations:
         </p>
         <div className="space-y-3 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">1. Check the consumer unit</h4>
             <p className="text-white text-sm leading-relaxed">
               Open the consumer unit cover and look at all the switches. If any MCB is in the middle
@@ -178,7 +178,7 @@ const sections = [
               it.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">2. Check the RCD</h4>
             <p className="text-white text-sm leading-relaxed">
               If you have a split-load consumer unit, check whether one of the RCDs (the larger
@@ -187,7 +187,7 @@ const sections = [
               Reset the RCD by pushing it firmly to "on".
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">3. Check your neighbours</h4>
             <p className="text-white text-sm leading-relaxed">
               If the power loss does not match your circuit layout (for example, you have lost one
@@ -197,7 +197,7 @@ const sections = [
               (found on your electricity bill).
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">4. Check for a prepayment meter</h4>
             <p className="text-white text-sm leading-relaxed">
               If you have a prepayment meter, check the credit. Some prepayment meters disconnect
@@ -270,7 +270,7 @@ const sections = [
           connection to an MCB or busbar becomes loose, the circuit can lose power intermittently or
           completely. This is also a significant fire risk because loose connections generate heat.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-3">Signs of a Loose Connection</h3>
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-3">
@@ -518,7 +518,7 @@ const sections = [
           need an electrician immediately (but monitor the situation). Here is when you definitely
           need professional help:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -566,7 +566,7 @@ const sections = [
           consumer unit, in the circuit wiring, or at a specific point:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <CircuitBoard className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -582,7 +582,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Cable className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -597,7 +597,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -612,7 +612,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

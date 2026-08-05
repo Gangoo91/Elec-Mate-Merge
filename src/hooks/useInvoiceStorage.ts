@@ -498,11 +498,18 @@ export const useInvoiceStorage = () => {
       });
       return updatedQuote.id;
     } catch (error: any) {
-      // Check if it's a duplicate key error (PostgreSQL error code 23505)
+      // Check if it's a duplicate key error (PostgreSQL error code 23505).
+      // ELE-1466 — the global `quotes_invoice_number_key` constraint was
+      // replaced by the per-user `unique_invoice_number_per_user` index, so
+      // match that name too. Collisions should now be vanishingly rare: the
+      // number comes from an atomic per-user counter rather than a shared
+      // sequence, and it is only two users writing the same number that this
+      // ever guarded against — which the per-user scope now permits anyway.
       const isDuplicateKeyError =
         error?.code === '23505' ||
         error?.message?.includes('duplicate key') ||
-        error?.message?.includes('invoice_number_key');
+        error?.message?.includes('invoice_number_key') ||
+        error?.message?.includes('unique_invoice_number_per_user');
 
       // Track non-duplicate errors (duplicates are expected race conditions)
       if (!isDuplicateKeyError) {

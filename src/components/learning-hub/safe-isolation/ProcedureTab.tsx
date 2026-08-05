@@ -106,7 +106,7 @@ const ProcedureTab = ({ onBack }: { onBack: () => void }) => {
         {/* Preparation */}
         <section className="space-y-3">
           <div className="px-0.5">
-            <h2 className="text-xs font-medium text-amber-400 uppercase tracking-wider">Preparation</h2>
+            <h2 className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Preparation</h2>
             <p className="text-[11px] text-white mt-0.5">Before you touch any isolation device</p>
           </div>
           {renderSteps(preparationSteps, 'bg-amber-500/50', 'text-amber-400')}
@@ -115,7 +115,7 @@ const ProcedureTab = ({ onBack }: { onBack: () => void }) => {
         {/* Execution */}
         <section className="space-y-3">
           <div className="px-0.5">
-            <h2 className="text-xs font-medium text-red-400 uppercase tracking-wider">Execution</h2>
+            <h2 className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Execution</h2>
             <p className="text-[11px] text-white mt-0.5">Three-step test: prove — test — reprove</p>
           </div>
           {renderSteps(executionSteps, 'bg-red-500/50', 'text-red-400')}
@@ -123,7 +123,7 @@ const ProcedureTab = ({ onBack }: { onBack: () => void }) => {
 
         {/* Critical Warnings */}
         <section className="space-y-3">
-          <h2 className="text-xs font-medium text-red-400 uppercase tracking-wider px-0.5">Critical Warnings</h2>
+          <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">Critical Warnings</h2>
           {[
             'NEVER work without using a proving unit \u2014 a meter alone is not sufficient to confirm dead.',
             'NEVER test with a meter that has not been proved on a known live source before and after testing.',

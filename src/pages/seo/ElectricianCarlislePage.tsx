@@ -285,7 +285,7 @@ const sections = [
           means that many Carlisle electricians regularly work across the border. This creates a
           need to understand both regulatory systems:
         </p>
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Landmark className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
@@ -349,7 +349,7 @@ const sections = [
               found in unmodernised properties and requires full rewire.
             </p>
           </div>
-          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Flood-Affected Properties</h3>
             <p className="text-white text-sm leading-relaxed">
               Carlisle's 2005 and 2015 floods caused extensive damage in low-lying areas near the
@@ -460,7 +460,7 @@ const sections = [
           well-rounded workload.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

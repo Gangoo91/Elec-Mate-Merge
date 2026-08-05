@@ -27,6 +27,7 @@ import { useReportSync } from '@/hooks/useReportSync';
 import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
 import CertShellHeader from '@/components/inspection/shared/CertShellHeader';
+import { scrollToTopForStepChange } from '@/utils/scroll';
 import CertShellFooter, {
   certFooterNeutralButton,
 } from '@/components/inspection/shared/CertShellFooter';
@@ -542,7 +543,7 @@ const {
         currentTab={currentTab}
         onTabChange={(tab) => {
           setCurrentTab(tab);
-          window.scrollTo({ top: 0 });
+          scrollToTopForStepChange();
         }}
         completedTabs={completedTabs}
       />
@@ -573,6 +574,9 @@ const {
           </div>
 
           <CertShellFooter
+        previewReportType="testing-only"
+        previewReportId={savedReportId}
+        previewData={data as unknown as Record<string, unknown>}
             currentIndex={currentIndex}
             totalSteps={TAB_ORDER.length}
             canPrevious={currentIndex > 0}

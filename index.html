@@ -313,6 +313,14 @@
     <div id="root">
       <!-- Initial loading state - replaced by React when it mounts -->
       <!-- Hidden on native (Capacitor) since the native splash screen covers loading -->
+      <!-- Initial loading state. Deliberately NOT a spinner: a spinning ring
+           reads as "something is wrong" the longer it turns, and the old one
+           sat on a navy gradient (#0a1628) while every real page is #0a0a0a,
+           so the handoff flashed from blue to black. This is the wordmark on
+           the page's own background with a single indeterminate hairline —
+           same house language as the app (type + control-primitive geometry,
+           no icons). Identical ground colour means the swap to React is
+           invisible rather than a flash. -->
       <div
         id="initial-loading"
         style="
@@ -320,26 +328,42 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          background: linear-gradient(180deg, #0a1628 0%, #0a0a0a 100%);
-          color: #e5e7eb;
-          font-family: Inter, system-ui, sans-serif;
-          text-align: center;
-          padding: 20px;
+          background: #0a0a0a;
+          color: #ffffff;
+          font-family: Inter, system-ui, -apple-system, sans-serif;
+          padding: 24px;
         "
       >
-        <div>
+        <div style="width: 100%; max-width: 240px">
+          <p
+            style="
+              margin: 0;
+              font-size: 21px;
+              font-weight: 700;
+              letter-spacing: -0.02em;
+              line-height: 1;
+            "
+          >
+            Elec-<span style="color: #facc15">Mate</span>
+          </p>
           <div
             style="
-              width: 48px;
-              height: 48px;
-              margin: 0 auto 16px;
-              border: 3px solid #facc15;
-              border-top-color: transparent;
-              border-radius: 50%;
-              animation: spin 1s linear infinite;
+              margin-top: 18px;
+              height: 1px;
+              width: 100%;
+              background: rgba(255, 255, 255, 0.14);
+              overflow: hidden;
             "
-          ></div>
-          <p style="font-size: 16px; margin: 0">Loading Elec-Mate...</p>
+          >
+            <div
+              style="
+                height: 1px;
+                width: 40%;
+                background: #facc15;
+                animation: em-load 1.15s ease-in-out infinite;
+              "
+            ></div>
+          </div>
         </div>
       </div>
       <!-- Static landing hero — painted instantly on "/" before any JS loads.
@@ -451,6 +475,21 @@
         @keyframes spin {
           to {
             transform: rotate(360deg);
+          }
+        }
+        /* Indeterminate hairline for #initial-loading — sweeps left to right. */
+        @keyframes em-load {
+          0% {
+            transform: translateX(-100%);
+          }
+          100% {
+            transform: translateX(250%);
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          #initial-loading [style*='em-load'] {
+            animation: none;
+            width: 100%;
           }
         }
         #load-error {

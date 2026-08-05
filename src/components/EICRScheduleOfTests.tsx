@@ -34,6 +34,16 @@ import {
   getCircuitsForBoard,
   formatBoardsForFormData,
 } from '@/utils/boardMigration';
+import { isSpareCircuit, describeBulkFill } from '@/utils/spareWays';
+import {
+  getNextCircuitNumber,
+  deriveCircuitNumber,
+  parseCircuitNumberBase,
+  isAutoDesignation,
+  countDuplicateCircuits,
+  renumberDuplicateCircuits,
+  applyCircuitNumber,
+} from '@/utils/circuitNumbering';
 import { moveCircuitUp, moveCircuitDown } from '@/utils/circuitReorder';
 import BoardSection, { BoardToolCallbacks } from './testing/BoardSection';
 import BoardManagement from './testing/BoardManagement';
@@ -550,7 +560,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       if (toolName === 'add_circuit') {
         const circuitType = (params.circuit_type as string) || 'other';
         const description = (params.description as string) || '';
-        const nextNum = (testResults.length + 1).toString();
+        const nextNum = getNextCircuitNumber(testResults, MAIN_BOARD_ID).toString();
         const newCircuit = createCircuitWithDefaults(circuitType, nextNum, description);
 
         setTestResults((prev) => [...prev, newCircuit]);
@@ -574,12 +584,10 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         if (removeIdx >= 0 && removeIdx < testResults.length) {
           const removed = testResults[removeIdx];
           setTestResults((prev) => {
-            const filtered = prev.filter((_, i) => i !== removeIdx);
-            return filtered.map((circuit, i) => {
-              const newNum = (i + 1).toString();
-              const desc = circuit.circuitDescription || circuit.circuitType || 'Circuit';
-              return { ...circuit, circuitNumber: newNum, circuitDesignation: `Way ${newNum}` };
-            });
+            // ELE-1475 — renumber via the shared repair: it is board-scoped and
+            // preserves hand-typed labels. The old inline map renumbered every
+            // board globally and overwrote "Ct1"/"Cooker" with "Way n".
+            return renumberDuplicateCircuits(prev.filter((_, i) => i !== removeIdx));
           });
           if (selectedCircuitIndex >= testResults.length - 1 && selectedCircuitIndex > 0) {
             setSelectedCircuitIndex((prev) => Math.max(0, prev - 1));
@@ -695,7 +703,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
           case 'add_circuit': {
             const circuitType = (params.circuit_type as string) || 'other';
             const description = (params.description as string) || '';
-            const nextNum = (testResults.length + 1).toString();
+            const nextNum = getNextCircuitNumber(testResults, MAIN_BOARD_ID).toString();
 
             // Create circuit with ALL 32 fields pre-filled using BS7671 defaults
             const newCircuit = createCircuitWithDefaults(circuitType, nextNum, description);
@@ -830,17 +838,8 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
             if (removeIdx >= 0 && removeIdx < testResults.length) {
               const removed = testResults[removeIdx];
               setTestResults((prev) => {
-                // Remove the circuit
-                const filtered = prev.filter((_, i) => i !== removeIdx);
-                // Renumber all remaining circuits, preserving description
-                return filtered.map((circuit, i) => {
-                  const newNum = (i + 1).toString();
-                  return {
-                    ...circuit,
-                    circuitNumber: newNum,
-                    circuitDesignation: `Way ${newNum}`,
-                  };
-                });
+                // ELE-1475 — board-scoped repair that keeps hand-typed labels.
+                return renumberDuplicateCircuits(prev.filter((_, i) => i !== removeIdx));
               });
               // Adjust selected index if needed
               if (selectedCircuitIndex >= testResults.length - 1 && selectedCircuitIndex > 0) {
@@ -1260,8 +1259,9 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   const addTestResult = (boardId?: string) => {
     const targetBoard =
       boardId || activeBoardId || getMainBoard(distributionBoards)?.id || MAIN_BOARD_ID;
-    const boardCircuits = getCircuitsForBoard(testResults, targetBoard);
-    const nextCircuitNumber = (boardCircuits.length + 1).toString();
+    // ELE-1475 — highest way in use + 1, never count + 1: deleting way 3 of 6
+    // made the next add reuse 6.
+    const nextCircuitNumber = getNextCircuitNumber(testResults, targetBoard).toString();
     setPendingAddBoardId(targetBoard);
     setNewCircuitNumber(nextCircuitNumber);
     setShowAutoFillPrompt(true);
@@ -1269,8 +1269,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
 
   // Add a circuit directly to a specific board - uses BS7671 defaults
   const addCircuitToBoard = (boardId: string) => {
-    const boardCircuits = getCircuitsForBoard(testResults, boardId);
-    const nextCircuitNum = boardCircuits.length + 1;
+    const nextCircuitNum = getNextCircuitNumber(testResults, boardId);
     // Use createCircuitWithDefaults to get BS7671-compliant pre-filled values
     const newResult = createCircuitWithDefaults('other', nextCircuitNum.toString(), '');
     // Add boardId to the circuit
@@ -1652,12 +1651,20 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         const index = prev.findIndex((result) => result.id === id);
         if (index === -1) return prev;
         const source = prev[index];
-        const copy = (
+        const cloned = (
           typeof structuredClone === 'function'
             ? structuredClone(source)
             : JSON.parse(JSON.stringify(source))
         ) as TestResult;
-        copy.id = crypto.randomUUID();
+        cloned.id = crypto.randomUUID();
+        // ELE-1475 — a copy must take the next free way on its own board.
+        // Cloning the source's circuitNumber/wayNumber put duplicate circuit
+        // numbers onto issued certs; the PDF prints circuitNumber, so the
+        // electrician had no way to see it, let alone fix it.
+        const copy = applyCircuitNumber(
+          cloned,
+          getNextCircuitNumber(prev, source.boardId || MAIN_BOARD_ID)
+        );
         const next = [...prev];
         next.splice(index + 1, 0, copy);
         queueMicrotask(() => onUpdate('scheduleOfTests', next));
@@ -1669,6 +1676,27 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     },
     [onUpdate]
   );
+
+  // ELE-1475 — a schedule can still carry duplicate circuit numbers from
+  // before the duplicate-circuit fix, and those certs are already saved. Show
+  // the electrician the clash and let them repair it in one tap rather than
+  // silently rewriting historic data underneath them.
+  const duplicateCircuitCount = useMemo(
+    () => countDuplicateCircuits(testResults),
+    [testResults]
+  );
+
+  const handleRenumberDuplicates = useCallback(() => {
+    setTestResults((prev) => {
+      const next = renumberDuplicateCircuits(prev);
+      if (next === prev) return prev;
+      queueMicrotask(() => onUpdate('scheduleOfTests', next));
+      return next;
+    });
+    toast.success('Circuit numbers repaired', {
+      description: 'Each board is numbered in order. Your own circuit labels were kept.',
+    });
+  }, [onUpdate]);
 
   const removeTestResult = useCallback(
     (id: string) => {
@@ -1754,9 +1782,25 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
             updatedResult.autoFilled = false;
           }
 
-          // Basic auto-update logic for circuit designation
+          // ELE-1475 — keep the number and its label in step, BOTH ways.
+          // The schedule's circuit-number column writes circuitDesignation,
+          // but the PDF prints circuitNumber. With the sync running one way
+          // only, the printed value could never be corrected from the table —
+          // which is how five circuits went out numbered "5".
           if (field === 'circuitNumber' && value) {
-            updatedResult.circuitDesignation = `C${value}`;
+            if (isAutoDesignation(result.circuitDesignation)) {
+              updatedResult.circuitDesignation = `C${value}`;
+            }
+            const base = parseCircuitNumberBase(value);
+            updatedResult.wayNumber = base ?? updatedResult.wayNumber ?? null;
+          } else if (field === 'circuitDesignation') {
+            const derived = deriveCircuitNumber(value);
+            // No digits in the label (e.g. "Cooker") — leave the number alone
+            // rather than replacing it with something worse.
+            if (derived) {
+              updatedResult.circuitNumber = derived;
+              updatedResult.wayNumber = parseCircuitNumberBase(derived) ?? updatedResult.wayNumber ?? null;
+            }
           }
 
           // Maintain legacy field synchronisation for backward compatibility
@@ -1957,8 +2001,19 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   const handleBulkFieldUpdate = (field: keyof TestResult, value: string, circuitIds?: string[]) => {
     const scope = circuitIds ? new Set(circuitIds) : null;
     setTestResults((prev) => {
+      // A spare way is an empty position — there is no circuit to measure, so a
+      // bulk fill must not write a reading into it. The board scanner already
+      // sets these to 'N/A'; without this guard one tap on "Fill all" replaced
+      // that with a result. See utils/spareWays for the production numbers.
+      let filled = 0;
+      let skipped = 0;
       const updatedResults = prev.map((result) => {
         if (scope && !scope.has(result.id)) return result;
+        if (isSpareCircuit(result)) {
+          skipped += 1;
+          return result;
+        }
+        filled += 1;
         return {
           ...result,
           [field]: value,
@@ -1966,6 +2021,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
           autoFilled: result.autoFilled ? false : result.autoFilled,
         };
       });
+      if (skipped > 0) toast.success(describeBulkFill(filled, skipped));
       queueMicrotask(() => onUpdate('scheduleOfTests', updatedResults));
       return updatedResults;
     });
@@ -2021,11 +2077,19 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   };
 
   const handleAcceptTestResults = (selectedCircuits: any[]) => {
+    // ELE-1475 — these rows carry no boardId, so they land on the main CU.
+    // Number them from the highest way already in use there rather than from
+    // the row count, which reuses numbers once a circuit has been deleted.
+    const firstFreeWay = getNextCircuitNumber(testResults, MAIN_BOARD_ID);
     // Transform extracted test results to TestResult format
     const transformedResults = selectedCircuits.map((circuit, index) => {
       const nextId = (testResults.length + index + 1).toString();
-      // Use the circuit_reference from AI if available, otherwise generate one
-      const circuitRef = circuit.circuit_reference || `C${testResults.length + index + 1}`;
+      // Prefer the reference the AI read off the paper schedule; fall back to
+      // the next free way. circuitNumber is the bare number the PDF prints,
+      // circuitRef stays the human label.
+      const wayNumber = String(firstFreeWay + index);
+      const circuitRef = circuit.circuit_reference || `C${wayNumber}`;
+      const circuitNum = deriveCircuitNumber(circuitRef) ?? wayNumber;
 
       // Derive combined BS Standard (e.g., "MCB (BS EN 60898)")
       const incomingType: string = circuit.protective_device?.type || '';
@@ -2046,7 +2110,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
 
       return {
         id: nextId,
-        circuitNumber: circuitRef,
+        circuitNumber: circuitNum,
         circuitDesignation: circuitRef,
         circuitDescription: circuit.circuit_description || '',
         circuitType: circuit.circuit_type || '',
@@ -2408,17 +2472,16 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     let phaseGroupCounter = 0;
     let lastPhaseGroupBase: number | null = null;
     remainingCircuits.forEach((circuit, index) => {
-      // Count only circuits on the TARGET board for per-board numbering
-      const boardCircuitCount = updatedResults.filter(
-        (r) => (r.boardId || MAIN_BOARD_ID) === targetBoardId
-      ).length;
+      // ELE-1475 — next free way on the target board. Recomputed each pass
+      // because rows are pushed to updatedResults as we go.
+      const nextFreeWay = getNextCircuitNumber(updatedResults, targetBoardId);
       // For 3P expansion: keep the same way number across L1/L2/L3.
       // We detect contiguous expanded triplets by the _phaseLetter field set
       // upstream — L1 starts a new group, L2/L3 reuse the same way number.
       const phaseLetter = circuit._phaseLetter as 'L1' | 'L2' | 'L3' | undefined;
       let circuitNumber: string;
       if (phaseLetter === 'L1' || phaseLetter === undefined) {
-        const wayNum = boardCircuitCount + 1;
+        const wayNum = nextFreeWay;
         circuitNumber =
           phaseLetter === 'L1' ? `${wayNum}.1` : String(wayNum);
         if (phaseLetter === 'L1') {
@@ -2431,7 +2494,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       } else {
         // L2 or L3 — reuse the way number from the L1 row
         phaseGroupCounter += 1;
-        circuitNumber = `${lastPhaseGroupBase ?? boardCircuitCount + 1}.${phaseGroupCounter}`;
+        circuitNumber = `${lastPhaseGroupBase ?? nextFreeWay}.${phaseGroupCounter}`;
       }
       const liveSize = circuit.liveSize;
       const circuitType = circuit.circuitType || '';
@@ -2545,6 +2608,28 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
 
   return (
     <div className="pb-20 lg:pb-4">
+      {/* ELE-1475 — duplicate circuit numbers reach the PDF, so surface them
+          before the cert is issued rather than after a customer spots it. */}
+      {duplicateCircuitCount > 0 && (
+        <div className="-mx-4 mb-3 border-y border-orange-500/30 bg-orange-500/10 p-4 sm:mx-0 sm:rounded-2xl sm:border-x">
+          <p className="text-[15px] font-semibold text-white">
+            {duplicateCircuitCount === 1
+              ? '1 circuit shares its number with another'
+              : `${duplicateCircuitCount} circuits share their number with another`}
+          </p>
+          <p className="mt-1 text-[13px] leading-relaxed text-orange-200">
+            Circuit numbers must be unique on each board — this prints on the certificate.
+          </p>
+          <button
+            type="button"
+            onClick={handleRenumberDuplicates}
+            className="mt-3 h-11 w-full touch-manipulation rounded-xl bg-elec-yellow px-4 text-[15px] font-semibold text-black transition-colors active:bg-elec-yellow/85 sm:w-auto"
+          >
+            Renumber circuits
+          </button>
+        </div>
+      )}
+
       {/* MOBILE FULL-WIDTH LAYOUT - Clean Edge-to-Edge Design */}
       {useMobileView ? (
         <div className="min-h-screen bg-background -mx-4">

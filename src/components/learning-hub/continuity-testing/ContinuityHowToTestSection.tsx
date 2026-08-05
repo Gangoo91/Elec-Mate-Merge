@@ -189,7 +189,7 @@ const ContinuityHowToTestSection = ({ onBack }: Props) => {
           onClick={() => toggle(id)}
           className="w-full text-left touch-manipulation active:scale-[0.99] transition-transform"
         >
-          <div className={`relative rounded-2xl bg-white/[0.07] border ${isOpen ? borderActiveMap[accent] : 'border-white/[0.08]'} overflow-hidden transition-colors`}>
+          <div className={`relative rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border ${isOpen ? borderActiveMap[accent] : 'border-white/[0.08]'} overflow-hidden transition-colors`}>
             <div className={`absolute inset-x-0 top-0 h-[2px] ${topAccentMap[accent]}`} />
             <div className={`absolute left-0 top-0 bottom-0 w-1 ${barMap[accent]} rounded-l-2xl`} />
             <div className="p-4 flex items-center gap-3">
@@ -231,7 +231,7 @@ const ContinuityHowToTestSection = ({ onBack }: Props) => {
     return (
       <div className="space-y-1.5">
         {steps.map((step) => (
-          <div key={step.number} className="relative rounded-xl bg-white/[0.05] p-3 overflow-hidden">
+          <div key={step.number} className="relative rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3 overflow-hidden">
             <div className={`absolute left-0 top-0 bottom-0 w-1 ${barColour[accent]} rounded-l-xl`} />
             <div className="flex items-start gap-3 pl-2">
               <span className={`text-lg font-bold ${numColour[accent]} shrink-0 w-6 text-center`}>{step.number}</span>
@@ -265,7 +265,7 @@ const ContinuityHowToTestSection = ({ onBack }: Props) => {
         {/* Equipment */}
         {renderExpandable('equipment', 'Test Equipment Requirements', 'blue', (
           <div className="space-y-2">
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-blue-400 mb-1.5">Approved Test Instruments:</p>
               <div className="space-y-1">
                 {equipmentApproved.map((item, i) => (
@@ -273,7 +273,7 @@ const ContinuityHowToTestSection = ({ onBack }: Props) => {
                 ))}
               </div>
             </div>
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-blue-400 mb-1.5">Technical Specifications:</p>
               <div className="space-y-1">
                 {equipmentSpecs.map((item, i) => (
@@ -281,7 +281,7 @@ const ContinuityHowToTestSection = ({ onBack }: Props) => {
                 ))}
               </div>
             </div>
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-yellow-400 mb-1.5">Test Lead Considerations:</p>
               {leadConsiderations.map((group, i) => (
                 <div key={i} className="mb-2 last:mb-0">
@@ -296,11 +296,11 @@ const ContinuityHowToTestSection = ({ onBack }: Props) => {
         ))}
 
         {/* R1+R2 Method */}
-        <p className="text-xs font-medium text-amber-400 uppercase tracking-wider px-0.5 mt-4">R1+R2 Method (Preferred)</p>
+        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white px-0.5 mt-4">R1+R2 Method (Preferred)</p>
         {renderExpandable('r1r2', 'R1+R2 Step-by-Step Procedure', 'amber', (
           <div className="space-y-3">
             {renderStepCards(r1r2Steps, 'amber')}
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-blue-400 mb-1.5">Why R1+R2 is Preferred:</p>
               <p className="text-[12px] font-semibold text-white mb-1">Practical Advantages:</p>
               <div className="space-y-0.5 mb-2">
@@ -323,7 +323,7 @@ const ContinuityHowToTestSection = ({ onBack }: Props) => {
         {renderExpandable('r2', 'R2 Step-by-Step Procedure', 'purple', (
           <div className="space-y-3">
             {renderStepCards(r2Steps, 'purple')}
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-orange-400 mb-1.5">When to Use R2 Method:</p>
               <p className="text-[12px] font-semibold text-white mb-1">Suitable Situations:</p>
               <div className="space-y-0.5 mb-2">
@@ -351,7 +351,7 @@ const ContinuityHowToTestSection = ({ onBack }: Props) => {
             {renderStepCards(ringStepB, 'cyan')}
             <p className="text-[12px] font-semibold text-cyan-400 px-1 mt-2">Step C: Verification</p>
             {renderStepCards(ringStepC, 'cyan')}
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-green-400 mb-1.5">Expected Results:</p>
               {ringExpected.map((group, i) => (
                 <div key={i} className="mb-2 last:mb-0">
@@ -368,7 +368,7 @@ const ContinuityHowToTestSection = ({ onBack }: Props) => {
         {/* Common Errors */}
         {renderExpandable('errors', 'Common Testing Errors and Solutions', 'red', (
           <div className="space-y-2">
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-red-400 mb-1.5">Common Errors:</p>
               <div className="space-y-1">
                 {commonErrors.map((item, i) => (
@@ -376,7 +376,7 @@ const ContinuityHowToTestSection = ({ onBack }: Props) => {
                 ))}
               </div>
             </div>
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-green-400 mb-1.5">Solutions:</p>
               <div className="space-y-1">
                 {solutions.map((item, i) => (
@@ -384,7 +384,7 @@ const ContinuityHowToTestSection = ({ onBack }: Props) => {
                 ))}
               </div>
             </div>
-            <div className="rounded-xl bg-white/[0.05] p-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
               <p className="text-[12px] font-semibold text-yellow-400 mb-1.5">Troubleshooting High Resistance Readings:</p>
               <p className="text-[12px] font-semibold text-white mb-1">Potential Causes:</p>
               <div className="space-y-0.5 mb-2">

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ArrowLeft, Shield, Wrench, BookOpen, FileText, Calculator, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { BusinessCard } from '@/components/business-hub';
+import { HubTile as BusinessCard } from '@/components/learning-hub/HubTile';
 import { motion } from 'framer-motion';
 import WhyTestSection from './WhyTestSection';
 import HowToTestSection from './HowToTestSection';
@@ -51,8 +51,8 @@ const PfcTestingProcedure = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="relative rounded-2xl bg-white/[0.03] border border-orange-400/20 p-4 overflow-hidden">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-orange-400/60 rounded-l-2xl" />
+          <div className="relative rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/20 p-4 overflow-hidden">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-white/[0.08] to-white/[0.04] rounded-l-2xl" />
             <p className="text-[13px] font-semibold text-orange-400">Live Test — Measures Actual Fault Current</p>
             <p className="text-[12px] text-white mt-1">
               PFC testing must be performed on energised circuits. The tester briefly creates a controlled fault to measure the maximum current available. This confirms protective devices have adequate breaking capacity and will operate within required times.

@@ -369,7 +369,7 @@ const sections = [
               <li>Steady work if you build a good relationship</li>
             </ul>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Watch Out For</h3>
             <ul className="space-y-2 text-white text-sm">
               <li>Payment terms: 30 to 60 days is common, some push to 90</li>

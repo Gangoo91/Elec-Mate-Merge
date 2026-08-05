@@ -289,7 +289,7 @@ const sections = [
               eligible customers.
             </p>
           </div>
-          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Rural Kent Properties</h3>
             <p className="text-white text-sm leading-relaxed">
               The villages and rural areas surrounding Maidstone — including the Weald, the North
@@ -369,7 +369,7 @@ const sections = [
               before quoting rural jobs.
             </p>
           </div>
-          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Modern Developments</h3>
             <p className="text-white text-sm leading-relaxed">
               New-build estates in areas like Langley Park, Kings Hill (nearby), and on the fringes
@@ -393,7 +393,7 @@ const sections = [
           rewarding for well-qualified electricians.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

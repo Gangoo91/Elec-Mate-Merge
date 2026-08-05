@@ -192,7 +192,7 @@ export default function FP200CableGuidePage() {
                 fire-resistant cable is essential for correct specification.
               </p>
               <div className="space-y-4 my-6">
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-2">
                     Fire Detection and Alarm Systems (BS 5839)
                   </h3>
@@ -211,7 +211,7 @@ export default function FP200CableGuidePage() {
                     integral battery backup).
                   </p>
                 </div>
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-2">
                     Emergency Lighting (BS 5266)
                   </h3>
@@ -350,7 +350,7 @@ export default function FP200CableGuidePage() {
                 The key standards for fire performance cable in the UK are:
               </p>
               <div className="space-y-4 my-6">
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-2">
                     BS EN 50200 — Circuit Integrity Under Fire
                   </h3>

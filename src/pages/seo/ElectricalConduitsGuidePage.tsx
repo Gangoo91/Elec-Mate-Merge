@@ -177,7 +177,7 @@ export default function ElectricalConduitsGuidePage() {
                 joined using threaded couplers, locknuts, and bushes.
               </p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-3">Advantages</h3>
                   <ul className="space-y-2 text-white text-sm leading-relaxed">
                     <li className="flex items-start gap-2">
@@ -311,7 +311,7 @@ export default function ElectricalConduitsGuidePage() {
                 is unnecessarily expensive and bulky. BS 7671 limits the proportion of conduit
                 internal area that can be occupied by cables — this is the conduit fill calculation.
               </p>
-              <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-6">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-6">
                 <h3 className="font-bold text-yellow-400 text-lg mb-3">The 40% Fill Rule</h3>
                 <div className="space-y-3 text-white text-sm leading-relaxed">
                   <p>

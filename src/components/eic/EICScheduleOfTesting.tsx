@@ -31,6 +31,15 @@ import {
   getCircuitsForBoard,
   formatBoardsForFormData,
 } from '@/utils/boardMigration';
+import { isSpareCircuit, describeBulkFill } from '@/utils/spareWays';
+import {
+  getNextCircuitNumber,
+  deriveCircuitNumber,
+  parseCircuitNumberBase,
+  isAutoDesignation,
+  countDuplicateCircuits,
+  renumberDuplicateCircuits,
+} from '@/utils/circuitNumbering';
 import { moveCircuitUp, moveCircuitDown } from '@/utils/circuitReorder';
 import BoardSection, { BoardToolCallbacks } from '../testing/BoardSection';
 import BoardManagement from '../testing/BoardManagement';
@@ -499,7 +508,9 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       if (toolName === 'add_circuit') {
         const circuitType = (params.circuit_type as string) || 'other';
         const description = (params.description as string) || '';
-        const nextNum = (testResults.length + 1).toString();
+        // ELE-1475 — highest way in use + 1, scoped to the board. Count + 1
+        // reuses a number the moment a circuit is deleted.
+        const nextNum = getNextCircuitNumber(testResults, MAIN_BOARD_ID).toString();
         const newCircuit = createCircuitWithDefaults(circuitType, nextNum, description);
 
         setTestResults((prev) => [...prev, newCircuit]);
@@ -639,7 +650,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           case 'add_circuit': {
             const circuitType = (params.circuit_type as string) || 'other';
             const description = (params.description as string) || '';
-            const nextNum = (testResults.length + 1).toString();
+            const nextNum = getNextCircuitNumber(testResults, MAIN_BOARD_ID).toString();
 
             // Create circuit with ALL 32 fields pre-filled using BS7671 defaults
             const newCircuit = createCircuitWithDefaults(circuitType, nextNum, description);
@@ -1007,8 +1018,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
               return `Board "${boardName}" not found. Available: ${distributionBoards.map((b) => b.name).join(', ')}`;
             }
 
-            const boardCircuits = testResults.filter((c) => c.boardId === board.id);
-            const nextNum = (boardCircuits.length + 1).toString();
+            const nextNum = getNextCircuitNumber(testResults, board.id).toString();
             const newCircuit = createCircuitWithDefaults(circuitType, nextNum, description);
             newCircuit.boardId = board.id;
 
@@ -1295,16 +1305,15 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         ? getMainBoard(distributionBoards)?.id || MAIN_BOARD_ID
         : currentBoardId);
     setCurrentBoardId(targetBoardId);
-    const nextCircuitNumber = (getCircuitsForBoard(testResults, targetBoardId).length + 1).toString();
+    const nextCircuitNumber = getNextCircuitNumber(testResults, targetBoardId).toString();
     setNewCircuitNumber(nextCircuitNumber);
     setShowAutoFillPrompt(true);
   };
 
   // Add a circuit directly to a specific board - uses BS7671 defaults
   const addCircuitToBoard = (boardId: string) => {
-    const boardCircuits = getCircuitsForBoard(testResults, boardId);
-    // Use board-specific circuit count, not global count
-    const nextCircuitNum = boardCircuits.length + 1;
+    // ELE-1475 — highest way in use + 1, never count + 1.
+    const nextCircuitNum = getNextCircuitNumber(testResults, boardId);
     // Use createCircuitWithDefaults to get BS7671-compliant pre-filled values
     const newResult = createCircuitWithDefaults('other', nextCircuitNum.toString(), '');
     // Add boardId to the circuit
@@ -2031,6 +2040,25 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     [onUpdate]
   );
 
+  // ELE-1475 — surface any duplicate circuit numbers still carried by an
+  // existing cert, and let the electrician repair them in one tap.
+  const duplicateCircuitCount = useMemo(
+    () => countDuplicateCircuits(testResults),
+    [testResults]
+  );
+
+  const handleRenumberDuplicates = useCallback(() => {
+    setTestResults((prev) => {
+      const next = renumberDuplicateCircuits(prev);
+      if (next === prev) return prev;
+      queueMicrotask(() => onUpdate('scheduleOfTests', next));
+      return next;
+    });
+    toast.success('Circuit numbers repaired', {
+      description: 'Each board is numbered in order. Your own circuit labels were kept.',
+    });
+  }, [onUpdate]);
+
   const removeTestResult = useCallback(
     (id: string) => {
       setTestResults((prev) => {
@@ -2161,8 +2189,21 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
               updatedResult.autoFilled = false;
             }
 
+            // ELE-1475 — keep number and label in step BOTH ways. The
+            // circuit-number column writes circuitDesignation while the PDF
+            // prints circuitNumber; a one-way sync left the printed value
+            // uncorrectable from the table.
             if (field === 'circuitNumber' && value) {
-              updatedResult.circuitDesignation = `C${value}`;
+              if (isAutoDesignation(result.circuitDesignation)) {
+                updatedResult.circuitDesignation = `C${value}`;
+              }
+              updatedResult.wayNumber = parseCircuitNumberBase(value) ?? updatedResult.wayNumber ?? null;
+            } else if (field === 'circuitDesignation') {
+              const derived = deriveCircuitNumber(value);
+              if (derived) {
+                updatedResult.circuitNumber = derived;
+                updatedResult.wayNumber = parseCircuitNumberBase(derived) ?? updatedResult.wayNumber ?? null;
+              }
             }
 
             // Maintain legacy field synchronisation
@@ -2284,14 +2325,24 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   // boards. (Backwards-compatible with the (field, value) prop contract.)
   const makeBoardBulkFieldUpdate = useCallback(
     (boardId: string) => (field: keyof TestResult, value: string) => {
+      // Spare ways hold no circuit — nothing to measure, so bulk fill skips
+      // them and says so. See utils/spareWays.
+      let filled = 0;
+      let skipped = 0;
       const updatedResults = testResults.map((result) => {
         if ((result.boardId || MAIN_BOARD_ID) !== boardId) return result;
+        if (isSpareCircuit(result)) {
+          skipped += 1;
+          return result;
+        }
+        filled += 1;
         return {
           ...result,
           [field]: value,
           autoFilled: result.autoFilled ? false : result.autoFilled,
         };
       });
+      if (skipped > 0) toast.success(describeBulkFill(filled, skipped));
       setTestResults(updatedResults);
       onUpdate('scheduleOfTests', updatedResults);
     },
@@ -2302,6 +2353,28 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   // clearance (pb-32 sm:pb-24).
   return (
     <div>
+      {/* ELE-1475 — duplicate circuit numbers print on the certificate, so
+          catch them before it is issued rather than after. */}
+      {duplicateCircuitCount > 0 && (
+        <div className="-mx-4 mb-3 border-y border-orange-500/30 bg-orange-500/10 p-4 sm:mx-0 sm:rounded-2xl sm:border-x">
+          <p className="text-[15px] font-semibold text-white">
+            {duplicateCircuitCount === 1
+              ? '1 circuit shares its number with another'
+              : `${duplicateCircuitCount} circuits share their number with another`}
+          </p>
+          <p className="mt-1 text-[13px] leading-relaxed text-orange-200">
+            Circuit numbers must be unique on each board — this prints on the certificate.
+          </p>
+          <button
+            type="button"
+            onClick={handleRenumberDuplicates}
+            className="mt-3 h-11 w-full touch-manipulation rounded-xl bg-elec-yellow px-4 text-[15px] font-semibold text-black transition-colors active:bg-elec-yellow/85 sm:w-auto"
+          >
+            Renumber circuits
+          </button>
+        </div>
+      )}
+
       {/* MOBILE FULL-WIDTH LAYOUT - Clean Edge-to-Edge Design (EICR Pattern) */}
       {useMobileView ? (
         <div className="min-h-screen bg-white/[0.03] -mx-4">

@@ -158,7 +158,7 @@ const sections = [
           resistive (heaters, incandescent lighting, kettles) or simple inductive (motors with
           direct mains connection).
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-3">Type AC Limitations</h3>
           <p className="text-white text-sm leading-relaxed">
             Type AC cannot reliably detect pulsating DC fault currents. These are produced by
@@ -218,7 +218,7 @@ const sections = [
           produced by single-phase frequency converters (variable speed drives). These generate
           fault currents that combine multiple frequencies, which Type A may not reliably detect.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-3">When Type F Is Needed</h3>
           <ul className="space-y-2 text-white text-sm">
             <li>EV chargers with built-in power electronics (check manufacturer instructions)</li>

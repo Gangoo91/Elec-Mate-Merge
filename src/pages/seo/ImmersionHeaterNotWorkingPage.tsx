@@ -202,7 +202,7 @@ const sections = [
           likelihood:
         </p>
         <div className="space-y-3 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">Tripped circuit breaker or RCD</h4>
             <p className="text-white text-sm leading-relaxed">
               The most common and easiest to fix. Check your consumer unit. If the MCB for the
@@ -218,7 +218,7 @@ const sections = [
               press it firmly. If the heater works briefly then stops, the thermostat is faulty.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">Failed element</h4>
             <p className="text-white text-sm leading-relaxed">
               The element itself has failed — either open circuit (broken element wire, no
@@ -344,14 +344,14 @@ const sections = [
       <>
         <p>Before calling an electrician, safely check these things:</p>
         <div className="space-y-3 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">1. Consumer unit</h4>
             <p className="text-white text-sm leading-relaxed">
               Check that the MCB or fuse for the immersion heater circuit is in the on position. If
               it has tripped, reset it once. If it trips again, do not reset — call an electrician.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">2. Isolator switch</h4>
             <p className="text-white text-sm leading-relaxed">
               Check the double-pole switch near the hot water cylinder. It should be on with the
@@ -359,14 +359,14 @@ const sections = [
               failed or there is no power at the switch.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">3. Timer</h4>
             <p className="text-white text-sm leading-relaxed">
               If the heater is on a timer, try switching to manual/boost to bypass the timer. If hot
               water arrives on manual, the timer is the problem.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">4. Thermal cutout</h4>
             <p className="text-white text-sm leading-relaxed">
               If safe to access, remove the cover on the immersion heater thermostat (this does not
@@ -384,7 +384,7 @@ const sections = [
     content: (
       <>
         <p>Call an electrician if any of the following apply:</p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -436,7 +436,7 @@ const sections = [
       <>
         <p>Immersion heater work is common and straightforward. Here is the systematic approach:</p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Search className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -450,7 +450,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -464,7 +464,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

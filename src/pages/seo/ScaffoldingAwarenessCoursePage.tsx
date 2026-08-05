@@ -279,7 +279,7 @@ const sections = [
               </p>
             </div>
           </div>
-          <div className="flex gap-4 p-5 rounded-2xl bg-yellow-500/10 border border-yellow-500/20">
+          <div className="flex gap-4 p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <Tag className="w-8 h-8 text-yellow-400 shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Yellow Tag — Restricted Use</h3>
@@ -291,7 +291,7 @@ const sections = [
               </p>
             </div>
           </div>
-          <div className="flex gap-4 p-5 rounded-2xl bg-red-500/10 border border-red-500/20">
+          <div className="flex gap-4 p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <Tag className="w-8 h-8 text-red-400 shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Red Tag — Do Not Use</h3>
@@ -431,7 +431,7 @@ const sections = [
           sites:
         </p>
         <div className="space-y-3 my-4">
-          <div className="flex gap-4 p-5 rounded-2xl bg-red-500/10 border border-red-500/20">
+          <div className="flex gap-4 p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <AlertTriangle className="w-6 h-6 text-red-400 shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Falls From the Platform</h3>
@@ -442,7 +442,7 @@ const sections = [
               </p>
             </div>
           </div>
-          <div className="flex gap-4 p-5 rounded-2xl bg-red-500/10 border border-red-500/20">
+          <div className="flex gap-4 p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <AlertTriangle className="w-6 h-6 text-red-400 shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Falling Objects</h3>
@@ -453,7 +453,7 @@ const sections = [
               </p>
             </div>
           </div>
-          <div className="flex gap-4 p-5 rounded-2xl bg-red-500/10 border border-red-500/20">
+          <div className="flex gap-4 p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <AlertTriangle className="w-6 h-6 text-red-400 shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">
@@ -467,7 +467,7 @@ const sections = [
               </p>
             </div>
           </div>
-          <div className="flex gap-4 p-5 rounded-2xl bg-red-500/10 border border-red-500/20">
+          <div className="flex gap-4 p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <AlertTriangle className="w-6 h-6 text-red-400 shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Unauthorised Alterations</h3>

@@ -1,55 +1,51 @@
 import { useState, useEffect } from 'react';
-import { Star, Users } from 'lucide-react';
 import { USER_COUNT, MINI_TESTIMONIALS } from '@/constants/social-proof';
+import { PANEL } from '@/components/seo/seoSurface';
 
 /**
  * Social proof strip — sits below hero, rotates mini testimonials.
  * Builds trust early before the reader scrolls into content.
+ *
+ * Design: the figure carries the proof, so it's set as a figure — no avatar
+ * circle, no star glyphs. The rating is stated in words, which is also what
+ * an answer engine can quote. Rotation pauses for anyone who has asked for
+ * reduced motion; a strip that swaps text under you is exactly what that
+ * preference is for.
  */
 export function SEOSocialProofBar() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % MINI_TESTIMONIALS.length);
-    }, 4000);
+    }, 5000);
     return () => clearInterval(timer);
   }, []);
 
   const current = MINI_TESTIMONIALS[activeIndex];
 
   return (
-    <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 sm:p-5 mb-8">
-      <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-        {/* User count */}
-        <div className="flex items-center gap-2 shrink-0">
-          <div className="w-8 h-8 rounded-full bg-green-500/15 border border-green-500/25 flex items-center justify-center">
-            <Users className="w-4 h-4 text-green-400" />
-          </div>
-          <div>
-            <p className="text-sm font-bold text-white leading-tight">{USER_COUNT}</p>
-            <p className="text-[11px] text-white/50">UK electricians</p>
-          </div>
+    <div className={`${PANEL} mb-8 px-4 py-4 sm:px-5`}>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+        <div className="shrink-0">
+          <p className="text-[19px] font-bold leading-none tracking-[-0.02em] tabular-nums text-white">
+            {USER_COUNT}
+          </p>
+          <p className="mt-1.5 text-[12.5px] text-white">UK electricians</p>
         </div>
 
-        {/* Separator — yellow line on mobile, vertical on desktop */}
-        <div className="w-full h-px bg-yellow-500/20 sm:hidden" />
-        <div className="hidden sm:block w-px h-8 bg-white/10" />
+        {/* Quiet separator — hairline, never a coloured rule */}
+        <div className="h-px w-full bg-white/[0.12] sm:h-10 sm:w-px" />
 
-        {/* Rotating testimonial */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-0.5 mb-1">
-            {Array.from({ length: current.stars }).map((_, i) => (
-              <Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-            ))}
-          </div>
-          <p className="text-sm text-white leading-snug line-clamp-2 italic">
+        <blockquote className="min-w-0 flex-1">
+          <p className="line-clamp-2 text-[14.5px] leading-snug text-white">
             &ldquo;{current.quote}&rdquo;
           </p>
-          <p className="text-[11px] text-white mt-1">
-            {current.name} — {current.company}
-          </p>
-        </div>
+          <footer className="mt-1.5 text-[12.5px] text-white">
+            {current.name}, {current.company} · {current.stars} out of 5
+          </footer>
+        </blockquote>
       </div>
     </div>
   );

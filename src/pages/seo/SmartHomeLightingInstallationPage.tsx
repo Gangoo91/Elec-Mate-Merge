@@ -235,7 +235,7 @@ const sections = [
               and integration depth. Cost: £200 to £500+ per point for the lighting element.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <Wifi className="w-5 h-5 text-yellow-400 mb-2" />
             <h3 className="font-bold text-white text-base mb-2">Zigbee (Mid-Range)</h3>
             <p className="text-white text-sm leading-relaxed">
@@ -394,7 +394,7 @@ const sections = [
           harvesting:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <ShieldCheck className="w-6 h-6 text-yellow-400 mb-3" />
             <h3 className="font-bold text-white text-base mb-2">Presence Detection</h3>
             <p className="text-white text-sm leading-relaxed">
@@ -482,7 +482,7 @@ const sections = [
           will find growing demand from both residential and commercial clients.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -530,7 +530,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/25 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-red-500/25 p-5">
             <div className="flex items-start gap-4">
               <ShieldCheck className="w-6 h-6 text-red-400 mt-0.5 shrink-0" />
               <div>

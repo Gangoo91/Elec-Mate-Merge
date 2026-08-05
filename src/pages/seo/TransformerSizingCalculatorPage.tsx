@@ -107,7 +107,7 @@ export default function TransformerSizingCalculatorPage() {
                 For single-phase transformers, the kVA rating is calculated from the total load in
                 kilowatts and the power factor of the load:
               </p>
-              <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4 text-center">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4 text-center">
                 <p className="text-xl font-mono font-bold text-yellow-400">
                   kVA = kW / Power Factor
                 </p>
@@ -123,7 +123,7 @@ export default function TransformerSizingCalculatorPage() {
                 </div>
               </div>
               <p>The current drawn from a single-phase transformer is:</p>
-              <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4 text-center">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4 text-center">
                 <p className="text-xl font-mono font-bold text-yellow-400">I = kVA x 1000 / V</p>
                 <div className="mt-4 text-left max-w-md mx-auto space-y-1 text-sm text-white">
                   <p>
@@ -152,13 +152,13 @@ export default function TransformerSizingCalculatorPage() {
                 For three-phase transformers, the kVA rating calculation uses the same fundamental
                 relationship between real power and apparent power:
               </p>
-              <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4 text-center">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4 text-center">
                 <p className="text-xl font-mono font-bold text-yellow-400">
                   kVA = kW / Power Factor
                 </p>
               </div>
               <p>The line current drawn from a three-phase transformer is:</p>
-              <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4 text-center">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4 text-center">
                 <p className="text-xl font-mono font-bold text-yellow-400">
                   I = kVA x 1000 / (root 3 x V<sub>L</sub>)
                 </p>
@@ -236,7 +236,7 @@ export default function TransformerSizingCalculatorPage() {
                   </li>
                 </ul>
               </div>
-              <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+              <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
                 <h3 className="font-bold text-white text-lg mb-3">Oversize Factors</h3>
                 <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
@@ -313,7 +313,7 @@ export default function TransformerSizingCalculatorPage() {
                   ].map((rating) => (
                     <div
                       key={rating}
-                      className="text-center p-3 rounded-xl bg-yellow-500/5 border border-yellow-500/20"
+                      className="text-center p-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"
                     >
                       <span className="text-lg font-bold text-yellow-400">{rating}</span>
                       <span className="text-sm text-white ml-1">kVA</span>

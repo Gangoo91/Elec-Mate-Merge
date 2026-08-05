@@ -152,7 +152,7 @@ export default function BatteryBackupCalculatorPage() {
                 power alone, with no mains supply. It depends on the battery capacity, the load
                 current, and the UPS inverter efficiency.
               </p>
-              <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 text-center my-6">
+              <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
                 <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
                   Runtime (hrs) = (Battery Ah x Battery V x Efficiency) / Load (W)
                 </p>
@@ -199,7 +199,7 @@ export default function BatteryBackupCalculatorPage() {
                 less total energy you get.
               </p>
               <p>The formula to calculate the required battery capacity is:</p>
-              <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 text-center my-6">
+              <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
                 <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
                   Ah = (Load W x Runtime hrs) / (Battery V x Efficiency x Ageing Factor)
                 </p>
@@ -279,7 +279,7 @@ export default function BatteryBackupCalculatorPage() {
                 Chapter 57 boundary falls is essential before specifying or certifying any battery
                 backup system.
               </p>
-              <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 my-6 space-y-3">
+              <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] my-6 space-y-3">
                 <p className="font-semibold text-yellow-400">
                   What is excluded from Chapter 57 (Reg 570.4)
                 </p>

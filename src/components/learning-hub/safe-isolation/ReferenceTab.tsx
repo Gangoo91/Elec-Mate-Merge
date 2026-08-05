@@ -57,7 +57,7 @@ const ReferenceTab = ({ onBack }: { onBack: () => void }) => {
 
       {/* Legal framework */}
       <div className="space-y-3">
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Legal Framework</h2>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">Legal Framework</h2>
         {[
           {
             title: 'Health and Safety at Work Act 1974',
@@ -91,7 +91,7 @@ const ReferenceTab = ({ onBack }: { onBack: () => void }) => {
 
       {/* Acceptable vs NOT acceptable */}
       <div className="space-y-3">
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Acceptable Isolation Devices</h2>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">Acceptable Isolation Devices</h2>
         <div className="grid grid-cols-2 gap-2">
           <div className="relative rounded-2xl bg-white/[0.07] border border-green-500/30 p-3 sm:p-4 overflow-hidden">
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-green-500/50 rounded-l-2xl" />
@@ -118,7 +118,7 @@ const ReferenceTab = ({ onBack }: { onBack: () => void }) => {
 
       {/* Scenario cards — expandable */}
       <div className="space-y-3">
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Scenarios</h2>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">Scenarios</h2>
         {scenarios.map((entry, i) => {
           const isOpen = expanded === i;
           return (

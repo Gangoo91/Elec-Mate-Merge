@@ -304,7 +304,6 @@
               <td>
                 <div class="item-desc">{{ item.description }}</div>
                 {% if item.notes != blank %}<div class="item-notes">{{ item.notes }}</div>{% endif %}
-                {% if item.itemAdjustmentPercent > 0 %}<span class="item-adj">+{{ item.itemAdjustmentPercent }}% {{ item.itemAdjustmentLabel | default: 'markup' }}</span>{% endif %}
                 {% if item.itemAdjustmentPercent < 0 %}<span class="item-adj discount">{{ item.itemAdjustmentPercent }}% {{ item.itemAdjustmentLabel | default: 'discount' }}</span>{% endif %}
               </td>
               <td class="qty-unit">{{ item.quantity }}{% if item.unit != blank %} {{ item.unit }}{% endif %}</td>
@@ -320,7 +319,6 @@
               <td>
                 <div class="item-desc">{{ item.description }}</div>
                 {% if item.notes != blank %}<div class="item-notes">{{ item.notes }}</div>{% endif %}
-                {% if item.itemAdjustmentPercent > 0 %}<span class="item-adj">+{{ item.itemAdjustmentPercent }}% {{ item.itemAdjustmentLabel | default: 'markup' }}</span>{% endif %}
                 {% if item.itemAdjustmentPercent < 0 %}<span class="item-adj discount">{{ item.itemAdjustmentPercent }}% {{ item.itemAdjustmentLabel | default: 'discount' }}</span>{% endif %}
               </td>
               <td class="qty-unit">{{ item.quantity }}{% if item.unit != blank %} {{ item.unit }}{% endif %}</td>
@@ -336,7 +334,6 @@
               <td>
                 <div class="item-desc">{{ item.description }}</div>
                 {% if item.notes != blank %}<div class="item-notes">{{ item.notes }}</div>{% endif %}
-                {% if item.itemAdjustmentPercent > 0 %}<span class="item-adj">+{{ item.itemAdjustmentPercent }}% {{ item.itemAdjustmentLabel | default: 'markup' }}</span>{% endif %}
                 {% if item.itemAdjustmentPercent < 0 %}<span class="item-adj discount">{{ item.itemAdjustmentPercent }}% {{ item.itemAdjustmentLabel | default: 'discount' }}</span>{% endif %}
               </td>
               <td class="qty-unit">{{ item.quantity }}{% if item.unit != blank %} {{ item.unit }}{% endif %}</td>
@@ -352,7 +349,6 @@
               <td>
                 <div class="item-desc">{{ item.description }}</div>
                 {% if item.notes != blank %}<div class="item-notes">{{ item.notes }}</div>{% endif %}
-                {% if item.itemAdjustmentPercent > 0 %}<span class="item-adj">+{{ item.itemAdjustmentPercent }}% {{ item.itemAdjustmentLabel | default: 'markup' }}</span>{% endif %}
                 {% if item.itemAdjustmentPercent < 0 %}<span class="item-adj discount">{{ item.itemAdjustmentPercent }}% {{ item.itemAdjustmentLabel | default: 'discount' }}</span>{% endif %}
               </td>
               <td class="qty-unit">{{ item.quantity }}{% if item.unit != blank %} {{ item.unit }}{% endif %}</td>
@@ -416,7 +412,6 @@
               <td>
                 <div class="item-desc">{{ item.description }}</div>
                 {% if item.notes != blank %}<div class="item-notes">{{ item.notes }}</div>{% endif %}
-                {% if item.itemAdjustmentPercent > 0 %}<span class="item-adj">+{{ item.itemAdjustmentPercent }}% {{ item.itemAdjustmentLabel | default: 'markup' }}</span>{% endif %}
                 {% if item.itemAdjustmentPercent < 0 %}<span class="item-adj discount">{{ item.itemAdjustmentPercent }}% {{ item.itemAdjustmentLabel | default: 'discount' }}</span>{% endif %}
               </td>
               <td class="qty-unit">{{ item.quantity }}{% if item.unit != blank %} {{ item.unit }}{% endif %}</td>

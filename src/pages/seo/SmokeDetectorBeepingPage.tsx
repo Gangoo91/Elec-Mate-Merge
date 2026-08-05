@@ -155,7 +155,7 @@ const sections = [
           most common:
         </p>
         <div className="space-y-3 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">Single chirp every 30-60 seconds</h4>
             <p className="text-white text-sm leading-relaxed">
               <strong>Low battery.</strong> The most common cause. The detector has enough power to
@@ -172,7 +172,7 @@ const sections = [
               it is over 10 years old, this is almost certainly the cause.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">Loud, continuous alarm</h4>
             <p className="text-white text-sm leading-relaxed">
               <strong>Smoke or fire detected.</strong> The detector is sensing combustion particles,
@@ -400,7 +400,7 @@ const sections = [
       <>
         <p>Follow this process to diagnose and resolve a beeping smoke detector:</p>
         <div className="space-y-3 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">
               Step 1: Identify which detector is beeping
             </h4>
@@ -410,14 +410,14 @@ const sections = [
               red LED on the detector that triggered.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">Step 2: Identify the type of sound</h4>
             <p className="text-white text-sm leading-relaxed">
               A regular chirp = low battery or end of life. A continuous alarm = smoke detected or
               fault. An intermittent alarm = contamination or nuisance trigger.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">Step 3: Replace the battery</h4>
             <p className="text-white text-sm leading-relaxed">
               For a chirp, replace the battery first. Use a quality branded battery — cheap
@@ -425,7 +425,7 @@ const sections = [
               button for 15 seconds to reset, then test.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">Step 4: Check the age</h4>
             <p className="text-white text-sm leading-relaxed">
               If a new battery does not resolve the chirping, check the manufacture date. If the
@@ -446,7 +446,7 @@ const sections = [
           Battery-only smoke detectors can be replaced by a competent homeowner. However, you should
           call an electrician in these situations:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -503,7 +503,7 @@ const sections = [
           detection provision. BS 5839-6 defines grades and categories for domestic fire detection:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -517,7 +517,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -531,7 +531,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

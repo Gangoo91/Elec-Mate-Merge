@@ -290,7 +290,7 @@ const sections = [
           disconnects the circuit. This is a critical safety function — the same earth fault that
           trips the RCD could deliver a lethal shock to a person if the RCD were not present.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-3">Common Earth Fault Locations</h3>
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-3">
@@ -391,7 +391,7 @@ const sections = [
           identify which appliance is responsible using this simple isolation technique:
         </p>
         <div className="space-y-3 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">Step 1: Unplug everything</h4>
             <p className="text-white text-sm leading-relaxed">
               Go around the house and unplug every appliance from every socket on the affected
@@ -400,7 +400,7 @@ const sections = [
               but still plugged in.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">Step 2: Reset the trip switch</h4>
             <p className="text-white text-sm leading-relaxed">
               With everything unplugged, reset the tripped MCB or RCD. If it holds in the "on"
@@ -408,7 +408,7 @@ const sections = [
               everything unplugged, the fault is in the fixed wiring — call an electrician.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">Step 3: Plug in one appliance at a time</h4>
             <p className="text-white text-sm leading-relaxed">
               Plug in one appliance, switch it on, and wait a minute. If the trip holds, that
@@ -416,7 +416,7 @@ const sections = [
               faulty appliance, the trip switch will go off again. That is your culprit.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">Step 4: Deal with the faulty appliance</h4>
             <p className="text-white text-sm leading-relaxed">
               Once identified, leave the faulty appliance unplugged. If it is under warranty,
@@ -484,7 +484,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-white mb-2">
             A4:2026 Update: Lighting Circuits Now Need RCD Protection (Reg 411.3.4)
           </h3>
@@ -510,7 +510,7 @@ const sections = [
           Some tripping situations you can resolve yourself (overloaded circuit, faulty appliance
           identification). Others require an electrician:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -560,7 +560,7 @@ const sections = [
           components before you have identified the fault:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Search className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -574,7 +574,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Cable className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -591,7 +591,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -607,7 +607,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

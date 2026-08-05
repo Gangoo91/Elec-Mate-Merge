@@ -180,7 +180,7 @@ const ContinuityRegulationRequirementsCard = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-4">
         <motion.div variants={itemVariants}>
-          <div className="relative rounded-2xl bg-white/[0.03] border border-cyan-500/20 p-4 overflow-hidden">
+          <div className="relative rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-cyan-500/20 p-4 overflow-hidden">
             <div className="absolute inset-x-0 top-0 h-[2px] bg-cyan-500" />
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-cyan-500/60 rounded-l-2xl" />
             <p className="text-[15px] font-bold text-cyan-400">BS 7671 Regulation Requirements</p>
@@ -199,7 +199,7 @@ const ContinuityRegulationRequirementsCard = ({ onBack }: Props) => {
                 onClick={() => toggle(reg.id)}
                 className="w-full text-left touch-manipulation active:scale-[0.99] transition-transform"
               >
-                <div className={`relative rounded-2xl bg-white/[0.07] border ${isOpen ? borderActiveMap[reg.accent] : 'border-white/[0.08]'} overflow-hidden transition-colors`}>
+                <div className={`relative rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border ${isOpen ? borderActiveMap[reg.accent] : 'border-white/[0.08]'} overflow-hidden transition-colors`}>
                   <div className={`absolute inset-x-0 top-0 h-[2px] ${topAccentMap[reg.accent]}`} />
                   <div className={`absolute left-0 top-0 bottom-0 w-1 ${barMap[reg.accent]} rounded-l-2xl`} />
                   <div className="p-4 flex items-center gap-3">
@@ -221,7 +221,7 @@ const ContinuityRegulationRequirementsCard = ({ onBack }: Props) => {
                   >
                     <div className="pt-2 px-1 pb-1 space-y-2">
                       {reg.content.map((block, i) => (
-                        <div key={i} className="rounded-xl bg-white/[0.05] p-3">
+                        <div key={i} className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
                           <p className="text-[12px] font-semibold text-white mb-1.5">{block.heading}</p>
                           <div className="space-y-1">
                             {block.items.map((item, j) => (

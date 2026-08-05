@@ -192,7 +192,7 @@ export default function ApprenticeTrainingPage() {
       <section className="relative py-16 sm:py-24 px-5 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
             <GraduationCap className="w-4 h-4 text-yellow-400" />
             <span className="text-sm font-medium text-yellow-400">Level 2, Level 3 & AM2</span>
           </div>
@@ -280,7 +280,7 @@ export default function ApprenticeTrainingPage() {
                 key={item.step}
                 className="flex items-start gap-4 p-5 rounded-xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 shrink-0">
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] shrink-0">
                   <span className="text-yellow-400 font-bold">{item.step}</span>
                 </div>
                 <div>

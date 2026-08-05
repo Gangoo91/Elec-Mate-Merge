@@ -57,6 +57,50 @@ export function readableTextOn(fill: RGB): RGB {
 }
 
 /**
+ * Above this luminance a fill is close enough to the paper that it vanishes.
+ * Pure white is 1.0; #edf2f7 (a real user's saved colour) is ~0.95.
+ */
+const INVISIBLE_ON_PAPER = 0.92;
+
+/** Relative luminance, 0–1. */
+const luminance = ([r, g, b]: RGB): number => (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
+/**
+ * True when a fill is so light it would disappear against a white page.
+ *
+ * ELE-1444 — white is a legitimate brand colour (Mulcahy Electrical's identity
+ * is white) and nothing in the app blocks it, but a white block painted on
+ * white paper reads as "the branding is broken". Callers use this to add a
+ * hairline border so the shape still exists.
+ */
+export function needsOutlineOnPaper(fill: RGB): boolean {
+  return luminance(fill) >= INVISIBLE_ON_PAPER;
+}
+
+/** Fill, border and text colours for a branded block. */
+export interface BrandBlockStyle {
+  fill: RGB;
+  /** Hairline border — null when the fill is dark enough to stand alone. */
+  border: RGB | null;
+  text: RGB;
+}
+
+/**
+ * How to paint a block in the user's brand colour so it is always visible.
+ *
+ * A near-white brand keeps its fill (it IS their colour) but gains a soft grey
+ * border and dark text, which is how a white brand is treated in print. Any
+ * other colour is returned unchanged with readable text over it.
+ */
+export function brandBlockStyle(fill: RGB): BrandBlockStyle {
+  return {
+    fill,
+    border: needsOutlineOnPaper(fill) ? [203, 213, 225] : null,
+    text: readableTextOn(fill),
+  };
+}
+
+/**
  * Page-break guard. If `y + needed` would cross the bottom margin, add a page
  * and return the new top y; otherwise return `y` unchanged. Keeps blocks from
  * clipping or orphaning. All values are in the document's own unit.
@@ -77,11 +121,24 @@ export function ensureSpace(
   return y;
 }
 
-/** Thin brand accent strip across the top of the page (in doc units). */
+/**
+ * Thin brand accent strip across the top of the page (in doc units).
+ *
+ * ELE-1444 — a near-white brand (a real, legitimate choice) painted straight
+ * onto white paper is invisible, so the document just looked unbranded. The
+ * strip keeps the user's actual colour but gains a hairline rule beneath it so
+ * the band still reads as a deliberate design element.
+ */
 export function addAccentBar(doc: jsPDF, brand: RGB, height = 6): void {
   const pageW = doc.internal.pageSize.getWidth();
   doc.setFillColor(brand[0], brand[1], brand[2]);
   doc.rect(0, 0, pageW, height, 'F');
+
+  const { border } = brandBlockStyle(brand);
+  if (!border) return;
+  doc.setDrawColor(border[0], border[1], border[2]);
+  doc.setLineWidth(0.4);
+  doc.line(0, height, pageW, height);
 }
 
 /**

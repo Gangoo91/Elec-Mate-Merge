@@ -39,6 +39,7 @@ import MWTestingTab from '@/components/minor-works/MWTestingTab';
 import MWDeclarationTab from '@/components/minor-works/MWDeclarationTab';
 import { useMinorWorksValidation } from '@/hooks/useMinorWorksValidation';
 import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
+import { scrollToTopForStepChange } from '@/utils/scroll';
 
 const MinorWorksForm = ({
   onBack,
@@ -297,7 +298,7 @@ const MinorWorksForm = ({
   const handleTabChange = (tab: MWTabValue) => {
     setTab(tab);
     onTabChange?.(tab);
-    window.scrollTo({ top: 0, behavior: 'auto' });
+    scrollToTopForStepChange();
   };
 
   // Smart defaults
@@ -1317,6 +1318,7 @@ const MinorWorksForm = ({
         {/* v3 shell footer — single sticky step bar replaces per-tab inline nav */}
         {!isLocked && (
           <MWStickyFooter
+            previewData={formData as unknown as Record<string, unknown>}
             currentTabIndex={currentTabIndex}
             totalTabs={totalTabs}
             canNavigatePrevious={canNavigatePrevious}
@@ -1333,7 +1335,7 @@ const MinorWorksForm = ({
       // The explicit `behavior` beats the global `scroll-behavior: smooth` in
       // index.css, so this really is instant. Scrolling first means the new
       // step mounts already at the top and only the slide animates.
-      window.scrollTo({ top: 0, behavior: 'auto' });
+      scrollToTopForStepChange();
               navigateNext();
               onTabChange?.();
             }}
@@ -1350,7 +1352,7 @@ const MinorWorksForm = ({
       // The explicit `behavior` beats the global `scroll-behavior: smooth` in
       // index.css, so this really is instant. Scrolling first means the new
       // step mounts already at the top and only the slide animates.
-      window.scrollTo({ top: 0, behavior: 'auto' });
+      scrollToTopForStepChange();
               navigatePrevious();
               onTabChange?.();
             }}

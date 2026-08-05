@@ -190,7 +190,7 @@ const sections = [
           and quote with confidence. Here are the main categories:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Pathway and Bollard Lights</h3>
             <p className="text-white text-sm leading-relaxed mb-4">
               LED post lights and bollards for paths, driveways, and garden borders. The everyday
@@ -244,7 +244,7 @@ const sections = [
               <dd className="text-blue-300 font-semibold text-right">£40 – £150</dd>
             </dl>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Security and Floodlighting</h3>
             <p className="text-white text-sm leading-relaxed mb-4">
               Motion-activated LED floodlights for driveways, side passages, and rear gardens.
@@ -621,7 +621,7 @@ const sections = [
               Suitable for UK weather conditions.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">IP67</h3>
             <p className="text-white text-sm leading-relaxed">
               Dust-tight and protected against temporary immersion in water (up to 1 metre for 30
@@ -629,7 +629,7 @@ const sections = [
               that may flood temporarily after heavy rain.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">IP68</h3>
             <p className="text-white text-sm leading-relaxed">
               Dust-tight and protected against continuous immersion in water beyond 1 metre.
@@ -659,7 +659,7 @@ const sections = [
           these jobs is presenting a clear, itemised quote that shows the value.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

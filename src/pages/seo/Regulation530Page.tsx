@@ -257,14 +257,14 @@ const sections = [
                 Amendment 2 (A2:2022) — SPD requirements, EV charging updates
               </span>
             </div>
-            <div className="flex items-center gap-4 p-4 rounded-xl bg-yellow-500/5 border border-yellow-500/20">
+            <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <span className="text-yellow-400 font-bold shrink-0">Jul 2024</span>
               <span className="text-white">
                 Amendment 3 (A3:2024) — Regulation 530.3.201 (bidirectional/unidirectional devices)
                 + two new definitions
               </span>
             </div>
-            <div className="flex items-center gap-4 p-4 rounded-xl bg-yellow-500/5 border border-yellow-500/20">
+            <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <span className="text-yellow-400 font-bold shrink-0">2026</span>
               <span className="text-white">
                 Amendment 4 (A4:2026) — redrafted Reg 421.1.7 (AFDDs now required for socket-outlet
@@ -351,7 +351,7 @@ const sections = [
                 only connected to one defined set of connection terminals.
               </p>
             </div>
-            <div className="rounded-xl bg-yellow-500/5 border border-yellow-500/20 p-4">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4">
               <p className="text-white">
                 <strong className="text-yellow-400">Bidirectional protective device.</strong> A
                 protective device where it is intended by the manufacturer that a source of supply is
@@ -375,7 +375,7 @@ const sections = [
               direction, the device may fail to extinguish the arc safely.
             </p>
           </div>
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <ArrowLeftRight className="w-6 h-6 text-yellow-400 mb-3" />
             <h3 className="font-bold text-white text-lg mb-2">Bidirectional Devices</h3>
             <p className="text-white text-sm leading-relaxed mb-3">

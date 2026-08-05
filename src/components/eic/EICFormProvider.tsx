@@ -34,6 +34,7 @@ import {
 } from '@/utils/dataIntegrity';
 import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
 import { type SyncState } from '@/components/ui/SyncStatusIndicator';
+import type { SyncStatus } from '@/hooks/useReportSync';
 import { Button } from '@/components/ui/button';
 import { Bell } from 'lucide-react';
 import { useDesignedCircuit, useUpdateDesignedCircuitStatus } from '@/hooks/useDesignedCircuits';
@@ -56,6 +57,8 @@ interface EICFormContextType {
   handleGenerateCertificate: () => Promise<void>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   syncState: any;
+  /** Raw useReportSync status — see useCloudSync.cloudStatus (ELE-1446). */
+  cloudStatus: SyncStatus | undefined;
   isOnline: boolean;
   isAuthenticated: boolean;
   isSaving: boolean;
@@ -482,6 +485,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
 
   const {
     syncState,
+    cloudStatus,
     syncToCloud,
     loadFromCloud,
     isOnline,
@@ -1356,6 +1360,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     handleManualSave,
     handleGenerateCertificate,
     syncState,
+    cloudStatus,
     isOnline,
     isAuthenticated,
     isSaving,

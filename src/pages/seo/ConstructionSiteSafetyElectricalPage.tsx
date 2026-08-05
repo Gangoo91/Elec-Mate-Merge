@@ -266,7 +266,7 @@ const sections = [
           line conductor is at 55V to earth — if a worker touches a live conductor while in contact
           with earth, the maximum shock voltage is 55V rather than 230V.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-3">
             <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <div>
@@ -417,7 +417,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
             <div>
@@ -504,7 +504,7 @@ const sections = [
           incidents. These should be communicated to all workers during site induction and displayed
           at prominent locations around the site.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white mb-3">Electrical Emergency Response</h4>
           <ol className="space-y-3 text-white list-decimal list-inside">
             <li>
@@ -614,7 +614,7 @@ const sections = [
           work:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

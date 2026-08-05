@@ -152,7 +152,7 @@ const sections = [
           end-user experience.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">RCBO (Per Circuit)</h3>
             <p className="text-white text-sm leading-relaxed">
               An RCBO (Residual Current Breaker with Overcurrent protection) combines both functions
@@ -241,7 +241,7 @@ const sections = [
           is either a simple isolator (non-RCD) or a 100mA Type S RCD that provides upstream fire
           protection and a secondary backup.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white mb-4">Benefits of Full RCBO Board</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -529,7 +529,7 @@ const sections = [
           without exceeding the overcurrent threshold of an MCB. An AFDD detects the characteristic
           current signature of an arc fault and disconnects the circuit before ignition occurs.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white mb-4">
             Why the RCBO Board Is the Only Practical AFDD Architecture
           </h4>

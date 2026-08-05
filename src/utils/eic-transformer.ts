@@ -1,4 +1,5 @@
 import { EICCircuitData, EICScheduleOfTests, AgentCircuitOutput } from '@/types/eic-integration';
+import { getMcbZsLimit, type MCBCurve } from '@/data/zsLimits';
 
 // BS 7671 Table I1 - Conductor resistances (mΩ/m at 20°C)
 const CONDUCTOR_RESISTANCE: Record<string, number> = {
@@ -20,42 +21,17 @@ const CONDUCTOR_RESISTANCE: Record<string, number> = {
   '240.0': 0.0754,
 };
 
-// BS 7671 Appendix 3 - Max Zs values (Ω) at 0.4s for common protective devices
-const MAX_ZS_VALUES: Record<string, Record<number, number>> = {
-  B: {
-    6: 7.67,
-    10: 4.6,
-    16: 2.87,
-    20: 2.3,
-    25: 1.84,
-    32: 1.44,
-    40: 1.15,
-    50: 0.92,
-    63: 0.73,
-  },
-  C: {
-    6: 3.83,
-    10: 2.3,
-    16: 1.44,
-    20: 1.15,
-    25: 0.92,
-    32: 0.72,
-    40: 0.57,
-    50: 0.46,
-    63: 0.36,
-  },
-  D: {
-    6: 1.92,
-    10: 1.15,
-    16: 0.72,
-    20: 0.57,
-    25: 0.46,
-    32: 0.36,
-    40: 0.29,
-    50: 0.23,
-    63: 0.18,
-  },
-};
+/**
+ * Max Zs now comes from `@/data/zsLimits`, the single source for BS 7671
+ * Table 41.3.
+ *
+ * The table that used to live here was computed as U0/Ia with no Cmin factor —
+ * B32 read 1.44Ω where Table 41.3 gives 1.37Ω (0.95 × 230 / 160). Every entry
+ * was the same ~5% too generous, so a circuit measuring between the two
+ * numbers was reported compliant when BS 7671 says it is not. The published
+ * tables already have Cmin = 0.95 applied; re-deriving them by hand is what
+ * dropped it.
+ */
 
 /**
  * Calculate expected R1+R2 value based on cable sizes and length
@@ -76,23 +52,34 @@ export function calculateExpectedR1R2(
 }
 
 /**
- * Get max Zs for protective device from BS 7671 Appendix 3
+ * Maximum Zs for a protective device, from BS 7671 Table 41.3.
+ *
+ * Returns null when the device is not in the table. It used to return a
+ * hard-coded 0.5Ω "default safe value", which is not a BS 7671 figure and is
+ * not safe: it is far stricter than most devices need, so a sound circuit gets
+ * flagged, while an unrecognised large device gets a limit invented for it.
+ * A blank limit says "look this up"; a fabricated one does not.
  */
-export function getMaxZsForDevice(deviceType: string, curve: string, rating: number): number {
-  const curveUpper = curve.toUpperCase();
+export function getMaxZsForDevice(
+  deviceType: string,
+  curve: string,
+  rating: number
+): number | null {
+  const curveKey = `type${curve.toUpperCase()}` as MCBCurve;
 
-  if (deviceType.includes('RCD') || deviceType.includes('RCBO')) {
-    // RCD/RCBO max Zs = 230V / (5 × IΔn) typically
-    // For 30mA: 230 / (5 × 0.03) = 1533Ω (very high, earth path still needed)
-    return 200; // Practical limit for basic protection
+  // An RCBO to BS EN 61009-1 carries an overcurrent element with the same
+  // B/C/D characteristic as the equivalent MCB, so its Zs limit is the MCB
+  // limit — BS 7671 Table 41.3 lists them together. This previously returned a
+  // flat 200Ω, which is not a disconnection limit at all: at that value every
+  // reading passes, so an RCBO circuit was never actually checked.
+  if (deviceType.includes('MCB') || deviceType.includes('RCBO') || !deviceType.includes('RCD')) {
+    return getMcbZsLimit(curveKey, rating)?.maxZs ?? null;
   }
 
-  if (MAX_ZS_VALUES[curveUpper]?.[rating]) {
-    return MAX_ZS_VALUES[curveUpper][rating];
-  }
-
-  // Default safe value if not in table
-  return 0.5;
+  // A plain RCD has no overcurrent element; its earth-fault limit comes from
+  // the residual current rating, not from a curve. That lookup needs the IΔn
+  // rating, which this function is not given, so defer rather than guess.
+  return null;
 }
 
 /**
@@ -212,7 +199,8 @@ export function transformAgentOutputToEIC(
       insulationResistance: '≥1.0MΩ (min), expect >50MΩ',
       polarity: 'Correct (verify on-site)',
       zs: `${expectedZs.toFixed(3)}Ω (expected)`,
-      maxZs: `${maxZs.toFixed(2)}Ω`,
+      // Blank when the device isn't in Table 41.3 — see getMaxZsForDevice.
+      maxZs: maxZs !== null && maxZs !== undefined ? `${maxZs.toFixed(2)}Ω` : '',
       pfc: 'To be tested',
       functionalTesting: 'To be tested',
     };

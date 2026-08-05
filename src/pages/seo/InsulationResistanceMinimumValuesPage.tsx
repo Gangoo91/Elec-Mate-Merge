@@ -155,7 +155,7 @@ const sections = [
           Chapter 61 — A4:2026 renumbered Chapter 61 to Chapter 64. The values themselves are
           unchanged:
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-4">
             BS 7671 Table 64 — Minimum Insulation Resistance Values
           </h3>
@@ -250,7 +250,7 @@ const sections = [
           lighting transformers, and bathroom shaver socket SELV supplies. Always check the circuit
           voltage before selecting the test voltage on your MFT.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
             <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <div>
@@ -405,7 +405,7 @@ const sections = [
           identify the cause. The process involves progressively isolating sections of the circuit
           to narrow down where the fault is.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Troubleshooting Process</h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">

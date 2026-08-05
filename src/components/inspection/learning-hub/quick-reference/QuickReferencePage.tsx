@@ -30,7 +30,7 @@ const QuickReferencePage = ({ onBack }: Props) => {
         <motion.div variants={itemVariants}>
           <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
             <div className="px-4 py-2.5 bg-yellow-400/5 border-b border-white/[0.06]">
-              <p className="text-xs font-bold text-yellow-400 uppercase tracking-wider">Insulation Resistance — Minimum Values</p>
+              <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Insulation Resistance — Minimum Values</p>
             </div>
             <div className="p-3">
               <div className="grid grid-cols-3 gap-2 text-center">
@@ -58,7 +58,7 @@ const QuickReferencePage = ({ onBack }: Props) => {
         <motion.div variants={itemVariants}>
           <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
             <div className="px-4 py-2.5 bg-yellow-400/5 border-b border-white/[0.06]">
-              <p className="text-xs font-bold text-yellow-400 uppercase tracking-wider">Zs Maximum — Type B MCBs (80% test limit)</p>
+              <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Zs Maximum — Type B MCBs (80% test limit)</p>
             </div>
             <div className="p-3">
               <div className="grid grid-cols-4 gap-1.5">
@@ -96,7 +96,7 @@ const QuickReferencePage = ({ onBack }: Props) => {
         <motion.div variants={itemVariants}>
           <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
             <div className="px-4 py-2.5 bg-yellow-400/5 border-b border-white/[0.06]">
-              <p className="text-xs font-bold text-yellow-400 uppercase tracking-wider">PFC Minimum — Type B MCBs (5× In)</p>
+              <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">PFC Minimum — Type B MCBs (5× In)</p>
             </div>
             <div className="p-3">
               <div className="grid grid-cols-4 gap-1.5">
@@ -115,7 +115,7 @@ const QuickReferencePage = ({ onBack }: Props) => {
         <motion.div variants={itemVariants}>
           <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
             <div className="px-4 py-2.5 bg-yellow-400/5 border-b border-white/[0.06]">
-              <p className="text-xs font-bold text-yellow-400 uppercase tracking-wider">RCD Trip Times (30mA)</p>
+              <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">RCD Trip Times (30mA)</p>
             </div>
             <div className="p-3 space-y-2">
               <div className="grid grid-cols-3 gap-2">
@@ -154,7 +154,7 @@ const QuickReferencePage = ({ onBack }: Props) => {
         <motion.div variants={itemVariants}>
           <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
             <div className="px-4 py-2.5 bg-yellow-400/5 border-b border-white/[0.06]">
-              <p className="text-xs font-bold text-yellow-400 uppercase tracking-wider">Ze — Typical External Loop Impedance</p>
+              <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Ze — Typical External Loop Impedance</p>
             </div>
             <div className="p-3">
               <div className="grid grid-cols-3 gap-2">
@@ -182,7 +182,7 @@ const QuickReferencePage = ({ onBack }: Props) => {
         <motion.div variants={itemVariants}>
           <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
             <div className="px-4 py-2.5 bg-yellow-400/5 border-b border-white/[0.06]">
-              <p className="text-xs font-bold text-yellow-400 uppercase tracking-wider">Continuity — Target Values</p>
+              <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Continuity — Target Values</p>
             </div>
             <div className="p-3">
               <div className="grid grid-cols-2 gap-2">
@@ -228,7 +228,7 @@ const QuickReferencePage = ({ onBack }: Props) => {
         <motion.div variants={itemVariants}>
           <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 overflow-hidden">
             <div className="px-4 py-2.5 border-b border-yellow-400/20">
-              <p className="text-xs font-bold text-yellow-400 uppercase tracking-wider">Key Formulas</p>
+              <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Key Formulas</p>
             </div>
             <div className="p-3 space-y-2">
               {[

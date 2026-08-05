@@ -166,7 +166,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
         <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
             Part of 70 Electrical Calculators
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
@@ -197,7 +197,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
 
       {/* Direct-answer block — targets featured-snippet position */}
       <section className="px-5 pb-4">
-        <div className="max-w-4xl mx-auto p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+        <div className="max-w-4xl mx-auto p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
           <p className="text-white leading-relaxed">
             <strong className="text-yellow-400">What is Zs?</strong> Zs is the total earth fault
             loop impedance — the complete impedance of the fault current path from the point of
@@ -226,7 +226,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               What Is Earth Fault Loop Impedance?
             </h2>
@@ -283,7 +283,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">The Earth Fault Loop Path</h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
@@ -293,10 +293,10 @@ export default function EarthLoopImpedanceCalculatorPage() {
               current flows in a complete loop — the earth fault loop. This loop consists of several
               elements, each contributing impedance:
             </p>
-            <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 my-6">
+            <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] my-6">
               <ol className="space-y-3 text-white">
                 <li className="flex items-start gap-3">
-                  <span className="w-7 h-7 rounded-lg bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 font-bold text-sm flex-shrink-0">
+                  <span className="w-7 h-7 rounded-lg bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 font-bold text-sm flex-shrink-0">
                     1
                   </span>
                   <span>
@@ -308,7 +308,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-7 h-7 rounded-lg bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 font-bold text-sm flex-shrink-0">
+                  <span className="w-7 h-7 rounded-lg bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 font-bold text-sm flex-shrink-0">
                     2
                   </span>
                   <span>
@@ -321,7 +321,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-7 h-7 rounded-lg bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 font-bold text-sm flex-shrink-0">
+                  <span className="w-7 h-7 rounded-lg bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 font-bold text-sm flex-shrink-0">
                     3
                   </span>
                   <span>
@@ -331,7 +331,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-7 h-7 rounded-lg bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 font-bold text-sm flex-shrink-0">
+                  <span className="w-7 h-7 rounded-lg bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 font-bold text-sm flex-shrink-0">
                     4
                   </span>
                   <span>
@@ -341,7 +341,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="w-7 h-7 rounded-lg bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 font-bold text-sm flex-shrink-0">
+                  <span className="w-7 h-7 rounded-lg bg-yellow-500/20 border border-white/[0.14] flex items-center justify-center text-yellow-400 font-bold text-sm flex-shrink-0">
                     5
                   </span>
                   <span>
@@ -368,14 +368,14 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               The Zs Formula and Worked Examples
             </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>The fundamental formula for earth fault loop impedance is straightforward:</p>
-            <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 text-center my-6">
+            <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
               <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
                 Zs = Ze + (R1 + R2)
               </p>
@@ -499,7 +499,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Temperature Correction for Zs Measurements
             </h2>
@@ -521,7 +521,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
             </p>
             <p>There are two accepted methods for accounting for this:</p>
             <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+              <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                 <h3 className="font-bold text-white text-lg mb-2">Method 1: The Rule of Thumb</h3>
                 <p className="text-white text-sm leading-relaxed">
                   Compare your measured Zs against 80% of the tabulated maximum Zs. If your measured
@@ -531,7 +531,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
                   measured Zs must be 1.10 ohms or less.
                 </p>
               </div>
-              <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+              <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                 <h3 className="font-bold text-white text-lg mb-2">Method 2: Correction Factor</h3>
                 <p className="text-white text-sm leading-relaxed">
                   Multiply your measured Zs by a correction factor to obtain the estimated Zs at
@@ -557,7 +557,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Maximum Zs Values from BS 7671
             </h2>
@@ -579,10 +579,10 @@ export default function EarthLoopImpedanceCalculatorPage() {
             </h3>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden">
               <div className="grid grid-cols-2 gap-px bg-white/10">
-                <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                   MCB Rating (A)
                 </div>
-                <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                   Max Zs (ohms)
                 </div>
               </div>
@@ -612,10 +612,10 @@ export default function EarthLoopImpedanceCalculatorPage() {
             </h3>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden">
               <div className="grid grid-cols-2 gap-px bg-white/10">
-                <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                   MCB Rating (A)
                 </div>
-                <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                   Max Zs (ohms)
                 </div>
               </div>
@@ -645,10 +645,10 @@ export default function EarthLoopImpedanceCalculatorPage() {
             </h3>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden">
               <div className="grid grid-cols-2 gap-px bg-white/10">
-                <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                   MCB Rating (A)
                 </div>
-                <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                   Max Zs (ohms)
                 </div>
               </div>
@@ -690,7 +690,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               RCD-Protected Circuits and the 1667 Ohm Limit
             </h2>
@@ -708,7 +708,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
               current, it does not require a high fault current to trip. The maximum earth fault
               loop impedance for an RCD-protected circuit is calculated from the formula:
             </p>
-            <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 text-center my-6">
+            <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
               <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
                 Zs = 50 / I<sub>delta n</sub>
               </p>
@@ -781,7 +781,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Prospective Fault Current (Ipf) and the Schedule of Test Results
             </h2>
@@ -807,7 +807,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
               during a fault. BS 7671 Appendix 14 provides further guidance on determination of
               prospective fault current.
             </p>
-            <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+            <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <h3 className="font-bold text-white text-base mb-2">
                 Ipf at the origin — quick formula
               </h3>
@@ -836,7 +836,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       {/* A4:2026 Changes Relevant to Zs Planning */}
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
-          <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/30">
+          <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <h2 className="text-xl sm:text-2xl font-bold text-yellow-400 mb-4">
               BS 7671 A4:2026 — Key Changes for Zs Planning
             </h2>
@@ -879,7 +879,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               How to Measure Ze and R1+R2
             </h2>
@@ -925,7 +925,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section id="how-it-works" className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               How to Calculate Zs — Step by Step
             </h2>
@@ -936,7 +936,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
                 key={index}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 flex-shrink-0">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
                   <span className="font-bold text-yellow-400">{index + 1}</span>
                 </div>
                 <div>
@@ -979,7 +979,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
             </h2>

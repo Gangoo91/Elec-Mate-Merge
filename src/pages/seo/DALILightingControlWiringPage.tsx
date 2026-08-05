@@ -118,7 +118,7 @@ const sections = [
               interoperability was uneven, so commissioning typically required vendor-specific tools.
             </p>
           </div>
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <h3 className="font-bold text-yellow-400 text-lg mb-1">DALI-2</h3>
             <p className="text-yellow-400 text-xs font-semibold mb-3">
               Certified interoperability — administered by DiiA
@@ -141,7 +141,7 @@ const sections = [
             </p>
           </div>
         </div>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-red-300 mb-2">Specify DALI-2 throughout where possible</h3>
           <p className="text-white text-sm leading-relaxed">
             New specifications almost universally call for DALI-2 gear, frequently with D4i where
@@ -222,7 +222,7 @@ const sections = [
             driver and sensor share a connector.
           </p>
         </div>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-red-300 mb-2">Sizing the PSU is not optional</h3>
           <p className="text-white text-sm leading-relaxed">
             A common commissioning fault is an under-rated bus PSU. The bus works at first fix and
@@ -285,7 +285,7 @@ const sections = [
               </li>
             </ul>
           </div>
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <h3 className="font-bold text-yellow-400 text-base mb-3">Combined mains + DALI cable</h3>
             <p className="text-white text-sm leading-relaxed">
               Using 5-core mains cable for L, N, CPC and the DALI pair together is permitted under{' '}
@@ -424,7 +424,7 @@ const sections = [
             discovered short address.
           </li>
         </ol>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-red-300 mb-2">Permanent live to every driver</h3>
           <p className="text-white text-sm leading-relaxed">
             The single most common DALI first-fix mistake is wiring one core as a switched live.
@@ -575,7 +575,7 @@ const sections = [
               spaces — meeting rooms, retail bays.
             </p>
           </div>
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <h3 className="font-bold text-yellow-400 text-base mb-2">Managed (controller-based)</h3>
             <p className="text-white text-sm leading-relaxed">
               A central application controller or routing gateway orchestrates groups, scenes,
@@ -630,7 +630,7 @@ const sections = [
             with heavy switching.
           </li>
         </ol>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-red-300 mb-2">Lights still work without bus signalling</h3>
           <p className="text-white text-sm leading-relaxed">
             With the bus disabled, every driver still has mains and outputs light at its last-known
@@ -662,7 +662,7 @@ const sections = [
               </tr>
             </thead>
             <tbody className="text-white">
-              <tr className="border-b border-white/10 bg-yellow-500/5">
+              <tr className="border-b border-white/10 bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                 <td className="p-3 font-semibold">DALI</td>
                 <td className="p-3">64 per line, groups + scenes</td>
                 <td className="p-3">Yes (lamp fail, energy, hours)</td>

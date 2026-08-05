@@ -229,7 +229,7 @@ const sections = [
           non-notifiable — but only if the work is NOT in a special location. This is one of the
           most commonly misunderstood aspects of Part P.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Non-Notifiable Additions</h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
@@ -442,7 +442,7 @@ const sections = [
           best practice (and most competent person scheme provider requirements) is to issue a Minor
           Works certificate for any electrical work carried out. This provides:
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />

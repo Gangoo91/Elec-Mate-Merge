@@ -7,6 +7,8 @@ import PATTestingTabNavigation from './PATTestingTabNavigation';
 import { Appliance } from '@/types/pat-testing';
 
 interface PATTestingFormTabsProps {
+  /** ELE-1477 — saved report id, for the footer's View PDF. */
+  reportId?: string | null;
   currentTab: PATTestingTabValue;
   onTabChange: (value: string) => void;
   canAccessTab: (tabId: PATTestingTabValue) => boolean;
@@ -49,6 +51,7 @@ interface PATTestingFormTabsProps {
 const TAB_ORDER: PATTestingTabValue[] = ['client', 'appliances', 'declarations'];
 
 const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
+  reportId,
   currentTab,
   formData,
   onUpdate,
@@ -97,6 +100,8 @@ const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
         {content[currentTab]}
       </div>
       <PATTestingTabNavigation
+        previewData={formData}
+        previewReportId={reportId}
         {...tabNavigationProps}
         onGenerateCertificate={
           isLast ? onGenerateCertificate : tabNavigationProps.onGenerateCertificate

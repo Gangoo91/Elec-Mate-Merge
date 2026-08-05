@@ -181,7 +181,7 @@ const sections = [
               Typically 2–4 weeks. Required for access to open areas of most MOD sites.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">SC</h3>
             <p className="text-white text-sm leading-relaxed">
               Security Check. Required for regular, uncontrolled access to secure areas. 10-year
@@ -189,7 +189,7 @@ const sections = [
               establishments and technical facilities.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">DV</h3>
             <p className="text-white text-sm leading-relaxed">
               Developed Vetting. Highest level of clearance. Required for access to TOP SECRET

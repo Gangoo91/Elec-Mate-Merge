@@ -190,27 +190,25 @@ export function TaskDetailSheet({
       <Drawer.Root shouldScaleBackground={false} noBodyStyles open={isOpen} onOpenChange={(open) => !open && onClose()}>
         <Drawer.Portal>
           <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
-          <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col rounded-t-3xl bg-background max-h-[85dvh] outline-none">
+          <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col rounded-t-3xl bg-[#111114] max-h-[85dvh] outline-none">
             {/* Drag handle */}
             <div className="flex justify-center pt-3 pb-1">
               <div className="w-10 h-1 rounded-full bg-white/20" />
             </div>
 
             {/* Header */}
-            <div className="flex items-start justify-between px-5 pb-3 border-b border-white/10">
-              <div className="flex-1 min-w-0 pr-3">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className={cn('w-2.5 h-2.5 rounded-full', priorityDot)} />
-                  <span
-                    className={cn(
-                      'text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full',
-                      status.className
-                    )}
-                  >
-                    {status.label}
-                  </span>
+            <div className="mx-auto flex w-full max-w-xl items-start justify-between border-b border-white/10 px-5 pb-3">
+              <div className="min-w-0 flex-1 pr-3">
+                {/* The task is the headline. Status was set above it as a
+                    coloured pill, which made "OPEN" the first thing read on a
+                    screen where everything is open. */}
+                <h2 className="text-[19px] font-semibold leading-snug tracking-tight text-white">
+                  {task.title}
+                </h2>
+                <div className="mt-1 flex items-center gap-2">
+                  <span className={cn('h-2 w-2 rounded-full', priorityDot)} />
+                  <span className="text-[12px] text-white">{status.label}</span>
                 </div>
-                <h2 className="text-lg font-bold text-white leading-tight">{task.title}</h2>
               </div>
               <button
                 type="button"
@@ -222,7 +220,7 @@ export function TaskDetailSheet({
             </div>
 
             {/* Body */}
-            <div className="flex-1 overflow-y-auto px-5 py-4 space-y-5">
+            <div className="mx-auto w-full max-w-xl flex-1 space-y-5 overflow-y-auto px-5 py-4">
               {/* Details */}
               {task.details && (
                 <div className="space-y-1">
@@ -373,84 +371,92 @@ export function TaskDetailSheet({
                       ? handleNativePhoto(CameraSource.Camera)
                       : fileInputRef.current?.click()
                     }
-                    className="w-full h-20 rounded-2xl border-2 border-dashed border-white/20 flex flex-col items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-transform"
+                    className="flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-white/[0.14] bg-white/[0.06] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.10] touch-manipulation active:scale-[0.98]"
                   >
-                    <Camera className="h-5 w-5 text-white" />
-                    <span className="text-sm text-white">Attach a photo</span>
+                    <Camera className="h-4 w-4" />
+                    <span>Attach a photo</span>
                   </button>
                 )}
               </div>
 
               {/* Snooze options */}
               {showSnoozeOptions && (
-                <div className="space-y-2 p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
-                  <p className="text-sm font-medium text-blue-400">Snooze until:</p>
-                  {getSnoozeOptions().map((opt) => (
-                    <button
-                      key={opt.label}
-                      type="button"
-                      onClick={() => handleAction(() => onSnooze(task.id, opt.date))}
-                      disabled={actionLoading}
-                      className="w-full text-left h-11 px-3 rounded-lg bg-blue-500/10 text-white text-sm font-medium active:bg-blue-500/20 touch-manipulation transition-colors"
-                    >
-                      {opt.label}
-                    </button>
-                  ))}
+                <div>
+                  <p className="mb-2 text-[12px] font-medium text-white">Snooze until</p>
+                  {/* Chips, not a stack of full-width blue bars — these are
+                      short mutually-exclusive choices, and the blue panel was
+                      the only blue on the page. */}
+                  <div className="flex flex-wrap gap-2">
+                    {getSnoozeOptions().map((opt) => (
+                      <button
+                        key={opt.label}
+                        type="button"
+                        onClick={() => handleAction(() => onSnooze(task.id, opt.date))}
+                        disabled={actionLoading}
+                        className="h-11 rounded-full border border-white/[0.14] bg-white/[0.06] px-4 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.10] disabled:opacity-50 touch-manipulation active:scale-[0.97]"
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
 
-              {/* Action buttons */}
-              <div className="space-y-2 pt-1 pb-2">
+              {/* Actions — one primary, two secondary, one destructive.
+                  Four full-width bars of equal weight made the reader choose
+                  between them every time; only "done" is the common case, and
+                  Delete had the same visual footprint as it. */}
+              <div className="pt-1 pb-2">
                 {task.status === 'open' ? (
-                  <Button
+                  <button
+                    type="button"
                     onClick={() => { haptic.success(); handleAction(() => onMarkDone(task.id)); }}
                     disabled={actionLoading}
-                    className="w-full h-11 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                    className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation active:scale-[0.99]"
                   >
-                    <CheckCircle2 className="h-4 w-4 mr-2" />
-                    Mark Done
-                  </Button>
+                    Mark done
+                  </button>
                 ) : task.status === 'done' ? (
-                  <Button
+                  <button
+                    type="button"
                     onClick={() => handleAction(() => onReopen(task.id))}
                     disabled={actionLoading}
-                    className="w-full h-11 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                    className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation active:scale-[0.99]"
                   >
-                    <RotateCcw className="h-4 w-4 mr-2" />
                     Reopen
-                  </Button>
+                  </button>
                 ) : null}
 
-                {task.status === 'open' && (
-                  <Button
-                    variant="outline"
-                    onClick={() => setShowSnoozeOptions(!showSnoozeOptions)}
-                    disabled={actionLoading}
-                    className="w-full h-11 border-blue-500/30 text-blue-400 hover:bg-blue-500/10 font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                <div className="mt-2 flex items-center gap-2">
+                  {task.status === 'open' && (
+                    <button
+                      type="button"
+                      onClick={() => setShowSnoozeOptions(!showSnoozeOptions)}
+                      disabled={actionLoading}
+                      className="h-11 flex-1 rounded-xl border border-white/[0.14] bg-white/[0.06] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.10] disabled:opacity-50 touch-manipulation active:scale-[0.98]"
+                    >
+                      {showSnoozeOptions ? 'Hide snooze' : 'Snooze'}
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => { onEdit(task); onClose(); }}
+                    className="h-11 flex-1 rounded-xl border border-white/[0.14] bg-white/[0.06] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.10] touch-manipulation active:scale-[0.98]"
                   >
-                    <AlarmClock className="h-4 w-4 mr-2" />
-                    {showSnoozeOptions ? 'Hide Snooze' : 'Snooze'}
-                  </Button>
-                )}
+                    Edit
+                  </button>
+                </div>
 
-                <Button
-                  variant="outline"
-                  onClick={() => { onEdit(task); onClose(); }}
-                  className="w-full h-11 border-white/20 text-white hover:bg-white/10 font-bold rounded-xl touch-manipulation active:scale-[0.98]"
-                >
-                  <Pencil className="h-4 w-4 mr-2" />
-                  Edit
-                </Button>
-
-                <Button
-                  variant="outline"
+                {/* Destructive, so it does not sit in the same visual rank as
+                    the things you do daily. */}
+                <button
+                  type="button"
                   onClick={() => setShowDeleteConfirm(true)}
                   disabled={actionLoading}
-                  className="w-full h-11 border-red-500/30 text-red-400 hover:bg-red-500/10 font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                  className="mx-auto mt-4 block text-[13px] font-medium text-red-300 underline underline-offset-4 transition-colors hover:text-red-200 disabled:opacity-50 touch-manipulation"
                 >
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  Delete
-                </Button>
+                  Delete task
+                </button>
               </div>
             </div>
           </Drawer.Content>
@@ -481,7 +487,7 @@ export function TaskDetailSheet({
 
       {/* Delete photo confirmation */}
       <AlertDialog open={!!photoToDelete} onOpenChange={(open) => !open && setPhotoToDelete(null)}>
-        <AlertDialogContent className="bg-background border-white/10">
+        <AlertDialogContent className="bg-[#111114] border-white/[0.14]">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">Delete photo?</AlertDialogTitle>
             <AlertDialogDescription className="text-white">
@@ -502,7 +508,7 @@ export function TaskDetailSheet({
 
       {/* Delete task confirmation */}
       <AlertDialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
-        <AlertDialogContent className="bg-background border-white/10">
+        <AlertDialogContent className="bg-[#111114] border-white/[0.14]">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">Delete task?</AlertDialogTitle>
             <AlertDialogDescription className="text-white">

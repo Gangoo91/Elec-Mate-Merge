@@ -351,7 +351,7 @@ const sections = [
               demand for compliant student housing is increasing year on year.
             </p>
           </div>
-          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">New-Build Estates</h3>
             <p className="text-white text-sm leading-relaxed">
               Exeter is expanding with major new-build developments at Cranbrook (east of the M5),
@@ -428,7 +428,7 @@ const sections = [
           parts of the city are protected by conservation area designations and listed building
           status. Electrical work in these areas requires additional planning:
         </p>
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
@@ -538,7 +538,7 @@ const sections = [
           electricians looking to build their business.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Leaf className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

@@ -436,7 +436,7 @@ const sections = [
           spectrum. Here are the top recommendations for UK electricians:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-1">Fluke 376 FC</h3>
             <p className="text-white text-xs mb-3 uppercase tracking-wide">
               Best Professional AC/DC Clamp — ~£350
@@ -500,7 +500,7 @@ const sections = [
           Elec-Mate supports:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

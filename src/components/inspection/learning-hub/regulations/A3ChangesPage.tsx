@@ -34,7 +34,7 @@ const A3ChangesPage = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               Amendment 3 (A3:2024) is the most significant update since the 18th Edition was published in 2018. The headline addition is Chapter 82 covering prosumer installations — reflecting the massive growth in solar PV, battery storage, and EV charging in UK homes and businesses.
             </p>
@@ -42,22 +42,22 @@ const A3ChangesPage = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-1">Effective Date</p>
             <p className="text-sm text-white">A3 came into effect on <span className="font-semibold text-yellow-400">2 April 2024</span>. All new installations, alterations, and additions from this date must comply with A3. Existing installations do not need to be retrospectively upgraded unless alterations are made.</p>
           </div>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Key Changes</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Key Changes</p>
         </motion.div>
 
         {majorChanges.map((change, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-2">
               <p className="text-sm font-semibold text-white">{change.title}</p>
               <p className="text-sm text-white leading-relaxed">{change.description}</p>
-              <div className="rounded-xl bg-yellow-400/5 border border-yellow-400/10 p-3">
+              <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/10 p-3">
                 <p className="text-xs text-white"><span className="font-semibold text-yellow-400">Impact on your work:</span> {change.impact}</p>
               </div>
             </div>
@@ -65,7 +65,7 @@ const A3ChangesPage = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-orange-400/10 border border-orange-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-2">Looking Ahead — A4</p>
             <p className="text-sm text-white leading-relaxed">
               Amendment 4 (A4) is expected in due course. We will update all content in the app as soon as A4 is published. Until then, A3:2024 is the current standard and all content in this app is verified against it.

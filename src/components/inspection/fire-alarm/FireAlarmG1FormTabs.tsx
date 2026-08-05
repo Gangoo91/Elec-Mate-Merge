@@ -7,6 +7,8 @@ import FAG1Declaration from './tabs/FAG1Declaration';
 import FireAlarmTabNavigation from './FireAlarmTabNavigation';
 
 interface Props {
+  /** ELE-1477 — saved report id, for the footer's View PDF. */
+  reportId?: string | null;
   currentTab: string;
   onTabChange: (value: string) => void;
   formData: Record<string, any>;
@@ -23,6 +25,7 @@ interface Props {
 const TAB_ORDER = ['client', 'design', 'devices', 'declaration'];
 
 const FireAlarmG1FormTabs: React.FC<Props> = ({
+  reportId,
   currentTab,
   formData,
   onUpdate,
@@ -63,6 +66,9 @@ const FireAlarmG1FormTabs: React.FC<Props> = ({
         {content[currentTab]}
       </div>
       <FireAlarmTabNavigation
+        previewReportType="fire-alarm-design"
+        previewData={formData}
+        previewReportId={reportId}
         nextLabels={NEXT_LABELS}
         {...tabNavigationProps}
         onGenerateCertificate={

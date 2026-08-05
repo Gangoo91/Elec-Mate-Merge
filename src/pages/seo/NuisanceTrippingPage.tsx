@@ -232,7 +232,7 @@ const sections = [
           addresses both issues simultaneously.
         </p>
         <div className="space-y-4 mt-4">
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="flex items-center gap-2 mb-2">
               <ShieldCheck className="w-5 h-5 text-yellow-400" />
               <h3 className="font-bold text-white text-lg">

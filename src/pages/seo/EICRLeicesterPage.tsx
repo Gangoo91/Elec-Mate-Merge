@@ -364,7 +364,7 @@ const sections = [
           :
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">C1 — Danger Present</h3>
             <p className="text-white text-sm leading-relaxed">
               Risk of injury exists. Immediate remedial action is required. The inspector may
@@ -381,7 +381,7 @@ const sections = [
               circuits, and deteriorated cable insulation.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">C3 — Improvement Recommended</h3>
             <p className="text-white text-sm leading-relaxed">
               Not immediately dangerous but improvement would enhance safety. C3 observations do not
@@ -635,7 +635,7 @@ const sections = [
           should:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

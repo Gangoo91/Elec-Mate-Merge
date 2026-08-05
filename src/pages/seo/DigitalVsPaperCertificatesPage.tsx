@@ -376,7 +376,7 @@ const sections = [
           EICRs, this means the landlord can forward the report to their tenant the same day,
           meeting the 28-day notification requirement comfortably.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-4">
             <Send className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
             <div>
@@ -509,7 +509,7 @@ const sections = [
           workflow — but eliminate the paperwork at every step.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Camera className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

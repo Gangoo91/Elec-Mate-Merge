@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Trash2, Copy, ChevronUp, ChevronDown } from 'lucide-react';
@@ -30,6 +30,10 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import R1R2Calculator from '@/components/R1R2Calculator';
 import { useToast } from '@/hooks/use-toast';
 import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { getIrMaxForVoltage, isBlankReading } from '@/utils/irDefaults';
+import { checkRegulationCompliance } from '@/utils/autoRegChecker';
+import EnhancedRegulationWarningDialog from '@/components/EnhancedRegulationWarningDialog';
 
 interface MobileHorizontalScrollTableRowProps {
   result: TestResult;
@@ -52,6 +56,24 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
   canMoveUp = false,
   canMoveDown = false,
 }) => {
+  // ELE-1438/1467 — same one-tap max fill as the desktop cells. This app is
+  // used on a phone on site, which is exactly where retyping ">1049" twenty
+  // times hurts most, so the mobile row must not be the poor relation.
+  const { companyProfile } = useCompanyProfile();
+  const irMax = getIrMaxForVoltage(
+    companyProfile?.testing_instruments,
+    result.insulationTestVoltage
+  );
+
+  // ELE-1477 audit — the regulation checker (8 validators, incl. a sourced Zs
+  // check that handles TT and TN) ran on the desktop table only. On a
+  // mobile-first app used at the board, the people most likely to need a
+  // verdict were the only ones never shown one. Same function, same warnings
+  // dialog as the desktop row — this was never a missing feature, only a
+  // missing call.
+  const [showRegWarning, setShowRegWarning] = useState(false);
+  const regulationCompliance = useMemo(() => checkRegulationCompliance(result), [result]);
+
   const { toast } = useToast();
 
   const getBorderColor = () => {
@@ -135,12 +157,26 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
     >
       {/* Circuit Details Group */}
       <TableCell className="sticky left-0 z-10 border-r border-white/[0.08] p-0.5 font-bold text-center whitespace-nowrap bg-[hsl(0_0%_10%)] group-even:bg-[hsl(0_0%_12%)] w-[83px] min-w-[83px] max-w-[83px] shadow-[4px_0_8px_-2px_rgba(0,0,0,0.5)]">
-        <Input
-          value={result.circuitDesignation}
-          onChange={(e) => onUpdate(result.id, 'circuitDesignation', e.target.value)}
-          className={inputClassName}
-          placeholder="Way 1"
-        />
+        <div className="relative">
+          <Input
+            value={result.circuitDesignation}
+            onChange={(e) => onUpdate(result.id, 'circuitDesignation', e.target.value)}
+            className={inputClassName}
+            placeholder="Way 1"
+          />
+          {!regulationCompliance.isCompliant && (
+            <button
+              type="button"
+              onClick={() => setShowRegWarning(true)}
+              aria-label={`${regulationCompliance.warnings.length} compliance issue${
+                regulationCompliance.warnings.length === 1 ? '' : 's'
+              } on this circuit`}
+              className="absolute -right-0.5 -top-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white touch-manipulation"
+            >
+              !
+            </button>
+          )}
+        </div>
       </TableCell>
 
       <TableCell className="p-0.5 border-r border-white/[0.08] w-[152px] min-w-[152px] max-w-[152px]">
@@ -438,28 +474,52 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
         </Select>
       </TableCell>
       <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[110px] min-w-[110px] max-w-[110px]">
-        <input
-          type="text"
-          inputMode="text"
-          value={result.insulationLiveNeutral || ''}
-          onChange={(e) => onUpdate(result.id, 'insulationLiveNeutral', e.target.value)}
-          className="w-full h-11 text-sm text-center bg-white/[0.06] border border-white/[0.10] text-white placeholder:text-white/25 rounded-lg focus:border-elec-yellow focus:outline-none touch-manipulation"
-          /* 16px stops iOS zooming the page on focus — matches ui/input */
-          style={{ fontSize: '16px' }}
-          placeholder=">200"
-        />
+        <div className="relative">
+          <input
+            type="text"
+            inputMode="text"
+            value={result.insulationLiveNeutral || ''}
+            onChange={(e) => onUpdate(result.id, 'insulationLiveNeutral', e.target.value)}
+            className="w-full h-11 text-sm text-center bg-white/[0.06] border border-white/[0.10] text-white placeholder:text-white/25 rounded-lg focus:border-elec-yellow focus:outline-none touch-manipulation"
+            /* 16px stops iOS zooming the page on focus — matches ui/input */
+            style={{ fontSize: '16px' }}
+            placeholder=">200"
+          />
+          {irMax && isBlankReading(result.insulationLiveNeutral) && (
+            <button
+              type="button"
+              onClick={() => onUpdate(result.id, 'insulationLiveNeutral', irMax)}
+              aria-label={`Fill with tester maximum ${irMax}`}
+              className="absolute inset-y-0 right-0 px-2 text-[11px] font-semibold text-elec-yellow touch-manipulation"
+            >
+              Max
+            </button>
+          )}
+        </div>
       </TableCell>
       <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[110px] min-w-[110px] max-w-[110px]">
-        <input
-          type="text"
-          inputMode="text"
-          value={result.insulationLiveEarth || ''}
-          onChange={(e) => onUpdate(result.id, 'insulationLiveEarth', e.target.value)}
-          className="w-full h-11 text-sm text-center bg-white/[0.06] border border-white/[0.10] text-white placeholder:text-white/25 rounded-lg focus:border-elec-yellow focus:outline-none touch-manipulation"
-          /* 16px stops iOS zooming the page on focus — matches ui/input */
-          style={{ fontSize: '16px' }}
-          placeholder=">200"
-        />
+        <div className="relative">
+          <input
+            type="text"
+            inputMode="text"
+            value={result.insulationLiveEarth || ''}
+            onChange={(e) => onUpdate(result.id, 'insulationLiveEarth', e.target.value)}
+            className="w-full h-11 text-sm text-center bg-white/[0.06] border border-white/[0.10] text-white placeholder:text-white/25 rounded-lg focus:border-elec-yellow focus:outline-none touch-manipulation"
+            /* 16px stops iOS zooming the page on focus — matches ui/input */
+            style={{ fontSize: '16px' }}
+            placeholder=">200"
+          />
+          {irMax && isBlankReading(result.insulationLiveEarth) && (
+            <button
+              type="button"
+              onClick={() => onUpdate(result.id, 'insulationLiveEarth', irMax)}
+              aria-label={`Fill with tester maximum ${irMax}`}
+              className="absolute inset-y-0 right-0 px-2 text-[11px] font-semibold text-elec-yellow touch-manipulation"
+            >
+              Max
+            </button>
+          )}
+        </div>
       </TableCell>
       {/* Earth Fault Tests Group */}
       <TableCell className="p-0.5 border-r border-white/[0.08] whitespace-nowrap w-[76px] min-w-[76px] max-w-[76px]">
@@ -639,6 +699,13 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           </Button>
         </div>
       </TableCell>
+
+      {/* Same warnings dialog the desktop row uses — one compliance UI. */}
+      <EnhancedRegulationWarningDialog
+        open={showRegWarning}
+        onOpenChange={setShowRegWarning}
+        warnings={regulationCompliance.warnings}
+      />
     </TableRow>
   );
 };

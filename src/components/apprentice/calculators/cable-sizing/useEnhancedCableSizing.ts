@@ -6,6 +6,8 @@ import {
   type CableTemplate,
 } from './enhancedCableSizeData';
 
+import { getMcbZsLimit } from '@/data/zsLimits';
+
 export interface EnhancedCableSizingInputs {
   // Project Information
   projectName: string;
@@ -65,8 +67,10 @@ export interface EnhancedCableSizingResult {
   };
   zsCalculation: {
     zs: number;
-    maxZs: number;
-    compliant: boolean;
+    /** null when the rating is not in BS 7671 Table 41.3. */
+    maxZs: number | null;
+    /** null means not assessed — distinct from assessed and failing. */
+    compliant: boolean | null;
   };
   complianceChecks: Array<{
     requirement: string;
@@ -124,8 +128,10 @@ const defaultResult: EnhancedCableSizingResult = {
   },
   zsCalculation: {
     zs: 0,
-    maxZs: 0,
-    compliant: false,
+    // Nothing has been assessed yet — null, not 0, so the panel shows "—"
+    // rather than a 0.00Ω limit no device could ever meet.
+    maxZs: null,
+    compliant: null,
   },
   complianceChecks: [],
   warnings: [],
@@ -399,11 +405,23 @@ export const useEnhancedCableSizing = () => {
     const recommendedCable = rankedCables[0];
     const alternativeCables = rankedCables.slice(1, 6); // Top 5 alternatives
 
-    // Basic Zs calculation (simplified)
+    // The limit is looked up for the rating actually entered, against BS 7671
+    // Table 41.3 (Type B assumed — this calculator has no curve input). It was
+    // previously hard-coded to 1.44Ω "typical for 32A", which was wrong twice:
+    // it ignored the entered rating, and 1.44Ω is the pre-Cmin figure — Table
+    // 41.3 gives 1.37Ω for a B32.
+    //
+    // ⚠️ `zs` below is still a placeholder, not a calculation. Compliance is
+    // derived from it rather than hard-coded to true, so the panel can no
+    // longer state "compliant" for a circuit it never assessed — but the
+    // number itself only becomes meaningful once Zs is computed from the
+    // selected cable's impedance and length.
+    const maxZs = getMcbZsLimit('typeB', protectiveDeviceRating)?.maxZs ?? null;
+    const placeholderZs = 0.35;
     const zsCalculation = {
-      zs: 0.35, // Simplified - would normally calculate from cable impedance
-      maxZs: 1.44, // Typical for 32A MCB in TN system
-      compliant: true,
+      zs: placeholderZs,
+      maxZs,
+      compliant: maxZs === null ? null : placeholderZs <= maxZs,
     };
 
     // Compliance checks

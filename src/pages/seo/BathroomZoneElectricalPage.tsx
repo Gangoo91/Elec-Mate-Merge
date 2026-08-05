@@ -224,7 +224,7 @@ const sections = [
           </p>
         </figure>
         <div className="grid gap-4 sm:grid-cols-3 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-xl mb-2 flex items-center gap-2">
               <span className="bg-red-500 text-white text-sm font-bold rounded-full w-7 h-7 flex items-center justify-center shrink-0">
                 0
@@ -248,7 +248,7 @@ const sections = [
               level. For fixed shower heads, extends 1.2m horizontally from the head.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-xl mb-2 flex items-center gap-2">
               <span className="bg-yellow-500 text-black text-sm font-bold rounded-full w-7 h-7 flex items-center justify-center shrink-0">
                 2
@@ -335,7 +335,7 @@ const sections = [
           tray — the space where the bather or person showering is in direct contact with water. The
           electrical risk here is the highest.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-semibold text-white text-base mb-4 flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-red-400" />
             Zone 0 Requirements
@@ -471,7 +471,7 @@ const sections = [
           2.25m. In a typical bathroom, Zone 2 covers the area immediately adjacent to the bath or
           shower — where the washbasin, towel rail, and mirror are typically located.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-semibold text-white text-base mb-4 flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-yellow-400" />
             Zone 2 Requirements and Permissions
@@ -584,7 +584,7 @@ const sections = [
           Bathroom electrical work is one of the most commonly failed areas on EICRs. These are the
           most frequent mistakes encountered:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -664,7 +664,7 @@ const sections = [
           may have significant areas outside the zones.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

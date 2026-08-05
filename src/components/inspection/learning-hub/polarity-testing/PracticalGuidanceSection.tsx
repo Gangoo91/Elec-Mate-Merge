@@ -59,14 +59,14 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* Socket Outlets */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Socket Outlets</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Socket Outlets</p>
         </motion.div>
 
         {socketChecks.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                   <span className="text-[10px] font-bold text-yellow-400">{item.terminal.split(' ')[0]}</span>
                 </div>
                 <div className="flex-1 min-w-0">
@@ -81,15 +81,15 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Lighting Circuits */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Lighting Circuits</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Lighting Circuits</p>
         </motion.div>
 
         {lightingChecks.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-2">
               <p className="text-sm font-semibold text-white">{item.item}</p>
               <p className="text-sm text-white leading-relaxed">{item.check}</p>
-              <div className="rounded-xl bg-orange-400/5 border border-orange-400/10 p-3">
+              <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/10 p-3">
                 <p className="text-xs text-white"><span className="font-semibold text-orange-400">Risk if incorrect:</span> {item.risk}</p>
               </div>
             </div>
@@ -98,15 +98,15 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Isolators & Protection */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Isolators & Protection</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Isolators & Protection</p>
         </motion.div>
 
         {isolatorChecks.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-2">
               <p className="text-sm font-semibold text-white">{item.item}</p>
               <p className="text-sm text-white leading-relaxed">{item.check}</p>
-              <div className="rounded-xl bg-orange-400/5 border border-orange-400/10 p-3">
+              <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/10 p-3">
                 <p className="text-xs text-white"><span className="font-semibold text-orange-400">Risk if incorrect:</span> {item.risk}</p>
               </div>
             </div>
@@ -115,12 +115,12 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Troubleshooting */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Troubleshooting</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Troubleshooting</p>
         </motion.div>
 
         {troubleshooting.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-2">
               <p className="text-sm font-semibold text-white">{item.problem}</p>
               <div className="grid grid-cols-1 gap-2">
                 <div className="flex items-start gap-2">
@@ -138,11 +138,11 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Common defects found during inspections — from RAG */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Common Defects Found During Inspections</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Defects Found During Inspections</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
             <p className="text-sm text-white mb-1">These are the most frequently encountered polarity-related defects from real inspection data:</p>
             <div className="space-y-2">
               {[
@@ -155,7 +155,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
                 { defect: 'FCU wired with fuse in neutral', detail: 'Particularly common where non-electricians have installed fused spurs. The fuse must always be in the line conductor.' },
                 { defect: 'Two-way switches with neutral on common terminal', detail: 'Often found in older installations or where switches have been replaced without understanding the circuit.' },
               ].map((item, i) => (
-                <div key={i} className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
+                <div key={i} className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] p-3">
                   <p className="text-sm font-medium text-white">{item.defect}</p>
                   <p className="text-sm text-white mt-1">{item.detail}</p>
                 </div>
@@ -166,11 +166,11 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
 
         {/* Pro tips */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Professional Tips</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Professional Tips</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4 space-y-3">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4 space-y-3">
             {[
               { tip: 'Test systematically', detail: 'Work through circuits in board order. Mark each circuit as tested on the schedule before moving to the next. Do not skip between circuits.' },
               { tip: 'Photograph defects', detail: 'Take photos of any polarity defects found before rectifying them. This provides evidence for the EICR and protects you professionally.' },

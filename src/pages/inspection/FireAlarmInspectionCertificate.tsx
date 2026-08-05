@@ -35,6 +35,7 @@ import { cn } from '@/lib/utils';
 import { generateCertificateNumber } from '@/utils/certificateNumbering';
 import { formatFireAlarmG6Json } from '@/utils/fireAlarmG6JsonFormatter';
 import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
+import { scrollToTopForStepChange } from '@/utils/scroll';
 
 const REPORT_TYPE = 'fire-alarm-inspection' as const;
 
@@ -413,7 +414,7 @@ const {
         onTabChange={(tab) => {
           tabProps.setCurrentTab(tab as any);
           syncOnTabChange();
-          window.scrollTo({ top: 0 });
+          scrollToTopForStepChange();
         }}
         completedTabs={{
           project: !!tabProps.isTabComplete('project'),

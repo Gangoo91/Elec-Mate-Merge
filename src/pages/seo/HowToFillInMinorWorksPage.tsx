@@ -98,7 +98,7 @@ export default function HowToFillInMinorWorksPage() {
                 common examples:
               </p>
               <div className="grid sm:grid-cols-2 gap-4 my-4">
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-3">
                     Minor Works (Use Minor Works Cert)
                   </h3>
@@ -131,7 +131,7 @@ export default function HowToFillInMinorWorksPage() {
                     </li>
                   </ul>
                 </div>
-                <div className="p-5 rounded-2xl bg-red-500/5 border border-red-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-red-400 text-lg mb-3">NOT Minor Works (Use EIC)</h3>
                   <ul className="space-y-2 text-white text-sm">
                     <li className="flex items-start gap-2">

@@ -131,7 +131,7 @@ const sections = [
     heading: 'EV Homecharge Scheme (EVHS) — Closed March 2022',
     content: (
       <>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/30 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-6 h-6 text-red-400 mt-0.5 shrink-0" />
             <div>
@@ -539,7 +539,7 @@ const sections = [
           380,000 in 2024, each representing a potential charge point installation.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

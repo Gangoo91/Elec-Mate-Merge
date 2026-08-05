@@ -1,6 +1,6 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
-import { callOpenAI } from '../_shared/ai-providers.ts';
+import { callOpenAI, generateLargeEmbedding } from '../_shared/ai-providers.ts';
 import { searchFacets, formatFacetsForPrompt } from '../_shared/bs7671-facets-rag.ts';
 import { searchPracticalWorkIntelligence } from '../_shared/rag-practical-work.ts';
 import {
@@ -381,6 +381,26 @@ const TOOLS: any[] = [
         type: 'object',
         properties: {
           query: { type: 'string', description: 'The job, symptom, or equipment to look up.' },
+        },
+        required: ['query'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'search_business_knowledge',
+      description:
+        "Search the Employer Knowledge corpus — the business side of running an electrical firm. Covers JIB 2026 national working rules and rates, CIS/VAT and tax (ACCA), CDM 2015 and HSE guidance (L153, HSG85), ACAS employment/discipline/grievance, tendering and the Construction Playbook, adjudication and construction commercial practice, and apprenticeship routes. Use whenever the user asks something commercial, contractual, employment-related or health-and-safety-duty related — 'what should I pay an approved electrician', 'do I need to notify CDM', 'can I let someone go in their probation', 'how does CIS reverse charge work'. Complements search_bs7671, which covers the technical standards rather than the business.",
+      parameters: {
+        type: 'object',
+        properties: {
+          query: { type: 'string', description: 'The business, commercial, employment or H&S duty question.' },
+          domain: {
+            type: 'string',
+            enum: ['costing', 'hr-employment', 'health-safety', 'business-ops', 'tendering', 'construction-commercial', 'project-mgmt', 'apprenticeships', 'electrical-business'],
+            description: 'Optional. Narrow to one domain when the question clearly belongs to it — improves precision.',
+          },
         },
         required: ['query'],
       },
@@ -1231,6 +1251,7 @@ ${snapshotBlock}`;
     const LOOKUP_TOOLS = new Set([
       'search_bs7671',
       'search_practical_knowledge',
+      'search_business_knowledge',
       'find_customer',
       'find_project',
       'find_documents',
@@ -1841,6 +1862,8 @@ async function runToolLoopBuffered({
         toolOutput = formatFacetsForPrompt(facets);
       } else if (toolName === 'search_practical_knowledge') {
         toolOutput = await runPracticalKnowledgeSearch(supabase, args.query || '');
+      } else if (toolName === 'search_business_knowledge') {
+        toolOutput = await runBusinessKnowledgeSearch(supabase, args.query || '', args.domain);
       } else if (toolName === 'find_documents') {
         toolOutput = await findDocuments(supabase, userId, {
           query: args.query,
@@ -1928,6 +1951,59 @@ function safeParse(s: string): any {
     return JSON.parse(s || '{}');
   } catch {
     return {};
+  }
+}
+
+/**
+ * Employer Knowledge search — the business side of running an electrical firm.
+ *
+ * The corpus (2,896 rows) already backed the Employer Hub assistant, but the
+ * Electrical Hub's Business Mate had no route to it, so a sole trader asking
+ * about JIB rates, CIS reverse charge or CDM duties got an ungrounded answer
+ * while an employer asking the same question got a sourced one.
+ *
+ * Domains: costing (JIB 2026 working rules), hr-employment (ACAS),
+ * health-safety (HSE L153 CDM 2015, HSG85), business-ops (CIS/VAT),
+ * tendering (Construction Playbook), construction-commercial (adjudication),
+ * project-mgmt (APM BoK), apprenticeships, electrical-business.
+ *
+ * Unlike the task planner — which filters to health-safety so an EV install
+ * does not attract ACAS grievance procedure — the whole corpus is in scope
+ * here, because commercial and employment questions are this assistant's job.
+ */
+async function runBusinessKnowledgeSearch(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  supabase: any,
+  query: string,
+  domain?: string
+): Promise<string> {
+  if (!query.trim()) return 'No query supplied.';
+  try {
+    const apiKey = Deno.env.get('OPENAI_API_KEY');
+    if (!apiKey) return 'Business knowledge search unavailable.';
+    // search_employer_knowledge requires an embedding — there is no keyword-only
+    // path, so a failed embedding means no grounding rather than weak grounding.
+    const embedding = await generateLargeEmbedding(query, apiKey);
+    const { data, error } = await supabase.rpc('search_employer_knowledge', {
+      query_embedding: embedding,
+      query_text: query,
+      match_count: 6,
+      filter_domain: domain ?? null,
+    });
+    if (error) {
+      console.error('[search_business_knowledge] rpc error', error);
+      return 'Business knowledge search failed.';
+    }
+    if (!data?.length) return 'No business guidance matched that query.';
+    return (data as { topic?: string; domain?: string; content?: string }[])
+      .map((r, i) => {
+        const head = [r.topic, r.domain].filter(Boolean).join(' · ') || 'Business guidance';
+        return `[${i + 1}] ${head}\n${(r.content ?? '').replace(/\s+/g, ' ').slice(0, 900)}`;
+      })
+      .join('\n\n');
+  } catch (err) {
+    console.error('[search_business_knowledge] error', err);
+    return 'Business knowledge search failed.';
   }
 }
 

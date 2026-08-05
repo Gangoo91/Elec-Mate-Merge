@@ -172,7 +172,7 @@ const sections = [
     content: (
       <>
         <p>The hourly rate formula has three inputs and one output:</p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <p className="text-white font-bold text-lg mb-4">Hourly Rate = (A + B + C) / D</p>
           <ul className="space-y-3 text-white">
             <li>
@@ -192,7 +192,7 @@ const sections = [
               for. For example, 1,300 hours.
             </li>
           </ul>
-          <div className="mt-4 pt-4 border-t border-yellow-500/20">
+          <div className="mt-4 pt-4 border-t border-white/[0.14]">
             <p className="text-white font-mono">
               (£40,000 + £14,000 + £11,000) / 1,300 = <strong>£50 per hour</strong>
             </p>
@@ -454,7 +454,7 @@ const sections = [
               predictable.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Fixed Price</h3>
             <p className="text-white text-sm leading-relaxed">
               Best for: defined jobs (consumer unit upgrade, rewire, EV charger installation). Quote
@@ -550,7 +550,7 @@ const sections = [
           where most electricians underquote — and where Elec-Mate transforms your pricing.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

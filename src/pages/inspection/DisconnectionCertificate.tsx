@@ -27,6 +27,7 @@ import CertShellFooter, {
 import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 import { reportCloud } from '@/utils/reportCloud';
 import { formatDisconnectionCertificatePayload } from '@/utils/disconnection-certificate-formatter';
+import { scrollToTopForStepChange } from '@/utils/scroll';
 
 const cardCn =
   '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
@@ -673,7 +674,7 @@ export default function DisconnectionCertificate() {
 
   const goToStep = (step: string) => {
     setCurrentStep(step as StepId);
-    window.scrollTo({ top: 0 });
+    scrollToTopForStepChange();
   };
 
   const stepContent: Record<StepId, React.ReactNode> = {
@@ -1115,6 +1116,9 @@ export default function DisconnectionCertificate() {
 
       {/* Shell footer — Back + Continue, Generate on the last step */}
       <CertShellFooter
+        previewReportType="disconnection"
+        previewReportId={savedReportId}
+        previewData={data as unknown as Record<string, unknown>}
         currentIndex={currentIndex}
         totalSteps={STEPS.length}
         canPrevious={currentIndex > 0}

@@ -439,7 +439,7 @@ const sections = [
               Bluetooth beacons. The SELV voltage also reduces shock risk in patient areas.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Education</h3>
             <p className="text-white text-sm leading-relaxed">
               Schools and universities use PoE lighting for per-classroom control, exam mode
@@ -584,7 +584,7 @@ const sections = [
           also differentiates you from traditional electricians.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

@@ -55,8 +55,8 @@ const RcdAcceptanceCriteria = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* General type table */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">General Type RCD (30mA) — GN3 Table 2.17</p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">General Type RCD (30mA) — GN3 Table 2.17</p>
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -82,8 +82,8 @@ const RcdAcceptanceCriteria = ({ onBack }: Props) => {
 
         {/* S-type table */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">S-Type (Time Delayed) RCD (30mA)</p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">S-Type (Time Delayed) RCD (30mA)</p>
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -109,8 +109,8 @@ const RcdAcceptanceCriteria = ({ onBack }: Props) => {
 
         {/* Typical healthy values */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">What Healthy RCDs Typically Read</p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">What Healthy RCDs Typically Read</p>
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -141,12 +141,12 @@ const RcdAcceptanceCriteria = ({ onBack }: Props) => {
 
         {/* Failure indicators */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Failure Indicators & EICR Coding</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Failure Indicators & EICR Coding</p>
         </motion.div>
 
         {failureIndicators.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-center gap-2 mb-2">
                 <p className="text-sm font-semibold text-white">{item.indicator}</p>
                 {item.severity !== 'Investigate' && (
@@ -160,7 +160,7 @@ const RcdAcceptanceCriteria = ({ onBack }: Props) => {
 
         {/* Recording */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-2">Recording Results</p>
             <p className="text-sm text-white leading-relaxed mb-3">
               On the Schedule of Test Results, record for each RCD:

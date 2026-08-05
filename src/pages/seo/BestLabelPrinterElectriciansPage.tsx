@@ -380,7 +380,7 @@ const sections = [
     heading: 'Brady BMP21-PLUS',
     content: (
       <>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-3">
             Brady BMP21-PLUS — The Durability Champion
           </h3>

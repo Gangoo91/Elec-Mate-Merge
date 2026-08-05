@@ -219,7 +219,7 @@ const sections = [
           depending on the type of circuit and the earthing system:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
               <Timer className="w-5 h-5 text-red-400" />
               0.4 Seconds
@@ -233,7 +233,7 @@ const sections = [
               ventricular fibrillation becomes unacceptable.
             </p>
           </div>
-          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
               <Timer className="w-5 h-5 text-amber-400" />5 Seconds
             </h3>
@@ -428,7 +428,7 @@ const sections = [
               dangerous potential.
             </p>
           </div>
-          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">TT (Earth Electrode)</h3>
             <p className="text-white text-sm leading-relaxed">
               The installation has its own earth electrode — typically a driven rod. There is no
@@ -573,7 +573,7 @@ const sections = [
               </p>
             </div>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6">
             <h4 className="font-bold text-white mb-3">
               Example 3: Failing Circuit (32A Type C MCB)
             </h4>

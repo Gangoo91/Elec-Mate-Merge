@@ -321,7 +321,7 @@ const sections = [
           potential safety issues.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-2">Combi Ovens</h4>
             <p className="text-white text-sm leading-relaxed">
               The most power-hungry item in most kitchens. A single Rational iCombi Pro 10-1/1 draws
@@ -364,7 +364,7 @@ const sections = [
             </p>
           </div>
         </div>
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-amber-500/30 p-5 my-4">
           <h4 className="font-bold text-white mb-2">
             Reg 730.55.1.4 — One Socket-Outlet Per Vessel
           </h4>
@@ -477,7 +477,7 @@ const sections = [
           include:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Category M</h3>
             <p className="text-white text-sm leading-relaxed">
               Manual system only — call points at exit doors. Suitable for smaller premises with

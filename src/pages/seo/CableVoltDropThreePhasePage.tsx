@@ -246,7 +246,7 @@ const sections = [
           three-phase values give the line-to-line voltage drop directly when you apply the standard
           formula.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-3">
             <div>
               <h4 className="font-bold text-white mb-1">Common Mistake</h4>
@@ -277,7 +277,7 @@ const sections = [
           The standard formula for calculating three-phase voltage drop using BS 7671 tabulated
           values is identical in structure to the single-phase formula:
         </p>
-        <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 text-center my-6">
+        <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
           <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
             VD = (mV/A/m<sub>3ph</sub> x I<sub>b</sub> x L) / 1000
           </p>
@@ -318,7 +318,7 @@ const sections = [
           </SEOInternalLink>{' '}
           where the power factor can be significantly less than unity.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-3">
             <div>
               <h4 className="font-bold text-white mb-1">Frequency Limitation (Reg 125.8)</h4>
@@ -436,14 +436,14 @@ const sections = [
           installations. The limits for three-phase circuits on a public LV supply are:
         </p>
         <div className="grid sm:grid-cols-2 gap-4 my-6">
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="flex items-center gap-2 mb-2">
               <h4 className="font-bold text-white text-lg">Power Circuits</h4>
             </div>
             <p className="text-3xl font-bold text-yellow-400 mb-1">5%</p>
             <p className="text-white text-sm">of 400 V = 20 V maximum</p>
           </div>
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="flex items-center gap-2 mb-2">
               <h4 className="font-bold text-white text-lg">Lighting Circuits</h4>
             </div>
@@ -583,11 +583,11 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-4">
           <div className="grid grid-cols-3 gap-px bg-white/10">
-            <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">Cable Size</div>
-            <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+            <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">Cable Size</div>
+            <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
               mV/A/m (3-phase)
             </div>
-            <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">Cable Type</div>
+            <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">Cable Type</div>
           </div>
           {[
             { size: '4 mm²', mvam: '9.5', type: '4-core PVC' },

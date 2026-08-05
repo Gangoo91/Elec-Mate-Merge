@@ -205,7 +205,7 @@ const sections = [
             </tbody>
           </table>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4 flex items-start gap-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4 flex items-start gap-4">
           <ShieldCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
           <div>
             <p className="text-white font-semibold text-sm mb-1">
@@ -622,7 +622,7 @@ const sections = [
               £3,000 to £5,000 in labour. High demand and premium customers.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Fire Alarm and Emergency Lighting</h3>
             <p className="text-white text-sm leading-relaxed">
               Specialist fire alarm qualifications (FIA). Compliance-driven recurring work for
@@ -651,7 +651,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <p className="text-yellow-300 font-semibold text-sm mb-3">
             Key regulatory updates — BS&nbsp;7671:2018+A4:2026
           </p>

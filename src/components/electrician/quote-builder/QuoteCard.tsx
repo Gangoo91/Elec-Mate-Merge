@@ -47,29 +47,44 @@ export function QuoteCard({ quote, onTap, onDelete, onEdit, onAccept }: QuoteCar
   const isSent = quote.status === 'sent' || quote.status === 'pending';
   const isSettled = isWon || isLost || isInvoiced;
 
-  const status = isInvoiced
-    ? { label: 'Invoiced', dot: 'bg-blue-400', text: 'text-blue-400', wash: 'from-blue-500/[0.08]' }
-    : isWon
-      ? { label: 'Won', dot: 'bg-emerald-400', text: 'text-emerald-400', wash: 'from-emerald-500/[0.08]' }
-      : isLost
-        ? { label: 'Declined', dot: 'bg-red-400', text: 'text-red-400', wash: 'from-red-500/[0.07]' }
-        : isSent
-          ? { label: 'Sent', dot: 'bg-amber-400', text: 'text-amber-400', wash: 'from-amber-500/[0.08]' }
-          : quote.status === 'superseded'
-            ? { label: 'Superseded', dot: 'bg-white/50', text: 'text-white/70', wash: 'from-white/[0.04]' }
-            : { label: 'Draft', dot: 'bg-white/75', text: 'text-white/85', wash: 'from-white/[0.05]' };
-
   const expiryDate = quote.expiryDate ? new Date(quote.expiryDate) : null;
   const daysUntilExpiry = expiryDate ? differenceInDays(expiryDate, new Date()) : null;
   const isExpired = expiryDate ? isPast(expiryDate) : false;
   const isExpiringSoon =
     daysUntilExpiry !== null && daysUntilExpiry >= 0 && daysUntilExpiry <= 7 && !isExpired;
 
+  // A lapsed quote reads as "Expired", not "Sent" — an expired quote looked
+  // identical to a live one, so it sat in the pipeline being chased (ELE-1072).
+  const isLapsed = isSent && isExpired && !isSettled;
+
+  const status = isInvoiced
+    ? { label: 'Invoiced', dot: 'bg-blue-400', text: 'text-blue-400', wash: 'from-blue-500/[0.08]' }
+    : isWon
+      ? { label: 'Won', dot: 'bg-emerald-400', text: 'text-emerald-400', wash: 'from-emerald-500/[0.08]' }
+      : isLost
+        ? { label: 'Declined', dot: 'bg-red-400', text: 'text-red-400', wash: 'from-red-500/[0.07]' }
+        : isLapsed
+          ? { label: 'Expired', dot: 'bg-white/50', text: 'text-white/80', wash: 'from-white/[0.04]' }
+          : isSent
+            ? { label: 'Sent', dot: 'bg-amber-400', text: 'text-amber-400', wash: 'from-amber-500/[0.08]' }
+            : quote.status === 'superseded'
+              ? { label: 'Superseded', dot: 'bg-white/50', text: 'text-white/70', wash: 'from-white/[0.04]' }
+              : { label: 'Draft', dot: 'bg-white/75', text: 'text-white/85', wash: 'from-white/[0.05]' };
+
   const openCount = quote.email_open_count ?? 0;
 
   // Next-step cue — one per card, most urgent first
   const cue = isExpired && !isSettled
-    ? { text: 'Expired', cls: 'text-red-400', icon: null }
+    ? {
+        // The pill already says "Expired", so the cue carries how long ago
+        // instead of repeating the word.
+        text:
+          daysUntilExpiry !== null && daysUntilExpiry < 0
+            ? `Lapsed ${Math.abs(daysUntilExpiry)}d ago`
+            : 'Lapsed today',
+        cls: 'text-white/55',
+        icon: null,
+      }
     : isExpiringSoon && !isSettled
       ? {
           text: daysUntilExpiry === 0 ? 'Expires today' : `Expires in ${daysUntilExpiry}d`,

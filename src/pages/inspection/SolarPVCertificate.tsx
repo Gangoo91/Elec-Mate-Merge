@@ -56,6 +56,7 @@ import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolu
 import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
+import { scrollToTopForStepChange } from '@/utils/scroll';
 
 const REPORT_TYPE = 'solar-pv' as const;
 
@@ -669,7 +670,7 @@ export default function SolarPVCertificate() {
         onTabChange={(tab) => {
           tabProps.setCurrentTab(tab as SolarPVTabValue);
           syncOnTabChange();
-          window.scrollTo({ top: 0 });
+          scrollToTopForStepChange();
         }}
         completedTabs={{
           installation: !!tabProps.isTabComplete('installation'),

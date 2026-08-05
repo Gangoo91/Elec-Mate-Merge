@@ -84,7 +84,7 @@ export default function ElectricalNoiseAndInterferencePage() {
                 through capacitive coupling between adjacent cables, through inductive coupling from
                 magnetic fields, or through radiation of electromagnetic waves.
               </p>
-              <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 mt-4">
+              <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mt-4">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertTriangle className="w-5 h-5 text-yellow-400" />
                   <h3 className="font-bold text-white text-lg">Real-World Impact</h3>
@@ -479,7 +479,7 @@ export default function ElectricalNoiseAndInterferencePage() {
               </p>
               <div className="space-y-3 mt-4">
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                     1
                   </span>
                   <div>
@@ -494,7 +494,7 @@ export default function ElectricalNoiseAndInterferencePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                     2
                   </span>
                   <div>
@@ -509,7 +509,7 @@ export default function ElectricalNoiseAndInterferencePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                     3
                   </span>
                   <div>

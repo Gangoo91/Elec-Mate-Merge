@@ -40,7 +40,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Periodic inspection and testing verifies that an electrical installation remains safe for continued use and identifies any deterioration or defects.',
     section: 'Introduction',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Purpose of Testing',
     category: 'Introduction & Fundamentals',
   },
@@ -110,7 +110,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The recommended maximum interval for periodic inspection of domestic installations is 10 years, or at change of occupancy.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Inspection Intervals',
     category: 'Introduction & Fundamentals',
   },
@@ -128,7 +128,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       "C1 indicates 'Danger present' - a dangerous condition requiring immediate remedial action.",
     section: 'Introduction',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'Classification Codes',
     category: 'Introduction & Fundamentals',
   },
@@ -144,7 +144,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 3,
     explanation: "C2 indicates 'Potentially dangerous' - requiring urgent remedial action.",
     section: 'Introduction',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Classification Codes',
     category: 'Introduction & Fundamentals',
   },
@@ -195,7 +195,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Industrial installations typically require inspection every 3 years due to the more demanding environment.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Inspection Intervals',
     category: 'Introduction & Fundamentals',
   },
@@ -212,7 +212,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'An Electrical Installation Certificate must be provided after completing initial verification of a new installation.',
     section: 'Introduction',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Documentation',
     category: 'Introduction & Fundamentals',
   },
@@ -229,7 +229,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The correct sequence is visual inspection first, then testing, followed by documentation of results.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Testing Sequence',
     category: 'Introduction & Fundamentals',
   },
@@ -247,7 +247,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Periodic inspection should cover 100% of the installation where reasonably practicable.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Inspection Scope',
     category: 'Introduction & Fundamentals',
   },
@@ -316,7 +316,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Initial verification is the inspection and testing of a new installation or addition before being put into service.',
     section: 'Introduction',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Definitions',
     category: 'Introduction & Fundamentals',
   },
@@ -349,7 +349,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 3,
     explanation: 'Part 6 of BS 7671 covers inspection and testing requirements.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Standards',
     category: 'Introduction & Fundamentals',
   },
@@ -367,7 +367,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Any limitations or areas that could not be inspected must be recorded in the report.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Inspection Scope',
     category: 'Introduction & Fundamentals',
   },
@@ -419,7 +419,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Records must include method of protection against electric shock, earthing arrangements, and all test results.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Documentation',
     category: 'Introduction & Fundamentals',
   },
@@ -452,7 +452,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 1,
     explanation: 'Hotels typically require inspection every 5 years.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Inspection Intervals',
     category: 'Introduction & Fundamentals',
   },
@@ -470,7 +470,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The first step is to identify all sources of supply to the circuit or equipment being worked on.',
     section: 'Safe Isolation',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Isolation Procedure',
     category: 'Safe Isolation',
   },
@@ -538,7 +538,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'GS38 is HSE guidance on electrical test equipment used by electricians, covering safe use and probe requirements.',
     section: 'Safe Isolation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Standards',
     category: 'Safe Isolation',
   },
@@ -640,7 +640,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'All sources of supply including generators, UPS systems, and emergency supplies must be identified and isolated.',
     section: 'Safe Isolation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Isolation Procedure',
     category: 'Safe Isolation',
   },
@@ -657,7 +657,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Barriers prevent unauthorised persons from entering the work area and potentially being harmed or restoring supply.',
     section: 'Safe Isolation',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Safety',
     category: 'Safe Isolation',
   },
@@ -709,7 +709,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Live working is only permitted when dead working is unreasonable and adequate precautions are in place.',
     section: 'Safe Isolation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Live Working',
     category: 'Safe Isolation',
   },
@@ -726,7 +726,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Safe isolation procedures should be used for any voltage that could cause injury, typically above 50V AC.',
     section: 'Safe Isolation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Voltage Levels',
     category: 'Safe Isolation',
   },
@@ -812,7 +812,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Non-contact detectors may give false readings and cannot definitively verify absence of voltage. Always confirm with an AVI.',
     section: 'Safe Isolation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Test Equipment',
     category: 'Safe Isolation',
   },
@@ -829,7 +829,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Test leads should comply with GS38 requirements including finger guards, shrouded probes, and fused leads.',
     section: 'Safe Isolation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Test Equipment',
     category: 'Safe Isolation',
   },
@@ -847,7 +847,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A safe distance must be maintained where accidental contact with live parts is not possible.',
     section: 'Safe Isolation',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Safety',
     category: 'Safe Isolation',
   },
@@ -899,7 +899,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Protective conductor continuity testing verifies that the protective conductor provides a continuous low resistance path.',
     section: 'Continuity Testing',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Purpose',
     category: 'Continuity Testing',
   },
@@ -917,7 +917,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'R1+R2 should not exceed the calculated design value based on cable length and CSA.',
     section: 'Continuity Testing',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Acceptance Criteria',
     category: 'Continuity Testing',
   },
@@ -934,7 +934,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Continuity testing should use a test current of at least 200mA to ensure good contact and accurate readings.',
     section: 'Continuity Testing',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'Test Parameters',
     category: 'Continuity Testing',
   },
@@ -969,7 +969,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'L and N readings should be similar (same CSA), while CPC may differ if it has a different cross-sectional area.',
     section: 'Continuity Testing',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Ring Circuit Testing',
     category: 'Continuity Testing',
   },
@@ -1004,7 +1004,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A break causes readings to increase progressively up to the break point, then suddenly drop on the other side.',
     section: 'Continuity Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Fault Finding',
     category: 'Continuity Testing',
   },
@@ -1038,7 +1038,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Main bonding conductors should have very low resistance, typically 0.05 ohms or less.',
     section: 'Continuity Testing',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Acceptance Criteria',
     category: 'Continuity Testing',
   },
@@ -1055,7 +1055,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'R1 represents the resistance of the phase conductor from the origin to the point of measurement.',
     section: 'Continuity Testing',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Definitions',
     category: 'Continuity Testing',
   },
@@ -1072,7 +1072,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'R2 represents the resistance of the circuit protective conductor (CPC) from the point to the origin.',
     section: 'Continuity Testing',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Definitions',
     category: 'Continuity Testing',
   },
@@ -1123,7 +1123,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'High readings may indicate poor connections, damaged conductors, or incorrect cable size/type.',
     section: 'Continuity Testing',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Fault Finding',
     category: 'Continuity Testing',
   },
@@ -1140,7 +1140,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Supplementary bonding continuity is tested with a low resistance ohmmeter between simultaneously accessible parts.',
     section: 'Continuity Testing',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Bonding',
     category: 'Continuity Testing',
   },
@@ -1157,7 +1157,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Radial circuit continuity testing verifies the protective conductor path from origin to each point served.',
     section: 'Continuity Testing',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Radial Circuits',
     category: 'Continuity Testing',
   },
@@ -1175,7 +1175,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Significantly different readings on one leg indicate possible interconnection, spurs, or different cable types.',
     section: 'Continuity Testing',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'Fault Finding',
     category: 'Continuity Testing',
   },
@@ -1191,7 +1191,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 0,
     explanation: 'Continuity testing typically uses a low DC voltage between 4-24V.',
     section: 'Continuity Testing',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'Test Parameters',
     category: 'Continuity Testing',
   },
@@ -1209,7 +1209,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Higher L-CPC reading indicates the CPC has a smaller cross-sectional area (higher resistance per metre).',
     section: 'Continuity Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Ring Circuit Testing',
     category: 'Continuity Testing',
   },
@@ -1226,7 +1226,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Inconsistent readings may be caused by poor test lead connections or low instrument battery.',
     section: 'Continuity Testing',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Troubleshooting',
     category: 'Continuity Testing',
   },
@@ -1243,7 +1243,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The electrical midpoint shows the highest reading during the cross-connected test (approximately 25% of end-to-end).',
     section: 'Continuity Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Ring Circuit Testing',
     category: 'Continuity Testing',
   },
@@ -1278,7 +1278,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       '500V DC is the standard test voltage for insulation resistance testing on circuits up to and including 500V.',
     section: 'Insulation Resistance',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Test Parameters',
     category: 'Insulation Resistance',
   },
@@ -1295,7 +1295,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The minimum acceptable insulation resistance for a 230V installation is 1.0 MΩ (1 megohm).',
     section: 'Insulation Resistance',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Acceptance Criteria',
     category: 'Insulation Resistance',
   },
@@ -1312,7 +1312,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Electronic equipment must be disconnected or bypassed as the 500V test voltage can damage sensitive components.',
     section: 'Insulation Resistance',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Test Procedure',
     category: 'Insulation Resistance',
   },
@@ -1347,7 +1347,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'BS 7671 Table 64 requires SELV and PELV circuits to achieve a minimum insulation resistance of 0.5 MΩ when tested at 250V DC.',
     section: 'Insulation Resistance',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Acceptance Criteria',
     category: 'Insulation Resistance',
   },
@@ -1381,7 +1381,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       "Switches in the 'on' position ensures all wiring and insulation in the circuit is included in the test.",
     section: 'Insulation Resistance',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Test Procedure',
     category: 'Insulation Resistance',
   },
@@ -1398,7 +1398,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Low insulation resistance can be caused by moisture ingress, damaged insulation, or contamination.',
     section: 'Insulation Resistance',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Fault Finding',
     category: 'Insulation Resistance',
   },
@@ -1415,7 +1415,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Circuits rated above 500V up to and including 1000V should be tested at 1000V DC.',
     section: 'Insulation Resistance',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Test Parameters',
     category: 'Insulation Resistance',
   },
@@ -1483,7 +1483,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Electronic equipment, capacitors, indicator lamps, and surge protectors should be disconnected before testing.',
     section: 'Insulation Resistance',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Test Procedure',
     category: 'Insulation Resistance',
   },
@@ -1501,7 +1501,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Circuits rated above 50V but not exceeding 500V require minimum insulation resistance of 1.0 MΩ.',
     section: 'Insulation Resistance',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Acceptance Criteria',
     category: 'Insulation Resistance',
   },
@@ -1518,7 +1518,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'DC voltage provides steady stress on insulation and avoids the capacitive current that would flow with AC.',
     section: 'Insulation Resistance',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Theory',
     category: 'Insulation Resistance',
   },
@@ -1587,7 +1587,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 3,
     explanation: 'Higher temperatures typically result in lower insulation resistance readings.',
     section: 'Insulation Resistance',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Environmental Factors',
     category: 'Insulation Resistance',
   },
@@ -1604,7 +1604,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A megohmmeter (megger) is an instrument specifically designed for measuring insulation resistance in megohms.',
     section: 'Insulation Resistance',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Test Equipment',
     category: 'Insulation Resistance',
   },
@@ -1655,7 +1655,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 3,
     explanation: '0.9 MΩ is below the minimum 1.0 MΩ requirement and must be investigated.',
     section: 'Insulation Resistance',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Actions',
     category: 'Insulation Resistance',
   },
@@ -1673,7 +1673,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Zs represents the total earth fault loop impedance measured at the furthest point of a circuit.',
     section: 'Earth Fault Loop Impedance',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Definitions',
     category: 'Earth Fault Loop Impedance',
   },
@@ -1724,7 +1724,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Zs testing ensures the impedance is low enough for protective devices to disconnect within required times.',
     section: 'Earth Fault Loop Impedance',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Purpose',
     category: 'Earth Fault Loop Impedance',
   },
@@ -1741,7 +1741,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'For a 32A Type B MCB, maximum Zs is 1.37Ω per BS 7671 Table 41.3 (incorporating Cmin = 0.95) to ensure disconnection within the required time.',
     section: 'Earth Fault Loop Impedance',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Maximum Values',
     category: 'Earth Fault Loop Impedance',
   },
@@ -1775,22 +1775,23 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Distribution circuits on TN systems may have a disconnection time of up to 5 seconds.',
     section: 'Earth Fault Loop Impedance',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Disconnection Times',
     category: 'Earth Fault Loop Impedance',
   },
   {
     id: 103,
-    question: 'What causes the difference between measured Zs and calculated Zs values?',
+    question:
+      'On an installation with no extraneous parallel earth paths, why is a measured Zs usually lower than the value calculated for the circuit at its operating temperature?',
     options: [
       'The test instrument always reads slightly high',
-      'Parallel earth paths through bonding and pipework',
-      'The supply voltage varies during the test',
-      'Temperature - conductors are cooler when tested',
+      'The supply voltage rises during the test',
+      'The conductors are near ambient temperature when tested, so their resistance is lower',
+      'The test current is too small to develop the full impedance',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
-      'Measured Zs is typically lower than calculated because conductors are cooler during testing than at operating temperature.',
+      'Conductor resistance rises with temperature. A test is made on a cold or lightly loaded circuit, so the measured Zs reflects near-ambient resistance and reads lower than the value calculated at the conductor operating temperature. Parallel earth paths through bonding and pipework also lower a measured Zs, which is why this question excludes them — on a real installation both effects can be present.',
     section: 'Earth Fault Loop Impedance',
     difficulty: 'advanced',
     topic: 'Temperature Effects',
@@ -1798,16 +1799,17 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 104,
-    question: 'What correction factor should be applied to measured Zs values?',
+    question:
+      'A Zs measurement is taken on a cold circuit. Which rule of thumb does IET Guidance Note 3 give for comparing it against the maximum tabulated Zs for the protective device?',
     options: [
-      'Multiply by 1.2 for thermoplastic, 1.04 for thermosetting',
-      'Multiply by a fixed factor of 0.8 for all cable types',
-      'Divide by 1.2 for thermoplastic, 1.04 for thermosetting',
-      'No correction is needed as Zs is measured cold',
+      'The measured Zs should not exceed 0.8 times the tabulated maximum',
+      'The measured Zs should not exceed 1.2 times the tabulated maximum',
+      'The measured Zs should equal the tabulated maximum exactly',
+      'No comparison is needed provided an RCD is fitted',
     ],
     correctAnswer: 0,
     explanation:
-      'Apply a correction factor of 1.2 for thermoplastic cables or 1.04 for thermosetting to account for operating temperature.',
+      'Tabulated maximum Zs values assume conductors at their operating temperature, but a test is made on a cold circuit. GN3 applies the 0.8 rule — Zs(measured) ≤ 0.8 × the tabulated maximum — so the circuit still complies once warmed to operating temperature. The alternative is to correct the measured value using the temperature factors in Appendix 3 rather than the flat 0.8 rule; both are accepted, but the 0.8 rule is the one GN3 leads with.',
     section: 'Earth Fault Loop Impedance',
     difficulty: 'advanced',
     topic: 'Temperature Correction',
@@ -1826,7 +1828,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A loop impedance tester is specifically designed to measure earth fault loop impedance.',
     section: 'Earth Fault Loop Impedance',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Test Equipment',
     category: 'Earth Fault Loop Impedance',
   },
@@ -1843,7 +1845,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'High Zs indicates the protective device may not operate quickly enough to disconnect the supply safely.',
     section: 'Earth Fault Loop Impedance',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Interpreting Results',
     category: 'Earth Fault Loop Impedance',
   },
@@ -1875,23 +1877,24 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 0,
     explanation: 'The typical maximum Ze for a TN-S system is 0.8Ω.',
     section: 'Earth Fault Loop Impedance',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'System Values',
     category: 'Earth Fault Loop Impedance',
   },
   {
     id: 109,
-    question: 'What is the typical maximum Ze for a TT system?',
+    question:
+      'IET Guidance Note 3 quotes a typical maximum stable value of Ze for a TT system. What is it?',
     options: [
       '0.35Ω',
       '21Ω',
       '0.8Ω',
-      '200Ω',
+      '1667Ω',
     ],
     correctAnswer: 1,
     explanation: 'IET Guidance Note 3 gives a typical maximum stable Ze of 21Ω for a TT system; BS 7671 itself relies on the RCD condition Ra × IΔn ≤ 50V (Table 41.5), and an RCD is required on a TT system.',
     section: 'Earth Fault Loop Impedance',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'System Values',
     category: 'Earth Fault Loop Impedance',
   },
@@ -1908,7 +1911,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Loop testers create a brief high current and measure the resulting voltage drop to calculate impedance.',
     section: 'Earth Fault Loop Impedance',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Test Equipment',
     category: 'Earth Fault Loop Impedance',
   },
@@ -1941,7 +1944,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 0,
     explanation: 'No-trip testers use lower test currents to measure Zs without tripping RCDs.',
     section: 'Earth Fault Loop Impedance',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Test Equipment',
     category: 'Earth Fault Loop Impedance',
   },
@@ -1958,7 +1961,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Prospective fault current is the maximum current that could flow during a short circuit or earth fault.',
     section: 'Earth Fault Loop Impedance',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Definitions',
     category: 'Earth Fault Loop Impedance',
   },
@@ -1991,7 +1994,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       "A protective device's breaking capacity must exceed the prospective fault current at its installation point.",
     section: 'Earth Fault Loop Impedance',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Breaking Capacity',
     category: 'Earth Fault Loop Impedance',
   },
@@ -2025,7 +2028,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'An RCD detects imbalance between the current flowing in the live and neutral conductors.',
     section: 'RCD Testing',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Operation',
     category: 'RCD Testing',
   },
@@ -2042,7 +2045,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A general type RCD must disconnect within 300ms at its rated residual current (IΔn).',
     section: 'RCD Testing',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Trip Times',
     category: 'RCD Testing',
   },
@@ -2059,7 +2062,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 3,
     explanation: 'At 5 times rated current, an RCD must disconnect within 40ms.',
     section: 'RCD Testing',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Trip Times',
     category: 'RCD Testing',
   },
@@ -2075,7 +2078,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 0,
     explanation: 'RCDs rated 30mA or less provide additional protection against electric shock.',
     section: 'RCD Testing',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Ratings',
     category: 'RCD Testing',
   },
@@ -2092,7 +2095,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'RCD testing verifies the device trips within the required time at specific test currents.',
     section: 'RCD Testing',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Purpose',
     category: 'RCD Testing',
   },
@@ -2108,7 +2111,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 2,
     explanation: 'An RCD must not trip at 50% of its rated residual current (non-trip test).',
     section: 'RCD Testing',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Test Parameters',
     category: 'RCD Testing',
   },
@@ -2140,7 +2143,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 0,
     explanation: 'Type A RCDs detect AC sinusoidal and pulsating DC residual currents.',
     section: 'RCD Testing',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'RCD Types',
     category: 'RCD Testing',
   },
@@ -2152,7 +2155,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'EV chargers typically require Type A or Type B RCDs due to DC components in the charging current.',
     section: 'RCD Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'RCD Types',
     category: 'RCD Testing',
   },
@@ -2217,7 +2220,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 1,
     explanation: 'RCBOs provide individual circuit protection.',
     section: 'RCD Testing',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Device Types',
     category: 'RCD Testing',
   },
@@ -2239,7 +2242,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 131,
-    question: 'What is the minimum delay time for an S-type RCD at rated residual current?',
+    question:
+      'What is the minimum non-actuating time for an S-type (selective) RCD at its rated residual current?',
     options: [
       '40ms',
       '300ms',
@@ -2299,7 +2303,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'RCD testers connect between line, neutral and earth at a socket or other test point.',
     section: 'RCD Testing',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Test Procedure',
     category: 'RCD Testing',
   },
@@ -2350,7 +2354,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Single-pole switches must be in the phase conductor to isolate the load when switched off.',
     section: 'Polarity & Functional Testing',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Switch Polarity',
     category: 'Polarity & Functional Testing',
   },
@@ -2434,7 +2438,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Functional testing includes verifying switches operate correctly and dimmers function.',
     section: 'Polarity & Functional Testing',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Lighting Circuits',
     category: 'Polarity & Functional Testing',
   },
@@ -2468,7 +2472,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Check correct polarity, appropriate fuse rating, and that the switch is in the phase conductor.',
     section: 'Polarity & Functional Testing',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'FCUs',
     category: 'Polarity & Functional Testing',
   },
@@ -2485,7 +2489,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A voltage indicator or socket tester can verify polarity in an energised installation.',
     section: 'Polarity & Functional Testing',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'Live Testing',
     category: 'Polarity & Functional Testing',
   },
@@ -2519,7 +2523,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Verifying polarity at the origin ensures the incoming supply is correctly identified.',
     section: 'Polarity & Functional Testing',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Origin Polarity',
     category: 'Polarity & Functional Testing',
   },
@@ -2536,7 +2540,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Verify the isolator disconnects all intended poles and any auxiliary contacts function correctly.',
     section: 'Polarity & Functional Testing',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Isolators',
     category: 'Polarity & Functional Testing',
   },
@@ -2553,7 +2557,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Correct polarity is earth at top, neutral on left, line on right when viewing the socket face-on.',
     section: 'Polarity & Functional Testing',
-    difficulty: 'basic',
+    difficulty: 'advanced',
     topic: 'Socket Polarity',
     category: 'Polarity & Functional Testing',
   },
@@ -2587,7 +2591,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Phase rotation testing verifies the correct sequence of phases in three-phase installations.',
     section: 'Polarity & Functional Testing',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Three-Phase',
     category: 'Polarity & Functional Testing',
   },
@@ -2604,7 +2608,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Incorrect phase rotation causes three-phase motors to run in the opposite direction.',
     section: 'Polarity & Functional Testing',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Motors',
     category: 'Polarity & Functional Testing',
   },
@@ -2637,7 +2641,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Verify correct polarity, switch in phase conductor, and if a socket is fitted, its polarity too.',
     section: 'Polarity & Functional Testing',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Cooker Controls',
     category: 'Polarity & Functional Testing',
   },
@@ -2706,7 +2710,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Check cables are correct type for the application, have adequate current-carrying capacity, and suit the environment.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Cable Selection',
     category: 'Visual Inspection & Documentation',
   },
@@ -2723,7 +2727,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Check conductors are correctly terminated, connections are tight, and terminations are protected.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Connections',
     category: 'Visual Inspection & Documentation',
   },
@@ -2774,7 +2778,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       "Check ratings are adequate, fixing is secure, circuits are identified, and there's protection from damage.",
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Distribution Equipment',
     category: 'Visual Inspection & Documentation',
   },
@@ -2791,7 +2795,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Note any damage, signs of overheating, deterioration, or conditions that make accessories unsafe.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Accessories',
     category: 'Visual Inspection & Documentation',
   },
@@ -2842,7 +2846,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Verify enclosure IP rating is suitable for the location, considering water, dust, and impact protection needs.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'IP Ratings',
     category: 'Visual Inspection & Documentation',
   },
@@ -2859,7 +2863,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Check cables are protected against mechanical damage and fire stopping is provided where penetrating fire barriers.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Cable Protection',
     category: 'Visual Inspection & Documentation',
   },
@@ -2876,7 +2880,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Previous certificates, up-to-date circuit schedules, and operating instructions should be available.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Documentation',
     category: 'Visual Inspection & Documentation',
   },
@@ -2961,7 +2965,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The recommended date is based on installation type, use, environment, and condition found during inspection.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Next Inspection',
     category: 'Visual Inspection & Documentation',
   },
@@ -2978,7 +2982,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Previous documentation should be reviewed to understand installation history and previous issues.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Previous Documentation',
     category: 'Visual Inspection & Documentation',
   },
@@ -2995,7 +2999,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Where sampling is used, the extent and method must be clearly stated in the limitations.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Sampling',
     category: 'Visual Inspection & Documentation',
   },
@@ -3030,7 +3034,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Agricultural installations typically require inspection every 3 years due to harsh environmental conditions.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Inspection Intervals',
     category: 'Introduction & Fundamentals',
   },
@@ -3064,7 +3068,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'A Minor Works Certificate is for additions to existing circuits that do not require an EIC.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Certification',
     category: 'Introduction & Fundamentals',
   },
@@ -3081,7 +3085,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Part P of the Building Regulations covers electrical safety in dwellings in England.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Regulations',
     category: 'Introduction & Fundamentals',
   },
@@ -3132,7 +3136,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Proving dead means verifying the complete absence of dangerous voltage at the work location.',
     section: 'Safe Isolation',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Definitions',
     category: 'Safe Isolation',
   },
@@ -3148,7 +3152,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 0,
     explanation: 'BS 7671 specifies a minimum test current of 200mA for continuity testing.',
     section: 'Continuity Testing',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Test Parameters',
     category: 'Continuity Testing',
   },
@@ -3165,7 +3169,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'OL indicates the resistance is too high to measure, suggesting an open circuit or break.',
     section: 'Continuity Testing',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Interpreting Results',
     category: 'Continuity Testing',
   },
@@ -3198,7 +3202,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 3,
     explanation: 'SELV circuits not exceeding 25V AC should be tested at 250V DC.',
     section: 'Insulation Resistance',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Test Parameters',
     category: 'Insulation Resistance',
   },
@@ -3215,7 +3219,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'High humidity can reduce insulation resistance due to moisture absorption by insulation materials.',
     section: 'Insulation Resistance',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Environmental Factors',
     category: 'Insulation Resistance',
   },
@@ -3232,7 +3236,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'SPDs may conduct or be damaged at the 500V test voltage, and would give false low readings.',
     section: 'Insulation Resistance',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Test Procedure',
     category: 'Insulation Resistance',
   },
@@ -3249,7 +3253,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Prospective Earth Fault Current = Uo (nominal voltage) divided by Zs (earth fault loop impedance).',
     section: 'Earth Fault Loop Impedance',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Calculations',
     category: 'Earth Fault Loop Impedance',
   },
@@ -3333,7 +3337,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Testing at 0° and 180° verifies the RCD trips correctly on both positive and negative halves of the AC waveform.',
     section: 'RCD Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Test Methods',
     category: 'RCD Testing',
   },
@@ -3350,7 +3354,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'IP44 means protected against objects >1mm diameter and water splashing from any direction.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'IP Ratings',
     category: 'Visual Inspection & Documentation',
   },
@@ -3383,7 +3387,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Check cables are adequately supported at correct intervals with fixings suitable for cable type and weight.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Cable Installation',
     category: 'Visual Inspection & Documentation',
   },
@@ -3435,7 +3439,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'IET Guidance Note 3 provides detailed guidance on inspection and testing procedures.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Guidance Documents',
     category: 'Introduction & Fundamentals',
   },
@@ -3468,7 +3472,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 3,
     explanation: 'R1+R2 measurement is used to calculate expected Zs values: Zs = Ze + R1+R2.',
     section: 'Continuity Testing',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Purpose',
     category: 'Continuity Testing',
   },
@@ -3502,7 +3506,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Any circuits that cannot be tested must have the reason and limitation clearly recorded in the report.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Limitations',
     category: 'Visual Inspection & Documentation',
   },
@@ -3536,7 +3540,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Users should test RCDs using the test button at least quarterly (every 3 months).',
     section: 'RCD Testing',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'User Testing',
     category: 'RCD Testing',
   },
@@ -3553,7 +3557,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The 18th Edition is the current edition of BS 7671, setting requirements for electrical installations.',
     section: 'Introduction',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Standards',
     category: 'Introduction & Fundamentals',
   },
@@ -3569,7 +3573,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 1,
     explanation: 'At 5 times rated current, maximum trip time is 40ms.',
     section: 'RCD Testing',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Trip Times',
     category: 'RCD Testing',
   },
@@ -3586,7 +3590,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Verify protective device ratings are appropriate for the circuit design current and cable current-carrying capacity.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Protective Devices',
     category: 'Visual Inspection & Documentation',
   },
@@ -3654,7 +3658,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 2,
     explanation: 'Discrimination ensures the protective device nearest the fault operates first.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Discrimination',
     category: 'Introduction & Fundamentals',
   },
@@ -3671,7 +3675,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Check cables are protected from damage, installed in correct zones, and properly separated from other services.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Cable Routes',
     category: 'Visual Inspection & Documentation',
   },
@@ -3705,7 +3709,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Periodic inspection assesses deterioration and verifies continued safe operation of an existing installation.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Testing Types',
     category: 'Introduction & Fundamentals',
   },
@@ -3757,7 +3761,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'An extraneous-conductive-part is not part of the electrical installation but could introduce a potential.',
     section: 'Continuity Testing',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Definitions',
     category: 'Continuity Testing',
   },
@@ -3825,7 +3829,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Construction sites typically require inspection every 3 months due to the harsh and changing environment.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Inspection Intervals',
     category: 'Introduction & Fundamentals',
   },
@@ -3877,7 +3881,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The maximum permissible touch voltage in normal conditions is 50V AC or 120V ripple-free DC.',
     section: 'Earth Fault Loop Impedance',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Touch Voltage',
     category: 'Earth Fault Loop Impedance',
   },
@@ -3894,7 +3898,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Class II equipment provides protection through double or reinforced insulation, not relying on earthing.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Equipment Classes',
     category: 'Introduction & Fundamentals',
   },
@@ -3911,7 +3915,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Class II equipment is marked with a double square symbol (square within a square).',
     section: 'Introduction',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Equipment Classes',
     category: 'Introduction & Fundamentals',
   },
@@ -3962,7 +3966,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'TT systems use a local earth electrode at the installation as the supply does not provide an earth.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Earthing Systems',
     category: 'Introduction & Fundamentals',
   },
@@ -4013,7 +4017,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       "Check MET connections are secure, conductors are adequate size, it's accessible, and correctly labelled.",
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'MET',
     category: 'Visual Inspection & Documentation',
   },
@@ -4065,7 +4069,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Main bonding is typically required for incoming gas, water, oil pipes, and structural steel if extraneous.',
     section: 'Continuity Testing',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Bonding',
     category: 'Continuity Testing',
   },
@@ -4116,7 +4120,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'IP2X or IPXXB rating means internal parts are protected against finger contact when the cover is removed.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'IP Ratings',
     category: 'Visual Inspection & Documentation',
   },
@@ -4201,7 +4205,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Steel conduit can serve as a CPC if properly installed with fittings that maintain electrical continuity.',
     section: 'Continuity Testing',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Conduit',
     category: 'Continuity Testing',
   },
@@ -4235,7 +4239,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Segregation separates circuits of different categories (e.g., power from data) to prevent interference.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Cable Installation',
     category: 'Visual Inspection & Documentation',
   },
@@ -4252,7 +4256,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Fire stopping prevents fire and smoke spreading through penetrations in fire-resistant walls and floors.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Fire Safety',
     category: 'Visual Inspection & Documentation',
   },
@@ -4269,7 +4273,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Fire alarm cables must be fire-resistant (e.g., MICC, FP200) to maintain circuit integrity during a fire.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Fire Safety',
     category: 'Visual Inspection & Documentation',
   },
@@ -4287,7 +4291,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       "MICC stands for Mineral Insulated Copper Clad cable, commonly known as 'pyro' cable.",
     section: 'Introduction',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Cable Types',
     category: 'Introduction & Fundamentals',
   },
@@ -4304,7 +4308,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'MICC terminations must be properly sealed as the mineral insulation is hygroscopic (absorbs moisture).',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'MICC',
     category: 'Visual Inspection & Documentation',
   },
@@ -4321,7 +4325,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'EMC stands for Electromagnetic Compatibility - ensuring equipment operates without causing or being affected by interference.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'EMC',
     category: 'Introduction & Fundamentals',
   },
@@ -4338,7 +4342,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Residual current monitors measure and display earth leakage current without automatically disconnecting supply.',
     section: 'RCD Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'RCM',
     category: 'RCD Testing',
   },
@@ -4355,7 +4359,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       "An RCD automatically disconnects supply; an RCM monitors current and provides an alarm but doesn't disconnect.",
     section: 'RCD Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'RCM',
     category: 'RCD Testing',
   },
@@ -4389,7 +4393,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'IT systems are used where a first earth fault must not cause supply disconnection, such as hospital operating theatres.',
     section: 'Introduction',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Earthing Systems',
     category: 'Introduction & Fundamentals',
   },
@@ -4423,7 +4427,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Test instruments should be calibrated as per manufacturer recommendations, typically annually.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Test Equipment',
     category: 'Introduction & Fundamentals',
   },
@@ -4440,7 +4444,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Calibration certificates demonstrate instrument accuracy and measurement traceability to national standards.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Test Equipment',
     category: 'Introduction & Fundamentals',
   },
@@ -4458,7 +4462,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Ensure backup generators are isolated and cannot automatically start during testing to prevent shock hazards.',
     section: 'Safe Isolation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Backup Supplies',
     category: 'Safe Isolation',
   },
@@ -4492,7 +4496,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'The schedule of items inspected records what aspects were visually checked and the outcome of each.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'EICR Schedules',
     category: 'Visual Inspection & Documentation',
   },
@@ -4527,7 +4531,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Dead tests include continuity, insulation resistance, and polarity verification before energising.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Testing Types',
     category: 'Introduction & Fundamentals',
   },
@@ -4544,7 +4548,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Live tests include earth fault loop impedance, RCD testing, polarity verification, and functional tests.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Testing Types',
     category: 'Introduction & Fundamentals',
   },
@@ -4561,7 +4565,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Dead tests (continuity, insulation, polarity) are performed first, then live tests (Zs, RCD, functional).',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Testing Sequence',
     category: 'Introduction & Fundamentals',
   },
@@ -4611,7 +4615,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     correctAnswer: 2,
     explanation: 'Cinemas and other entertainment venues typically require annual inspection.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Inspection Intervals',
     category: 'Introduction & Fundamentals',
   },
@@ -4628,7 +4632,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Installations with more than one source of supply must have a warning label indicating this.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Labelling',
     category: 'Visual Inspection & Documentation',
   },
@@ -4645,7 +4649,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'RCDs should have a label indicating the recommended test frequency (typically quarterly).',
     section: 'RCD Testing',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'Labelling',
     category: 'RCD Testing',
   },
@@ -4662,7 +4666,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Danger notices should indicate the nature of danger, who performed the isolation, and contact details.',
     section: 'Safe Isolation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Safety Notices',
     category: 'Safe Isolation',
   },
@@ -4696,7 +4700,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'AFDDs are recommended in locations with sleeping accommodation and premises with particular fire risks.',
     section: 'Introduction',
-    difficulty: 'advanced',
+    difficulty: 'basic',
     topic: 'AFDD',
     category: 'Introduction & Fundamentals',
   },
@@ -4730,7 +4734,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'If an MCB trips during testing, investigate the cause before resetting and continuing.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Troubleshooting',
     category: 'Introduction & Fundamentals',
   },
@@ -4747,7 +4751,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'PFC testing measures the maximum current that could flow during a short circuit or earth fault.',
     section: 'Earth Fault Loop Impedance',
-    difficulty: 'basic',
+    difficulty: 'intermediate',
     topic: 'PFC Testing',
     category: 'Earth Fault Loop Impedance',
   },
@@ -4781,7 +4785,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       "Low PFC (high impedance) at remote points may mean protective devices won't operate quickly enough.",
     section: 'Earth Fault Loop Impedance',
-    difficulty: 'intermediate',
+    difficulty: 'advanced',
     topic: 'Interpreting Results',
     category: 'Earth Fault Loop Impedance',
   },
@@ -4798,22 +4802,23 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'ADS ensures automatic disconnection of supply under earth fault conditions before shock duration becomes dangerous.',
     section: 'Introduction',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'ADS',
     category: 'Introduction & Fundamentals',
   },
   {
     id: 282,
-    question: 'In special locations, what is the reduced touch voltage limit?',
+    question:
+      'In a medical location of group 1 or 2 where automatic disconnection of supply cannot be achieved, what is the maximum conventional touch voltage Uc?',
     options: [
-      '50V',
-      '12V',
+      '50V AC',
+      '12V AC',
       '25V AC',
-      '5V',
+      '5V AC',
     ],
     correctAnswer: 2,
     explanation:
-      'In special locations (e.g., bathrooms, swimming pools), touch voltage is limited to 25V AC.',
+      'Section 710: where automatic disconnection cannot be achieved in a medical location of group 1 or 2, the conventional touch voltage Uc shall not exceed 25V AC (or 60V DC) for TN, TT and IT systems. A supplementary protective equipotential bonding system to 710.415.2 and 710.419.3 is deemed to meet this. Note this 25V limit is NOT a general bathroom or swimming-pool rule — those locations rely on supplementary bonding and RCD protection instead.',
     section: 'Earth Fault Loop Impedance',
     difficulty: 'advanced',
     topic: 'Touch Voltage',
@@ -4849,7 +4854,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Fire alarm, emergency lighting, and data/telecommunications circuits require segregation from power circuits.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Segregation',
     category: 'Visual Inspection & Documentation',
   },
@@ -4917,7 +4922,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Check glands are correct type for the cable, properly tightened, and provide earth continuity where required.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Cable Installation',
     category: 'Visual Inspection & Documentation',
   },
@@ -4951,7 +4956,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Clean or technical earths provide a low-noise earth reference for sensitive electronic equipment.',
     section: 'Introduction',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Earthing Types',
     category: 'Introduction & Fundamentals',
   },
@@ -5019,7 +5024,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       "A cross-connected ring shows unexpected readings that don't follow the progressive pattern of a correctly wired ring.",
     section: 'Continuity Testing',
-    difficulty: 'advanced',
+    difficulty: 'intermediate',
     topic: 'Fault Finding',
     category: 'Continuity Testing',
   },
@@ -5042,7 +5047,8 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
   },
   {
     id: 296,
-    question: 'What is the minimum CSA for supplementary bonding conductors?',
+    question:
+      'A supplementary bonding conductor connecting two exposed-conductive-parts has no mechanical protection. What is the minimum cross-sectional area?',
     options: [
       '4mm²',
       '2.5mm²',
@@ -5051,7 +5057,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'A supplementary bonding conductor between extraneous-conductive-parts must be at least 4mm² where it is not mechanically protected (2.5mm² is permitted where protected).',
+      'Regulation 544.2.1: where mechanical protection is not provided, the cross-sectional area shall be not less than 4mm². Where the conductor IS sheathed or otherwise mechanically protected, the regulation sets no fixed CSA — it requires conductance not less than that of the smaller protective conductor connected to the exposed-conductive-parts.',
     section: 'Continuity Testing',
     difficulty: 'advanced',
     topic: 'Bonding',
@@ -5104,7 +5110,7 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     explanation:
       'Check cable tray is securely fixed, provides adequate support for cables, and is bonded if metallic.',
     section: 'Visual Inspection & Documentation',
-    difficulty: 'intermediate',
+    difficulty: 'basic',
     topic: 'Cable Installation',
     category: 'Visual Inspection & Documentation',
   },

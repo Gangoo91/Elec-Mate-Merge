@@ -173,7 +173,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <p className="text-white text-sm">
             <strong>Disclaimer:</strong> This guide provides general information about
             self-assessment for electricians. Tax law is subject to change and your individual
@@ -283,7 +283,7 @@ const sections = [
           Missing HMRC deadlines results in automatic financial penalties. The self-assessment
           system has several important dates each year.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -493,7 +493,7 @@ const sections = [
           earned and when makes the income section of your return straightforward.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileText className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

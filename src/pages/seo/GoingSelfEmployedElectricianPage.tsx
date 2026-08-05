@@ -357,7 +357,7 @@ const sections = [
           </SEOInternalLink>{' '}
           that accounts for every overhead. Here is the formula in simple terms:
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <p className="text-white font-mono text-sm mb-4">
             Hourly Rate = (Target Annual Income + Annual Overheads + Tax Provision) / Billable Hours
             Per Year
@@ -412,7 +412,7 @@ const sections = [
           how to build a steady pipeline of work:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Users className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

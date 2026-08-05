@@ -81,7 +81,7 @@ export default function EVChargerInstallationPage() {
                     possible. Cable sizing is simpler due to the lower current demand.
                   </p>
                 </div>
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-2xl mb-1">7 kW</h3>
                   <h4 className="font-bold text-white mb-3">Fast Charger (32A Single Phase)</h4>
                   <p className="text-white text-sm leading-relaxed">
@@ -269,7 +269,7 @@ export default function EVChargerInstallationPage() {
                 charger is:
               </p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-3">Standard Arrangement</h3>
                   <p className="text-white text-sm leading-relaxed mb-3">
                     <strong className="text-white">32A Type A RCBO (30 mA)</strong> — where the
@@ -412,7 +412,7 @@ export default function EVChargerInstallationPage() {
                     </div>
                     <span className="font-bold text-yellow-400 text-lg">£100 - £600</span>
                   </div>
-                  <div className="flex items-center justify-between p-4 rounded-xl bg-yellow-500/5 border border-yellow-500/20">
+                  <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                     <div>
                       <h4 className="font-bold text-white">Total installed (typical)</h4>
                       <p className="text-white text-sm">Standard domestic installation</p>
@@ -516,7 +516,7 @@ export default function EVChargerInstallationPage() {
                     from 60A to 100A fuse) before the charger can be connected.
                   </p>
                 </div>
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-3">Part P Notification</h3>
                   <p className="text-white text-sm leading-relaxed mb-3">
                     Installing a new circuit for an EV charger is notifiable under{' '}

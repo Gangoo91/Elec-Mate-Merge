@@ -286,7 +286,7 @@ const sections = [
           clear-cut. Here are practical examples based on common jobs.
         </p>
         <div className="space-y-4 my-6">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white mb-2">Installing a bathroom extractor fan</h3>
             <p className="text-white text-sm leading-relaxed mb-2">
               <strong>If wired from existing lighting circuit via FCU:</strong> Minor Works
@@ -298,7 +298,7 @@ const sections = [
               notifiable under Part P regardless of which certificate type.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white mb-2">Adding outdoor lighting</h3>
             <p className="text-white text-sm leading-relaxed mb-2">
               <strong>If extending an existing interior lighting circuit to the garden:</strong>{' '}
@@ -311,7 +311,7 @@ const sections = [
               EIC. New protective device at the board = new circuit.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white mb-2">Adding sockets in a kitchen extension</h3>
             <p className="text-white text-sm leading-relaxed mb-2">
               <strong>
@@ -324,7 +324,7 @@ const sections = [
               brand new circuit with its own MCB at the board.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white mb-2">Converting a single socket to a double</h3>
             <p className="text-white text-sm leading-relaxed">
               <strong>Like-for-like swap in the same back box:</strong> No certificate required
@@ -333,7 +333,7 @@ const sections = [
               Works certificate.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white mb-2">Installing a home office supply</h3>
             <p className="text-white text-sm leading-relaxed mb-2">
               <strong>If adding sockets from an existing ring in the room:</strong> Minor Works.
@@ -365,7 +365,7 @@ const sections = [
           as BS 7671.
         </p>
         <div className="grid sm:grid-cols-2 gap-4 my-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-yellow-400 text-lg mb-3">Notifiable Work</h3>
             <p className="text-white text-sm leading-relaxed mb-3">
               Requires either self-certification via a competent person scheme or notification to

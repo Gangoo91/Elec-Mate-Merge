@@ -53,18 +53,18 @@ const RcdTypesSection = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* Types */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">RCD Types — What They Detect</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">RCD Types — What They Detect</p>
         </motion.div>
 
         {rcdTypes.map((rcd, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
               <div className="flex items-center justify-between">
                 <p className="text-sm font-semibold text-white">{rcd.type}</p>
               </div>
               <p className="text-sm text-yellow-400/80">{rcd.detects}</p>
               <div className="grid grid-cols-1 gap-2">
-                <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
+                <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] p-3">
                   <p className="text-xs font-semibold text-white mb-1.5">Applications</p>
                   <div className="space-y-1">
                     {rcd.applications.map((app, j) => (
@@ -75,7 +75,7 @@ const RcdTypesSection = ({ onBack }: Props) => {
                     ))}
                   </div>
                 </div>
-                <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
+                <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] p-3">
                   <p className="text-xs font-semibold text-white mb-1.5">Limitations</p>
                   <div className="space-y-1">
                     {rcd.limitations.map((lim, j) => (
@@ -93,8 +93,8 @@ const RcdTypesSection = ({ onBack }: Props) => {
 
         {/* Sensitivity ratings */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Sensitivity Ratings</p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Sensitivity Ratings</p>
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -120,19 +120,19 @@ const RcdTypesSection = ({ onBack }: Props) => {
 
         {/* Time characteristics */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Time Characteristics</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Time Characteristics</p>
         </motion.div>
 
         {timeCharacteristics.map((tc, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-sm font-semibold text-white mb-2">{tc.type}</p>
               <div className="grid grid-cols-2 gap-2 mb-2">
-                <div className="rounded-xl bg-white/[0.05] p-2.5 text-center">
+                <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-2.5 text-center">
                   <p className="text-xs text-white">At 1×IΔn</p>
                   <p className="text-sm font-bold text-white">{tc.atRated}</p>
                 </div>
-                <div className="rounded-xl bg-white/[0.05] p-2.5 text-center">
+                <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-2.5 text-center">
                   <p className="text-xs text-white">At 5×IΔn</p>
                   <p className="text-sm font-bold text-yellow-400">{tc.atFiveX}</p>
                 </div>
@@ -144,7 +144,7 @@ const RcdTypesSection = ({ onBack }: Props) => {
 
         {/* EV charging */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-3">EV Charging — RCD Selection</p>
             <div className="space-y-1.5">
               {evChargingRules.map((rule, i) => (
@@ -159,7 +159,7 @@ const RcdTypesSection = ({ onBack }: Props) => {
 
         {/* What RCDs cannot protect against */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-orange-400/10 border border-orange-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-3">What RCDs Cannot Protect Against</p>
             <div className="space-y-1.5">
               {[

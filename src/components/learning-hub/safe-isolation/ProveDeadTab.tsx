@@ -33,7 +33,7 @@ const ProveDeadTab = ({ onBack }: { onBack: () => void }) => (
     <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-6">
       {/* Prove-Test-Prove */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <h2 className="text-xs font-medium text-emerald-400 uppercase tracking-wider px-0.5">Prove-Test-Prove Method</h2>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">Prove-Test-Prove Method</h2>
         <div className="grid grid-cols-3 gap-2.5">
           {[
             { num: '1', title: 'PROVE', desc: 'Prove tester on a known live source', accent: 'bg-green-500/50', titleCol: 'text-green-400', borderCol: 'border-green-500/20' },
@@ -59,7 +59,7 @@ const ProveDeadTab = ({ onBack }: { onBack: () => void }) => (
       {/* Single-phase */}
       <motion.section variants={itemVariants} className="space-y-3">
         <div className="px-0.5">
-          <h2 className="text-xs font-medium text-blue-400 uppercase tracking-wider">Single-Phase Testing Order</h2>
+          <h2 className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Single-Phase Testing Order</h2>
           <p className="text-[11px] text-white mt-0.5">Always test earth connections first</p>
         </div>
         <div className="space-y-2">
@@ -127,7 +127,7 @@ const ProveDeadTab = ({ onBack }: { onBack: () => void }) => (
 
       {/* Voltage Thresholds */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Voltage Danger Thresholds</h2>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">Voltage Danger Thresholds</h2>
         <div className="grid grid-cols-2 gap-2.5">
           <div className="relative rounded-2xl bg-white/[0.07] border border-orange-500/15 p-4 overflow-hidden">
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-orange-500/50 rounded-l-2xl" />
@@ -150,7 +150,7 @@ const ProveDeadTab = ({ onBack }: { onBack: () => void }) => (
 
       {/* Common Errors */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <h2 className="text-xs font-medium text-red-400 uppercase tracking-wider px-0.5">Common Prove-Dead Errors</h2>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">Common Prove-Dead Errors</h2>
         {[
           { title: 'Back-fed supplies', detail: 'Solar PV, battery storage, or generators can feed circuits that appear isolated from the mains. Check Reg 514.15.', reg: '514.15' },
           { title: 'Shared neutrals', detail: 'A shared neutral from another circuit can create a parallel path, keeping conductors live even after isolation.' },

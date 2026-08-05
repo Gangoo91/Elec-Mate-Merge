@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-import { List } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 
 export interface TOCItem {
@@ -45,15 +44,14 @@ export function SEOTableOfContents({ items }: SEOTableOfContentsProps) {
   }, []);
 
   const tocList = (
-    <ul className="space-y-1">
+    <ul className="divide-y divide-white/[0.08]">
       {items.map((item) => (
         <li key={item.id}>
           <button
             onClick={() => scrollTo(item.id)}
-            className={`w-full text-left px-3 py-2 text-sm rounded-lg transition-colors touch-manipulation ${
-              activeId === item.id
-                ? 'text-yellow-400 bg-yellow-500/10 font-medium'
-                : 'text-white hover:text-yellow-400 hover:bg-white/5'
+            aria-current={activeId === item.id ? 'true' : undefined}
+            className={`flex min-h-[52px] w-full touch-manipulation items-center px-5 text-left text-[15px] text-white transition-colors hover:bg-white/[0.04] ${
+              activeId === item.id ? 'font-semibold text-elec-yellow' : ''
             }`}
           >
             {item.label}
@@ -66,19 +64,29 @@ export function SEOTableOfContents({ items }: SEOTableOfContentsProps) {
   return (
     <>
       {/* Floating button + bottom sheet (all breakpoints) */}
-      <div className="fixed bottom-20 right-4 z-40 sm:bottom-6">
+      {/* Quiet dark control, not a yellow pill. Yellow is the page's CTA
+          colour and a floating "Contents" button should never outshout it —
+          this is navigation, not the action we want. No glow, no icon. */}
+      <div
+        className="fixed bottom-4 right-4 z-40"
+        style={{ marginBottom: 'env(safe-area-inset-bottom, 0px)' }}
+      >
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <SheetTrigger asChild>
-            <button className="flex items-center gap-2 px-4 py-3 bg-yellow-500 text-black font-semibold rounded-full shadow-lg shadow-yellow-500/25 touch-manipulation">
-              <List className="w-4 h-4" />
-              <span className="text-sm">Contents</span>
+            <button className="h-11 touch-manipulation rounded-xl border border-white/20 bg-[#0a0a0a]/95 px-4 text-[14px] font-semibold text-white backdrop-blur-md transition-colors hover:bg-white/[0.06]">
+              Contents
             </button>
           </SheetTrigger>
-          <SheetContent side="bottom" className="rounded-t-2xl bg-[#141414] border-white/10 p-0">
-            <SheetHeader className="px-5 pt-5 pb-3 border-b border-white/10">
-              <SheetTitle className="text-white text-left">Contents</SheetTitle>
+          <SheetContent
+            side="bottom"
+            className="h-[85vh] overflow-hidden rounded-t-2xl border-white/[0.12] bg-[#0a0a0a] p-0"
+          >
+            <SheetHeader className="border-b border-white/[0.12] px-5 pb-3 pt-5">
+              <SheetTitle className="text-left text-[11px] font-semibold uppercase tracking-[0.2em] text-white">
+                Contents
+              </SheetTitle>
             </SheetHeader>
-            <div className="px-3 py-4 max-h-[60vh] overflow-y-auto">{tocList}</div>
+            <div className="h-[calc(85vh-4rem)] overflow-y-auto">{tocList}</div>
           </SheetContent>
         </Sheet>
       </div>

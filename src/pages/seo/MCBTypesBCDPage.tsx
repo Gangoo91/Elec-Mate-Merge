@@ -190,7 +190,7 @@ const sections = [
               within seconds.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Magnetic Trip (Short Circuit)</h3>
             <p className="text-white text-sm leading-relaxed">
               An electromagnet (solenoid) inside the MCB pulls the trip mechanism open
@@ -259,7 +259,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-amber-500/30 p-5 my-4">
           <div className="flex items-start gap-3">
             <Shield className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
             <div>
@@ -366,7 +366,7 @@ const sections = [
           threshold is designed for loads with very high inrush currents that would trip even a Type
           C device.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white mb-4">Type D MCB — Specialist Applications</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">

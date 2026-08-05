@@ -18,15 +18,15 @@ const OverloadPage = ({ onBack }: Props) => (
 
     <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
       <motion.div variants={itemVariants}>
-        <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-2">What Is It</p>
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-2">What Is It</p>
           <p className="text-sm text-white leading-relaxed">An overload occurs when a circuit carries more current than its rated capacity for a sustained period. Unlike a short circuit (instant), an overload trips the thermal element of the MCB after minutes or hours of operation. The circuit heats up progressively, degrading insulation and creating fire risk before the protective device eventually operates.</p>
         </div>
       </motion.div>
 
       <motion.div variants={itemVariants}>
-        <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Symptoms</p>
-        <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Symptoms</p>
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
           <div className="space-y-2">
             {['MCB trips after running under load for a period — not immediately on energisation', 'Cables warm or hot to touch, especially at terminations and in trunking', 'Discolouration of cable sheath near accessories — browning or yellowing of PVC', 'Burning smell from overheated insulation — may precede MCB trip by hours', 'MCB body is hot to touch when the circuit is loaded', 'Appliances running slowly or underperforming due to voltage drop under excessive load'].map((s, i) => (
               <div key={i} className="flex items-start gap-3">
@@ -39,7 +39,7 @@ const OverloadPage = ({ onBack }: Props) => (
       </motion.div>
 
       <motion.div variants={itemVariants}>
-        <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Common Causes</p>
+        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Causes</p>
       </motion.div>
 
       {[
@@ -49,10 +49,10 @@ const OverloadPage = ({ onBack }: Props) => (
         { cause: 'Incorrect MCB rating for the cable', detail: 'An MCB rated higher than the cable can carry allows sustained overload without tripping. A 32A MCB on a 1.5mm² cable will allow sustained current that overheats the cable.', tip: 'Never increase the MCB rating to stop tripping — check the cable rating first. The MCB protects the cable, not the load.' },
       ].map((item, i) => (
         <motion.div key={i} variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-2">
             <p className="text-sm font-semibold text-white">{item.cause}</p>
             <p className="text-sm text-white leading-relaxed">{item.detail}</p>
-            <div className="rounded-xl bg-yellow-400/5 border border-yellow-400/10 p-2.5">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/10 p-2.5">
               <p className="text-xs text-yellow-400/80">{item.tip}</p>
             </div>
           </div>
@@ -60,13 +60,13 @@ const OverloadPage = ({ onBack }: Props) => (
       ))}
 
       <motion.div variants={itemVariants}>
-        <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">How to Diagnose</p>
+        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">How to Diagnose</p>
       </motion.div>
 
       {['Note when the MCB trips — a thermal trip occurs after sustained load, not instantly. Record the time between energisation and trip.', 'Measure load current with a clamp meter under normal operating conditions. Clamp around the line conductor at the MCB.', 'Compare measured current against the MCB rating AND the cable current-carrying capacity (with derating factors applied).', 'If load exceeds rating: identify the heaviest loads. Calculate total connected load. Determine if the circuit can be split.', 'If load is within rating but MCB still trips: check for loose connections. Use thermal imaging under load — hot spots indicate high-resistance joints.', 'Check cable route for bunching with other cables — grouping derating (Table F3) may reduce the effective cable capacity below the MCB rating.', 'After repair: recheck load current, retorque all connections, verify thermal performance under load.'].map((step, i) => (
         <motion.div key={i} variants={itemVariants}>
-          <div className="flex items-start gap-3 rounded-xl bg-white/[0.03] border border-white/10 p-3.5">
-            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+          <div className="flex items-start gap-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-3.5">
+            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
               <span className="text-sm font-bold text-yellow-400">{i + 1}</span>
             </div>
             <p className="text-sm text-white leading-relaxed pt-1">{step}</p>
@@ -75,14 +75,14 @@ const OverloadPage = ({ onBack }: Props) => (
       ))}
 
       <motion.div variants={itemVariants}>
-        <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider">Real-World Case</p>
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-3">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Real-World Case</p>
           <p className="text-sm font-semibold text-white">Kitchen Ring — Clamp Meter Reveals Overload</p>
           <p className="text-sm text-white">Client complains MCB trips every evening around dinner time. Never trips during the day.</p>
-          <div className="rounded-xl bg-white/[0.05] p-3">
+          <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
             <p className="text-xs text-white">Clamp meter reading during evening meal preparation: 34A on a 32A MCB. Kettle (13A) + oven (13A) + microwave (6A) + dishwasher (10A) running simultaneously. The MCB thermal element trips after ~15 minutes at 106% overload.</p>
           </div>
-          <div className="rounded-xl bg-green-400/5 border border-green-400/10 p-3">
+          <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-green-400/10 p-3">
             <p className="text-xs text-white">Installed a dedicated radial circuit for the oven (6mm² cable, 32A MCB). Kitchen ring now peaks at 22A during dinner. MCB trips eliminated. Also retorqued all ring circuit connections as a precaution.</p>
           </div>
         </div>
@@ -90,7 +90,7 @@ const OverloadPage = ({ onBack }: Props) => (
 
       {/* Grouping derating */}
       <motion.div variants={itemVariants}>
-        <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
           <p className="text-sm font-semibold text-white mb-2">Cable Grouping Derating (Table F3)</p>
           <p className="text-sm text-white leading-relaxed mb-3">When cables are bunched or enclosed together, their current-carrying capacity is reduced. A cable rated at 27A in free air may only carry 19A when grouped with 5 other cables. If the load exceeds the derated capacity, the cable overheats even though the MCB has not tripped.</p>
           <div className="space-y-1.5">
@@ -103,7 +103,7 @@ const OverloadPage = ({ onBack }: Props) => (
       </motion.div>
 
       <motion.div variants={itemVariants}>
-        <div className="rounded-2xl bg-orange-400/10 border border-orange-400/20 p-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/20 p-4">
           <p className="text-sm font-semibold text-white mb-2">Critical Warning</p>
           <p className="text-sm text-white leading-relaxed">Never increase the MCB rating to stop overload tripping. The MCB protects the cable — increasing the rating allows the cable to overheat, degrading insulation and creating a fire risk. The correct fix is to reduce the load or upgrade the cable.</p>
         </div>

@@ -56,6 +56,7 @@ import {
 } from '@/types/g99-commissioning';
 import { useG99CommissioningTabs, G99TabValue } from '@/hooks/useG99CommissioningTabs';
 import useReadingKeypad from '@/hooks/useReadingKeypad';
+import { scrollToTopForStepChange } from '@/utils/scroll';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -1356,7 +1357,7 @@ const {
         onTabChange={(tab) => {
           setCurrentTab(tab as G99TabValue);
           syncOnTabChange();
-          window.scrollTo({ top: 0 });
+          scrollToTopForStepChange();
         }}
         completedTabs={{
           application: !!isTabComplete('application'),
@@ -1392,6 +1393,9 @@ const {
         {/* Footer OUTSIDE the isLocked pointer-events-none wrapper — a locked
             cert must still allow Download PDF / navigation. */}
         <CertShellFooter
+        previewReportType="g99-commissioning"
+        previewReportId={savedReportId}
+        previewData={data as unknown as Record<string, unknown>}
           currentIndex={currentTabIndex}
           totalSteps={totalTabs}
           canPrevious={canNavigatePrevious}

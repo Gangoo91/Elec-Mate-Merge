@@ -139,7 +139,7 @@ const sections = [
           of technical disciplines including electrical installation, engineering, motor vehicle,
           construction, and aviation.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -445,7 +445,7 @@ const sections = [
           awarding body that provider is approved to deliver. However, if you have a choice or
           are selecting a training provider, here is how to approach the decision.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -588,7 +588,7 @@ const sections = [
           Card, and begin your career as a qualified electrician.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <GraduationCap className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

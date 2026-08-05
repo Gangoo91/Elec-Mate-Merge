@@ -185,7 +185,7 @@ export default function EPAPreparationPage() {
       {/* Hero */}
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
             <GraduationCap className="w-4 h-4 text-yellow-400" />
             <span className="text-sm font-medium text-yellow-400">ST0215 EPA Preparation</span>
           </div>
@@ -282,7 +282,7 @@ export default function EPAPreparationPage() {
             {/* Component 1: Practical */}
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
               <div className="flex items-start gap-4 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                   1
                 </div>
                 <div>
@@ -316,7 +316,7 @@ export default function EPAPreparationPage() {
             {/* Component 2: Knowledge Test */}
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
               <div className="flex items-start gap-4 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                   2
                 </div>
                 <div>
@@ -352,7 +352,7 @@ export default function EPAPreparationPage() {
             {/* Component 3: Professional Discussion */}
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
               <div className="flex items-start gap-4 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                   3
                 </div>
                 <div>
@@ -490,7 +490,7 @@ export default function EPAPreparationPage() {
                 key={item.step}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                   {item.step}
                 </div>
                 <div>

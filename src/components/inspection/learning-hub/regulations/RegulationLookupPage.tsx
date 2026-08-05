@@ -101,7 +101,7 @@ const RegulationLookupPage = ({ onBack }: Props) => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by number, title or keyword..."
-              className="h-11 pl-10 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white placeholder:text-white"
+              className="h-11 pl-10 text-base touch-manipulation bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.08] text-white placeholder:text-white"
             />
           </div>
         </motion.div>
@@ -109,9 +109,9 @@ const RegulationLookupPage = ({ onBack }: Props) => {
         {/* Results */}
         {filtered.map((reg, i) => (
           <motion.div key={reg.number} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 rounded-xl bg-yellow-400/10 border border-yellow-400/20 px-2.5 py-1.5">
+                <div className="flex-shrink-0 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 px-2.5 py-1.5">
                   <span className="text-xs font-bold text-yellow-400 whitespace-nowrap">{reg.number}</span>
                 </div>
                 <div className="flex-1 min-w-0">
@@ -125,7 +125,7 @@ const RegulationLookupPage = ({ onBack }: Props) => {
 
         {filtered.length === 0 && (
           <motion.div variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-6 text-center">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-6 text-center">
               <p className="text-sm text-white">No regulations match your search. Try a different number or keyword.</p>
             </div>
           </motion.div>

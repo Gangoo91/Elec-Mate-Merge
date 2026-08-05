@@ -239,7 +239,7 @@ const sections = [
     content: (
       <>
         <p>Regulation 4 is the cornerstone of the EAWR. It states:</p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <p className="text-white italic leading-relaxed">
             "All systems shall at all times be of such construction as to prevent, so far as is
             reasonably practicable, danger."
@@ -334,7 +334,7 @@ const sections = [
             guide for the rented-sector statutory five-year requirement.
           </p>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/30 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <p className="text-yellow-300 font-semibold mb-2">
             A4:2026 Update — New construction requirements
           </p>
@@ -484,7 +484,7 @@ const sections = [
           regulations. It states that no person shall work on or near a live conductor (other than
           one suitably covered with insulating material) unless:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -612,7 +612,7 @@ const sections = [
           local authority environmental health officers. Enforcement action can range from informal
           advice to criminal prosecution:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -700,7 +700,7 @@ const sections = [
           proper procedures, and documentation. Elec-Mate provides tools that support all three:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

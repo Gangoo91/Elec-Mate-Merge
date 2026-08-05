@@ -251,7 +251,7 @@ const InsulationTablesSection = ({ onBack }: Props) => {
 
         {/* Typical Values */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-emerald-400 uppercase tracking-wider px-0.5 mb-2">Typical Insulation Resistance Values</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white px-0.5 mb-2">Typical Insulation Resistance Values</p>
         </motion.div>
 
         <motion.div variants={itemVariants} className="grid grid-cols-1 gap-3">

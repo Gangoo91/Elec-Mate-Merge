@@ -53,14 +53,14 @@ const FaultFindingRegulations = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">BS 7671:2018+A4:2026</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">BS 7671:2018+A4:2026</p>
         </motion.div>
 
         {bs7671Regs.map((reg, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 rounded-xl bg-yellow-400/10 border border-yellow-400/20 px-2.5 py-1.5">
+                <div className="flex-shrink-0 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 px-2.5 py-1.5">
                   <span className="text-xs font-bold text-yellow-400 whitespace-nowrap">{reg.number}</span>
                 </div>
                 <div className="flex-1 min-w-0">
@@ -73,14 +73,14 @@ const FaultFindingRegulations = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Electricity at Work Regulations 1989</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Electricity at Work Regulations 1989</p>
         </motion.div>
 
         {eawRegs.map((reg, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 rounded-xl bg-orange-400/10 border border-orange-400/20 px-2.5 py-1.5">
+                <div className="flex-shrink-0 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/20 px-2.5 py-1.5">
                   <span className="text-xs font-bold text-orange-400 whitespace-nowrap">{reg.number}</span>
                 </div>
                 <div className="flex-1 min-w-0">
@@ -93,12 +93,12 @@ const FaultFindingRegulations = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Other Standards</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Other Standards</p>
         </motion.div>
 
         {otherStandards.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-sm font-semibold text-white">{item.standard}</p>
               <p className="text-sm text-white mt-1 leading-relaxed">{item.detail}</p>
             </div>
@@ -106,14 +106,14 @@ const FaultFindingRegulations = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">EICR Coding for Faults</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">EICR Coding for Faults</p>
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
             {eicrCoding.map((item, i) => (
               <div key={i} className={`p-3 flex items-start gap-3 ${i < eicrCoding.length - 1 ? 'border-b border-white/[0.06]' : ''}`}>
-                <div className={`flex-shrink-0 rounded-lg px-2 py-1 ${item.code === 'C1' ? 'bg-red-400/20 border border-red-400/30' : item.code === 'C2' ? 'bg-orange-400/20 border border-orange-400/30' : item.code === 'C3' ? 'bg-yellow-400/20 border border-yellow-400/30' : 'bg-blue-400/20 border border-blue-400/30'}`}>
+                <div className={`flex-shrink-0 rounded-lg px-2 py-1 ${item.code === 'C1' ? 'bg-red-400/20 border border-red-400/30' : item.code === 'C2' ? 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-orange-400/30' : item.code === 'C3' ? 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/30' : 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-blue-400/30'}`}>
                   <span className={`text-xs font-bold ${item.code === 'C1' ? 'text-red-400' : item.code === 'C2' ? 'text-orange-400' : item.code === 'C3' ? 'text-yellow-400' : 'text-blue-400'}`}>{item.code}</span>
                 </div>
                 <div>

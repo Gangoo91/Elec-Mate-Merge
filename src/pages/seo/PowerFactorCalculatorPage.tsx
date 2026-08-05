@@ -171,7 +171,7 @@ export default function PowerFactorCalculatorPage() {
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
         <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
             Part of 70 Electrical Calculators
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
@@ -223,7 +223,7 @@ export default function PowerFactorCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">What Is Power Factor?</h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
@@ -274,7 +274,7 @@ export default function PowerFactorCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               True Power, Apparent Power, and Reactive Power
             </h2>
@@ -302,7 +302,7 @@ export default function PowerFactorCalculatorPage() {
               loads, the reactive power is positive (lagging); for capacitive loads, it is negative
               (leading).
             </p>
-            <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 text-center my-6">
+            <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
               <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
                 kVA = sqrt(kW² + kVAr²)
               </p>
@@ -325,7 +325,7 @@ export default function PowerFactorCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Why Low Power Factor Costs Money
             </h2>
@@ -366,7 +366,7 @@ export default function PowerFactorCalculatorPage() {
               installation is a high-value service that pays for itself through energy savings,
               often within 12 to 18 months.
             </p>
-            <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 mt-2">
+            <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mt-2">
               <h3 className="font-bold text-yellow-400 mb-2">BS 7671 Design Obligation</h3>
               <p className="text-sm text-white leading-relaxed">
                 BS 7671:2018+A4:2026 Regulation 331.1(l) places a direct obligation on designers:
@@ -386,7 +386,7 @@ export default function PowerFactorCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Power Factor Correction with Capacitors
             </h2>
@@ -434,7 +434,7 @@ export default function PowerFactorCalculatorPage() {
       {/* Cable Sizing Impact callout — Reg 125.8 */}
       <section className="py-8 px-5">
         <div className="max-w-4xl mx-auto">
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <h3 className="font-bold text-yellow-400 mb-2">
               Cable Sizing Impact — BS 7671 Reg 125.8
             </h3>
@@ -460,7 +460,7 @@ export default function PowerFactorCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Industrial Tariff Penalties and Savings
             </h2>
@@ -502,7 +502,7 @@ export default function PowerFactorCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Worked Examples</h2>
           </div>
           <div className="space-y-6">
@@ -611,7 +611,7 @@ export default function PowerFactorCalculatorPage() {
       <section id="how-it-works" className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               How to Calculate Power Factor and Size Capacitors — Step by Step
             </h2>
@@ -622,7 +622,7 @@ export default function PowerFactorCalculatorPage() {
                 key={index}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 flex-shrink-0">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
                   <span className="font-bold text-yellow-400">{index + 1}</span>
                 </div>
                 <div>
@@ -676,7 +676,7 @@ export default function PowerFactorCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20"></div>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]"></div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Frequently Asked Questions
             </h2>

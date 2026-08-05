@@ -173,7 +173,7 @@ const sections = [
               </tr>
             </thead>
             <tbody>
-              <tr className="border-t border-white/10 bg-yellow-500/[0.06]">
+              <tr className="border-t border-white/10 bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                 <td className="px-4 py-3 font-bold text-white">BS 7671 (Brown Book)</td>
                 <td className="px-4 py-3 text-white">Every electrician</td>
                 <td className="px-4 py-3 font-bold text-yellow-400">£90 — £100</td>
@@ -183,7 +183,7 @@ const sections = [
                 <td className="px-4 py-3 text-white">Every electrician — daily use</td>
                 <td className="px-4 py-3 font-bold text-yellow-400">£30 — £35</td>
               </tr>
-              <tr className="border-t border-white/10 bg-yellow-500/[0.06]">
+              <tr className="border-t border-white/10 bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                 <td className="px-4 py-3 font-bold text-white">Guidance Note 3 (GN3)</td>
                 <td className="px-4 py-3 text-white">Inspectors, 2391 students</td>
                 <td className="px-4 py-3 font-bold text-yellow-400">£35 — £40</td>
@@ -208,7 +208,7 @@ const sections = [
     heading: 'BS 7671:2018+A2:2022 — The Brown Book',
     content: (
       <>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <div className="flex items-start gap-4">
             <Book className="w-8 h-8 text-yellow-400 mt-0.5 shrink-0" />
             <div>
@@ -524,7 +524,7 @@ const sections = [
           and experienced electricians alike.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>

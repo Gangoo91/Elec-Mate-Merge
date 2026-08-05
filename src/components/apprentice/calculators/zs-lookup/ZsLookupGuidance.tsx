@@ -178,8 +178,8 @@ const ZsLookupGuidance = () => {
           </h4>
           <div className="text-[13px] text-white/85 space-y-0.5 font-mono">
             <p>Protection: 32A Type B MCB</p>
-            <p>Maximum Zs (100%): 1.44Ω</p>
-            <p>Test limit (80%): 1.44 × 0.8 = 1.15Ω</p>
+            <p>Maximum Zs (100%): 1.37Ω</p>
+            <p>Test limit (80%): 1.37 × 0.8 = 1.10Ω</p>
             <p>Measured Zs: 0.85Ω</p>
             <p>Result: Pass (good margin)</p>
           </div>
@@ -189,9 +189,9 @@ const ZsLookupGuidance = () => {
           <h4 className="text-[14px] text-white font-medium mb-1">Example 2: Circuit design check</h4>
           <div className="text-[13px] text-white/85 space-y-0.5 font-mono">
             <p>Protection: 16A Type C MCB</p>
-            <p>Maximum Zs (100%): 1.44Ω</p>
-            <p>Calculated Zs: 1.35Ω</p>
-            <p>Safety margin: (1.44 - 1.35) / 1.44 = 6.3%</p>
+            <p>Maximum Zs (100%): 1.37Ω</p>
+            <p>Calculated Zs: 1.30Ω</p>
+            <p>Safety margin: (1.37 - 1.30) / 1.37 = 5.1%</p>
             <p>Result: Pass but low margin</p>
           </div>
         </div>

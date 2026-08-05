@@ -261,7 +261,7 @@ const sections = [
               who see your work. It also looks excellent on your Google Business Profile.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Photography Quality Matters</h3>
             <p className="text-white text-sm leading-relaxed">
               Clean, well-lit photos of neat cabling, labelled boards, and tidy installations sell
@@ -340,7 +340,7 @@ const sections = [
           work. Resist it. Cheap pricing attracts problem customers, kills your margins, and makes
           it impossible to grow.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-3">How to Calculate Your Rate</h3>
           <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
@@ -552,7 +552,7 @@ const sections = [
           one.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <PoundSterling className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

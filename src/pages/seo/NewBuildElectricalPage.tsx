@@ -271,7 +271,7 @@ const sections = [
           comply with Building Regulations Part L. The electrical installation directly contributes
           to the SAP score through the lighting specification.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white mb-3">Lighting Requirements for SAP Compliance</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -392,7 +392,7 @@ const sections = [
           recent years — new builds now require more comprehensive detector coverage than existing
           properties.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white mb-3">New Build Detector Requirements</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">

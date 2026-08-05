@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { TestingProcedure } from './TestingProcedureData';
 import { Zap, Wrench, BookOpen, Shield, Activity, Settings, FileText, ClipboardList, AlertTriangle, Target } from 'lucide-react';
-import { BusinessCard } from '@/components/business-hub';
+import { HubTile as BusinessCard } from '@/components/learning-hub/HubTile';
 
 interface TestingProceduresGridProps {
   procedures: TestingProcedure[];
@@ -51,7 +51,7 @@ const TestingProceduresGrid = ({
     <motion.div className="space-y-5" variants={containerVariants} initial="hidden" animate="visible">
       {/* Safety Critical */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <h2 className="text-xs font-medium text-red-400 uppercase tracking-wider px-0.5">Safety Critical</h2>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">Safety Critical</h2>
         <BusinessCard
           title="Safe Isolation"
           description="GS38 compliant procedure · 15-20 min"
@@ -66,7 +66,7 @@ const TestingProceduresGrid = ({
 
       {/* Dead Tests */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <h2 className="text-xs font-medium text-amber-400 uppercase tracking-wider px-0.5">Dead Tests</h2>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">Dead Tests</h2>
         <div className="grid grid-cols-2 gap-3">
           <BusinessCard
             title="Continuity"
@@ -103,7 +103,7 @@ const TestingProceduresGrid = ({
 
       {/* Live Tests */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <h2 className="text-xs font-medium text-emerald-400 uppercase tracking-wider px-0.5">Live Tests</h2>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">Live Tests</h2>
         <div className="grid grid-cols-2 gap-3">
           <BusinessCard
             title="Zs Testing"
@@ -140,7 +140,7 @@ const TestingProceduresGrid = ({
 
       {/* Functional & Additional */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Functional & Additional</h2>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">Functional & Additional</h2>
         <div className="grid grid-cols-2 gap-3">
           <BusinessCard
             title="Functional"
@@ -167,7 +167,7 @@ const TestingProceduresGrid = ({
 
       {/* Documentation */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Documentation</h2>
+        <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">Documentation</h2>
         <div className="grid grid-cols-2 gap-3">
           <BusinessCard
             title="Certificates"
@@ -195,7 +195,7 @@ const TestingProceduresGrid = ({
       {/* Additional Procedures from props */}
       {procedures.length > 0 && (
         <motion.section variants={itemVariants} className="space-y-3">
-          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Additional</h2>
+          <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">Additional</h2>
           <div className="grid grid-cols-2 gap-3">
             {procedures.map((procedure) => (
               <BusinessCard

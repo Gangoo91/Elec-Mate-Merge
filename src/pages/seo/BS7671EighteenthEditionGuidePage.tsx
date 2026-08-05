@@ -138,7 +138,7 @@ const sections = [
           the 2382 exam, or checking compliance on site.
         </p>
         <div className="space-y-4 mt-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">
               Part 1: Scope, Object, and Fundamental Principles
             </h3>
@@ -161,7 +161,7 @@ const sections = [
               protection required. Part 2 is frequently tested in the 2382 exam.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">
               Part 3: Assessment of General Characteristics
             </h3>
@@ -187,7 +187,7 @@ const sections = [
               most often on site.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">
               Part 5: Selection and Erection of Equipment
             </h3>
@@ -217,7 +217,7 @@ const sections = [
               issued in the UK.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">
               Part 7: Special Installations or Locations
             </h3>
@@ -402,7 +402,7 @@ const sections = [
           bidirectional devices must now be recorded on the appropriate Part 6 electrical
           certificate.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">
             Reg 530.3.201 — Bidirectional and unidirectional device selection
           </h3>

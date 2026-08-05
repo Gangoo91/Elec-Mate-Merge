@@ -180,7 +180,7 @@ const sections = [
           still reach each socket from one direction, but it is now operating as a radial circuit
           rather than a ring.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white text-base mb-3">Common causes of open rings</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -237,7 +237,7 @@ const sections = [
           mistakenly connects both new cables to the same leg of the ring (instead of one to each
           leg), a bridge is created.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white text-base mb-3">How to detect a bridged ring</h4>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">

@@ -271,7 +271,7 @@ const sections = [
           7671 (Table 3 of the On-Site Guide) and IET Guidance Note 1 provide standard diversity
           factors for different types of circuit and load.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white text-base mb-3">
             Example maximum demand calculation
           </h4>
@@ -379,7 +379,7 @@ const sections = [
           Circuit overloading is a leading cause of electrical fires in the UK. When current exceeds
           the cable's capacity, the consequences escalate progressively:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />

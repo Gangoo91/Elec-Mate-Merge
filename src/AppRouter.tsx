@@ -58,15 +58,15 @@ const ScopeSharePage = lazyWithRetry(() => import('@/pages/public/ScopeSharePage
 const CompletionSignOffPage = lazyWithRetry(() => import('@/pages/public/CompletionSignOffPage'));
 const DangerNoticeSignPage = lazyWithRetry(() => import('@/pages/public/DangerNoticeSignPage'));
 const SharedPortfolioView = lazyWithRetry(() => import('@/pages/public/SharedPortfolioView'));
-const InvoiceMarkPaid = lazy(() => import('@/pages/public/InvoiceMarkPaid'));
+const InvoiceMarkPaid = lazyWithRetry(() => import('@/pages/public/InvoiceMarkPaid'));
 // ELE-955 — BookingSlotPicker retired. Quote-accept flow now hands off
 // to the existing PublicBooking page at /book/:electricianId?quote=...
 // so we share one availability source + UX. Old /book-slot/:quoteId
 // route kept around as a redirect target so already-sent emails / Stripe
 // success_urls that reference the old path don't 404.
-const BookingSlotPickerRedirect = lazy(() => import('@/pages/public/BookingSlotRedirect'));
-const ForCollegesPage = lazy(() => import('@/pages/public/ForCollegesPage'));
-const StoryPage = lazy(() => import('@/pages/public/StoryPage'));
+const BookingSlotPickerRedirect = lazyWithRetry(() => import('@/pages/public/BookingSlotRedirect'));
+const ForCollegesPage = lazyWithRetry(() => import('@/pages/public/ForCollegesPage'));
+const StoryPage = lazyWithRetry(() => import('@/pages/public/StoryPage'));
 const LaTeXPDFGeneratorPage = lazy(() => import('@/pages/LaTeXPDFGeneratorPage'));
 const InvoiceQuoteBuilder = lazy(() => import('@/pages/electrician/InvoiceQuoteBuilder'));
 const InvoiceViewPage = lazy(() => import('@/pages/electrician/InvoiceViewPage'));

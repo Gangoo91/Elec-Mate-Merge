@@ -110,7 +110,7 @@ const ComplianceChecklistsPage = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               Use these checklists to ensure you meet all regulatory requirements for each job type. Each item references the specific BS 7671 regulation so you can verify compliance.
             </p>
@@ -119,15 +119,15 @@ const ComplianceChecklistsPage = ({ onBack }: Props) => {
 
         {checklists.map((cl, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
-              <div className="px-4 py-3 bg-yellow-400/5 border-b border-white/[0.06]">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
+              <div className="px-4 py-3 bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-b border-white/[0.06]">
                 <p className="text-sm font-semibold text-white">{cl.title}</p>
                 <p className="text-[10px] text-yellow-400 mt-0.5">{cl.cert}</p>
               </div>
               <div className="p-4 space-y-1.5">
                 {cl.items.map((item, j) => (
                   <div key={j} className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-6 h-6 rounded-md bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center mt-0.5">
+                    <div className="flex-shrink-0 w-6 h-6 rounded-md bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center mt-0.5">
                       <Check className="h-3 w-3 text-yellow-400" />
                     </div>
                     <p className="text-xs text-white leading-relaxed" dangerouslySetInnerHTML={{ __html: item }} />

@@ -184,7 +184,7 @@ export default function MaxDemandCalculatorPage() {
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
         <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
             <Zap className="w-4 h-4" />
             Part of 70 Electrical Calculators
           </div>
@@ -227,7 +227,7 @@ export default function MaxDemandCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Zap className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -285,7 +285,7 @@ export default function MaxDemandCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <BookOpen className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -372,7 +372,7 @@ export default function MaxDemandCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Home className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -389,14 +389,14 @@ export default function MaxDemandCalculatorPage() {
 
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
             <div className="grid grid-cols-4 gap-px bg-white/10">
-              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">Circuit</div>
-              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">Circuit</div>
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                 Connected Load
               </div>
-              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                 Diversity Rule
               </div>
-              <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+              <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                 After Diversity
               </div>
             </div>
@@ -429,7 +429,7 @@ export default function MaxDemandCalculatorPage() {
             ))}
           </div>
 
-          <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 my-6">
+          <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] my-6">
             <p className="text-white leading-relaxed">
               <strong className="text-yellow-400">Total maximum demand:</strong> 5.7 + 32.0 + 12.8 +
               12.8 + 27.7 + 41.3 + 13.0 + 32.0 ={' '}
@@ -463,7 +463,7 @@ export default function MaxDemandCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Building2 className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -516,7 +516,7 @@ export default function MaxDemandCalculatorPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <BarChart3 className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -573,7 +573,7 @@ export default function MaxDemandCalculatorPage() {
       <section id="how-it-works" className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <CheckCircle2 className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -586,7 +586,7 @@ export default function MaxDemandCalculatorPage() {
                 key={index}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 flex-shrink-0">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
                   <span className="font-bold text-yellow-400">{index + 1}</span>
                 </div>
                 <div>
@@ -629,7 +629,7 @@ export default function MaxDemandCalculatorPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <HelpCircle className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">

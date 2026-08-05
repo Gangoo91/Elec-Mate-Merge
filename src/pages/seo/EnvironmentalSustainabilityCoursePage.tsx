@@ -262,7 +262,7 @@ const sections = [
           storage, heat pumps, and EV charging.
         </p>
         <div className="space-y-3 my-4">
-          <div className="flex gap-4 p-5 rounded-2xl bg-yellow-500/10 border border-yellow-500/20">
+          <div className="flex gap-4 p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <Sun className="w-8 h-8 text-yellow-400 shrink-0 mt-1" />
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Solar PV</h3>

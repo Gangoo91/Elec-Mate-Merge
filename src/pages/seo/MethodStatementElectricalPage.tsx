@@ -120,7 +120,7 @@ const commonMethodStatements = [
   {
     title: 'Domestic Rewire',
     icon: Home,
-    tint: 'bg-yellow-500/5 border-yellow-500/20',
+    tint: 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14]',
     steps: [
       'Mobilisation, customer briefing, and agreement of working hours and access',
       'Asbestos assessment (mandatory consideration in pre-2000 properties)',
@@ -326,7 +326,7 @@ const sections = [
           every electrical method statement should include the following core elements.
         </p>
         <div className="space-y-4 my-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">Header Information</h3>
             <p className="text-white text-sm leading-relaxed">
               Project name and address, client name, contractor details, document reference number,
@@ -497,7 +497,7 @@ const sections = [
               <li>Completed first — it defines the controls</li>
             </ul>
           </div>
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-base mb-3 flex items-center gap-2">
               <ListOrdered className="w-4 h-4 text-yellow-400" />
               Method Statement
@@ -609,7 +609,7 @@ const sections = [
           in rejection by clients and safety teams.
         </p>
         <div className="space-y-4 mt-6">
-          <div className="rounded-2xl bg-red-500/5 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <div>
@@ -626,7 +626,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-red-500/5 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <div>
@@ -643,7 +643,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-red-500/5 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <div>
@@ -667,7 +667,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-red-500/5 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <div>
@@ -683,7 +683,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-red-500/5 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <div>

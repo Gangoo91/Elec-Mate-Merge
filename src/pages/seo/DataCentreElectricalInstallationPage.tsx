@@ -200,7 +200,7 @@ const sections = [
               centres and server rooms.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-base mb-2">Tier III and IV: N+1 and 2N</h3>
             <p className="text-white text-sm leading-relaxed">
               Tier III has multiple active distribution paths — maintenance can be carried out
@@ -338,7 +338,7 @@ const sections = [
               Used in lower-tier data centres.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-base mb-2">Type B PDU</h3>
             <p className="text-white text-sm leading-relaxed">
               Distribution with monitoring. Real-time current, voltage, and power measurement at

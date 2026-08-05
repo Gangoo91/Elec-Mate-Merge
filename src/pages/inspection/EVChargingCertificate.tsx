@@ -43,6 +43,7 @@ import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
 import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
+import { scrollToTopForStepChange } from '@/utils/scroll';
 
 const REPORT_TYPE = 'ev-charging' as const;
 
@@ -445,7 +446,7 @@ const {
         onTabChange={(tab) => {
           tabProps.setCurrentTab(tab);
           syncOnTabChange();
-          window.scrollTo({ top: 0 });
+          scrollToTopForStepChange();
         }}
         completedTabs={{
           installation: !!tabProps.isTabComplete('installation'),

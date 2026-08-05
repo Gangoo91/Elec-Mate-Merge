@@ -275,7 +275,7 @@ const sections = [
           the Electricity at Work Regulations 1989, working live requires specific justification and
           precautions — insulated tools are one of those required precautions.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -467,7 +467,7 @@ const sections = [
           across the UK. The grid below compares them at a glance; detailed notes follow.
         </p>
         <div className="grid sm:grid-cols-2 gap-4 my-6">
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <h3 className="font-bold text-yellow-400 text-lg mb-1">Knipex</h3>
             <p className="text-white/60 text-xs mb-3">Germany · VDE-certified · Premium</p>
             <ul className="space-y-1 text-white text-sm">
@@ -476,7 +476,7 @@ const sections = [
               <li><strong>Notable:</strong> 98-series, market leader</li>
             </ul>
           </div>
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <h3 className="font-bold text-yellow-400 text-lg mb-1">Wiha</h3>
             <p className="text-white/60 text-xs mb-3">Germany · VDE-certified · Premium</p>
             <ul className="space-y-1 text-white text-sm">
@@ -485,7 +485,7 @@ const sections = [
               <li><strong>Notable:</strong> SlimBit / SlimLine ranges</li>
             </ul>
           </div>
-          <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <h3 className="font-bold text-yellow-400 text-lg mb-1">Wera</h3>
             <p className="text-white/60 text-xs mb-3">Germany · VDE-certified · Premium</p>
             <ul className="space-y-1 text-white text-sm">
@@ -725,7 +725,7 @@ const sections = [
           insulated tools and PPE to be used, the competency of the workers, and the rescue plan.
           This documentation protects you legally and demonstrates professional standards.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <div className="flex items-start gap-4">
             <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
             <div>

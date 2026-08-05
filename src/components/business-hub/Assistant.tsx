@@ -623,6 +623,10 @@ export function Assistant({
     switch (tool) {
       case 'search_bs7671':
         return 'Searching BS 7671…';
+      case 'search_business_knowledge':
+        return 'Checking JIB, CIS and CDM guidance…';
+      case 'search_practical_knowledge':
+        return 'Checking practical guidance…';
       case 'find_customer':
         return 'Looking up customer…';
       case 'find_project':

@@ -36,7 +36,7 @@ const EquipmentTab = ({ onBack }: { onBack: () => void }) => (
 
     {/* GS38 Probe Specs */}
     <div className="space-y-3">
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">GS38 Compliant Test Probe</h2>
+      <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">GS38 Compliant Test Probe</h2>
       <p className="text-xs text-white px-0.5">
         GS38 specifies 4mm max exposed tip — some references incorrectly state 2mm
       </p>
@@ -53,7 +53,7 @@ const EquipmentTab = ({ onBack }: { onBack: () => void }) => (
 
     {/* Before-Use Checks */}
     <div className="space-y-3">
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Before-Use Checks</h2>
+      <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">Before-Use Checks</h2>
       <p className="text-xs text-white px-0.5">Required every time before testing</p>
       {[
         {
@@ -82,7 +82,7 @@ const EquipmentTab = ({ onBack }: { onBack: () => void }) => (
 
     {/* Equipment checklist */}
     <div className="space-y-3">
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Equipment Checklist</h2>
+      <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">Equipment Checklist</h2>
       {[
         {
           item: 'Proving unit / voltage indicator',
@@ -122,7 +122,7 @@ const EquipmentTab = ({ onBack }: { onBack: () => void }) => (
 
     {/* CAT Ratings */}
     <div className="space-y-3">
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">CAT Ratings</h2>
+      <h2 className="mb-3 text-[15px] font-semibold tracking-tight text-white">CAT Ratings</h2>
       <p className="text-xs text-white px-0.5">Where you work determines the rating</p>
       {[
         {

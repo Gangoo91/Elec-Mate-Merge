@@ -47,18 +47,19 @@ export function SEODesktopTOC({ items }: SEODesktopTOCProps) {
       aria-label="On this page"
       className="sticky top-[calc(5rem+env(safe-area-inset-top,0px))] max-h-[calc(100vh-7rem)] overflow-y-auto scrollbar-hide"
     >
-      <p className="px-3 mb-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/40">
+      <p className="mb-3 px-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-white">
         On this page
       </p>
-      <ul className="space-y-0.5 border-l border-white/[0.08]">
+      <ul className="space-y-0.5 border-l border-white/[0.12]">
         {items.map((item) => (
           <li key={item.id}>
             <button
               onClick={() => scrollTo(item.id)}
-              className={`-ml-px block w-full border-l-2 text-left pl-3 pr-2 py-1.5 text-[13px] leading-snug transition-colors touch-manipulation ${
+              aria-current={activeId === item.id ? 'true' : undefined}
+              className={`-ml-px block w-full touch-manipulation border-l-2 py-1.5 pl-3 pr-2 text-left text-[13px] leading-snug text-white transition-colors ${
                 activeId === item.id
-                  ? 'border-elec-yellow text-elec-yellow font-medium'
-                  : 'border-transparent text-white/55 hover:text-white hover:border-white/30'
+                  ? 'border-elec-yellow font-semibold text-elec-yellow'
+                  : 'border-transparent hover:border-white/40'
               }`}
             >
               {item.label}

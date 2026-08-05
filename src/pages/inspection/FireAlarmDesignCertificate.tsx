@@ -43,6 +43,7 @@ import { formatFireAlarmG1Json } from '@/utils/fireAlarmG1JsonFormatter';
 import { createInvoiceFromCertificate } from '@/utils/certificateToQuote';
 import { useCertificateEmail } from '@/hooks/useCertificateEmail';
 import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
+import { scrollToTopForStepChange } from '@/utils/scroll';
 
 const REPORT_TYPE = 'fire-alarm-design' as const;
 
@@ -385,7 +386,7 @@ const {
         onTabChange={(tab) => {
           tabProps.setCurrentTab(tab as FAG1TabValue);
           syncOnTabChange();
-          window.scrollTo({ top: 0 });
+          scrollToTopForStepChange();
         }}
         completedTabs={{
           client: !!tabProps.isTabComplete('client'),
@@ -412,6 +413,7 @@ const {
       <main className="-mx-3 px-4 py-4 pb-36 sm:mx-auto sm:px-4 lg:max-w-[1600px] lg:px-8">
         <div className={cn(isLocked && 'pointer-events-none select-none opacity-95')} aria-disabled={isLocked || undefined}>
         <FireAlarmG1FormTabs
+          reportId={savedReportId}
           currentTab={tabProps.currentTab}
           onTabChange={(tab) => {
             tabProps.setCurrentTab(tab as any);

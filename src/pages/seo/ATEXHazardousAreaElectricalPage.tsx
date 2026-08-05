@@ -187,7 +187,7 @@ const sections = [
               the equipment, not the installation.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">DSEAR 2002</h3>
             <p className="text-white text-sm leading-relaxed">
               Dangerous Substances and Explosive Atmospheres Regulations 2002. Governs employers

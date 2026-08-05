@@ -177,19 +177,19 @@ const sections = [
               For those on an electrotechnical apprenticeship, currently in training.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">Trainee Electrician</h3>
             <p className="text-white text-sm">
               For those on a formal training programme towards a recognised qualification.
             </p>
           </div>
-          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">Installation Electrician (Gold)</h3>
             <p className="text-white text-sm">
               Fully qualified electrician with NVQ3 + 2382 + AM2.
             </p>
           </div>
-          <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-2">Approved Electrician (Gold)</h3>
             <p className="text-white text-sm">
               Gold-card grading above Installation Electrician — C&G 2391 plus experience.
@@ -256,7 +256,7 @@ const sections = [
           The Trainee Electrician card is a stepping stone for those working towards becoming a
           qualified electrician on a formal training programme outside an apprenticeship.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -297,7 +297,7 @@ const sections = [
           qualified electrician. This is the card that most employers and site managers expect to
           see.
         </p>
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
@@ -373,7 +373,7 @@ const sections = [
           recognises electricians with qualifications and experience above the standard
           installation or maintenance level.
         </p>
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Award className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />

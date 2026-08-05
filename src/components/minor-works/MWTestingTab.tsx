@@ -13,6 +13,8 @@ import {
 import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
 import MWReadingKeypad, { KeypadStatus } from '@/components/minor-works/MWReadingKeypad';
 import { useHaptic } from '@/hooks/useHaptic';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { getIrMaxForVoltage } from '@/utils/irDefaults';
 
 interface MWTestingTabProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -147,6 +149,14 @@ const KEYPAD_META: Record<string, { label: string; unit: string; inf?: boolean }
 };
 
 const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
+  // ELE-1438/1467 — the electrician's own tester ceiling for the selected
+  // insulation test voltage (Settings → Business → Instruments). MW defaults
+  // the voltage to 500V, matching the form's own default.
+  const { companyProfile } = useCompanyProfile();
+  const irMax = getIrMaxForVoltage(
+    companyProfile?.testing_instruments,
+    formData.insulationTestVoltage || '500V'
+  );
   const haptic = useHaptic();
   const [recentInstruments, setRecentInstruments] = useState<string[]>([]);
   // Cross-connect ring readings are optional — only expand if user already filled them in.
@@ -1365,6 +1375,10 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                 unit={reading.unit}
                 value={raw}
                 allowInfinity={!!reading.inf}
+                // ELE-1438/1467 — the off-the-scale key was hardcoded '>999'.
+                // Use the max saved against the electrician's own tester for
+                // the selected test voltage; '>999' remains the fallback.
+                infinityValue={irMax || undefined}
                 status={status}
                 hint={hint}
                 isLastReading={isLast}

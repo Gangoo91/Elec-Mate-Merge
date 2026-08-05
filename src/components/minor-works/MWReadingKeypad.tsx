@@ -13,8 +13,14 @@ interface MWReadingKeypadProps {
   label: string;
   unit: string;
   value: string;
-  /** Show the >999 key (insulation resistance readings) */
+  /** Show the off-the-scale key (insulation resistance readings) */
   allowInfinity?: boolean;
+  /**
+   * What the off-the-scale key writes, e.g. '>1049' on a Kewtech KT66DL at
+   * 500V (ELE-1438/1467). Defaults to '>999' — the old hardcoded value —
+   * which is wrong for most testers, and was exactly the complaint.
+   */
+  infinityValue?: string;
   status?: KeypadStatus | null;
   hint?: string;
   isLastReading?: boolean;
@@ -40,6 +46,7 @@ const MWReadingKeypad: React.FC<MWReadingKeypadProps> = ({
   unit,
   value,
   allowInfinity = false,
+  infinityValue = '>999',
   status,
   hint,
   isLastReading = false,
@@ -73,16 +80,19 @@ const MWReadingKeypad: React.FC<MWReadingKeypadProps> = ({
 
   const press = (key: string) => {
     haptic.light();
+    // An off-the-scale reading is atomic: any keypress replaces it whole,
+    // rather than editing '>1049' into '>104'.
+    const isOffScale = value === infinityValue || value.startsWith('>');
     if (key === 'del') {
-      onChange(value === '>999' ? '' : value.slice(0, -1));
+      onChange(isOffScale ? '' : value.slice(0, -1));
       return;
     }
     if (key === 'inf') {
-      onChange('>999');
+      onChange(infinityValue);
       return;
     }
-    if (key === '.' && (value.includes('.') || value === '>999')) return;
-    if (value === '>999') {
+    if (key === '.' && (value.includes('.') || isOffScale)) return;
+    if (isOffScale) {
       onChange(key === '.' ? '0.' : key);
       return;
     }
@@ -195,7 +205,7 @@ const MWReadingKeypad: React.FC<MWReadingKeypadProps> = ({
             onClick={() => press('inf')}
             className="h-11 px-4 rounded-xl bg-white/[0.08] border border-white/[0.14] text-[13px] font-bold text-white touch-manipulation active:scale-[0.96] transition-transform"
           >
-            &gt;999
+            {infinityValue}
           </button>
         )}
         <button

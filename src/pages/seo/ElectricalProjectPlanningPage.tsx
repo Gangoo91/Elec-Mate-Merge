@@ -108,7 +108,7 @@ const sections = [
           difference between winning profitably and losing money.
         </p>
         <div className="space-y-4 mt-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-2 mb-3">
               <DollarSign className="w-5 h-5 text-yellow-400" />
               <h3 className="font-bold text-white text-lg">Material Take-Off</h3>
@@ -242,7 +242,7 @@ const sections = [
           phase, activities should be broken down by area or zone so that progress can be tracked
           geographically as well as chronologically.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-4">Programme Key Milestones</h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/10">
@@ -280,7 +280,7 @@ const sections = [
               </div>
               <span className="text-white text-sm">After termination complete</span>
             </div>
-            <div className="flex items-center justify-between p-3 rounded-xl bg-yellow-500/5 border border-yellow-500/20">
+            <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <div className="flex items-center gap-2">
                 <Target className="w-4 h-4 text-yellow-400" />
                 <span className="text-white font-medium">Handover</span>
@@ -310,7 +310,7 @@ const sections = [
           pre-construction phase onwards, prevents these problems.
         </p>
         <div className="space-y-4 mt-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-2 mb-3">
               <Truck className="w-5 h-5 text-yellow-400" />
               <h3 className="font-bold text-white text-lg">Long-Lead Items</h3>

@@ -245,7 +245,7 @@ export default function ElectricalSiteInductionPage() {
                 rather than treating it as a box-ticking exercise.
               </p>
               <div className="space-y-4 mt-6">
-                <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+                <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
                   <div className="flex items-center gap-2 mb-3">
                     <MapPin className="w-5 h-5 text-yellow-400" />
                     <h3 className="font-bold text-white text-lg">Site Layout and Access</h3>

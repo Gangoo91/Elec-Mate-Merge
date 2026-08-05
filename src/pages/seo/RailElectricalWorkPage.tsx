@@ -214,7 +214,7 @@ const sections = [
               on OLE.
             </p>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-base mb-3">OLEC 2</h3>
             <p className="text-white text-sm leading-relaxed">
               Direct work on overhead line equipment — maintenance, inspection, repair. Full
@@ -222,7 +222,7 @@ const sections = [
               Required for most traction power electrical work.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-base mb-3">OLEC 3</h3>
             <p className="text-white text-sm leading-relaxed">
               Senior electrical engineers and Designated Responsible Engineers (DRE). Responsible

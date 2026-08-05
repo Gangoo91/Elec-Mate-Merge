@@ -322,7 +322,7 @@ const sections = [
           the additional qualifications and site cards required:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Domestic Requirements</h3>
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
@@ -400,7 +400,7 @@ const sections = [
           specialisation. Here is a realistic comparison for 2026:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Domestic Earnings</h3>
             <ul className="space-y-3 text-white text-sm">
               <li>
@@ -465,7 +465,7 @@ const sections = [
       <>
         <p>Both sectors offer progression, but the routes are different:</p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-lg mb-3">Domestic Career Path</h3>
             <ol className="space-y-2 text-white text-sm list-decimal list-inside">
               <li>Apprentice electrician</li>
@@ -613,7 +613,7 @@ const sections = [
           need to do in each direction:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Home className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

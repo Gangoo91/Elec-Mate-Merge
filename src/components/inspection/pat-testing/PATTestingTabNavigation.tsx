@@ -5,6 +5,10 @@ import CertShellFooter, {
 import { useWhatsAppShare, type ShareableDocumentType } from '@/hooks/useWhatsAppShare';
 
 interface PATTestingTabNavigationProps {
+  /** ELE-1477 — live form data, for the footer's Preview sheet. */
+  previewData?: Record<string, unknown>;
+  /** Saved report id, for the footer's View PDF. */
+  previewReportId?: string | null;
   currentTab: string;
   currentTabIndex: number;
   totalTabs: number;
@@ -30,6 +34,8 @@ interface PATTestingTabNavigationProps {
 const NEXT_LABELS = ['Continue to Items', 'Continue to Sign off'];
 
 const PATTestingTabNavigation: React.FC<PATTestingTabNavigationProps> = ({
+  previewData,
+  previewReportId,
   currentTabIndex,
   totalTabs,
   canNavigateNext,
@@ -62,6 +68,9 @@ const PATTestingTabNavigation: React.FC<PATTestingTabNavigationProps> = ({
 
   return (
     <CertShellFooter
+      previewReportType="pat-testing"
+      previewData={previewData}
+      previewReportId={previewReportId}
       currentIndex={currentTabIndex}
       totalSteps={totalTabs}
       canPrevious={canNavigatePrevious}

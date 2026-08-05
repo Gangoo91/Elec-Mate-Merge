@@ -5,14 +5,11 @@ import {
   ArrowLeft,
   Search,
   Plus,
-  Pencil,
   Clock,
   ChevronDown,
+  ChevronRight,
   ChevronUp,
-  Trash2,
   X,
-  Check,
-  FileText,
   Upload,
   ClipboardPaste,
   Loader2,
@@ -29,10 +26,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useMaterialsLists, MaterialsListItem } from '@/hooks/useMaterialsLists';
+import { useMaterialsLists, normaliseItemName, MaterialsListItem } from '@/hooks/useMaterialsLists';
 import { usePriceBookSettings } from '@/hooks/usePriceBookSettings';
 import { usePriceBookBundles, BundleLineItem } from '@/hooks/usePriceBookBundles';
 import { useInventoryStorage } from '@/hooks/useInventoryStorage';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useToast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -40,6 +38,8 @@ import { cn } from '@/lib/utils';
 // ─── Constants ──────────────────────────────────────────────────────────────
 
 const STALE_DAYS = 60;
+
+
 const CATEGORIES = ['All', 'Cable', 'Accessories', 'Tools', 'Safety', 'General'] as const;
 type Category = (typeof CATEGORIES)[number];
 const TABS = ['Items', 'Bundles'] as const;
@@ -66,18 +66,64 @@ function numInput(val: string, setter: (v: string) => void) { if (val === '' || 
 
 interface PricedItem { item: MaterialsListItem; listId: string; listName: string; }
 
+// ─── Design language ────────────────────────────────────────────────────────
+// Matches the specialist certificates (src/components/inspection/ev-charging),
+// which carry the current form language: cards go edge-to-edge on a phone and
+// inset from `sm:` up, hierarchy comes from type rather than icons or rules,
+// and every piece of text is full white — low-opacity white reads as grey.
+
+/** Full-bleed on phones, inset card from sm: up. */
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x ' +
+  'bg-gradient-to-b from-white/[0.08] to-white/[0.04]';
+
+/** Same surface, but for a row the whole of which is tappable. */
+const cardInteractiveCn =
+  cardCn + ' transition-colors hover:from-white/[0.10] hover:to-white/[0.06] touch-manipulation';
+
+/** Single-choice chips — used for the tab switch and the category filter. */
+const chipOn = 'bg-elec-yellow border-elec-yellow text-black font-semibold';
+const chipOff = 'bg-white/[0.06] border-white/[0.12] text-white font-medium';
+const chipBase =
+  'h-11 px-4 rounded-full border text-[13px] whitespace-nowrap transition-colors ' +
+  'touch-manipulation active:scale-[0.97]';
+
+/** Underline field — no filled box, no focus ring; the caret and the rule carry focus. */
+const fieldCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent ' +
+  'px-1 text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow ' +
+  'transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 ' +
+  'focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation';
+
+/** Field label — sentence case, full white. Never white/60-70, which reads grey. */
+const labelCn = 'mb-1 block text-[12px] font-medium text-white';
+
+/** Underline field — no filled box, no focus ring; the caret and the rule carry focus. */
+const searchInputCn =
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent ' +
+  'pl-7 pr-1 text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow ' +
+  'transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 ' +
+  'focus:ring-0 focus:outline-none touch-manipulation';
+
 const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.03 } } };
-const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } } };
+// `as const` on the type: framer-motion's Variants wants the literal 'spring',
+// and a widened string produced eight type errors off this one declaration.
+const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 300, damping: 24 } } };
 
 // ─── Main ───────────────────────────────────────────────────────────────────
 
 export default function PriceBook() {
-  const { lists, updateItemDetails, addItem, createList, removeItem } = useMaterialsLists();
+  const { lists, updateItemDetails, addItem, bulkUpsertItems, createList, removeItem } = useMaterialsLists();
   const { settings, updateMarkup, calcSellPrice } = usePriceBookSettings();
   const { bundles, createBundle, deleteBundle, bundleTotal } = usePriceBookBundles();
   const { items: stockItems } = useInventoryStorage();
+  const { companyProfile } = useCompanyProfile();
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  // Rate the labour allowance is costed at. Mirrors the quote builder so the
+  // preview here matches what lands on the quote (ELE-1470).
+  const hourlyRate = companyProfile?.hourly_rate ?? 0;
 
   // Live stock lookup for price-book items linked to a `personal_inventory` row.
   const stockById = useMemo(
@@ -102,6 +148,7 @@ export default function PriceBook() {
   const [editMarkup, setEditMarkup] = useState('');
   const [editUnit, setEditUnit] = useState('');
   const [editSupplier, setEditSupplier] = useState('');
+  const [editLabourHours, setEditLabourHours] = useState('');
   const [editMode, setEditMode] = useState<'cost' | 'sell'>('cost');
   const [editStockId, setEditStockId] = useState<string | undefined>(undefined);
 
@@ -121,7 +168,9 @@ export default function PriceBook() {
   // Import sheet
   const [importSheetOpen, setImportSheetOpen] = useState(false);
   const [importText, setImportText] = useState('');
-  const [importParsed, setImportParsed] = useState<{ name: string; price: number; unit: string; supplier: string }[]>([]);
+  const [importParsed, setImportParsed] = useState<{ name: string; price: number; unit: string; supplier: string; labourHours?: number }[]>([]);
+  /** Which of the user's columns we mapped to what — null when the file had no usable header. */
+  const [importCols, setImportCols] = useState<{ label: string; header: string }[] | null>(null);
   const [importing, setImporting] = useState(false);
 
   // Bundle sheet
@@ -129,6 +178,7 @@ export default function PriceBook() {
   const [bundleName, setBundleName] = useState('');
   const [bundleDesc, setBundleDesc] = useState('');
   const [bundleLabourHours, setBundleLabourHours] = useState('');
+  const [bundlePickerSearch, setBundlePickerSearch] = useState('');
   const [bundleItems, setBundleItems] = useState<BundleLineItem[]>([]);
   const [expandedBundle, setExpandedBundle] = useState<string | null>(null);
 
@@ -146,6 +196,35 @@ export default function PriceBook() {
   }, [lists]);
 
   const staleCount = useMemo(() => pricedItems.filter((p) => (daysOld(p.item.price_updated_at) ?? 0) >= STALE_DAYS).length, [pricedItems]);
+
+  /** Every name already in the book, normalised the same way the importer
+   *  matches on, so the preview can say "new" or "updating" honestly. */
+  const existingNames = useMemo(() => {
+    const set = new Set<string>();
+    for (const list of lists) for (const item of list.items) set.add(normaliseItemName(item.name));
+    return set;
+  }, [lists]);
+
+  /** Price-book items offered inside the bundle builder, filtered by its own
+   *  search so a large book stays usable. */
+  const bundlePickerItems = useMemo(() => {
+    const q = bundlePickerSearch.trim().toLowerCase();
+    if (!q) return pricedItems;
+    return pricedItems.filter((p) => p.item.name.toLowerCase().includes(q));
+  }, [pricedItems, bundlePickerSearch]);
+
+  /** What the import is actually about to do, counted before it runs. */
+  const importSplit = useMemo(() => {
+    let added = 0;
+    let updated = 0;
+    let skipped = 0;
+    for (const row of importParsed) {
+      if (!(row.price > 0) || !row.name) { skipped++; continue; }
+      if (existingNames.has(normaliseItemName(row.name))) updated++;
+      else added++;
+    }
+    return { added, updated, skipped, valid: added + updated };
+  }, [importParsed, existingNames]);
 
   const filtered = useMemo(() => {
     let items = pricedItems;
@@ -167,6 +246,7 @@ export default function PriceBook() {
     setEditName(item.name);
     setEditUnit(item.unit || 'each');
     setEditSupplier(item.supplier || '');
+    setEditLabourHours(item.labour_hours != null ? String(item.labour_hours) : '');
     setEditStockId(item.personal_inventory_id);
     if ((item.cost_price ?? 0) > 0) {
       setEditMode('cost');
@@ -200,6 +280,10 @@ export default function PriceBook() {
   const handleSaveEdit = async () => {
     if (!editSheet) return;
     const updates: Partial<MaterialsListItem> = { name: editName.trim() || editSheet.item.name, unit: editUnit.trim() || 'each', supplier: editSupplier.trim() || undefined, personal_inventory_id: editStockId };
+    // Blank clears the allowance rather than storing 0, so "no labour on this
+    // item" and "zero hours" stay the same thing (ELE-1470).
+    const labourHours = parseFloat(editLabourHours);
+    updates.labour_hours = editLabourHours.trim() === '' || isNaN(labourHours) || labourHours <= 0 ? undefined : labourHours;
     if (editMode === 'cost') {
       const cost = parseFloat(editCostPrice);
       if (isNaN(cost) || cost <= 0) { toast({ title: 'Invalid cost price', variant: 'destructive' }); return; }
@@ -269,7 +353,7 @@ export default function PriceBook() {
     toast({ title: 'Bundle saved', description: bundleName });
     resetBundleSheet();
   };
-  const resetBundleSheet = () => { setBundleName(''); setBundleDesc(''); setBundleLabourHours(''); setBundleItems([]); setBundleSheetOpen(false); };
+  const resetBundleSheet = () => { setBundleName(''); setBundleDesc(''); setBundleLabourHours(''); setBundleItems([]); setBundlePickerSearch(''); setBundleSheetOpen(false); };
 
   // Import — parse price string (handles £, commas in numbers)
   const cleanPrice = (raw: string): number => {
@@ -282,13 +366,178 @@ export default function PriceBook() {
   // Detect if a line is a header row
   const isHeaderRow = (parts: string[]): boolean => {
     const joined = parts.join(' ').toLowerCase();
-    return ['name', 'price', 'cost', 'description', 'item', 'product', 'unit price'].some((h) => joined.includes(h));
+    return ['name', 'price', 'cost', 'description', 'item', 'product', 'unit price', 'labour', 'hours'].some((h) => joined.includes(h));
+  };
+
+  /**
+   * Split a CSV line, respecting double quotes.
+   *
+   * A plain `.split(',')` tears "Cable, 2.5mm T&E" into two columns and shifts
+   * every field after it — and Excel quotes exactly those fields, so a real
+   * exported spreadsheet is where it breaks, not a hand-typed one.
+   */
+  const splitCsvLine = (line: string): string[] => {
+    const out: string[] = [];
+    let cur = '';
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') {
+        if (inQuotes && line[i + 1] === '"') {
+          cur += '"';
+          i++;
+        } else {
+          inQuotes = !inQuotes;
+        }
+      } else if (ch === ',' && !inQuotes) {
+        out.push(cur.trim());
+        cur = '';
+      } else {
+        cur += ch;
+      }
+    }
+    out.push(cur.trim());
+    return out;
+  };
+
+  /**
+   * Map a header row to column positions (ELE-1470).
+   *
+   * The header used to be detected and then thrown away, after which columns
+   * were read by position. That only works for a file written to our layout —
+   * and the whole point is importing the spreadsheet the electrician already
+   * has. Sean's is "all the rates per item on a csv already", in his order,
+   * not ours. Read blind, his labour column would be taken as the price and a
+   * 0.5h item at £30 would import as £0.50 with no labour time.
+   *
+   * Returns null when no column is recognisable, so the caller falls back to
+   * the positional reader for headerless files.
+   */
+  const mapHeaderColumns = (parts: string[]) => {
+    const norm = parts.map((p) => p.toLowerCase().replace(/[^a-z0-9]/g, ' ').trim());
+    const find = (...needles: string[]) =>
+      norm.findIndex((h) => needles.some((n) => h.includes(n)));
+
+    // Labour first: "labour rate" and "unit price" both contain price-ish
+    // words, so the more specific match has to claim its column before the
+    // price matcher gets to look at it.
+    const labour = find('labour hour', 'labour time', 'labour', 'hours', 'hrs', 'minutes', 'mins', 'time');
+    const price = norm.findIndex(
+      (h, idx) =>
+        idx !== labour &&
+        ['price', 'cost', 'buy', 'trade', 'net', 'rate'].some((n) => h.includes(n))
+    );
+    const name = find('description', 'item', 'name', 'product', 'part');
+    const unit = norm.findIndex((h, idx) => idx !== price && /\b(unit|uom|measure)\b/.test(h));
+    const supplier = find('supplier', 'vendor', 'manufacturer', 'brand', 'merchant');
+
+    if (name < 0 && price < 0 && labour < 0) return null;
+
+    // A column headed in minutes is stored as hours — the value means the same
+    // thing either way, and importing "30" as thirty hours would be absurd.
+    const labourInMinutes = labour >= 0 && /\b(minutes|mins)\b/.test(norm[labour]);
+
+    return { name, price, unit, supplier, labour, labourInMinutes };
+  };
+
+  /**
+   * Labour allowance on import (ELE-1470).
+   *
+   * People write a time allowance every way there is, so accept every way
+   * rather than make the electrician reformat a spreadsheet they already
+   * maintain: "0.5", "0.5h", "30m", "30 mins", "1h 30m", "1:30", and "45"
+   * where the column itself is headed in minutes.
+   *
+   * Returns undefined rather than a guess when nothing parses — a wrong labour
+   * figure silently becomes a wrong invoice, so no value beats a bad one.
+   */
+  const cleanLabourHours = (
+    raw: string | undefined,
+    columnIsMinutes = false
+  ): number | undefined => {
+    if (!raw) return undefined;
+    const s = raw.toLowerCase().trim();
+    if (!s) return undefined;
+
+    // "1:30" — hours:minutes
+    const clock = s.match(/^(\d+)\s*:\s*(\d{1,2})$/);
+    if (clock) {
+      const h = parseInt(clock[1], 10) + parseInt(clock[2], 10) / 60;
+      return h > 0 ? Math.round(h * 100) / 100 : undefined;
+    }
+
+    // "1h 30m" / "1 hr 30 min" — combined units
+    const combined = s.match(/(\d+(?:\.\d+)?)\s*h(?:ou)?r?s?\s*(\d+(?:\.\d+)?)\s*m/);
+    if (combined) {
+      const h = parseFloat(combined[1]) + parseFloat(combined[2]) / 60;
+      return h > 0 ? Math.round(h * 100) / 100 : undefined;
+    }
+
+    const num = parseFloat(s.replace(/[^\d.]/g, ''));
+    if (isNaN(num) || num <= 0) return undefined;
+
+    // An explicit minute unit on the value wins over the column heading.
+    // No leading \b: in "30m" the digit and the m are both word characters, so
+    // there is no boundary between them and \bm never matches — which read
+    // half an hour as thirty hours.
+    const saysMinutes = /\d\s*m(?:in|ins|inute|inutes)?\.?\s*$/.test(s) && !/h/.test(s);
+    const hours = saysMinutes || columnIsMinutes ? num / 60 : num;
+    return hours > 0 ? Math.round(hours * 100) / 100 : undefined;
   };
 
   // Parse text (paste, CSV content, or extracted doc text) into items
   const parseImportText = (text: string) => {
-    const lines = text.split('\n').filter((l) => l.trim());
+    const lines = text.split(/\r?\n/).filter((l) => l.trim());
     const parsed: typeof importParsed = [];
+
+    // Delimiter is whichever separator the first line actually uses. Tabs come
+    // from a spreadsheet paste, semicolons from Excel on a European locale.
+    const first = lines[0] || '';
+    const delimiter = first.includes('\t') ? '\t' : first.includes(';') ? ';' : ',';
+    const split = (line: string) =>
+      delimiter === ',' ? splitCsvLine(line) : line.split(delimiter).map((p) => p.trim());
+
+    // If the file describes its own columns, believe it. Order and extra
+    // columns then stop mattering, which is the difference between importing
+    // OUR layout and importing the spreadsheet the electrician already keeps.
+    const headerParts = split(first);
+    const cols = isHeaderRow(headerParts) ? mapHeaderColumns(headerParts) : null;
+
+    if (cols) {
+      // Show which of their columns we read as what. A silent mapping is how a
+      // trade price ends up imported as a labour time and nobody notices until
+      // it is on a quote.
+      setImportCols(
+        (
+          [
+            ['Name', cols.name],
+            ['Cost price', cols.price],
+            ['Unit', cols.unit],
+            ['Supplier', cols.supplier],
+            [cols.labourInMinutes ? 'Labour (minutes)' : 'Labour time', cols.labour],
+          ] as [string, number][]
+        )
+          .filter(([, idx]) => idx >= 0)
+          .map(([label, idx]) => ({ label, header: headerParts[idx] }))
+      );
+      for (let i = 1; i < lines.length; i++) {
+        const parts = split(lines[i]);
+        const at = (idx: number) => (idx >= 0 ? parts[idx] : undefined);
+        const name = (at(cols.name) ?? parts[0] ?? '').trim();
+        if (!name) continue;
+        parsed.push({
+          name,
+          price: cleanPrice(at(cols.price) || ''),
+          unit: at(cols.unit)?.trim() || 'each',
+          supplier: at(cols.supplier)?.trim() || '',
+          labourHours: cleanLabourHours(at(cols.labour), cols.labourInMinutes),
+        });
+      }
+      setImportParsed(parsed);
+      return;
+    }
+
+    setImportCols(null);
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
       // Tab-separated takes priority (unambiguous)
@@ -297,12 +546,13 @@ export default function PriceBook() {
         if (i === 0 && isHeaderRow(parts)) continue;
         const name = parts[0]?.trim();
         if (!name) continue;
-        parsed.push({ name, price: cleanPrice(parts[1] || ''), unit: parts[2]?.trim() || 'each', supplier: parts[3]?.trim() || '' });
+        parsed.push({ name, price: cleanPrice(parts[1] || ''), unit: parts[2]?.trim() || 'each', supplier: parts[3]?.trim() || '', labourHours: cleanLabourHours(parts[4]) });
         continue;
       }
-      // Comma-separated — but names might contain commas
-      // Strategy: find the LAST comma-separated segment that looks like a price, everything before it is the name
-      const parts = line.split(',').map((p) => p.trim());
+      // Headerless comma-separated — names might contain commas, so find the
+      // first segment that looks like a price and treat everything before it
+      // as the name. Quote-aware split so Excel's quoted fields survive.
+      const parts = splitCsvLine(line);
       if (i === 0 && isHeaderRow(parts)) continue;
       if (parts.length === 1) {
         // Single value — just a name, no price
@@ -326,6 +576,7 @@ export default function PriceBook() {
           price: cleanPrice(parts[priceIdx]),
           unit: parts[priceIdx + 1]?.trim() || 'each',
           supplier: parts[priceIdx + 2]?.trim() || '',
+          labourHours: cleanLabourHours(parts[priceIdx + 3]),
         });
       }
     }
@@ -402,13 +653,25 @@ export default function PriceBook() {
     setImporting(true);
     let list = lists.find((l) => l.name === 'Price Book');
     if (!list) { const created = await createList('Price Book', 'Items added directly to My Price Book'); if (!created) { setImporting(false); return; } list = created; }
-    let count = 0;
-    for (const item of validItems) {
-      const sellPrice = calcSellPrice(item.price, settings.globalMarkupPercent);
-      await addItem(list.id, { name: item.name, current_price: sellPrice, cost_price: item.price, markup_percent: settings.globalMarkupPercent, supplier_name: item.supplier || undefined });
-      count++;
-    }
-    toast({ title: `${count} items imported`, description: `Added to Price Book with ${settings.globalMarkupPercent}% markup` });
+    // One merged write, matching on name — re-importing the same list refreshes
+    // prices instead of giving the electrician two of everything.
+    const { added, updated } = await bulkUpsertItems(
+      list.id,
+      validItems.map((item) => ({
+        name: item.name,
+        current_price: calcSellPrice(item.price, settings.globalMarkupPercent),
+        cost_price: item.price,
+        markup_percent: settings.globalMarkupPercent,
+        supplier_name: item.supplier || undefined,
+        labour_hours: item.labourHours,
+      }))
+    );
+    const count = added + updated;
+    const withLabour = validItems.filter((i) => (i.labourHours ?? 0) > 0).length;
+    toast({
+      title: updated > 0 ? `${added} added · ${updated} updated` : `${count} items imported`,
+      description: `${settings.globalMarkupPercent}% markup applied${withLabour > 0 ? ` · ${withLabour} with labour times` : ''}`,
+    });
     setImportText('');
     setImportParsed([]);
     setImportSheetOpen(false);
@@ -463,25 +726,21 @@ export default function PriceBook() {
             </div>
           </div>
 
-          {/* Tabs — segment control */}
-          <div className="px-4 pb-2">
-            <div className="flex p-1 rounded-xl bg-white/[0.04] border border-white/[0.06]">
-              {TABS.map((t) => (
-                <button
-                  key={t}
-                  onClick={() => setTab(t)}
-                  className={cn(
-                    'flex-1 py-2 text-sm font-medium rounded-lg transition-all touch-manipulation',
-                    tab === t ? 'bg-elec-yellow text-black' : 'text-white'
-                  )}
-                >
-                  {t}
-                  {t === 'Bundles' && bundles.length > 0 && (
-                    <span className={cn('ml-1.5 text-[10px]', tab === t ? 'text-black/60' : 'text-white')}>({bundles.length})</span>
-                  )}
-                </button>
-              ))}
-            </div>
+          {/* Two choices, so chips rather than a filled segment control — the
+              solid yellow bar shouted louder than anything it contained. */}
+          <div className="flex gap-2 px-4 pb-3">
+            {TABS.map((t) => (
+              <button
+                key={t}
+                onClick={() => setTab(t)}
+                className={cn(chipBase, tab === t ? chipOn : chipOff)}
+              >
+                {t}
+                {t === 'Bundles' && bundles.length > 0 && (
+                  <span className="ml-1.5 tabular-nums">{bundles.length}</span>
+                )}
+              </button>
+            ))}
           </div>
         </div>
 
@@ -489,58 +748,84 @@ export default function PriceBook() {
           {/* ── Items Tab ── */}
           {tab === 'Items' && (
             <>
-              {/* KPI + Settings */}
-              <motion.div variants={itemVariants} className="grid grid-cols-3 gap-2">
-                <div className="card-surface p-3 flex flex-col items-center">
-                  <span className="text-lg font-bold text-white">{pricedItems.length}</span>
-                  <span className="text-[10px] text-white uppercase tracking-wider">Items</span>
+              {/* One surface split into three, rather than three boxes with
+                  three borders competing for the same glance. */}
+              <motion.div variants={itemVariants} className={cn(cardCn, 'grid grid-cols-3 overflow-hidden')}>
+                <div className="px-3 py-3.5 sm:px-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">Items</p>
+                  <p className="mt-1 text-[20px] font-bold tabular-nums leading-none tracking-tight text-white">
+                    {pricedItems.length}
+                  </p>
                 </div>
-                <div className="card-surface p-3 flex flex-col items-center">
+                <div className="border-l border-white/[0.10] px-3 py-3.5 sm:px-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">Markup</p>
                   {editingMarkup ? (
-                    <div className="flex items-center gap-1">
+                    <div className="mt-1 flex items-baseline gap-1">
                       <input
                         type="text" inputMode="decimal" value={markupInput} autoFocus
                         onChange={(e) => numInput(e.target.value, setMarkupInput)}
                         onKeyDown={(e) => { if (e.key === 'Enter') handleSaveMarkup(); if (e.key === 'Escape') setEditingMarkup(false); }}
                         onBlur={handleSaveMarkup}
-                        className="w-10 h-7 text-center bg-transparent border border-elec-yellow/40 rounded text-elec-yellow font-bold text-lg focus:outline-none"
+                        className="w-12 border-0 border-b border-elec-yellow bg-transparent p-0 text-[20px] font-bold leading-none tabular-nums text-elec-yellow caret-elec-yellow focus:outline-none focus:ring-0"
                       />
-                      <span className="text-xs text-white">%</span>
+                      <span className="text-[13px] text-white">%</span>
                     </div>
                   ) : (
-                    <button onClick={() => { setMarkupInput(settings.globalMarkupPercent.toFixed(0)); setEditingMarkup(true); }} className="touch-manipulation">
-                      <span className="text-lg font-bold text-elec-yellow">{settings.globalMarkupPercent}%</span>
+                    <button
+                      onClick={() => { setMarkupInput(settings.globalMarkupPercent.toFixed(0)); setEditingMarkup(true); }}
+                      className="mt-1 block text-left touch-manipulation"
+                    >
+                      <span className="text-[20px] font-bold tabular-nums leading-none tracking-tight text-elec-yellow">
+                        {settings.globalMarkupPercent}%
+                      </span>
                     </button>
                   )}
-                  <span className="text-[10px] text-white uppercase tracking-wider">Markup</span>
                 </div>
-                <div className="card-surface p-3 flex flex-col items-center">
-                  <span className={cn('text-lg font-bold', staleCount > 0 ? 'text-amber-400' : 'text-white')}>{staleCount}</span>
-                  <span className="text-[10px] text-white uppercase tracking-wider">Stale</span>
+                <div className="border-l border-white/[0.10] px-3 py-3.5 sm:px-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">Stale</p>
+                  <p className={cn(
+                    'mt-1 text-[20px] font-bold tabular-nums leading-none tracking-tight',
+                    staleCount > 0 ? 'text-amber-400' : 'text-white'
+                  )}>
+                    {staleCount}
+                  </p>
                 </div>
               </motion.div>
 
               {/* Rate Card link */}
               <motion.div variants={itemVariants}>
-                <Link to="/electrician/rate-card" className="group card-surface-interactive p-3.5 flex items-center gap-3 touch-manipulation active:scale-[0.98] transition-all block">
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-white group-hover:text-elec-yellow transition-colors">Rate Card</p>
-                    <p className="text-[11px] text-white/60 mt-0.5">Labour & call-out prices for quotes</p>
+                <Link
+                  to="/electrician/rate-card"
+                  className={cn(cardInteractiveCn, 'flex items-center gap-3 p-4 sm:p-5 active:scale-[0.99]')}
+                >
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[15px] font-semibold tracking-tight text-white">Rate card</p>
+                    <p className="mt-0.5 text-[12px] text-white">Labour and call-out prices for quotes</p>
                   </div>
-                  <span className="text-[13px] font-medium text-elec-yellow group-hover:translate-x-0.5 transition-transform">→</span>
+                  <ChevronRight className="h-4 w-4 flex-shrink-0 text-elec-yellow" />
                 </Link>
               </motion.div>
 
-              {/* Search */}
+              {/* Search — underline, not a filled box */}
               <motion.div variants={itemVariants} className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-                <Input placeholder="Search items..." value={search} onChange={(e) => setSearch(e.target.value)} className="h-11 pl-10 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow touch-manipulation" />
+                <Search className="pointer-events-none absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
+                <input
+                  type="text"
+                  placeholder="Search your price book"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className={searchInputCn}
+                />
               </motion.div>
 
-              {/* Category pills */}
-              <motion.div variants={itemVariants} className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+              {/* Category filter */}
+              <motion.div variants={itemVariants} className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 scrollbar-hide sm:mx-0 sm:px-0">
                 {CATEGORIES.map((cat) => (
-                  <button key={cat} onClick={() => setActiveCategory(cat)} className={cn('h-11 px-3.5 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-[0.97]', activeCategory === cat ? 'bg-elec-yellow text-black' : 'bg-white/[0.05] text-white border border-white/[0.08]')}>
+                  <button
+                    key={cat}
+                    onClick={() => setActiveCategory(cat)}
+                    className={cn(chipBase, activeCategory === cat ? chipOn : chipOff)}
+                  >
                     {cat}
                   </button>
                 ))}
@@ -548,18 +833,36 @@ export default function PriceBook() {
 
               {/* Items */}
               {filtered.length === 0 ? (
-                <motion.div variants={itemVariants} className="text-center py-10">
-                  <h2 className="text-base font-semibold text-white mb-1">{pricedItems.length === 0 ? 'No priced items yet' : 'No matching items'}</h2>
-                  <p className="text-white text-xs mb-5 max-w-xs mx-auto">{pricedItems.length === 0 ? 'Add prices to your materials lists, or add your first item.' : 'Try a different search or category.'}</p>
+                <motion.div variants={itemVariants} className="py-14 text-center">
+                  <h2 className="text-[15px] font-semibold tracking-tight text-white">
+                    {pricedItems.length === 0 ? 'No priced items yet' : 'No matching items'}
+                  </h2>
+                  <p className="mx-auto mt-1.5 max-w-xs text-[13px] text-white">
+                    {pricedItems.length === 0
+                      ? 'Import the price list you already keep, or add your first item by hand.'
+                      : 'Try a different search or category.'}
+                  </p>
                   {pricedItems.length === 0 && (
-                    <div className="flex gap-2 justify-center">
-                      <Button onClick={() => setAddSheetOpen(true)} className="h-11 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"><Plus className="h-4 w-4 mr-1.5" />Add Item</Button>
-                      <Link to="/electrician/materials"><Button variant="outline" className="h-11 touch-manipulation border-white/15 text-white"><Search className="h-4 w-4 mr-1.5" />Marketplace</Button></Link>
+                    <div className="mt-5 flex justify-center gap-2">
+                      <button
+                        onClick={() => setImportSheetOpen(true)}
+                        className="h-11 rounded-xl bg-elec-yellow px-5 text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
+                      >
+                        Import a price list
+                      </button>
+                      <button
+                        onClick={() => setAddSheetOpen(true)}
+                        className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.04] px-5 text-[14px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation active:scale-[0.98]"
+                      >
+                        Add an item
+                      </button>
                     </div>
                   )}
                 </motion.div>
               ) : (
-                <div className="space-y-2">
+                /* One column on a phone; two from lg, where a single column of
+                   full-width cards leaves most of the screen empty. */
+                <div className="space-y-3 lg:grid lg:grid-cols-2 lg:gap-3 lg:space-y-0">
                   {filtered.map((p) => {
                     const sellPrice = getSellPrice(p.item);
                     const hasCost = (p.item.cost_price ?? 0) > 0;
@@ -567,60 +870,83 @@ export default function PriceBook() {
                     const stale = (days ?? 0) >= STALE_DAYS;
                     const cat = deriveCategory(p.item.name);
                     return (
-                      <motion.div key={`${p.listId}-${p.item.id}`} variants={itemVariants}>
-                        <div className={cn('group card-surface-interactive overflow-hidden', stale && 'ring-1 ring-amber-500/30')}>
-                          <div className="relative z-10 p-4">
-                            <div className="flex items-start gap-3">
-                              <div className="flex-1 min-w-0">
-                                <div className="flex items-center gap-2">
-                                  <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/50">{cat}</span>
-                                </div>
-                                <p className="text-sm font-semibold text-white line-clamp-2 mt-1">{p.item.name}</p>
-                                <div className="flex items-center gap-2 mt-1 flex-wrap">
-                                  {p.item.supplier && (
-                                    <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-white/[0.04] text-white border border-white/[0.06]">{p.item.supplier}</span>
-                                  )}
-                                  <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-white/[0.04] text-white border border-white/[0.06]">{p.listName}</span>
-                                  {(() => {
-                                    const stock = stockForItem(p.item);
-                                    if (!stock) return null;
-                                    const low = stock.low_stock_threshold != null && stock.quantity <= stock.low_stock_threshold;
-                                    return (
-                                      <span className={cn('px-1.5 py-0.5 rounded text-[10px] font-medium border flex items-center gap-0.5', low ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20')}>
-                                        <Boxes className="h-2.5 w-2.5" />{stock.quantity} in stock
-                                      </span>
-                                    );
-                                  })()}
-                                  {stale && (
-                                    <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center gap-0.5">
-                                      <Clock className="h-2.5 w-2.5" />{days}d old
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
-                              <div className="text-right flex-shrink-0">
-                                <p className="text-lg font-bold text-elec-yellow">{formatGBP(sellPrice)}</p>
-                                <p className="text-[10px] text-white">per {p.item.unit || 'each'}</p>
-                                {hasCost && (
-                                  <p className="text-[10px] text-white mt-0.5">
-                                    cost {formatGBP(p.item.cost_price!)} · {(p.item.markup_percent ?? settings.globalMarkupPercent).toFixed(0)}%
-                                  </p>
-                                )}
-                              </div>
-                            </div>
-
-                            {/* Actions */}
-                            <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-white/[0.04]">
-                              <button onClick={() => handleAddToQuote(p.item.name, sellPrice, p.item.unit || 'each')} className="h-11 px-3 rounded-full flex items-center gap-1.5 text-xs font-medium text-elec-yellow active:bg-elec-yellow/5 touch-manipulation">
-                                <FileText className="h-3 w-3" />Add to Quote
-                              </button>
-                              <div className="flex items-center gap-1">
-                                <button onClick={() => openEditSheet(p)} className="h-11 px-3 rounded-full flex items-center gap-1.5 text-xs font-medium text-white active:bg-white/[0.05] touch-manipulation">
-                                  <Pencil className="h-3 w-3" />Edit
-                                </button>
-                              </div>
+                      <motion.div
+                        key={`${p.listId}-${p.item.id}`}
+                        variants={itemVariants}
+                        className={cn(cardCn, 'flex flex-col p-4 sm:p-5', stale && 'border-y-amber-500/25 sm:border-x-amber-500/25')}
+                      >
+                        {/* flex-1 so short and long names produce cards of the
+                            same height, with the actions level across a row. */}
+                        <div className="flex-1">
+                        <div className="flex items-start gap-4">
+                          <div className="min-w-0 flex-1">
+                            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">{cat}</p>
+                            <p className="mt-1 text-[15px] font-semibold leading-snug tracking-tight text-white">
+                              {p.item.name}
+                            </p>
+                            <div className="mt-2 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[12px] text-white">
+                              {p.item.supplier && <span>{p.item.supplier}</span>}
+                              <span>{p.listName}</span>
+                              {(() => {
+                                const stock = stockForItem(p.item);
+                                if (!stock) return null;
+                                const low = stock.low_stock_threshold != null && stock.quantity <= stock.low_stock_threshold;
+                                return (
+                                  <span className={cn('flex items-center gap-1', low ? 'text-amber-400' : 'text-emerald-400')}>
+                                    <Boxes className="h-3 w-3" />
+                                    {stock.quantity} in stock
+                                  </span>
+                                );
+                              })()}
+                              {stale && (
+                                <span className="flex items-center gap-1 text-amber-400">
+                                  <Clock className="h-3 w-3" />
+                                  Priced {days}d ago
+                                </span>
+                              )}
                             </div>
                           </div>
+                          <div className="flex-shrink-0 text-right">
+                            <p className="text-[20px] font-bold leading-none tracking-tight text-elec-yellow tabular-nums">
+                              {formatGBP(sellPrice)}
+                            </p>
+                            <p className="mt-1 text-[12px] text-white">per {p.item.unit || 'each'}</p>
+                          </div>
+                        </div>
+
+                        {/* Cost basis and labour — the working behind the price,
+                            kept apart from it so the sell price reads cleanly. */}
+                        {(hasCost || (p.item.labour_hours ?? 0) > 0) && (
+                          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-white/[0.10] pt-3 text-[12px] text-white tabular-nums">
+                            {hasCost && (
+                              <span>
+                                Cost {formatGBP(p.item.cost_price!)} · {(p.item.markup_percent ?? settings.globalMarkupPercent).toFixed(0)}% markup
+                              </span>
+                            )}
+                            {(p.item.labour_hours ?? 0) > 0 && (
+                              <span>
+                                {p.item.labour_hours}h labour
+                                {hourlyRate > 0 && ` · ${formatGBP(p.item.labour_hours! * hourlyRate)}`}
+                              </span>
+                            )}
+                          </div>
+                        )}
+
+                        </div>
+
+                        <div className="mt-3 flex items-center gap-2 border-t border-white/[0.10] pt-3">
+                          <button
+                            onClick={() => handleAddToQuote(p.item.name, sellPrice, p.item.unit || 'each')}
+                            className="h-11 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[13px] font-semibold text-white transition-colors hover:bg-white/[0.08] touch-manipulation active:scale-[0.98]"
+                          >
+                            Add to quote
+                          </button>
+                          <button
+                            onClick={() => openEditSheet(p)}
+                            className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.04] px-4 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation active:scale-[0.98]"
+                          >
+                            Edit
+                          </button>
                         </div>
                       </motion.div>
                     );
@@ -634,55 +960,80 @@ export default function PriceBook() {
           {tab === 'Bundles' && (
             <>
               {bundles.length === 0 ? (
-                <motion.div variants={itemVariants} className="text-center py-10">
-                  <h2 className="text-base font-semibold text-white mb-1">No bundles yet</h2>
-                  <p className="text-white text-xs mb-5 max-w-xs mx-auto">
-                    Group materials + labour into reusable bundles. E.g. "Consumer unit swap" with CU, MCBs, cabling, and labour.
+                <motion.div variants={itemVariants} className="py-14 text-center">
+                  <h2 className="text-[15px] font-semibold tracking-tight text-white">No bundles yet</h2>
+                  <p className="mx-auto mt-1.5 max-w-xs text-[13px] text-white">
+                    Group materials and labour into something reusable — a consumer unit swap, say, with the board, MCBs, cabling and the time to fit it.
                   </p>
-                  <Button onClick={() => setBundleSheetOpen(true)} className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation">
-                    <Plus className="h-4 w-4 mr-1.5" />Create Bundle
-                  </Button>
+                  <button
+                    onClick={() => setBundleSheetOpen(true)}
+                    className="mt-5 h-11 rounded-xl bg-elec-yellow px-5 text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
+                  >
+                    Create a bundle
+                  </button>
                 </motion.div>
               ) : (
                 <div className="space-y-3">
-                  <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">{bundles.length} Bundles</h2>
+                  <h2 className="text-[15px] font-semibold tracking-tight text-white">
+                    {bundles.length} {bundles.length === 1 ? 'bundle' : 'bundles'}
+                  </h2>
+                  <div className="space-y-3 lg:grid lg:grid-cols-2 lg:gap-3 lg:space-y-0">
                   {bundles.map((bundle) => {
                     const total = bundleTotal(bundle);
                     const expanded = expandedBundle === bundle.id;
                     return (
-                      <motion.div key={bundle.id} variants={itemVariants} className="card-surface-interactive overflow-hidden">
-                        <button className="w-full relative z-10 p-4 text-left touch-manipulation" onClick={() => setExpandedBundle(expanded ? null : bundle.id)}>
-                          <div className="flex items-start gap-3">
-                            <div className="flex-1 min-w-0">
-                              <p className="text-base font-semibold text-white">{bundle.name}</p>
-                              {bundle.description && <p className="text-[11px] text-white mt-0.5 line-clamp-1">{bundle.description}</p>}
-                              <div className="flex items-center gap-2 mt-1.5">
-                                <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-white/[0.04] text-white border border-white/[0.06]">{bundle.items.length} items</span>
-                                {bundle.labourHours && <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-white/[0.04] text-white border border-white/[0.06]">~{bundle.labourHours}hr</span>}
-                              </div>
+                      <motion.div key={bundle.id} variants={itemVariants} className={cn(cardCn, 'overflow-hidden')}>
+                        <button
+                          className="w-full p-4 text-left touch-manipulation sm:p-5"
+                          onClick={() => setExpandedBundle(expanded ? null : bundle.id)}
+                        >
+                          <div className="flex items-start gap-4">
+                            <div className="min-w-0 flex-1">
+                              <p className="text-[15px] font-semibold tracking-tight text-white">{bundle.name}</p>
+                              {bundle.description && (
+                                <p className="mt-0.5 line-clamp-1 text-[12px] text-white">{bundle.description}</p>
+                              )}
+                              <p className="mt-2 text-[12px] text-white tabular-nums">
+                                {bundle.items.length} {bundle.items.length === 1 ? 'item' : 'items'}
+                                {bundle.labourHours ? ` · ${bundle.labourHours}h labour` : ''}
+                              </p>
                             </div>
-                            <div className="flex items-center gap-2 flex-shrink-0">
-                              <span className="text-lg font-bold text-elec-yellow">{formatGBP(total)}</span>
-                              {expanded ? <ChevronUp className="h-4 w-4 text-white" /> : <ChevronDown className="h-4 w-4 text-white" />}
+                            <div className="flex flex-shrink-0 items-center gap-2">
+                              <span className="text-[20px] font-bold leading-none tracking-tight text-elec-yellow tabular-nums">
+                                {formatGBP(total)}
+                              </span>
+                              {expanded ? (
+                                <ChevronUp className="h-4 w-4 text-white" />
+                              ) : (
+                                <ChevronDown className="h-4 w-4 text-white" />
+                              )}
                             </div>
                           </div>
                         </button>
                         {expanded && (
-                          <div className="border-t border-white/[0.06] px-4 pb-4">
-                            <div className="space-y-1.5 mt-3 mb-3">
+                          <div className="border-t border-white/[0.10] px-4 pb-4 sm:px-5 sm:pb-5">
+                            <div className="mb-4 mt-3 space-y-2">
                               {bundle.items.map((item) => (
-                                <div key={item.id} className="flex items-center justify-between text-xs p-2 rounded-lg bg-white/[0.02]">
-                                  <span className="text-white flex-1 min-w-0 line-clamp-1">{item.name}</span>
-                                  <span className="text-white ml-2 flex-shrink-0">{item.quantity} × {formatGBP(item.unitPrice)}</span>
+                                <div key={item.id} className="flex items-center justify-between gap-3 text-[13px]">
+                                  <span className="line-clamp-1 min-w-0 flex-1 text-white">{item.name}</span>
+                                  <span className="flex-shrink-0 text-white tabular-nums">
+                                    {item.quantity} × {formatGBP(item.unitPrice)}
+                                  </span>
                                 </div>
                               ))}
                             </div>
                             <div className="flex gap-2">
-                              <Button onClick={() => handleBundleToQuote(bundle)} className="flex-1 h-10 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-xs touch-manipulation">
-                                <FileText className="h-3.5 w-3.5 mr-1.5" />Add to Quote
-                              </Button>
-                              <button onClick={() => deleteBundle(bundle.id)} className="h-10 px-4 text-xs font-medium text-red-400 bg-red-400/10 rounded-lg flex items-center gap-1.5 touch-manipulation">
-                                <Trash2 className="h-3.5 w-3.5" />Delete
+                              <button
+                                onClick={() => handleBundleToQuote(bundle)}
+                                className="h-11 flex-1 rounded-xl bg-elec-yellow text-[13px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
+                              >
+                                Add to quote
+                              </button>
+                              <button
+                                onClick={() => deleteBundle(bundle.id)}
+                                className="h-11 rounded-xl border border-red-500/25 bg-red-500/10 px-4 text-[13px] font-medium text-red-300 transition-colors hover:bg-red-500/15 touch-manipulation active:scale-[0.98]"
+                              >
+                                Delete
                               </button>
                             </div>
                           </div>
@@ -690,9 +1041,13 @@ export default function PriceBook() {
                       </motion.div>
                     );
                   })}
-                  <Button onClick={() => setBundleSheetOpen(true)} className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation">
-                    <Plus className="h-4 w-4 mr-1.5" />Create Bundle
-                  </Button>
+                  </div>
+                  <button
+                    onClick={() => setBundleSheetOpen(true)}
+                    className="h-12 w-full rounded-xl border border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation active:scale-[0.99]"
+                  >
+                    Create a bundle
+                  </button>
                 </div>
               )}
             </>
@@ -702,37 +1057,105 @@ export default function PriceBook() {
 
       {/* ── Edit Item Sheet ── */}
       <Sheet open={!!editSheet} onOpenChange={(open) => !open && setEditSheet(null)}>
-        <SheetContent side="bottom" className="h-auto max-h-[85vh] rounded-t-2xl overflow-y-auto">
-          <SheetHeader><SheetTitle className="flex items-center gap-2 text-white"><Pencil className="h-5 w-5" />Edit Item</SheetTitle></SheetHeader>
-          <div className="mt-4 space-y-4 pb-6">
-            <div><label className="text-xs text-white mb-1 block">Item Name</label><Input value={editName} onChange={(e) => setEditName(e.target.value)} className="h-11 bg-white/[0.03] border-white/[0.08] text-white touch-manipulation" /></div>
-            <div className="flex p-1 rounded-xl bg-white/[0.04] border border-white/[0.06]">
-              {(['cost', 'sell'] as const).map((m) => (<button key={m} onClick={() => setEditMode(m)} className={cn('flex-1 py-2 text-sm font-medium rounded-lg transition-all touch-manipulation', editMode === m ? 'bg-elec-yellow text-black' : 'text-white')}>{m === 'cost' ? 'Cost + markup' : 'Sell price'}</button>))}
+        <SheetContent side="bottom" className="h-auto max-h-[85vh] rounded-t-2xl overflow-y-auto bg-[#111114]">
+          <SheetHeader>
+            <SheetTitle className="text-[17px] font-semibold tracking-tight text-white">Edit item</SheetTitle>
+          </SheetHeader>
+          <div className="mt-5 space-y-5 pb-6">
+            <div>
+              <label className={labelCn}>Item name</label>
+              <input value={editName} onChange={(e) => setEditName(e.target.value)} className={fieldCn} />
             </div>
+
+            {/* Two ways to price the same item, so chips rather than a filled
+                segment control — the solid bar outweighed the fields below it. */}
+            <div>
+              <label className={labelCn}>Price by</label>
+              <div className="flex gap-2">
+                {(['cost', 'sell'] as const).map((m) => (
+                  <button
+                    key={m}
+                    onClick={() => setEditMode(m)}
+                    className={cn(chipBase, editMode === m ? chipOn : chipOff)}
+                  >
+                    {m === 'cost' ? 'Cost + markup' : 'Sell price'}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {editMode === 'cost' ? (
               <>
-                <div className="grid grid-cols-2 gap-3">
-                  <div><label className="text-xs text-white mb-1 block">Cost price (£)</label><Input type="text" inputMode="decimal" value={editCostPrice} placeholder="0.00" onChange={(e) => handleEditCostChange(e.target.value)} className="h-11 bg-white/[0.03] border-white/[0.08] text-white touch-manipulation" /></div>
-                  <div><label className="text-xs text-white mb-1 block">Markup (%)</label><Input type="text" inputMode="decimal" value={editMarkup} placeholder={`${settings.globalMarkupPercent}`} onChange={(e) => handleEditMarkupChange(e.target.value)} className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white touch-manipulation" /></div>
+                <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+                  <div>
+                    <label className={labelCn}>Cost price (£)</label>
+                    <input type="text" inputMode="decimal" value={editCostPrice} placeholder="0.00" onChange={(e) => handleEditCostChange(e.target.value)} className={fieldCn} />
+                  </div>
+                  <div>
+                    <label className={labelCn}>Markup (%)</label>
+                    <input type="text" inputMode="decimal" value={editMarkup} placeholder={`${settings.globalMarkupPercent}`} onChange={(e) => handleEditMarkupChange(e.target.value)} className={fieldCn} />
+                  </div>
                 </div>
-                <div className="card-surface p-3"><p className="text-[11px] text-white">Sell price (goes on quote)</p><p className="text-lg font-bold text-elec-yellow mt-0.5">{editSellPrice ? formatGBP(parseFloat(editSellPrice)) : '—'}</p></div>
+                <div className="flex items-baseline justify-between border-t border-white/[0.10] pt-4">
+                  <span className="text-[13px] text-white">Sell price, as quoted</span>
+                  <span className="text-[20px] font-bold leading-none tracking-tight text-elec-yellow tabular-nums">
+                    {editSellPrice ? formatGBP(parseFloat(editSellPrice)) : '—'}
+                  </span>
+                </div>
               </>
             ) : (
-              <div><label className="text-xs text-white mb-1 block">Sell price (£)</label><Input type="text" inputMode="decimal" value={editSellPrice} placeholder="0.00" onChange={(e) => { if (e.target.value === '' || /^\d*\.?\d*$/.test(e.target.value)) setEditSellPrice(e.target.value); }} className="h-11 bg-white/[0.03] border-white/[0.08] text-white touch-manipulation" /></div>
+              <div>
+                <label className={labelCn}>Sell price (£)</label>
+                <input type="text" inputMode="decimal" value={editSellPrice} placeholder="0.00" onChange={(e) => { if (e.target.value === '' || /^\d*\.?\d*$/.test(e.target.value)) setEditSellPrice(e.target.value); }} className={fieldCn} />
+              </div>
             )}
-            <div className="grid grid-cols-2 gap-3">
-              <div><label className="text-xs text-white mb-1 block">Unit</label><Input value={editUnit} onChange={(e) => setEditUnit(e.target.value)} className="h-11 bg-white/[0.03] border-white/[0.08] text-white touch-manipulation" /></div>
-              <div><label className="text-xs text-white mb-1 block">Supplier</label><Input value={editSupplier} onChange={(e) => setEditSupplier(e.target.value)} placeholder="Optional" className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white touch-manipulation" /></div>
+
+            <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+              <div>
+                <label className={labelCn}>Unit</label>
+                <input value={editUnit} onChange={(e) => setEditUnit(e.target.value)} className={fieldCn} />
+              </div>
+              <div>
+                <label className={labelCn}>Supplier</label>
+                <input value={editSupplier} onChange={(e) => setEditSupplier(e.target.value)} placeholder="Optional" className={fieldCn} />
+              </div>
             </div>
+
+            {/* Labour allowance — time to install one unit. Costed at the hourly
+                rate and added to the quote as its own labour line (ELE-1470). */}
+            <div>
+              <label className={labelCn}>Labour time (hours per {editUnit.trim() || 'each'})</label>
+              <input
+                type="text"
+                inputMode="decimal"
+                value={editLabourHours}
+                placeholder="e.g. 0.5"
+                onChange={(e) => { if (e.target.value === '' || /^\d*\.?\d*$/.test(e.target.value)) setEditLabourHours(e.target.value); }}
+                className={fieldCn}
+              />
+              <p className="mt-1.5 text-[12px] text-white">
+                {(() => {
+                  const h = parseFloat(editLabourHours);
+                  if (isNaN(h) || h <= 0) return 'Leave blank to quote this item as materials only.';
+                  if (hourlyRate <= 0) return 'Set an hourly rate in Business Settings to cost this time.';
+                  return `${h}h at ${formatGBP(hourlyRate)}/hr adds ${formatGBP(h * hourlyRate)} labour per ${editUnit.trim() || 'each'}.`;
+                })()}
+              </p>
+            </div>
+
             {/* Stock link — connect this price-book item to a stock item so quotes
                 show availability and stock decrements when the invoice is raised. */}
-            <div>
-              <label className="text-xs text-white mb-1 flex items-center gap-1.5"><Boxes className="h-3.5 w-3.5 text-blue-400" />Stock item</label>
+            <div className="border-t border-white/[0.10] pt-4">
+              <label className={labelCn}>Stock item</label>
               {stockItems.length === 0 ? (
-                <p className="text-[11px] text-white/70">No stock items yet — add some in Inventory to link them here.</p>
+                <p className="text-[12px] text-white">
+                  No stock items yet — add some in Inventory to link them here.
+                </p>
               ) : (
                 <Select value={editStockId ?? '__none__'} onValueChange={(v) => setEditStockId(v === '__none__' ? undefined : v)}>
-                  <SelectTrigger className="h-11 bg-white/[0.03] border-white/[0.08] text-white touch-manipulation"><SelectValue placeholder="Not linked" /></SelectTrigger>
+                  <SelectTrigger className="h-11 rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white focus:border-elec-yellow focus:ring-0 touch-manipulation">
+                    <SelectValue placeholder="Not linked" />
+                  </SelectTrigger>
                   <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground">
                     <SelectItem value="__none__">Not linked</SelectItem>
                     {[...stockItems].sort((a, b) => a.name.localeCompare(b.name)).map((s) => (
@@ -742,142 +1165,247 @@ export default function PriceBook() {
                 </Select>
               )}
               {editStockId && stockById.get(editStockId) && (
-                <p className="text-[11px] text-white/70 mt-1">Quotes will show availability; stock drops when you raise the invoice.</p>
+                <p className="mt-1.5 text-[12px] text-white">
+                  Quotes will show availability, and stock drops when you raise the invoice.
+                </p>
               )}
             </div>
-            <Button onClick={handleSaveEdit} className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation">Save Changes</Button>
-            <button
-              onClick={async () => {
-                if (!editSheet) return;
-                await removeItem(editSheet.listId, editSheet.item.id);
-                toast({ title: 'Item removed from price book' });
-                setEditSheet(null);
-              }}
-              className="w-full h-11 rounded-xl text-sm font-medium text-red-400 bg-red-400/10 flex items-center justify-center gap-1.5 touch-manipulation active:bg-red-400/20"
-            >
-              <Trash2 className="h-4 w-4" />
-              Remove item
-            </button>
+
+            <div className="space-y-2 pt-1">
+              <button
+                onClick={handleSaveEdit}
+                className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.99]"
+              >
+                Save changes
+              </button>
+              <button
+                onClick={async () => {
+                  if (!editSheet) return;
+                  await removeItem(editSheet.listId, editSheet.item.id);
+                  toast({ title: 'Item removed from price book' });
+                  setEditSheet(null);
+                }}
+                className="h-12 w-full rounded-xl border border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-red-300 transition-colors hover:bg-red-500/10 touch-manipulation active:scale-[0.99]"
+              >
+                Remove from price book
+              </button>
+            </div>
           </div>
         </SheetContent>
       </Sheet>
 
       {/* ── Add Item Sheet ── */}
       <Sheet open={addSheetOpen} onOpenChange={setAddSheetOpen}>
-        <SheetContent side="bottom" className="h-auto max-h-[85vh] rounded-t-2xl overflow-y-auto">
-          <SheetHeader><SheetTitle className="flex items-center gap-2 text-white"><Plus className="h-5 w-5" />Add to Price Book</SheetTitle></SheetHeader>
-          <div className="mt-4 space-y-4 pb-6">
-            <div><label className="text-xs text-white mb-1 block">Item Name *</label><Input value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="e.g., 2.5mm T&E 100m" className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white touch-manipulation" /></div>
-            <div className="flex p-1 rounded-xl bg-white/[0.04] border border-white/[0.06]">
-              {(['cost', 'sell'] as const).map((m) => (<button key={m} onClick={() => setNewMode(m)} className={cn('flex-1 py-2 text-sm font-medium rounded-lg transition-all touch-manipulation', newMode === m ? 'bg-elec-yellow text-black' : 'text-white')}>{m === 'cost' ? 'Cost + markup' : 'Sell price'}</button>))}
+        <SheetContent side="bottom" className="h-auto max-h-[85vh] rounded-t-2xl overflow-y-auto bg-[#111114]">
+          <SheetHeader>
+            <SheetTitle className="text-[17px] font-semibold tracking-tight text-white">Add to price book</SheetTitle>
+          </SheetHeader>
+          <div className="mt-5 space-y-5 pb-6">
+            <div>
+              <label className={labelCn}>Item name</label>
+              <input value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="e.g. 2.5mm T&E 100m" className={fieldCn} />
             </div>
+
+            <div>
+              <label className={labelCn}>Price by</label>
+              <div className="flex gap-2">
+                {(['cost', 'sell'] as const).map((m) => (
+                  <button
+                    key={m}
+                    onClick={() => setNewMode(m)}
+                    className={cn(chipBase, newMode === m ? chipOn : chipOff)}
+                  >
+                    {m === 'cost' ? 'Cost + markup' : 'Sell price'}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {newMode === 'cost' ? (
               <>
-                <div><label className="text-xs text-white mb-1 block">Cost price (£) *</label><Input type="text" inputMode="decimal" value={newCostPrice} placeholder="0.00" onChange={(e) => numInput(e.target.value, setNewCostPrice)} className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white touch-manipulation" /></div>
+                <div>
+                  <label className={labelCn}>Cost price (£)</label>
+                  <input type="text" inputMode="decimal" value={newCostPrice} placeholder="0.00" onChange={(e) => numInput(e.target.value, setNewCostPrice)} className={fieldCn} />
+                </div>
                 {newCostPrice && parseFloat(newCostPrice) > 0 && (
-                  <div className="card-surface p-3"><p className="text-[11px] text-white">Sell price at {settings.globalMarkupPercent}% markup</p><p className="text-lg font-bold text-elec-yellow">{formatGBP(calcSellPrice(parseFloat(newCostPrice)))}</p></div>
+                  <div className="flex items-baseline justify-between border-t border-white/[0.10] pt-4">
+                    <span className="text-[13px] text-white">Sell price at {settings.globalMarkupPercent}% markup</span>
+                    <span className="text-[20px] font-bold leading-none tracking-tight text-elec-yellow tabular-nums">
+                      {formatGBP(calcSellPrice(parseFloat(newCostPrice)))}
+                    </span>
+                  </div>
                 )}
               </>
             ) : (
-              <div><label className="text-xs text-white mb-1 block">Sell price (£) *</label><Input type="text" inputMode="decimal" value={newSellPrice} placeholder="0.00" onChange={(e) => numInput(e.target.value, setNewSellPrice)} className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white touch-manipulation" /></div>
+              <div>
+                <label className={labelCn}>Sell price (£)</label>
+                <input type="text" inputMode="decimal" value={newSellPrice} placeholder="0.00" onChange={(e) => numInput(e.target.value, setNewSellPrice)} className={fieldCn} />
+              </div>
             )}
-            <div className="grid grid-cols-2 gap-3">
-              <div><label className="text-xs text-white mb-1 block">Unit</label><Input value={newUnit} onChange={(e) => setNewUnit(e.target.value)} placeholder="each" className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white touch-manipulation" /></div>
-              <div><label className="text-xs text-white mb-1 block">Supplier</label><Input value={newSupplier} onChange={(e) => setNewSupplier(e.target.value)} placeholder="Optional" className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white touch-manipulation" /></div>
+
+            <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+              <div>
+                <label className={labelCn}>Unit</label>
+                <input value={newUnit} onChange={(e) => setNewUnit(e.target.value)} placeholder="each" className={fieldCn} />
+              </div>
+              <div>
+                <label className={labelCn}>Supplier</label>
+                <input value={newSupplier} onChange={(e) => setNewSupplier(e.target.value)} placeholder="Optional" className={fieldCn} />
+              </div>
             </div>
-            <Button onClick={handleAddItem} disabled={!newName.trim() || (newMode === 'cost' ? !newCostPrice : !newSellPrice)} className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-40"><Plus className="h-4 w-4 mr-1.5" />Add Item</Button>
+
+            <button
+              onClick={handleAddItem}
+              disabled={!newName.trim() || (newMode === 'cost' ? !newCostPrice : !newSellPrice)}
+              className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:opacity-40 touch-manipulation active:scale-[0.99]"
+            >
+              Add item
+            </button>
           </div>
         </SheetContent>
       </Sheet>
 
       {/* ── Create Bundle Sheet ── */}
       <Sheet open={bundleSheetOpen} onOpenChange={(open) => { if (!open) resetBundleSheet(); }}>
-        <SheetContent side="bottom" className="h-[92vh] rounded-t-2xl overflow-hidden p-0">
+        <SheetContent side="bottom" className="h-[92vh] rounded-t-2xl overflow-hidden p-0 bg-[#111114]">
           <div className="flex flex-col h-full">
-            <SheetHeader className="px-4 pt-4 pb-3 border-b border-white/[0.06] flex-shrink-0">
-              <div className="flex items-center justify-between">
-                <SheetTitle className="text-white">Create Bundle</SheetTitle>
-                <button onClick={resetBundleSheet} className="h-11 w-11 rounded-full flex items-center justify-center text-white active:bg-white/10 touch-manipulation"><X className="h-5 w-5" /></button>
-              </div>
+            {/* SheetContent renders its own close button, so the hand-rolled
+                one here put two X's in the corner. Both did the same thing —
+                closing runs onOpenChange, which already resets the form. */}
+            <SheetHeader className="flex-shrink-0 border-b border-white/[0.08] px-4 pb-3 pt-4">
+              <SheetTitle className="text-[17px] font-semibold tracking-tight text-white">
+                Create a bundle
+              </SheetTitle>
             </SheetHeader>
 
-            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
-              <div><label className="text-xs text-white mb-1 block">Bundle Name *</label><Input value={bundleName} onChange={(e) => setBundleName(e.target.value)} placeholder="e.g., Consumer unit swap" className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white touch-manipulation" /></div>
-              <div><label className="text-xs text-white mb-1 block">Description (optional)</label><Input value={bundleDesc} onChange={(e) => setBundleDesc(e.target.value)} placeholder="e.g., Includes 18-way CU, MCBs, cabling, labour" className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white touch-manipulation" /></div>
-              <div className="grid grid-cols-2 gap-3">
-                <div><label className="text-xs text-white mb-1 block">Est. labour hours</label><Input type="text" inputMode="decimal" value={bundleLabourHours} onChange={(e) => numInput(e.target.value, setBundleLabourHours)} placeholder="e.g., 3.5" className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white touch-manipulation" /></div>
-                {bundleItems.length > 0 && (
-                  <div className="card-surface p-3 flex flex-col items-center justify-center">
-                    <span className="text-lg font-bold text-elec-yellow">{formatGBP(bundleItems.reduce((s, i) => s + i.quantity * i.unitPrice, 0))}</span>
-                    <span className="text-[10px] text-white uppercase tracking-wider">Total</span>
-                  </div>
-                )}
+            <div className="flex-1 space-y-5 overflow-y-auto px-4 py-5">
+              <div>
+                <label className={labelCn}>Bundle name</label>
+                <input value={bundleName} onChange={(e) => setBundleName(e.target.value)} placeholder="e.g. Consumer unit swap" className={fieldCn} />
+              </div>
+              <div>
+                <label className={labelCn}>Description</label>
+                <input value={bundleDesc} onChange={(e) => setBundleDesc(e.target.value)} placeholder="Optional — what's included" className={fieldCn} />
+              </div>
+              <div>
+                <label className={labelCn}>Estimated labour hours</label>
+                <input type="text" inputMode="decimal" value={bundleLabourHours} onChange={(e) => numInput(e.target.value, setBundleLabourHours)} placeholder="e.g. 3.5" className={fieldCn} />
               </div>
 
-              {/* Bundle items */}
-              <div className="space-y-3">
-                <h3 className="text-xs font-medium text-white uppercase tracking-wider">
-                  Bundle Items ({bundleItems.length})
+              {/* What's in the bundle */}
+              <div className="space-y-3 border-t border-white/[0.10] pt-5">
+                <h3 className="text-[15px] font-semibold tracking-tight text-white">
+                  What's in it{bundleItems.length > 0 ? ` · ${bundleItems.length}` : ''}
                 </h3>
 
                 {bundleItems.length === 0 && (
-                  <div className="card-surface p-4 text-center">
-                    <p className="text-xs text-white">Add items from your price book or add a labour line to get started.</p>
-                  </div>
+                  <p className="text-[13px] text-white">
+                    Nothing yet. Add items from your price book below, or add a labour line.
+                  </p>
                 )}
 
                 {bundleItems.map((item) => (
-                  <div key={item.id} className="card-surface-interactive p-3.5">
-                    <div className="flex items-center gap-2 mb-2.5">
-                      <span className={cn('text-[9px] font-semibold uppercase tracking-[0.14em] flex-shrink-0 w-14', item.category === 'labour' ? 'text-elec-yellow' : 'text-white/50')}>
+                  <div key={item.id} className="rounded-xl border border-white/[0.12] bg-white/[0.04] p-3.5">
+                    <div className="flex items-center gap-2">
+                      <span className={cn('flex-shrink-0 text-[10px] font-semibold uppercase tracking-[0.16em]', item.category === 'labour' ? 'text-elec-yellow' : 'text-white')}>
                         {item.category === 'labour' ? 'Labour' : 'Material'}
                       </span>
-                      <Input value={item.name} onChange={(e) => updateBundleItemField(item.id, 'name', e.target.value)} className="h-8 flex-1 bg-white/[0.03] border-white/[0.08] text-white text-xs touch-manipulation" />
-                      <button onClick={() => removeBundleItem(item.id)} className="h-7 w-7 rounded-full flex items-center justify-center text-red-400 active:bg-red-500/10 touch-manipulation flex-shrink-0"><X className="h-3.5 w-3.5" /></button>
+                      <button
+                        onClick={() => removeBundleItem(item.id)}
+                        className="ml-auto h-8 w-8 flex-shrink-0 rounded-full text-[13px] font-medium text-red-300 transition-colors hover:bg-red-500/10 touch-manipulation"
+                        aria-label="Remove from bundle"
+                      >
+                        <X className="mx-auto h-4 w-4" />
+                      </button>
                     </div>
-                    <div className="flex items-center gap-2 pl-16">
-                      <div className="flex items-center gap-1.5 bg-white/[0.03] rounded-lg border border-white/[0.06] px-2 py-1">
-                        <span className="text-[10px] text-white">Qty</span>
-                        <Input type="text" inputMode="decimal" value={item.quantity} onChange={(e) => updateBundleItemField(item.id, 'quantity', e.target.value)} className="h-6 w-10 text-center bg-transparent border-0 text-white text-xs p-0 focus:ring-0" />
+                    <input
+                      value={item.name}
+                      onChange={(e) => updateBundleItemField(item.id, 'name', e.target.value)}
+                      className={cn(fieldCn, 'mt-1')}
+                    />
+                    <div className="mt-3 flex items-end gap-4">
+                      <div className="w-16">
+                        <label className={labelCn}>Qty</label>
+                        <input type="text" inputMode="decimal" value={item.quantity} onChange={(e) => updateBundleItemField(item.id, 'quantity', e.target.value)} className={cn(fieldCn, 'tabular-nums')} />
                       </div>
-                      <span className="text-xs text-white">×</span>
-                      <div className="flex items-center gap-1 bg-white/[0.03] rounded-lg border border-white/[0.06] px-2 py-1">
-                        <span className="text-[10px] text-white">£</span>
-                        <Input type="text" inputMode="decimal" value={item.unitPrice === 0 ? '' : item.unitPrice.toFixed(2)} placeholder={item.category === 'labour' ? 'rate' : '0.00'} onChange={(e) => updateBundleItemField(item.id, 'unitPrice', e.target.value)} className="h-6 w-16 bg-transparent border-0 text-white text-xs p-0 focus:ring-0" />
+                      <div className="w-24">
+                        <label className={labelCn}>{item.category === 'labour' ? 'Rate (£)' : 'Price (£)'}</label>
+                        <input type="text" inputMode="decimal" value={item.unitPrice === 0 ? '' : item.unitPrice.toFixed(2)} placeholder="0.00" onChange={(e) => updateBundleItemField(item.id, 'unitPrice', e.target.value)} className={cn(fieldCn, 'tabular-nums')} />
                       </div>
-                      <span className="text-sm text-elec-yellow ml-auto font-bold">{formatGBP(item.quantity * item.unitPrice)}</span>
+                      <span className="ml-auto pb-2 text-[15px] font-bold text-elec-yellow tabular-nums">
+                        {formatGBP(item.quantity * item.unitPrice)}
+                      </span>
                     </div>
                   </div>
                 ))}
 
-                {/* Add buttons */}
-                <button onClick={addBundleLabourLine} className="w-full card-surface-interactive p-3 flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all">
-                  <Plus className="h-3.5 w-3.5 text-elec-yellow" />
-                  <span className="text-xs font-medium text-white">Add labour line</span>
+                <button
+                  onClick={addBundleLabourLine}
+                  className="h-11 w-full rounded-xl border border-white/[0.12] bg-white/[0.04] text-[13px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation active:scale-[0.98]"
+                >
+                  Add a labour line
                 </button>
               </div>
 
               {/* Price book picker */}
               {pricedItems.length > 0 && (
-                <div className="space-y-2">
-                  <h3 className="text-xs font-medium text-white uppercase tracking-wider">From Price Book</h3>
-                  <div className="space-y-1.5 max-h-56 overflow-y-auto">
-                    {pricedItems.map((p) => (
-                      <button key={`${p.listId}-${p.item.id}`} onClick={() => addBundleItemFromPriceBook(p)} className="w-full card-surface p-3 flex items-center gap-2.5 text-left touch-manipulation active:scale-[0.98] transition-all">
-                        <span className="text-xs text-white line-clamp-1 flex-1">{p.item.name}</span>
-                        <span className="text-xs text-elec-yellow font-semibold flex-shrink-0">{formatGBP(getSellPrice(p.item))}</span>
-                        <Plus className="h-3.5 w-3.5 text-white flex-shrink-0" />
-                      </button>
-                    ))}
+                <div className="space-y-3 border-t border-white/[0.10] pt-5">
+                  <h3 className="text-[15px] font-semibold tracking-tight text-white">From your price book</h3>
+                  {/* A search, because an electrician with a few hundred items
+                      cannot scroll to the one they want. */}
+                  {pricedItems.length > 6 && (
+                    <div className="relative">
+                      <Search className="pointer-events-none absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
+                      <input
+                        type="text"
+                        value={bundlePickerSearch}
+                        onChange={(e) => setBundlePickerSearch(e.target.value)}
+                        placeholder="Search items"
+                        className={searchInputCn}
+                      />
+                    </div>
+                  )}
+                  <div className="max-h-56 divide-y divide-white/[0.08] overflow-y-auto rounded-xl border border-white/[0.12] bg-white/[0.03]">
+                    {bundlePickerItems.length === 0 ? (
+                      <p className="p-3 text-[13px] text-white">No matching items.</p>
+                    ) : (
+                      bundlePickerItems.map((p) => (
+                        <button
+                          key={`${p.listId}-${p.item.id}`}
+                          onClick={() => addBundleItemFromPriceBook(p)}
+                          className="flex w-full items-center gap-3 p-3 text-left transition-colors hover:bg-white/[0.05] touch-manipulation"
+                        >
+                          <span className="line-clamp-1 flex-1 text-[13px] text-white">{p.item.name}</span>
+                          <span className="flex-shrink-0 text-[13px] font-semibold text-elec-yellow tabular-nums">
+                            {formatGBP(getSellPrice(p.item))}
+                          </span>
+                          <Plus className="h-4 w-4 flex-shrink-0 text-white" />
+                        </button>
+                      ))
+                    )}
                   </div>
                 </div>
               )}
             </div>
 
-            <div className="px-4 pb-6 pt-3 border-t border-white/[0.06] flex-shrink-0">
-              <Button onClick={handleCreateBundle} disabled={!bundleName.trim() || bundleItems.length === 0} className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-40">
-                Save Bundle
-              </Button>
+            {/* Running total lives with the action, so it is visible while you
+                build rather than scrolled away at the top. */}
+            <div className="flex-shrink-0 border-t border-white/[0.08] px-4 pb-6 pt-3">
+              <div className="mb-2.5 flex items-baseline justify-between">
+                <span className="text-[13px] text-white">
+                  {bundleItems.length} {bundleItems.length === 1 ? 'line' : 'lines'}
+                </span>
+                <span className="text-[20px] font-bold leading-none tracking-tight text-elec-yellow tabular-nums">
+                  {formatGBP(bundleItems.reduce((s, i) => s + i.quantity * i.unitPrice, 0))}
+                </span>
+              </div>
+              <button
+                onClick={handleCreateBundle}
+                disabled={!bundleName.trim() || bundleItems.length === 0}
+                className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:opacity-40 touch-manipulation active:scale-[0.99]"
+              >
+                Save bundle
+              </button>
             </div>
           </div>
         </SheetContent>
@@ -885,23 +1413,21 @@ export default function PriceBook() {
 
       {/* ── Import Sheet ── */}
       <Sheet open={importSheetOpen} onOpenChange={(open) => { if (!open) { setImportSheetOpen(false); setImportText(''); setImportParsed([]); } }}>
-        <SheetContent side="bottom" className="h-auto max-h-[85vh] rounded-t-2xl overflow-y-auto">
+        <SheetContent side="bottom" className="h-auto max-h-[85vh] rounded-t-2xl overflow-y-auto bg-[#111114]">
           <SheetHeader>
             <SheetTitle className="text-white">Import Price List</SheetTitle>
           </SheetHeader>
           <div className="mt-4 space-y-4 pb-6">
-            <p className="text-xs text-white leading-relaxed">
-              Upload a file or paste your price list. Format: <span className="text-elec-yellow font-medium">name, cost price, unit, supplier</span> — one item per line.
+            <p className="text-[13px] leading-relaxed text-white">
+              Bring in the price list you already keep. Your own column order is used, so
+              nothing needs rearranging, and importing again later updates prices rather
+              than duplicating items.
             </p>
 
-            {/* File upload */}
             <div className="grid grid-cols-2 gap-2">
-              <label className="group card-surface-interactive p-3 flex items-center gap-2.5 touch-manipulation active:scale-[0.98] transition-all cursor-pointer">
-                <Upload className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                <div className="min-w-0">
-                  <span className="text-xs font-medium text-white block">Upload File</span>
-                  <span className="text-[10px] text-white">.csv, .xlsx, .docx</span>
-                </div>
+              <label className="flex h-11 cursor-pointer items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[13px] font-semibold text-white transition-colors hover:bg-white/[0.08] touch-manipulation active:scale-[0.98]">
+                <Upload className="h-4 w-4" />
+                Choose a file
                 <input
                   type="file"
                   accept=".csv,.txt,.xlsx,.xls,.docx,.doc"
@@ -909,66 +1435,122 @@ export default function PriceBook() {
                   className="hidden"
                 />
               </label>
-              <div className="card-surface p-3 flex items-center gap-2.5">
-                <ClipboardPaste className="h-4 w-4 text-white/60 flex-shrink-0" />
-                <div className="min-w-0">
-                  <span className="text-xs font-medium text-white block">Or Paste Below</span>
-                  <span className="text-[10px] text-white">From spreadsheet</span>
-                </div>
-              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  const sample =
+                    'Item,Cost price,Unit,Supplier,Labour hours\n' +
+                    '2.5mm T&E 100m,45.99,roll,Screwfix,0\n' +
+                    '32A MCB Type B,8.50,each,Toolstation,0.25\n' +
+                    '20A Rotary Isolator,30.05,each,CEF,0.5';
+                  setImportText(sample);
+                  parseImportText(sample);
+                }}
+                className="flex h-11 items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[13px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation active:scale-[0.98]"
+              >
+                <ClipboardPaste className="h-4 w-4" />
+                Use an example
+              </button>
             </div>
 
-            <Textarea
-              value={importText}
-              onChange={(e) => {
-                setImportText(e.target.value);
-                parseImportText(e.target.value);
-              }}
-              placeholder={"2.5mm T&E 100m, 45.99, roll, Screwfix\n32A MCB Type B, 8.50, each, Toolstation\nLED Downlight 10W, 4.99, each, CEF"}
-              className="min-h-[120px] text-sm font-mono touch-manipulation"
-            />
+            <div>
+              <label className={labelCn}>Or paste straight from your spreadsheet</label>
+              <Textarea
+                value={importText}
+                onChange={(e) => {
+                  setImportText(e.target.value);
+                  parseImportText(e.target.value);
+                }}
+                placeholder={'Item, Cost price, Unit, Supplier, Labour hours\n2.5mm T&E 100m, 45.99, roll, Screwfix, 0\n32A MCB Type B, 8.50, each, Toolstation, 0.25'}
+                className="min-h-[110px] rounded-xl border-white/[0.12] bg-white/[0.03] font-mono text-[13px] text-white placeholder:text-white/25 focus-visible:ring-0 focus:border-elec-yellow touch-manipulation"
+              />
+              <p className="mt-1.5 text-[12px] text-white">
+                Labour time can be hours or minutes — 0.5, 30m, 1h 30m all work. Leave it out
+                and items come in as materials only.
+              </p>
+            </div>
 
-            {/* Preview */}
-            {importParsed.length > 0 && (
-              <div className="space-y-2">
-                <h3 className="text-xs font-medium text-white uppercase tracking-wider">
-                  Preview ({importParsed.length} items)
-                </h3>
-                <div className="max-h-48 overflow-y-auto space-y-1.5">
-                  {importParsed.map((item, i) => (
-                    <div key={i} className="card-surface p-3 flex items-center gap-3">
-                      <div className="flex-1 min-w-0">
-                        <p className="text-xs font-medium text-white line-clamp-1">{item.name}</p>
-                        <div className="flex items-center gap-2 mt-0.5">
-                          {item.supplier && <span className="text-[10px] text-white">{item.supplier}</span>}
-                          <span className="text-[10px] text-white">per {item.unit}</span>
-                        </div>
-                      </div>
-                      <div className="text-right flex-shrink-0">
-                        <p className="text-xs text-white">Cost: {formatGBP(item.price)}</p>
-                        <p className="text-xs text-elec-yellow font-semibold">Sell: {item.price > 0 ? formatGBP(calcSellPrice(item.price)) : '—'}</p>
-                      </div>
+            {/* How their columns were read. Only shown when a header was found,
+                because otherwise there is nothing honest to report. */}
+            {importCols && importCols.length > 0 && (
+              <div className="rounded-xl border border-white/[0.12] bg-white/[0.04] p-3.5">
+                <p className="text-[12px] font-semibold text-white">Read from your file</p>
+                <div className="mt-2 space-y-1">
+                  {importCols.map((c) => (
+                    <div key={c.label} className="flex items-baseline justify-between gap-3 text-[12px]">
+                      <span className="text-white">{c.label}</span>
+                      <span className="truncate font-mono text-white">{c.header}</span>
                     </div>
                   ))}
-                </div>
-                <div className="card-surface p-3 flex items-center justify-between">
-                  <span className="text-xs text-white">Markup applied: <span className="text-elec-yellow font-semibold">{settings.globalMarkupPercent}%</span></span>
-                  <span className="text-xs text-white">{importParsed.filter((i) => i.price > 0).length} valid items</span>
                 </div>
               </div>
             )}
 
-            <Button
+            {/* Preview */}
+            {importParsed.length > 0 && (
+              <div className="space-y-2">
+                <div className="flex items-baseline justify-between">
+                  <h3 className="text-[13px] font-semibold tracking-tight text-white">Preview</h3>
+                  <span className="text-[12px] text-white tabular-nums">
+                    {importSplit.added} new · {importSplit.updated} updating
+                    {importSplit.skipped > 0 && ` · ${importSplit.skipped} skipped`}
+                  </span>
+                </div>
+                <div className="max-h-56 divide-y divide-white/[0.08] overflow-y-auto rounded-xl border border-white/[0.12] bg-white/[0.03]">
+                  {importParsed.map((item, i) => {
+                    const isUpdate = existingNames.has(normaliseItemName(item.name));
+                    const invalid = !(item.price > 0);
+                    return (
+                      <div key={i} className={cn('flex items-center gap-3 p-3', invalid && 'opacity-45')}>
+                        <div className="min-w-0 flex-1">
+                          <p className="line-clamp-1 text-[13px] font-medium text-white">{item.name}</p>
+                          <p className="mt-0.5 text-[11px] text-white">
+                            {invalid
+                              ? 'No price found — this row will be skipped'
+                              : [
+                                  isUpdate ? 'Updating' : 'New',
+                                  `per ${item.unit}`,
+                                  item.supplier || null,
+                                  (item.labourHours ?? 0) > 0 ? `${item.labourHours}h labour` : null,
+                                ]
+                                  .filter(Boolean)
+                                  .join(' · ')}
+                          </p>
+                        </div>
+                        {!invalid && (
+                          <div className="flex-shrink-0 text-right">
+                            <p className="text-[13px] font-semibold text-elec-yellow tabular-nums">
+                              {formatGBP(calcSellPrice(item.price))}
+                            </p>
+                            <p className="text-[11px] text-white tabular-nums">cost {formatGBP(item.price)}</p>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+                <p className="text-[12px] text-white">
+                  Sell prices shown include your {settings.globalMarkupPercent}% markup.
+                </p>
+              </div>
+            )}
+
+            <button
               onClick={handleImport}
-              disabled={importParsed.filter((i) => i.price > 0).length === 0 || importing}
-              className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-40"
+              disabled={importSplit.valid === 0 || importing}
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:opacity-40 touch-manipulation active:scale-[0.99]"
             >
               {importing ? (
-                <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Importing...</>
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Importing…
+                </>
+              ) : importSplit.valid === 0 ? (
+                'Nothing to import yet'
               ) : (
-                <><Upload className="h-4 w-4 mr-1.5" />Import {importParsed.filter((i) => i.price > 0).length} Items</>
+                `Import ${importSplit.valid} ${importSplit.valid === 1 ? 'item' : 'items'}`
               )}
-            </Button>
+            </button>
           </div>
         </SheetContent>
       </Sheet>

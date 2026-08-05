@@ -346,7 +346,7 @@ const sections = [
         </p>
         <p>The key organisations included are:</p>
         <div className="space-y-3 my-4">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-1">Samaritans — 116 123 (24/7, free)</h4>
             <p className="text-white text-sm leading-relaxed">
               Available any time, day or night. You do not have to be suicidal to call — the

@@ -149,7 +149,7 @@ export default function EarthRodResistanceCalculatorPage() {
                 The resistance of a single vertical earth rod driven into homogeneous soil is
                 calculated using the formula:
               </p>
-              <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 text-center my-6">
+              <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
                 <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
                   R = (rho / 2 x pi x L) x ln(4L / d)
                 </p>
@@ -191,13 +191,13 @@ export default function EarthRodResistanceCalculatorPage() {
               </p>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden my-6">
                 <div className="grid grid-cols-3 gap-px bg-white/10">
-                  <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                     Soil Type
                   </div>
-                  <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                     Resistivity (ohm-m)
                   </div>
-                  <div className="p-4 bg-yellow-500/10 font-bold text-yellow-400 text-sm">
+                  <div className="p-4 bg-gradient-to-b from-white/[0.08] to-white/[0.04] font-bold text-yellow-400 text-sm">
                     Notes
                   </div>
                 </div>
@@ -258,7 +258,7 @@ export default function EarthRodResistanceCalculatorPage() {
                 is approximately half the resistance of a single rod. For three rods, the combined
                 resistance is approximately one-third. In general, for N well-spaced identical rods:
               </p>
-              <div className="p-6 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 text-center my-6">
+              <div className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-center my-6">
                 <p className="text-xl sm:text-2xl font-mono font-bold text-yellow-400">
                   R(combined) = R(single) / N
                 </p>

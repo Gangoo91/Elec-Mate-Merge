@@ -179,7 +179,7 @@ const sections = [
           contribute on behalf of their employees. It does not apply to self-employed sole traders
           or partners.
         </p>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
             <AlertTriangle className="w-5 h-5 text-yellow-400" /> The Self-Employed Pension Gap
           </h4>
@@ -332,7 +332,7 @@ const sections = [
             </p>
           </div>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-3">Worked Example</h3>
           <div className="text-white text-sm space-y-2">
             <p>Self-employed electrician, profit £45,000, basic rate taxpayer</p>
@@ -387,12 +387,12 @@ const sections = [
               <p>Save 15%</p>
               <p className="text-xs mt-1">£562/month on £45k</p>
             </div>
-            <div className="rounded-xl bg-yellow-500/10 border border-yellow-500/20 p-3 text-centre">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-3 text-centre">
               <p className="font-bold text-yellow-400">Start at 35</p>
               <p>Save 17.5%</p>
               <p className="text-xs mt-1">£656/month on £45k</p>
             </div>
-            <div className="rounded-xl bg-red-500/10 border border-red-500/20 p-3 text-centre">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-3 text-centre">
               <p className="font-bold text-red-400">Start at 40</p>
               <p>Save 20%</p>
               <p className="text-xs mt-1">£750/month on £45k</p>

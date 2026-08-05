@@ -199,6 +199,9 @@ const QuoteBuilderEdit = () => {
                 acceptance_method: _am,
                 invoice_raised: _ir,
                 invoice_number: _in,
+                // ELE-1469 — drop the CRM link so the copy can be re-matched
+                // to whichever customer the user types in (see QuoteViewPage).
+                customer_id: _cid,
                 ...rest
               } = quote;
               const duplicate: Partial<Quote> = {

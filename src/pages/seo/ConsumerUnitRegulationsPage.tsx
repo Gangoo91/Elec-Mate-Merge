@@ -177,7 +177,7 @@ export default function ConsumerUnitRegulationsPage() {
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
         <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
             <BookOpen className="w-4 h-4" />
             BS 7671:2018+A4:2026
           </div>
@@ -186,7 +186,7 @@ export default function ConsumerUnitRegulationsPage() {
             <span className="block text-yellow-400 mt-1">Amendment 4 Guide (A4:2026)</span>
           </h1>
           {/* Answer-first block — targets featured snippet for 'consumer unit regulations UK' */}
-          <div className="rounded-2xl bg-white/[0.06] border border-yellow-500/20 px-6 py-5 max-w-2xl mx-auto mb-6 text-left">
+          <div className="rounded-2xl bg-white/[0.06] border border-white/[0.14] px-6 py-5 max-w-2xl mx-auto mb-6 text-left">
             <p className="text-base text-white leading-relaxed">
               <strong className="text-yellow-400">Consumer unit regulations</strong> in the UK are
               set by BS&nbsp;7671:2018+A4:2026 (the IET Wiring Regulations, 18th Edition). They
@@ -227,7 +227,7 @@ export default function ConsumerUnitRegulationsPage() {
       <section id="cu-regulations" className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Layers className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -326,7 +326,7 @@ export default function ConsumerUnitRegulationsPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <ShieldCheck className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -375,7 +375,7 @@ export default function ConsumerUnitRegulationsPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Zap className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -478,7 +478,7 @@ export default function ConsumerUnitRegulationsPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Settings className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -525,7 +525,7 @@ export default function ConsumerUnitRegulationsPage() {
                 </li>
               </ul>
             </div>
-            <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+            <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <h3 className="font-bold text-yellow-400 text-xl mb-3">Full RCBO Board</h3>
               <ul className="space-y-3 text-white text-sm leading-relaxed">
                 <li className="flex items-start gap-3">
@@ -610,7 +610,7 @@ export default function ConsumerUnitRegulationsPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <BookOpen className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -625,7 +625,7 @@ export default function ConsumerUnitRegulationsPage() {
               AFDD requirement in Regulation 421.1.7, and the redrafted surge protection criteria in
               Regulation 443.4.
             </p>
-            <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-6 my-6">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-6">
               <h3 className="font-bold text-yellow-400 text-lg mb-3">
                 Regulation 530.3.201 — Bidirectional and Unidirectional Devices
               </h3>
@@ -734,7 +734,7 @@ export default function ConsumerUnitRegulationsPage() {
       <section className="py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Activity className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -855,7 +855,7 @@ export default function ConsumerUnitRegulationsPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <ClipboardCheck className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -938,7 +938,7 @@ export default function ConsumerUnitRegulationsPage() {
       <section className="py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <HelpCircle className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -949,7 +949,7 @@ export default function ConsumerUnitRegulationsPage() {
             {faqs.map((faq, index) => (
               <details
                 key={index}
-                className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-yellow-500/30 transition-colors"
+                className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/[0.14] transition-colors"
               >
                 <summary className="flex items-start gap-3 cursor-pointer touch-manipulation list-none [&::-webkit-details-marker]:hidden">
                   <ChevronRight className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />

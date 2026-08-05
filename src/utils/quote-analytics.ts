@@ -1,4 +1,4 @@
-import { isQuoteWon, isQuoteLost, isQuoteAwaiting } from '@/utils/quote-status';
+import { isQuoteWon, isQuoteLost, isQuoteLive, isQuoteExpired } from '@/utils/quote-status';
 import { Quote } from '@/types/quote';
 
 export interface FinancialBreakdown {
@@ -88,13 +88,19 @@ export const calculateFinancialBreakdown = (quotes: Quote[]): FinancialBreakdown
   };
 };
 
-export const filterQuotesByStatus = (quotes: Quote[], status: Quote['status']): Quote[] => {
+export const filterQuotesByStatus = (
+  quotes: Quote[],
+  status: Quote['status'] | 'expired'
+): Quote[] => {
   // Tab semantics, not raw column match: accepting/declining via
   // acceptance_status leaves `status` untouched, so 'approved'/'rejected'
   // tabs must use the derived state and 'sent' means awaiting a decision.
   if (status === 'approved') return quotes.filter(isQuoteWon);
   if (status === 'rejected') return quotes.filter(isQuoteLost);
-  if (status === 'sent' || status === 'pending') return quotes.filter(isQuoteAwaiting);
+  // 'sent' is the live pipeline, so lapsed quotes drop out of it into their
+  // own tab rather than sitting there looking chaseable forever (ELE-1072).
+  if (status === 'sent' || status === 'pending') return quotes.filter(isQuoteLive);
+  if (status === 'expired') return quotes.filter(isQuoteExpired);
   return quotes.filter((quote) => quote.status === status);
 };
 

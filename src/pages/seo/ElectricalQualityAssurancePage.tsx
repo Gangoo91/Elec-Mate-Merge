@@ -132,7 +132,7 @@ const sections = [
           commercial electrical project should have an ITP, and on most managed projects the client
           or principal contractor will require one.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-4">
             Typical ITP Activities for Electrical Work
           </h3>
@@ -220,7 +220,7 @@ const sections = [
           is inspected and approved before being covered up or built upon.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 mt-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-2 mb-3">
               <Target className="w-5 h-5 text-yellow-400" />
               <h3 className="font-bold text-white text-lg">Hold Points</h3>
@@ -342,7 +342,7 @@ const sections = [
           contractually.
         </p>
         <div className="space-y-4 mt-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-2 mb-3">
               <FileCheck2 className="w-5 h-5 text-yellow-400" />
               <h3 className="font-bold text-white text-lg">Test Certificates</h3>
@@ -500,7 +500,7 @@ const sections = [
           training, and consistent reinforcement.
         </p>
         <div className="space-y-4 mt-6">
-          <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-2 mb-3">
               <Users className="w-5 h-5 text-yellow-400" />
               <h3 className="font-bold text-white text-lg">Lead by Example</h3>

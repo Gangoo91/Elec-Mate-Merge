@@ -140,7 +140,7 @@ const sections = [
           (reversed). If the rotation is reversed, swapping any two of the three phase connections
           at the supply point will correct it.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Phase Rotation Key Points</h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
@@ -347,7 +347,7 @@ const sections = [
           Ze value is measured once and is common to all phases. The expected Zs for each phase can
           be calculated as Ze + R1+R2 for that phase.
         </p>
-        <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-4 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-4 my-4">
           <p className="text-white text-sm leading-relaxed">
             <strong className="text-yellow-400">Temperature correction (GN3 Reg 1.08):</strong>{' '}
             R1+R2 is measured at ambient (cold) temperature, but Tables 41.2–41.4 assume conductors

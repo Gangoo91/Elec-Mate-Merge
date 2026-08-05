@@ -50,15 +50,15 @@ const InsulationExpectedResults = ({ onBack }: Props) => {
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         {/* Expected by scenario */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Typical Readings by Installation Age</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Typical Readings by Installation Age</p>
         </motion.div>
 
         {expectedByScenario.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-center justify-between mb-2">
                 <p className="text-sm font-semibold text-white">{item.scenario}</p>
-                <span className="text-xs font-bold text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded-lg whitespace-nowrap">{item.expected}</span>
+                <span className="text-xs font-bold text-yellow-400 bg-gradient-to-b from-white/[0.08] to-white/[0.04] px-2 py-0.5 rounded-lg whitespace-nowrap">{item.expected}</span>
               </div>
               <p className="text-sm text-white leading-relaxed">{item.detail}</p>
             </div>
@@ -67,12 +67,12 @@ const InsulationExpectedResults = ({ onBack }: Props) => {
 
         {/* Fault indicators */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">What Readings Tell You</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">What Readings Tell You</p>
         </motion.div>
 
         {faultIndicators.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <div className="flex items-center gap-2 mb-2">
                 <p className="text-sm font-semibold text-white">{item.indicator}</p>
                 <span className={`text-[10px] font-bold px-2 py-0.5 rounded-lg ${
@@ -88,12 +88,12 @@ const InsulationExpectedResults = ({ onBack }: Props) => {
 
         {/* Troubleshooting by test combination */}
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Fault Diagnosis by Test Combination</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Fault Diagnosis by Test Combination</p>
         </motion.div>
 
         {troubleshooting.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-2">
               <p className="text-sm font-semibold text-white">{item.problem}</p>
               <div className="space-y-1">
                 {item.actions.map((action, j) => (
@@ -109,7 +109,7 @@ const InsulationExpectedResults = ({ onBack }: Props) => {
 
         {/* Trending */}
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-2">Trending — Comparing Results Over Time</p>
             <p className="text-sm text-white leading-relaxed mb-3">
               The most valuable use of IR data is comparing results between inspections. A consistent decline over successive periodic inspections indicates insulation degradation and allows planning before failure occurs.

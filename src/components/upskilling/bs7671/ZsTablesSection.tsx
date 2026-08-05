@@ -96,22 +96,22 @@ const ZsTablesSection = () => {
                 <tr className="border-b border-gray-700">
                   <td className="py-3 px-4">Type B MCB</td>
                   <td className="py-3 px-4">6-50</td>
-                  <td className="py-3 px-4">11.5-0.92</td>
-                  <td className="py-3 px-4">92-7.36</td>
+                  <td className="py-3 px-4">7.28-0.87</td>
+                  <td className="py-3 px-4">7.28-0.87</td>
                   <td className="py-3 px-4">General circuits, lighting, sockets</td>
                 </tr>
                 <tr className="border-b border-gray-700">
                   <td className="py-3 px-4">Type C MCB</td>
                   <td className="py-3 px-4">6-50</td>
-                  <td className="py-3 px-4">5.75-0.46</td>
-                  <td className="py-3 px-4">46-3.68</td>
+                  <td className="py-3 px-4">3.64-0.44</td>
+                  <td className="py-3 px-4">3.64-0.44</td>
                   <td className="py-3 px-4">Motor circuits, high inrush loads</td>
                 </tr>
                 <tr className="border-b border-gray-700">
                   <td className="py-3 px-4">Type D MCB</td>
                   <td className="py-3 px-4">6-50</td>
-                  <td className="py-3 px-4">2.87-0.23</td>
-                  <td className="py-3 px-4">23-1.84</td>
+                  <td className="py-3 px-4">1.82-0.22</td>
+                  <td className="py-3 px-4">3.64-0.44</td>
                   <td className="py-3 px-4">Welding, large transformers</td>
                 </tr>
                 <tr>

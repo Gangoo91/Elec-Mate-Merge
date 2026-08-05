@@ -168,7 +168,7 @@ const sections = [
         <div className="space-y-4 my-6">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                 1
               </div>
               <div>
@@ -180,7 +180,7 @@ const sections = [
                   terminals, cable dressing, and circuit labelling. This task rewards methodical,
                   careful work and a professional finish.
                 </p>
-                <div className="mt-3 rounded-xl bg-yellow-500/10 border border-yellow-500/25 px-4 py-3">
+                <div className="mt-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] px-4 py-3">
                   <p className="text-yellow-300 text-xs font-semibold mb-1">
                     BS 7671:2018+A4:2026 update — device selection
                   </p>
@@ -200,7 +200,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                 2
               </div>
               <div>
@@ -217,7 +217,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                 3
               </div>
               <div>
@@ -237,7 +237,7 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-yellow-500/15 border border-yellow-500/25 flex items-center justify-center font-bold text-yellow-400 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 shrink-0">
                 4
               </div>
               <div>
@@ -315,7 +315,7 @@ const sections = [
           covers. The most common failures are entirely preventable with the right preparation.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-6">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-3 mb-3">
               <h3 className="font-bold text-white">Time Management</h3>
             </div>
@@ -326,7 +326,7 @@ const sections = [
               not from rushing.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-3 mb-3">
               <h3 className="font-bold text-white">Safe Isolation Errors</h3>
             </div>
@@ -337,7 +337,7 @@ const sections = [
               until it is automatic.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-3 mb-3">
               <h3 className="font-bold text-white">Loose Terminations</h3>
             </div>
@@ -347,7 +347,7 @@ const sections = [
               torque screwdriver and visually check every single connection before moving on.
             </p>
           </div>
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-center gap-3 mb-3">
               <h3 className="font-bold text-white">Two-Way Switching Errors</h3>
             </div>

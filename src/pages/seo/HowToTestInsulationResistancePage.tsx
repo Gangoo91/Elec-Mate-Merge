@@ -174,7 +174,7 @@ export default function HowToTestInsulationResistancePage() {
       <section className="relative overflow-hidden py-20 sm:py-28 px-5">
         <div className="absolute inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-yellow-400 text-sm font-medium mb-6">
             <ShieldCheck className="w-4 h-4" />
             BS 7671:2018+A4:2026 Compliant
           </div>
@@ -210,7 +210,7 @@ export default function HowToTestInsulationResistancePage() {
       <section className="py-12 sm:py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <BookOpen className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -264,7 +264,7 @@ export default function HowToTestInsulationResistancePage() {
       <section className="py-12 sm:py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Zap className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -289,7 +289,7 @@ export default function HowToTestInsulationResistancePage() {
                 shaver supplies, garden lighting transformers, and specialist equipment.
               </p>
             </div>
-            <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+            <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <h3 className="font-bold text-yellow-400 text-2xl mb-1">500 V DC</h3>
               <h4 className="font-bold text-white mb-3">Up to 500 V Circuits</h4>
               <p className="text-white text-sm leading-relaxed">
@@ -310,7 +310,7 @@ export default function HowToTestInsulationResistancePage() {
               </p>
             </div>
           </div>
-          <div className="p-5 rounded-2xl bg-yellow-500/10 border border-yellow-500/20">
+          <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
               <div>
@@ -333,7 +333,7 @@ export default function HowToTestInsulationResistancePage() {
       <section className="py-12 sm:py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Activity className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -350,7 +350,7 @@ export default function HowToTestInsulationResistancePage() {
           <div className="grid sm:grid-cols-2 gap-4 my-6">
             <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10">
               <div className="flex items-center gap-2 mb-3">
-                <span className="w-10 h-10 rounded-xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm">
+                <span className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm">
                   1
                 </span>
                 <h3 className="font-bold text-white text-lg">L+N Combined to Earth</h3>
@@ -364,9 +364,9 @@ export default function HowToTestInsulationResistancePage() {
                 immersion heaters.
               </p>
             </div>
-            <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+            <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <div className="flex items-center gap-2 mb-3">
-                <span className="w-10 h-10 rounded-xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm">
+                <span className="w-10 h-10 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm">
                   2
                 </span>
                 <h3 className="font-bold text-white text-lg">Line to Neutral</h3>
@@ -399,7 +399,7 @@ export default function HowToTestInsulationResistancePage() {
       <section className="py-12 sm:py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <AlertTriangle className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -473,7 +473,7 @@ export default function HowToTestInsulationResistancePage() {
       <section className="py-12 sm:py-16 px-5">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <Thermometer className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -516,7 +516,7 @@ export default function HowToTestInsulationResistancePage() {
       <section id="how-it-works" className="py-12 sm:py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <CheckCircle2 className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -529,7 +529,7 @@ export default function HowToTestInsulationResistancePage() {
                 key={index}
                 className="flex gap-4 p-5 rounded-2xl bg-white/[0.04] border border-white/10"
               >
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20 flex-shrink-0">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex-shrink-0">
                   <span className="font-bold text-yellow-400">{index + 1}</span>
                 </div>
                 <div>
@@ -573,7 +573,7 @@ export default function HowToTestInsulationResistancePage() {
       <section className="py-12 sm:py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-yellow-500/10 border border-yellow-500/20">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
               <HelpCircle className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
@@ -584,7 +584,7 @@ export default function HowToTestInsulationResistancePage() {
             {faqs.map((faq, index) => (
               <details
                 key={index}
-                className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-yellow-500/30 transition-colors"
+                className="group p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/[0.14] transition-colors"
               >
                 <summary className="flex items-start gap-3 cursor-pointer touch-manipulation list-none [&::-webkit-details-marker]:hidden">
                   <ChevronRight className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0 transition-transform group-open:rotate-90" />

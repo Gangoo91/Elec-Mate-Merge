@@ -3,6 +3,8 @@ import { SEOPageShell } from '@/components/seo/SEOPageShell';
 import { SEOReadingMeta } from '@/components/seo/SEOReadingMeta';
 import { SEOKeyTakeaways } from '@/components/seo/SEOKeyTakeaways';
 import { SEOAnswerBox } from '@/components/seo/SEOAnswerBox';
+import { accentFor } from '@/components/seo/seoSurface';
+import { SEOSectionHeading } from '@/components/seo/SEOSectionHeading';
 import { SEOFAQAccordion } from '@/components/seo/SEOFAQAccordion';
 import { type RelatedPage } from '@/components/seo/SEORelatedPages';
 import { RecentReviews } from '@/components/seo/RecentReviews';
@@ -336,7 +338,7 @@ export default function GuideTemplate({
       {sections.map((section, index) => (
         <div key={section.id}>
           <section id={section.id} className="pb-10 scroll-mt-24">
-            <SectionHeader
+            <SEOSectionHeading
               eyebrow={`${String(index + 1).padStart(2, '0')} · ${badge}`}
               title={section.heading}
             />
@@ -373,33 +375,38 @@ export default function GuideTemplate({
       {/* Related Pages — editorial cards with real <a> tags for SEO link equity */}
       {relatedPages.length > 0 && (
         <section id="related" className="pb-10 scroll-mt-24">
-          <SectionHeader eyebrow="RELATED" title="Continue reading" />
+          <SEOSectionHeading eyebrow="RELATED" title="Continue reading" />
           <div className="mt-6">
             <HubGrid columns={3}>
-              {relatedPages.map((page, i) => (
-                <Link
-                  key={page.href}
-                  to={page.href}
-                  className="group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-6 sm:p-7 lg:p-8 text-left min-h-[200px] sm:min-h-[240px] flex flex-col"
-                >
-                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70 opacity-70 group-hover:opacity-100 transition-opacity" />
-                  <Eyebrow className="truncate">
-                    {String(i + 1).padStart(2, '0')} · {page.category}
-                  </Eyebrow>
-                  <h3 className="mt-4 text-xl sm:text-2xl lg:text-[26px] font-semibold text-white tracking-tight leading-[1.1]">
-                    {page.title}
-                  </h3>
-                  <p className="mt-2.5 text-[13px] leading-relaxed text-white max-w-[34ch] line-clamp-3">
-                    {page.description}
-                  </p>
-                  <div className="flex-grow" />
-                  <div className="mt-6 flex items-center justify-end pt-4 border-t border-white/[0.06]">
-                    <span className="text-[13px] font-medium text-elec-yellow/90 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all">
-                      Read →
+              {relatedPages.map((page) => {
+                const accent = accentFor(page.category);
+                return (
+                  <Link
+                    key={page.href}
+                    to={page.href}
+                    className="group relative flex min-h-[210px] flex-col bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-6 text-left transition-colors hover:from-white/[0.12] hover:to-white/[0.06] sm:p-7"
+                  >
+                    {/* Category rule — the one saturated mark on the card, and
+                        it encodes what kind of page this is. */}
+                    <span className={`h-[3px] w-9 shrink-0 rounded-full ${accent.rule}`} />
+                    <p
+                      className={`mt-4 text-[11px] font-semibold uppercase tracking-[0.2em] ${accent.text}`}
+                    >
+                      {page.category}
+                    </p>
+                    <h3 className="mt-2.5 text-[20px] font-semibold leading-[1.15] tracking-[-0.02em] text-white sm:text-[22px]">
+                      {page.title}
+                    </h3>
+                    <p className="mt-2.5 line-clamp-3 max-w-[34ch] text-[13.5px] leading-relaxed text-white">
+                      {page.description}
+                    </p>
+                    <div className="flex-grow" />
+                    <span className="mt-6 text-[13.5px] font-semibold text-elec-yellow">
+                      Read
                     </span>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                );
+              })}
             </HubGrid>
           </div>
         </section>
@@ -415,7 +422,7 @@ export default function GuideTemplate({
       <SEOCTASection heading={ctaHeading} subheading={ctaSubheading} />
 
       <div className="h-24 sm:hidden" />
-      <SEOStickyMobileCTA />
+      <SEOStickyMobileCTA hideWhileVisible="section.bg-elec-yellow" />
     </SEOPageShell>
   );
 }

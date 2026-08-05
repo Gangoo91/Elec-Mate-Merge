@@ -431,7 +431,7 @@ const sections = [
           be correctly sized for the assessed maximum demand, with voltage drop calculated for the
           cable length.
         </p>
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-amber-500/30 p-5 my-4">
           <h3 className="font-bold text-white text-base mb-2">
             AFDDs for Retail Socket-Outlet Circuits — BS 7671:2018+A4:2026 Reg 421.1.7
           </h3>
@@ -536,7 +536,7 @@ const sections = [
           equipment, seasonal decorations, and periodic refits. These changes often introduce
           defects that are identified during periodic EICR inspections:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -607,7 +607,7 @@ const sections = [
         </p>
         <p>Elec-Mate supports the full retail certification workflow:</p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Brain className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

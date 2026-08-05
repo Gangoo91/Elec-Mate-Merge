@@ -281,7 +281,7 @@ const sections = [
           outdoors or in locations where there is an increased risk of electric shock must be
           protected by a 30mA RCD. This is a mandatory requirement, not a recommendation.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -423,7 +423,7 @@ const sections = [
           While some homeowners consider installing an outdoor socket themselves, this is not
           recommended and in most cases not legally compliant:
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -472,7 +472,7 @@ const sections = [
           EV charger preparation, hot tub supply). Here is how to quote them accurately:
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Calculator className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

@@ -178,7 +178,7 @@ const sections = [
           target your training investment correctly:
         </p>
         <div className="grid gap-4 sm:grid-cols-3 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h3 className="font-bold text-white text-base mb-3">Oil and Gas Platforms</h3>
             <p className="text-white text-sm leading-relaxed">
               Fixed and floating production platforms on the UK Continental Shelf (North Sea and

@@ -1,18 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import {
-  BookOpen,
-  Zap,
-  Wrench,
-  Brain,
-  ChevronRight,
-  Shield,
-  AlertTriangle,
-  HelpCircle,
-  ClipboardList,
-} from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { LearningSection } from '../LearningHub';
-import { BusinessCard } from '@/components/business-hub';
 
 interface LearningHubOverviewProps {
   onNavigateToSection: (section: LearningSection) => void;
@@ -39,6 +28,20 @@ const tests = [
   { label: 'Func.', abbrev: 'Op.' },
 ];
 
+/**
+ * The certificate card. Same class the schedule of tests and the specialist
+ * certificates use, so the hub an electrician learns in and the certificate
+ * they then fill out read as one product rather than two.
+ *
+ * Full-bleed on a phone (`-mx-4`), inset and rounded from `sm:` up.
+ */
+const cardCn =
+  '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x ' +
+  'bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5';
+
+/** Section heading — typography only. No icons, no dots, no gradient rules. */
+const headingCn = 'mb-3 text-[15px] font-semibold tracking-tight text-white';
+
 const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) => {
   return (
     <motion.main
@@ -54,17 +57,19 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
           onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); onNavigateToSection('testing'); }}
           className="w-full text-left touch-manipulation active:scale-[0.98] transition-transform"
         >
-          <div className="relative rounded-2xl bg-red-500/15 border border-red-500/30 p-4 overflow-hidden">
-            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-red-500 via-rose-400 to-red-500" />
-            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-red-500 rounded-l-2xl" />
-            <div className="flex items-center justify-between pl-2">
-              <div className="flex-1 min-w-0">
-                <p className="text-[15px] font-bold text-white">Always Isolate Before Testing</p>
-                <p className="text-[12px] text-red-200 mt-1">Safe isolation is life-critical — follow GS38 procedures every time</p>
+          {/* Red is kept here because it encodes danger, not decoration — the
+              one place on this screen where colour carries meaning. */}
+          <div className="-mx-4 rounded-none border-y border-red-500/30 bg-red-500/[0.12] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5">
+            <div className="flex items-center justify-between gap-3">
+              <div className="min-w-0 flex-1">
+                <p className="text-[15px] font-semibold tracking-tight text-white">
+                  Always isolate before testing
+                </p>
+                <p className="mt-1 text-[12px] text-white">
+                  Safe isolation is life-critical — follow GS38 every time
+                </p>
               </div>
-              <div className="w-9 h-9 rounded-full bg-red-500/30 flex items-center justify-center shrink-0 ml-3">
-                <ChevronRight className="h-5 w-5 text-red-300" />
-              </div>
+              <ChevronRight className="h-5 w-5 shrink-0 text-white" />
             </div>
           </div>
         </button>
@@ -72,12 +77,9 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
 
       {/* Required Test Sequence — brighter cards */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <h2 className="text-[11px] font-bold text-white uppercase tracking-widest px-0.5">
-          Required Test Sequence
-        </h2>
+        <h2 className={headingCn}>Required test sequence</h2>
 
-        <div className="rounded-2xl bg-white/[0.06] border border-white/[0.12] p-4 space-y-3 overflow-hidden relative">
-          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 opacity-60" />
+        <div className={cardCn}>
 
           <div className="flex gap-1.5 overflow-x-auto scrollbar-hide -mx-1 px-1 pb-1 items-end">
             {tests.map((test, i) => {
@@ -115,139 +117,147 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
 
       {/* Learning Modules — hero variant for more visual weight */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <h2 className="text-[11px] font-bold text-white uppercase tracking-widest px-0.5">
-          Learning Modules
-        </h2>
-        <div className="grid grid-cols-2 gap-3">
-          <BusinessCard
-            title="Testing"
-            description="10 test procedures"
-            icon={Zap}
-            onClick={() => onNavigateToSection('testing')}
-            variant="hero"
-          />
-          <BusinessCard
-            title="Fault Finding"
-            description="8 diagnostic tools"
-            icon={Wrench}
-            onClick={() => onNavigateToSection('fault-finding')}
-            variant="hero"
-          />
-          <BusinessCard
-            title="Regulations"
-            description="9 reference tools"
-            icon={BookOpen}
-            onClick={() => onNavigateToSection('regulations')}
-            variant="hero"
-          />
-          <BusinessCard
-            title="Quiz"
-            description="460 questions"
-            icon={Brain}
-            onClick={() => onNavigateToSection('quiz')}
-            variant="hero"
-          />
+        <h2 className={headingCn}>Learning modules</h2>
+        {/* Was BusinessCard from the business-hub set — a different design
+            system, so these tiles did not match the certificates they teach. */}
+        <div className="-mx-4 grid grid-cols-2 gap-px border-y border-white/[0.14] bg-white/[0.14] sm:mx-0 sm:gap-3 sm:border-0 sm:bg-transparent">
+          {[
+            { title: 'Testing', desc: '10 test procedures', section: 'testing' as LearningSection },
+            { title: 'Fault finding', desc: '8 diagnostic tools', section: 'fault-finding' as LearningSection },
+            { title: 'Regulations', desc: '9 reference tools', section: 'regulations' as LearningSection },
+            { title: 'Quiz', desc: '460 questions', section: 'quiz' as LearningSection },
+          ].map((mod) => (
+            <button
+              key={mod.section}
+              type="button"
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                onNavigateToSection(mod.section);
+              }}
+              className="flex min-h-[5.5rem] touch-manipulation flex-col justify-between bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 text-left transition-transform active:scale-[0.98] sm:rounded-2xl sm:border sm:border-white/[0.14]"
+            >
+              <span className="text-[15px] font-semibold tracking-tight text-white">
+                {mod.title}
+              </span>
+              <span className="mt-1 text-[12px] text-white">{mod.desc}</span>
+            </button>
+          ))}
         </div>
       </motion.section>
 
       {/* Quick Reference — brighter contrast */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <h2 className="text-[11px] font-bold text-white uppercase tracking-widest px-0.5">
-          Quick Reference
-        </h2>
-        <div className="grid grid-cols-2 gap-3">
-          <div className="relative rounded-2xl bg-white/[0.06] border border-amber-500/20 p-4 space-y-2 overflow-hidden">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500/60 rounded-l-2xl" />
-            <p className="text-[13px] font-bold text-amber-400">Zs 80% Limits</p>
-            <div className="space-y-1.5 text-[11px]">
-              <div className="flex justify-between"><span className="text-white">6A Type B</span><span className="font-bold text-white">5.82Ω</span></div>
-              <div className="flex justify-between"><span className="text-white">32A Type B</span><span className="font-bold text-yellow-400">1.09Ω</span></div>
-              <div className="flex justify-between"><span className="text-white">40A Type B</span><span className="font-bold text-white">0.87Ω</span></div>
+        <h2 className={headingCn}>Quick reference</h2>
+        {/* The coloured left rails and per-card border tints were decoration —
+            four different hues for four equally important tables. Values are
+            tabular-nums so the columns line up the way they do on a cert. */}
+        <div className="-mx-4 grid grid-cols-2 gap-px border-y border-white/[0.14] bg-white/[0.14] sm:mx-0 sm:gap-3 sm:border-0 sm:bg-transparent">
+          {[
+            {
+              title: 'Zs 80% limits',
+              rows: [
+                ['6A Type B', '5.82Ω'],
+                ['32A Type B', '1.09Ω'],
+                ['40A Type B', '0.87Ω'],
+              ],
+            },
+            {
+              title: 'RCD 30mA',
+              rows: [
+                ['0.5× (15mA)', 'No trip'],
+                ['1× (30mA)', '≤300ms'],
+                ['5× (150mA)', '≤40ms'],
+              ],
+            },
+            {
+              title: 'IR minimum',
+              rows: [
+                ['SELV ≤50V', '0.5MΩ'],
+                ['LV ≤500V', '1.0MΩ'],
+                ['500–1000V', '1.0MΩ'],
+              ],
+            },
+            {
+              title: 'Disconnection',
+              rows: [
+                ['Sockets ≤63A', '0.4s'],
+                ['Fixed equip', '5s'],
+                ['TT (230V)', '0.2s'],
+              ],
+            },
+          ].map((ref) => (
+            <div
+              key={ref.title}
+              className="bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:rounded-2xl sm:border sm:border-white/[0.14]"
+            >
+              <p className="text-[13px] font-semibold tracking-tight text-white">{ref.title}</p>
+              <div className="mt-2 space-y-1.5 text-[11px]">
+                {ref.rows.map(([label, value]) => (
+                  <div key={label} className="flex justify-between gap-2">
+                    <span className="text-white">{label}</span>
+                    <span className="font-semibold tabular-nums text-white">{value}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="relative rounded-2xl bg-white/[0.06] border border-red-500/20 p-4 space-y-2 overflow-hidden">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-red-500/60 rounded-l-2xl" />
-            <p className="text-[13px] font-bold text-red-400">RCD 30mA</p>
-            <div className="space-y-1.5 text-[11px]">
-              <div className="flex justify-between"><span className="text-white">0.5× (15mA)</span><span className="font-bold text-white">No trip</span></div>
-              <div className="flex justify-between"><span className="text-white">1× (30mA)</span><span className="font-bold text-yellow-400">≤300ms</span></div>
-              <div className="flex justify-between"><span className="text-white">5× (150mA)</span><span className="font-bold text-yellow-400">≤40ms</span></div>
-            </div>
-          </div>
-          <div className="relative rounded-2xl bg-white/[0.06] border border-blue-500/20 p-4 space-y-2 overflow-hidden">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-500/60 rounded-l-2xl" />
-            <p className="text-[13px] font-bold text-blue-400">IR Minimum</p>
-            <div className="space-y-1.5 text-[11px]">
-              <div className="flex justify-between"><span className="text-white">SELV ≤50V</span><span className="font-bold text-white">0.5MΩ</span></div>
-              <div className="flex justify-between"><span className="text-white">LV ≤500V</span><span className="font-bold text-yellow-400">1.0MΩ</span></div>
-              <div className="flex justify-between"><span className="text-white">500-1000V</span><span className="font-bold text-white">1.0MΩ</span></div>
-            </div>
-          </div>
-          <div className="relative rounded-2xl bg-white/[0.06] border border-emerald-500/20 p-4 space-y-2 overflow-hidden">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500/60 rounded-l-2xl" />
-            <p className="text-[13px] font-bold text-emerald-400">Disconnection</p>
-            <div className="space-y-1.5 text-[11px]">
-              <div className="flex justify-between"><span className="text-white">Sockets ≤63A</span><span className="font-bold text-white">0.4s</span></div>
-              <div className="flex justify-between"><span className="text-white">Fixed equip</span><span className="font-bold text-white">5s</span></div>
-              <div className="flex justify-between"><span className="text-white">TT (230V)</span><span className="font-bold text-white">0.2s</span></div>
-            </div>
-          </div>
+          ))}
         </div>
       </motion.section>
 
       {/* On-Site Essentials — brighter list items */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <h2 className="text-[11px] font-bold text-white uppercase tracking-widest px-0.5">
-          On-Site Essentials
-        </h2>
-        <div className="space-y-2">
+        <h2 className={headingCn}>On-site essentials</h2>
+        {/* One list, hairline-separated — the pattern the schedule of tests
+            uses for its rows. The coloured icon tiles were three different
+            hues for three items of equal weight. */}
+        <div className="-mx-4 divide-y divide-white/[0.1] border-y border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] sm:mx-0 sm:rounded-2xl sm:border-x">
           {[
-            { icon: HelpCircle, colour: 'yellow', title: 'Common Questions', desc: '20 plain-English regulation answers', section: 'regulations' as LearningSection },
-            { icon: AlertTriangle, colour: 'orange', title: 'EICR Coding Guide', desc: 'C1, C2, C3, FI — with examples', section: 'regulations' as LearningSection },
-            { icon: ClipboardList, colour: 'blue', title: 'Compliance Checklists', desc: 'New install, CU change, EICR, EV, PV', section: 'regulations' as LearningSection },
-          ].map((item, i) => {
-            const colourMap: Record<string, { bg: string; border: string; icon: string }> = {
-              yellow: { bg: 'bg-yellow-400/15', border: 'border-yellow-400/25', icon: 'text-yellow-400' },
-              orange: { bg: 'bg-orange-400/15', border: 'border-orange-400/25', icon: 'text-orange-400' },
-              blue: { bg: 'bg-blue-400/15', border: 'border-blue-400/25', icon: 'text-blue-400' },
-            };
-            const c = colourMap[item.colour];
-            return (
-              <button
-                key={i}
-                type="button"
-                onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); onNavigateToSection(item.section); }}
-                className="w-full text-left touch-manipulation active:scale-[0.98] transition-transform"
-              >
-                <div className="flex items-center gap-3 rounded-2xl bg-white/[0.06] border border-white/[0.12] p-3.5 hover:bg-white/[0.08] transition-colors">
-                  <div className={`w-10 h-10 rounded-xl ${c.bg} border ${c.border} flex items-center justify-center shrink-0`}>
-                    <item.icon className={`h-5 w-5 ${c.icon}`} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[13px] font-semibold text-white">{item.title}</p>
-                    <p className="text-[11px] text-white">{item.desc}</p>
-                  </div>
-                  <ChevronRight className="h-4 w-4 text-white shrink-0" />
-                </div>
-              </button>
-            );
-          })}
+            {
+              title: 'Common questions',
+              desc: '20 plain-English regulation answers',
+              section: 'regulations' as LearningSection,
+            },
+            {
+              title: 'EICR coding guide',
+              desc: 'C1, C2, C3, FI — with examples',
+              section: 'regulations' as LearningSection,
+            },
+            {
+              title: 'Compliance checklists',
+              desc: 'New install, CU change, EICR, EV, PV',
+              section: 'regulations' as LearningSection,
+            },
+          ].map((item) => (
+            <button
+              key={item.title}
+              type="button"
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                onNavigateToSection(item.section);
+              }}
+              className="flex min-h-[3.25rem] w-full touch-manipulation items-center gap-3 p-4 text-left transition-colors active:bg-white/[0.04]"
+            >
+              <div className="min-w-0 flex-1">
+                <p className="text-[14px] font-medium text-white">{item.title}</p>
+                <p className="mt-0.5 text-[12px] text-white">{item.desc}</p>
+              </div>
+              <ChevronRight className="h-4 w-4 shrink-0 text-white" />
+            </button>
+          ))}
         </div>
       </motion.section>
 
       {/* BS 7671 Badge */}
       <motion.div variants={itemVariants}>
-        <div className="relative rounded-2xl bg-yellow-400/[0.08] border border-yellow-400/20 p-4 overflow-hidden">
-          <div className="absolute left-0 top-0 bottom-0 w-1 bg-yellow-400/60 rounded-l-2xl" />
-          <div className="flex items-center justify-between pl-1">
-            <div>
-              <p className="text-[12px] font-bold text-yellow-400">BS 7671:2018+A4:2026</p>
-              <p className="text-[11px] text-white leading-relaxed mt-0.5">
-                All content verified against the current edition. A4 update coming.
-              </p>
-            </div>
-            <Shield className="h-8 w-8 text-yellow-400/30 shrink-0 ml-3" />
-          </div>
+        {/* "A4 update coming" contradicted the heading directly above it —
+            A4:2026 IS the current edition, and this content is written to it. */}
+        <div className={cardCn}>
+          <p className="text-[13px] font-semibold tracking-tight text-white">
+            BS 7671:2018+A4:2026
+          </p>
+          <p className="mt-1 text-[12px] leading-relaxed text-white">
+            All content on this page is written to the current edition.
+          </p>
         </div>
       </motion.div>
     </motion.main>

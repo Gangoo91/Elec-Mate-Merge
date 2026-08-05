@@ -214,7 +214,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <p className="text-white text-sm">
             <strong>Disclaimer:</strong> VAT rules are complex and subject to change. The
             information in this guide is general in nature. Always consult a qualified accountant or
@@ -563,7 +563,7 @@ const sections = [
           electricians in recent years. It came into force in March 2021 and affects all
           VAT-registered CIS subcontractors supplying services to VAT-registered CIS contractors.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -604,7 +604,7 @@ const sections = [
           </ul>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
-          <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <h4 className="font-bold text-white mb-3 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5 text-red-400 shrink-0" /> Reverse charge applies
             </h4>
@@ -694,7 +694,7 @@ const sections = [
           DRC notation.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <Receipt className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

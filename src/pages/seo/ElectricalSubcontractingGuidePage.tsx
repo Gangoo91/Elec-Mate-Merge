@@ -246,7 +246,7 @@ export default function ElectricalSubcontractingGuidePage() {
                       <span className="text-white text-sm">London and South East</span>
                       <span className="font-bold text-yellow-400">£240 - £300/day</span>
                     </div>
-                    <div className="flex items-center justify-between p-3 rounded-xl bg-yellow-500/5 border border-yellow-500/20">
+                    <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                       <span className="text-white text-sm">
                         Specialist (data centres, healthcare)
                       </span>
@@ -295,7 +295,7 @@ export default function ElectricalSubcontractingGuidePage() {
               </p>
               <div className="space-y-3 mt-4">
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                     1
                   </span>
                   <div>
@@ -312,7 +312,7 @@ export default function ElectricalSubcontractingGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                     2
                   </span>
                   <div>
@@ -328,7 +328,7 @@ export default function ElectricalSubcontractingGuidePage() {
                   </div>
                 </div>
                 <div className="flex gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/10">
-                  <span className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
+                  <span className="w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] flex items-center justify-center font-bold text-yellow-400 text-sm flex-shrink-0">
                     3
                   </span>
                   <div>
@@ -348,7 +348,7 @@ export default function ElectricalSubcontractingGuidePage() {
                   </div>
                 </div>
               </div>
-              <div className="mt-4 p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+              <div className="mt-4 p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                   <div>

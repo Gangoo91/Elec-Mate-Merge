@@ -26,15 +26,32 @@ interface CertShellHeaderProps {
   completedTabs: Record<string, boolean>;
 }
 
-/** Save state as a word — no icons (design rule: typography carries state). */
+/**
+ * Save state as a word — no icons (design rule: typography carries state).
+ *
+ * `queued` gets its own word deliberately. Work that failed to reach the cloud
+ * is enqueued for retry (useReportSync ~line 906) and is safe in localStorage,
+ * but it previously fell through to the same "Save" as a brand-new draft — so
+ * an electrician on bad signal had no way to tell there was outstanding work
+ * not yet on the server. Their phone going in a puddle would take it with them.
+ * "Pending" states that plainly, and the count shows how much is outstanding.
+ */
 const saveWord = (
   isSaving: boolean,
-  cloud: SyncStatus['cloud'] | undefined
+  cloud: SyncStatus['cloud'] | undefined,
+  queuedChanges = 0
 ): { word: string; tone: string } => {
   if (cloud === 'offline') return { word: 'Offline', tone: 'text-orange-300' };
   if (isSaving || cloud === 'syncing') return { word: 'Saving', tone: 'text-white/90' };
   if (cloud === 'error' || cloud === 'conflict') return { word: 'Retry save', tone: 'text-red-400' };
+  if (cloud === 'queued') {
+    return {
+      word: queuedChanges > 1 ? `Pending ${queuedChanges}` : 'Pending',
+      tone: 'text-amber-300',
+    };
+  }
   if (cloud === 'synced') return { word: 'Saved', tone: 'text-green-400' };
+  if (cloud === 'unsaved') return { word: 'Not saved', tone: 'text-white/90' };
   return { word: 'Save', tone: 'text-white/90' };
 };
 
@@ -65,7 +82,7 @@ const CertShellHeader: React.FC<CertShellHeaderProps> = ({
   completedTabs,
 }) => {
   const haptic = useHaptic();
-  const save = saveWord(isSaving, syncStatus?.cloud);
+  const save = saveWord(isSaving, syncStatus?.cloud, syncStatus?.queuedChanges);
 
   return (
     <>

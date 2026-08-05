@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowLeft,
   Plus,
-  ClipboardCheck,
   Loader2,
   AlertTriangle,
   Sparkles,
@@ -16,12 +15,14 @@ import { TaskForm } from '@/components/tasks/TaskForm';
 import { TaskDetailSheet } from '@/components/tasks/TaskDetailSheet';
 import { TaskQuickAdd } from '@/components/tasks/TaskQuickAdd';
 import { TaskTemplates } from '@/components/tasks/TaskTemplates';
+import { GenerateTasksSheet } from '@/components/tasks/GenerateTasksSheet';
 import { Assistant } from '@/components/business-hub/Assistant';
 import {
   useSparkTasks,
   type SparkTask,
   type TaskView,
   type UpdateTaskInput,
+  type SaveTaskInput,
 } from '@/hooks/useSparkTasks';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import PushNotificationPrompt from '@/components/notifications/PushNotificationPrompt';
@@ -164,6 +165,7 @@ const TasksPage = () => {
     counts,
     isLoading,
     saveTask,
+    saveTasks,
     updateTask,
     deleteTask,
     markDone,
@@ -181,10 +183,41 @@ const TasksPage = () => {
     deleteProject,
   } = useSparkProjects('all');
 
+  /**
+   * The one task to do next.
+   *
+   * 59% of open tasks platform-wide carry no due date, so an urgency-grouped
+   * list collapses into a single undifferentiated pile — 16 of 17 under "No
+   * due date" in the reported case. Grouping does not fix that; it just labels
+   * it. Picking one task and putting it above everything else does.
+   *
+   * Order: most overdue first, then soonest due, then the oldest thing sitting
+   * undated — because a task nobody has touched in three weeks is exactly what
+   * gets lost in a flat list.
+   */
+  const upNext = useMemo(() => {
+    if (activeView !== 'all' || tasks.length === 0) return null;
+    const open = tasks.filter((t) => t.status !== 'done');
+    if (open.length === 0) return null;
+    const dated = open.filter((t) => t.dueAt);
+    if (dated.length > 0) {
+      return dated.reduce((a, b) => (new Date(a.dueAt!) <= new Date(b.dueAt!) ? a : b));
+    }
+    return open.reduce((a, b) =>
+      new Date(a.createdAt ?? 0) <= new Date(b.createdAt ?? 0) ? a : b
+    );
+  }, [tasks, activeView]);
+
+  /** Everything except the hero, so it is not shown twice. */
+  const listTasks = useMemo(
+    () => (upNext ? tasks.filter((t) => t.id !== upNext.id) : tasks),
+    [tasks, upNext]
+  );
+
   // Group tasks by urgency when in "All Open" view
   const groups = useMemo(
-    () => (activeView === 'all' ? groupTasksByUrgency(tasks) : null),
-    [tasks, activeView]
+    () => (activeView === 'all' ? groupTasksByUrgency(listTasks) : null),
+    [listTasks, activeView]
   );
 
   // Sheet state
@@ -193,6 +226,13 @@ const TasksPage = () => {
   const [detailTask, setDetailTask] = useState<SparkTask | null>(null);
   const [templatesOpen, setTemplatesOpen] = useState(false);
   const [aiOpen, setAiOpen] = useState(false);
+  const [generateOpen, setGenerateOpen] = useState(false);
+
+  /** One insert for the whole plan — see saveTasks. Looping saveTask made a
+   *  nine-task plan arrive one row at a time. */
+  async function handleGenerateCreate(list: SaveTaskInput[]) {
+    await saveTasks(list);
+  }
 
   async function handleQuickSave(title: string) {
     return saveTask({ title });
@@ -221,7 +261,7 @@ const TasksPage = () => {
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24 min-h-screen">
       {/* Sticky compact bar — back, title, add */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 lg:px-6 py-2">
+        <div className="mx-auto max-w-5xl px-4 py-2 lg:px-6">
           <div className="flex items-center justify-between h-11">
             <div className="flex items-center gap-2 min-w-0">
               <Button
@@ -234,14 +274,21 @@ const TasksPage = () => {
               </Button>
               <div className="min-w-0">
                 <h1 className="text-lg font-bold text-white leading-tight">Tasks</h1>
-                <p className="text-[11px] text-white/60 leading-tight truncate">
-                  <span className="font-semibold text-white tabular-nums">{counts.all ?? 0}</span> open
-                  {(counts.overdue ?? 0) > 0 && (
+                {/* "17 open · 1 overdue" restated the tabs directly beneath it.
+                    Completed momentum was buried in the last tab instead — and
+                    for someone clearing jobs, what you have finished is the
+                    number worth showing. */}
+                <p className="text-[11px] leading-tight text-white truncate">
+                  {(counts.completed ?? 0) > 0 ? (
                     <>
-                      <span className="mx-1 text-white/30">·</span>
-                      <span className="font-semibold text-red-400 tabular-nums">{counts.overdue}</span> overdue
+                      <span className="font-semibold text-emerald-400 tabular-nums">
+                        {counts.completed}
+                      </span>{' '}
+                      done
+                      <span className="mx-1">·</span>
                     </>
-                  )}
+                  ) : null}
+                  <span className="font-semibold tabular-nums">{counts.all ?? 0}</span> to go
                 </p>
               </div>
             </div>
@@ -250,7 +297,7 @@ const TasksPage = () => {
               size="icon"
               onClick={() => handleOpenForm()}
               aria-label="New task"
-              className="h-11 w-11 text-white/80 hover:text-white hover:bg-white/10 rounded-xl touch-manipulation active:scale-[0.98]"
+              className="h-11 w-11 text-white hover:text-white hover:bg-white/10 rounded-xl touch-manipulation active:scale-[0.98]"
             >
               <Plus className="h-5 w-5" />
             </Button>
@@ -260,7 +307,7 @@ const TasksPage = () => {
         {/* Filter tabs — single source of truth for what's on screen.
             "Overdue" leads when count > 0 with a red tint so the eye lands
             on what's pressing without needing a separate stat grid. */}
-        <div className="px-4 lg:px-6 lg:mx-auto">
+        <div className="mx-auto max-w-5xl px-4 lg:px-6">
           <div className="relative">
             <div className="flex gap-5 overflow-x-auto scrollbar-hide">
               {VIEWS.map((v) => (
@@ -270,7 +317,7 @@ const TasksPage = () => {
                   onClick={() => setActiveView(v.key)}
                   className="relative flex-shrink-0 pb-2.5 pt-1 text-[13px] font-medium whitespace-nowrap touch-manipulation select-none"
                 >
-                  <span className={activeView === v.key ? 'text-white' : 'text-white/80'}>
+                  <span className="text-white">
                     {v.label}
                   </span>
                   {counts[v.key] > 0 && (
@@ -281,7 +328,7 @@ const TasksPage = () => {
                           ? 'text-orange-400'
                           : activeView === v.key
                             ? 'text-elec-yellow'
-                            : 'text-white/60'
+                            : 'text-white'
                       )}
                     >
                       {counts[v.key]}
@@ -299,7 +346,7 @@ const TasksPage = () => {
       </div>
 
       {/* ─── Quick-add bar — straight to action, no editorial chrome ─── */}
-      <div className="px-4 lg:px-6 pt-4">
+      <div className="mx-auto max-w-5xl px-4 pt-4 lg:px-6">
         <TaskQuickAdd
           onQuickSave={handleQuickSave}
           onExpandForm={() => handleOpenForm()}
@@ -315,29 +362,109 @@ const TasksPage = () => {
         </div>
       </div>
 
+      {/* ─── Up next — the page's answer to "what do I do?" ───────────────
+          A flat list of seventeen equal-weight rows makes the reader do the
+          prioritising. This makes one choice for them and gives it the actions
+          it needs, so the common case is a single tap and move on. */}
+      {upNext && !isLoading && (
+        <div className="mx-auto max-w-5xl px-4 pt-4 lg:px-6">
+          <div className="rounded-2xl border border-elec-yellow/30 bg-gradient-to-b from-elec-yellow/[0.10] to-white/[0.06] p-4 sm:p-5">
+            <div className="flex items-baseline justify-between gap-3">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-elec-yellow">
+                Up next
+              </p>
+              {upNext.dueAt && (
+                <p
+                  className={cn(
+                    'text-[12px] font-semibold tabular-nums',
+                    new Date(upNext.dueAt) < new Date() ? 'text-red-400' : 'text-white'
+                  )}
+                >
+                  {new Date(upNext.dueAt) < new Date() ? 'Overdue' : 'Due'}{' '}
+                  {new Date(upNext.dueAt).toLocaleDateString('en-GB', {
+                    weekday: 'short',
+                    day: 'numeric',
+                    month: 'short',
+                  })}
+                </p>
+              )}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => handleTapTask(upNext)}
+              className="mt-2 block w-full text-left touch-manipulation"
+            >
+              <h2 className="text-[19px] font-semibold leading-snug tracking-tight text-white">
+                {upNext.title}
+              </h2>
+              {(upNext.location || upNext.customerName) && (
+                <p className="mt-1 text-[13px] text-white">
+                  {[upNext.customerName, upNext.location].filter(Boolean).join(' · ')}
+                </p>
+              )}
+            </button>
+
+            <div className="mt-4 flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => markDone(upNext.id)}
+                className="h-11 flex-1 rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.99]"
+              >
+                Mark done
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  // Tomorrow morning, not "+24 hours" — a task pushed from
+                  // 21:00 to 21:00 lands outside the working day.
+                  const t = new Date();
+                  t.setDate(t.getDate() + 1);
+                  t.setHours(9, 0, 0, 0);
+                  snoozeTask(upNext.id, t);
+                }}
+                className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.04] px-4 text-[14px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation active:scale-[0.99]"
+              >
+                Tomorrow
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Task list */}
       <PullToRefresh onRefresh={refreshTasks} isRefreshing={isLoading}>
-        <div className="px-4 lg:px-6 py-4">
+        <div className="mx-auto max-w-5xl px-4 py-4 lg:px-6">
           {isLoading && tasks.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16">
               <Loader2 className="h-8 w-8 text-white animate-spin" />
               <p className="text-sm text-white mt-3">Loading tasks...</p>
             </div>
           ) : tasks.length === 0 ? (
-            <div className="rounded-2xl border border-white/[0.10] bg-gradient-to-b from-white/[0.06] to-white/[0.03] shadow-[0_8px_24px_rgba(0,0,0,0.35)] flex flex-col items-center justify-center text-center py-10 px-4">
-              <div className="h-12 w-12 rounded-2xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center mb-3.5">
-                <ClipboardCheck className="h-6 w-6 text-white/70" />
-              </div>
-              <h3 className="text-[15px] font-semibold text-white mb-1">{empty.title}</h3>
-              <p className="text-[13px] text-white/60 mb-4">{empty.subtitle}</p>
+            /* Typography carries the empty state — the boxed icon was chrome
+               around a sentence. */
+            <div className="py-14 text-center">
+              <h3 className="text-[17px] font-semibold tracking-tight text-white mb-1.5">{empty.title}</h3>
+              <p className="text-[13px] text-white mb-4">{empty.subtitle}</p>
               {activeView !== 'completed' && (
-                <button
-                  type="button"
-                  onClick={() => setTemplatesOpen(true)}
-                  className="px-5 h-11 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation active:scale-[0.97] transition-all"
-                >
-                  Browse templates
-                </button>
+                <div className="flex flex-wrap justify-center gap-2">
+                  {/* Describing the job beats picking from a template list when
+                      you have nothing yet — it produces the whole plan at once. */}
+                  <button
+                    type="button"
+                    onClick={() => setGenerateOpen(true)}
+                    className="h-11 rounded-xl bg-elec-yellow px-5 text-[13px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
+                  >
+                    Plan a job with AI
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setTemplatesOpen(true)}
+                    className="h-11 rounded-xl border border-white/[0.14] bg-white/[0.06] px-5 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.10] touch-manipulation active:scale-[0.98]"
+                  >
+                    Browse templates
+                  </button>
+                </div>
               )}
             </div>
           ) : groups ? (
@@ -351,36 +478,39 @@ const TasksPage = () => {
               {groups.map((group) => (
                 <motion.div key={group.key} variants={itemVariants}>
                   {/* Subtle group label — small caps, count inline, no badges */}
-                  <div className="flex items-baseline gap-2 mb-1.5">
-                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
-                      0{groups.indexOf(group) + 1}
-                    </span>
-                    <span
+                  {/* Plain heading and a count. The old "01 ·" prefix numbered
+                      the sections, which told the reader nothing — the order is
+                      already urgency, and a number in front of "Overdue" reads
+                      like part of the label. */}
+                  <div className="mb-2 flex items-baseline gap-2">
+                    <h2
                       className={cn(
-                        'text-[10px] font-medium uppercase tracking-[0.18em]',
+                        'text-[15px] font-semibold tracking-tight',
                         group.key === 'overdue'
                           ? 'text-red-400'
                           : group.key === 'today'
                             ? 'text-amber-400'
-                            : 'text-white/65'
+                            : 'text-white'
                       )}
                     >
-                      · {group.label}
-                    </span>
-                    <span className="text-[11px] font-medium text-white/35 tabular-nums">
-                      {group.tasks.length}
-                    </span>
+                      {group.label}
+                    </h2>
+                    <span className="text-[13px] text-white tabular-nums">{group.tasks.length}</span>
                   </div>
                   {/* Tasks — hairline-separated rows. Two columns on lg+. */}
-                  <div className="lg:grid lg:grid-cols-2 lg:gap-x-6 divide-y divide-white/[0.06] lg:divide-y-0">
+                  {/* Deliberately one column on every width. The two-column
+                      version flowed tasks left-right-left-right while the eye
+                      reads top-to-bottom, so the third most urgent job appeared
+                      below the fifth. A prioritised list only works read in
+                      order; width is capped instead so lines stay readable. */}
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                     <AnimatePresence mode="popLayout">
                       {group.tasks.map((task) => (
                         <motion.div
                           key={task.id}
                           variants={itemVariants}
                           layout
-                          exit={{ opacity: 0, x: -100, transition: { duration: 0.2 } }}
-                          className="lg:border-b lg:border-white/[0.06]"
+                          exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.2 } }}
                         >
                           <TaskCard
                             task={task}
@@ -395,12 +525,12 @@ const TasksPage = () => {
               ))}
             </motion.div>
           ) : (
-            /* Flat list — hairline rows, two columns on lg+ */
+            /* Today / This week / Snagging / Completed — same card grid */
             <motion.div
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="lg:grid lg:grid-cols-2 lg:gap-x-6 divide-y divide-white/[0.06] lg:divide-y-0"
+              className="grid grid-cols-1 gap-3 sm:grid-cols-2"
             >
               <AnimatePresence mode="popLayout">
                 {tasks.map((task) => (
@@ -408,8 +538,7 @@ const TasksPage = () => {
                     key={task.id}
                     variants={itemVariants}
                     layout
-                    exit={{ opacity: 0, x: -100, transition: { duration: 0.2 } }}
-                    className="lg:border-b lg:border-white/[0.06]"
+                    exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.2 } }}
                   >
                     <TaskCard
                       task={task}
@@ -449,6 +578,12 @@ const TasksPage = () => {
       />
 
       {/* Templates sheet */}
+      <GenerateTasksSheet
+        open={generateOpen}
+        onOpenChange={setGenerateOpen}
+        onCreate={handleGenerateCreate}
+      />
+
       <TaskTemplates
         isOpen={templatesOpen}
         onClose={() => setTemplatesOpen(false)}

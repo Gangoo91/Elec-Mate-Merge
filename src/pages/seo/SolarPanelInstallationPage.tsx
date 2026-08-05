@@ -174,7 +174,7 @@ export default function SolarPanelInstallationPage() {
                 depending on the rated output of the system.
               </p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-3">
                     G98 (Up to 3.68 kW Single Phase)
                   </h3>
@@ -335,7 +335,7 @@ export default function SolarPanelInstallationPage() {
                     layouts with multiple orientations. Single point of failure.
                   </p>
                 </div>
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-3">Microinverters</h3>
                   <p className="text-white text-sm leading-relaxed mb-3">
                     Microinverters are small inverters mounted on the back of each individual panel.
@@ -521,7 +521,7 @@ export default function SolarPanelInstallationPage() {
                 fully compliant:
               </p>
               <div className="grid sm:grid-cols-2 gap-4 my-6">
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-3">MCS Certificate</h3>
                   <p className="text-white text-sm leading-relaxed">
                     Issued by the MCS-certified installer upon completion. Documents the system
@@ -530,7 +530,7 @@ export default function SolarPanelInstallationPage() {
                     commissioning photographs and the performance estimate.
                   </p>
                 </div>
-                <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
+                <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                   <h3 className="font-bold text-yellow-400 text-lg mb-3">
                     Electrical Installation Certificate (EIC)
                   </h3>
@@ -590,7 +590,7 @@ export default function SolarPanelInstallationPage() {
                     </div>
                     <span className="font-bold text-yellow-400 text-lg">£4,000 - £6,000</span>
                   </div>
-                  <div className="flex items-center justify-between p-4 rounded-xl bg-yellow-500/5 border border-yellow-500/20">
+                  <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                     <div>
                       <h4 className="font-bold text-white">4 kW system (10 panels)</h4>
                       <p className="text-white text-sm">Most common domestic size</p>

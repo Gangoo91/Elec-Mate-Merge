@@ -6,18 +6,30 @@ interface OrientationState {
   shouldShowDesktopTable: boolean;
 }
 
+/**
+ * Read the viewport. Shared by the initial state and every update so the two
+ * cannot drift apart. Guarded so a non-browser environment can't throw.
+ */
+const readOrientation = (): OrientationState => {
+  if (typeof window === 'undefined') {
+    return { isLandscape: false, isMobile: false, shouldShowDesktopTable: false };
+  }
+  const isMobile = window.innerWidth < 768; // sm breakpoint
+  const isLandscape = window.innerWidth > window.innerHeight;
+  return { isMobile, isLandscape, shouldShowDesktopTable: isMobile && isLandscape };
+};
+
 export const useOrientation = () => {
-  const [orientation, setOrientation] = useState<OrientationState>({
-    isLandscape: false,
-    isMobile: false,
-    shouldShowDesktopTable: false,
-  });
+  // Seeded from the real viewport, not all-false. This hook is read by the
+  // three schedule-of-tests components (EICR, EICR three-phase, EIC), and it
+  // chooses between the mobile rows and the desktop table. Starting at false
+  // meant a phone built the wrong variant on first paint and then remounted
+  // the correct one — the heaviest screen in the app, rendered twice.
+  const [orientation, setOrientation] = useState<OrientationState>(readOrientation);
 
   useEffect(() => {
     const updateOrientation = () => {
-      const isMobile = window.innerWidth < 768; // sm breakpoint
-      const isLandscape = window.innerWidth > window.innerHeight;
-      const shouldShowDesktopTable = isMobile && isLandscape;
+      const { isMobile, isLandscape, shouldShowDesktopTable } = readOrientation();
 
       setOrientation((prev) => {
         if (

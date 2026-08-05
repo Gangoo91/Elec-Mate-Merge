@@ -55,8 +55,8 @@ const SupplementaryBondingSection = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">When Supplementary Bonding Is Required</p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">When Supplementary Bonding Is Required</p>
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <div className="space-y-1.5">
               {whenRequired.map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
@@ -69,12 +69,12 @@ const SupplementaryBondingSection = ({ onBack }: Props) => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">What to Bond</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">What to Bond</p>
         </motion.div>
 
         {whatToBond.map((item, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
               <p className="text-sm font-semibold text-white">{item.item}</p>
               <p className="text-sm text-white mt-1">{item.detail}</p>
             </div>
@@ -82,13 +82,13 @@ const SupplementaryBondingSection = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Test Procedure</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Test Procedure</p>
         </motion.div>
 
         {testProcedure.map((step, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="flex items-start gap-3 rounded-2xl bg-white/[0.03] border border-white/10 p-4">
-              <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+            <div className="flex items-start gap-3 rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
+              <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 flex items-center justify-center">
                 <span className="text-sm font-bold text-yellow-400">{i + 1}</span>
               </div>
               <p className="text-sm text-white pt-1">{step}</p>
@@ -97,10 +97,10 @@ const SupplementaryBondingSection = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Common Defects</p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white mb-3">Common Defects</p>
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4 space-y-2">
             {commonDefects.map((item, i) => (
-              <div key={i} className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
+              <div key={i} className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.06] p-3">
                 <p className="text-sm font-medium text-white">{item.defect}</p>
                 <p className="text-sm text-white mt-1">{item.detail}</p>
               </div>

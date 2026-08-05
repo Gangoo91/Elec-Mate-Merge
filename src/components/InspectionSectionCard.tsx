@@ -30,6 +30,7 @@ interface InspectionSectionCardProps {
   onNavigateToObservations?: () => void;
   onAutoCreateObservation?: (inspectionItem: InspectionItem) => void;
   onBulkMarkSatisfactory?: (sectionId: string) => void;
+  onBulkMarkNotApplicable?: (sectionId: string) => void;
   onBulkClearSection?: (sectionId: string) => void;
   quickMarkMode?: boolean;
 }
@@ -43,6 +44,7 @@ const InspectionSectionCard = ({
   onNavigateToObservations,
   onAutoCreateObservation,
   onBulkMarkSatisfactory,
+  onBulkMarkNotApplicable,
   onBulkClearSection,
   quickMarkMode,
 }: InspectionSectionCardProps) => {
@@ -56,6 +58,7 @@ const InspectionSectionCard = ({
       onNavigateToObservations={onNavigateToObservations}
       onAutoCreateObservation={onAutoCreateObservation}
       onBulkMarkSatisfactory={onBulkMarkSatisfactory}
+      onBulkMarkNotApplicable={onBulkMarkNotApplicable}
       onBulkClearSection={onBulkClearSection}
       quickMarkMode={quickMarkMode}
     />

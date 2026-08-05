@@ -183,7 +183,7 @@ const sections = [
             </li>
           </ul>
         </div>
-        <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">
           <p className="text-white text-sm leading-relaxed">
             <strong>A4:2026 — Arc Fault Detection (AFDD):</strong> Regulation 421.1.7 of BS
             7671:2018+A4:2026 recommends arc fault detection devices (AFDDs) on AC final circuits to
@@ -319,7 +319,7 @@ const sections = [
           Running an EV charger from a home office circuit is occasionally considered where the
           office is close to the driveway or garage. In practice, this is rarely the right approach.
         </p>
-        <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
+        <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Car className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -600,7 +600,7 @@ const sections = [
           charging quoted at the same time.
         </p>
         <div className="space-y-4 my-4">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>

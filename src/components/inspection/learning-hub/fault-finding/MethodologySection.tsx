@@ -34,7 +34,7 @@ const MethodologySection = ({ onBack }: Props) => {
 
       <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 p-4">
             <p className="text-sm text-white leading-relaxed">
               Effective fault finding is systematic, not random. Follow these 8 steps in order every time. Skipping steps or jumping to conclusions wastes time and can miss the real cause — leading to repeat call-backs.
             </p>
@@ -43,9 +43,9 @@ const MethodologySection = ({ onBack }: Props) => {
 
         {steps.map((s, i) => (
           <motion.div key={i} variants={itemVariants}>
-            <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/10 overflow-hidden">
               <div className="flex items-stretch">
-                <div className="w-14 bg-yellow-400/10 flex items-center justify-center border-r border-white/[0.06] shrink-0">
+                <div className="w-14 bg-gradient-to-b from-white/[0.08] to-white/[0.04] flex items-center justify-center border-r border-white/[0.06] shrink-0">
                   <span className="text-2xl font-black text-yellow-400">{i + 1}</span>
                 </div>
                 <div className="flex-1 p-4 space-y-3">
@@ -66,7 +66,7 @@ const MethodologySection = ({ onBack }: Props) => {
         ))}
 
         <motion.div variants={itemVariants}>
-          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-yellow-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-2">The Golden Rule</p>
             <p className="text-sm text-white leading-relaxed">
               Never skip straight to testing. Information gathering and visual inspection solve more faults than any test instrument. The most experienced electricians spend the most time on steps 1-4 and the least time on step 5.

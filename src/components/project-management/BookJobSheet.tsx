@@ -91,7 +91,11 @@ export const BookJobSheet = ({
           location: location || null,
           start_at: dayStart.toISOString(),
           end_at: dayEnd.toISOString(),
-          job_id: projectId,
+          // ELE-1472 — was `job_id`, which is FK'd to `employer_jobs` while
+          // this is a `spark_projects` id. Every booking therefore failed with
+          // a foreign key violation: 0 of 345 calendar events carry a job_id.
+          // `project_id` is the Electrician Hub column added for this.
+          project_id: projectId,
           event_type: 'job',
         };
       });

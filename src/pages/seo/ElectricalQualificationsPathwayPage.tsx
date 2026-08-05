@@ -538,7 +538,7 @@ const sections = [
           main routes from newly qualified electrician to senior professional.
         </p>
         <div className="space-y-4 my-6">
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -553,7 +553,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -569,7 +569,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>
@@ -585,7 +585,7 @@ const sections = [
               </div>
             </div>
           </div>
-          <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
+          <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5">
             <div className="flex items-start gap-3">
               <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>

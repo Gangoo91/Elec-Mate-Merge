@@ -21,12 +21,33 @@ const Command = React.forwardRef<
 ));
 Command.displayName = CommandPrimitive.displayName;
 
-interface CommandDialogProps extends DialogProps {}
+interface CommandDialogProps extends DialogProps {
+  onOpenAutoFocus?: (event: Event) => void;
+}
 
-const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
+const CommandDialog = ({ children, onOpenAutoFocus, ...props }: CommandDialogProps) => {
+  const contentRef = React.useRef<HTMLDivElement>(null);
+
   return (
     <Dialog {...props}>
-      <DialogContent className="overflow-hidden p-0 shadow-lg">
+      <DialogContent
+        ref={contentRef}
+        // DialogContent suppresses auto-focus by default so a form is visible
+        // before the keyboard covers it. A command palette is the opposite
+        // case — it exists to be typed into, and leaving it unfocused makes
+        // the user tap the icon, then tap the field, then type (ELE-1433).
+        // Focus the cmdk input explicitly rather than letting Radix pick the
+        // first focusable node, which would be the close button.
+        onOpenAutoFocus={(e) => {
+          if (onOpenAutoFocus) {
+            onOpenAutoFocus(e);
+            return;
+          }
+          e.preventDefault();
+          contentRef.current?.querySelector<HTMLInputElement>('[cmdk-input]')?.focus();
+        }}
+        className="overflow-hidden p-0 shadow-lg"
+      >
         <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
           {children}
         </Command>

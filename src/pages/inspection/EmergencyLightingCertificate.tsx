@@ -49,6 +49,7 @@ import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
 import { cn } from '@/lib/utils';
 import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
+import { scrollToTopForStepChange } from '@/utils/scroll';
 
 const REPORT_TYPE = 'emergency-lighting' as const;
 
@@ -436,7 +437,7 @@ const {
         onTabChange={(tab) => {
           tabProps.setCurrentTab(tab as EmergencyLightingTabValue);
           syncOnTabChange();
-          window.scrollTo({ top: 0 });
+          scrollToTopForStepChange();
         }}
         completedTabs={{
           installation: !!tabProps.isTabComplete('installation'),

@@ -247,7 +247,7 @@ export default function GuidesHubPage() {
     <PublicPageLayout>
       <section className="py-16 sm:py-24 px-5">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
             <BookOpen className="w-4 h-4 text-yellow-400" />
             <span className="text-sm font-medium text-yellow-400">Electrical Guide Library</span>
           </div>
@@ -315,7 +315,7 @@ export default function GuidesHubPage() {
                     <Link
                       key={link.href}
                       to={link.href}
-                      className="block rounded-xl border border-white/8 bg-black/20 px-4 py-3 text-white hover:border-yellow-500/30 hover:text-yellow-300 transition-colors"
+                      className="block rounded-xl border border-white/8 bg-black/20 px-4 py-3 text-white hover:border-white/[0.14] hover:text-yellow-300 transition-colors"
                     >
                       {link.label}
                     </Link>
