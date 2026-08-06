@@ -1055,7 +1055,7 @@ export default function ConversationalSearch() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.12 }}
             className="pointer-events-none absolute inset-3 z-40 flex flex-col items-center justify-center
-              rounded-2xl border-2 border-dashed border-elec-yellow/60 bg-black/70 backdrop-blur-sm"
+              rounded-2xl border-2 border-dashed border-elec-yellow bg-black/70 backdrop-blur-sm"
           >
             <FileText className="h-8 w-8 text-elec-yellow" />
             <p className="mt-3 text-[15px] font-semibold text-white">Drop it here</p>
@@ -1095,7 +1095,7 @@ export default function ConversationalSearch() {
               {messages.length > 0 && (
                 <button
                   onClick={handleNewChat}
-                  className="text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+                  className="text-elec-yellow underline decoration-elec-yellow/50 underline-offset-2 transition-colors hover:decoration-elec-yellow touch-manipulation"
                   aria-label="New chat"
                 >
                   New
@@ -1127,7 +1127,7 @@ export default function ConversationalSearch() {
                       key={entry.id}
                       className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3"
                     >
-                      <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
+                      <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-elec-yellow">
                         {formatRelativeTime(new Date(entry.timestamp))}
                       </div>
                       <div className="mt-1 text-[13px] font-semibold text-white">
@@ -1233,9 +1233,9 @@ export default function ConversationalSearch() {
                               {message.documentNames.map((name, i) => (
                                 <span
                                   key={`${name}-${i}`}
-                                  className="inline-flex max-w-full items-center gap-2 rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.07] px-3 py-2"
+                                  className="inline-flex max-w-full items-center gap-2 rounded-xl border border-white/[0.16] bg-white/[0.08] px-3 py-2"
                                 >
-                                  <FileText className="h-3.5 w-3.5 shrink-0 text-elec-yellow" />
+                                  <FileText className="h-3.5 w-3.5 shrink-0 text-white" />
                                   <span className="min-w-0 truncate text-[12.5px] font-medium text-white">
                                     {name}
                                   </span>
@@ -1243,7 +1243,7 @@ export default function ConversationalSearch() {
                               ))}
                             </div>
                           )}
-                          <div className="rounded-2xl px-3.5 py-3 sm:px-4 bg-elec-yellow/10 border border-elec-yellow/20 text-white">
+                          <div className="rounded-2xl px-3.5 py-3 sm:px-4 border border-white/[0.16] bg-white/[0.10] text-white">
                             <div
                               className="whitespace-pre-wrap text-[14.5px] leading-relaxed"
                               style={{ overflowWrap: 'anywhere', wordBreak: 'break-word' }}
@@ -1295,7 +1295,7 @@ export default function ConversationalSearch() {
                           {isCurrentlyStreaming && streamStatus && (
                             <div className="flex items-center gap-2 text-[12.5px] text-white">
                               <span className="relative flex h-1.5 w-1.5">
-                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-elec-yellow/60" />
+                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-elec-yellow/70" />
                                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-elec-yellow" />
                               </span>
                               {streamStatus}
@@ -1315,8 +1315,8 @@ export default function ConversationalSearch() {
                                 className={cn(
                                   'flex h-9 w-9 touch-manipulation items-center justify-center rounded-lg transition-colors',
                                   message.feedback === 'positive'
-                                    ? 'text-elec-yellow'
-                                    : 'text-white/35 hover:text-white/70 hover:bg-white/[0.05]',
+                                    ? 'bg-white/[0.14] text-white'
+                                    : 'text-white hover:bg-white/[0.08]',
                                   message.feedback === 'negative' && 'opacity-30'
                                 )}
                               >
@@ -1487,9 +1487,9 @@ export default function ConversationalSearch() {
               {selectedDocuments.map((doc, i) => (
                 <span
                   key={`${doc.name}-${i}`}
-                  className="inline-flex max-w-full items-center gap-2 rounded-xl border border-elec-yellow/25 bg-elec-yellow/10 px-3 py-2"
+                  className="inline-flex max-w-full items-center gap-2 rounded-xl border border-white/[0.16] bg-white/[0.08] px-3 py-2"
                 >
-                  <FileText className="h-3.5 w-3.5 shrink-0 text-elec-yellow" />
+                  <FileText className="h-3.5 w-3.5 shrink-0 text-white" />
                   <span className="min-w-0 truncate text-[12.5px] font-medium text-white">
                     {doc.name}
                   </span>

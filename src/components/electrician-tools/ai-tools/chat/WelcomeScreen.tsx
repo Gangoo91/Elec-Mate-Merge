@@ -136,11 +136,11 @@ export function WelcomeScreen({
         transition={{ duration: 0.35 }}
         className="relative"
       >
-        <div className="absolute inset-x-0 -top-2 h-px bg-gradient-to-r from-transparent via-elec-yellow/60 to-transparent opacity-70" />
+        <div className="absolute inset-x-0 -top-2 h-px bg-gradient-to-r from-transparent via-white/25/60 to-transparent opacity-70" />
 
         <div className="pt-4 max-w-3xl">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.05]">
-            Every reg. Every table. <span className="text-elec-yellow">On tap.</span>
+            Every reg. Every table. <span className="text-white">On tap.</span>
           </h1>
           <p className="mt-4 max-w-2xl text-[13.5px] sm:text-sm text-white leading-relaxed">
             Ask anything on BS 7671:2018+A4:2026 — regulations, calculations, test procedures,
@@ -181,11 +181,11 @@ export function WelcomeScreen({
                 onClick={() => onResumeSession?.(s.id)}
                 className="group flex min-w-0 flex-1 items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.03] px-4 py-3 text-left transition-colors hover:bg-white/[0.06] active:scale-[0.99] touch-manipulation"
               >
-                <Clock className="h-4 w-4 flex-shrink-0 text-elec-yellow" />
+                <Clock className="h-4 w-4 flex-shrink-0 text-white" />
                 <span className="min-w-0 flex-1 truncate text-[13.5px] font-medium text-white">
                   {s.title || 'Previous conversation'}
                 </span>
-                <ArrowRight className="h-3.5 w-3.5 flex-shrink-0 text-elec-yellow transition-transform group-hover:translate-x-0.5" />
+                <ArrowRight className="h-3.5 w-3.5 flex-shrink-0 text-white transition-transform group-hover:translate-x-0.5" />
               </button>
             ))}
           </div>
@@ -216,7 +216,7 @@ export function WelcomeScreen({
               'border border-white/[0.06] hover:border-white/[0.12] rounded-2xl',
               'p-5 sm:p-6 lg:p-6 min-h-[150px] lg:min-h-[168px]',
               'transition-[background-color,border-color,transform] duration-150 touch-manipulation',
-              'active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60'
+              'active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40'
             )}
           >
             <div
@@ -235,7 +235,7 @@ export function WelcomeScreen({
               >
                 {item.category}
               </div>
-              <span className="shrink-0 text-[13px] font-medium text-elec-yellow transition-transform group-hover:translate-x-0.5">
+              <span className="shrink-0 text-[13px] font-medium text-white transition-transform group-hover:translate-x-0.5">
                 Ask &rarr;
               </span>
             </div>
@@ -248,7 +248,7 @@ export function WelcomeScreen({
                 rather than an essay — and it's the honest differentiator against
                 asking a generic chatbot the same question. */}
             <div className="mt-auto flex items-center gap-2 pt-4">
-              <span className="h-1 w-1 shrink-0 rounded-full bg-elec-yellow" />
+              <span className="h-1 w-1 shrink-0 rounded-full bg-white" />
               <span className="text-[11.5px] font-medium text-white">{item.yields}</span>
             </div>
           </motion.button>

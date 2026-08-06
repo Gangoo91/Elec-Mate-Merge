@@ -94,7 +94,7 @@ export const VoiceInputButton = memo(function VoiceInputButton({
         'text-[12px] font-medium px-3 py-1.5 rounded-full transition-colors touch-manipulation',
         'border',
         listening
-          ? 'bg-elec-yellow/15 border-elec-yellow/40 text-elec-yellow'
+          ? 'bg-white/[0.08] border-white/[0.16] text-white'
           : 'bg-white/[0.04] border-white/[0.08] text-white hover:bg-white/[0.08]',
         'disabled:opacity-40 disabled:cursor-not-allowed',
         className

@@ -56,14 +56,7 @@ export function SourcesRail({ regNumbers, onOpenReg, isStreaming }: SourcesRailP
           regNumbers.slice(0, 8).map((n) => {
             const row = byNumber.get(n);
             const title = (row?.title || '').trim() || null;
-            // full_text usually opens with the flattened reg number ("3141
-            // Every installation…") and often repeats the title — strip both
-            // so the excerpt adds information instead of echoing.
-            let excerpt = (row?.full_text || '').trim().replace(/^[\d.\s]+/, '');
-            if (title && excerpt.toLowerCase().startsWith(title.toLowerCase())) {
-              excerpt = excerpt.slice(title.length).replace(/^[\s—:-]+/, '');
-            }
-            return { reg_number: n, title, excerpt: excerpt.slice(0, 180) };
+            return { reg_number: n, title, excerpt: buildExcerpt(row?.full_text, n, title) };
           })
         );
       } catch {
@@ -110,7 +103,7 @@ export function SourcesRail({ regNumbers, onOpenReg, isStreaming }: SourcesRailP
               className="group block w-full rounded-lg px-2 py-2.5 -ml-2 text-left touch-manipulation transition-colors hover:bg-white/[0.04]"
             >
               <div className="text-[12.5px] leading-snug">
-                <span className="font-semibold text-elec-yellow">Reg {s.reg_number}</span>
+                <span className="font-semibold text-white">Reg {s.reg_number}</span>
                 {s.title && (
                   <span className="font-medium text-white"> — {s.title}</span>
                 )}

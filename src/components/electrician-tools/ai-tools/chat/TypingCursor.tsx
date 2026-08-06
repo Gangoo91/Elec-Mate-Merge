@@ -25,7 +25,7 @@ export const TypingCursor = memo(function TypingCursor({
   if (!visible) return null;
 
   const colorClasses = {
-    primary: 'bg-elec-yellow',
+    primary: 'bg-white',
     muted: 'bg-white/40',
   };
 
@@ -93,7 +93,7 @@ export const TypingIndicator = memo(function TypingIndicator({
               delay: i * 0.2,
               ease: 'easeInOut',
             }}
-            className="w-1.5 h-1.5 rounded-full bg-elec-yellow"
+            className="w-1.5 h-1.5 rounded-full bg-white"
           />
         ))}
       </div>

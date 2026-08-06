@@ -209,7 +209,7 @@ export const MobileChatInput = memo(function MobileChatInput({
       <div
         className={cn(
           'flex items-end gap-2 rounded-2xl bg-[hsl(0_0%_12%)] border transition-colors',
-          isFocused ? 'border-elec-yellow/50' : 'border-white/[0.08]',
+          isFocused ? 'border-elec-yellow/60' : 'border-white/[0.10]',
           'p-1.5'
         )}
       >
@@ -278,7 +278,7 @@ export const MobileChatInput = memo(function MobileChatInput({
             }}
             className={cn(
               'shrink-0 h-11 w-11 rounded-full inline-flex items-center justify-center',
-              'bg-white text-black hover:bg-white/90',
+              'bg-elec-yellow text-black hover:bg-elec-yellow/90',
               'active:scale-[0.98] transition-all touch-manipulation'
             )}
             aria-label="Stop generating"
@@ -293,9 +293,10 @@ export const MobileChatInput = memo(function MobileChatInput({
             disabled={!canSend}
             className={cn(
               'shrink-0 h-11 px-5 rounded-full text-[13px] font-semibold',
-              'bg-elec-yellow text-black hover:bg-elec-yellow/90',
+              'bg-white text-black hover:bg-white/90',
               'active:scale-[0.98] transition-all touch-manipulation',
-              'disabled:opacity-40 disabled:active:scale-100 disabled:cursor-not-allowed'
+              'disabled:bg-white/[0.10] disabled:text-white/40 disabled:opacity-100',
+              'disabled:active:scale-100 disabled:cursor-not-allowed'
             )}
             aria-label="Send message"
           >

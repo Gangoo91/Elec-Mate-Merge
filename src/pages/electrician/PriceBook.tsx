@@ -228,11 +228,22 @@ export default function PriceBook() {
   const [expandedBundle, setExpandedBundle] = useState<string | null>(null);
 
   // Computed
+  /**
+   * Everything the page shows: stats, categories, search and the grid all read
+   * this list.
+   *
+   * The gate used to be "has a price", which silently hid every labour-book
+   * item — Sean's 1,244 imported times were in the database and invisible in
+   * the app, because a time guide carries hours and no price. An item earns its
+   * place here if it has a price OR a labour allowance.
+   */
   const pricedItems = useMemo<PricedItem[]>(() => {
     const result: PricedItem[] = [];
     for (const list of lists) {
       for (const item of list.items) {
-        if ((item.estimated_price ?? 0) > 0 || (item.cost_price ?? 0) > 0) {
+        const hasPrice = (item.estimated_price ?? 0) > 0 || (item.cost_price ?? 0) > 0;
+        const hasLabour = labourAllocations(item).length > 0;
+        if (hasPrice || hasLabour) {
           result.push({ item, listId: list.id, listName: list.name });
         }
       }
@@ -1013,13 +1024,13 @@ export default function PriceBook() {
                   </p>
                 </div>
                 <div className="border-l border-white/[0.10] px-3 py-3.5 sm:px-4">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">Priced</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">Materials</p>
                   <p className="mt-1 text-[20px] font-bold tabular-nums leading-none tracking-tight text-white">
                     {bookStats.priced}
                   </p>
                 </div>
                 <div className="border-l border-white/[0.10] px-3 py-3.5 sm:px-4">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">Timed</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">Labour</p>
                   <p className="mt-1 text-[20px] font-bold tabular-nums leading-none tracking-tight text-blue-300">
                     {bookStats.withTime}
                   </p>

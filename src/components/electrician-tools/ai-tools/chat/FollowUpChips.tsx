@@ -78,7 +78,7 @@ export const FollowUpChips = memo(function FollowUpChips({
               )}
               style={{ overflowWrap: 'anywhere', wordBreak: 'break-word' }}
             >
-              <span className="sm:hidden text-elec-yellow/70 mt-[2px]">→</span>
+              <span className="sm:hidden text-white mt-[2px]">→</span>
               <span className="flex-1 min-w-0">{question}</span>
             </motion.button>
           );

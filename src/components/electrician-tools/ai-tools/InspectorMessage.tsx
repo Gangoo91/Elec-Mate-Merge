@@ -50,7 +50,8 @@ interface InspectorMessageProps {
 /**
  * InspectorMessage — Editorial AI response block.
  *
- * User messages: soft yellow pill (`bg-elec-yellow/10`), right-aligned.
+ * User messages: bright neutral pill, right-aligned. A yellow tint at 10%
+ * over this background renders olive-brown.
  * Assistant messages: full-width prose, no chrome, no avatar tile.
  * Headings, lists, code and block-quotes are styled to feel like an article.
  * A small "Elec-AI · BS 7671 A4:2026" eyebrow sits above the prose.
@@ -97,7 +98,7 @@ export const InspectorMessage = memo(
                 />
               </div>
             )}
-            <div className="rounded-2xl px-3.5 py-3 sm:px-4 bg-elec-yellow/10 border border-elec-yellow/20 text-white">
+            <div className="rounded-2xl border border-white/[0.16] bg-white/[0.10] px-3.5 py-3 text-white sm:px-4">
               <div
                 className="whitespace-pre-wrap text-[14.5px] leading-relaxed"
                 style={{ overflowWrap: 'anywhere', wordBreak: 'break-word' }}
@@ -162,7 +163,7 @@ export const InspectorMessage = memo(
           {/* Eyebrow — editorial; Dave variant adds a small avatar for identity */}
           <div className="flex items-center gap-2.5">
             {variant === 'dave' && (
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-elec-yellow to-elec-yellow/80 shadow-sm">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-elec-yellow shadow-sm">
                 <Zap className="h-3.5 w-3.5 text-black" strokeWidth={2.5} />
               </span>
             )}
@@ -170,7 +171,7 @@ export const InspectorMessage = memo(
               <span className="text-elec-yellow">{message.agentName || 'Elec-AI'}</span>
               {/* Never badge a failure with the standard rev — it reads as guidance */}
               {isError ? (
-                <span className="inline-flex items-center gap-1.5 text-amber-300">
+                <span className="inline-flex items-center gap-1.5 text-white">
                   <AlertTriangle className="h-3 w-3" />
                   Couldn&rsquo;t answer
                 </span>
@@ -240,7 +241,7 @@ export const InspectorMessage = memo(
                       </h1>
                     ),
                     h2: ({ children }) => (
-                      <h2 className="relative text-lg sm:text-xl font-semibold mt-7 pt-7 mb-3 first:mt-0 first:pt-0 text-white tracking-tight before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-[2px] before:rounded-full before:bg-gradient-to-r before:from-elec-yellow/40 before:via-elec-yellow/20 before:to-transparent first:before:hidden">
+                      <h2 className="relative text-lg sm:text-xl font-semibold mt-7 pt-7 mb-3 first:mt-0 first:pt-0 text-white tracking-tight before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-[2px] before:rounded-full before:bg-gradient-to-r before:from-elec-yellow before:via-elec-yellow/40 before:to-transparent first:before:hidden">
                         {transformInlineChildren(children, inlineCtx, 'h2')}
                       </h2>
                     ),
@@ -259,7 +260,7 @@ export const InspectorMessage = memo(
                     // additional `---` line would double the divider.
                     hr: () => null,
                     ul: ({ children }) => (
-                      <ul className="my-3 ml-5 space-y-1.5 list-disc marker:text-elec-yellow/70">
+                      <ul className="my-3 ml-5 space-y-1.5 list-disc marker:text-elec-yellow">
                         {children}
                       </ul>
                     ),
@@ -271,7 +272,7 @@ export const InspectorMessage = memo(
                       ) as React.ReactElement<{ children?: React.ReactNode }>[];
                       if (items.length === 0) {
                         return (
-                          <ol className="my-3 ml-5 space-y-1.5 list-decimal marker:text-elec-yellow/70 marker:font-semibold">
+                          <ol className="my-3 ml-5 space-y-1.5 list-decimal marker:text-elec-yellow marker:font-semibold">
                             {children}
                           </ol>
                         );
@@ -299,7 +300,7 @@ export const InspectorMessage = memo(
                         href={href}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-elec-yellow underline-offset-2 hover:underline"
+                        className="text-elec-yellow underline decoration-elec-yellow/50 underline-offset-2 hover:decoration-elec-yellow"
                       >
                         {children}
                       </a>
@@ -326,25 +327,38 @@ export const InspectorMessage = memo(
                       );
                     },
                     blockquote: ({ children }) => (
-                      <blockquote className="my-4 pl-4 border-l-2 border-elec-yellow/60 text-white text-[14px] leading-relaxed italic">
+                      <blockquote className="my-4 pl-4 border-l-2 border-elec-yellow text-white text-[14px] leading-relaxed italic">
                         {transformInlineChildren(children, inlineCtx, 'bq')}
                       </blockquote>
                     ),
+                    /* Spec tables carry the densest information in an answer,
+                       and they were the darkest thing on the page — a near-black
+                       body inside a near-invisible border. Brighter surface,
+                       zebra rows so the eye tracks across, and a header that
+                       stays put when the table scrolls. */
                     table: ({ children }) => (
-                      <div className="overflow-x-auto my-4 rounded-2xl border border-white/[0.06]">
-                        <table className="w-full text-[13px]">{children}</table>
+                      <div className="my-4 -mx-4 overflow-x-auto rounded-none border-y border-white/[0.14] bg-white/[0.05] sm:mx-0 sm:rounded-2xl sm:border-x">
+                        <table className="w-full min-w-[420px] text-[13.5px]">{children}</table>
                       </div>
                     ),
                     thead: ({ children }) => (
-                      <thead className="bg-[hsl(0_0%_15%)] border-b border-white/[0.06]">
+                      <thead className="border-b border-white/[0.14] bg-white/[0.09]">
                         {children}
                       </thead>
                     ),
                     th: ({ children }) => (
-                      <th className="px-3 py-2 text-left font-semibold text-white">{children}</th>
+                      <th className="whitespace-nowrap px-3.5 py-2.5 text-left text-[11px] font-semibold uppercase tracking-[0.14em] text-white sm:px-4">
+                        {children}
+                      </th>
+                    ),
+                    tbody: ({ children }) => (
+                      /* Zebra striping beats a hairline rule per row: on a phone
+                         a long value wraps to two lines and the rules stop
+                         telling you which row you are on. */
+                      <tbody className="[&>tr:nth-child(even)]:bg-white/[0.035]">{children}</tbody>
                     ),
                     td: ({ children }) => (
-                      <td className="px-3 py-2 border-t border-white/[0.06] text-white">
+                      <td className="border-t border-white/[0.08] px-3.5 py-2.5 align-top text-white first:font-medium sm:px-4">
                         {transformInlineChildren(children, inlineCtx, 'td')}
                       </td>
                     ),
@@ -366,7 +380,7 @@ export const InspectorMessage = memo(
                     <button
                       type="button"
                       onClick={() => setShowWorking((v) => !v)}
-                      className="h-11 text-[12.5px] font-medium text-elec-yellow hover:text-elec-yellow transition-colors touch-manipulation sm:h-auto"
+                      className="h-11 text-[12.5px] font-medium text-elec-yellow transition-colors touch-manipulation sm:h-auto"
                     >
                       {showWorking ? 'Hide working' : 'Show working'}
                     </button>
@@ -483,7 +497,7 @@ export const InspectorMessage = memo(
               */}
               {!isError &&
                 (message.content.includes('⚠️ **Citation check:**') ? (
-                  <span className="inline-flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-amber-300">
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     <AlertTriangle className="h-3 w-3" />
                     Check citations before relying on this
                   </span>

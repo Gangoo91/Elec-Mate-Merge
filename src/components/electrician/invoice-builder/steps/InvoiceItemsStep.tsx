@@ -231,7 +231,13 @@ export const InvoiceItemsStep = ({
     const result: { item: MaterialsListItem; listName: string }[] = [];
     for (const list of materialsLists) {
       for (const item of list.items) {
-        if (item.estimated_price != null && item.estimated_price > 0) {
+        // Price OR labour: a labour-book item carries hours and no price, and
+        // gating on price alone hid every one of them from the very wizard
+        // where the times are meant to be used.
+        if (
+          (item.estimated_price != null && item.estimated_price > 0) ||
+          labourAllocations(item).length > 0
+        ) {
           result.push({ item, listName: list.name });
         }
       }

@@ -17,7 +17,9 @@ interface MessageBubbleProps {
 /**
  * MessageBubble — Editorial message surface.
  *
- * User: right-aligned, `bg-elec-yellow/10` pill — not a solid colour bubble.
+ * User: right-aligned on a bright neutral surface. A yellow tint at 10% over
+ * this background renders olive-brown, which read as a rendering fault rather
+ * than as the user's own words.
  * Assistant: full-width prose block, no chrome — reads like an article.
  * Copy action is a plain text button. Timestamp muted, 11px, below the message.
  */
@@ -58,7 +60,7 @@ export const MessageBubble = memo(function MessageBubble({
           className={cn(
             'max-w-[85%] sm:max-w-[75%]',
             'rounded-2xl px-4 py-3',
-            'bg-elec-yellow/10 border border-elec-yellow/20',
+            'border border-white/[0.16] bg-white/[0.10]',
             'text-white'
           )}
         >
@@ -94,7 +96,7 @@ export const MessageBubble = memo(function MessageBubble({
         <div className="mt-2 flex items-center gap-4 text-[11px]">
           <button
             onClick={handleCopy}
-            className="font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+            className="font-medium text-white underline decoration-white/40 underline-offset-2 transition-colors hover:decoration-white touch-manipulation"
           >
             {isCopied ? 'Copied' : 'Copy'}
           </button>

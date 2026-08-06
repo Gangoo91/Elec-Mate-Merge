@@ -55,7 +55,7 @@ function RegReference({
   const interactive = !!onClick;
   if (!interactive) {
     return (
-      <span className="font-medium text-elec-yellow align-baseline">
+      <span className="font-medium text-white align-baseline">
         Reg&nbsp;{regNumber}
       </span>
     );
@@ -65,9 +65,9 @@ function RegReference({
       type="button"
       onClick={() => onClick!(regNumber)}
       className={
-        'inline font-medium text-elec-yellow align-baseline ' +
-        'underline decoration-elec-yellow/30 decoration-[1.5px] underline-offset-[3px] ' +
-        'hover:decoration-elec-yellow/80 transition-colors cursor-pointer touch-manipulation'
+        'inline font-medium text-white align-baseline ' +
+        'underline decoration-white/40 decoration-[1.5px] underline-offset-[3px] ' +
+        'hover:decoration-white transition-colors cursor-pointer touch-manipulation'
       }
     >
       Reg&nbsp;{regNumber}

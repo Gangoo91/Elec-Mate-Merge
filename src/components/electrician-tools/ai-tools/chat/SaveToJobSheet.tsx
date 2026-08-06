@@ -262,7 +262,7 @@ export const SaveToJobSheet = memo(function SaveToJobSheet({
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
                         {titleCaseStatus(project.status)}
                       </div>
                       <div className="mt-0.5 text-[14px] font-semibold text-white truncate">
@@ -282,7 +282,7 @@ export const SaveToJobSheet = memo(function SaveToJobSheet({
                       <div className="text-[11px] text-white">
                         {formatUpdatedAgo(project.updated_at)}
                       </div>
-                      <div className="mt-1 text-[11px] font-medium text-elec-yellow/90">
+                      <div className="mt-1 text-[11px] font-medium text-white">
                         {saving ? 'Saving…' : 'Save →'}
                       </div>
                     </div>

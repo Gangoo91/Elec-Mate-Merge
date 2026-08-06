@@ -92,7 +92,7 @@ export const ChatHistoryDrawer = memo(function ChatHistoryDrawer({
             <div className="flex items-center gap-4 text-[12px] font-medium shrink-0">
               <button
                 onClick={handleNewChat}
-                className="text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+                className="text-white hover:text-white transition-colors touch-manipulation"
               >
                 New chat
               </button>
@@ -111,7 +111,7 @@ export const ChatHistoryDrawer = memo(function ChatHistoryDrawer({
         <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-4">
           {isLoading && sessions.length === 0 && (
             <div className="flex items-center justify-center py-10">
-              <div className="h-5 w-5 rounded-full border-2 border-elec-yellow border-t-transparent animate-spin" />
+              <div className="h-5 w-5 rounded-full border-2 border-white border-t-transparent animate-spin" />
             </div>
           )}
 
@@ -153,7 +153,7 @@ export const ChatHistoryDrawer = memo(function ChatHistoryDrawer({
                         <div
                           className={cn(
                             'text-[10px] font-medium uppercase tracking-[0.22em]',
-                            isActive ? 'text-elec-yellow' : 'text-white'
+                            isActive ? 'text-white' : 'text-white'
                           )}
                         >
                           {formatDayEyebrow(session.updated_at)}

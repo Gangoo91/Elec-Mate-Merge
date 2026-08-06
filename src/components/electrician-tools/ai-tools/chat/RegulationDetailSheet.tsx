@@ -221,7 +221,7 @@ export const RegulationDetailSheet = memo(function RegulationDetailSheet({
                     className={cn(
                       'text-[10px] font-medium uppercase tracking-[0.18em] px-2 py-0.5 rounded-full border',
                       isA4
-                        ? 'bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow'
+                        ? 'bg-white/[0.08] border-white/[0.16] text-white'
                         : 'bg-white/[0.04] border-white/[0.08] text-white'
                     )}
                   >
@@ -282,7 +282,7 @@ export const RegulationDetailSheet = memo(function RegulationDetailSheet({
                     key={s.id}
                     className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] px-4 py-3"
                   >
-                    <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+                    <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">
                       Reg {s.reg_number}
                     </div>
                     {s.title && (
@@ -346,7 +346,7 @@ export const RegulationDetailSheet = memo(function RegulationDetailSheet({
                         key={ref.id}
                         className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] px-4 py-3"
                       >
-                        <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+                        <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">
                           {ref.target_document_type === 'external'
                             ? ref.target_reg_number
                             : `Reg ${ref.target_reg_number}`}
@@ -371,7 +371,7 @@ export const RegulationDetailSheet = memo(function RegulationDetailSheet({
             <button
               type="button"
               onClick={handleAskFollowUp}
-              className="w-full h-11 rounded-full text-[13px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 active:scale-[0.99] transition-all touch-manipulation"
+              className="w-full h-11 rounded-full text-[13px] font-semibold bg-white text-black hover:bg-white/[0.08] active:scale-[0.99] transition-all touch-manipulation"
             >
               Ask a follow-up about this reg
             </button>

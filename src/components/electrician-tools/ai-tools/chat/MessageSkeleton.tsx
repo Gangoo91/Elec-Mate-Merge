@@ -62,7 +62,7 @@ interface SearchingSkeletonProps {
 }
 
 const toneText: Record<'yellow' | 'emerald' | 'blue' | 'purple', string> = {
-  yellow: 'text-elec-yellow',
+  yellow: 'text-white',
   emerald: 'text-emerald-400',
   blue: 'text-blue-400',
   purple: 'text-purple-400',

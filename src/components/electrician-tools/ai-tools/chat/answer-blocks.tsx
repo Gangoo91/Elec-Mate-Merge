@@ -19,8 +19,8 @@ export function VerdictCallout({ children }: { children: React.ReactNode }) {
       className="relative mb-5 pl-4 min-w-0"
       style={{ overflowWrap: 'anywhere', wordBreak: 'break-word' }}
     >
-      <span className="absolute left-0 top-1 bottom-1 w-[2px] rounded-full bg-elec-yellow" />
-      <div className="text-[9.5px] uppercase tracking-[0.22em] font-semibold text-elec-yellow mb-1">
+      <span className="absolute left-0 top-1 bottom-1 w-[2px] rounded-full bg-white" />
+      <div className="text-[9.5px] uppercase tracking-[0.22em] font-semibold text-white mb-1">
         Verdict
       </div>
       <div className="text-[15.5px] sm:text-[17px] leading-relaxed text-white font-medium">
@@ -56,8 +56,8 @@ export function ProcedureStep({
           'flex items-center justify-center font-mono text-[11px] font-semibold ' +
           'transition-colors touch-manipulation cursor-pointer ' +
           (checked
-            ? 'bg-elec-yellow text-black'
-            : 'bg-transparent text-elec-yellow/90 border border-elec-yellow/50 hover:border-elec-yellow')
+            ? 'bg-white text-black'
+            : 'bg-transparent text-white border border-white/[0.16] hover:border-white/[0.35]')
         }
       >
         {checked ? (
