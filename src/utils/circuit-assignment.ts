@@ -1,5 +1,32 @@
 import { symbolRegistry } from '@/components/electrician-tools/diagram-builder/symbols/symbolRegistry';
 
+/**
+ * ⚠️ These are INDICATIVE starting points for a domestic installation, not a
+ * design. They exist to save the electrician typing, and every value is
+ * editable before the drawing is issued.
+ *
+ * RCD defaults follow BS 7671:2018+A4:2026 as verified against the regulations:
+ *
+ *  - 411.3.4  — within domestic premises, additional protection by a 30mA RCD
+ *               SHALL be provided for AC final circuits supplying luminaires.
+ *               Lighting circuits previously printed "N/A" here, which is a
+ *               non-compliance printed onto a client-facing document.
+ *  - 411.3.3  — additional protection for socket-outlets rated up to 32A.
+ *  - 722.531.3.101 — EV charging. Cross-references BS EN 62423 (Type B) and
+ *               BS IEC 62955 (RDC-DD, mode 3). A plain Type AC/A is not enough.
+ *  - 522.6.202 / Table 52.1 — 30mA RCD for cables concealed in a wall at a
+ *               depth of less than 50mm, which in practice covers essentially
+ *               every domestic final circuit run in a stud or plastered wall.
+ *
+ * Because 522.6.202 catches almost everything, the honest default is RCD
+ * protection ON, with the electrician removing it where a documented reason
+ * applies (e.g. cable in earthed metallic conduit) rather than the reverse.
+ */
+const RCD_30MA = '30mA RCD';
+
+/** Why a circuit carries RCD protection — printed so the drawing is auditable. */
+type RcdBasis = '411.3.4' | '411.3.3' | '522.6.202' | 'Section 701' | '722.531.3.101';
+
 export interface CircuitAssignment {
   symbolId: string;
   symbolName: string;
@@ -8,7 +35,21 @@ export interface CircuitAssignment {
   cableSize: string;
   protectionRating: string;
   rcdRequired: boolean;
+  /** Regulation the RCD requirement comes from, for the drawing's notes. */
+  rcdBasis?: RcdBasis;
   typicalLoad: string;
+}
+
+/** One way in the consumer unit, derived from the circuit schedule. */
+export interface ConsumerUnitWay {
+  way: number;
+  circuitRef: string;
+  circuitName: string;
+  protection: string;
+  rcd: string;
+  cableSize: string;
+  points: number;
+  connectedLoad: string;
 }
 
 export interface CircuitScheduleEntry {
@@ -17,8 +58,15 @@ export interface CircuitScheduleEntry {
   cableSize: string;
   protection: string;
   rcd: string;
+  /** Regulation reference behind the RCD column, e.g. "411.3.4". */
+  rcdBasis?: string;
   points: number;
   typicalLoad: string;
+  /**
+   * Set when the default needs the designer's attention before issue — the
+   * value is deliberately left for them rather than guessed.
+   */
+  needsReview?: string;
 }
 
 // Symbol IDs that are lighting points
@@ -74,6 +122,45 @@ function getSymbolName(symbolId: string): string {
   return sym?.name || symbolId;
 }
 
+/**
+ * Build a consumer unit way schedule from the circuit schedule.
+ *
+ * Purely derived — it re-presents circuits already established (and their
+ * regulation-sourced RCD requirements) as board ways, and introduces no new
+ * electrical claims of its own. Ways are numbered in schedule order.
+ *
+ * Note this is a CONNECTED load total. Applying diversity to arrive at maximum
+ * demand is a design step requiring the installation's actual usage, so it is
+ * deliberately not attempted here.
+ */
+export function buildConsumerUnitSchedule(
+  circuitSchedule: CircuitScheduleEntry[]
+): { ways: ConsumerUnitWay[]; totalConnectedLoadKw: number; wayCount: number } {
+  const ways = circuitSchedule.map((c, i) => ({
+    way: i + 1,
+    circuitRef: c.circuitRef,
+    circuitName: c.circuitName,
+    protection: c.protection,
+    rcd: c.rcd,
+    cableSize: c.cableSize,
+    points: c.points,
+    connectedLoad: c.typicalLoad,
+  }));
+
+  const totalWatts = circuitSchedule.reduce((sum, c) => {
+    const m = c.typicalLoad.match(/([\d.]+)\s*(kW|W)/i);
+    if (!m) return sum;
+    const v = parseFloat(m[1]);
+    return sum + (m[2].toLowerCase() === 'kw' ? v * 1000 : v);
+  }, 0);
+
+  return {
+    ways,
+    totalConnectedLoadKw: Math.round((totalWatts / 1000) * 10) / 10,
+    wayCount: ways.length,
+  };
+}
+
 export function assignCircuits(symbolIds: string[]): {
   assignments: CircuitAssignment[];
   circuitSchedule: CircuitScheduleEntry[];
@@ -101,7 +188,10 @@ export function assignCircuits(symbolIds: string[]): {
         circuitName: `Lighting Circuit ${circuitNum}`,
         cableSize: '1.5mm² T&E',
         protectionRating: '6A MCB Type B',
-        rcdRequired: false,
+        // 411.3.4 — mandatory for AC final circuits supplying luminaires in
+        // domestic premises. This printed "N/A" before.
+        rcdRequired: true,
+        rcdBasis: '411.3.4',
         typicalLoad: '100W per point',
       });
     });
@@ -126,7 +216,10 @@ export function assignCircuits(symbolIds: string[]): {
         circuitName: `Ring Final ${circuitNum}`,
         cableSize: '2.5mm² T&E',
         protectionRating: '32A MCB Type B',
-        rcdRequired: isBathroom,
+        // 411.3.3 covers every socket-outlet rated up to 32A — not only the
+        // ones in a bathroom, which is all the old flag caught.
+        rcdRequired: true,
+        rcdBasis: isBathroom ? 'Section 701' : '411.3.3',
         typicalLoad: '230W per point',
       });
     });
@@ -141,8 +234,13 @@ export function assignCircuits(symbolIds: string[]): {
       circuitRef: 'C1',
       circuitName: 'Cooker Circuit',
       cableSize: '6mm² T&E',
-      protectionRating: '45A MCB Type B',
-      rcdRequired: false,
+      // 45A is not a standard BS EN 60898 MCB rating — it is the rating of the
+      // cooker CONTROL SWITCH, which is what the old value had confused it
+      // with. 32A is the conventional protective device for 6mm² on a domestic
+      // cooker circuit with diversity applied.
+      protectionRating: '32A MCB Type B',
+      rcdRequired: true,
+      rcdBasis: '522.6.202',
       typicalLoad: '8kW',
     });
   });
@@ -157,7 +255,20 @@ export function assignCircuits(symbolIds: string[]): {
       circuitName: 'EV Charger',
       cableSize: '6mm² T&E',
       protectionRating: '32A MCB Type B',
+      // RCD TYPE, not just sensitivity.
+      //
+      // Verified against bs7671_facets (A4:2026): Regulation 722.531.3.101
+      // cross-references BS EN 62423 (Type F and Type B RCDs) and
+      // BS IEC 62955 (RDC-DD — residual direct current detecting device for
+      // mode 3 charging), and is listed in Table 537.4. So a plain 30mA Type AC
+      // or Type A alone is not sufficient for an EV charge point: it needs a
+      // Type B RCD, or Type A together with an RDC-DD.
+      //
+      // Which of the two applies depends on whether the charge point provides
+      // its own DC fault detection, which only the manufacturer's data states —
+      // hence both compliant options are printed and the choice is flagged.
       rcdRequired: true,
+      rcdBasis: '722.531.3.101',
       typicalLoad: '7.4kW',
     });
   });
@@ -189,7 +300,8 @@ export function assignCircuits(symbolIds: string[]): {
       circuitName: 'Fire Alarm Circuit',
       cableSize: '1.5mm² FP200',
       protectionRating: '6A MCB Type B',
-      rcdRequired: false,
+      rcdRequired: true,
+      rcdBasis: '522.6.202',
       typicalLoad: '5W per point',
     });
   });
@@ -204,7 +316,8 @@ export function assignCircuits(symbolIds: string[]): {
       circuitName: 'Immersion Heater',
       cableSize: '2.5mm² T&E',
       protectionRating: '16A MCB Type B',
-      rcdRequired: false,
+      rcdRequired: true,
+      rcdBasis: '522.6.202',
       typicalLoad: '3kW',
     });
   });
@@ -234,7 +347,8 @@ export function assignCircuits(symbolIds: string[]): {
       circuitName: 'Ring Final 1 (FCU)',
       cableSize: '2.5mm² T&E',
       protectionRating: '32A MCB Type B',
-      rcdRequired: false,
+      rcdRequired: true,
+      rcdBasis: '522.6.202',
       typicalLoad: '100W',
     });
   });
@@ -249,7 +363,8 @@ export function assignCircuits(symbolIds: string[]): {
       circuitName: 'Ring Final 1 (FCU)',
       cableSize: '2.5mm² T&E',
       protectionRating: '32A MCB Type B',
-      rcdRequired: false,
+      rcdRequired: true,
+      rcdBasis: '522.6.202',
       typicalLoad: '2kW',
     });
   });
@@ -265,6 +380,7 @@ export function assignCircuits(symbolIds: string[]): {
       cableSize: '2.5mm² T&E',
       protectionRating: '32A MCB Type B',
       rcdRequired: true,
+      rcdBasis: '411.3.3',
       typicalLoad: '2.4kW',
     });
   });
@@ -279,7 +395,8 @@ export function assignCircuits(symbolIds: string[]): {
       circuitName: 'Air Conditioning',
       cableSize: '2.5mm² T&E',
       protectionRating: '16A MCB Type C',
-      rcdRequired: false,
+      rcdRequired: true,
+      rcdBasis: '522.6.202',
       typicalLoad: '2.5kW',
     });
   });
@@ -298,19 +415,32 @@ export function assignCircuits(symbolIds: string[]): {
     const existing = scheduleMap.get(a.circuitRef);
     if (existing) {
       existing.points += 1;
-      // If any symbol on this circuit requires RCD, mark circuit as RCD
-      if (a.rcdRequired && existing.rcd === 'N/A') {
-        existing.rcd = '30mA RCD';
+      // If any point on this circuit needs an RCD, the whole circuit does.
+      if (a.rcdRequired && existing.rcd !== RCD_30MA) {
+        existing.rcd = RCD_30MA;
+        existing.rcdBasis = a.rcdBasis;
       }
+      // A bathroom point on a shared circuit is the stronger citation.
+      if (a.rcdBasis === 'Section 701') existing.rcdBasis = 'Section 701';
     } else {
       scheduleMap.set(a.circuitRef, {
         circuitRef: a.circuitRef,
         circuitName: a.circuitName,
         cableSize: a.cableSize,
         protection: a.protectionRating,
-        rcd: a.rcdRequired ? '30mA RCD' : 'N/A',
+        rcd: a.rcdRequired
+          ? (a.rcdBasis === '722.531.3.101' ? '30mA Type B / Type A + RDC-DD' : RCD_30MA)
+          : 'Not required',
+        rcdBasis: a.rcdBasis,
         points: 1,
         typicalLoad: '',
+        // The RCD TYPE for EV charging depends on the charge point's own DC
+        // fault detection (Section 722). We deliberately don't guess it — the
+        // drawing says so rather than printing a type that may be wrong.
+        needsReview:
+          a.rcdBasis === '722.531.3.101'
+            ? 'Type B (BS EN 62423), or Type A with an RDC-DD (BS IEC 62955) where the charge point provides DC fault detection — confirm against the manufacturer’s instructions'
+            : undefined,
       });
     }
   }

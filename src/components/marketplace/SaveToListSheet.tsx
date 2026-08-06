@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { Plus, ListChecks, Package } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { useMaterialsLists } from '@/hooks/useMaterialsLists';
 import { MarketplaceProduct } from '@/hooks/useMarketplaceSearch';
 import { cn } from '@/lib/utils';
+import { inputCn, labelCn } from '@/components/forms/fieldStyles';
+import ProductImage from './ProductImage';
 
 interface SaveToListSheetProps {
   open: boolean;
@@ -60,115 +59,113 @@ export function SaveToListSheet({ open, onOpenChange, product }: SaveToListSheet
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-auto max-h-[60vh] rounded-t-2xl">
+      <SheetContent side="bottom" className="h-auto max-h-[85vh] rounded-t-2xl">
         <SheetHeader>
-          <SheetTitle className="flex items-center gap-2">
-            <ListChecks className="h-5 w-5" />
-            Save to List
+          <SheetTitle className="text-left text-[17px] font-semibold tracking-tight text-white">
+            Save to a list
           </SheetTitle>
         </SheetHeader>
 
-        <div className="mt-4 space-y-2 overflow-y-auto pb-6">
-          {/* Product preview */}
+        <div className="mt-4 space-y-3 overflow-y-auto pb-6">
           {product && (
-            <div className="flex items-center gap-3 p-3 bg-card rounded-lg border border-border/50 mb-4">
-              {product.image_url ? (
-                <img
-                  src={product.image_url}
-                  alt={product.name}
-                  className="h-12 w-12 object-contain rounded bg-white p-1"
-                />
-              ) : (
-                <div className="h-12 w-12 rounded bg-muted flex items-center justify-center">
-                  <Package className="h-6 w-6 text-white" />
-                </div>
-              )}
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-white line-clamp-1">
+            <div className="flex items-center gap-3 rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-3">
+              <ProductImage
+                src={product.image_url}
+                alt={product.name}
+                fallbackLabel={product.brand || product.supplier_name}
+                sizeClassName="h-12 w-12 shrink-0"
+                className="rounded-lg"
+              />
+              <div className="min-w-0 flex-1">
+                <p className="line-clamp-1 text-[14px] font-semibold text-white">
                   {product.brand ? `${product.brand} ${product.name}` : product.name}
                 </p>
-                <p className="text-xs text-white">
-                  £{product.current_price?.toFixed(2)} &middot; {product.supplier_name}
+                <p className="mt-0.5 text-[12px] text-white tabular-nums">
+                  £{product.current_price?.toFixed(2)} · {product.supplier_name}
                 </p>
               </div>
             </div>
           )}
 
-          {/* Loading state */}
-          {isLoading && (
-            <p className="text-center text-sm text-white py-4">Loading lists...</p>
-          )}
+          {isLoading && <p className="py-4 text-center text-[13px] text-white">Loading lists…</p>}
 
-          {/* No lists state */}
           {!isLoading && lists.length === 0 && !showNewListInput && (
-            <div className="text-center py-6">
-              <ListChecks className="h-10 w-10 text-white mx-auto mb-3" />
-              <p className="text-sm text-white mb-4">Create your first list to start saving products</p>
-              <Button
+            <div className="py-8 text-center">
+              <h3 className="text-[15px] font-semibold tracking-tight text-white">No lists yet</h3>
+              <p className="mx-auto mt-1.5 max-w-xs text-[13px] text-white">
+                A list keeps what you need for a job in one place, ready to price up.
+              </p>
+              <button
+                type="button"
                 onClick={() => setShowNewListInput(true)}
-                className="h-11 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
+                className="mt-5 h-11 rounded-xl bg-elec-yellow px-5 text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
               >
-                <Plus className="h-4 w-4 mr-2" />
-                Create First List
-              </Button>
+                Create a list
+              </button>
             </div>
           )}
 
-          {/* Existing lists */}
           {!isLoading && lists.length > 0 && (
-            <>
+            <div className="divide-y divide-white/[0.10] overflow-hidden rounded-2xl border border-white/[0.12]">
               {lists.map((list) => (
                 <button
                   key={list.id}
+                  type="button"
                   onClick={() => handleSelectList(list.id)}
                   disabled={saving}
                   className={cn(
-                    'w-full flex items-center justify-between p-3 rounded-lg border border-border/50 touch-manipulation',
-                    'hover:border-elec-yellow/50 active:scale-[0.98] transition-all text-left',
+                    'flex w-full items-center justify-between gap-3 bg-white/[0.03] px-4 py-3.5 text-left transition-colors hover:bg-white/[0.06] touch-manipulation',
                     saving && 'opacity-50'
                   )}
                 >
-                  <div>
-                    <p className="text-sm font-medium text-white">{list.name}</p>
-                    <p className="text-xs text-white">
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-[14px] font-semibold text-white">
+                      {list.name}
+                    </span>
+                    <span className="mt-0.5 block text-[12px] text-white tabular-nums">
                       {list.items.length} {list.items.length === 1 ? 'item' : 'items'}
-                    </p>
-                  </div>
-                  <Plus className="h-4 w-4 text-white" />
+                    </span>
+                  </span>
+                  <span className="shrink-0 text-[12px] font-semibold text-elec-yellow">Add</span>
                 </button>
               ))}
-            </>
+            </div>
           )}
 
-          {/* New list input */}
           {showNewListInput ? (
-            <div className="flex gap-2 pt-2">
-              <Input
+            <div className="pt-1">
+              <label className={labelCn} htmlFor="new-list-name">
+                List name
+              </label>
+              <input
+                id="new-list-name"
                 value={newListName}
                 onChange={(e) => setNewListName(e.target.value)}
-                placeholder="List name..."
-                className="h-11 flex-1"
+                placeholder="Rewire — 42 Oak Avenue"
+                className={inputCn}
                 autoFocus
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') handleCreateAndAdd();
                 }}
               />
-              <Button
+              <button
+                type="button"
                 onClick={handleCreateAndAdd}
                 disabled={!newListName.trim() || saving}
-                className="h-11 px-4 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
+                className="mt-3 h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors touch-manipulation active:scale-[0.98] disabled:opacity-50"
               >
-                {saving ? 'Saving...' : 'Create & Add'}
-              </Button>
+                {saving ? 'Saving…' : 'Create and add'}
+              </button>
             </div>
           ) : (
-            !isLoading && lists.length > 0 && (
+            !isLoading &&
+            lists.length > 0 && (
               <button
+                type="button"
                 onClick={() => setShowNewListInput(true)}
-                className="w-full flex items-center gap-2 p-3 rounded-lg border border-dashed border-border/50 touch-manipulation hover:border-elec-yellow/50 transition-all text-white text-sm"
+                className="h-11 w-full rounded-xl border border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation"
               >
-                <Plus className="h-4 w-4" />
-                Create New List
+                New list
               </button>
             )
           )}

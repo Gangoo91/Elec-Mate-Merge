@@ -560,9 +560,16 @@ const TaxFinances = () => {
                     <Calculator className="h-5 w-5 text-yellow-400" />
                     <h4 className="text-base font-semibold text-white">Flat Rate Scheme</h4>
                   </div>
+                  {/* There is no "electrician" flat rate sector. HMRC classes
+                      you by how much material you supply: 9.5% general
+                      building or construction, 14.5% labour-only (materials
+                      under 10% of turnover). This said "14.5% for
+                      electricians", which is the labour-only rate applied to
+                      everyone — wrong for most electricians, who supply
+                      materials. Source: gov.uk/vat-flat-rate-scheme. */}
                   <p className="text-sm text-white mb-3">
-                    Pay a fixed percentage of gross turnover (14.5% for electricians). Simpler but
-                    can't reclaim VAT on purchases.
+                    Pay a fixed percentage of gross turnover — 9.5% if you supply materials, 14.5%
+                    labour-only. Simpler, but you can't reclaim VAT on purchases.
                   </p>
                   <div className="space-y-2">
                     <div className="flex items-start gap-2">

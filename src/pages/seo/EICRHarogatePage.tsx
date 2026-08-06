@@ -42,7 +42,7 @@ const keyTakeaways = [
   'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 require all private landlords in Harrogate to hold a valid EICR and renew it at least every five years.',
   'North Yorkshire Council (formerly Harrogate Borough Council) is the local housing authority responsible for enforcement and can issue civil penalties of up to £30,000 per breach.',
   'Harrogate has a significant proportion of Victorian and Edwardian period properties — particularly in the Duchy, Starbeck, and town centre areas — where older wiring installations present recurring EICR findings including absent RCD protection and deteriorated insulation.',
-  'C1 (danger present) and C2 (potentially dangerous) observations under BS 7671 Section 631 render an EICR Unsatisfactory, requiring all remedial work to be completed within 28 days.',
+  'C1 (danger present) and C2 (potentially dangerous) observations under BS 7671 Chapter 65 render an EICR Unsatisfactory, requiring all remedial work to be completed within 28 days.',
   'Harrogate EICR prices reflect North Yorkshire labour rates and are broadly in line with the Yorkshire and Humber average — typically £120 to £210 for a two-bedroom property.',
 ];
 
@@ -162,7 +162,7 @@ const sections = [
         </div>
         <p>
           The EICR replaced the older Periodic Inspection Report (PIR) format and is carried out in
-          accordance with BS 7671 Section 631. It is the document required by the 2020 private
+          accordance with BS 7671 Chapter 65. It is the document required by the 2020 private
           rented sector regulations and by HMO licensing conditions administered by North Yorkshire
           Council across the former Harrogate Borough Council area.
         </p>

@@ -5,10 +5,10 @@ import { TestResult } from '@/types/testResult';
 import { cn } from '@/lib/utils';
 import EnhancedTestResultDesktopTableHeader from './EnhancedTestResultDesktopTableHeader';
 import EnhancedTestResultDesktopTableRow from './EnhancedTestResultDesktopTableRow';
-import RegulationValidationControls from './RegulationValidationControls';
 import { toast } from 'sonner';
 import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
 import { bsStandardRequiresCurve } from '@/types/protectiveDeviceTypes';
+import { handleGridKeyDown } from '@/utils/scheduleGridNavigation';
 
 interface EnhancedTestResultDesktopTableProps {
   testResults: TestResult[];
@@ -63,7 +63,8 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
     lastByBoard.forEach((id) => lastIds.add(id));
     return { firstOfBoardIds: firstIds, lastOfBoardIds: lastIds };
   }, [testResults]);
-  const [showRegulationStatus, setShowRegulationStatus] = useState(false);
+  // Defaults on now the panel that toggled it has gone — see below.
+  const [showRegulationStatus] = useState(true);
   const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(new Set());
 
   // Fill handlers read the current circuits through a ref so they can be
@@ -457,6 +458,10 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
           <div className="sot-table-wrapper">
             <div
               className="w-full overflow-auto enhanced-table-scroll"
+              // ELE-1485 — Enter and the arrows move between cells. Handled here
+              // rather than per cell: the keydown bubbles up from the input, and
+              // the table's own DOM already describes the grid.
+              onKeyDown={handleGridKeyDown}
               style={{
                 maxHeight: 'calc(100vh - 140px)',
                 overscrollBehavior: 'contain',
@@ -520,12 +525,17 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
         )}
       </div>
 
-      {/* Regulation Validation Controls */}
-      <RegulationValidationControls
-        testResults={testResults}
-        showRegulationStatus={showRegulationStatus}
-        onToggleRegulationStatus={setShowRegulationStatus}
-      />
+      {/* The "Regulation checks" panel that used to sit here has gone.
+          ────────────────────────────────────────────────────────────
+          It duplicated the Validate sheet exactly — same checks, same counts —
+          while occupying ~300px below the table on every board, on a page
+          where the schedule is the thing you want to see. The Validate button
+          in the board toolbar carries the issue count, opens the full detail,
+          and unlike the panel it exists on mobile.
+
+          The per-row status column it used to toggle is kept, and now shows by
+          default: one narrow column of inline feedback is worth more than a
+          panel you have to scroll past. */}
 
       {!isEmpty && (
         <div className="mt-3 flex flex-col lg:flex-row items-center justify-between gap-3 px-4 py-3 rounded-lg border border-white/10 bg-white/[0.02]">
@@ -543,12 +553,16 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
               <span>next row</span>
             </span>
             <span className="flex items-center gap-1.5">
-              <kbd className="px-1.5 py-0.5 rounded border border-white/15 bg-white/[0.04] text-[10px] font-mono text-white">← ↑ ↓ →</kbd>
-              <span>cells</span>
+              <kbd className="px-1.5 py-0.5 rounded border border-white/15 bg-white/[0.04] text-[10px] font-mono text-white">↑ ↓</kbd>
+              <span>rows</span>
             </span>
+            {/* ELE-1485 — plain ← → stay with the caret inside the field, so the
+                horizontal move is modified. The legend used to promise bare
+                arrows for cells, and a right-click copy/paste menu that has
+                never existed. */}
             <span className="flex items-center gap-1.5">
-              <kbd className="px-1.5 py-0.5 rounded border border-white/15 bg-white/[0.04] text-[10px] font-mono text-white">Right-click</kbd>
-              <span>copy / paste</span>
+              <kbd className="px-1.5 py-0.5 rounded border border-white/15 bg-white/[0.04] text-[10px] font-mono text-white">⌘ ← →</kbd>
+              <span>cells</span>
             </span>
           </div>
         </div>

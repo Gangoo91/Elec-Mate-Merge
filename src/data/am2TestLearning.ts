@@ -120,7 +120,7 @@ export const TEST_LEARNING: Record<string, TestLearningEntry> = {
     eicInfo: 'Columns 23 & 25 — IR test voltage (V) & IR L–E (MΩ)',
     practicalTip:
       'Disconnect sensitive electronic equipment first. Link line and neutral together at the DB, then test between them and the main earth terminal. On a new installation you should see >200MΩ. If you get a low reading, disconnect circuits one by one to find the fault.',
-    regulation: 'BS 7671:2018+A3:2024 Reg. 643.3 / Table 61 / GN3 Section 11',
+    regulation: 'BS 7671:2018+A4:2026 Reg. 643.3 / Table 64 / GN3 Section 11',
     failPoints: [
       'Leaving electronic equipment connected (LED drivers, smart switches, dimmers) — they cause false low readings',
       'Not linking L and N together before testing to earth — you must test all live conductors as a group against E',
@@ -137,7 +137,7 @@ export const TEST_LEARNING: Record<string, TestLearningEntry> = {
     eicInfo: 'Columns 23 & 24 — IR test voltage (V) & IR L–L (MΩ)',
     practicalTip:
       'Ensure all loads are disconnected (lamps removed, appliances unplugged). Test between line and neutral at the DB. On a healthy circuit expect >200MΩ. Two-way switching circuits may need switches in specific positions.',
-    regulation: 'BS 7671:2018+A3:2024 Reg. 643.3 / Table 61 / GN3 Section 11',
+    regulation: 'BS 7671:2018+A4:2026 Reg. 643.3 / Table 64 / GN3 Section 11',
     failPoints: [
       'Leaving lamps in their holders — filament lamps short L to N and give a near-zero reading',
       'Not checking two-way lighting circuits in both switch positions — one position may bypass a section',
@@ -153,11 +153,11 @@ export const TEST_LEARNING: Record<string, TestLearningEntry> = {
     eicInfo: 'Columns 23 & 25 — IR test voltage (V) & IR L–E (MΩ)',
     practicalTip:
       'Select the 250V range on your MFT. This is typically used for SELV/PELV circuits only — most standard circuits use the 500V range.',
-    regulation: 'BS 7671:2018+A3:2024 Reg. 643.3 / Table 61',
+    regulation: 'BS 7671:2018+A4:2026 Reg. 643.3 / Table 64',
     failPoints: [
       'Using 500V on a SELV/PELV circuit — the higher test voltage can damage sensitive components',
-      'Applying 250V to a standard 230V circuit — Table 61 requires 500V for circuits above 50V',
-      'Not recording the correct test voltage on the EIC schedule — the assessor checks this matches Table 61',
+      'Applying 250V to a standard 230V circuit — Table 64 requires 500V for circuits above 50V',
+      'Not recording the correct test voltage on the EIC schedule — the assessor checks this matches Table 64',
     ],
   },
 
@@ -168,10 +168,10 @@ export const TEST_LEARNING: Record<string, TestLearningEntry> = {
       'Ensures insulation integrity between conductors on lower-voltage circuits without risking damage to sensitive components.',
     eicInfo: 'Columns 23 & 24 — IR test voltage (V) & IR L–L (MΩ)',
     practicalTip:
-      'Only use 250V for SELV/PELV circuits. For standard 230V circuits always use 500V as per Table 61.',
-    regulation: 'BS 7671:2018+A3:2024 Reg. 643.3 / Table 61',
+      'Only use 250V for SELV/PELV circuits. For standard 230V circuits always use 500V as per Table 64.',
+    regulation: 'BS 7671:2018+A4:2026 Reg. 643.3 / Table 64',
     failPoints: [
-      'Using the wrong test voltage — always check Table 61 to confirm 250V is correct for the circuit type',
+      'Using the wrong test voltage — always check Table 64 to confirm 250V is correct for the circuit type',
       'Confusing SELV with PELV — SELV has no earth reference, PELV is earthed; both use 250V test voltage',
     ],
   },

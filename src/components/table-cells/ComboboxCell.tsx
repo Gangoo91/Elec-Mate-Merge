@@ -90,6 +90,11 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
   const trigger = (
     <button
       type="button"
+      // A combobox in both senses: it announces correctly to a screen reader,
+      // and it lets the schedule size every dropdown trigger with its text
+      // inputs from one CSS rule rather than a hardcoded height per cell.
+      role="combobox"
+      aria-expanded={open}
       onClick={handleOpen}
       title={displayValue || placeholder || undefined}
       className={cn(

@@ -2,18 +2,13 @@ import { useState, useMemo, useRef } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
 import {
-  AlertTriangle,
   ArrowLeft,
   Check,
   ChevronDown,
   ChevronUp,
-  MapPin,
-  Calendar,
-  Camera,
   Plus,
   Pencil,
   FileText,
-  Flame,
   Send,
   Sparkles,
 } from 'lucide-react';
@@ -40,6 +35,9 @@ import {
 import { useSnags, type Snag, type CreateSnagInput, type SnagPhotoUpload } from '@/hooks/useSnags';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
+import { cardCn, chipBase, chipOff, chipOn, eyebrowCn } from '@/components/shared/surfaceStyles';
+import { inputCn, labelCn, selectTriggerCn, textareaCn } from '@/components/forms/fieldStyles';
 
 const priorityConfig: Record<string, { label: string; bg: string; text: string }> = {
   urgent: { label: 'Urgent', bg: 'bg-red-500/20', text: 'text-red-400' },
@@ -107,8 +105,11 @@ const SnagRow = ({
   const isCritical = snag.priority === 'urgent' || snag.priority === 'high';
   const firstPhoto = snag.photos[0];
 
+  // A resolved snag used to be struck through AND dimmed to 50% AND greyed —
+  // three signals for one state, which made a finished job read as a dead
+  // page. The quiet "Done" on the right says it once.
   return (
-    <div className={isDone && !selectMode ? 'opacity-50' : ''}>
+    <div>
       <button
         onClick={() => {
           if (selectMode) {
@@ -146,41 +147,22 @@ const SnagRow = ({
                 loading="lazy"
               />
             </div>
-            <span
-              aria-hidden="true"
-              className={`absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full ${dotColour} ring-2 ring-background`}
-            />
           </div>
-        ) : (
-          <span
-            aria-hidden="true"
-            className={`w-2 h-2 rounded-full shrink-0 ml-1.5 ${dotColour}`}
-          />
-        )}
+        ) : null}
 
         {/* Body */}
         <div className="flex-1 min-w-0">
-          <p
-            className={`text-[14px] font-medium leading-snug truncate ${
-              isDone ? 'line-through text-white/60' : 'text-white'
-            }`}
-          >
+          <p className="truncate text-[14px] font-semibold leading-snug tracking-tight text-white">
             {snag.title}
           </p>
-          <p className="mt-0.5 text-[11.5px] text-white/50 truncate leading-snug flex items-center gap-2">
-            {snag.location && (
-              <span className="inline-flex items-center gap-1">
-                <MapPin className="h-3 w-3" />
-                {snag.location}
-              </span>
-            )}
-            <span className="inline-flex items-center gap-1">
-              <Calendar className="h-3 w-3" />
-              {dateStr}
+          {/* One meta line, no icons — the location and the date read as
+              plainly without a pin and a calendar glyph in front of them. */}
+          <p className="mt-0.5 flex items-center gap-2 truncate text-[12px] leading-snug text-white">
+            <span className="truncate">
+              {[snag.location, dateStr].filter(Boolean).join(' · ')}
             </span>
             {isCritical && !isDone && (
-              <span className="inline-flex items-center gap-0.5 text-orange-400 font-semibold uppercase tracking-wide text-[10px]">
-                <Flame className="h-2.5 w-2.5" />
+              <span className="shrink-0 rounded-full border border-orange-500/30 bg-orange-500/[0.12] px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-orange-300">
                 {snag.priority}
               </span>
             )}
@@ -190,21 +172,20 @@ const SnagRow = ({
         {/* Right meta — photo count + chevron */}
         <div className="flex items-center gap-2 shrink-0">
           {snag.photos.length > 1 && (
-            <span className="flex items-center gap-0.5 text-[11px] text-white/40 tabular-nums">
-              <Camera className="h-3 w-3" />
-              {snag.photos.length}
+            <span className="text-[11px] text-white tabular-nums">
+              {snag.photos.length} photos
             </span>
           )}
-          {isDone ? (
-            <span className="text-[10px] font-semibold uppercase tracking-wide text-emerald-400/80 px-1.5">
-              Resolved
+          {isDone && (
+            <span className="px-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-white">
+              Done
             </span>
-          ) : null}
+          )}
           {!selectMode &&
             (expanded ? (
-              <ChevronUp className="h-3.5 w-3.5 text-white/35" />
+              <ChevronUp className="h-4 w-4 text-elec-yellow" />
             ) : (
-              <ChevronDown className="h-3.5 w-3.5 text-white/35" />
+              <ChevronDown className="h-4 w-4 text-elec-yellow" />
             ))}
         </div>
       </button>
@@ -212,7 +193,7 @@ const SnagRow = ({
       {expanded && !selectMode && (
         <div className="px-4 pb-3 pl-12 space-y-3">
           {snag.details && (
-            <p className="text-[13px] text-white/70 whitespace-pre-wrap leading-relaxed">
+            <p className="whitespace-pre-wrap text-[13px] leading-relaxed text-white">
               {snag.details}
             </p>
           )}
@@ -244,7 +225,7 @@ const SnagRow = ({
                   )}
                 </div>
                 {showDetails && (
-                  <p className="text-[12.5px] text-white/75 leading-relaxed">{a.details}</p>
+                  <p className="text-[12.5px] leading-relaxed text-white">{a.details}</p>
                 )}
                 {cites.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 pt-0.5">
@@ -550,63 +531,52 @@ const SnaggingPage = () => {
       {/* Sticky compact header — matches the rest of the app */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
         <div className="px-4 lg:px-8 py-2 lg:max-w-[1200px] lg:mx-auto">
-          <div className="flex items-center justify-between h-11">
-            <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => navigate('/electrician/business')}
-                className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </Button>
-              <h1 className="text-lg font-bold text-white">Snagging</h1>
-              {snags.length > 0 && (
-                <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-white/[0.08] text-white/70">
-                  {snags.length}
-                </span>
-              )}
-              {counts.critical > 0 && (
-                <span className="ml-1 px-2 py-0.5 rounded-full text-[10.5px] font-semibold bg-red-500/15 text-red-400 ring-1 ring-red-500/20 flex items-center gap-1">
-                  <Flame className="h-3 w-3" />
-                  {counts.critical} critical
-                </span>
-              )}
-            </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setDrawerOpen(true)}
-              aria-label="New snag"
-              className="text-white/80 hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
+          <div className="flex h-11 items-center gap-2">
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/business')}
+              aria-label="Back to Business Hub"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white transition-colors hover:bg-white/10 touch-manipulation active:scale-[0.98]"
             >
-              <Plus className="h-5 w-5" />
-            </Button>
+              <ArrowLeft className="h-5 w-5" />
+            </button>
+            <h1 className="min-w-0 flex-1 truncate text-[19px] font-semibold tracking-tight text-white">
+              Snagging
+            </h1>
+            {/* The total was a badge next to the title and told you nothing you
+                could act on. What is still outstanding is the number that
+                matters, so only that earns a place here. */}
+            {counts.open > 0 && (
+              <span className="shrink-0 rounded-full bg-elec-yellow px-2.5 py-1 text-[11px] font-bold tabular-nums text-black">
+                {counts.open} to fix
+              </span>
+            )}
+            <button
+              type="button"
+              onClick={() => setDrawerOpen(true)}
+              className="h-11 shrink-0 rounded-xl bg-elec-yellow px-4 text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
+            >
+              Add
+            </button>
           </div>
         </div>
       </div>
 
       {/* Slim filter chips */}
       <div className="px-4 lg:px-8 pt-3 lg:max-w-[1200px] lg:mx-auto">
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
           {FILTERS.map((f) => (
             <button
               key={f.key}
               onClick={() => setFilter(f.key)}
-              className={`flex items-center gap-1.5 px-2.5 h-7 rounded-full text-[12px] font-medium transition-colors touch-manipulation ${
-                filter === f.key
-                  ? f.key === 'critical'
-                    ? 'bg-red-500/[0.15] text-red-300 ring-1 ring-red-500/30'
-                    : 'bg-white/[0.10] text-white'
-                  : 'text-white/45 hover:text-white hover:bg-white/[0.05]'
-              }`}
+              className={cn(
+                chipBase,
+                'flex items-center gap-1.5',
+                filter === f.key ? chipOn : chipOff
+              )}
             >
               {f.label}
-              <span
-                className={`text-[10px] font-semibold tabular-nums ${
-                  filter === f.key ? 'opacity-80' : 'text-white/35'
-                }`}
-              >
+              <span className="text-[11px] font-semibold tabular-nums">
                 {filterCounts[f.key]}
               </span>
             </button>
@@ -619,11 +589,7 @@ const SnaggingPage = () => {
                   if (selectMode) exitSelectMode();
                   else setSelectMode(true);
                 }}
-                className={`inline-flex items-center h-7 px-2.5 rounded-full text-[12px] font-medium touch-manipulation transition-colors ${
-                  selectMode
-                    ? 'bg-white/[0.10] text-white'
-                    : 'text-white/55 hover:text-white hover:bg-white/[0.05]'
-                }`}
+                className="inline-flex h-9 items-center rounded-full px-3 text-[12.5px] font-semibold text-elec-yellow transition-colors hover:bg-elec-yellow/[0.10] touch-manipulation" 
               >
                 {selectMode ? 'Cancel' : 'Select'}
               </button>
@@ -658,27 +624,37 @@ const SnaggingPage = () => {
 
         {/* Empty state */}
         {!isLoading && filteredSnags.length === 0 && snags.length === 0 && (
-          <div className="md:col-span-2 text-center py-12 space-y-4">
-            <AlertTriangle className="h-12 w-12 text-orange-400 mx-auto" />
-            <h3 className="text-lg font-semibold text-white">No snags yet</h3>
-            <p className="text-sm text-white max-w-xs mx-auto">
-              Add snags manually or ask Mate to generate a snagging list from your certificates.
+          <div className="py-14 text-center md:col-span-2">
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">Nothing snagged</h3>
+            <p className="mx-auto mt-1.5 max-w-xs text-[13px] text-white">
+              Snap what needs putting right before you leave site and it stays on the job until it
+              is done.
             </p>
-            <Button
+            <button
+              type="button"
               onClick={() => setDrawerOpen(true)}
-              className="h-11 px-6 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl touch-manipulation"
+              className="mt-5 h-11 rounded-xl bg-elec-yellow px-5 text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
             >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Your First Snag
-            </Button>
+              Add the first one
+            </button>
           </div>
         )}
 
         {/* Filter empty state (snags exist but filter returns nothing) */}
         {!isLoading && filteredSnags.length === 0 && snags.length > 0 && (
-          <div className="md:col-span-2 text-center py-12 space-y-3">
-            <Check className="h-10 w-10 text-white mx-auto" />
-            <p className="text-sm text-white">No snags match this filter.</p>
+          <div className="py-14 text-center md:col-span-2">
+            <h3 className="text-[15px] font-semibold tracking-tight text-white">
+              {filter === 'open'
+                ? 'Nothing left to fix'
+                : filter === 'critical'
+                  ? 'Nothing critical'
+                  : 'Nothing here'}
+            </h3>
+            <p className="mx-auto mt-1.5 max-w-xs text-[13px] text-white">
+              {filter === 'open'
+                ? 'Every snag on the books has been signed off.'
+                : 'Try a different filter.'}
+            </p>
           </div>
         )}
 
@@ -695,51 +671,42 @@ const SnaggingPage = () => {
           return (
             <div
               key={key}
-              className="rounded-xl bg-white/[0.05] border border-white/[0.10] overflow-hidden shadow-sm shadow-black/20"
+              className={cn(cardCn, 'overflow-hidden')}
             >
               <Collapsible open={isOpen} onOpenChange={() => toggleProject(key)}>
                 <CollapsibleTrigger asChild>
                   <button className="w-full touch-manipulation hover:bg-white/[0.02] active:bg-white/[0.04] transition-colors text-left">
-                    <div className="flex items-center justify-between px-4 pt-3 pb-2">
-                      <div className="flex items-baseline gap-2 min-w-0">
-                        <span
-                          className={`text-[11px] font-semibold uppercase tracking-[0.18em] truncate ${
-                            allResolved ? 'text-emerald-400/70' : 'text-white/55'
-                          }`}
-                        >
+                    {/* The percentage and the progress bar said the same thing
+                        as the count beside them, in two more ways. What is left
+                        to do is the only number worth reading here. */}
+                    <div className="flex items-center justify-between gap-3 px-4 py-3.5 sm:px-5">
+                      <div className="min-w-0 flex-1">
+                        <span className="block truncate text-[15px] font-semibold tracking-tight text-white">
                           {group.projectTitle}
                         </span>
-                        <span className="text-[11px] font-medium text-white/35 tabular-nums shrink-0">
-                          {openCount > 0 ? `${openCount} open` : 'all resolved'}
-                          {resolvedCount > 0 && openCount > 0 && ` · ${resolvedCount} done`}
+                        <span className="mt-0.5 block text-[12px] text-white tabular-nums">
+                          {openCount > 0
+                            ? `${openCount} to fix${resolvedCount > 0 ? ` · ${resolvedCount} done` : ''}`
+                            : `All ${group.snags.length} done`}
                         </span>
                       </div>
-                      <div className="flex items-center gap-2 shrink-0">
-                        {group.snags.length > 0 && (
-                          <span className="text-[11px] font-semibold text-white/45 tabular-nums">
-                            {Math.round(progressPct)}%
+                      <div className="flex shrink-0 items-center gap-2">
+                        {openCount > 0 && (
+                          <span className="rounded-full bg-elec-yellow px-2 py-0.5 text-[11px] font-bold tabular-nums text-black">
+                            {openCount}
                           </span>
                         )}
                         {isOpen ? (
-                          <ChevronUp className="h-3.5 w-3.5 text-white/35" />
+                          <ChevronUp className="h-4 w-4 text-elec-yellow" />
                         ) : (
-                          <ChevronDown className="h-3.5 w-3.5 text-white/35" />
+                          <ChevronDown className="h-4 w-4 text-elec-yellow" />
                         )}
                       </div>
-                    </div>
-                    {/* Hairline progress under header */}
-                    <div className="h-0.5 mx-4 mb-1 bg-white/[0.05] rounded-full overflow-hidden">
-                      <div
-                        className={`h-full rounded-full transition-all duration-500 ${
-                          allResolved ? 'bg-emerald-400/70' : 'bg-elec-yellow/80'
-                        }`}
-                        style={{ width: `${progressPct}%` }}
-                      />
                     </div>
                   </button>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
-                  <div className="divide-y divide-white/[0.06] border-t border-white/[0.08]">
+                  <div className="divide-y divide-white/[0.08] border-t border-white/[0.10]">
                     {group.snags.map((snag) => (
                       <SnagRow
                         key={snag.id}
@@ -762,12 +729,12 @@ const SnaggingPage = () => {
       {selectMode && selectedIds.size > 0 && (
         <div className="fixed bottom-0 left-0 right-0 z-40 px-4 pb-[max(env(safe-area-inset-bottom),12px)] pt-3 bg-gradient-to-t from-background via-background/95 to-background/0 pointer-events-none">
           <div className="max-w-[1200px] mx-auto pointer-events-auto">
-            <div className="flex items-center gap-2 rounded-2xl bg-neutral-900 border border-white/10 shadow-2xl shadow-black/40 px-3 py-2">
+            <div className="flex items-center gap-2 rounded-2xl border border-white/[0.14] bg-neutral-900 px-3 py-2 shadow-2xl shadow-black/40">
               <div className="flex-1 min-w-0 px-1">
                 <p className="text-[13px] font-semibold text-white leading-tight tabular-nums">
                   {selectedIds.size} selected
                 </p>
-                <p className="text-[11.5px] text-white/50 leading-tight">
+                <p className="text-[12px] leading-tight text-white">
                   {(() => {
                     const openSelected = snags.filter(
                       (s) => selectedIds.has(s.id) && s.status !== 'done'
@@ -781,9 +748,8 @@ const SnaggingPage = () => {
               <Button
                 variant="ghost"
                 onClick={() => openSendSheet(Array.from(selectedIds))}
-                className="h-10 px-3 text-[13px] text-white/80 hover:text-white hover:bg-white/[0.06] touch-manipulation"
+                className="h-11 rounded-xl px-4 text-[13px] font-medium text-white hover:bg-white/[0.08] touch-manipulation"
               >
-                <Send className="h-3.5 w-3.5 mr-1.5" />
                 Send
               </Button>
               <Button
@@ -844,7 +810,7 @@ const SnaggingPage = () => {
             <DrawerTitle className="text-white text-[17px] font-semibold tracking-tight">
               Send snagging report
             </DrawerTitle>
-            <p className="text-[12.5px] text-white/55 mt-1">
+            <p className="mt-1 text-[12.5px] text-white">
               {sendIds.length} snag{sendIds.length === 1 ? '' : 's'} · PDF with photos +
               BS 7671 refs will be attached
             </p>
@@ -852,9 +818,7 @@ const SnaggingPage = () => {
 
           <div className="px-4 pt-4 pb-4 space-y-4 overflow-y-auto flex-1">
             <div className="space-y-2">
-              <label className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/45 block">
-                Recipient email
-              </label>
+              <label className={labelCn}>Recipient email</label>
               <Input
                 type="email"
                 value={sendRecipient}
@@ -862,34 +826,28 @@ const SnaggingPage = () => {
                 placeholder="client@example.com"
                 autoCapitalize="none"
                 autoComplete="email"
-                className="h-11 text-[15px] touch-manipulation border-white/[0.10] bg-white/[0.04] focus:border-elec-yellow focus:ring-elec-yellow rounded-xl placeholder:text-white/35 text-white"
+                className={inputCn}
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/45 block">
-                Subject{' '}
-                <span className="text-white/30 normal-case tracking-normal">(optional)</span>
-              </label>
+              <label className={labelCn}>Subject</label>
               <Input
                 value={sendSubject}
                 onChange={(e) => setSendSubject(e.target.value)}
                 placeholder={`Snagging report — ${sendIds.length} item${sendIds.length === 1 ? '' : 's'}`}
-                className="h-11 text-[15px] touch-manipulation border-white/[0.10] bg-white/[0.04] focus:border-elec-yellow focus:ring-elec-yellow rounded-xl placeholder:text-white/35 text-white"
+                className={inputCn}
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/45 block">
-                Message{' '}
-                <span className="text-white/30 normal-case tracking-normal">(optional)</span>
-              </label>
+              <label className={labelCn}>Message</label>
               <Textarea
                 value={sendMessage}
                 onChange={(e) => setSendMessage(e.target.value)}
                 placeholder="Add a short personal note — leave blank for a friendly default."
                 rows={4}
-                className="touch-manipulation text-[15px] min-h-[100px] bg-white/[0.04] border-white/[0.10] focus:border-elec-yellow focus:ring-elec-yellow rounded-xl placeholder:text-white/35 text-white resize-none"
+                className={cn(textareaCn, "min-h-[100px]")}
               />
             </div>
           </div>
@@ -961,13 +919,8 @@ const SnaggingPage = () => {
             {/* Photo strip — thumbnails when present, capture buttons always */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/45">
-                  Evidence
-                  {formPhotos.length > 0 && (
-                    <span className="ml-2 text-white/30 normal-case tracking-normal">
-                      ({formPhotos.length}/6)
-                    </span>
-                  )}
+                <label className={labelCn}>
+                  Photos{formPhotos.length > 0 ? ` (${formPhotos.length}/6)` : ''}
                 </label>
                 {formPhotos.length > 0 && (
                   <button
@@ -983,8 +936,7 @@ const SnaggingPage = () => {
                       </>
                     ) : (
                       <>
-                        <Sparkles className="h-3 w-3" />
-                        {formPhotos[0]?.analysis ? 'Re-suggest' : 'Suggest from photo'}
+                        {formPhotos[0]?.analysis ? 'Read it again' : 'Read the photo'}
                       </>
                     )}
                   </button>
@@ -1003,14 +955,14 @@ const SnaggingPage = () => {
                   : [];
                 if (analysis.grounded && citations.length > 0) {
                   return (
-                    <p className="text-[11px] text-emerald-400/80 flex items-center gap-1.5">
+                    <p className="flex items-center gap-1.5 text-[11px] text-white">
                       <Check className="h-3 w-3" />
                       Grounded · {citations.map((c) => c.ref).join(', ')}
                     </p>
                   );
                 }
                 return (
-                  <p className="text-[11px] text-white/40">
+                  <p className="text-[11px] text-white">
                     Vision-only — no matching reg in BS 7671 facets.
                   </p>
                 );
@@ -1042,9 +994,9 @@ const SnaggingPage = () => {
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
-                      className="aspect-square rounded-lg border border-dashed border-white/15 hover:border-white/30 hover:bg-white/[0.03] flex items-center justify-center touch-manipulation transition-colors"
+                      className="flex aspect-square items-center justify-center rounded-lg border border-white/[0.14] bg-white/[0.06] text-[12px] font-semibold text-white transition-colors hover:bg-white/[0.10] touch-manipulation"
                     >
-                      <Camera className="h-5 w-5 text-white/45" />
+                      Add
                     </button>
                   )}
                 </div>
@@ -1052,33 +1004,33 @@ const SnaggingPage = () => {
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="w-full flex items-center justify-center gap-2 h-11 rounded-xl border border-dashed border-white/15 hover:border-white/30 hover:bg-white/[0.03] text-[13px] text-white/55 hover:text-white touch-manipulation transition-colors"
+                  className="w-full rounded-xl border border-elec-yellow/40 bg-elec-yellow/[0.10] px-4 py-3 text-left transition-colors hover:bg-elec-yellow/[0.14] touch-manipulation active:scale-[0.99]"
                 >
-                  <Camera className="h-4 w-4" />
-                  Add a photo — Mate will draft the snag for you
+                  <span className="block text-[14px] font-semibold tracking-tight text-white">
+                    Add a photo
+                  </span>
+                  <span className="mt-0.5 block text-[12px] text-white">
+                    Mate reads it and drafts the snag for you
+                  </span>
                 </button>
               )}
             </div>
 
             {/* Title */}
             <div className="space-y-2">
-              <label className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/45 block">
-                What's the snag?
-              </label>
+              <label className={labelCn}>What's the snag?</label>
               <Input
                 value={formTitle}
                 onChange={(e) => setFormTitle(e.target.value)}
                 placeholder="e.g. Damaged socket faceplate in lounge"
                 autoCapitalize="sentences"
-                className="h-11 text-[15px] touch-manipulation border-white/[0.10] bg-white/[0.04] focus:border-elec-yellow focus:ring-elec-yellow rounded-xl placeholder:text-white/35 text-white"
+                className={inputCn}
               />
             </div>
 
-            {/* Priority — proper segmented control with priority dots */}
+            {/* Priority — chips. The four coloured dots were a legend the user had to learn; the words already rank themselves. */}
             <div className="space-y-2">
-              <label className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/45 block">
-                Priority
-              </label>
+              <label className={labelCn}>Priority</label>
               <div className="grid grid-cols-4 gap-1.5">
                 {priorityPills.map((p) => {
                   const isActive = formPriority === p.value;
@@ -1087,18 +1039,8 @@ const SnaggingPage = () => {
                       key={p.value}
                       type="button"
                       onClick={() => setFormPriority(p.value)}
-                      className={`h-10 rounded-lg text-[12.5px] font-semibold touch-manipulation transition-colors flex items-center justify-center gap-1.5 ${
-                        isActive
-                          ? 'bg-white/[0.10] text-white ring-1 ring-white/20'
-                          : 'bg-white/[0.04] text-white/55 hover:text-white hover:bg-white/[0.06]'
-                      }`}
+                      className={cn(chipBase, 'flex-1 justify-center', isActive ? chipOn : chipOff)}
                     >
-                      <span
-                        aria-hidden="true"
-                        className={`w-1.5 h-1.5 rounded-full ${
-                          priorityAccent[p.value] || priorityAccent.normal
-                        }`}
-                      />
                       {p.label}
                     </button>
                   );
@@ -1108,26 +1050,22 @@ const SnaggingPage = () => {
 
             {/* Location */}
             <div className="space-y-2">
-              <label className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/45 block">
-                Location
-              </label>
+              <label className={labelCn}>Location</label>
               <Input
                 value={formLocation}
                 onChange={(e) => setFormLocation(e.target.value)}
                 placeholder="e.g. Kitchen, 1st floor"
                 autoCapitalize="sentences"
-                className="h-11 text-[15px] touch-manipulation border-white/[0.10] bg-white/[0.04] focus:border-elec-yellow focus:ring-elec-yellow rounded-xl placeholder:text-white/35 text-white"
+                className={inputCn}
               />
             </div>
 
             {/* Project */}
             {projectList.length > 0 && (
               <div className="space-y-2">
-                <label className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/45 block">
-                  Project
-                </label>
+                <label className={labelCn}>Project</label>
                 <Select value={formProjectId} onValueChange={setFormProjectId}>
-                  <SelectTrigger className="h-11 text-[15px] touch-manipulation bg-white/[0.04] border-white/[0.10] focus:border-elec-yellow focus:ring-elec-yellow rounded-xl text-white">
+                  <SelectTrigger className={selectTriggerCn}>
                     <SelectValue placeholder="None — unassigned" />
                   </SelectTrigger>
                   <SelectContent className="bg-neutral-900 border-white/10">
@@ -1144,16 +1082,14 @@ const SnaggingPage = () => {
 
             {/* Details */}
             <div className="space-y-2">
-              <label className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/45 block">
-                Details <span className="text-white/30 normal-case tracking-normal">(optional)</span>
-              </label>
+              <label className={labelCn}>Details</label>
               <Textarea
                 value={formDetails}
                 onChange={(e) => setFormDetails(e.target.value)}
                 placeholder="Any extra notes — what's wrong, what to do, parts needed…"
                 autoCapitalize="sentences"
                 rows={3}
-                className="touch-manipulation text-[15px] min-h-[88px] bg-white/[0.04] border-white/[0.10] focus:border-elec-yellow focus:ring-elec-yellow rounded-xl placeholder:text-white/35 text-white resize-none"
+                className={textareaCn}
               />
             </div>
           </div>
@@ -1170,10 +1106,7 @@ const SnaggingPage = () => {
                   Adding...
                 </span>
               ) : (
-                <span className="flex items-center gap-1.5">
-                  <Plus className="h-4 w-4" strokeWidth={2.4} />
-                  Add snag
-                </span>
+                'Add snag'
               )}
             </Button>
           </DrawerFooter>

@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 4:2024.',
+      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 4:2026.',
     icon: FileText,
     category: 'Guide',
   },
@@ -382,7 +382,7 @@ const sections = [
           Chapter 64.
         </p>
         <p>
-          Amendment 4:2024 adds Regulation 530.3.2 covering bidirectional and unidirectional
+          Amendment 4:2026 adds Regulation 530.3.2 covering bidirectional and unidirectional
           protective devices. For installations with solar PV, battery storage, or other sources of
           reverse power flow, the Commissioning Specialist includes verification steps to confirm
           that the installed protective devices are suitable for the direction of energy flow — a

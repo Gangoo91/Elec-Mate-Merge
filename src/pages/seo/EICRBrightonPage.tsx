@@ -41,7 +41,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A4:2026 (Section 631). It produces a condition assessment using C1, C2, C3 and FI observation codes.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A4:2026 (Chapter 65). It produces a condition assessment using C1, C2, C3 and FI observation codes.",
   'Brighton EICR costs are above the national average due to high local demand and elevated property values. Expect to pay between £130 and £240 for a two-bedroom flat and £200 to £360 for a three-bedroom house.',
   'Landlords in England must obtain a valid EICR before a new tenancy begins and renew it every five years. Brighton & Hove City Council enforces the regulations and can fine non-compliant landlords up to £30,000 per breach.',
   'Brighton has a high proportion of Regency, Victorian, and Edwardian properties — many converted into flats. These conversions frequently have mixed-era wiring and absent RCD protection, leading to C2 observations on most EICRs.',
@@ -161,7 +161,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (Section 631), which specifies that an Electrical Installation Condition Report must be
+          (Chapter 65), which specifies that an Electrical Installation Condition Report must be
           used for periodic inspection of existing installations. It is not a simple pass or fail —
           it is a detailed condition assessment with standardised observation codes.
         </p>
@@ -256,7 +256,7 @@ const sections = [
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Every five years</strong> — the EICR must be renewed at least every five
-                years, or sooner if the inspector specifies. BS 7671 Regulation 134.2 requires
+                years, or sooner if the inspector specifies. BS 7671 Regulation 135.1 requires
                 periodic inspection regimes to confirm installations remain safe.
               </span>
             </li>
@@ -435,7 +435,7 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Report completion</strong> — the inspector completes the EICR including
-                Schedules of Circuit Details and Test Results as required by Section 631 of BS 7671,
+                Schedules of Circuit Details and Test Results as required by Chapter 65 of BS 7671,
                 with observation codes and an overall Satisfactory or Unsatisfactory assessment.
               </span>
             </li>

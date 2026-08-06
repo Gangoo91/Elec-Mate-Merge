@@ -56,18 +56,29 @@ export const checkEarthingRequirements = (result: TestResult): RegulationWarning
     const cpcSize = parseFloat(result.cpcSize.replace('mm', ''));
 
     if (!isNaN(liveSize) && !isNaN(cpcSize)) {
-      // Standard twin and earth combinations - fully compliant
-      const isStandardTwinAndEarth =
-        (liveSize === 1.0 && cpcSize === 1.0) ||
-        (liveSize === 1.5 && cpcSize === 1.0) ||
-        (liveSize === 2.5 && cpcSize === 1.5) ||
-        (liveSize === 4.0 && cpcSize === 1.5) ||
-        (liveSize === 6.0 && cpcSize === 2.5) ||
-        (liveSize === 10.0 && cpcSize === 4.0) ||
-        (liveSize === 16.0 && cpcSize === 6.0);
+      // Manufactured flat twin-and-earth carries a reduced cpc, which is
+      // compliant because 543.1.3 permits the size to be calculated (adiabatic)
+      // rather than taken from Table 54.7.
+      //
+      // This used to be an EXACT match on those pairings, so a cpc *larger*
+      // than the standard one failed while the standard one passed — 4.0mm²
+      // live with a 2.5mm² cpc was reported as undersized against a Table 54.7
+      // minimum of 4.0mm², even though 2.5mm² exceeds the 1.5mm² that a
+      // manufactured 4mm² T&E ships with. A bigger protective conductor is
+      // never less safe. Now a floor, not an equality.
+      const STANDARD_TWIN_EARTH_CPC: Record<number, number> = {
+        1.0: 1.0,
+        1.5: 1.0,
+        2.5: 1.5,
+        4.0: 1.5,
+        6.0: 2.5,
+        10.0: 4.0,
+        16.0: 6.0,
+      };
 
-      if (isStandardTwinAndEarth) {
-        return warnings; // Compliant - no warnings
+      const standardCpc = STANDARD_TWIN_EARTH_CPC[liveSize];
+      if (standardCpc !== undefined && cpcSize >= standardCpc) {
+        return warnings; // At or above the manufactured T&E cpc — compliant.
       }
 
       // Ring circuits - special CPC rules (Appendix 15)
@@ -81,7 +92,7 @@ export const checkEarthingRequirements = (result: TestResult): RegulationWarning
           severity: 'warning',
           title: 'Ring Circuit CPC Sizing',
           description: `CPC ${result.cpcSize} is smaller than live conductor ${result.liveSize} in ring circuit. Verify (R1+R2) ≤ 1.67Ω compliance.`,
-          regulation: 'BS 7671 Appendix 15',
+          regulation: 'BS 7671 Appendix 15 (informative) — ring and radial final circuits',
           suggestion:
             'For ring circuits with reduced CPC, end-to-end resistance must meet requirements. Check (R1+R2) measurement is acceptable.',
         });

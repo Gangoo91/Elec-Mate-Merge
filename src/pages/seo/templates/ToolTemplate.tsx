@@ -1,3 +1,4 @@
+import { CalculatorSurface } from '@/components/calculators/shared';
 import useSEO, { SEOSchemas } from '@/hooks/useSEO';
 import { SEOPageShell } from '@/components/seo/SEOPageShell';
 import { SEOSectionHeading } from '@/components/seo/SEOSectionHeading';
@@ -89,6 +90,14 @@ export interface ToolTemplateProps {
    * are searching for; promotional-only pages bounce.
    */
   calculator?: React.ReactNode;
+  /** Heading above the tool. Defaults to a generic label. */
+  calculatorLabel?: string;
+  /**
+   * Rendered directly under the calculator — the slot the "email me this
+   * calculation" capture goes in. Kept as a slot rather than built in because
+   * only the page knows how to turn its calculator's result into a summary.
+   */
+  calculatorFooter?: React.ReactNode;
 }
 
 export default function ToolTemplate({
@@ -120,6 +129,8 @@ export default function ToolTemplate({
   extraSchemas = [],
   toolPath,
   calculator,
+  calculatorLabel = 'Calculator',
+  calculatorFooter,
 }: ToolTemplateProps) {
   const softwareSchema = SEOSchemas.softwareApplication(title, description, toolPath);
   const faqSchema = faqs.length > 0 ? SEOSchemas.faqPage(faqs) : null;
@@ -207,7 +218,7 @@ export default function ToolTemplate({
             </a>
           )}
         </div>
-        <p className="text-xs text-white/60 mb-6">
+        <p className="text-xs text-white mb-6">
           Free for 7 days · No charge until day 8 · Cancel anytime · Used by 1,000+ UK electricians
         </p>
 
@@ -222,8 +233,25 @@ export default function ToolTemplate({
       {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant.
           Top-of-class SEO pattern: ship the actual tool, not a screenshot. */}
       {calculator && (
-        <section id="calculator" className="pb-10 scroll-mt-24">
-          {calculator}
+        <section id="calculator" className="pb-10 scroll-mt-24" aria-labelledby="calculator-heading">
+          {/* The tool is why they clicked. Give it a heading it can be linked to,
+              and say the free/no-signup part HERE rather than only in the hero —
+              on mobile the hero is long gone by the time they reach the inputs. */}
+          <div className="mb-4 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <h2
+              id="calculator-heading"
+              className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white"
+            >
+              {calculatorLabel}
+            </h2>
+            <p className="text-[13px] text-white">
+              Free · no sign-up · BS 7671:2018+A4:2026
+            </p>
+          </div>
+          {/* Edge-to-edge on mobile — the calculator is the reason they clicked,
+              so it gets the full screen width rather than sitting inset. */}
+          <CalculatorSurface>{calculator}</CalculatorSurface>
+          {calculatorFooter}
         </section>
       )}
 

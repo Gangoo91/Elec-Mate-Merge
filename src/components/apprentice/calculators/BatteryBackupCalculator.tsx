@@ -28,6 +28,7 @@ import {
   formatRuntime,
   type BatteryInputs,
   type CalculationResults,
+  type LoadPreset,
 } from '@/lib/battery-backup-calcs';
 
 interface Load {
@@ -55,6 +56,7 @@ const BatteryBackupCalculator = () => {
   const [loads, setLoads] = useState<Load[]>([]);
   const [newLoadName, setNewLoadName] = useState('');
   const [newLoadWatts, setNewLoadWatts] = useState('');
+  const [selectedPreset, setSelectedPreset] = useState<LoadPreset | null>(null);
   const [newLoadPriority, setNewLoadPriority] = useState<'essential' | 'important' | 'convenience'>(
     'essential'
   );
@@ -63,6 +65,14 @@ const BatteryBackupCalculator = () => {
 
   const [showGuidance, setShowGuidance] = useState(false);
   const [showRegs, setShowRegs] = useState(false);
+
+  // FIX: the calculator previously graded runtime against hard-coded 8 h / 3 h bands and labelled
+  // 8 h a "typical requirement". BS 7671 states no backup duration — Reg 560.9 defers emergency
+  // lighting to BS 5266-1 / BS EN 1838 / BS EN 50172, and UPS durations come from the application
+  // (5–10 min for a graceful server shutdown, hours for some healthcare and security systems).
+  // Runtime is now judged only against a duration the user supplies.
+  const parsedTarget = parseFloat(requiredRuntime);
+  const targetHours = Number.isFinite(parsedTarget) && parsedTarget > 0 ? parsedTarget : null;
 
   const chemistryOptions = Object.entries(BATTERY_CHEMISTRIES).map(([key, chem]) => ({
     value: key,
@@ -80,18 +90,29 @@ const BatteryBackupCalculator = () => {
     { value: 'convenience', label: 'Convenience' },
   ];
 
+  // FIX: the preset's dutyCycle and surgeMultiplier were being thrown away — every load was added
+  // with 1.0/1.0, so a fridge (surge ×4) or sump pump (surge ×6) contributed no inrush at all to
+  // surgePower / recommendedVA. The selected preset is now retained until the user edits the
+  // name or wattage, at which point the load falls back to a continuous, non-surging default.
   const addLoad = () => {
     if (!newLoadName || !newLoadWatts || parseFloat(newLoadWatts) <= 0) return;
 
+    const watts = parseFloat(newLoadWatts);
+    const presetStillMatches =
+      selectedPreset !== null &&
+      selectedPreset.name === newLoadName &&
+      selectedPreset.watts === watts;
+
     const newLoad: Load = {
       name: newLoadName,
-      watts: parseFloat(newLoadWatts),
-      dutyCycle: 1.0,
-      surgeMultiplier: 1.0,
+      watts,
+      dutyCycle: presetStillMatches ? selectedPreset.dutyCycle : 1.0,
+      surgeMultiplier: presetStillMatches ? selectedPreset.surgeMultiplier : 1.0,
       priority: newLoadPriority,
     };
 
     setLoads([...loads, newLoad]);
+    setSelectedPreset(null);
     setNewLoadName('');
     setNewLoadWatts('');
     setNewLoadPriority('essential');
@@ -101,7 +122,8 @@ const BatteryBackupCalculator = () => {
     setLoads(loads.filter((_, i) => i !== index));
   };
 
-  const handleLoadPresetSelect = (preset: (typeof LOAD_PRESETS)[0]) => {
+  const handleLoadPresetSelect = (preset: LoadPreset) => {
+    setSelectedPreset(preset);
     setNewLoadName(preset.name);
     setNewLoadWatts(preset.watts.toString());
     setNewLoadPriority(preset.category);
@@ -142,13 +164,17 @@ const BatteryBackupCalculator = () => {
     setRequiredRuntime('');
     setNewLoadName('');
     setNewLoadWatts('');
+    setSelectedPreset(null);
   };
 
   const handleCopy = () => {
     if (!results) return;
     const selectedChemistry = BATTERY_CHEMISTRIES[chemistry];
-    const runtimeStatus =
-      results.runtime >= 8 ? 'ADEQUATE' : results.runtime >= 3 ? 'MARGINAL' : 'INSUFFICIENT';
+    const runtimeStatus = targetHours
+      ? results.runtime >= targetHours
+        ? `MEETS ${targetHours} h target`
+        : `BELOW ${targetHours} h target`
+      : 'No target duration entered — compare against the application requirement';
     const text = [
       'Battery Backup Calculator Results',
       `Chemistry: ${selectedChemistry.name}`,
@@ -159,7 +185,10 @@ const BatteryBackupCalculator = () => {
       `Usable Energy: ${results.usableEnergyWh.toFixed(0)} Wh`,
       `DC Current: ${results.dcCurrent.toFixed(1)} A`,
       `C-Rate: ${results.cRate.toFixed(2)} C`,
-      `Total Load: ${results.averagePower.toFixed(0)} W`,
+      `Average Load: ${results.averagePower.toFixed(0)} W`,
+      `Peak Load: ${results.peakPower.toFixed(0)} W`,
+      `Surge (inrush) Load: ${results.surgePower.toFixed(0)} W`,
+      `Min Inverter: ${results.recommendedVA.toFixed(0)} VA`,
       `Assessment: ${runtimeStatus}`,
     ].join('\n');
     copyToClipboard(text).then((ok) => {
@@ -336,6 +365,8 @@ const BatteryBackupCalculator = () => {
                   <span className="font-medium text-white block truncate">{load.name}</span>
                   <span className="text-white text-xs">
                     {load.watts}W · {load.priority}
+                    {load.dutyCycle < 1 && ` · ${Math.round(load.dutyCycle * 100)}% duty`}
+                    {load.surgeMultiplier > 1 && ` · surge ×${load.surgeMultiplier}`}
                   </span>
                 </div>
                 <button
@@ -350,18 +381,23 @@ const BatteryBackupCalculator = () => {
         )}
       </div>
 
-      {/* Sizing Mode Input */}
-      {mode === 'sizing' && (
+      {/* Target runtime — required for sizing, optional in runtime mode.
+          BS 7671 sets no backup duration, so the target has to come from the application. */}
+      <div className="space-y-2">
         <CalculatorInput
-          label="Required Runtime"
+          label={mode === 'sizing' ? 'Required Runtime' : 'Target Runtime (optional)'}
           unit="hours"
           type="text"
           inputMode="decimal"
           value={requiredRuntime}
           onChange={setRequiredRuntime}
-          placeholder="8"
+          placeholder={mode === 'sizing' ? '8' : 'e.g. 0.5'}
         />
-      )}
+        <p className="text-xs text-white">
+          BS 7671 does not specify a backup duration. Take it from the application — emergency
+          lighting from BS 5266-1 / BS EN 1838, UPS duration from the operational requirement.
+        </p>
+      </div>
 
       <CalculatorActions
         category={CAT}
@@ -378,13 +414,13 @@ const BatteryBackupCalculator = () => {
           {/* Status + Copy */}
           <div className="flex items-center justify-between">
             <ResultBadge
-              status={results.runtime >= 8 ? 'pass' : results.runtime >= 3 ? 'warning' : 'fail'}
+              status={targetHours ? (results.runtime >= targetHours ? 'pass' : 'fail') : 'info'}
               label={
-                results.runtime >= 8
-                  ? 'Adequate Runtime'
-                  : results.runtime >= 3
-                    ? 'Marginal Runtime'
-                    : 'Insufficient Runtime'
+                targetHours
+                  ? results.runtime >= targetHours
+                    ? `Meets ${targetHours} h target`
+                    : `Below ${targetHours} h target`
+                  : 'Runtime estimate — no target set'
               }
             />
             <button
@@ -446,6 +482,22 @@ const BatteryBackupCalculator = () => {
               category={CAT}
               size="sm"
             />
+            {/* Surge and inverter sizing were computed but never shown, so preset inrush data
+                had nowhere to land. */}
+            <ResultValue
+              label="Surge (inrush) Load"
+              value={results.surgePower.toFixed(0)}
+              unit="W"
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Min Inverter"
+              value={results.recommendedVA.toFixed(0)}
+              unit="VA"
+              category={CAT}
+              size="sm"
+            />
           </ResultsGrid>
 
           {/* C-Rate Warning */}
@@ -491,18 +543,17 @@ const BatteryBackupCalculator = () => {
               },
               {
                 label: 'Runtime (Peukert-adjusted)',
-                formula: `usableEnergy ÷ totalLoad = ${results.usableEnergyWh.toFixed(0)} ÷ ${results.averagePower.toFixed(0)}`,
+                formula: `usableEnergy ÷ (totalLoad ÷ inverterEff) = ${results.usableEnergyWh.toFixed(0)} ÷ (${results.averagePower.toFixed(0)} ÷ ${selectedInverter.efficiency})`,
                 value: formatRuntime(results.runtime),
-                description: `Peukert exponent: ${selectedChemistry.peukertExponent} — accounts for capacity reduction at higher discharge rates`,
+                description: `Peukert exponent: ${selectedChemistry.peukertExponent} — accounts for capacity reduction at higher discharge rates. Gain at light loads is capped at the manufacturer's longest published rate.`,
               },
               {
                 label: 'Assessment',
-                value:
-                  results.runtime >= 8
-                    ? 'ADEQUATE — exceeds typical 8-hour requirement'
-                    : results.runtime >= 3
-                      ? 'MARGINAL — consider if adequate for your needs'
-                      : 'INSUFFICIENT — larger battery or reduced loads needed',
+                value: targetHours
+                  ? results.runtime >= targetHours
+                    ? `MEETS the ${targetHours} h target you entered`
+                    : `BELOW the ${targetHours} h target — larger bank or reduced loads needed`
+                  : 'No target duration entered — BS 7671 sets none; take it from the application',
               },
             ]}
           />
@@ -575,29 +626,63 @@ const BatteryBackupCalculator = () => {
               >
                 <ul className="space-y-2">
                   {[
+                    // Chapter 57 (Stationary secondary batteries) was introduced by
+                    // BS 7671:2018+A4:2026 and was missing from this panel entirely.
+                    {
+                      reg: 'Chapter 57 — scope (570.1)',
+                      desc: 'Requirements for stationary secondary batteries supplying an installation. Does not apply to batteries wholly inside pluggable UPS, central safety power supplies to BS EN 50171, fire alarm to BS 5839 or emergency lighting to BS 5266.',
+                    },
+                    {
+                      reg: 'Regulation 570.6.1.1.1',
+                      desc: 'Battery installations shall conform to the relevant parts of the BS EN IEC 62485 series.',
+                    },
+                    {
+                      // FIX: this panel previously said ventilation was a lead-acid measure.
+                      // 570.6.3 applies to the location or enclosure irrespective of chemistry.
+                      reg: 'Regulation 570.6.3 / 570.6.7.202 — ventilation',
+                      desc: 'The location or enclosure of ALL stationary secondary batteries shall be adequately ventilated, whatever the chemistry, taking account of the manufacturer’s instructions and safety data sheets. Ventilation shall not itself create a hazard and may need to discharge outdoors.',
+                    },
+                    {
+                      // FIX: Type B RCD requirement was absent.
+                      reg: 'Regulation 570.6.2.2 — RCD type',
+                      desc: 'Where an RCD protects the AC supply circuit it shall be Type B to BS EN 62423 or BS EN 60947-2, unless the PCE gives at least simple separation between AC and DC, separation is provided by separate transformer windings, or the PCE manufacturer states Type B is not required.',
+                    },
+                    {
+                      reg: 'Regulation 570.6.5 — isolation',
+                      desc: 'Every power circuit connecting to the battery shall have means of isolation conforming to Section 462 — likely needed at both ends.',
+                    },
+                    {
+                      // FIX: replaces an uncited "DC OCPD within 0.5 m of the terminals" claim
+                      // that appears nowhere in BS 7671.
+                      reg: 'Regulation 570.6.7.201 — DC fuses',
+                      desc: `DC current is ${results.dcCurrent.toFixed(1)} A; suggested device ${results.recommendedFuse} A. DC battery fuses shall be accessible only by key or tool, or removable only after opening a means of isolation suitable for on-load DC isolation.`,
+                    },
+                    {
+                      reg: 'Regulation 570.6.8.201/.202/.203 — notices',
+                      desc: 'Warning notices at the origin, at remote metering positions and at each board fed from the battery; at every access point to a battery room or enclosure; and on all PCE ("isolate both AC and DC sides before servicing").',
+                    },
+                    {
+                      // FIX: 560.7 is CIRCUITS OF SAFETY SERVICES. The battery/UPS source
+                      // requirements sit in 560.6, and UPS specifically at 560.6.12.
+                      reg: 'Regulation 560.6.12 — UPS',
+                      desc: 'Where the system is a safety service: uninterruptible power systems shall conform to BS EN 50171 in addition to the BS EN IEC 62040 series.',
+                    },
                     {
                       reg: 'Regulation 560.7',
-                      desc: 'Safety services — battery backup requirements',
+                      desc: 'Circuits of safety services — must be independent of other circuits and routed clear of fire-risk locations.',
                     },
                     {
                       reg: 'Regulation 313.2',
-                      desc: 'Supplies for safety services classification',
+                      desc: 'Supplies for safety services and standby systems.',
                     },
                     {
-                      reg: 'BS 5266-1',
-                      desc: 'Emergency lighting — minimum 3 hours duration',
+                      // FIX: duration is set by BS 5266-1 and the application, not by BS 7671.
+                      reg: 'Regulation 560.9',
+                      desc: 'Emergency lighting shall comply with BS 5266-1, BS EN 1838 and BS EN 50172. BS 7671 sets no backup duration — the required duration comes from those standards and the application.',
                     },
                     {
-                      reg: 'IEC 62040',
-                      desc: 'UPS systems standard — performance and safety',
-                    },
-                    {
-                      reg: 'DC Protection',
-                      desc: `DC current (${results.dcCurrent.toFixed(1)}A) must not exceed cable rating — install appropriate DC OCPD`,
-                    },
-                    {
-                      reg: 'Ventilation',
-                      desc: 'Required for lead-acid batteries (hydrogen gas risk)',
+                      reg: 'Cable derating',
+                      desc: 'The DC cable ratings used here carry no correction factors. Apply the Appendix 4 factors for ambient temperature (Ca), grouping (Cg) and thermal insulation (Ci) for the actual reference method before accepting a size.',
                     },
                   ].map((item) => (
                     <li key={item.reg} className="flex items-start gap-2 text-sm">
@@ -621,15 +706,20 @@ const BatteryBackupCalculator = () => {
       <FormulaReference
         category={CAT}
         name="Battery Backup Runtime"
-        formula="Runtime = UsableEnergy ÷ TotalLoad"
+        formula="Runtime = UsableEnergy ÷ (TotalLoad ÷ InverterEfficiency)"
         variables={[
           {
             symbol: 'UsableEnergy',
-            description: 'V × Ah × DoD × η (usable watt-hours)',
+            description:
+              'V × Ah × DoD × health × temperature factor — DC-side usable watt-hours (Peukert-adjusted)',
           },
           {
             symbol: 'TotalLoad',
-            description: 'Sum of all loads (watts ÷ inverter efficiency)',
+            description: 'Sum of all AC loads in watts (each × its duty cycle)',
+          },
+          {
+            symbol: 'InverterEfficiency',
+            description: 'Converts the AC load to the DC power actually drawn from the bank',
           },
           {
             symbol: 'C-rate',

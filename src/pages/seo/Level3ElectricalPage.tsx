@@ -324,7 +324,7 @@ export default function Level3ElectricalPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Level 3 introduces the full inspection and testing procedures specified in Chapter 61
+              Level 3 introduces the full inspection and testing procedures specified in Chapter 64
               (initial verification) and Chapter 62 (periodic inspection and testing) of BS 7671:2018+A4:2026, and detailed in Guidance Note 3: Inspection & Testing (GN3, 9th
               Edition).
             </p>

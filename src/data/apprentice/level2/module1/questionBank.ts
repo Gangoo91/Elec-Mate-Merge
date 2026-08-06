@@ -931,7 +931,7 @@ export const module1Questions: Question[] = [
     ],
     correctAnswer: 3,
     explanation:
-      'A 30mA RCD must operate within 300ms at rated residual current and within 40ms at five times the rated current.',
+      'A general (non-delay) 30mA RCD must operate within 300ms at its rated residual current, IΔn. This is the figure BS 7671:2018+A4:2026 verifies: Regulation 643.7.3.201 calls for a single alternating current test at IΔn, whatever the RCD type. (The familiar 40ms at five times rated current is a device characteristic under BS EN 61008/61009, not part of the required test sequence — Amendment 4 deleted Table 3A of Appendix 3.)',
   },
   {
     id: 72,

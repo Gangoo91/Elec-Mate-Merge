@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback } from 'react';
+import { useMemo, useState, useCallback, useEffect } from 'react';
 import { copyToClipboard } from '@/utils/clipboard';
 import { Copy, Check, CheckCircle, AlertTriangle, ChevronDown, Zap } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -28,12 +28,41 @@ const STANDARD_SIZES = [
   1, 1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300, 400,
 ];
 
-const K_FACTORS: Record<string, Record<number, number>> = {
-  copper: { 60: 103, 70: 115, 90: 143 },
-  aluminium: { 60: 65, 70: 76, 90: 87 },
-  steel: { 60: 46, 70: 50, 90: 50 },
+/**
+ * k factors — BS 7671:2018+A4:2026, verified against the printed tables
+ * (Desktop/BS7671_ocr.pdf) on 2026-08-06, not recalled.
+ *
+ * TABLE 54.3 — protective conductor incorporated in a cable or bunched with
+ * cables, assumed initial temperature 70 °C or greater. This is the normal case
+ * for a CPC inside twin-and-earth or a multicore, which is what this calculator
+ * is for.
+ *
+ *                70 °C thermoplastic   90 °C thermoplastic   90 °C thermosetting
+ *   Copper           115/103*                100/86*                143
+ *   Aluminium         76/68*                  66/57*                 94
+ *   (* above 300 mm²)
+ *
+ * TABLE 54.5 — steel conduit, ducting and trunking used as the protective
+ * conductor: 47 / 44 / 58 (initial 50/60/60 °C). Steel has no row in 54.3.
+ *
+ * ⚠️ WHAT WAS WRONG (all corrected here):
+ *  - Aluminium thermosetting was 87. It is 94. k appears in the DENOMINATOR of
+ *    S = √(I²t)/k, so too low a k under-states the required CSA — the unsafe
+ *    direction for a fault-withstand calculation.
+ *  - Steel was 46/50/50, which matches no column of any table. 54.5 gives 47/44/58.
+ *  - The options were keyed by conductor temperature with a "60 °C (Rubber/EPR)"
+ *    entry. There is no 60 °C column in Table 54.3, and its copper value (103)
+ *    was actually the "above 300 mm²" variant of 115. Meanwhile the real third
+ *    column, 90 °C thermoplastic, was missing entirely. Keys now map 1:1 to the
+ *    printed columns.
+ */
+const K_FACTORS: Record<string, Record<string, number>> = {
+  //          70 °C thermoplastic   90 °C thermoplastic   90 °C thermosetting
+  copper: { tp70: 115, tp90: 100, ts90: 143 },
+  aluminium: { tp70: 76, tp90: 66, ts90: 94 },
+  // Table 54.5 — steel conduit / ducting / trunking as the CPC
+  steel: { tp70: 47, tp90: 44, ts90: 58 },
 };
-
 const modeOptions = [
   { value: 'current', label: 'Enter Fault Current (I)' },
   { value: 'zs', label: 'Calculate I from Zs' },
@@ -54,10 +83,18 @@ const materialOptions = [
   { value: 'steel', label: 'Steel' },
 ];
 
+// Columns of BS 7671 Table 54.3 / 54.5 — insulation type, which is what sets k.
+/** Internal key -> printed column name, for result text and the copy-out. */
+const INSULATION_LABEL: Record<string, string> = {
+  tp70: '70°C thermoplastic',
+  tp90: '90°C thermoplastic',
+  ts90: '90°C thermosetting',
+};
+
 const tempOptions = [
-  { value: '60', label: '60°C (Rubber/EPR)' },
-  { value: '70', label: '70°C (PVC)' },
-  { value: '90', label: '90°C (XLPE)' },
+  { value: 'tp70', label: '70°C thermoplastic (PVC)' },
+  { value: 'tp90', label: '90°C thermoplastic' },
+  { value: 'ts90', label: '90°C thermosetting (XLPE/EPR)' },
 ];
 
 interface AdiabaticResult {
@@ -76,7 +113,16 @@ interface AdiabaticResult {
   voltage?: number;
 }
 
-const AdiabaticCalculator = () => {
+/**
+ * Optional result callback. The public SEO page uses it to offer "email me this
+ * calculation"; the signed-in app passes nothing and is unaffected. Keep it
+ * optional — this component is shared.
+ */
+interface AdiabaticCalculatorProps {
+  onResult?: (result: AdiabaticResult | null) => void;
+}
+
+const AdiabaticCalculator = ({ onResult }: AdiabaticCalculatorProps = {}) => {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
 
@@ -84,7 +130,7 @@ const AdiabaticCalculator = () => {
   const [disconnectionTime, setDisconnectionTime] = useState<string>('');
   const [timePreset, setTimePreset] = useState<string>('custom');
   const [material, setMaterial] = useState<string>('copper');
-  const [maxTemp, setMaxTemp] = useState<string>('70');
+  const [maxTemp, setMaxTemp] = useState<string>('tp70');
   const [customK, setCustomK] = useState<string>('');
   const [faultCurrent, setFaultCurrent] = useState<string>('');
   const [zs, setZs] = useState<string>('');
@@ -92,12 +138,17 @@ const AdiabaticCalculator = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [result, setResult] = useState<AdiabaticResult | null>(null);
 
+  // Surface the result to an optional parent (public page email capture).
+  useEffect(() => {
+    onResult?.(result);
+  }, [result, onResult]);
+
   // Collapsible states
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   // Derived display values (not results)
   const effectiveK = useMemo(() => {
-    const kFromMap = K_FACTORS[material]?.[parseFloat(maxTemp)] ?? 115;
+    const kFromMap = K_FACTORS[material]?.[maxTemp] ?? 115;
     const kCustom = parseFloat(customK);
     return Number.isFinite(kCustom) && kCustom > 0 ? kCustom : kFromMap;
   }, [material, maxTemp, customK]);
@@ -221,7 +272,7 @@ const AdiabaticCalculator = () => {
     text += `\nStandard Size: ${result.roundedCsa} mm²`;
     text += `\nFault Current: ${result.usedFaultCurrent.toFixed(0)} A`;
     text += `\nDisconnection Time: ${result.disconnectionTime} s`;
-    text += `\nk Factor: ${result.k} (${result.material} @ ${result.maxTemp}°C)`;
+    text += `\nk Factor: ${result.k} (${result.material}, ${INSULATION_LABEL[result.maxTemp] ?? result.maxTemp})`;
     text += `\nSafety Margin: ${result.safetyMargin.toFixed(1)}%`;
     copyToClipboard(text);
     setCopied(true);
@@ -332,14 +383,12 @@ const AdiabaticCalculator = () => {
 
       {/* Advanced Options */}
       <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
-        <div
-          className="rounded-xl border overflow-hidden"
-          style={{
-            borderColor: `${config.gradientFrom}30`,
-            background: `${config.gradientFrom}08`,
-          }}
-        >
-          <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 px-4 py-2 text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+        {/* A rule-separated section, not a tinted box. Every field above it is
+            an underline on a transparent ground; a filled rounded panel here was
+            the one thing on the card that looked like it came from a different
+            design. Hierarchy comes from the rule and the type, per the system. */}
+        <div className="border-t border-white/[0.1] pt-1">
+          <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 px-1 py-2 text-sm font-medium text-white hover:text-white/90 transition-colors touch-manipulation">
             <span>Advanced Options</span>
             <ChevronDown
               className={cn(
@@ -379,7 +428,7 @@ const AdiabaticCalculator = () => {
               status={result.isCompliant ? 'pass' : 'warning'}
               label={
                 result.isCompliant
-                  ? `${result.material.charAt(0).toUpperCase() + result.material.slice(1)} @ ${result.maxTemp}°C (k=${result.k})`
+                  ? `${result.material.charAt(0).toUpperCase() + result.material.slice(1)}, ${INSULATION_LABEL[result.maxTemp] ?? result.maxTemp} (k=${result.k})`
                   : 'Review Required'
               }
             />

@@ -37,15 +37,19 @@ interface MotorResult {
   thermalStress: number;
   voltageDropRunning: number;
   voltageDropStarting: number;
+  voltageDropLimit: number;
   complianceStatus: string;
   recommendedCableSize: string;
-  minimumCableSize: number;
+  minimumCableSize: number | null;
+  referenceMethodLabel: string;
+  deratingSummary: string;
   cableAnalysis: string;
   currentCapacityCheck: string;
   protectionAnalysis: string;
   whatThisMeans: string[];
   practicalGuidance: string[];
   recommendations: string[];
+  notes: string[];
   warnings: string[];
   bs7671Compliant: boolean;
 }
@@ -65,11 +69,14 @@ const MotorStartingCurrentCalculator = () => {
   const [ratedCurrent, setRatedCurrent] = useState('');
   const [startingTime, setStartingTime] = useState('2');
   const [cableLength, setCableLength] = useState('50');
-  const [cableSize, setCableSize] = useState('2.5');
+  const [cableSize, setCableSize] = useState('');
   const [breakerRating, setBreakerRating] = useState('');
-  const [supplyImpedance, setSupplyImpedance] = useState('0.1');
-  const [installationMethod, setInstallationMethod] = useState('clipped');
-  const [groupingFactor, setGroupingFactor] = useState('1.0');
+  const [cableType, setCableType] = useState('pvc-single');
+  const [installationMethod, setInstallationMethod] = useState('clipped-direct');
+  // Cg now comes from Table 4C1 via the engine — the user picks the number of
+  // circuits and the arrangement instead of typing a factor from memory.
+  const [groupingCircuits, setGroupingCircuits] = useState('1');
+  const [groupingArrangement, setGroupingArrangement] = useState('bunched');
 
   const [showInstallation, setShowInstallation] = useState(false);
   const [showGuidance, setShowGuidance] = useState(false);
@@ -96,59 +103,78 @@ const MotorStartingCurrentCalculator = () => {
       loadType: loadType as MotorStartingInputs['loadType'],
       ambientTemp: parseFloat(serviceTemperature),
       cableLength: parseFloat(cableLength),
+      cableType: cableType as MotorStartingInputs['cableType'],
       installationMethod: installationMethod as MotorStartingInputs['installationMethod'],
-      groupingFactor: parseFloat(groupingFactor),
+      groupingCircuits: parseInt(groupingCircuits, 10) || 1,
+      groupingArrangement: groupingArrangement as MotorStartingInputs['groupingArrangement'],
       ratedCurrent: ratedCurrent ? parseFloat(ratedCurrent) : undefined,
       startingTime: parseFloat(startingTime),
-      supplyImpedance: parseFloat(supplyImpedance),
+      // Previously collected and silently discarded. Both are now checked
+      // against Reg 433.1.1 by the engine.
+      proposedCableSize: cableSize ? parseFloat(cableSize) : undefined,
+      proposedDeviceRating: breakerRating ? parseFloat(breakerRating) : undefined,
     };
 
     const r = calculateMotorStarting(inputs);
 
-    const recommendedCableSize = `${r.recommendedCableSize}mm²`;
-    let cableAnalysis = 'Cable sizing meets BS 7671 requirements';
-    if (r.recommendedCableSize > r.minimumCableSize) {
-      cableAnalysis = `Upgrade from ${r.minimumCableSize}mm² to ${r.recommendedCableSize}mm² required for voltage drop compliance`;
+    const recommendedCableSize =
+      r.recommendedCableSize !== null ? `${r.recommendedCableSize}mm²` : 'Not tabulated';
+    let cableAnalysis =
+      r.minimumCableSize === null
+        ? 'No tabulated cable size satisfies this circuit — see warnings'
+        : 'Cable sizing satisfies Reg 433.1.1 and Table 4Ab';
+    if (
+      r.recommendedCableSize !== null &&
+      r.minimumCableSize !== null &&
+      r.recommendedCableSize > r.minimumCableSize
+    ) {
+      cableAnalysis = `Upgrade from ${r.minimumCableSize}mm² to ${r.recommendedCableSize}mm² for voltage drop (Table 4Ab, ${r.voltageDropLimit}%)`;
     }
 
-    const currentCapacityCheck = r.currentCarryingCheck.suitable
-      ? `Cable capacity: ${r.currentCarryingCheck.capacity.toFixed(0)}A (Required: ${r.currentCarryingCheck.required.toFixed(0)}A)`
-      : `Cable capacity insufficient: ${r.currentCarryingCheck.capacity.toFixed(0)}A < ${r.currentCarryingCheck.required.toFixed(0)}A`;
+    const cc = r.currentCarryingCheck;
+    // Reg 433.1.1 has three conditions, not one. The panel used to test Iz >= Ib
+    // only, which skips the device entirely.
+    const currentCapacityCheck = [
+      `Ib ${cc.designCurrent.toFixed(1)}A · In ${cc.deviceRating}A · Iz ${cc.capacity.toFixed(1)}A`,
+      `433.1.1(a) In ≥ Ib: ${cc.inNotLessThanIb ? 'pass' : 'FAIL'}`,
+      `433.1.1(b) In ≤ Iz: ${cc.inNotGreaterThanIz ? 'pass' : 'FAIL'}`,
+      `433.1.1(c) I₂ ≤ 1.45 Iz: ${cc.i2WithinOneFourFiveIz ? 'pass (via 433.1.201)' : 'FAIL'}`,
+    ].join(' · ');
+
+    const deratingSummary = `Ca ${cc.deratingBreakdown.ca.toFixed(2)} (Table 4B1) × Cg ${cc.deratingBreakdown.cg.toFixed(2)} (Table 4C1) × Cc ${cc.deratingBreakdown.cc.toFixed(2)} = ${cc.derating.toFixed(3)}`;
 
     const protectionAnalysis = r.protectionSuitable
-      ? `${r.recommendedMcbRating}A ${r.protectionType.toUpperCase()} suitable for motor protection`
-      : `${r.recommendedMcbRating}A protection may be unsuitable — verify coordination`;
+      ? `${r.recommendedMcbRating}A ${r.protectionTypeLabel} — coordination satisfied`
+      : `${r.recommendedMcbRating}A ${r.protectionTypeLabel} — coordination NOT satisfied, see warnings`;
 
     let complianceStatus = 'BS 7671 Compliant';
     if (!r.bs7671Compliant) {
-      if (!r.voltageDropCompliant) complianceStatus = 'Non-compliant — voltage drop exceeds limits';
-      else if (!r.currentCarryingCheck.suitable)
-        complianceStatus = 'Non-compliant — cable undersized';
+      if (r.minimumCableSize === null) complianceStatus = 'No compliant cable size found';
+      else if (!r.voltageDropCompliant)
+        complianceStatus = `Non-compliant — running voltage drop exceeds ${r.voltageDropLimit}%`;
+      else if (!r.protectionSuitable)
+        complianceStatus = 'Non-compliant — Reg 433.1.1 coordination not satisfied';
       else complianceStatus = 'Review required for full compliance';
     }
-    if (startingMethod === 'direct' && P > 11) {
-      complianceStatus = 'Consider reduced starting method (BS 7671 recommendation)';
-    }
+    // 🔴 REMOVED: a "Consider reduced starting method (BS 7671 recommendation)"
+    // status forced whenever a DOL motor exceeded 11 kW. BS 7671 contains no kW
+    // threshold for the choice of starting method.
 
     const whatThisMeans: string[] = [
-      `Full load current: ${r.fullLoadCurrent.toFixed(1)}A (normal running current per BS 7671)`,
-      `Starting current: ${r.startingCurrent.toFixed(0)}A (${r.startingMultiplier.toFixed(1)}× full load current)`,
+      `Full load current: ${r.fullLoadCurrent.toFixed(1)}A (Ib per Reg 552.1.1, plus a 25% design margin = ${cc.designCurrent.toFixed(1)}A)`,
+      `Starting current: ${r.startingCurrent.toFixed(0)}A (${r.startingMultiplier.toFixed(1)}× full load current — a typical machine value, not a BS 7671 figure)`,
       `Supply demand: ${r.startingKva.toFixed(1)}kVA during motor starting`,
-      `Running voltage drop: ${r.voltageDropRunning.toFixed(1)}% (limit: 3%)`,
-      `Starting voltage drop: ${r.voltageDropStarting.toFixed(1)}% (limit: 10%)`,
+      `Running voltage drop: ${r.voltageDropRunning.toFixed(1)}% (Table 4Ab limit for "other uses": ${r.voltageDropLimit}%)`,
+      `Starting voltage drop: ${r.voltageDropStarting.toFixed(1)}% — BS 7671 sets no limit (Reg 525.203); check the motor's product standard or manufacturer data`,
+      `Sized on ${r.referenceMethodLabel}`,
     ];
 
     const practicalGuidance: string[] = [
-      'Install motor starter close to distribution board to minimise cable runs',
-      'Use thermally protected motor starter for overload protection',
-      startingMethod === 'direct'
-        ? 'Direct starting suitable for motors <11kW only'
-        : 'Reduced starting method reduces supply impact',
-      'Regular testing of motor protection devices is required',
-      `Use ${r.protectionType.includes('c') ? 'Type C' : 'Type D'} MCB for motor loads`,
+      'Install the starter close to the distribution board to keep the run short',
+      'Overload protection belongs in the motor control equipment (Reg 552.1.2), not only in the upstream device',
+      'Test motor protection devices at the intervals set by the maintenance regime',
+      `Protective device: ${r.protectionTypeLabel}`,
     ];
-
-    const allRecommendations = [...r.recommendations, ...r.notes];
 
     setResult({
       fullLoadCurrent: r.fullLoadCurrent,
@@ -158,18 +184,19 @@ const MotorStartingCurrentCalculator = () => {
       thermalStress: r.thermalStress,
       voltageDropRunning: r.voltageDropRunning,
       voltageDropStarting: r.voltageDropStarting,
+      voltageDropLimit: r.voltageDropLimit,
       complianceStatus,
       recommendedCableSize,
       minimumCableSize: r.minimumCableSize,
+      referenceMethodLabel: r.referenceMethodLabel,
+      deratingSummary,
       cableAnalysis,
       currentCapacityCheck,
       protectionAnalysis,
       whatThisMeans,
       practicalGuidance,
-      recommendations:
-        allRecommendations.length > 0
-          ? allRecommendations
-          : ['Motor installation meets BS 7671 requirements'],
+      recommendations: r.recommendations,
+      notes: r.notes,
       warnings: r.warnings,
       bs7671Compliant: r.bs7671Compliant,
     });
@@ -187,11 +214,12 @@ const MotorStartingCurrentCalculator = () => {
     setRatedCurrent('');
     setStartingTime('2');
     setCableLength('50');
-    setCableSize('2.5');
+    setCableSize('');
     setBreakerRating('');
-    setSupplyImpedance('0.1');
-    setInstallationMethod('clipped');
-    setGroupingFactor('1.0');
+    setCableType('pvc-single');
+    setInstallationMethod('clipped-direct');
+    setGroupingCircuits('1');
+    setGroupingArrangement('bunched');
     setResult(null);
   };
 
@@ -204,10 +232,13 @@ const MotorStartingCurrentCalculator = () => {
       `Full load current: ${result.fullLoadCurrent.toFixed(1)} A`,
       `Starting current: ${result.startingCurrent.toFixed(0)} A (${result.startingMultiplier.toFixed(1)}×)`,
       `Starting kVA: ${result.startingKva.toFixed(1)} kVA`,
-      `Voltage drop (running): ${result.voltageDropRunning.toFixed(1)}%`,
-      `Voltage drop (starting): ${result.voltageDropStarting.toFixed(1)}%`,
-      `Thermal stress: ${(result.thermalStress / 1000).toFixed(1)} kA²s`,
+      `Voltage drop (running): ${result.voltageDropRunning.toFixed(1)}% (Table 4Ab limit ${result.voltageDropLimit}%)`,
+      `Voltage drop (starting): ${result.voltageDropStarting.toFixed(1)}% (no BS 7671 limit — Reg 525.203)`,
+      `I²t during starting: ${(result.thermalStress / 1000).toFixed(1)} kA²s`,
+      `Installation: ${result.referenceMethodLabel}`,
+      `Rating factors: ${result.deratingSummary}`,
       `Recommended cable: ${result.recommendedCableSize}`,
+      `Reg 433.1.1: ${result.currentCapacityCheck}`,
       `Status: ${result.complianceStatus}`,
     ].join('\n');
     copyToClipboard(text);
@@ -243,12 +274,33 @@ const MotorStartingCurrentCalculator = () => {
     { value: 'centrifugal', label: 'Centrifugal Pumps' },
   ];
 
+  // Values are the engine's installation-method keys, which map to the Table 4A2
+  // reference methods. They used to be strings the engine did not recognise, so
+  // every option silently resolved to Reference Method C.
   const installationMethodOptions = [
-    { value: 'clipped', label: 'Clipped Direct' },
-    { value: 'conduit', label: 'In Conduit' },
-    { value: 'trunking', label: 'In Trunking' },
-    { value: 'underground', label: 'Underground' },
-    { value: 'tray', label: 'Cable Tray' },
+    { value: 'clipped-direct', label: 'Clipped direct (Method C)' },
+    { value: 'conduit-on-wall', label: 'In conduit on a wall (Method B)' },
+    { value: 'trunking-on-wall', label: 'In trunking on a wall (Method B)' },
+    { value: 'tray', label: 'On a cable tray (Method E/F)' },
+    { value: 'buried-duct', label: 'In ducting in the ground (Method D1)' },
+  ];
+
+  const cableTypeOptions = [
+    { value: 'pvc-single', label: 'Single-core PVC, non-armoured (4D1A)' },
+    { value: 'swa-pvc', label: 'Multicore PVC SWA (4D4A)' },
+  ];
+
+  // Table 4C1 rows.
+  const groupingCircuitOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 16, 20].map((n) => ({
+    value: String(n),
+    label: n === 1 ? '1 circuit (no grouping)' : `${n} circuits`,
+  }));
+
+  const groupingArrangementOptions = [
+    { value: 'bunched', label: 'Bunched / enclosed (4C1 item 1)' },
+    { value: 'single-layer-wall', label: 'Single layer on wall or floor (item 2)' },
+    { value: 'single-layer-tray', label: 'Single layer on perforated tray (item 3)' },
+    { value: 'single-layer-ladder', label: 'Single layer on ladder or cleats (item 4)' },
   ];
 
   return (
@@ -303,7 +355,11 @@ const MotorStartingCurrentCalculator = () => {
             value={efficiency}
             onChange={setEfficiency}
             placeholder="e.g., 0.85"
-            hint="IE3: 0.85, IE4: 0.90"
+            /* The old hint gave "IE3: 0.85, IE4: 0.90" as if efficiency were a
+               constant per IE class. It is a function of rated power and pole
+               count (IEC 60034-30-1), so the nameplate is the only right
+               source and no fixed figure is offered. */
+            hint="From the motor nameplate"
           />
           <CalculatorInput
             label="Power Factor"
@@ -354,7 +410,7 @@ const MotorStartingCurrentCalculator = () => {
             value={breakerRating}
             onChange={setBreakerRating}
             placeholder="Optional"
-            hint="Proposed breaker rating"
+            hint="Checked against Reg 433.1.1"
           />
         </CalculatorInputGrid>
       </CalculatorSection>
@@ -389,8 +445,8 @@ const MotorStartingCurrentCalculator = () => {
               inputMode="decimal"
               value={cableSize}
               onChange={setCableSize}
-              placeholder="e.g., 2.5"
-              hint="Proposed cable CSA"
+              placeholder="Optional"
+              hint="Checked against Reg 433.1.1"
             />
           </CalculatorInputGrid>
           <CalculatorInputGrid columns={2}>
@@ -402,15 +458,13 @@ const MotorStartingCurrentCalculator = () => {
               value={serviceTemperature}
               onChange={setServiceTemperature}
               placeholder="e.g., 40"
+              hint="Table 4B1 (Ca)"
             />
-            <CalculatorInput
-              label="Supply Impedance"
-              unit="Ω"
-              type="text"
-              inputMode="decimal"
-              value={supplyImpedance}
-              onChange={setSupplyImpedance}
-              placeholder="e.g., 0.1"
+            <CalculatorSelect
+              label="Cable Type"
+              value={cableType}
+              onChange={setCableType}
+              options={cableTypeOptions}
             />
           </CalculatorInputGrid>
           <CalculatorInputGrid columns={2}>
@@ -420,14 +474,19 @@ const MotorStartingCurrentCalculator = () => {
               onChange={setInstallationMethod}
               options={installationMethodOptions}
             />
-            <CalculatorInput
-              label="Grouping Factor"
-              type="text"
-              inputMode="decimal"
-              value={groupingFactor}
-              onChange={setGroupingFactor}
-              placeholder="e.g., 1.0"
-              hint="Derating for grouped cables"
+            <CalculatorSelect
+              label="Circuits in Group"
+              value={groupingCircuits}
+              onChange={setGroupingCircuits}
+              options={groupingCircuitOptions}
+            />
+          </CalculatorInputGrid>
+          <CalculatorInputGrid columns={1}>
+            <CalculatorSelect
+              label="Grouping Arrangement"
+              value={groupingArrangement}
+              onChange={setGroupingArrangement}
+              options={groupingArrangementOptions}
             />
           </CalculatorInputGrid>
         </CollapsibleContent>
@@ -526,7 +585,7 @@ const MotorStartingCurrentCalculator = () => {
             />
             <ResultValue
               label="Min Cable"
-              value={result.minimumCableSize.toString()}
+              value={result.minimumCableSize !== null ? result.minimumCableSize.toString() : '—'}
               unit="mm²"
               category={CAT}
               size="sm"
@@ -540,8 +599,11 @@ const MotorStartingCurrentCalculator = () => {
               <p className="text-sm text-white mt-1">{result.cableAnalysis}</p>
             </div>
             <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm text-white font-medium">Current Carrying Capacity</p>
+              <p className="text-sm text-white font-medium">
+                Reg 433.1.1 Coordination (Ib ≤ In ≤ Iz)
+              </p>
               <p className="text-sm text-white mt-1">{result.currentCapacityCheck}</p>
+              <p className="text-sm text-white mt-1">{result.deratingSummary}</p>
             </div>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm text-white font-medium">Protection Device</p>
@@ -598,13 +660,23 @@ const MotorStartingCurrentCalculator = () => {
                 value: `${result.startingKva.toFixed(1)} kVA`,
               },
               {
+                label: 'Cable sizing',
+                formula: `It ≥ In ÷ (Ca × Cg × Cc) — Appendix 4 §5.1.1, on ${result.referenceMethodLabel}`,
+                value: result.recommendedCableSize,
+                description: result.deratingSummary,
+              },
+              {
                 label: 'Voltage drop',
-                value: `Running: ${result.voltageDropRunning.toFixed(1)}% (limit 3%) | Starting: ${result.voltageDropStarting.toFixed(1)}% (limit 10%)`,
+                formula: 'ΔU = (mV/A/m × Ib × L) ÷ 1000 — Appendix 4 §6 (tabulated value covers all circuit conductors)',
+                value: `Running: ${result.voltageDropRunning.toFixed(1)}% (Table 4Ab limit ${result.voltageDropLimit}%) | Starting: ${result.voltageDropStarting.toFixed(1)}%`,
+                description:
+                  'BS 7671 sets no numeric limit on the starting drop — Reg 525.203 defers to the motor product standard or the manufacturer.',
               },
               {
                 label: 'Thermal stress',
                 formula: `I²t = I_start² × t = ${result.startingCurrent.toFixed(0)}² × ${startingTime}`,
                 value: `${(result.thermalStress / 1000).toFixed(1)} kA²s`,
+                description: 'Reported only — BS 7671 sets no I²t limit for starting current.',
               },
               {
                 label: 'Protection recommendation',
@@ -649,7 +721,10 @@ const MotorStartingCurrentCalculator = () => {
                     className="pt-2 border-t"
                     style={{ borderColor: `${config.gradientFrom}15` }}
                   >
-                    <p className="text-sm text-white font-medium mb-2">BS 7671 Recommendations</p>
+                    {/* Heading was "BS 7671 Recommendations" while the list carried
+                        a 552.1.2 shall softened to "recommended" and an 11 kW DOL
+                        threshold BS 7671 does not contain. */}
+                    <p className="text-sm text-white font-medium mb-2">BS 7671 Requirements</p>
                     <ul className="space-y-2">
                       {result.recommendations.map((rec, idx) => (
                         <li key={idx} className="flex items-start gap-2 text-sm">
@@ -658,6 +733,28 @@ const MotorStartingCurrentCalculator = () => {
                             style={{ backgroundColor: config.gradientFrom }}
                           />
                           <span className="text-white">{rec}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {result.notes.length > 0 && (
+                  <div
+                    className="pt-2 border-t"
+                    style={{ borderColor: `${config.gradientFrom}15` }}
+                  >
+                    <p className="text-sm text-white font-medium mb-2">
+                      What this calculator does not check
+                    </p>
+                    <ul className="space-y-2">
+                      {result.notes.map((note, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-sm">
+                          <span
+                            className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                            style={{ backgroundColor: config.gradientFrom }}
+                          />
+                          <span className="text-white">{note}</span>
                         </li>
                       ))}
                     </ul>
@@ -688,10 +785,37 @@ const MotorStartingCurrentCalculator = () => {
               >
                 <ul className="space-y-2">
                   {[
-                    { reg: 'Regulation 552.1', desc: 'Motor circuit requirements' },
-                    { reg: 'Regulation 435.1', desc: 'Overload protection' },
-                    { reg: 'Table 41.3', desc: 'Maximum disconnection times' },
-                    { reg: 'Regulation 433.1', desc: 'Overcurrent protection coordination' },
+                    {
+                      reg: 'Regulation 552.1.1',
+                      desc: 'Equipment suitable for at least the motor full-load current; cumulative starting effects on intermittent duty',
+                    },
+                    {
+                      reg: 'Regulation 552.1.2',
+                      desc: 'Motors above 0.37 kW shall have control equipment incorporating overload protection',
+                    },
+                    {
+                      reg: 'Regulation 552.1.3',
+                      desc: 'Means to prevent automatic restarting after a supply failure',
+                    },
+                    // 435.1 is "Protection afforded by one device" inside Section
+                    // 435, Coordination of overload and fault current protection.
+                    // Overload protection is Section 433.
+                    {
+                      reg: 'Regulation 433.1.1',
+                      desc: 'Ib ≤ In ≤ Iz, and I₂ ≤ 1.45 Iz (see 433.1.201)',
+                    },
+                    // Table 41.3 is maximum Zs for circuit-breakers, not
+                    // disconnection times — that is Table 41.1.
+                    { reg: 'Table 41.1', desc: 'Maximum disconnection times' },
+                    {
+                      reg: 'Regulation 411.3.2.2',
+                      desc: 'Automatic disconnection times — verify Zs separately',
+                    },
+                    { reg: 'Table 4Ab (Appendix 4 §6.4)', desc: 'Voltage drop limits' },
+                    {
+                      reg: 'Regulation 525.203',
+                      desc: 'A greater drop is permitted during motor starting, to the product standard or manufacturer data',
+                    },
                   ].map((item) => (
                     <li key={item.reg} className="flex items-start gap-2 text-sm">
                       <span
@@ -707,17 +831,32 @@ const MotorStartingCurrentCalculator = () => {
 
                 <div className="grid grid-cols-2 gap-3 pt-2">
                   <div className="space-y-1">
-                    <p className="text-sm text-white font-medium">Starting Multipliers</p>
+                    {/* These ranges are typical machine data. BS 7671 tabulates
+                        no starting multipliers, so they are not presented as a
+                        BS 7671 figure. The engine now uses the mid-point of each
+                        range shown here — it previously used values below every
+                        range on this panel. */}
+                    <p className="text-sm text-white font-medium">
+                      Typical Starting Multipliers (not a BS 7671 figure)
+                    </p>
                     <p className="text-sm text-white">DOL: 6-8× FLC</p>
                     <p className="text-sm text-white">Star-Delta: 2-3× FLC</p>
                     <p className="text-sm text-white">Soft Start: 2-4× FLC</p>
                     <p className="text-sm text-white">VFD: 1-2× FLC</p>
+                    <p className="text-sm text-white">Auto-transformer: 3-4× FLC</p>
                   </div>
                   <div className="space-y-1">
-                    <p className="text-sm text-white font-medium">Voltage Drop Limits</p>
-                    <p className="text-sm text-white">Running: 3% max</p>
-                    <p className="text-sm text-white">Starting: 10% max</p>
-                    <p className="text-sm text-white">DOL: ≤11kW recommended</p>
+                    {/* Table 4Ab: 3% is the LIGHTING figure. A motor is "other
+                        uses" — 5%. There is no BS 7671 starting-drop limit; the
+                        old panel printed "Starting: 10% max" and "DOL: ≤11kW
+                        recommended", neither of which is in the standard. */}
+                    <p className="text-sm text-white font-medium">Voltage Drop — Table 4Ab</p>
+                    <p className="text-sm text-white">Lighting: 3%</p>
+                    <p className="text-sm text-white">Other uses (incl. motors): 5%</p>
+                    <p className="text-sm text-white">Private LV supply: 6% / 8%</p>
+                    <p className="text-sm text-white">
+                      Starting: no BS 7671 limit — Reg 525.203
+                    </p>
                   </div>
                 </div>
               </div>
@@ -735,7 +874,8 @@ const MotorStartingCurrentCalculator = () => {
           { symbol: 'I_FLC', description: 'Full load current (A)' },
           {
             symbol: 'Multiplier',
-            description: 'DOL=6-8×, Star-Delta=2-3×, Soft Start=2-4×, VFD=1-1.5×',
+            description:
+              'Typical machine data (BS 7671 tabulates none): DOL=6-8×, Star-Delta=2-3×, Soft Start=2-4×, VFD=1-2×',
           },
           { symbol: 'I²t', description: 'Thermal stress (A²s)' },
         ]}

@@ -42,7 +42,7 @@ const keyTakeaways = [
   'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 require all private landlords in Wolverhampton to hold a valid EICR and renew it at least every five years.',
   'City of Wolverhampton Council enforces the 2020 Regulations and can issue civil penalties of up to £30,000 per breach for non-compliant landlords.',
   'Wolverhampton has a significant proportion of pre-1960s housing stock, including older terraced properties in Bilston, Willenhall, and Wednesfield — these properties frequently present C2 findings relating to earthing, bonding, and outdated wiring.',
-  'C1 (danger present) and C2 (potentially dangerous) observations under BS 7671 Section 631 result in an Unsatisfactory EICR, requiring landlords to complete all remedial work within 28 days.',
+  'C1 (danger present) and C2 (potentially dangerous) observations under BS 7671 Chapter 65 result in an Unsatisfactory EICR, requiring landlords to complete all remedial work within 28 days.',
   'Electricians carrying out EICRs in Wolverhampton must be qualified and competent — registration with NICEIC, NAPIT, or ELECSA is the recognised standard.',
 ];
 
@@ -160,7 +160,7 @@ const sections = [
         </div>
         <p>
           The EICR replaces the older Periodic Inspection Report (PIR) and follows the format set
-          out in BS 7671 Section 631. It is the document required by the 2020 private rented sector
+          out in BS 7671 Chapter 65. It is the document required by the 2020 private rented sector
           electrical safety regulations and by HMO licensing schemes operated by City of
           Wolverhampton Council.
         </p>
@@ -334,7 +334,7 @@ const sections = [
       <>
         <p>
           Every observation recorded on a Wolverhampton EICR is assigned a classification code under
-          BS 7671 Section 631. Understanding these codes helps landlords, tenants, and electricians
+          BS 7671 Chapter 65. Understanding these codes helps landlords, tenants, and electricians
           assess the urgency of remedial action.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

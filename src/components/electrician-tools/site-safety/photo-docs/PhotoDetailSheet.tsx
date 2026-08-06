@@ -128,6 +128,11 @@ export default function PhotoDetailSheet({
       }
       setAnnotations(parsed);
     }
+    // Keyed on the photo IDENTITY on purpose. Depending on `photo` itself would
+    // re-seed the local notes and annotation state every time any field on it
+    // changed — including our own auto-save below — wiping whatever the user
+    // was part-way through typing.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [photo?.id]);
 
   // --- Auto-save notes with 2s debounce ---
@@ -141,6 +146,10 @@ export default function PhotoDetailSheet({
       }, 2000);
     }
     return () => clearTimeout(saveTimeoutRef.current);
+    // Fires on `notes` alone by design. Adding `photo` or `updatePhoto` would
+    // restart the debounce each time the save completes and the photo object is
+    // replaced — an endless save loop rather than a 2s debounce.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notes]);
 
   // --- Handlers ---
@@ -383,9 +392,12 @@ export default function PhotoDetailSheet({
 
               {/* Pin text input popup */}
               {pendingPin && (
-                <div className="px-4 pt-3">
+                <div
+                  className="px-4 pt-3"
+                  ref={(el) => el?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })}
+                >
                   <div className="bg-white/5 border border-white/10 rounded-xl p-3">
-                    <label className="text-xs font-medium text-white uppercase tracking-wide">
+                    <label className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
                       Pin Label
                     </label>
                     <input
@@ -394,19 +406,19 @@ export default function PhotoDetailSheet({
                       onChange={(e) => setPinText(e.target.value)}
                       onKeyDown={(e) => e.key === 'Enter' && handleConfirmPin()}
                       placeholder="Describe this point..."
-                      className="w-full h-11 mt-1.5 bg-white/5 border border-white/10 rounded-lg px-3 text-sm text-white focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 touch-manipulation placeholder:text-white/25"
+                      className="mt-1.5 h-12 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation"
                     />
                     <div className="flex gap-2 mt-2">
                       <button
                         onClick={handleCancelPin}
-                        className="flex-1 h-11 rounded-xl bg-white/10 text-sm font-medium text-white touch-manipulation active:bg-white/15"
+                        className="h-12 flex-1 rounded-xl border border-white/[0.14] bg-white/[0.06] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.12] touch-manipulation"
                       >
                         Cancel
                       </button>
                       <button
                         onClick={handleConfirmPin}
                         disabled={!pinText.trim()}
-                        className="flex-1 h-11 rounded-xl bg-elec-yellow text-sm font-semibold text-black touch-manipulation active:bg-yellow-400 disabled:opacity-50"
+                        className="h-12 flex-1 rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 disabled:bg-white/[0.08] disabled:text-white/40 disabled:opacity-100 touch-manipulation"
                       >
                         Place Pin
                       </button>
@@ -483,7 +495,7 @@ export default function PhotoDetailSheet({
 
               {/* Notes section */}
               <div className="px-4 pt-4">
-                <label className="text-xs font-medium text-white uppercase tracking-wide">
+                <label className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
                   Notes
                 </label>
                 <textarea
@@ -491,7 +503,7 @@ export default function PhotoDetailSheet({
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="Add notes about this photo..."
                   rows={3}
-                  className="w-full mt-1.5 bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 touch-manipulation resize-none placeholder:text-white/25"
+                  className="mt-1.5 min-h-[96px] w-full resize-none rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 py-2.5 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
                 />
               </div>
 
@@ -499,7 +511,7 @@ export default function PhotoDetailSheet({
               <div className="px-4 pt-4 pb-6 space-y-3">
                 {/* Project picker (MobileSelectPicker) */}
                 <div>
-                  <label className="text-xs font-medium text-white uppercase tracking-wide">
+                  <label className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
                     Project
                   </label>
                   <div className="mt-1.5">
@@ -516,31 +528,28 @@ export default function PhotoDetailSheet({
                           description: p.customer_name || undefined,
                         })),
                       ]}
-                      triggerClassName="bg-white/5 border-white/10"
+                      triggerClassName="h-12 rounded-xl border-white/[0.14] bg-white/[0.06]"
                     />
                   </div>
                 </div>
 
                 {/* Photo type pill grid */}
                 <div>
-                  <label className="text-xs font-medium text-white uppercase tracking-wide">
-                    Photo Type
+                  <label className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+                    Photo type
                   </label>
                   <div className="grid grid-cols-4 gap-1.5 mt-1.5">
                     {PHOTO_TYPES.map((type) => (
                       <button
                         key={type.value}
                         onClick={() => handlePhotoTypeChange(type.value)}
-                        className={`flex flex-col items-center gap-1 p-2.5 rounded-xl transition-all touch-manipulation ${
+                        className={`flex min-h-[52px] items-center justify-center rounded-xl border px-2 text-center transition-colors touch-manipulation ${
                           selectedPhotoType === type.value
-                            ? 'bg-elec-yellow/20 ring-1 ring-elec-yellow'
-                            : 'bg-white/5 active:bg-white/10'
+                            ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                            : 'border-white/[0.14] bg-white/[0.06] font-medium text-white hover:border-white/[0.24]'
                         }`}
                       >
-                        <span className={`w-2.5 h-2.5 rounded-full ${type.dotColour}`} />
-                        <span className="text-[10px] text-white text-center leading-tight">
-                          {type.label}
-                        </span>
+                        <span className="text-[12px] leading-tight">{type.label}</span>
                       </button>
                     ))}
                   </div>

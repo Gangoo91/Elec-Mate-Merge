@@ -17,6 +17,8 @@ import { cn } from '@/lib/utils';
 import {
   InventoryCategory,
   InventoryLocation,
+  DEFAULT_LOW_STOCK_THRESHOLD,
+  defaultThresholdFor,
   InventoryUnit,
   INVENTORY_CATEGORIES,
   INVENTORY_LOCATIONS,
@@ -38,6 +40,8 @@ interface AddFormState {
   supplier: string;
   notes: string;
   showMore: boolean;
+  /** Stops the unit-driven default clobbering a hand-typed level. */
+  thresholdTouched: boolean;
 }
 
 type AddFormAction =
@@ -50,17 +54,27 @@ const INITIAL_STATE: AddFormState = {
   quantity: 1,
   unit: 'each',
   location: 'van',
-  lowStockThreshold: '',
+  lowStockThreshold: String(DEFAULT_LOW_STOCK_THRESHOLD.each),
   unitCost: '',
   supplier: '',
   notes: '',
   showMore: false,
+  thresholdTouched: false,
 };
 
 function formReducer(state: AddFormState, action: AddFormAction): AddFormState {
   switch (action.type) {
-    case 'SET':
-      return { ...state, [action.field]: action.value };
+    case 'SET': {
+      const next = { ...state, [action.field]: action.value };
+      // Changing the unit re-seeds the alert level — 5 is sensible for sockets
+      // and absurd for metres of cable — but never overwrites a number the
+      // electrician typed themselves.
+      if (action.field === 'unit' && !state.thresholdTouched) {
+        next.lowStockThreshold = String(defaultThresholdFor(action.value as InventoryUnit));
+      }
+      if (action.field === 'lowStockThreshold') next.thresholdTouched = true;
+      return next;
+    }
     case 'RESET':
       return INITIAL_STATE;
     default:
@@ -138,10 +152,11 @@ export function InventoryAddSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
+      <SheetContent side="bottom"
+          className="h-[88vh] overflow-hidden rounded-t-2xl border-t border-white/[0.14] bg-[#141419] p-0 focus:outline-none focus-visible:outline-none">
+        <div className="flex h-full flex-col">
           {/* Header */}
-          <div className="px-4 pt-6 pb-3 border-b border-white/[0.06]">
+          <div className="mx-auto w-full max-w-5xl border-b border-white/[0.08] px-4 pb-4 pt-6">
             <h2 className="text-lg font-semibold text-white">Add Item</h2>
             <p className="text-[12px] text-white mt-0.5">
               Add materials, tools or equipment to your stock
@@ -151,18 +166,19 @@ export function InventoryAddSheet({
           {/* Form */}
           <div
             className={cn(
-              'flex-1 overflow-y-auto px-4 py-4 space-y-6 transition-opacity',
+              'mx-auto w-full max-w-5xl flex-1 overflow-y-auto px-4 py-5 transition-opacity',
               saving && 'pointer-events-none opacity-60'
             )}
           >
+            <div className="grid gap-4 lg:grid-cols-2 lg:items-start">
             {/* Name */}
-            <div className="space-y-2">
-              <Label className="text-sm font-medium text-white">Item Name *</Label>
+            <div className="space-y-2 rounded-2xl border border-white/[0.12] bg-white/[0.04] p-4 lg:col-span-2">
+              <Label className="text-[12px] font-medium text-white mb-1 block">Item Name *</Label>
               <Input
                 value={form.name}
                 onChange={(e) => dispatch({ type: 'SET', field: 'name', value: e.target.value })}
                 placeholder="e.g. 6mm T&E Twin & Earth"
-                className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                className="input-underline h-12 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
                 autoFocus
               />
               {duplicate && (
@@ -176,8 +192,8 @@ export function InventoryAddSheet({
             </div>
 
             {/* Category pills */}
-            <div className="space-y-2">
-              <Label className="text-sm font-medium text-white">Category</Label>
+            <div className="space-y-2 rounded-2xl border border-white/[0.12] bg-white/[0.04] p-4 lg:col-span-2">
+              <Label className="text-[12px] font-medium text-white mb-1 block">Category</Label>
               <div className="flex flex-wrap gap-2">
                 {INVENTORY_CATEGORIES.map((cat) => (
                   <button
@@ -185,10 +201,10 @@ export function InventoryAddSheet({
                     type="button"
                     onClick={() => dispatch({ type: 'SET', field: 'category', value: cat.id })}
                     className={cn(
-                      'px-4 py-2.5 rounded-full text-[13px] font-medium touch-manipulation transition-all min-h-[44px]',
+                      'flex min-h-[44px] items-center rounded-xl border px-4 text-[13px] transition-colors touch-manipulation',
                       form.category === cat.id
                         ? cat.pillActiveClass
-                        : 'bg-white/[0.04] text-white border border-white/[0.06]'
+                        : 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:border-white/[0.25]'
                     )}
                   >
                     {cat.label}
@@ -198,14 +214,14 @@ export function InventoryAddSheet({
             </div>
 
             {/* Quantity + Unit */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3 rounded-2xl border border-white/[0.12] bg-white/[0.04] p-4">
               <div className="space-y-2">
-                <Label className="text-sm font-medium text-white">Quantity</Label>
+                <Label className="text-[12px] font-medium text-white mb-1 block">Quantity</Label>
                 <div className="flex items-center gap-2">
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="rounded-xl bg-white/[0.06] text-white"
+                    className="h-12 w-12 flex-shrink-0 rounded-xl border border-white/[0.14] bg-white/[0.06] text-white transition-colors hover:bg-white/[0.12] touch-manipulation"
                     onClick={() =>
                       dispatch({
                         type: 'SET',
@@ -226,14 +242,14 @@ export function InventoryAddSheet({
                         value: parseFloat(e.target.value) || 0,
                       })
                     }
-                    className="h-11 text-center text-base font-bold touch-manipulation border-white/30 focus:border-yellow-500"
+                    className="input-underline h-12 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation text-center font-bold"
                     min={0}
                     step={step}
                   />
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="rounded-xl bg-white/[0.06] text-white"
+                    className="h-12 w-12 flex-shrink-0 rounded-xl border border-white/[0.14] bg-white/[0.06] text-white transition-colors hover:bg-white/[0.12] touch-manipulation"
                     onClick={() =>
                       dispatch({
                         type: 'SET',
@@ -247,15 +263,15 @@ export function InventoryAddSheet({
                 </div>
               </div>
               <div className="space-y-2">
-                <Label className="text-sm font-medium text-white">Unit</Label>
+                <Label className="text-[12px] font-medium text-white mb-1 block">Unit</Label>
                 <Select
                   value={form.unit}
                   onValueChange={(v) => dispatch({ type: 'SET', field: 'unit', value: v })}
                 >
-                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow">
+                  <SelectTrigger className="h-12 rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white transition-colors hover:border-white/[0.24] focus:border-elec-yellow focus:ring-0 touch-manipulation">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-elec-gray border-elec-gray text-white">
+                  <SelectContent className="border-white/[0.1] bg-[#111114] text-white">
                     {INVENTORY_UNITS.map((u) => (
                       <SelectItem key={u.id} value={u.id}>
                         {u.pluralLabel}
@@ -266,9 +282,43 @@ export function InventoryAddSheet({
               </div>
             </div>
 
+            {/* Alert level — out of "More details" and into the form proper.
+                Hidden, it was set on 3 of 42 items in production, which left the
+                one feature a stock tracker exists for switched off for almost
+                everybody. Pre-filled from the unit so it works untouched. */}
+            <div className="space-y-2 rounded-2xl border border-white/[0.12] bg-white/[0.04] p-4">
+              <Label className="text-[12px] font-medium text-white mb-1 block">Tell me when it drops below</Label>
+              <div className="flex items-center gap-3">
+                <Input
+                  type="number"
+                  value={form.lowStockThreshold}
+                  onChange={(e) =>
+                    dispatch({ type: 'SET', field: 'lowStockThreshold', value: e.target.value })
+                  }
+                  className="input-underline h-12 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation w-28"
+                  min={0}
+                  step={step}
+                />
+                <span className="text-[13px] text-white">
+                  {INVENTORY_UNITS.find((u) => u.id === form.unit)?.pluralLabel ?? form.unit}
+                </span>
+                {form.lowStockThreshold !== '' && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      dispatch({ type: 'SET', field: 'lowStockThreshold', value: '' })
+                    }
+                    className="ml-auto h-11 px-2 text-[12.5px] font-medium text-white touch-manipulation"
+                  >
+                    No alert
+                  </button>
+                )}
+              </div>
+            </div>
+
             {/* Location pills */}
-            <div className="space-y-2">
-              <Label className="text-sm font-medium text-white">Location</Label>
+            <div className="space-y-2 rounded-2xl border border-white/[0.12] bg-white/[0.04] p-4 lg:col-span-2">
+              <Label className="text-[12px] font-medium text-white mb-1 block">Location</Label>
               <div className="flex flex-wrap gap-2">
                 {INVENTORY_LOCATIONS.map((loc) => (
                   <button
@@ -276,16 +326,18 @@ export function InventoryAddSheet({
                     type="button"
                     onClick={() => dispatch({ type: 'SET', field: 'location', value: loc.id })}
                     className={cn(
-                      'px-4 py-2.5 rounded-full text-[13px] font-medium touch-manipulation transition-all min-h-[44px]',
+                      'flex min-h-[44px] items-center rounded-xl border px-4 text-[13px] transition-colors touch-manipulation',
                       form.location === loc.id
-                        ? 'bg-teal-500/20 text-white border border-teal-500/40'
-                        : 'bg-white/[0.04] text-white border border-white/[0.06]'
+                        ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                        : 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:border-white/[0.25]'
                     )}
                   >
                     {loc.label}
                   </button>
                 ))}
               </div>
+            </div>
+
             </div>
 
             {/* More details (collapsible) */}
@@ -301,21 +353,7 @@ export function InventoryAddSheet({
               </CollapsibleTrigger>
               <CollapsibleContent className="space-y-4 pt-3">
                 <div className="space-y-2">
-                  <Label className="text-sm font-medium text-white">Low Stock Alert</Label>
-                  <Input
-                    type="number"
-                    value={form.lowStockThreshold}
-                    onChange={(e) =>
-                      dispatch({ type: 'SET', field: 'lowStockThreshold', value: e.target.value })
-                    }
-                    placeholder="Alert when quantity drops below..."
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
-                    min={0}
-                    step={step}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-white">Unit Cost (£)</Label>
+                  <Label className="text-[12px] font-medium text-white mb-1 block">Unit Cost (£)</Label>
                   <Input
                     type="number"
                     value={form.unitCost}
@@ -323,13 +361,13 @@ export function InventoryAddSheet({
                       dispatch({ type: 'SET', field: 'unitCost', value: e.target.value })
                     }
                     placeholder="Cost per unit"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
+                    className="input-underline h-12 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
                     min={0}
                     step={0.01}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-sm font-medium text-white">Supplier</Label>
+                  <Label className="text-[12px] font-medium text-white mb-1 block">Supplier</Label>
                   <Input
                     value={form.supplier}
                     onChange={(e) =>
@@ -337,7 +375,7 @@ export function InventoryAddSheet({
                     }
                     list="supplier-suggestions"
                     placeholder="e.g. CEF, Edmundson, Screwfix"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
+                    className="input-underline h-12 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
                   />
                   <datalist id="supplier-suggestions">
                     <option value="CEF" />
@@ -351,14 +389,14 @@ export function InventoryAddSheet({
                   </datalist>
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-sm font-medium text-white">Notes</Label>
+                  <Label className="text-[12px] font-medium text-white mb-1 block">Notes</Label>
                   <Textarea
                     value={form.notes}
                     onChange={(e) =>
                       dispatch({ type: 'SET', field: 'notes', value: e.target.value })
                     }
                     placeholder="Any extra details..."
-                    className="touch-manipulation text-base min-h-[80px] border-white/30 focus:border-yellow-500"
+                    className="min-h-[96px] w-full resize-none rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 py-2.5 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
                   />
                 </div>
               </CollapsibleContent>
@@ -366,11 +404,11 @@ export function InventoryAddSheet({
           </div>
 
           {/* Save button */}
-          <div className="p-4 border-t border-white/[0.06]">
+          <div className="mx-auto w-full max-w-5xl border-t border-white/[0.08] p-4">
             <Button
               onClick={handleSave}
               disabled={saving || !form.name.trim()}
-              className="w-full h-12 text-base font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black rounded-xl touch-manipulation"
+              className="h-12 w-full rounded-xl bg-elec-yellow text-base font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation disabled:bg-white/[0.08] disabled:text-white/40 disabled:hover:bg-white/[0.08] disabled:cursor-not-allowed disabled:opacity-100"
             >
               {saving ? 'Adding...' : duplicate ? 'Add to Existing' : 'Add Item'}
             </Button>

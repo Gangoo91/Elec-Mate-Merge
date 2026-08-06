@@ -1,12 +1,22 @@
 import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
 import { Canvas as FabricCanvas, Rect, Line, FabricText, FabricObject, Group, Circle, Path, Point, loadSVGFromString, util } from 'fabric';
+import type { TPointerEventInfo, TPointerEvent } from 'fabric';
 import type { CanvasObject } from '@/pages/electrician-tools/ai-tools/DiagramBuilderPage';
 import { symbolRegistry } from './symbols/symbolRegistry';
 import { electricalSymbols } from './symbols/electricalSymbols';
 import { loadSymbolSvg } from './symbols/svgLoader';
 import { extractWalls, orthogonalRoute } from './cableRouter';
+import { SCALE, GRID_MINOR, GRID_MAJOR, snapToStep } from './constants';
+import {
+  computeWallSnap,
+  isWallMountSymbol,
+  WALL_MOUNT_OFFSET,
+  type WallSnapPlacement,
+} from './wallSnap';
+import { isTypingContext, shouldAllowSpaceDefault, isInOverlay } from '@/utils/keyboardGuards';
 import { ZoomIn, ZoomOut, Maximize2, RotateCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useHaptic } from '@/hooks/useHaptic';
 
 // Minimap component — renders a small overview of the canvas
 const MinimapOverlay = ({ fabricCanvas }: { fabricCanvas: FabricCanvas | null }) => {
@@ -54,18 +64,33 @@ const MinimapOverlay = ({ fabricCanvas }: { fabricCanvas: FabricCanvas | null })
       }
     };
 
-    // Event-driven updates instead of polling
-    fabricCanvas.on('after:render', update);
-    fabricCanvas.on('object:modified', update);
-    fabricCanvas.on('object:added', update);
-    fabricCanvas.on('object:removed', update);
+    // Coalesce to one repaint per frame.
+    //
+    // `update` blits the entire main canvas, and it is wired to object:added /
+    // object:removed — which fire once PER OBJECT. The grid alone is ~80 line
+    // objects and it is now rebuilt whenever the viewport moves, so a single
+    // pan frame would otherwise trigger ~160 full-canvas blits.
+    let frame: number | null = null;
+    const scheduleUpdate = () => {
+      if (frame !== null) return;
+      frame = requestAnimationFrame(() => {
+        frame = null;
+        update();
+      });
+    };
+
+    fabricCanvas.on('after:render', scheduleUpdate);
+    fabricCanvas.on('object:modified', scheduleUpdate);
+    fabricCanvas.on('object:added', scheduleUpdate);
+    fabricCanvas.on('object:removed', scheduleUpdate);
     update();
 
     return () => {
-      fabricCanvas.off('after:render', update);
-      fabricCanvas.off('object:modified', update);
-      fabricCanvas.off('object:added', update);
-      fabricCanvas.off('object:removed', update);
+      if (frame !== null) cancelAnimationFrame(frame);
+      fabricCanvas.off('after:render', scheduleUpdate);
+      fabricCanvas.off('object:modified', scheduleUpdate);
+      fabricCanvas.off('object:added', scheduleUpdate);
+      fabricCanvas.off('object:removed', scheduleUpdate);
     };
   }, [fabricCanvas]);
 
@@ -78,8 +103,6 @@ const MinimapOverlay = ({ fabricCanvas }: { fabricCanvas: FabricCanvas | null })
   );
 };
 
-// Scale: 52px = 1 metre
-const SCALE = 52;
 const WALL_THICKNESS = 3;
 const SNAP_DISTANCE = 10; // px for wall endpoint snapping
 const AXIS_SNAP_DEGREES = 10; // snap to horizontal/vertical within this angle
@@ -131,9 +154,10 @@ const pxToMetres = (px: number): string => {
   return (Math.abs(px) / SCALE).toFixed(2) + 'm';
 };
 
-const WALL_SNAP_THRESHOLD = 32;
-const WALL_MOUNT_OFFSET = 14;
-const WALL_END_MARGIN = 12;
+// WALL_SNAP_THRESHOLD / WALL_MOUNT_OFFSET / WALL_END_MARGIN and the snap
+// geometry itself live in ./wallSnap so the canvas and the re-seat pass share
+// one implementation. Only WALL_MOUNT_OFFSET is needed here, for the
+// "is this symbol sitting on that wall?" test used by the wall-feature logic.
 const WALL_SNAP_GUIDE_COLOUR = '#EAB308';
 const WALL_POINT_MATCH_TOLERANCE = 6;
 
@@ -154,11 +178,59 @@ const serialiseCanvasObject = (obj: CanvasObject): string => {
   );
 };
 
-const isWallMountSymbol = (symbolId?: string | null): boolean => {
-  if (!symbolId) return false;
-  const sym = symbolRegistry.find((entry) => entry.id === symbolId);
-  return !!sym && (sym.mountType === 'wall' || sym.mountType === 'panel');
+
+/**
+ * Pick a clear position for a circuit tag.
+ *
+ * A fixed offset only moves the collision — put the tag above and it lands on
+ * whatever sits above. This walks candidate positions around the symbol
+ * (above, below, right, left, then the diagonals) and takes the first that
+ * does not sit on top of a neighbouring symbol, falling back to directly above
+ * when a symbol is boxed in on every side.
+ */
+const TAG_RADIUS = 23;
+const TAG_CLEARANCE = 15;
+const findTagSpot = (
+  target: CanvasObject,
+  all: CanvasObject[]
+): { x: number; y: number } => {
+  const candidates = [
+    { x: 0, y: -TAG_RADIUS },
+    { x: 0, y: TAG_RADIUS },
+    { x: TAG_RADIUS, y: 0 },
+    { x: -TAG_RADIUS, y: 0 },
+    { x: TAG_RADIUS * 0.75, y: -TAG_RADIUS * 0.75 },
+    { x: -TAG_RADIUS * 0.75, y: -TAG_RADIUS * 0.75 },
+    { x: TAG_RADIUS * 0.75, y: TAG_RADIUS * 0.75 },
+    { x: -TAG_RADIUS * 0.75, y: TAG_RADIUS * 0.75 },
+  ];
+  const neighbours = all.filter(
+    (o) => o.type === 'symbol' && o.id !== target.id
+  );
+
+  for (const c of candidates) {
+    const px = target.x + c.x;
+    const py = target.y + c.y;
+    const clashes = neighbours.some(
+      (n) => Math.abs(n.x - px) < TAG_CLEARANCE && Math.abs(n.y - py) < TAG_CLEARANCE
+    );
+    if (!clashes) return { x: px, y: py };
+  }
+  return { x: target.x, y: target.y - TAG_RADIUS };
 };
+
+// KNOWN GAP: lettering inside a mounted symbol rotates with it, so the cooker
+// outlet's "C" reads sideways once the symbol faces into the room (same for
+// EM, 2xEM, USB, D, T, SH, EXIT). Drawing convention is that labels stay
+// horizontal whatever the device orientation.
+//
+// Counter-rotating the text child does NOT work on its own: SVG text imports
+// with a top-left origin, so setting `angle` spins the glyph about its corner
+// and throws it clear of the symbol — tried, and it looked worse than the
+// sideways letter. Capturing the centre and restoring it across an origin
+// change is the likely fix, but it needs to be seen on the canvas before it
+// ships. The durable answer is probably to re-author the lettered SVGs so the
+// glyph is a separate, rotation-exempt layer.
 
 const cloneCanvasObjectWithOffset = (obj: CanvasObject, offset = 20): CanvasObject => ({
   ...obj,
@@ -171,20 +243,100 @@ const cloneCanvasObjectWithOffset = (obj: CanvasObject, offset = 20): CanvasObje
   })),
 });
 
-interface WallSnapPlacement {
-  x: number;
-  y: number;
-  rotation: number;
-  projectedX: number;
-  projectedY: number;
-  wallId: string;
-}
-
 const pointsMatch = (
   a: { x: number; y: number },
   b: { x: number; y: number },
   tolerance = WALL_POINT_MATCH_TOLERANCE
 ) => Math.abs(a.x - b.x) <= tolerance && Math.abs(a.y - b.y) <= tolerance;
+
+/**
+ * Rebuild the metric grid.
+ *
+ * Covers the visible WORLD area rather than a fixed rectangle in canvas
+ * pixels: the old version drew the grid once at the canvas' own width/height,
+ * so panning or zooming out took you off the edge of it and left you drawing
+ * on blank white with no reference at all.
+ *
+ * Lines are drawn on exact 0.5m / 1m multiples so the squares are a usable
+ * measuring reference that agrees with the on-screen scale bar.
+ *
+ * Single source of truth — this used to be copy-pasted three times (init,
+ * gridEnabled toggle, and the AI room render) with subtly different values.
+ */
+const drawGrid = (canvas: FabricCanvas, enabled: boolean) => {
+  const cache = canvas as FabricCanvas & { __gridKey?: string };
+
+  if (!enabled) {
+    if (cache.__gridKey === 'off') return;
+    canvas
+      .getObjects()
+      .filter((obj) => (obj as { isGridLine?: boolean }).isGridLine)
+      .forEach((obj) => canvas.remove(obj));
+    cache.__gridKey = 'off';
+    return;
+  }
+
+  const zoom = canvas.getZoom() || 1;
+  const vpt = canvas.viewportTransform || [1, 0, 0, 1, 0, 0];
+  const viewW = (canvas.width || 1200) / zoom;
+  const viewH = (canvas.height || 600) / zoom;
+  // World coordinate of the top-left corner of the viewport.
+  const originX = -vpt[4] / zoom;
+  const originY = -vpt[5] / zoom;
+
+  // Coarsen as you zoom out rather than giving up. A fixed 0.5m spacing needs
+  // ~460 lines at minimum zoom, so a naive cap simply deleted the grid at the
+  // moment you most need a sense of scale. Step up 0.5m → 1m → 5m → 10m so the
+  // line count stays bounded and the squares always mean a round distance.
+  const MAX_LINES_PER_AXIS = 160;
+  const steps = [GRID_MINOR, GRID_MAJOR, GRID_MAJOR * 5, GRID_MAJOR * 10];
+  const span = Math.max(viewW, viewH) + GRID_MAJOR * 2;
+  const step = steps.find((s) => span / s <= MAX_LINES_PER_AXIS) ?? steps[steps.length - 1];
+  // Emphasise every metre at the fine step, every fifth line beyond it.
+  // (`<=` here made major == step at the 1m step, so every line came out
+  // emphasised and the grid read as a solid slab of heavy lines.)
+  const majorEvery = step < GRID_MAJOR ? GRID_MAJOR : step * 5;
+
+  // Overscan by two steps so a small pan doesn't reveal an unpainted edge
+  // before the next redraw lands.
+  const pad = step * 2;
+  const left = Math.floor((originX - pad) / step) * step;
+  const right = originX + viewW + pad;
+  const top = Math.floor((originY - pad) / step) * step;
+  const bottom = originY + viewH + pad;
+
+  // Panning moves the viewport continuously, but the grid only actually
+  // changes when it crosses a step boundary or the zoom step changes. Bail
+  // early when the result would be identical — otherwise a drag rebuilt ~160
+  // Fabric objects every frame to draw exactly the same lines.
+  const key = `${step}|${left}|${top}|${Math.ceil(right)}|${Math.ceil(bottom)}`;
+  if (cache.__gridKey === key) return;
+  cache.__gridKey = key;
+
+  canvas
+    .getObjects()
+    .filter((obj) => (obj as { isGridLine?: boolean }).isGridLine)
+    .forEach((obj) => canvas.remove(obj));
+
+  const addLine = (coords: [number, number, number, number], isMajor: boolean) => {
+    const line = new Line(coords, {
+      stroke: isMajor ? '#B0B0B0' : '#DCDCDC',
+      strokeWidth: isMajor ? 1 : 0.5,
+      selectable: false,
+      evented: false,
+    });
+    (line as { isGridLine?: boolean }).isGridLine = true;
+    canvas.add(line);
+    canvas.sendObjectToBack(line);
+  };
+
+  // Emphasis is derived from the world coordinate, not a loop index, so major
+  // lines stay locked to true metre multiples however the viewport has moved.
+  const isMajorAt = (v: number) => Math.abs(v % majorEvery) < 0.01;
+
+  for (let x = left; x <= right; x += step) addLine([x, top, x, bottom], isMajorAt(x));
+  for (let y = top; y <= bottom; y += step) addLine([left, y, right, y], isMajorAt(y));
+};
 
 export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
   ({ activeTool, selectedSymbolId, objects, onObjectsChange, onSelectionChange, onRequestProperties, gridEnabled, snapEnabled, headerHeight = 48, toolbarHeight = 56, onWallTapped, onRotate, onToolChange, showMinimap = true }, ref) => {
@@ -209,9 +361,29 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
     const dimensionStartRef = useRef<{ x: number; y: number } | null>(null);
     const cableStartIdRef = useRef<string | null>(null);
     const [zoomLevel, setZoomLevel] = useState(1);
-    const aiRenderActiveRef = useRef(false);
+    // Published once the Fabric canvas exists so children re-render with it.
+    const [canvasReady, setCanvasReady] = useState<FabricCanvas | null>(null);
+    // (An `aiRenderActiveRef` guard used to live here to suppress the object
+    // sync during AI rendering. It never worked — it was cleared before React
+    // re-rendered — and `renderAIRoom` is now state-only, so nothing to guard.)
     // Block single-finger handlers during multi-touch pinch/pan (ELE-712)
     const isTouchGestureRef = useRef(false);
+    // Set while a desktop drag-pan is in progress. Shared at component scope
+    // because pan and drawing are registered as SEPARATE mouse:down handlers
+    // on the same canvas — without this, alt/space/middle-dragging to pan
+    // while the wall tool was active would pan AND draw a wall at once.
+    const isPanningRef = useRef(false);
+
+    // Haptics. Read through a ref because the canvas event handlers are
+    // registered once on mount, and useHaptic() returns a fresh object each
+    // render. Snap feedback is fired on TRANSITION into a snap — pulsing every
+    // frame while a symbol sits against a wall would be unbearable.
+    const haptic = useHaptic();
+    const hapticRef = useRef(haptic);
+    hapticRef.current = haptic;
+    /** Wall the symbol under the cursor is currently snapped to, for haptics. */
+    const wasSnappedRef = useRef<string | null>(null);
+    const wasEndpointSnappedRef = useRef(false);
     // Long-press + double-tap detection for PropertiesPanel gesture.
     // Single tap = select only. Long-press (500ms) or double-tap = open props.
     const longPressTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -575,73 +747,19 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       return getViewportCentre();
     };
 
+    /**
+     * Thin wrapper over the shared geometry in `wallSnap.ts`, supplying the
+     * walls currently on the drawing. The maths lives in that module so that
+     * placement here and the re-seat pass applied when an existing room is
+     * opened can never drift apart.
+     */
     const getWallSnapPlacement = (
       x: number,
       y: number,
-      symbolId?: string | null
-    ): WallSnapPlacement | null => {
-      if (!isWallMountSymbol(symbolId)) return null;
-
-      const wallObjects = objectsRef.current.filter(
-        (obj) => obj.type === 'wall' && obj.points && obj.points.length >= 2
-      );
-
-      let best:
-        | (WallSnapPlacement & { distance: number })
-        | null = null;
-
-      for (const wall of wallObjects) {
-        const p1 = wall.points![0];
-        const p2 = wall.points![1];
-        const dx = p2.x - p1.x;
-        const dy = p2.y - p1.y;
-        const length = Math.hypot(dx, dy);
-        if (length === 0) continue;
-
-        const unitX = dx / length;
-        const unitY = dy / length;
-        const normalX = -unitY;
-        const normalY = unitX;
-
-        let t = ((x - p1.x) * dx + (y - p1.y) * dy) / (length * length);
-        const marginRatio = Math.min(WALL_END_MARGIN / length, 0.2);
-        t = Math.max(marginRatio, Math.min(1 - marginRatio, t));
-
-        const projX = p1.x + t * dx;
-        const projY = p1.y + t * dy;
-        const distance = Math.hypot(x - projX, y - projY);
-
-        if (distance > WALL_SNAP_THRESHOLD) continue;
-
-        const side = (x - projX) * normalX + (y - projY) * normalY >= 0 ? 1 : -1;
-        const snapX = projX + normalX * WALL_MOUNT_OFFSET * side;
-        const snapY = projY + normalY * WALL_MOUNT_OFFSET * side;
-        const rotation = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
-
-        if (!best || distance < best.distance) {
-          best = {
-            x: snapX,
-            y: snapY,
-            rotation,
-            projectedX: projX,
-            projectedY: projY,
-            wallId: wall.id,
-            distance,
-          };
-        }
-      }
-
-      return best
-        ? {
-            x: best.x,
-            y: best.y,
-            rotation: best.rotation,
-            projectedX: best.projectedX,
-            projectedY: best.projectedY,
-            wallId: best.wallId,
-          }
-        : null;
-    };
+      symbolId?: string | null,
+      opts?: { alwaysSnap?: boolean }
+    ): WallSnapPlacement | null =>
+      computeWallSnap(x, y, symbolId, objectsRef.current, opts);
 
     // Snap wall direction to horizontal/vertical if within threshold
     const snapWallDirection = (sx: number, sy: number, ex: number, ey: number): { x: number; y: number } => {
@@ -659,7 +777,15 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       return { x: ex, y: ey };
     };
 
-    // Zoom canvas to fit all non-grid objects with padding
+    /**
+     * Fit all drawing content to the visible working area.
+     *
+     * The left inset matters: on desktop a 150px tool rail floats over the
+     * canvas, so centring on the raw canvas width tucked the drawing partly
+     * underneath it. Fitting to the area the user can actually see puts the
+     * work where they are looking.
+     */
+    const RAIL_INSET = 178;
     const zoomToFit = () => {
       const canvas = fabricCanvasRef.current;
       if (!canvas) return;
@@ -682,18 +808,24 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       const canvasWidth = canvas.width || 400;
       const canvasHeight = canvas.height || 600;
       const padding = 60;
+      // Only inset on desktop, where the rail exists.
+      const leftInset = canvasWidth >= 1024 ? RAIL_INSET : 0;
+      const usableWidth = canvasWidth - leftInset;
 
-      const zoomX = (canvasWidth - padding * 2) / contentWidth;
+      const zoomX = (usableWidth - padding * 2) / contentWidth;
       const zoomY = (canvasHeight - padding * 2) / contentHeight;
       const zoom = Math.min(zoomX, zoomY, 2); // Don't zoom in more than 2x
 
       canvas.setZoom(zoom);
-      const vpw = canvasWidth / zoom;
-      const vph = canvasHeight / zoom;
       const centreX = minX + contentWidth / 2;
       const centreY = minY + contentHeight / 2;
-      canvas.viewportTransform = [zoom, 0, 0, zoom, canvasWidth / 2 - centreX * zoom, canvasHeight / 2 - centreY * zoom];
+      canvas.viewportTransform = [
+        zoom, 0, 0, zoom,
+        leftInset + usableWidth / 2 - centreX * zoom,
+        canvasHeight / 2 - centreY * zoom,
+      ];
       setZoomLevel(zoom);
+      drawGrid(canvas, gridEnabledRef.current);
       canvas.renderAll();
     };
 
@@ -713,6 +845,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         height / 2 - y * targetZoom,
       ];
       setZoomLevel(targetZoom);
+      drawGrid(canvas, gridEnabledRef.current);
       canvas.renderAll();
     };
 
@@ -725,8 +858,67 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       getPlacementCenter: () => getPreferredPlacementCentre(),
       undo,
       redo,
+      /**
+       * Push the current objects onto the undo stack.
+       *
+       * Exposed so mutations that originate in DiagramBuilderPage — room
+       * shapes, multi-place, properties edits, duplicate, rotate-all, wall
+       * length — become undoable too. Previously `saveState` was only reached
+       * from canvas-drawn actions, so undo silently skipped past half the
+       * tools and Rotate All could not be reversed at all.
+       *
+       * Call BEFORE applying the mutation. Never call it from the
+       * `onObjectsChange` handler: canvas-originated edits already push their
+       * own snapshot and would double up.
+       */
+      saveState,
       zoomToFit,
       focusOnPoint,
+      /**
+       * Is the object comfortably inside the current viewport?
+       *
+       * Used to decide whether selecting something on mobile should recentre
+       * the view. Inset by a margin so an item hard against the edge (or under
+       * the floating action bar) still counts as needing a nudge.
+       */
+      isObjectVisible: (id: string, margin = 56): boolean => {
+        const canvas = fabricCanvasRef.current;
+        const target = objectsRef.current.find((obj) => obj.id === id);
+        if (!canvas || !target) return true;
+
+        // Symbols are drawn with a CENTRE origin, so x/y is their middle —
+        // treating it as a top-left corner overstated their extent and made
+        // on-screen items read as off-screen.
+        const halfW = (target.width || 0) / 2;
+        const halfH = (target.height || 0) / 2;
+        const pts = target.points?.length
+          ? target.points
+          : target.type === 'symbol'
+            ? [
+                { x: target.x - halfW, y: target.y - halfH },
+                { x: target.x + halfW, y: target.y + halfH },
+              ]
+            : [
+                { x: target.x, y: target.y },
+                { x: target.x + (target.width || 0), y: target.y + (target.height || 0) },
+              ];
+
+        const zoom = canvas.getZoom() || 1;
+        const vpt = canvas.viewportTransform || [1, 0, 0, 1, 0, 0];
+        const width = canvas.width || 0;
+        const height = canvas.height || 0;
+
+        return pts.every((p) => {
+          const screenX = p.x * zoom + vpt[4];
+          const screenY = p.y * zoom + vpt[5];
+          return (
+            screenX >= margin &&
+            screenX <= width - margin &&
+            screenY >= margin &&
+            screenY <= height - margin
+          );
+        });
+      },
       focusOnObject: (id: string) => {
         const target = objectsRef.current.find((obj) => obj.id === id);
         if (!target) return;
@@ -783,270 +975,138 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         renderedObjectIds.current.clear();
         canvas.renderAll();
       },
-      renderAIRoom: async (roomData: any) => {
-        if (!fabricCanvasRef.current) return;
-
-        aiRenderActiveRef.current = true;
+      /**
+       * Render an AI-generated room.
+       *
+       * This is deliberately STATE-ONLY: it converts the AI payload into
+       * CanvasObjects and hands them to React, letting the normal sync effect
+       * draw them exactly like any other object.
+       *
+       * It previously drew walls, labels and symbols onto Fabric by hand AND
+       * pushed the same geometry into state. The guard flag meant to suppress
+       * the resulting double-draw was cleared synchronously, before React had
+       * re-rendered, so the sync effect never saw it — every AI room was drawn
+       * twice, and the hand-drawn copy carried no `customData`, which made it
+       * invisible to selection, undo and delete. Going through state removes
+       * the duplication, the orphaned geometry and ~150 lines of drawing code.
+       */
+      renderAIRoom: async (roomData: {
+        room?: { name?: string };
+        walls?: { id?: string; length: number }[];
+        symbols?: { type: string; wall?: string; position?: number | string }[];
+      }) => {
         const canvas = fabricCanvasRef.current;
-        const scale = SCALE;
+        if (!canvas) return;
+
         const offsetX = 100;
         const offsetY = 100;
-
-        // Clear existing objects but redraw grid
-        canvas.clear();
-        canvas.backgroundColor = '#FFFFFF';
-
-        // Redraw grid after clear
-        if (gridEnabledRef.current) {
-          const gridSize = 10;
-          const gw = canvas.width || 1200;
-          const gh = canvas.height || 600;
-          for (let i = 0; i < gw / gridSize; i++) {
-            const isMajor = i % 5 === 0;
-            canvas.add(new Line([i * gridSize, 0, i * gridSize, gh], {
-              stroke: isMajor ? '#999999' : '#CCCCCC', strokeWidth: isMajor ? 1 : 0.5, selectable: false, evented: false,
-            }));
-          }
-          for (let i = 0; i < gh / gridSize; i++) {
-            const isMajor = i % 5 === 0;
-            canvas.add(new Line([0, i * gridSize, gw, i * gridSize], {
-              stroke: isMajor ? '#999999' : '#CCCCCC', strokeWidth: isMajor ? 1 : 0.5, selectable: false, evented: false,
-            }));
-          }
-        }
-
-        // Draw walls as lines
         const walls = roomData.walls || [];
-        let currentX = offsetX;
-        let currentY = offsetY;
+        const symbols = roomData.symbols || [];
+        const stamp = Date.now();
+        const next: CanvasObject[] = [];
 
-        walls.forEach((wall: any) => {
-          const length = wall.length * scale;
-          let endX = currentX;
-          let endY = currentY;
+        // Walls, laid end to end from the offset origin.
+        let cx = offsetX;
+        let cy = offsetY;
+        walls.forEach((wall, idx) => {
+          const length = wall.length * SCALE;
+          let ex = cx;
+          let ey = cy;
+          if (wall.id === 'north') ex = cx + length;
+          else if (wall.id === 'east') ey = cy + length;
+          else if (wall.id === 'south') ex = cx - length;
+          else if (wall.id === 'west') ey = cy - length;
 
-          if (wall.id === 'north') endX = currentX + length;
-          else if (wall.id === 'east') endY = currentY + length;
-          else if (wall.id === 'south') endX = currentX - length;
-          else if (wall.id === 'west') endY = currentY - length;
-
-          const wallThickness = WALL_THICKNESS;
-          const isVertical = Math.abs(endX - currentX) < Math.abs(endY - currentY);
-
-          if (isVertical) {
-            const wallRect = new Rect({
-              left: currentX - wallThickness / 2,
-              top: Math.min(currentY, endY),
-              width: wallThickness,
-              height: Math.abs(endY - currentY),
-              fill: '#000000',
-              stroke: '#000000',
-              strokeWidth: 1,
-              selectable: false,
-            });
-            canvas.add(wallRect);
-          } else {
-            const wallRect = new Rect({
-              left: Math.min(currentX, endX),
-              top: currentY - wallThickness / 2,
-              width: Math.abs(endX - currentX),
-              height: wallThickness,
-              fill: '#000000',
-              stroke: '#000000',
-              strokeWidth: 1,
-              selectable: false,
-            });
-            canvas.add(wallRect);
-          }
-
-          const midX = (currentX + endX) / 2;
-          const midY = (currentY + endY) / 2;
-          const label = new FabricText(`${wall.length}m`, {
-            left: midX,
-            top: midY - 20,
-            fontSize: 12,
-            fill: '#000000',
-            fontFamily: 'Arial',
-            fontWeight: '500',
-            selectable: false,
+          next.push({
+            id: `ai-wall-${idx}-${stamp}`,
+            type: 'wall',
+            x: cx,
+            y: cy,
+            points: [{ x: cx, y: cy }, { x: ex, y: ey }],
           });
-          canvas.add(label);
-
-          currentX = endX;
-          currentY = endY;
+          cx = ex;
+          cy = ey;
         });
 
-        // Place electrical symbols (async)
+        // Room extents, used to place symbols against the correct wall.
+        const roomWidth = (walls[0]?.length ?? 0) * SCALE || 200;
+        const roomHeight = (walls[1]?.length ?? 0) * SCALE || 200;
         const SYMBOL_INSET = 4;
-        const roomWidth = walls[0]?.length * scale || 200;
-        const roomHeight = walls[1]?.length * scale || 200;
 
-        const symbols = roomData.symbols || [];
-        const symbolPromises = symbols.map(async (symbol: any) => {
-          // ELE-604: Strip -bs7671 suffix from AI-generated symbol IDs
+        symbols.forEach((symbol, idx) => {
+          // ELE-604: AI sometimes emits ids suffixed with -bs7671.
           const symbolId = symbol.type.replace(/-bs7671$/, '');
-
-          // Try symbolRegistry first, then fall back to legacy electricalSymbols
-          const registrySymbol = symbolRegistry.find((s) => s.id === symbolId);
-          const legacySymbol = electricalSymbols.find((s) => s.id === symbolId);
-
-          if (!registrySymbol && !legacySymbol) {
-            console.warn(`Symbol not found: ${symbol.type} (resolved: ${symbolId})`);
+          const known =
+            symbolRegistry.some((s) => s.id === symbolId) ||
+            electricalSymbols.some((s) => s.id === symbolId);
+          if (!known) {
+            console.warn(`[AI room] unknown symbol skipped: ${symbol.type} (resolved: ${symbolId})`);
             return;
           }
 
-          let symbolX = offsetX + 20;
-          let symbolY = offsetY + 20;
-
-          // ELE-589: Calculate symbol position INSIDE the room
+          let sx = offsetX + 20;
+          let sy = offsetY + 20;
           if (symbol.position === 'center') {
-            symbolX = offsetX + roomWidth / 2;
-            symbolY = offsetY + roomHeight / 2;
+            sx = offsetX + roomWidth / 2;
+            sy = offsetY + roomHeight / 2;
           } else if (symbol.wall) {
-            const positionOnWall = (symbol.position || 0) * scale;
-
+            const along = (typeof symbol.position === 'number' ? symbol.position : 0) * SCALE;
             if (symbol.wall === 'north') {
-              symbolX = offsetX + positionOnWall;
-              symbolY = offsetY + WALL_THICKNESS + SYMBOL_INSET;
+              sx = offsetX + along;
+              sy = offsetY + WALL_THICKNESS + SYMBOL_INSET;
             } else if (symbol.wall === 'south') {
-              symbolX = offsetX + positionOnWall;
-              symbolY = offsetY + roomHeight - WALL_THICKNESS - SYMBOL_INSET - 20;
+              sx = offsetX + along;
+              sy = offsetY + roomHeight - WALL_THICKNESS - SYMBOL_INSET - 20;
             } else if (symbol.wall === 'east') {
-              symbolX = offsetX + roomWidth - WALL_THICKNESS - SYMBOL_INSET - 20;
-              symbolY = offsetY + positionOnWall;
+              sx = offsetX + roomWidth - WALL_THICKNESS - SYMBOL_INSET - 20;
+              sy = offsetY + along;
             } else if (symbol.wall === 'west') {
-              symbolX = offsetX + WALL_THICKNESS + SYMBOL_INSET;
-              symbolY = offsetY + positionOnWall;
+              sx = offsetX + WALL_THICKNESS + SYMBOL_INSET;
+              sy = offsetY + along;
             }
           }
 
-          // Load SVG via the new loader
-          try {
-            const svgString = await loadSymbolSvg(symbolId);
-            const { objects: svgObjects } = await loadSVGFromString(svgString);
-            const validObjects = svgObjects.filter((o): o is FabricObject => o !== null);
-            if (validObjects.length > 0) {
-              const group = util.groupSVGElements(validObjects, {
-                left: symbolX,
-                top: symbolY,
-                scaleX: 1.2,
-                scaleY: 1.2,
-                selectable: true,
-                hasControls: false,
-                lockScalingX: true,
-                lockScalingY: true,
-                originX: 'center',
-                originY: 'center',
-              });
-              group.set({ fill: '#000000', stroke: '#000000' });
-              canvas.add(group);
-            }
-          } catch (err) {
-            console.warn('Failed to load SVG for AI symbol:', symbolId, err);
-          }
-        });
-
-        await Promise.all(symbolPromises);
-
-        // Add room title
-        if (roomData.room?.name) {
-          const title = new FabricText(roomData.room.name, {
-            left: offsetX,
-            top: offsetY - 50,
-            fontSize: 18,
-            fill: '#000000',
-            fontFamily: 'Arial',
-            fontWeight: 'bold',
-            selectable: false,
-          });
-          canvas.add(title);
-        }
-
-        // Scale bar in bottom-left
-        const scaleBarMetres = 1;
-        const scaleBarPx = scaleBarMetres * scale;
-        const scaleBarX = 20;
-        const scaleBarY = (canvas.height || 600) - 30;
-
-        const scaleBarLine = new Line([scaleBarX, scaleBarY, scaleBarX + scaleBarPx, scaleBarY], {
-          stroke: '#000000', strokeWidth: 2, selectable: false, evented: false,
-        });
-        canvas.add(scaleBarLine);
-
-        const tickLeft = new Line([scaleBarX, scaleBarY - 5, scaleBarX, scaleBarY + 5], {
-          stroke: '#000000', strokeWidth: 2, selectable: false, evented: false,
-        });
-        canvas.add(tickLeft);
-
-        const tickRight = new Line([scaleBarX + scaleBarPx, scaleBarY - 5, scaleBarX + scaleBarPx, scaleBarY + 5], {
-          stroke: '#000000', strokeWidth: 2, selectable: false, evented: false,
-        });
-        canvas.add(tickRight);
-
-        const scaleLabel = new FabricText(`${scaleBarMetres}m`, {
-          left: scaleBarX + scaleBarPx / 2,
-          top: scaleBarY - 18,
-          fontSize: 11,
-          fill: '#000000',
-          fontFamily: 'Arial',
-          fontWeight: '500',
-          selectable: false,
-          originX: 'center',
-        });
-        canvas.add(scaleLabel);
-
-        canvas.renderAll();
-
-        // Sync AI-generated objects to React state so "Done" can save them
-        const newCanvasObjects: any[] = [];
-
-        // Add walls as CanvasObjects
-        let wx = offsetX, wy = offsetY;
-        walls.forEach((wall: any, idx: number) => {
-          const length = wall.length * scale;
-          let ex = wx, ey = wy;
-          if (wall.id === 'north') ex = wx + length;
-          else if (wall.id === 'east') ey = wy + length;
-          else if (wall.id === 'south') ex = wx - length;
-          else if (wall.id === 'west') ey = wy - length;
-
-          newCanvasObjects.push({
-            id: `ai-wall-${idx}-${Date.now()}`,
-            type: 'wall',
-            x: wx, y: wy,
-            points: [{ x: wx, y: wy }, { x: ex, y: ey }],
-          });
-          wx = ex; wy = ey;
-        });
-
-        // Add symbols as CanvasObjects
-        symbols.forEach((symbol: any, idx: number) => {
-          const symbolId = symbol.type.replace(/-bs7671$/, '');
-          let sx = offsetX + 20, sy = offsetY + 20;
-          if (symbol.position === 'center') {
-            sx = offsetX + roomWidth / 2; sy = offsetY + roomHeight / 2;
-          } else if (symbol.wall) {
-            const pos = (symbol.position || 0) * scale;
-            if (symbol.wall === 'north') { sx = offsetX + pos; sy = offsetY + WALL_THICKNESS + SYMBOL_INSET; }
-            else if (symbol.wall === 'south') { sx = offsetX + pos; sy = offsetY + roomHeight - WALL_THICKNESS - SYMBOL_INSET - 20; }
-            else if (symbol.wall === 'east') { sx = offsetX + roomWidth - WALL_THICKNESS - SYMBOL_INSET - 20; sy = offsetY + pos; }
-            else if (symbol.wall === 'west') { sx = offsetX + WALL_THICKNESS + SYMBOL_INSET; sy = offsetY + pos; }
-          }
-          newCanvasObjects.push({
-            id: `ai-sym-${idx}-${Date.now()}`,
+          next.push({
+            id: `ai-sym-${idx}-${stamp}`,
             type: 'symbol',
-            x: sx, y: sy,
-            width: 40, height: 40,
+            x: sx,
+            y: sy,
+            width: 40,
+            height: 40,
             rotation: 0,
             symbolId,
           });
         });
 
-        onObjectsChangeRef.current(newCanvasObjects);
-        aiRenderActiveRef.current = false;
+        // Room name as a real text object so it can be moved, edited or
+        // deleted like anything else — it used to be baked into the canvas.
+        if (roomData.room?.name) {
+          next.push({
+            id: `ai-title-${stamp}`,
+            type: 'text',
+            x: offsetX,
+            y: offsetY - 40,
+            text: roomData.room.name,
+          });
+        }
 
-        // Auto-zoom to fit the generated room on screen
-        setTimeout(() => zoomToFit(), 100);
+        // Generating a room REPLACES whatever was on the canvas. Snapshot
+        // first so that is reversible — an accidental tap on AI Help could
+        // otherwise wipe a finished room with no way back.
+        saveState();
+
+        // Replacing the drawing wholesale — clear the rendered-id bookkeeping
+        // so the sync effect rebuilds from scratch rather than skipping ids it
+        // thinks it has already drawn.
+        const nonGrid = canvas.getObjects().filter((obj) => !(obj as { isGridLine?: boolean }).isGridLine);
+        nonGrid.forEach((obj) => canvas.remove(obj));
+        renderedObjectIds.current.clear();
+        drawGrid(canvas, gridEnabledRef.current);
+
+        onObjectsChangeRef.current(next);
+
+        // Let the sync effect paint before fitting the view to it.
+        setTimeout(() => zoomToFit(), 120);
       },
     }));
 
@@ -1092,29 +1152,28 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         return canvas;
       };
 
+      // Selection styling. Fabric's defaults are cyan corner squares on a
+      // dashed blue box — off-brand, and it reads as an unfinished prototype
+      // rather than a drawing tool. Brand yellow, thin, no scaling corners
+      // (symbols are fixed size, so corners only ever caused accidental
+      // distortion), and a soft marquee.
+      FabricObject.prototype.borderColor = '#EAB308';
+      FabricObject.prototype.borderScaleFactor = 1.5;
+      FabricObject.prototype.cornerColor = '#EAB308';
+      FabricObject.prototype.cornerStrokeColor = '#1a1a1a';
+      FabricObject.prototype.cornerSize = 9;
+      FabricObject.prototype.transparentCorners = false;
+      FabricObject.prototype.padding = 4;
+      canvas.selectionColor = 'rgba(234,179,8,0.10)';
+      canvas.selectionBorderColor = '#EAB308';
+      canvas.selectionLineWidth = 1;
+
       fabricCanvasRef.current = canvas;
+      setCanvasReady(canvas);
 
       // Draw initial grid immediately
-      if (gridEnabled) {
-        const gridSize = 10;
-        for (let i = 0; i <= canvasWidth / gridSize; i++) {
-          const isMajor = i % 5 === 0;
-          const line = new Line([i * gridSize, 0, i * gridSize, canvasHeight], {
-            stroke: isMajor ? '#999999' : '#CCCCCC', strokeWidth: isMajor ? 1 : 0.5, selectable: false, evented: false,
-          });
-          (line as any).isGridLine = true;
-          canvas.add(line);
-        }
-        for (let i = 0; i <= canvasHeight / gridSize; i++) {
-          const isMajor = i % 5 === 0;
-          const line = new Line([0, i * gridSize, canvasWidth, i * gridSize], {
-            stroke: isMajor ? '#999999' : '#CCCCCC', strokeWidth: isMajor ? 1 : 0.5, selectable: false, evented: false,
-          });
-          (line as any).isGridLine = true;
-          canvas.add(line);
-        }
-        canvas.renderAll();
-      }
+      drawGrid(canvas, gridEnabled);
+      canvas.renderAll();
 
       // Pinch-to-zoom + two-finger pan handler (ELE-712 fix: deselect objects during gesture)
       let lastPinchDistance = 0;
@@ -1178,6 +1237,12 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
       // touchend safety net — resets gesture state and catches stuck drawing (ELE-713)
       const handleTouchEnd = (e: TouchEvent) => {
+        if (lastPinchDistance > 0) {
+          // Repaint the grid to cover wherever the pinch/pan landed. Deferred
+          // to gesture end so we aren't rebuilding line objects mid-pinch.
+          drawGrid(canvas, gridEnabledRef.current);
+          canvas.renderAll();
+        }
         lastPinchDistance = 0;
         lastPinchMidpoint = null;
         // Small delay before clearing gesture flag so the final mouse:up from Fabric.js
@@ -1198,6 +1263,133 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       canvas.on('mouse:move', handleTouchGesture);
       canvas.upperCanvasEl?.addEventListener('touchend', handleTouchEnd, { passive: true });
 
+      // ── Desktop navigation ────────────────────────────────────────────────
+      // There was none. No wheel handler, no drag-to-pan: a desktop user had
+      // three zoom buttons and literally no way to move around a drawing
+      // larger than the viewport. Touch had pinch-zoom and two-finger pan; the
+      // desktop equivalents are below.
+
+      // Rebuilding the grid means recreating ~80 Fabric objects, which is far
+      // too heavy to do per wheel tick or per pan frame. Coalesce to one
+      // rebuild per animation frame; the grid trails the gesture by a frame,
+      // which is imperceptible, instead of stuttering it.
+      let gridFrame: number | null = null;
+      const scheduleGridRedraw = () => {
+        if (gridFrame !== null) return;
+        gridFrame = requestAnimationFrame(() => {
+          gridFrame = null;
+          drawGrid(canvas, gridEnabledRef.current);
+          canvas.renderAll();
+        });
+      };
+
+      // Wheel zooms to the cursor; a trackpad two-finger scroll (which arrives
+      // as a wheel event with a dominant deltaX) pans instead.
+      const handleWheel = (opt: TPointerEventInfo<WheelEvent>) => {
+        const e = opt.e;
+        e.preventDefault();
+        e.stopPropagation();
+
+        const vpt = canvas.viewportTransform;
+        const isPanGesture = !e.ctrlKey && !e.metaKey && Math.abs(e.deltaX) > Math.abs(e.deltaY);
+        if (isPanGesture && vpt) {
+          vpt[4] -= e.deltaX;
+          vpt[5] -= e.deltaY;
+          canvas.setViewportTransform(vpt);
+          scheduleGridRedraw();
+          return;
+        }
+
+        // Exponential, so a notch feels the same at any zoom level.
+        const next = Math.min(Math.max(canvas.getZoom() * 0.999 ** e.deltaY, 0.1), 5);
+        canvas.zoomToPoint(new Point(e.offsetX, e.offsetY), next);
+        setZoomLevel(next);
+        scheduleGridRedraw();
+      };
+
+      // Drag to pan: middle mouse, or space/alt held with the left button.
+      // Plain left-drag stays as marquee selection / drawing.
+      let panLastX = 0;
+      let panLastY = 0;
+      let spaceHeld = false;
+
+      // Fabric delivers mouse:* for touch too, so the event is TPointerEvent
+      // (mouse OR touch) — not MouseEvent. Narrowing properly matters: a
+      // TouchEvent has no `button`, `clientX` or `altKey`, and typing these as
+      // MouseEvent quietly asserted properties that do not exist at runtime.
+      // Touch panning is handled by the pinch/two-finger path, so this only
+      // ever engages for a real mouse.
+      const asMouse = (e: TPointerEvent): MouseEvent | null =>
+        'button' in e && typeof (e as MouseEvent).button === 'number' ? (e as MouseEvent) : null;
+
+      const wantsPan = (e: MouseEvent) => e.button === 1 || spaceHeld || e.altKey;
+
+      const handlePanDown = (opt: TPointerEventInfo<TPointerEvent>) => {
+        const e = asMouse(opt.e);
+        if (!e || !wantsPan(e)) return;
+        // Middle-click otherwise triggers browser autoscroll.
+        e.preventDefault();
+        isPanningRef.current = true;
+        canvas.selection = false;
+        canvas.setCursor('grabbing');
+        panLastX = e.clientX;
+        panLastY = e.clientY;
+      };
+
+      const handlePanMove = (opt: TPointerEventInfo<TPointerEvent>) => {
+        if (!isPanningRef.current) return;
+        const e = asMouse(opt.e);
+        if (!e) return;
+        const vpt = canvas.viewportTransform;
+        if (!vpt) return;
+        vpt[4] += e.clientX - panLastX;
+        vpt[5] += e.clientY - panLastY;
+        panLastX = e.clientX;
+        panLastY = e.clientY;
+        canvas.setViewportTransform(vpt);
+        canvas.renderAll();
+        scheduleGridRedraw();
+      };
+
+      const handlePanUp = () => {
+        if (!isPanningRef.current) return;
+        isPanningRef.current = false;
+        canvas.selection = activeToolRef.current === 'select';
+        canvas.setCursor('default');
+        drawGrid(canvas, gridEnabledRef.current);
+        canvas.renderAll();
+      };
+
+      const handleSpaceDown = (e: KeyboardEvent) => {
+        if (e.code !== 'Space' || e.repeat) return;
+        if (isTypingContext(e.target) || isInOverlay(e.target)) return;
+        // Space still has to activate a focused button or checkbox — only
+        // claim it when the focus isn't on something that needs it.
+        if (shouldAllowSpaceDefault(e.target)) return;
+        e.preventDefault();
+        spaceHeld = true;
+        canvas.defaultCursor = 'grab';
+      };
+      const handleSpaceUp = (e: KeyboardEvent) => {
+        if (e.code !== 'Space') return;
+        spaceHeld = false;
+        canvas.defaultCursor = 'default';
+      };
+      // A drag that ends outside the window never delivers mouse:up to the
+      // canvas, which would leave the pan latched on. Reset on blur.
+      const handleWindowBlur = () => {
+        spaceHeld = false;
+        if (isPanningRef.current) handlePanUp();
+      };
+
+      canvas.on('mouse:wheel', handleWheel);
+      canvas.on('mouse:down', handlePanDown);
+      canvas.on('mouse:move', handlePanMove);
+      canvas.on('mouse:up', handlePanUp);
+      window.addEventListener('keydown', handleSpaceDown);
+      window.addEventListener('keyup', handleSpaceUp);
+      window.addEventListener('blur', handleWindowBlur);
+
       // Fill the available space whenever it changes. A ResizeObserver on the
       // flex wrapper catches everything window 'resize' misses — the iOS URL
       // bar collapsing, safe-area changes, orientation, split-view — and keeps
@@ -1205,6 +1397,10 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       const handleResize = () => {
         const { width, height } = measureSize();
         canvas.setDimensions({ width, height });
+        // The grid covers the visible world area, so it has to be re-laid when
+        // that area changes — rotating the phone or the iOS URL bar collapsing
+        // would otherwise leave the new strip ungridded.
+        drawGrid(canvas, gridEnabledRef.current);
         canvas.renderAll();
       };
 
@@ -1216,9 +1412,17 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       window.addEventListener('resize', handleResize);
 
       return () => {
+        if (gridFrame !== null) cancelAnimationFrame(gridFrame);
         window.removeEventListener('resize', handleResize);
+        window.removeEventListener('keydown', handleSpaceDown);
+        window.removeEventListener('keyup', handleSpaceUp);
+        window.removeEventListener('blur', handleWindowBlur);
         resizeObserver?.disconnect();
         canvas.off('mouse:move', handleTouchGesture);
+        canvas.off('mouse:wheel', handleWheel);
+        canvas.off('mouse:down', handlePanDown);
+        canvas.off('mouse:move', handlePanMove);
+        canvas.off('mouse:up', handlePanUp);
         canvas.upperCanvasEl?.removeEventListener('touchend', handleTouchEnd);
         canvas.dispose();
       };
@@ -1231,56 +1435,32 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
     useEffect(() => {
       const canvas = fabricCanvasRef.current;
       if (!canvas) return;
-
-      // Remove existing grid lines
-      const gridObjects = canvas.getObjects().filter((obj) => (obj as any).isGridLine);
-      gridObjects.forEach((obj) => canvas.remove(obj));
-
-      if (gridEnabled) {
-        const gridSize = 10;
-        const width = canvas.width || 1200;
-        const height = canvas.height || 600;
-
-        for (let i = 0; i <= width / gridSize; i++) {
-          const isMajor = i % 5 === 0;
-          const line = new Line([i * gridSize, 0, i * gridSize, height], {
-            stroke: isMajor ? '#999999' : '#CCCCCC',
-            strokeWidth: isMajor ? 1 : 0.5,
-            selectable: false,
-            evented: false,
-          });
-          (line as any).isGridLine = true;
-          canvas.add(line);
-          canvas.sendObjectToBack(line);
-        }
-
-        for (let i = 0; i <= height / gridSize; i++) {
-          const isMajor = i % 5 === 0;
-          const line = new Line([0, i * gridSize, width, i * gridSize], {
-            stroke: isMajor ? '#999999' : '#CCCCCC',
-            strokeWidth: isMajor ? 1 : 0.5,
-            selectable: false,
-            evented: false,
-          });
-          (line as any).isGridLine = true;
-          canvas.add(line);
-          canvas.sendObjectToBack(line);
-        }
-      }
-
+      drawGrid(canvas, gridEnabled);
       canvas.renderAll();
     }, [gridEnabled]);
+
+    // Fit restored work to the view on first paint. Without this you reopened a
+    // plan to find it as a postage stamp in the corner of an empty sheet, and
+    // had to hunt for it with the zoom buttons before you could do anything.
+    //
+    // Triggered from the object-sync completion rather than a timer: symbols
+    // load their SVGs asynchronously, so a fixed delay fitted to whatever
+    // happened to be drawn at that instant — usually the walls alone, and
+    // sometimes nothing at all.
+    const didInitialFitRef = useRef(false);
+    // Whether there was work on the canvas at mount — i.e. a plan restored from
+    // storage. Captured on the first render only.
+    //
+    // This must gate the fit. Without it, starting from an empty canvas and
+    // drawing the FIRST wall counted as "content appeared" and re-zoomed the
+    // view mid-draw: the canvas jumped under the user's hand and every wall
+    // after it was drawn at a different scale, so a 3m drag became 1.5m.
+    const hadRestoredContentRef = useRef(objects.length > 0);
 
     // Sync new objects from React state to Fabric canvas (add only, no clear/rebuild)
     useEffect(() => {
       const canvas = fabricCanvasRef.current;
       if (!canvas) return;
-
-      // Skip if AI render is active
-      if (aiRenderActiveRef.current) {
-        aiRenderActiveRef.current = false;
-        return;
-      }
 
       const stateMap = new Map(objects.map((obj) => [obj.id, obj]));
 
@@ -1340,7 +1520,15 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           const allObjs = canvas.getObjects();
           allObjs.forEach((fObj) => {
             const cd = (fObj as any).customData;
-            if (cd?.type === 'symbol' || cd?.type === 'circuit-dot' || cd?.type === 'cable') {
+            if (cd?.type === 'symbol' || cd?.type === 'cable') {
+              canvas.bringObjectToFront(fObj);
+            }
+          });
+          // Annotation last, so dimensions and circuit tags always read on top
+          // of the geometry rather than being buried beneath a symbol.
+          canvas.getObjects().forEach((fObj) => {
+            const cd = (fObj as any).customData;
+            if (cd?.type === 'wall-label' || cd?.type === 'circuit-dot') {
               canvas.bringObjectToFront(fObj);
             }
           });
@@ -1351,16 +1539,19 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           const wallStillExists = objects.some((obj) => obj.id === selectedWallIdRef.current && obj.type === 'wall');
           renderWallAdornment(wallStillExists ? selectedWallIdRef.current : null);
         }
+
+        // Everything for this pass is now on the canvas — safe to fit. Only for
+        // work restored at mount; never for something the user just drew.
+        if (!didInitialFitRef.current && objects.length > 0) {
+          didInitialFitRef.current = true;
+          if (hadRestoredContentRef.current) zoomToFit();
+        }
       };
       addNewObjects();
     }, [objects]);
 
-    // Snap to grid helper
-    const snapToGrid = (value: number) => {
-      if (!snapEnabledRef.current) return value;
-      const gridSize = 10;
-      return Math.round(value / gridSize) * gridSize;
-    };
+    const snapToGrid = (value: number) =>
+      snapEnabledRef.current ? snapToStep(value) : value;
 
     // Create a dimension line group from two points
     const createDimensionGroup = (x1: number, y1: number, x2: number, y2: number): Group => {
@@ -1375,60 +1566,11 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       const elements: FabricObject[] = [];
 
       // Main line
-      const mainLine = new Line([x1, y1, x2, y2], {
-        stroke: '#333333',
-        strokeWidth: 1,
-        selectable: false,
-      });
-      elements.push(mainLine as unknown as FabricObject);
-
-      // Tick marks (perpendicular end lines)
-      if (isHorizontal) {
-        elements.push(new Line([x1, y1 - tickLen, x1, y1 + tickLen], {
-          stroke: '#333333', strokeWidth: 1, selectable: false,
-        }) as unknown as FabricObject);
-        elements.push(new Line([x2, y2 - tickLen, x2, y2 + tickLen], {
-          stroke: '#333333', strokeWidth: 1, selectable: false,
-        }) as unknown as FabricObject);
-      } else {
-        elements.push(new Line([x1 - tickLen, y1, x1 + tickLen, y1], {
-          stroke: '#333333', strokeWidth: 1, selectable: false,
-        }) as unknown as FabricObject);
-        elements.push(new Line([x2 - tickLen, y2, x2 + tickLen, y2], {
-          stroke: '#333333', strokeWidth: 1, selectable: false,
-        }) as unknown as FabricObject);
-      }
-
-      // Arrowheads
-      const angle = Math.atan2(dy, dx);
-      const addArrow = (tipX: number, tipY: number, pointAngle: number) => {
-        const a1x = tipX - arrowSize * Math.cos(pointAngle - Math.PI / 6);
-        const a1y = tipY - arrowSize * Math.sin(pointAngle - Math.PI / 6);
-        const a2x = tipX - arrowSize * Math.cos(pointAngle + Math.PI / 6);
-        const a2y = tipY - arrowSize * Math.sin(pointAngle + Math.PI / 6);
-        elements.push(new Line([tipX, tipY, a1x, a1y], {
-          stroke: '#333333', strokeWidth: 1, selectable: false,
-        }) as unknown as FabricObject);
-        elements.push(new Line([tipX, tipY, a2x, a2y], {
-          stroke: '#333333', strokeWidth: 1, selectable: false,
-        }) as unknown as FabricObject);
-      };
-
-      addArrow(x1, y1, angle + Math.PI); // arrow pointing away from start towards start
-      addArrow(x2, y2, angle); // arrow pointing away from end towards end
-
-      // Wait — arrows should point outward from the line ends.
-      // Actually for dimension lines: arrows point INWARD. Let me fix:
-      // Arrow at start points toward end (angle), arrow at end points toward start (angle + PI)
-      // Let me redo:
-      elements.length = 0; // clear and redo
-
-      // Main line
       elements.push(new Line([x1, y1, x2, y2], {
         stroke: '#333333', strokeWidth: 1, selectable: false,
       }) as unknown as FabricObject);
 
-      // Tick marks
+      // Tick marks (perpendicular end caps)
       if (isHorizontal) {
         elements.push(new Line([x1, y1 - tickLen, x1, y1 + tickLen], {
           stroke: '#333333', strokeWidth: 1, selectable: false,
@@ -1445,30 +1587,20 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         }) as unknown as FabricObject);
       }
 
-      // Arrowhead at start (pointing toward end)
-      const a1x1 = x1 + arrowSize * Math.cos(angle - Math.PI / 6);
-      const a1y1 = y1 + arrowSize * Math.sin(angle - Math.PI / 6);
-      const a1x2 = x1 + arrowSize * Math.cos(angle + Math.PI / 6);
-      const a1y2 = y1 + arrowSize * Math.sin(angle + Math.PI / 6);
-      elements.push(new Line([x1, y1, a1x1, a1y1], {
-        stroke: '#333333', strokeWidth: 1, selectable: false,
-      }) as unknown as FabricObject);
-      elements.push(new Line([x1, y1, a1x2, a1y2], {
-        stroke: '#333333', strokeWidth: 1, selectable: false,
-      }) as unknown as FabricObject);
-
-      // Arrowhead at end (pointing toward start)
-      const reverseAngle = angle + Math.PI;
-      const a2x1 = x2 + arrowSize * Math.cos(reverseAngle - Math.PI / 6);
-      const a2y1 = y2 + arrowSize * Math.sin(reverseAngle - Math.PI / 6);
-      const a2x2 = x2 + arrowSize * Math.cos(reverseAngle + Math.PI / 6);
-      const a2y2 = y2 + arrowSize * Math.sin(reverseAngle + Math.PI / 6);
-      elements.push(new Line([x2, y2, a2x1, a2y1], {
-        stroke: '#333333', strokeWidth: 1, selectable: false,
-      }) as unknown as FabricObject);
-      elements.push(new Line([x2, y2, a2x2, a2y2], {
-        stroke: '#333333', strokeWidth: 1, selectable: false,
-      }) as unknown as FabricObject);
+      // Arrowheads, pointing inward along the dimension line as drafting
+      // convention requires.
+      const angle = Math.atan2(dy, dx);
+      const addArrowhead = (tipX: number, tipY: number, pointAngle: number) => {
+        for (const spread of [-Math.PI / 6, Math.PI / 6]) {
+          elements.push(new Line([
+            tipX, tipY,
+            tipX + arrowSize * Math.cos(pointAngle + spread),
+            tipY + arrowSize * Math.sin(pointAngle + spread),
+          ], { stroke: '#333333', strokeWidth: 1, selectable: false }) as unknown as FabricObject);
+        }
+      };
+      addArrowhead(x1, y1, angle);
+      addArrowhead(x2, y2, angle + Math.PI);
 
       // Label background + text
       const midX = (x1 + x2) / 2;
@@ -1755,27 +1887,38 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           }
         }
 
-        // Circuit colour dot — small indicator showing which circuit this symbol is on
+        // Circuit reference tag.
+        //
+        // This used to be a coloured dot floating beside each symbol. On screen
+        // that reads as a UI affordance; printed on a drawing handed to a
+        // client it reads as a stray blob and says nothing. Drawings label
+        // circuits with their reference — L1, S1, C1 — so that is what we
+        // draw. The colour is kept as the TEXT colour, so the at-a-glance
+        // scanning still works without the blob.
         if (obj.circuitRef && fabricObj) {
           const COLOURS: Record<string, string> = {
-            L1: '#3B82F6', L2: '#60A5FA', S1: '#EF4444', S2: '#F87171',
-            C1: '#F59E0B', EV1: '#10B981', FA1: '#EC4899', IH1: '#8B5CF6', AC1: '#06B6D4',
+            L1: '#1D4ED8', L2: '#3B82F6', S1: '#B91C1C', S2: '#DC2626',
+            C1: '#B45309', EV1: '#047857', FA1: '#BE185D', IH1: '#6D28D9', AC1: '#0E7490',
           };
-          const dotColour = COLOURS[obj.circuitRef] || '#6B7280';
-          const dot = new Circle({
-            radius: 4,
-            fill: dotColour,
-            stroke: '#000000',
-            strokeWidth: 0.5,
-            left: (fabricObj.left || 0) + 16,
-            top: (fabricObj.top || 0) - 16,
-            selectable: false,
-            evented: false,
+          const tagColour = COLOURS[obj.circuitRef] || '#374151';
+          const spot = findTagSpot(obj, objectsRef.current);
+          const tag = new FabricText(obj.circuitRef, {
+            left: spot.x,
+            top: spot.y,
+            fontSize: 7.5,
+            fontWeight: '700',
+            fontFamily: 'Helvetica, Arial, sans-serif',
+            fill: tagColour,
+            // A white ground keeps the tag legible where it lands on a wall.
+            backgroundColor: 'rgba(255,255,255,0.9)',
             originX: 'center',
             originY: 'center',
+            selectable: false,
+            evented: false,
           });
-          (dot as any).customData = { type: 'circuit-dot', parentId: obj.id };
-          canvas.add(dot);
+          // Same customData type so the follow-the-symbol move logic still applies.
+          (tag as any).customData = { type: 'circuit-dot', parentId: obj.id };
+          canvas.add(tag);
         }
       } else if (obj.type === 'rectangle') {
         fabricObj = new Rect({
@@ -1891,9 +2034,10 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
               top: Math.min(sy, ey),
               width: WALL_THICKNESS,
               height: Math.abs(segDy),
-              fill: '#000000',
-              stroke: '#000000',
-              strokeWidth: 1,
+              fill: '#111827',
+              // No extra stroke — fill plus a 1px stroke rendered ~5px of solid
+              // black, which read as a slab rather than a drafted wall.
+              strokeWidth: 0,
               selectable: false,
               hasControls: false,
               evented: true,
@@ -1912,9 +2056,8 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
               top: sy - WALL_THICKNESS / 2,
               width: Math.abs(segDx),
               height: WALL_THICKNESS,
-              fill: '#000000',
-              stroke: '#000000',
-              strokeWidth: 1,
+              fill: '#111827',
+              strokeWidth: 0,
               selectable: false,
               hasControls: false,
               evented: true,
@@ -1936,13 +2079,17 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         const midX = (p1.x + p2.x) / 2;
         const midY = (p1.y + p2.y) / 2;
         const labelText = pxToMetres(dist);
+        // Dimension text sits ON the drawing, so it needs to read as annotation
+        // rather than content: smaller, mid-grey, on a white ground so it is
+        // never lost against a wall or a symbol it happens to overlap.
         const label = new FabricText(labelText, {
-          left: isVertical ? midX + WALL_THICKNESS / 2 + 6 : midX,
-          top: isVertical ? midY : midY - WALL_THICKNESS / 2 - 16,
-          fontSize: 10,
-          fill: '#000000',
-          fontFamily: 'Arial',
-          fontWeight: '500',
+          left: isVertical ? midX + WALL_THICKNESS / 2 + 7 : midX,
+          top: isVertical ? midY : midY - WALL_THICKNESS / 2 - 15,
+          fontSize: 9,
+          fill: '#1f2937',
+          fontFamily: 'Helvetica, Arial, sans-serif',
+          fontWeight: '600',
+          backgroundColor: 'rgba(255,255,255,0.92)',
           selectable: false,
           evented: false,
           originX: isVertical ? 'left' : 'center',
@@ -2074,7 +2221,12 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
     };
 
     const undo = () => {
-      if (undoStack.current.length === 0) return;
+      if (undoStack.current.length === 0) {
+        // Nothing left to undo — a soft warning beats silence.
+        hapticRef.current.warning();
+        return;
+      }
+      hapticRef.current.light();
       const prevState = undoStack.current.pop();
       if (prevState) {
         redoStack.current.push([...objectsRef.current]);
@@ -2083,7 +2235,11 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
     };
 
     const redo = () => {
-      if (redoStack.current.length === 0) return;
+      if (redoStack.current.length === 0) {
+        hapticRef.current.warning();
+        return;
+      }
+      hapticRef.current.light();
       const nextState = redoStack.current.pop();
       if (nextState) {
         undoStack.current.push([...objectsRef.current]);
@@ -2091,20 +2247,23 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       }
     };
 
-    // Keyboard shortcuts
+    // Canvas-local keyboard shortcuts.
+    //
+    // Undo/redo deliberately live in DiagramBuilderPage ONLY. They used to be
+    // handled here as well, and because both listeners are on `window` a single
+    // Cmd+Z fired both and popped the undo stack twice.
+    //
+    // Every branch below is gated on `isTypingContext` — without it, pressing
+    // Backspace to correct a room name in SaveRoomSheet (which autofocuses)
+    // deleted whatever was selected on the canvas.
     useEffect(() => {
       const handleKeyDown = (e: KeyboardEvent) => {
         const canvas = fabricCanvasRef.current;
         if (!canvas) return;
+        if (isTypingContext(e.target)) return;
+        // Deleting or pasting must not reach the canvas while a sheet covers it.
+        if (isInOverlay(e.target)) return;
 
-        if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
-          e.preventDefault();
-          undo();
-        }
-        if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || (e.key === 'z' && e.shiftKey))) {
-          e.preventDefault();
-          redo();
-        }
         if (e.key === 'Delete' || e.key === 'Backspace') {
           const activeObjects = canvas.getActiveObjects();
           if (activeObjects.length > 0) {
@@ -2185,6 +2344,9 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       const handleMouseDown = (e: any) => {
         // Block drawing during multi-touch gesture (ELE-712)
         if (isTouchGestureRef.current) return;
+        // Block drawing while drag-panning — pan is a separate mouse:down
+        // handler on this same canvas, so both would otherwise run.
+        if (isPanningRef.current) return;
 
         const tool = activeToolRef.current;
 
@@ -2294,6 +2456,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           const tapped = e.target as any;
           const customData = tapped.customData;
           if (customData?.id) {
+            hapticRef.current.medium();
             saveState();
             if (customData.type === 'wall') {
               const labels = canvas.getObjects().filter(
@@ -2319,6 +2482,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           if (!targetObj) return;
 
           if (!cableStartIdRef.current) {
+            hapticRef.current.light();
             cableStartIdRef.current = targetData.id;
             canvas.setActiveObject(e.target);
             canvas.renderAll();
@@ -2362,6 +2526,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
                 circuitRef,
               };
               onObjectsChangeRef.current([...objectsRef.current, newCable]);
+              hapticRef.current.success();
             }
             cableStartIdRef.current = null;
             canvas.discardActiveObject();
@@ -2370,9 +2535,17 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           return;
         }
 
-        // Always allow tapping existing objects to select them (except in eraser/cable mode)
-        // Fixes ELE-611: wall-draw cursor stays active when clicking placed symbols
-        if (tool !== 'eraser' && tool !== 'select' && tool !== 'cable' && e.target && (e.target as any).customData) {
+        // Tapping an existing object with a PLACEMENT tool active means "I want
+        // that one" — switch to select (ELE-611).
+        //
+        // It must NOT apply to the drawing tools. Rooms are drawn by chaining
+        // walls, each starting exactly where the last ended — which means every
+        // wall after the first begins ON an existing wall's endpoint. Treating
+        // that as a select gesture kicked the user out of the Wall tool and
+        // silently dropped the wall, so a closed room could not be drawn at all:
+        // you got two sides and then found yourself in Select.
+        const isPlacementTool = tool === 'symbol' || tool === 'text';
+        if (isPlacementTool && e.target && (e.target as any).customData) {
           canvas.setActiveObject(e.target);
           canvas.renderAll();
           onToolChangeRef.current?.('select');
@@ -2408,6 +2581,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             const tempDots = canvas.getObjects().filter((obj) => (obj as any).isDimensionDot);
             tempDots.forEach((obj) => canvas.remove(obj));
 
+            hapticRef.current.light();
             const ds = dimensionStartRef.current;
             const newObj: CanvasObject = {
               id: `obj-${Date.now()}`,
@@ -2444,7 +2618,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             let placeX = x;
             let placeY = y;
             let placeRotation = 0;
-            const snappedPlacement = getWallSnapPlacement(x, y, symId);
+            const snappedPlacement = getWallSnapPlacement(x, y, symId, { alwaysSnap: true });
             if (snappedPlacement) {
               placeX = snappedPlacement.x;
               placeY = snappedPlacement.y;
@@ -2481,6 +2655,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       const handleMouseMove = (e: any) => {
         // Block drawing preview during multi-touch gesture
         if (isTouchGestureRef.current) return;
+        if (isPanningRef.current) return;
 
         const tool = activeToolRef.current;
         const pointer = canvas.getPointer(e.e);
@@ -2499,7 +2674,19 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         }
 
         if (tool === 'symbol') {
-          const snappedPlacement = getWallSnapPlacement(x, y, selectedSymbolIdRef.current);
+          // Preview with the same rule placement uses, so the ghost lands
+          // exactly where the tap will put the symbol.
+          const snappedPlacement = getWallSnapPlacement(x, y, selectedSymbolIdRef.current, {
+            alwaysSnap: true,
+          });
+          // Pulse as it moves to a DIFFERENT wall, not every frame it stays on
+          // one. Keyed on the wall rather than on snapped-vs-not: with
+          // always-snap a wall-mounted symbol is permanently snapped, so the
+          // old null-to-non-null test would have fired once and gone silent.
+          if ((snappedPlacement?.wallId ?? null) !== wasSnappedRef.current) {
+            wasSnappedRef.current = snappedPlacement?.wallId ?? null;
+            if (snappedPlacement) hapticRef.current.selection();
+          }
           renderWallSnapPreview(snappedPlacement);
         } else if (wallSnapPreviewIdsRef.current.size > 0) {
           clearWallSnapPreview();
@@ -2626,6 +2813,12 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           (liveLabel as any).isTemp = true;
           canvas.add(liveLabel);
 
+          // Endpoint snap is the moment a room closes cleanly — worth feeling.
+          if (!!snapEnd !== wasEndpointSnappedRef.current) {
+            wasEndpointSnappedRef.current = !!snapEnd;
+            if (snapEnd) hapticRef.current.light();
+          }
+
           if (snapEnd) {
             const snapIndicator = new Circle({
               left: snapEnd.x,
@@ -2676,6 +2869,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
         // Block if gesture was multi-touch
         if (isTouchGestureRef.current) return;
+        if (isPanningRef.current) return;
 
         const sp = startPointRef.current;
         if (!isDrawingRef.current || !sp) return;
@@ -2725,6 +2919,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
           const dist = Math.hypot(endX - sp.x, endY - sp.y);
           if (dist > 5) {
+            hapticRef.current.light();
             const newObj: CanvasObject = {
               id: `obj-${Date.now()}`,
               type: 'wall',
@@ -2738,6 +2933,8 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
         isDrawingRef.current = false;
         startPointRef.current = null;
+        wasEndpointSnappedRef.current = false;
+        wasSnappedRef.current = null;
         canvas.renderAll();
       };
 
@@ -2780,12 +2977,16 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             (o) => (o as any).customData?.type === 'circuit-dot' &&
                    (o as any).customData?.parentId === customData.id
           );
-          dots.forEach((dot) => {
-            dot.set({
-              left: (modifiedObj.left || 0) + 16,
-              top: (modifiedObj.top || 0) - 16,
-            });
-          });
+          const moved = objectsRef.current.find((o) => o.id === customData.id);
+          if (moved) {
+            // Re-run placement rather than translating by a fixed offset — the
+            // symbol may have been dragged next to something else.
+            const spot = findTagSpot(
+              { ...moved, x: modifiedObj.left || moved.x, y: modifiedObj.top || moved.y },
+              objectsRef.current
+            );
+            dots.forEach((dot) => dot.set({ left: spot.x, top: spot.y }));
+          }
           if (dots.length > 0) canvas.renderAll();
         }
 
@@ -2797,9 +2998,11 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
               modifiedObj.set({ scaleX: 1.2, scaleY: 1.2 });
               const updatedObject = {
                 ...obj,
-                x: modifiedObj.left || obj.x,
-                y: modifiedObj.top || obj.y,
-                rotation: modifiedObj.angle || obj.rotation || 0,
+                // ?? not || — rotating an item back to 0deg is a real value,
+                // and the falsy check silently kept the previous angle.
+                x: modifiedObj.left ?? obj.x,
+                y: modifiedObj.top ?? obj.y,
+                rotation: modifiedObj.angle ?? obj.rotation ?? 0,
               };
               customData.stateHash = serialiseCanvasObject(updatedObject);
               return updatedObject;
@@ -2883,6 +3086,10 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           customData.symbolId
         );
 
+        if ((snappedPlacement?.wallId ?? null) !== wasSnappedRef.current) {
+          wasSnappedRef.current = snappedPlacement?.wallId ?? null;
+          if (snappedPlacement) hapticRef.current.selection();
+        }
         if (snappedPlacement) {
           movingObj.set({
             left: snappedPlacement.x,
@@ -2931,6 +3138,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           renderWallAdornment(null);
         }
         const selected = objectsRef.current.find((obj) => obj.id === customData.id) || null;
+        if (selected) hapticRef.current.selection();
         onSelectionChangeRef.current?.(selected);
       };
 
@@ -2975,22 +3183,28 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       }
     };
 
-    // Zoom controls
-    const handleZoomIn = () => {
+    // Zoom controls.
+    //
+    // These used `setZoom`, which scales about the canvas ORIGIN — so zooming
+    // in pushed whatever you were looking at off toward the bottom-right and
+    // you had to hunt for it. Zooming about the viewport centre keeps the
+    // thing you are working on under the cursor, which is what the buttons
+    // are assumed to do.
+    const zoomAboutCentre = (factor: number) => {
       const canvas = fabricCanvasRef.current;
       if (!canvas) return;
-      const newZoom = Math.min(canvas.getZoom() * 1.2, 5);
-      canvas.setZoom(newZoom);
-      setZoomLevel(newZoom);
+      const next = Math.min(Math.max(canvas.getZoom() * factor, 0.1), 5);
+      canvas.zoomToPoint(
+        new Point((canvas.width || 0) / 2, (canvas.height || 0) / 2),
+        next
+      );
+      setZoomLevel(next);
+      drawGrid(canvas, gridEnabledRef.current);
+      canvas.renderAll();
     };
 
-    const handleZoomOut = () => {
-      const canvas = fabricCanvasRef.current;
-      if (!canvas) return;
-      const newZoom = Math.max(canvas.getZoom() * 0.8, 0.1);
-      canvas.setZoom(newZoom);
-      setZoomLevel(newZoom);
-    };
+    const handleZoomIn = () => zoomAboutCentre(1.2);
+    const handleZoomOut = () => zoomAboutCentre(0.8);
 
     const handleResetView = () => {
       const canvas = fabricCanvasRef.current;
@@ -3002,6 +3216,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       canvas.setZoom(1);
       setZoomLevel(1);
       canvas.viewportTransform = [1, 0, 0, 1, 0, 0];
+      drawGrid(canvas, gridEnabledRef.current);
       canvas.renderAll();
     };
 
@@ -3020,13 +3235,17 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           <span className="ml-1">1m</span>
         </div>
 
-        {/* Zoom Controls - Floating top-right */}
-        <div className="absolute top-3 right-3 flex flex-col gap-1.5">
+        {/* Zoom / view controls — only once there is something to look at.
+            Four 44px buttons run 176px down the right edge, which on a phone
+            collided with the empty-state card and cluttered the very first
+            thing a user sees, on a canvas with nothing to zoom or rotate. */}
+        {objects.length > 0 && (
+        <div className="absolute top-3 right-3 flex flex-col overflow-hidden rounded-xl border border-white/10 bg-black/70 backdrop-blur-xl shadow-2xl divide-y divide-white/10">
           <Button
             size="icon"
             variant="outline"
             onClick={handleZoomIn}
-            className="h-9 w-9 bg-black/60 backdrop-blur border-white/10 text-white hover:bg-black/80 touch-manipulation"
+            className="h-11 w-11 sm:h-10 sm:w-10 rounded-none border-0 bg-transparent text-white hover:bg-white/10 touch-manipulation"
             title="Zoom In"
           >
             <ZoomIn className="h-4 w-4" />
@@ -3035,7 +3254,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             size="icon"
             variant="outline"
             onClick={handleZoomOut}
-            className="h-9 w-9 bg-black/60 backdrop-blur border-white/10 text-white hover:bg-black/80 touch-manipulation"
+            className="h-11 w-11 sm:h-10 sm:w-10 rounded-none border-0 bg-transparent text-white hover:bg-white/10 touch-manipulation"
             title="Zoom Out"
           >
             <ZoomOut className="h-4 w-4" />
@@ -3044,7 +3263,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             size="icon"
             variant="outline"
             onClick={handleResetView}
-            className="h-9 w-9 bg-black/60 backdrop-blur border-white/10 text-white hover:bg-black/80 touch-manipulation"
+            className="h-11 w-11 sm:h-10 sm:w-10 rounded-none border-0 bg-transparent text-white hover:bg-white/10 touch-manipulation"
             title="Reset View"
           >
             <Maximize2 className="h-4 w-4" />
@@ -3053,15 +3272,19 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             size="icon"
             variant="outline"
             onClick={handleRotate}
-            className="h-9 w-9 bg-black/60 backdrop-blur border-white/10 text-white hover:bg-black/80 touch-manipulation"
+            className="h-11 w-11 sm:h-10 sm:w-10 rounded-none border-0 bg-transparent text-white hover:bg-white/10 touch-manipulation"
             title="Rotate 90°"
           >
             <RotateCw className="h-4 w-4" />
           </Button>
         </div>
+        )}
 
-        {/* Minimap — bottom-right overview */}
-        {showMinimap && <MinimapOverlay fabricCanvas={fabricCanvasRef.current} />}
+        {/* Minimap — bottom-right overview. Driven by state rather than
+            reading fabricCanvasRef during render: a ref mutation doesn't
+            re-render, so the minimap only ever populated by accident when
+            some other state change happened to follow canvas init. */}
+        {showMinimap && <MinimapOverlay fabricCanvas={canvasReady} />}
       </div>
     );
   }

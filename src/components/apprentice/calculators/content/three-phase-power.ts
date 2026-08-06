@@ -48,7 +48,11 @@ export const threePhasePowerContent: CalculatorContent = {
 
   _grounding: {
     status: 'verified',
-    generatedAt: '2026-06-01',
-    notes: 'Fundamental theory. √3 relationships and worked example verified; engine uses √3 correctly.',
+    generatedAt: '2026-08-06',
+    notes:
+      'Fundamental theory. √3 relationships and worked example verified against the printed standard. ' +
+      'Corrected 2026-08-06: the engine had skipped the VLN → VLL × √3 conversion when the load was ' +
+      'delta-connected — star/delta is a property of the load, not of the supply, so the conversion ' +
+      'now depends on the voltage type alone. Editorial content itself unchanged.',
   },
 };

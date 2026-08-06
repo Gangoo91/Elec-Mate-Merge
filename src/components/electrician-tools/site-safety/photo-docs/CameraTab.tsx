@@ -612,7 +612,7 @@ export default function CameraTab({
 
           {/* Photo type grid */}
           <div className="bg-[#1e1e1e] rounded-xl p-3 md:p-4 border border-white/10">
-            <label className="text-xs font-medium text-white uppercase tracking-wide text-center block">
+            <label className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
               Photo Type
             </label>
             <div className="grid grid-cols-4 gap-1.5 md:gap-2 mt-2">
@@ -620,16 +620,13 @@ export default function CameraTab({
                 <button
                   key={type.value}
                   onClick={() => setSelectedPhotoType(type.value)}
-                  className={`flex flex-col items-center gap-1 p-2 md:p-3 rounded-lg transition-all touch-manipulation ${
+                  className={`flex min-h-[52px] items-center justify-center rounded-xl border px-2 text-center transition-colors touch-manipulation ${
                     selectedPhotoType === type.value
-                      ? 'bg-elec-yellow/20 ring-1 ring-elec-yellow'
-                      : 'bg-white/5 active:bg-white/10'
+                      ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                      : 'border-white/[0.14] bg-white/[0.06] font-medium text-white hover:border-white/[0.24]'
                   }`}
                 >
-                  <span className={`w-2.5 h-2.5 rounded-full ${type.dotColour}`} />
-                  <span className="text-[10px] md:text-xs text-white text-center leading-tight">
-                    {type.label}
-                  </span>
+                  <span className="text-[12px] leading-tight">{type.label}</span>
                 </button>
               ))}
             </div>
@@ -637,7 +634,7 @@ export default function CameraTab({
 
           {/* Category grid */}
           <div className="bg-[#1e1e1e] rounded-xl p-3 md:p-4 border border-white/10">
-            <label className="text-xs font-medium text-white uppercase tracking-wide text-center block">
+            <label className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
               Category
             </label>
             <div className="grid grid-cols-4 gap-1.5 md:gap-2 mt-2">
@@ -645,16 +642,13 @@ export default function CameraTab({
                 <button
                   key={cat.value}
                   onClick={() => setSelectedCategory(cat.value)}
-                  className={`flex flex-col items-center gap-1 p-2 md:p-3 rounded-lg transition-all touch-manipulation ${
+                  className={`flex min-h-[52px] items-center justify-center rounded-xl border px-2 text-center transition-colors touch-manipulation ${
                     selectedCategory === cat.value
-                      ? 'bg-elec-yellow/20 ring-1 ring-elec-yellow'
-                      : 'bg-white/5 hover:bg-white/10 active:bg-white/10'
+                      ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                      : 'border-white/[0.14] bg-white/[0.06] font-medium text-white hover:border-white/[0.24]'
                   }`}
                 >
-                  <span className={`w-2.5 h-2.5 rounded-full ${cat.color}`} />
-                  <span className="text-[10px] md:text-xs text-white text-center leading-tight">
-                    {cat.label}
-                  </span>
+                  <span className="text-[12px] leading-tight">{cat.label}</span>
                 </button>
               ))}
             </div>
@@ -662,7 +656,7 @@ export default function CameraTab({
 
           {/* Description */}
           <div className="bg-[#1e1e1e] rounded-xl p-3 md:p-4 border border-white/10">
-            <label className="text-xs font-medium text-white uppercase tracking-wide text-center block">
+            <label className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
               Description *
             </label>
             <Textarea
@@ -678,7 +672,7 @@ export default function CameraTab({
           {/* Location + Project */}
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-[#1e1e1e] rounded-xl p-3 md:p-4 border border-white/10">
-              <label className="text-xs font-medium text-white uppercase tracking-wide text-center block">
+              <label className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
                 Location
               </label>
               <div className="relative mt-2">
@@ -686,7 +680,7 @@ export default function CameraTab({
                   placeholder="Site..."
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  className="h-10 bg-white/5 border border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm pr-9 touch-manipulation"
+                  className="h-12 rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus:ring-0 touch-manipulation"
                 />
                 <button
                   onClick={handleGetLocation}
@@ -697,7 +691,7 @@ export default function CameraTab({
               </div>
             </div>
             <div className="bg-[#1e1e1e] rounded-xl p-3 md:p-4 border border-white/10">
-              <label className="text-xs font-medium text-white uppercase tracking-wide text-center block">
+              <label className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
                 Project {isProjectLocked && <span className="text-elec-yellow">(locked)</span>}
               </label>
               <Input
@@ -705,7 +699,7 @@ export default function CameraTab({
                 value={projectReference}
                 onChange={(e) => setProjectReference(e.target.value)}
                 disabled={isProjectLocked}
-                className={`mt-2 h-10 bg-white/5 border border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation ${
+                className={`mt-2 h-12 rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus:ring-0 touch-manipulation focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation ${
                   isProjectLocked
                     ? 'opacity-70 cursor-not-allowed bg-elec-yellow/5 border-elec-yellow/20'
                     : ''
@@ -735,7 +729,7 @@ export default function CameraTab({
 
           {/* Tags */}
           <div className="bg-[#1e1e1e] rounded-xl p-3 md:p-4 border border-white/10">
-            <label className="text-xs font-medium text-white uppercase tracking-wide text-center block">
+            <label className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
               Tags
             </label>
             <div className="flex gap-2 mt-2">
@@ -744,12 +738,12 @@ export default function CameraTab({
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleAddTag()}
-                className="flex-1 h-10 bg-white/5 border border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation"
+                className="h-12 flex-1 rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus:ring-0 touch-manipulation"
               />
               <button
                 onClick={handleAddTag}
                 disabled={!tagInput.trim()}
-                className="px-4 h-10 rounded-lg bg-white/10 text-sm font-medium text-white hover:bg-white/15 disabled:opacity-40 touch-manipulation"
+                className="h-12 rounded-xl border border-white/[0.14] bg-white/[0.06] px-4 text-[14px] font-medium text-white transition-colors hover:bg-white/[0.12] touch-manipulation disabled:opacity-40 touch-manipulation"
               >
                 Add
               </button>

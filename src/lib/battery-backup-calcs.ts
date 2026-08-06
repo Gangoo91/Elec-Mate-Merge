@@ -1,5 +1,14 @@
 // Battery Backup Runtime Calculator - Core Logic
-// BS 7671 18th Edition compliant calculations
+// Referenced against BS 7671:2018+A4:2026 Chapter 57 (Stationary secondary batteries),
+// Section 560 (Safety services) and Appendix 9 Table 9A (conductor resistance).
+//
+// NOTE ON SCOPE (Reg 570.1): Chapter 57 gives requirements for stationary secondary battery
+// installations used as a source of supply. It does NOT apply to batteries wholly within
+// pluggable UPS to BS EN IEC 62040, central safety power supplies to BS EN 50171, fire
+// detection/alarm to BS 5839, alarm systems to BS EN 50132, machinery to BS EN IEC 60204, or
+// emergency lighting to BS 5266. Those systems follow their own product standards.
+
+import { standardDeviceRatings } from '@/lib/calculators/bs7671-data';
 
 export interface BatteryChemistry {
   name: string;
@@ -7,6 +16,8 @@ export interface BatteryChemistry {
   peukertExponent: number;
   maxCRate: number;
   chargeEfficiency: number;
+  // Capacity lost per °C below the 25 °C reference. Only ever applied as a LOSS — see
+  // TEMP_DERATING_CEILING below.
   temperatureCoeff: number; // %/°C below 25°C
   minChargeRate: number;
   maxChargeRate: number;
@@ -254,10 +265,39 @@ export const LOAD_PRESETS: LoadPreset[] = [
   },
 ];
 
-// Standard fuse/MCB sizes (A)
-const STANDARD_FUSE_SIZES = [5, 6, 10, 13, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250];
+// FIX (consolidation): this file previously inlined its own fuse-size list which contained 5 A
+// and 13 A — neither is a standard BS 88 fuse rating (13 A is the BS 1362 plug fuse). Now taken
+// from the shared BS 7671 dataset so it cannot drift again.
+const STANDARD_FUSE_SIZES = standardDeviceRatings.bs88;
 
-// Cable sizes and current ratings (simplified)
+// Peukert gain ceiling.
+// Peukert's equation has no BS 7671 source, and extrapolating it to very light loads manufactures
+// capacity the cell does not have. Manufacturers publish a longest rate (typically C100) that is
+// only about 1.15–1.25 × the C20 figure. BS 7671 Reg 570.5.1 requires battery capacity to be
+// selected on "charge time and discharge time" and "battery charge and discharge profiles" —
+// i.e. the manufacturer's published discharge data, not an unbounded exponent. Gain is therefore
+// capped here; losses at high discharge rates remain uncapped.
+const MAX_PEUKERT_GAIN = 1.25;
+
+// Temperature factor ceiling.
+// temperatureCoeff describes capacity LOST below the 25 °C reference. The model previously ran
+// the same straight line upwards, awarding extra capacity for heat without limit. BS 7671
+// Reg 570.6.3 (and its NOTE) treats temperature as something to be controlled to stay inside the
+// manufacturer's range — heat is a damage mechanism, not a capacity bonus. Capped at 1.0.
+const TEMP_DERATING_CEILING = 1.0;
+
+// Conductor operating-temperature correction.
+// The resistances below are Appendix 9 Table 9A copper values at 20 °C. Volt drop has to be
+// assessed at conductor operating temperature, so the 20 °C resistance is multiplied by the
+// standard 1.20 correction (the same factor used to predict R1+R2 at operating temperature).
+const CONDUCTOR_TEMP_CORRECTION = 1.2;
+
+// Cable sizes and current ratings.
+// resistance = mΩ/m at 20 °C, BS 7671 Appendix 9 Table 9A (copper).
+// ⚠️ `rating` here is a bare tabulated figure with NO correction factors applied. Real DC cable
+// selection must apply the Appendix 4 correction factors for ambient temperature (Ca), grouping
+// (Cg) and thermal insulation (Ci) for the actual reference method — see the compliance notes
+// emitted below.
 const DC_CABLE_RATINGS = [
   { csa: '1.5mm²', rating: 16, resistance: 12.1 },
   { csa: '2.5mm²', rating: 21, resistance: 7.41 },
@@ -305,26 +345,46 @@ export function calculateBatteryBackup(inputs: BatteryInputs): CalculationResult
   const bankEnergyWh = bankVoltage * bankCapacityAh;
 
   // Environmental adjustments
-  const tempDerating = 1 + (chemistry.temperatureCoeff * (inputs.ambientTemp - 25)) / 100;
+  // FIX: clamped at 1.0. Previously this ran linearly and unbounded in both directions, so a
+  // warm battery room was credited with extra capacity (Reg 570.6.3 — temperature is controlled
+  // to protect the battery, it is not a capacity bonus).
+  const tempDerating = Math.max(
+    0,
+    Math.min(
+      TEMP_DERATING_CEILING,
+      1 + (chemistry.temperatureCoeff * (inputs.ambientTemp - 25)) / 100
+    )
+  );
   const healthFactor = inputs.batteryHealth / 100;
   const doD = inputs.customDoD || chemistry.defaultDoD;
   const peukertExp = inputs.customPeukert || chemistry.peukertExponent;
 
-  // DC current calculation
+  // DC current calculation — the inverter draws the AC load plus its own losses from the bank.
   const efficiency = inputs.customEfficiency || inverterType.efficiency;
-  const dcCurrent = totalWatts / (bankVoltage * efficiency);
-  const cRate = dcCurrent / bankCapacityAh;
+  const dcLoadWatts = efficiency > 0 ? totalWatts / efficiency : 0;
+  const dcCurrent = bankVoltage > 0 ? dcLoadWatts / bankVoltage : 0;
+  const cRate = bankCapacityAh > 0 ? dcCurrent / bankCapacityAh : 0;
 
   // Peukert adjustment (assuming C20 reference)
+  // FIX: gain capped at MAX_PEUKERT_GAIN. Unclamped, a light load produced an effectiveCapacity
+  // far above nameplate — capacity that does not exist. Losses at high discharge remain uncapped.
   const referenceRate = bankCapacityAh / 20; // C20
-  const peukertFactor = Math.pow(referenceRate / dcCurrent, peukertExp - 1);
+  const peukertFactor =
+    dcCurrent > 0
+      ? Math.min(MAX_PEUKERT_GAIN, Math.pow(referenceRate / dcCurrent, peukertExp - 1))
+      : MAX_PEUKERT_GAIN;
   const effectiveCapacity = bankCapacityAh * peukertFactor;
 
-  // Usable energy
+  // Usable energy (DC side of the inverter)
   const usableEnergyWh = bankVoltage * effectiveCapacity * doD * tempDerating * healthFactor;
 
   // Runtime calculation
-  const runtime = totalWatts > 0 ? usableEnergyWh / totalWatts : 0;
+  // FIX: inverter efficiency was missing. usableEnergyWh is DC-side energy but totalWatts is the
+  // AC load, so dividing one by the other silently assumed a 100% efficient inverter and
+  // over-stated runtime by 5–14%. Runtime = usable DC energy ÷ (AC load ÷ inverter efficiency).
+  // This now agrees with the sizing branch below and with the published formula
+  // Runtime = (Ah × V × efficiency) ÷ load.
+  const runtime = dcLoadWatts > 0 ? usableEnergyWh / dcLoadWatts : 0;
 
   // Sizing mode calculation
   let requiredAh: number | undefined;
@@ -338,7 +398,10 @@ export function calculateBatteryBackup(inputs: BatteryInputs): CalculationResult
   // Inverter sizing
   const headroom = inputs.customHeadroom || inverterType.defaultHeadroom;
   const recommendedWatts = Math.ceil(peakWatts * (1 + headroom));
-  const recommendedVA = Math.ceil(recommendedWatts * 1.2); // Assume 0.8 PF
+  // FIX: was × 1.2 with the comment "Assume 0.8 PF". VA = W ÷ PF, so 0.8 PF is × 1.25 — the old
+  // multiplier corresponded to 0.833 PF and under-sized the inverter by 4%.
+  const ASSUMED_POWER_FACTOR = 0.8;
+  const recommendedVA = Math.ceil(recommendedWatts / ASSUMED_POWER_FACTOR);
   const surgeCapability = surgeWatts;
 
   // Charging calculations
@@ -350,21 +413,44 @@ export function calculateBatteryBackup(inputs: BatteryInputs): CalculationResult
 
   // DC protection and cabling
   const maxDcCurrent = dcCurrent * 1.25; // 125% for protection
-  const recommendedFuse = STANDARD_FUSE_SIZES.find((size) => size >= maxDcCurrent) || 250;
+  const recommendedFuse =
+    STANDARD_FUSE_SIZES.find((size) => size >= maxDcCurrent) ??
+    STANDARD_FUSE_SIZES[STANDARD_FUSE_SIZES.length - 1];
 
-  // Cable sizing (simplified volt drop calculation)
-  const voltDropMv = (2 * inputs.dcCableLength * dcCurrent * 1000) / 1000; // Simplified
-  let recommendedCableSize = '50mm²';
-  let actualVoltDrop = 5.0;
+  // Cable sizing
+  // FIX (Reg 433.1.1 — Ib ≤ In ≤ Iz): the cable was previously checked against the design current
+  // Ib alone, which skips the device step and can leave the protective device rated above the
+  // cable. The tabulated rating is now compared with the selected device rating In.
+  // FIX: volt drop is evaluated at conductor operating temperature (Table 9A resistance is 20 °C).
+  const largestCable = DC_CABLE_RATINGS[DC_CABLE_RATINGS.length - 1];
+  let recommendedCableSize = `> ${largestCable.csa} — specialist DC design required`;
+  let actualVoltDrop = 0;
+  let cableFound = false;
 
   for (const cable of DC_CABLE_RATINGS) {
-    const drop =
-      ((2 * inputs.dcCableLength * dcCurrent * cable.resistance) / (1000 * bankVoltage)) * 100;
-    if (drop <= inputs.maxVoltDrop && dcCurrent <= cable.rating) {
+    const rOperating = cable.resistance * CONDUCTOR_TEMP_CORRECTION;
+    const drop = ((2 * inputs.dcCableLength * dcCurrent * rOperating) / (1000 * bankVoltage)) * 100;
+    if (drop <= inputs.maxVoltDrop && recommendedFuse <= cable.rating) {
       recommendedCableSize = cable.csa;
       actualVoltDrop = drop;
+      cableFound = true;
       break;
     }
+  }
+
+  if (!cableFound) {
+    // Report the volt drop of the largest listed size so the figure shown is real, not a placeholder.
+    actualVoltDrop =
+      ((2 *
+        inputs.dcCableLength *
+        dcCurrent *
+        largestCable.resistance *
+        CONDUCTOR_TEMP_CORRECTION) /
+        (1000 * bankVoltage)) *
+      100;
+    warnings.push(
+      `No listed DC cable satisfies both the ${recommendedFuse} A device rating and the ${inputs.maxVoltDrop}% volt drop target — size the DC cabling by specific design.`
+    );
   }
 
   // Generate warnings and recommendations
@@ -397,21 +483,63 @@ export function calculateBatteryBackup(inputs: BatteryInputs): CalculationResult
     recommendations.push('Consider battery heating or insulation in cold environments');
   }
 
-  // Compliance notes
+  // Compliance notes — BS 7671:2018+A4:2026 Chapter 57 (stationary secondary batteries) and
+  // Section 560 (safety services). Chapter 57 was introduced by A4:2026; see the scope note at
+  // the top of this file for what it excludes.
   complianceNotes.push('AC circuits: Follow BS 7671 for protection, cable sizing, and earthing');
   complianceNotes.push(
-    'DC protection: Install appropriate DC OCPD within 0.5m of battery terminals'
+    'Chapter 57 applies to stationary secondary batteries supplying an installation. Reg 570.1 excludes batteries wholly inside pluggable UPS (BS EN IEC 62040), central safety power supplies (BS EN 50171), fire alarm (BS 5839) and emergency lighting (BS 5266) systems.'
   );
-  complianceNotes.push('UPS equipment: Must comply with BS EN 62040 series');
+  complianceNotes.push(
+    'Reg 570.6.1.1.1: The battery installation shall conform to the relevant parts of the BS EN IEC 62485 series.'
+  );
+  complianceNotes.push(
+    // FIX: previously stated only for lead-acid. Reg 570.6.3 requires the location or enclosure of
+    // stationary secondary batteries to be adequately ventilated irrespective of chemistry.
+    "Reg 570.6.3 and 570.6.7.202: The location or enclosure shall be adequately ventilated for ALL stationary secondary batteries regardless of chemistry, taking account of the manufacturer's instructions and safety data sheets. Ventilation shall not itself create a hazard and may need to discharge outdoors."
+  );
+  complianceNotes.push(
+    'Reg 570.6.3 NOTE: Heating or cooling may also be needed to hold the battery inside the temperature range the manufacturer specifies.'
+  );
+  complianceNotes.push(
+    'Reg 570.6.2.2: Where an RCD protects the AC supply circuit it shall be Type B to BS EN 62423 or BS EN 60947-2, unless the PCE provides at least simple separation between AC and DC sides, simple separation is provided by separate transformer windings, or the PCE manufacturer states Type B is not required.'
+  );
+  complianceNotes.push(
+    'Reg 570.6.2.1.201: Battery connections shall have basic protection by insulation or enclosure, or be arranged so parts with more than 120 V between them cannot be touched simultaneously.'
+  );
+  complianceNotes.push(
+    'Reg 570.6.5: Every power circuit connecting to the battery shall have means of isolation conforming to Section 462 — likely required at both ends of the circuit.'
+  );
+  complianceNotes.push(
+    // FIX: the DC OCPD note previously invented a "within 0.5 m of battery terminals" rule that
+    // BS 7671 does not state. Replaced with the actual Chapter 57 requirement.
+    'Reg 570.6.7.201: Fuses in DC battery circuits shall be accessible only by key or tool, or removable only after opening a means of isolation suitable for on-load DC isolation.'
+  );
+  complianceNotes.push(
+    'DC cable sizing: the tabulated ratings used here carry no correction factors. Apply the BS 7671 Appendix 4 factors for ambient temperature (Ca), grouping (Cg) and thermal insulation (Ci) for the actual reference method before accepting a size.'
+  );
+  complianceNotes.push(
+    'Reg 560.6.12: An uninterruptible power system shall conform to BS EN 50171 in addition to the BS EN IEC 62040 series.'
+  );
+  complianceNotes.push(
+    'Reg 570.6.8.201/.202/.203: Warning notices are required at the origin, at remote metering positions and at each board fed from the battery; at every access point to a battery room or enclosure ("live parts can remain energised after isolation"); and on all PCE ("isolate both AC and DC sides before servicing").'
+  );
 
   if (inputs.chemistry.includes('lead-acid')) {
     complianceNotes.push(
-      'Lead-acid: Provide adequate ventilation and spill containment (BS 7671 Sect 721)'
+      // FIX: previously cited "BS 7671 Sect 721", which is Electrical Installations in Caravans
+      // and Motor Caravans — nothing to do with batteries.
+      'Lead-acid: gas evolution must be considered at selection (Reg 570.5.1). Batteries that can evolve flammable or combustible gases shall be sited at a safe distance from equipment liable to arc, spark or flame in normal use (Reg 570.6.7.202). Electrolyte containment follows the BS EN IEC 62485 series.'
     );
   } else {
-    complianceNotes.push("Lithium: Follow manufacturer's spacing and temperature requirements");
+    complianceNotes.push(
+      "Lithium: adequate ventilation is still required (Reg 570.6.3) — it is not a lead-acid-only measure. Follow the manufacturer's spacing, thermal-management and fire-separation instructions (Reg 570.6.7)."
+    );
   }
 
+  complianceNotes.push(
+    'Reg 570.6.7.203: In dwellings the battery location shall take account of the manufacturer’s instructions and PAS 63100. In other premises location and fire protection follow the fire strategy for the premises.'
+  );
   complianceNotes.push(
     'Testing: Regular battery and UPS testing per IET Code of Practice for EESS'
   );

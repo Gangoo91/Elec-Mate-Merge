@@ -67,12 +67,12 @@ const faqs = [
   {
     question: 'Are AFDDs mandatory in new build homes?',
     answer:
-      'AFDDs (Arc Fault Detection Devices) are not strictly mandatory under BS 7671:2018+A2:2022, but they are strongly recommended. Regulation 421.1.7 recommends that AFDDs conforming to BS EN 62606 be considered for final circuits supplying socket-outlets with a rated current not exceeding 32 A in single-occupancy dwellings (houses, flats, and similar). The recommendation applies to all single-phase final circuits that supply socket-outlets in sleeping accommodation and is particularly relevant for new builds where the cost of fitting AFDDs at the time of installation is significantly lower than retrofitting them later. Some developers and housing associations now specify AFDDs as a standard requirement in their specifications, particularly for affordable housing and social housing. The IET Guidance Note 1 (Selection and Erection) discusses AFDD selection in detail. Amendment 2 strengthened the recommendation, and it is widely expected that a future amendment will make AFDDs mandatory for certain circuits.',
+      'AFDDs (Arc Fault Detection Devices) are not strictly mandatory under BS 7671:2018+A4:2026, but they are strongly recommended. Regulation 421.1.7 recommends that AFDDs conforming to BS EN 62606 be considered for final circuits supplying socket-outlets with a rated current not exceeding 32 A in single-occupancy dwellings (houses, flats, and similar). The recommendation applies to all single-phase final circuits that supply socket-outlets in sleeping accommodation and is particularly relevant for new builds where the cost of fitting AFDDs at the time of installation is significantly lower than retrofitting them later. Some developers and housing associations now specify AFDDs as a standard requirement in their specifications, particularly for affordable housing and social housing. The IET Guidance Note 1 (Selection and Erection) discusses AFDD selection in detail. Amendment 2 strengthened the recommendation, and it is widely expected that a future amendment will make AFDDs mandatory for certain circuits.',
   },
   {
     question: 'What SPD requirements apply to new build installations?',
     answer:
-      'Under BS 7671:2018+A2:2022, Regulation 443.4.1 requires surge protective devices (SPDs) to be fitted where the consequence of an overvoltage event would be serious. In practice, this means SPDs are required in virtually all new build domestic installations because the risk assessment under Regulation 443.4 will almost always conclude that the consequences are serious — a new build contains electronic equipment, IT networks, and potentially EV charging infrastructure, all of which are vulnerable to transient overvoltages. The SPD must be Type 2 (or Type 1+2 combined) and must be installed at the origin of the installation, typically within or adjacent to the consumer unit. If the supply is TT (earth rod), a Type 1+2 SPD is required because the installation is more exposed to lightning-induced surges. The SPD must be coordinated with the upstream protective device and must have a suitable backup protection device (SPD-rated MCB or fuse). Most consumer unit manufacturers now offer units with integrated SPD modules specifically designed for new build installations.',
+      'Under BS 7671:2018+A4:2026, Regulation 443.4.1 requires surge protective devices (SPDs) to be fitted where the consequence of an overvoltage event would be serious. In practice, this means SPDs are required in virtually all new build domestic installations because the risk assessment under Regulation 443.4 will almost always conclude that the consequences are serious — a new build contains electronic equipment, IT networks, and potentially EV charging infrastructure, all of which are vulnerable to transient overvoltages. The SPD must be Type 2 (or Type 1+2 combined) and must be installed at the origin of the installation, typically within or adjacent to the consumer unit. If the supply is TT (earth rod), a Type 1+2 SPD is required because the installation is more exposed to lightning-induced surges. The SPD must be coordinated with the upstream protective device and must have a suitable backup protection device (SPD-rated MCB or fuse). Most consumer unit manufacturers now offer units with integrated SPD modules specifically designed for new build installations.',
   },
   {
     question: 'What is a SAP calculation and how does it affect electrical design?',
@@ -154,7 +154,7 @@ const sections = [
           carried out. The document requires that all electrical installations are designed,
           installed, inspected, and tested in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A2:2022
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           (the IET Wiring Regulations, 18th Edition).
         </p>
@@ -315,7 +315,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A2:2022 introduced two significant protective device requirements that are
+          BS 7671:2018+A4:2026 introduced two significant protective device requirements that are
           particularly relevant to new build installations: Arc Fault Detection Devices (AFDDs) and
           Surge Protective Devices (SPDs).
         </p>

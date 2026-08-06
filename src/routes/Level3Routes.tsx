@@ -1,5 +1,5 @@
 import { Route } from 'react-router-dom';
-import { lazy } from 'react';
+import { lazyWithRetry } from '@/utils/lazyWithRetry';
 import { withTimeout, trackImport } from '@/lib/lazy';
 
 /**
@@ -28,15 +28,15 @@ import { withTimeout, trackImport } from '@/lib/lazy';
 // Lazy imports (288 components)
 // ============================================================================
 
-const Level3 = lazy(() =>
+const Level3 = lazyWithRetry(() =>
   withTimeout(() => trackImport('Level3', () => import('@/pages/apprentice-courses/Level3')))
 );
-const Level3Module1 = lazy(() =>
+const Level3Module1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Level3Module1', () => import('@/pages/apprentice-courses/Level3Module1'))
   )
 );
-const Level3Module1Section1 = lazy(() =>
+const Level3Module1Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section1',
@@ -44,7 +44,7 @@ const Level3Module1Section1 = lazy(() =>
     )
   )
 );
-const Level3Module1Section2 = lazy(() =>
+const Level3Module1Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section2',
@@ -52,7 +52,7 @@ const Level3Module1Section2 = lazy(() =>
     )
   )
 );
-const Level3Module1Section3 = lazy(() =>
+const Level3Module1Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section3',
@@ -60,7 +60,7 @@ const Level3Module1Section3 = lazy(() =>
     )
   )
 );
-const Level3Module1Section4 = lazy(() =>
+const Level3Module1Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section4',
@@ -68,7 +68,7 @@ const Level3Module1Section4 = lazy(() =>
     )
   )
 );
-const Level3Module1Section5 = lazy(() =>
+const Level3Module1Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section5',
@@ -76,7 +76,7 @@ const Level3Module1Section5 = lazy(() =>
     )
   )
 );
-const Level3Module1Section6 = lazy(() =>
+const Level3Module1Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section6',
@@ -84,7 +84,7 @@ const Level3Module1Section6 = lazy(() =>
     )
   )
 );
-const Level3Module1Section1_1 = lazy(() =>
+const Level3Module1Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section1_1',
@@ -92,7 +92,7 @@ const Level3Module1Section1_1 = lazy(() =>
     )
   )
 );
-const Level3Module1Section1_2 = lazy(() =>
+const Level3Module1Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section1_2',
@@ -100,7 +100,7 @@ const Level3Module1Section1_2 = lazy(() =>
     )
   )
 );
-const Level3Module1Section1_3 = lazy(() =>
+const Level3Module1Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section1_3',
@@ -108,7 +108,7 @@ const Level3Module1Section1_3 = lazy(() =>
     )
   )
 );
-const Level3Module1Section1_4 = lazy(() =>
+const Level3Module1Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section1_4',
@@ -116,7 +116,7 @@ const Level3Module1Section1_4 = lazy(() =>
     )
   )
 );
-const Level3Module1Section1_5 = lazy(() =>
+const Level3Module1Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section1_5',
@@ -124,7 +124,7 @@ const Level3Module1Section1_5 = lazy(() =>
     )
   )
 );
-const Level3Module1Section1_6 = lazy(() =>
+const Level3Module1Section1_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section1_6',
@@ -132,7 +132,7 @@ const Level3Module1Section1_6 = lazy(() =>
     )
   )
 );
-const Level3Module1Section1_7 = lazy(() =>
+const Level3Module1Section1_7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section1_7',
@@ -140,7 +140,7 @@ const Level3Module1Section1_7 = lazy(() =>
     )
   )
 );
-const Level3Module1Section2_1 = lazy(() =>
+const Level3Module1Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section2_1',
@@ -148,7 +148,7 @@ const Level3Module1Section2_1 = lazy(() =>
     )
   )
 );
-const Level3Module1Section2_2 = lazy(() =>
+const Level3Module1Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section2_2',
@@ -156,7 +156,7 @@ const Level3Module1Section2_2 = lazy(() =>
     )
   )
 );
-const Level3Module1Section2_3 = lazy(() =>
+const Level3Module1Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section2_3',
@@ -164,7 +164,7 @@ const Level3Module1Section2_3 = lazy(() =>
     )
   )
 );
-const Level3Module1Section2_4 = lazy(() =>
+const Level3Module1Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section2_4',
@@ -172,7 +172,7 @@ const Level3Module1Section2_4 = lazy(() =>
     )
   )
 );
-const Level3Module1Section2_5 = lazy(() =>
+const Level3Module1Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section2_5',
@@ -180,7 +180,7 @@ const Level3Module1Section2_5 = lazy(() =>
     )
   )
 );
-const Level3Module1Section3_1 = lazy(() =>
+const Level3Module1Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section3_1',
@@ -188,7 +188,7 @@ const Level3Module1Section3_1 = lazy(() =>
     )
   )
 );
-const Level3Module1Section3_2 = lazy(() =>
+const Level3Module1Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section3_2',
@@ -196,7 +196,7 @@ const Level3Module1Section3_2 = lazy(() =>
     )
   )
 );
-const Level3Module1Section3_3 = lazy(() =>
+const Level3Module1Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section3_3',
@@ -204,7 +204,7 @@ const Level3Module1Section3_3 = lazy(() =>
     )
   )
 );
-const Level3Module1Section3_4 = lazy(() =>
+const Level3Module1Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section3_4',
@@ -212,7 +212,7 @@ const Level3Module1Section3_4 = lazy(() =>
     )
   )
 );
-const Level3Module1Section3_5 = lazy(() =>
+const Level3Module1Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section3_5',
@@ -220,7 +220,7 @@ const Level3Module1Section3_5 = lazy(() =>
     )
   )
 );
-const Level3Module1Section3_6 = lazy(() =>
+const Level3Module1Section3_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section3_6',
@@ -228,7 +228,7 @@ const Level3Module1Section3_6 = lazy(() =>
     )
   )
 );
-const Level3Module1Section4_1 = lazy(() =>
+const Level3Module1Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section4_1',
@@ -236,7 +236,7 @@ const Level3Module1Section4_1 = lazy(() =>
     )
   )
 );
-const Level3Module1Section4_2 = lazy(() =>
+const Level3Module1Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section4_2',
@@ -244,7 +244,7 @@ const Level3Module1Section4_2 = lazy(() =>
     )
   )
 );
-const Level3Module1Section4_3 = lazy(() =>
+const Level3Module1Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section4_3',
@@ -252,7 +252,7 @@ const Level3Module1Section4_3 = lazy(() =>
     )
   )
 );
-const Level3Module1Section4_4 = lazy(() =>
+const Level3Module1Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section4_4',
@@ -260,7 +260,7 @@ const Level3Module1Section4_4 = lazy(() =>
     )
   )
 );
-const Level3Module1Section4_5 = lazy(() =>
+const Level3Module1Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section4_5',
@@ -268,7 +268,7 @@ const Level3Module1Section4_5 = lazy(() =>
     )
   )
 );
-const Level3Module1Section4_6 = lazy(() =>
+const Level3Module1Section4_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section4_6',
@@ -276,7 +276,7 @@ const Level3Module1Section4_6 = lazy(() =>
     )
   )
 );
-const Level3Module1Section5_1 = lazy(() =>
+const Level3Module1Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section5_1',
@@ -284,7 +284,7 @@ const Level3Module1Section5_1 = lazy(() =>
     )
   )
 );
-const Level3Module1Section5_2 = lazy(() =>
+const Level3Module1Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section5_2',
@@ -292,7 +292,7 @@ const Level3Module1Section5_2 = lazy(() =>
     )
   )
 );
-const Level3Module1Section5_3 = lazy(() =>
+const Level3Module1Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section5_3',
@@ -300,7 +300,7 @@ const Level3Module1Section5_3 = lazy(() =>
     )
   )
 );
-const Level3Module1Section5_4 = lazy(() =>
+const Level3Module1Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section5_4',
@@ -308,7 +308,7 @@ const Level3Module1Section5_4 = lazy(() =>
     )
   )
 );
-const Level3Module1Section5_5 = lazy(() =>
+const Level3Module1Section5_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section5_5',
@@ -316,7 +316,7 @@ const Level3Module1Section5_5 = lazy(() =>
     )
   )
 );
-const Level3Module1Section5_6 = lazy(() =>
+const Level3Module1Section5_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section5_6',
@@ -324,7 +324,7 @@ const Level3Module1Section5_6 = lazy(() =>
     )
   )
 );
-const Level3Module1Section6_1 = lazy(() =>
+const Level3Module1Section6_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section6_1',
@@ -332,7 +332,7 @@ const Level3Module1Section6_1 = lazy(() =>
     )
   )
 );
-const Level3Module1Section6_2 = lazy(() =>
+const Level3Module1Section6_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section6_2',
@@ -340,7 +340,7 @@ const Level3Module1Section6_2 = lazy(() =>
     )
   )
 );
-const Level3Module1Section6_3 = lazy(() =>
+const Level3Module1Section6_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section6_3',
@@ -348,7 +348,7 @@ const Level3Module1Section6_3 = lazy(() =>
     )
   )
 );
-const Level3Module1Section6_4 = lazy(() =>
+const Level3Module1Section6_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section6_4',
@@ -356,7 +356,7 @@ const Level3Module1Section6_4 = lazy(() =>
     )
   )
 );
-const Level3Module1Section6_5 = lazy(() =>
+const Level3Module1Section6_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section6_5',
@@ -364,7 +364,7 @@ const Level3Module1Section6_5 = lazy(() =>
     )
   )
 );
-const Level3Module1Section6_6 = lazy(() =>
+const Level3Module1Section6_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module1Section6_6',
@@ -372,12 +372,12 @@ const Level3Module1Section6_6 = lazy(() =>
     )
   )
 );
-const Level3Module2 = lazy(() =>
+const Level3Module2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Level3Module2', () => import('@/pages/apprentice-courses/Level3Module2'))
   )
 );
-const Level3Module2Section1 = lazy(() =>
+const Level3Module2Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section1',
@@ -385,7 +385,7 @@ const Level3Module2Section1 = lazy(() =>
     )
   )
 );
-const Level3Module2Section2 = lazy(() =>
+const Level3Module2Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section2',
@@ -393,7 +393,7 @@ const Level3Module2Section2 = lazy(() =>
     )
   )
 );
-const Level3Module2Section3 = lazy(() =>
+const Level3Module2Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section3',
@@ -401,7 +401,7 @@ const Level3Module2Section3 = lazy(() =>
     )
   )
 );
-const Level3Module2Section4 = lazy(() =>
+const Level3Module2Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section4',
@@ -409,7 +409,7 @@ const Level3Module2Section4 = lazy(() =>
     )
   )
 );
-const Level3Module2Section5 = lazy(() =>
+const Level3Module2Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section5',
@@ -417,7 +417,7 @@ const Level3Module2Section5 = lazy(() =>
     )
   )
 );
-const Level3Module2Section6 = lazy(() =>
+const Level3Module2Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section6',
@@ -425,7 +425,7 @@ const Level3Module2Section6 = lazy(() =>
     )
   )
 );
-const Level3Module2Section1_1 = lazy(() =>
+const Level3Module2Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section1_1',
@@ -433,7 +433,7 @@ const Level3Module2Section1_1 = lazy(() =>
     )
   )
 );
-const Level3Module2Section1_2 = lazy(() =>
+const Level3Module2Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section1_2',
@@ -441,7 +441,7 @@ const Level3Module2Section1_2 = lazy(() =>
     )
   )
 );
-const Level3Module2Section1_3 = lazy(() =>
+const Level3Module2Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section1_3',
@@ -449,7 +449,7 @@ const Level3Module2Section1_3 = lazy(() =>
     )
   )
 );
-const Level3Module2Section1_4 = lazy(() =>
+const Level3Module2Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section1_4',
@@ -457,7 +457,7 @@ const Level3Module2Section1_4 = lazy(() =>
     )
   )
 );
-const Level3Module2Section1_5 = lazy(() =>
+const Level3Module2Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section1_5',
@@ -465,7 +465,7 @@ const Level3Module2Section1_5 = lazy(() =>
     )
   )
 );
-const Level3Module2Section2_1 = lazy(() =>
+const Level3Module2Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section2_1',
@@ -473,7 +473,7 @@ const Level3Module2Section2_1 = lazy(() =>
     )
   )
 );
-const Level3Module2Section2_2 = lazy(() =>
+const Level3Module2Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section2_2',
@@ -481,7 +481,7 @@ const Level3Module2Section2_2 = lazy(() =>
     )
   )
 );
-const Level3Module2Section2_3 = lazy(() =>
+const Level3Module2Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section2_3',
@@ -489,7 +489,7 @@ const Level3Module2Section2_3 = lazy(() =>
     )
   )
 );
-const Level3Module2Section2_4 = lazy(() =>
+const Level3Module2Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section2_4',
@@ -497,7 +497,7 @@ const Level3Module2Section2_4 = lazy(() =>
     )
   )
 );
-const Level3Module2Section2_5 = lazy(() =>
+const Level3Module2Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section2_5',
@@ -505,7 +505,7 @@ const Level3Module2Section2_5 = lazy(() =>
     )
   )
 );
-const Level3Module2Section3_1 = lazy(() =>
+const Level3Module2Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section3_1',
@@ -513,7 +513,7 @@ const Level3Module2Section3_1 = lazy(() =>
     )
   )
 );
-const Level3Module2Section3_2 = lazy(() =>
+const Level3Module2Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section3_2',
@@ -521,7 +521,7 @@ const Level3Module2Section3_2 = lazy(() =>
     )
   )
 );
-const Level3Module2Section3_3 = lazy(() =>
+const Level3Module2Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section3_3',
@@ -529,7 +529,7 @@ const Level3Module2Section3_3 = lazy(() =>
     )
   )
 );
-const Level3Module2Section3_4 = lazy(() =>
+const Level3Module2Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section3_4',
@@ -537,7 +537,7 @@ const Level3Module2Section3_4 = lazy(() =>
     )
   )
 );
-const Level3Module2Section3_5 = lazy(() =>
+const Level3Module2Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section3_5',
@@ -545,7 +545,7 @@ const Level3Module2Section3_5 = lazy(() =>
     )
   )
 );
-const Level3Module2Section4_1 = lazy(() =>
+const Level3Module2Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section4_1',
@@ -553,7 +553,7 @@ const Level3Module2Section4_1 = lazy(() =>
     )
   )
 );
-const Level3Module2Section4_2 = lazy(() =>
+const Level3Module2Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section4_2',
@@ -561,7 +561,7 @@ const Level3Module2Section4_2 = lazy(() =>
     )
   )
 );
-const Level3Module2Section4_3 = lazy(() =>
+const Level3Module2Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section4_3',
@@ -569,7 +569,7 @@ const Level3Module2Section4_3 = lazy(() =>
     )
   )
 );
-const Level3Module2Section4_4 = lazy(() =>
+const Level3Module2Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section4_4',
@@ -577,7 +577,7 @@ const Level3Module2Section4_4 = lazy(() =>
     )
   )
 );
-const Level3Module2Section4_5 = lazy(() =>
+const Level3Module2Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section4_5',
@@ -585,7 +585,7 @@ const Level3Module2Section4_5 = lazy(() =>
     )
   )
 );
-const Level3Module2Section5_1 = lazy(() =>
+const Level3Module2Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section5_1',
@@ -593,7 +593,7 @@ const Level3Module2Section5_1 = lazy(() =>
     )
   )
 );
-const Level3Module2Section5_2 = lazy(() =>
+const Level3Module2Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section5_2',
@@ -601,7 +601,7 @@ const Level3Module2Section5_2 = lazy(() =>
     )
   )
 );
-const Level3Module2Section5_3 = lazy(() =>
+const Level3Module2Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section5_3',
@@ -609,7 +609,7 @@ const Level3Module2Section5_3 = lazy(() =>
     )
   )
 );
-const Level3Module2Section5_4 = lazy(() =>
+const Level3Module2Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section5_4',
@@ -617,7 +617,7 @@ const Level3Module2Section5_4 = lazy(() =>
     )
   )
 );
-const Level3Module2Section5_5 = lazy(() =>
+const Level3Module2Section5_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section5_5',
@@ -625,7 +625,7 @@ const Level3Module2Section5_5 = lazy(() =>
     )
   )
 );
-const Level3Module2Section6_1 = lazy(() =>
+const Level3Module2Section6_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section6_1',
@@ -633,7 +633,7 @@ const Level3Module2Section6_1 = lazy(() =>
     )
   )
 );
-const Level3Module2Section6_2 = lazy(() =>
+const Level3Module2Section6_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section6_2',
@@ -641,7 +641,7 @@ const Level3Module2Section6_2 = lazy(() =>
     )
   )
 );
-const Level3Module2Section6_3 = lazy(() =>
+const Level3Module2Section6_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section6_3',
@@ -649,7 +649,7 @@ const Level3Module2Section6_3 = lazy(() =>
     )
   )
 );
-const Level3Module2Section6_4 = lazy(() =>
+const Level3Module2Section6_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section6_4',
@@ -657,7 +657,7 @@ const Level3Module2Section6_4 = lazy(() =>
     )
   )
 );
-const Level3Module2Section6_5 = lazy(() =>
+const Level3Module2Section6_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module2Section6_5',
@@ -665,12 +665,12 @@ const Level3Module2Section6_5 = lazy(() =>
     )
   )
 );
-const Level3Module3 = lazy(() =>
+const Level3Module3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Level3Module3', () => import('@/pages/apprentice-courses/Level3Module3'))
   )
 );
-const Level3Module3Section1 = lazy(() =>
+const Level3Module3Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section1',
@@ -678,7 +678,7 @@ const Level3Module3Section1 = lazy(() =>
     )
   )
 );
-const Level3Module3Section1_1 = lazy(() =>
+const Level3Module3Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section1_1',
@@ -686,7 +686,7 @@ const Level3Module3Section1_1 = lazy(() =>
     )
   )
 );
-const Level3Module3Section1_2 = lazy(() =>
+const Level3Module3Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section1_2',
@@ -694,7 +694,7 @@ const Level3Module3Section1_2 = lazy(() =>
     )
   )
 );
-const Level3Module3Section1_3 = lazy(() =>
+const Level3Module3Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section1_3',
@@ -702,7 +702,7 @@ const Level3Module3Section1_3 = lazy(() =>
     )
   )
 );
-const Level3Module3Section1_4 = lazy(() =>
+const Level3Module3Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section1_4',
@@ -710,7 +710,7 @@ const Level3Module3Section1_4 = lazy(() =>
     )
   )
 );
-const Level3Module3Section1_5 = lazy(() =>
+const Level3Module3Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section1_5',
@@ -718,7 +718,7 @@ const Level3Module3Section1_5 = lazy(() =>
     )
   )
 );
-const Level3Module3Section2 = lazy(() =>
+const Level3Module3Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section2',
@@ -726,7 +726,7 @@ const Level3Module3Section2 = lazy(() =>
     )
   )
 );
-const Level3Module3Section2_1 = lazy(() =>
+const Level3Module3Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section2_1',
@@ -734,7 +734,7 @@ const Level3Module3Section2_1 = lazy(() =>
     )
   )
 );
-const Level3Module3Section2_2 = lazy(() =>
+const Level3Module3Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section2_2',
@@ -742,7 +742,7 @@ const Level3Module3Section2_2 = lazy(() =>
     )
   )
 );
-const Level3Module3Section2_3 = lazy(() =>
+const Level3Module3Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section2_3',
@@ -750,7 +750,7 @@ const Level3Module3Section2_3 = lazy(() =>
     )
   )
 );
-const Level3Module3Section2_4 = lazy(() =>
+const Level3Module3Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section2_4',
@@ -758,7 +758,7 @@ const Level3Module3Section2_4 = lazy(() =>
     )
   )
 );
-const Level3Module3Section2_5 = lazy(() =>
+const Level3Module3Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section2_5',
@@ -766,7 +766,7 @@ const Level3Module3Section2_5 = lazy(() =>
     )
   )
 );
-const Level3Module3Section2_6 = lazy(() =>
+const Level3Module3Section2_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section2_6',
@@ -774,7 +774,7 @@ const Level3Module3Section2_6 = lazy(() =>
     )
   )
 );
-const Level3Module3Section3 = lazy(() =>
+const Level3Module3Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section3',
@@ -782,7 +782,7 @@ const Level3Module3Section3 = lazy(() =>
     )
   )
 );
-const Level3Module3Section3_1 = lazy(() =>
+const Level3Module3Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section3_1',
@@ -790,7 +790,7 @@ const Level3Module3Section3_1 = lazy(() =>
     )
   )
 );
-const Level3Module3Section3_2 = lazy(() =>
+const Level3Module3Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section3_2',
@@ -798,7 +798,7 @@ const Level3Module3Section3_2 = lazy(() =>
     )
   )
 );
-const Level3Module3Section3_3 = lazy(() =>
+const Level3Module3Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section3_3',
@@ -806,7 +806,7 @@ const Level3Module3Section3_3 = lazy(() =>
     )
   )
 );
-const Level3Module3Section3_4 = lazy(() =>
+const Level3Module3Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section3_4',
@@ -814,7 +814,7 @@ const Level3Module3Section3_4 = lazy(() =>
     )
   )
 );
-const Level3Module3Section3_5 = lazy(() =>
+const Level3Module3Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section3_5',
@@ -822,7 +822,7 @@ const Level3Module3Section3_5 = lazy(() =>
     )
   )
 );
-const Level3Module3Section4 = lazy(() =>
+const Level3Module3Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section4',
@@ -830,7 +830,7 @@ const Level3Module3Section4 = lazy(() =>
     )
   )
 );
-const Level3Module3Section4_1 = lazy(() =>
+const Level3Module3Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section4_1',
@@ -838,7 +838,7 @@ const Level3Module3Section4_1 = lazy(() =>
     )
   )
 );
-const Level3Module3Section4_2 = lazy(() =>
+const Level3Module3Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section4_2',
@@ -846,7 +846,7 @@ const Level3Module3Section4_2 = lazy(() =>
     )
   )
 );
-const Level3Module3Section4_3 = lazy(() =>
+const Level3Module3Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section4_3',
@@ -854,7 +854,7 @@ const Level3Module3Section4_3 = lazy(() =>
     )
   )
 );
-const Level3Module3Section4_4 = lazy(() =>
+const Level3Module3Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section4_4',
@@ -862,7 +862,7 @@ const Level3Module3Section4_4 = lazy(() =>
     )
   )
 );
-const Level3Module3Section4_5 = lazy(() =>
+const Level3Module3Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section4_5',
@@ -870,7 +870,7 @@ const Level3Module3Section4_5 = lazy(() =>
     )
   )
 );
-const Level3Module3Section4_6 = lazy(() =>
+const Level3Module3Section4_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section4_6',
@@ -878,7 +878,7 @@ const Level3Module3Section4_6 = lazy(() =>
     )
   )
 );
-const Level3Module3Section5 = lazy(() =>
+const Level3Module3Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section5',
@@ -886,7 +886,7 @@ const Level3Module3Section5 = lazy(() =>
     )
   )
 );
-const Level3Module3Section5_1 = lazy(() =>
+const Level3Module3Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section5_1',
@@ -894,7 +894,7 @@ const Level3Module3Section5_1 = lazy(() =>
     )
   )
 );
-const Level3Module3Section5_2 = lazy(() =>
+const Level3Module3Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section5_2',
@@ -902,7 +902,7 @@ const Level3Module3Section5_2 = lazy(() =>
     )
   )
 );
-const Level3Module3Section5_3 = lazy(() =>
+const Level3Module3Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section5_3',
@@ -910,7 +910,7 @@ const Level3Module3Section5_3 = lazy(() =>
     )
   )
 );
-const Level3Module3Section5_4 = lazy(() =>
+const Level3Module3Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section5_4',
@@ -918,7 +918,7 @@ const Level3Module3Section5_4 = lazy(() =>
     )
   )
 );
-const Level3Module3Section6 = lazy(() =>
+const Level3Module3Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section6',
@@ -926,7 +926,7 @@ const Level3Module3Section6 = lazy(() =>
     )
   )
 );
-const Level3Module3Section6_1 = lazy(() =>
+const Level3Module3Section6_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section6_1',
@@ -934,7 +934,7 @@ const Level3Module3Section6_1 = lazy(() =>
     )
   )
 );
-const Level3Module3Section6_2 = lazy(() =>
+const Level3Module3Section6_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section6_2',
@@ -942,7 +942,7 @@ const Level3Module3Section6_2 = lazy(() =>
     )
   )
 );
-const Level3Module3Section6_3 = lazy(() =>
+const Level3Module3Section6_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section6_3',
@@ -950,7 +950,7 @@ const Level3Module3Section6_3 = lazy(() =>
     )
   )
 );
-const Level3Module3Section6_4 = lazy(() =>
+const Level3Module3Section6_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section6_4',
@@ -958,7 +958,7 @@ const Level3Module3Section6_4 = lazy(() =>
     )
   )
 );
-const Level3Module3Section6_5 = lazy(() =>
+const Level3Module3Section6_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module3Section6_5',
@@ -966,12 +966,12 @@ const Level3Module3Section6_5 = lazy(() =>
     )
   )
 );
-const Level3Module4 = lazy(() =>
+const Level3Module4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Level3Module4', () => import('@/pages/apprentice-courses/Level3Module4'))
   )
 );
-const Level3Module4Section1 = lazy(() =>
+const Level3Module4Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section1',
@@ -979,7 +979,7 @@ const Level3Module4Section1 = lazy(() =>
     )
   )
 );
-const Level3Module4Section1_1 = lazy(() =>
+const Level3Module4Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section1_1',
@@ -987,7 +987,7 @@ const Level3Module4Section1_1 = lazy(() =>
     )
   )
 );
-const Level3Module4Section1_2 = lazy(() =>
+const Level3Module4Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section1_2',
@@ -995,7 +995,7 @@ const Level3Module4Section1_2 = lazy(() =>
     )
   )
 );
-const Level3Module4Section1_3 = lazy(() =>
+const Level3Module4Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section1_3',
@@ -1003,7 +1003,7 @@ const Level3Module4Section1_3 = lazy(() =>
     )
   )
 );
-const Level3Module4Section1_4 = lazy(() =>
+const Level3Module4Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section1_4',
@@ -1011,7 +1011,7 @@ const Level3Module4Section1_4 = lazy(() =>
     )
   )
 );
-const Level3Module4Section1_5 = lazy(() =>
+const Level3Module4Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section1_5',
@@ -1019,7 +1019,7 @@ const Level3Module4Section1_5 = lazy(() =>
     )
   )
 );
-const Level3Module4Section2 = lazy(() =>
+const Level3Module4Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section2',
@@ -1027,7 +1027,7 @@ const Level3Module4Section2 = lazy(() =>
     )
   )
 );
-const Level3Module4Section2_1 = lazy(() =>
+const Level3Module4Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section2_1',
@@ -1035,7 +1035,7 @@ const Level3Module4Section2_1 = lazy(() =>
     )
   )
 );
-const Level3Module4Section2_2 = lazy(() =>
+const Level3Module4Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section2_2',
@@ -1043,7 +1043,7 @@ const Level3Module4Section2_2 = lazy(() =>
     )
   )
 );
-const Level3Module4Section2_3 = lazy(() =>
+const Level3Module4Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section2_3',
@@ -1051,7 +1051,7 @@ const Level3Module4Section2_3 = lazy(() =>
     )
   )
 );
-const Level3Module4Section2_4 = lazy(() =>
+const Level3Module4Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section2_4',
@@ -1059,7 +1059,7 @@ const Level3Module4Section2_4 = lazy(() =>
     )
   )
 );
-const Level3Module4Section3 = lazy(() =>
+const Level3Module4Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section3',
@@ -1067,7 +1067,7 @@ const Level3Module4Section3 = lazy(() =>
     )
   )
 );
-const Level3Module4Section3_1 = lazy(() =>
+const Level3Module4Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section3_1',
@@ -1075,7 +1075,7 @@ const Level3Module4Section3_1 = lazy(() =>
     )
   )
 );
-const Level3Module4Section3_2 = lazy(() =>
+const Level3Module4Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section3_2',
@@ -1083,7 +1083,7 @@ const Level3Module4Section3_2 = lazy(() =>
     )
   )
 );
-const Level3Module4Section3_3 = lazy(() =>
+const Level3Module4Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section3_3',
@@ -1091,7 +1091,7 @@ const Level3Module4Section3_3 = lazy(() =>
     )
   )
 );
-const Level3Module4Section3_4 = lazy(() =>
+const Level3Module4Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section3_4',
@@ -1099,7 +1099,7 @@ const Level3Module4Section3_4 = lazy(() =>
     )
   )
 );
-const Level3Module4Section3_5 = lazy(() =>
+const Level3Module4Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section3_5',
@@ -1107,7 +1107,7 @@ const Level3Module4Section3_5 = lazy(() =>
     )
   )
 );
-const Level3Module4Section3_6 = lazy(() =>
+const Level3Module4Section3_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section3_6',
@@ -1115,7 +1115,7 @@ const Level3Module4Section3_6 = lazy(() =>
     )
   )
 );
-const Level3Module4Section4 = lazy(() =>
+const Level3Module4Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section4',
@@ -1123,7 +1123,7 @@ const Level3Module4Section4 = lazy(() =>
     )
   )
 );
-const Level3Module4Section4_1 = lazy(() =>
+const Level3Module4Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section4_1',
@@ -1131,7 +1131,7 @@ const Level3Module4Section4_1 = lazy(() =>
     )
   )
 );
-const Level3Module4Section4_2 = lazy(() =>
+const Level3Module4Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section4_2',
@@ -1139,7 +1139,7 @@ const Level3Module4Section4_2 = lazy(() =>
     )
   )
 );
-const Level3Module4Section4_3 = lazy(() =>
+const Level3Module4Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section4_3',
@@ -1147,7 +1147,7 @@ const Level3Module4Section4_3 = lazy(() =>
     )
   )
 );
-const Level3Module4Section4_4 = lazy(() =>
+const Level3Module4Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section4_4',
@@ -1155,7 +1155,7 @@ const Level3Module4Section4_4 = lazy(() =>
     )
   )
 );
-const Level3Module4Section4_5 = lazy(() =>
+const Level3Module4Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section4_5',
@@ -1163,7 +1163,7 @@ const Level3Module4Section4_5 = lazy(() =>
     )
   )
 );
-const Level3Module4Section5 = lazy(() =>
+const Level3Module4Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section5',
@@ -1171,7 +1171,7 @@ const Level3Module4Section5 = lazy(() =>
     )
   )
 );
-const Level3Module4Section5_1 = lazy(() =>
+const Level3Module4Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section5_1',
@@ -1179,7 +1179,7 @@ const Level3Module4Section5_1 = lazy(() =>
     )
   )
 );
-const Level3Module4Section5_2 = lazy(() =>
+const Level3Module4Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section5_2',
@@ -1187,7 +1187,7 @@ const Level3Module4Section5_2 = lazy(() =>
     )
   )
 );
-const Level3Module4Section5_3 = lazy(() =>
+const Level3Module4Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section5_3',
@@ -1195,7 +1195,7 @@ const Level3Module4Section5_3 = lazy(() =>
     )
   )
 );
-const Level3Module4Section5_4 = lazy(() =>
+const Level3Module4Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section5_4',
@@ -1203,7 +1203,7 @@ const Level3Module4Section5_4 = lazy(() =>
     )
   )
 );
-const Level3Module4Section5_5 = lazy(() =>
+const Level3Module4Section5_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section5_5',
@@ -1211,7 +1211,7 @@ const Level3Module4Section5_5 = lazy(() =>
     )
   )
 );
-const Level3Module4Section6 = lazy(() =>
+const Level3Module4Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section6',
@@ -1219,7 +1219,7 @@ const Level3Module4Section6 = lazy(() =>
     )
   )
 );
-const Level3Module4Section6_1 = lazy(() =>
+const Level3Module4Section6_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section6_1',
@@ -1227,7 +1227,7 @@ const Level3Module4Section6_1 = lazy(() =>
     )
   )
 );
-const Level3Module4Section6_2 = lazy(() =>
+const Level3Module4Section6_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section6_2',
@@ -1235,7 +1235,7 @@ const Level3Module4Section6_2 = lazy(() =>
     )
   )
 );
-const Level3Module4Section6_3 = lazy(() =>
+const Level3Module4Section6_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section6_3',
@@ -1243,7 +1243,7 @@ const Level3Module4Section6_3 = lazy(() =>
     )
   )
 );
-const Level3Module4Section6_4 = lazy(() =>
+const Level3Module4Section6_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module4Section6_4',
@@ -1251,12 +1251,12 @@ const Level3Module4Section6_4 = lazy(() =>
     )
   )
 );
-const Level3Module5 = lazy(() =>
+const Level3Module5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Level3Module5', () => import('@/pages/apprentice-courses/Level3Module5'))
   )
 );
-const Level3Module5Section1 = lazy(() =>
+const Level3Module5Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section1',
@@ -1264,7 +1264,7 @@ const Level3Module5Section1 = lazy(() =>
     )
   )
 );
-const Level3Module5Section1_1 = lazy(() =>
+const Level3Module5Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section1_1',
@@ -1272,7 +1272,7 @@ const Level3Module5Section1_1 = lazy(() =>
     )
   )
 );
-const Level3Module5Section1_2 = lazy(() =>
+const Level3Module5Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section1_2',
@@ -1280,7 +1280,7 @@ const Level3Module5Section1_2 = lazy(() =>
     )
   )
 );
-const Level3Module5Section1_3 = lazy(() =>
+const Level3Module5Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section1_3',
@@ -1288,7 +1288,7 @@ const Level3Module5Section1_3 = lazy(() =>
     )
   )
 );
-const Level3Module5Section1_4 = lazy(() =>
+const Level3Module5Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section1_4',
@@ -1296,7 +1296,7 @@ const Level3Module5Section1_4 = lazy(() =>
     )
   )
 );
-const Level3Module5Section1_5 = lazy(() =>
+const Level3Module5Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section1_5',
@@ -1304,7 +1304,7 @@ const Level3Module5Section1_5 = lazy(() =>
     )
   )
 );
-const Level3Module5Section1_6 = lazy(() =>
+const Level3Module5Section1_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section1_6',
@@ -1312,7 +1312,7 @@ const Level3Module5Section1_6 = lazy(() =>
     )
   )
 );
-const Level3Module5Section2 = lazy(() =>
+const Level3Module5Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section2',
@@ -1320,7 +1320,7 @@ const Level3Module5Section2 = lazy(() =>
     )
   )
 );
-const Level3Module5Section2_1 = lazy(() =>
+const Level3Module5Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section2_1',
@@ -1328,7 +1328,7 @@ const Level3Module5Section2_1 = lazy(() =>
     )
   )
 );
-const Level3Module5Section2_2 = lazy(() =>
+const Level3Module5Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section2_2',
@@ -1336,7 +1336,7 @@ const Level3Module5Section2_2 = lazy(() =>
     )
   )
 );
-const Level3Module5Section2_3 = lazy(() =>
+const Level3Module5Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section2_3',
@@ -1344,7 +1344,7 @@ const Level3Module5Section2_3 = lazy(() =>
     )
   )
 );
-const Level3Module5Section2_4 = lazy(() =>
+const Level3Module5Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section2_4',
@@ -1352,7 +1352,7 @@ const Level3Module5Section2_4 = lazy(() =>
     )
   )
 );
-const Level3Module5Section2_5 = lazy(() =>
+const Level3Module5Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section2_5',
@@ -1360,7 +1360,7 @@ const Level3Module5Section2_5 = lazy(() =>
     )
   )
 );
-const Level3Module5Section3 = lazy(() =>
+const Level3Module5Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section3',
@@ -1368,7 +1368,7 @@ const Level3Module5Section3 = lazy(() =>
     )
   )
 );
-const Level3Module5Section3_1 = lazy(() =>
+const Level3Module5Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section3_1',
@@ -1376,7 +1376,7 @@ const Level3Module5Section3_1 = lazy(() =>
     )
   )
 );
-const Level3Module5Section3_2 = lazy(() =>
+const Level3Module5Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section3_2',
@@ -1384,7 +1384,7 @@ const Level3Module5Section3_2 = lazy(() =>
     )
   )
 );
-const Level3Module5Section3_3 = lazy(() =>
+const Level3Module5Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section3_3',
@@ -1392,7 +1392,7 @@ const Level3Module5Section3_3 = lazy(() =>
     )
   )
 );
-const Level3Module5Section3_4 = lazy(() =>
+const Level3Module5Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section3_4',
@@ -1400,7 +1400,7 @@ const Level3Module5Section3_4 = lazy(() =>
     )
   )
 );
-const Level3Module5Section3_5 = lazy(() =>
+const Level3Module5Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section3_5',
@@ -1408,7 +1408,7 @@ const Level3Module5Section3_5 = lazy(() =>
     )
   )
 );
-const Level3Module5Section3_6 = lazy(() =>
+const Level3Module5Section3_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section3_6',
@@ -1416,7 +1416,7 @@ const Level3Module5Section3_6 = lazy(() =>
     )
   )
 );
-const Level3Module5Section4 = lazy(() =>
+const Level3Module5Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section4',
@@ -1424,7 +1424,7 @@ const Level3Module5Section4 = lazy(() =>
     )
   )
 );
-const Level3Module5Section4_1 = lazy(() =>
+const Level3Module5Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section4_1',
@@ -1432,7 +1432,7 @@ const Level3Module5Section4_1 = lazy(() =>
     )
   )
 );
-const Level3Module5Section4_2 = lazy(() =>
+const Level3Module5Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section4_2',
@@ -1440,7 +1440,7 @@ const Level3Module5Section4_2 = lazy(() =>
     )
   )
 );
-const Level3Module5Section4_3 = lazy(() =>
+const Level3Module5Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section4_3',
@@ -1448,7 +1448,7 @@ const Level3Module5Section4_3 = lazy(() =>
     )
   )
 );
-const Level3Module5Section4_4 = lazy(() =>
+const Level3Module5Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section4_4',
@@ -1456,7 +1456,7 @@ const Level3Module5Section4_4 = lazy(() =>
     )
   )
 );
-const Level3Module5Section4_5 = lazy(() =>
+const Level3Module5Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section4_5',
@@ -1464,7 +1464,7 @@ const Level3Module5Section4_5 = lazy(() =>
     )
   )
 );
-const Level3Module5Section5 = lazy(() =>
+const Level3Module5Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section5',
@@ -1472,7 +1472,7 @@ const Level3Module5Section5 = lazy(() =>
     )
   )
 );
-const Level3Module5Section5_1 = lazy(() =>
+const Level3Module5Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section5_1',
@@ -1480,7 +1480,7 @@ const Level3Module5Section5_1 = lazy(() =>
     )
   )
 );
-const Level3Module5Section5_2 = lazy(() =>
+const Level3Module5Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section5_2',
@@ -1488,7 +1488,7 @@ const Level3Module5Section5_2 = lazy(() =>
     )
   )
 );
-const Level3Module5Section5_3 = lazy(() =>
+const Level3Module5Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section5_3',
@@ -1496,7 +1496,7 @@ const Level3Module5Section5_3 = lazy(() =>
     )
   )
 );
-const Level3Module5Section5_4 = lazy(() =>
+const Level3Module5Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section5_4',
@@ -1504,7 +1504,7 @@ const Level3Module5Section5_4 = lazy(() =>
     )
   )
 );
-const Level3Module5Section5_5 = lazy(() =>
+const Level3Module5Section5_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section5_5',
@@ -1512,7 +1512,7 @@ const Level3Module5Section5_5 = lazy(() =>
     )
   )
 );
-const Level3Module5Section6 = lazy(() =>
+const Level3Module5Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section6',
@@ -1520,7 +1520,7 @@ const Level3Module5Section6 = lazy(() =>
     )
   )
 );
-const Level3Module5Section6_1 = lazy(() =>
+const Level3Module5Section6_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section6_1',
@@ -1528,7 +1528,7 @@ const Level3Module5Section6_1 = lazy(() =>
     )
   )
 );
-const Level3Module5Section6_2 = lazy(() =>
+const Level3Module5Section6_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section6_2',
@@ -1536,7 +1536,7 @@ const Level3Module5Section6_2 = lazy(() =>
     )
   )
 );
-const Level3Module5Section6_3 = lazy(() =>
+const Level3Module5Section6_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section6_3',
@@ -1544,7 +1544,7 @@ const Level3Module5Section6_3 = lazy(() =>
     )
   )
 );
-const Level3Module5Section6_4 = lazy(() =>
+const Level3Module5Section6_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module5Section6_4',
@@ -1552,12 +1552,12 @@ const Level3Module5Section6_4 = lazy(() =>
     )
   )
 );
-const Level3Module6 = lazy(() =>
+const Level3Module6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Level3Module6', () => import('@/pages/apprentice-courses/Level3Module6'))
   )
 );
-const Level3Module6Section1 = lazy(() =>
+const Level3Module6Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section1',
@@ -1565,7 +1565,7 @@ const Level3Module6Section1 = lazy(() =>
     )
   )
 );
-const Level3Module6Section1_1 = lazy(() =>
+const Level3Module6Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section1_1',
@@ -1573,7 +1573,7 @@ const Level3Module6Section1_1 = lazy(() =>
     )
   )
 );
-const Level3Module6Section1_2 = lazy(() =>
+const Level3Module6Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section1_2',
@@ -1581,7 +1581,7 @@ const Level3Module6Section1_2 = lazy(() =>
     )
   )
 );
-const Level3Module6Section1_3 = lazy(() =>
+const Level3Module6Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section1_3',
@@ -1589,7 +1589,7 @@ const Level3Module6Section1_3 = lazy(() =>
     )
   )
 );
-const Level3Module6Section1_4 = lazy(() =>
+const Level3Module6Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section1_4',
@@ -1597,7 +1597,7 @@ const Level3Module6Section1_4 = lazy(() =>
     )
   )
 );
-const Level3Module6Section1_5 = lazy(() =>
+const Level3Module6Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section1_5',
@@ -1605,7 +1605,7 @@ const Level3Module6Section1_5 = lazy(() =>
     )
   )
 );
-const Level3Module6Section2 = lazy(() =>
+const Level3Module6Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section2',
@@ -1613,7 +1613,7 @@ const Level3Module6Section2 = lazy(() =>
     )
   )
 );
-const Level3Module6Section2_1 = lazy(() =>
+const Level3Module6Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section2_1',
@@ -1621,7 +1621,7 @@ const Level3Module6Section2_1 = lazy(() =>
     )
   )
 );
-const Level3Module6Section2_2 = lazy(() =>
+const Level3Module6Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section2_2',
@@ -1629,7 +1629,7 @@ const Level3Module6Section2_2 = lazy(() =>
     )
   )
 );
-const Level3Module6Section2_3 = lazy(() =>
+const Level3Module6Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section2_3',
@@ -1637,7 +1637,7 @@ const Level3Module6Section2_3 = lazy(() =>
     )
   )
 );
-const Level3Module6Section2_4 = lazy(() =>
+const Level3Module6Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section2_4',
@@ -1645,7 +1645,7 @@ const Level3Module6Section2_4 = lazy(() =>
     )
   )
 );
-const Level3Module6Section2_5 = lazy(() =>
+const Level3Module6Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section2_5',
@@ -1653,7 +1653,7 @@ const Level3Module6Section2_5 = lazy(() =>
     )
   )
 );
-const Level3Module6Section2_6 = lazy(() =>
+const Level3Module6Section2_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section2_6',
@@ -1661,7 +1661,7 @@ const Level3Module6Section2_6 = lazy(() =>
     )
   )
 );
-const Level3Module6Section3 = lazy(() =>
+const Level3Module6Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section3',
@@ -1669,7 +1669,7 @@ const Level3Module6Section3 = lazy(() =>
     )
   )
 );
-const Level3Module6Section3_1 = lazy(() =>
+const Level3Module6Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section3_1',
@@ -1677,7 +1677,7 @@ const Level3Module6Section3_1 = lazy(() =>
     )
   )
 );
-const Level3Module6Section3_2 = lazy(() =>
+const Level3Module6Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section3_2',
@@ -1685,7 +1685,7 @@ const Level3Module6Section3_2 = lazy(() =>
     )
   )
 );
-const Level3Module6Section3_3 = lazy(() =>
+const Level3Module6Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section3_3',
@@ -1693,7 +1693,7 @@ const Level3Module6Section3_3 = lazy(() =>
     )
   )
 );
-const Level3Module6Section3_4 = lazy(() =>
+const Level3Module6Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section3_4',
@@ -1701,7 +1701,7 @@ const Level3Module6Section3_4 = lazy(() =>
     )
   )
 );
-const Level3Module6Section3_5 = lazy(() =>
+const Level3Module6Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section3_5',
@@ -1709,7 +1709,7 @@ const Level3Module6Section3_5 = lazy(() =>
     )
   )
 );
-const Level3Module6Section4 = lazy(() =>
+const Level3Module6Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section4',
@@ -1717,7 +1717,7 @@ const Level3Module6Section4 = lazy(() =>
     )
   )
 );
-const Level3Module6Section4_1 = lazy(() =>
+const Level3Module6Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section4_1',
@@ -1725,7 +1725,7 @@ const Level3Module6Section4_1 = lazy(() =>
     )
   )
 );
-const Level3Module6Section4_2 = lazy(() =>
+const Level3Module6Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section4_2',
@@ -1733,7 +1733,7 @@ const Level3Module6Section4_2 = lazy(() =>
     )
   )
 );
-const Level3Module6Section4_3 = lazy(() =>
+const Level3Module6Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section4_3',
@@ -1741,7 +1741,7 @@ const Level3Module6Section4_3 = lazy(() =>
     )
   )
 );
-const Level3Module6Section4_4 = lazy(() =>
+const Level3Module6Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section4_4',
@@ -1749,7 +1749,7 @@ const Level3Module6Section4_4 = lazy(() =>
     )
   )
 );
-const Level3Module6Section4_5 = lazy(() =>
+const Level3Module6Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section4_5',
@@ -1757,7 +1757,7 @@ const Level3Module6Section4_5 = lazy(() =>
     )
   )
 );
-const Level3Module6Section4_6 = lazy(() =>
+const Level3Module6Section4_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section4_6',
@@ -1765,7 +1765,7 @@ const Level3Module6Section4_6 = lazy(() =>
     )
   )
 );
-const Level3Module6Section5 = lazy(() =>
+const Level3Module6Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section5',
@@ -1773,7 +1773,7 @@ const Level3Module6Section5 = lazy(() =>
     )
   )
 );
-const Level3Module6Section5_1 = lazy(() =>
+const Level3Module6Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section5_1',
@@ -1781,7 +1781,7 @@ const Level3Module6Section5_1 = lazy(() =>
     )
   )
 );
-const Level3Module6Section5_2 = lazy(() =>
+const Level3Module6Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section5_2',
@@ -1789,7 +1789,7 @@ const Level3Module6Section5_2 = lazy(() =>
     )
   )
 );
-const Level3Module6Section5_3 = lazy(() =>
+const Level3Module6Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section5_3',
@@ -1797,7 +1797,7 @@ const Level3Module6Section5_3 = lazy(() =>
     )
   )
 );
-const Level3Module6Section5_4 = lazy(() =>
+const Level3Module6Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section5_4',
@@ -1805,7 +1805,7 @@ const Level3Module6Section5_4 = lazy(() =>
     )
   )
 );
-const Level3Module6Section6 = lazy(() =>
+const Level3Module6Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section6',
@@ -1813,7 +1813,7 @@ const Level3Module6Section6 = lazy(() =>
     )
   )
 );
-const Level3Module6Section6_1 = lazy(() =>
+const Level3Module6Section6_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section6_1',
@@ -1821,7 +1821,7 @@ const Level3Module6Section6_1 = lazy(() =>
     )
   )
 );
-const Level3Module6Section6_2 = lazy(() =>
+const Level3Module6Section6_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section6_2',
@@ -1829,7 +1829,7 @@ const Level3Module6Section6_2 = lazy(() =>
     )
   )
 );
-const Level3Module6Section6_3 = lazy(() =>
+const Level3Module6Section6_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section6_3',
@@ -1837,7 +1837,7 @@ const Level3Module6Section6_3 = lazy(() =>
     )
   )
 );
-const Level3Module6Section6_4 = lazy(() =>
+const Level3Module6Section6_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section6_4',
@@ -1845,7 +1845,7 @@ const Level3Module6Section6_4 = lazy(() =>
     )
   )
 );
-const Level3Module6Section6_5 = lazy(() =>
+const Level3Module6Section6_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module6Section6_5',
@@ -1853,12 +1853,12 @@ const Level3Module6Section6_5 = lazy(() =>
     )
   )
 );
-const Level3Module7 = lazy(() =>
+const Level3Module7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Level3Module7', () => import('@/pages/apprentice-courses/Level3Module7'))
   )
 );
-const Level3Module7Section1 = lazy(() =>
+const Level3Module7Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section1',
@@ -1866,7 +1866,7 @@ const Level3Module7Section1 = lazy(() =>
     )
   )
 );
-const Level3Module7Section1_1 = lazy(() =>
+const Level3Module7Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section1_1',
@@ -1874,7 +1874,7 @@ const Level3Module7Section1_1 = lazy(() =>
     )
   )
 );
-const Level3Module7Section1_2 = lazy(() =>
+const Level3Module7Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section1_2',
@@ -1882,7 +1882,7 @@ const Level3Module7Section1_2 = lazy(() =>
     )
   )
 );
-const Level3Module7Section1_3 = lazy(() =>
+const Level3Module7Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section1_3',
@@ -1890,7 +1890,7 @@ const Level3Module7Section1_3 = lazy(() =>
     )
   )
 );
-const Level3Module7Section1_4 = lazy(() =>
+const Level3Module7Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section1_4',
@@ -1898,7 +1898,7 @@ const Level3Module7Section1_4 = lazy(() =>
     )
   )
 );
-const Level3Module7Section1_5 = lazy(() =>
+const Level3Module7Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section1_5',
@@ -1906,7 +1906,7 @@ const Level3Module7Section1_5 = lazy(() =>
     )
   )
 );
-const Level3Module7Section2 = lazy(() =>
+const Level3Module7Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section2',
@@ -1914,7 +1914,7 @@ const Level3Module7Section2 = lazy(() =>
     )
   )
 );
-const Level3Module7Section2_1 = lazy(() =>
+const Level3Module7Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section2_1',
@@ -1922,7 +1922,7 @@ const Level3Module7Section2_1 = lazy(() =>
     )
   )
 );
-const Level3Module7Section2_2 = lazy(() =>
+const Level3Module7Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section2_2',
@@ -1930,7 +1930,7 @@ const Level3Module7Section2_2 = lazy(() =>
     )
   )
 );
-const Level3Module7Section2_3 = lazy(() =>
+const Level3Module7Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section2_3',
@@ -1938,7 +1938,7 @@ const Level3Module7Section2_3 = lazy(() =>
     )
   )
 );
-const Level3Module7Section2_4 = lazy(() =>
+const Level3Module7Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section2_4',
@@ -1946,7 +1946,7 @@ const Level3Module7Section2_4 = lazy(() =>
     )
   )
 );
-const Level3Module7Section2_5 = lazy(() =>
+const Level3Module7Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section2_5',
@@ -1954,7 +1954,7 @@ const Level3Module7Section2_5 = lazy(() =>
     )
   )
 );
-const Level3Module7Section3 = lazy(() =>
+const Level3Module7Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section3',
@@ -1962,7 +1962,7 @@ const Level3Module7Section3 = lazy(() =>
     )
   )
 );
-const Level3Module7Section3_1 = lazy(() =>
+const Level3Module7Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section3_1',
@@ -1970,7 +1970,7 @@ const Level3Module7Section3_1 = lazy(() =>
     )
   )
 );
-const Level3Module7Section3_2 = lazy(() =>
+const Level3Module7Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section3_2',
@@ -1978,7 +1978,7 @@ const Level3Module7Section3_2 = lazy(() =>
     )
   )
 );
-const Level3Module7Section3_3 = lazy(() =>
+const Level3Module7Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section3_3',
@@ -1986,7 +1986,7 @@ const Level3Module7Section3_3 = lazy(() =>
     )
   )
 );
-const Level3Module7Section3_4 = lazy(() =>
+const Level3Module7Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section3_4',
@@ -1994,7 +1994,7 @@ const Level3Module7Section3_4 = lazy(() =>
     )
   )
 );
-const Level3Module7Section3_5 = lazy(() =>
+const Level3Module7Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section3_5',
@@ -2002,7 +2002,7 @@ const Level3Module7Section3_5 = lazy(() =>
     )
   )
 );
-const Level3Module7Section4 = lazy(() =>
+const Level3Module7Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section4',
@@ -2010,7 +2010,7 @@ const Level3Module7Section4 = lazy(() =>
     )
   )
 );
-const Level3Module7Section4_1 = lazy(() =>
+const Level3Module7Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section4_1',
@@ -2018,7 +2018,7 @@ const Level3Module7Section4_1 = lazy(() =>
     )
   )
 );
-const Level3Module7Section4_2 = lazy(() =>
+const Level3Module7Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section4_2',
@@ -2026,7 +2026,7 @@ const Level3Module7Section4_2 = lazy(() =>
     )
   )
 );
-const Level3Module7Section4_3 = lazy(() =>
+const Level3Module7Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section4_3',
@@ -2034,7 +2034,7 @@ const Level3Module7Section4_3 = lazy(() =>
     )
   )
 );
-const Level3Module7Section4_4 = lazy(() =>
+const Level3Module7Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section4_4',
@@ -2042,7 +2042,7 @@ const Level3Module7Section4_4 = lazy(() =>
     )
   )
 );
-const Level3Module7Section4_5 = lazy(() =>
+const Level3Module7Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section4_5',
@@ -2050,7 +2050,7 @@ const Level3Module7Section4_5 = lazy(() =>
     )
   )
 );
-const Level3Module7Section5 = lazy(() =>
+const Level3Module7Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section5',
@@ -2058,7 +2058,7 @@ const Level3Module7Section5 = lazy(() =>
     )
   )
 );
-const Level3Module7Section5_1 = lazy(() =>
+const Level3Module7Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section5_1',
@@ -2066,7 +2066,7 @@ const Level3Module7Section5_1 = lazy(() =>
     )
   )
 );
-const Level3Module7Section5_2 = lazy(() =>
+const Level3Module7Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section5_2',
@@ -2074,7 +2074,7 @@ const Level3Module7Section5_2 = lazy(() =>
     )
   )
 );
-const Level3Module7Section5_3 = lazy(() =>
+const Level3Module7Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section5_3',
@@ -2082,7 +2082,7 @@ const Level3Module7Section5_3 = lazy(() =>
     )
   )
 );
-const Level3Module7Section5_4 = lazy(() =>
+const Level3Module7Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section5_4',
@@ -2090,7 +2090,7 @@ const Level3Module7Section5_4 = lazy(() =>
     )
   )
 );
-const Level3Module7Section5_5 = lazy(() =>
+const Level3Module7Section5_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section5_5',
@@ -2098,7 +2098,7 @@ const Level3Module7Section5_5 = lazy(() =>
     )
   )
 );
-const Level3Module7Section5_6 = lazy(() =>
+const Level3Module7Section5_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module7Section5_6',
@@ -2106,12 +2106,12 @@ const Level3Module7Section5_6 = lazy(() =>
     )
   )
 );
-const Level3Module8 = lazy(() =>
+const Level3Module8 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Level3Module8', () => import('@/pages/apprentice-courses/Level3Module8'))
   )
 );
-const Level3Module8Section1 = lazy(() =>
+const Level3Module8Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module8Section1',
@@ -2119,7 +2119,7 @@ const Level3Module8Section1 = lazy(() =>
     )
   )
 );
-const Level3Module8Section2 = lazy(() =>
+const Level3Module8Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module8Section2',
@@ -2127,7 +2127,7 @@ const Level3Module8Section2 = lazy(() =>
     )
   )
 );
-const Level3Module8Section2Section1 = lazy(() =>
+const Level3Module8Section2Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module8Section2Section1',
@@ -2135,7 +2135,7 @@ const Level3Module8Section2Section1 = lazy(() =>
     )
   )
 );
-const Level3Module8Section2Section2 = lazy(() =>
+const Level3Module8Section2Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module8Section2Section2',
@@ -2143,7 +2143,7 @@ const Level3Module8Section2Section2 = lazy(() =>
     )
   )
 );
-const Level3Module8Section2Section3 = lazy(() =>
+const Level3Module8Section2Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module8Section2Section3',
@@ -2151,7 +2151,7 @@ const Level3Module8Section2Section3 = lazy(() =>
     )
   )
 );
-const Level3Module8Section2Section4 = lazy(() =>
+const Level3Module8Section2Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module8Section2Section4',
@@ -2159,7 +2159,7 @@ const Level3Module8Section2Section4 = lazy(() =>
     )
   )
 );
-const Level3Module8MockExam1 = lazy(() =>
+const Level3Module8MockExam1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module8MockExam1',
@@ -2167,7 +2167,7 @@ const Level3Module8MockExam1 = lazy(() =>
     )
   )
 );
-const Level3Module8MockExam2 = lazy(() =>
+const Level3Module8MockExam2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module8MockExam2',
@@ -2175,7 +2175,7 @@ const Level3Module8MockExam2 = lazy(() =>
     )
   )
 );
-const Level3Module8MockExam3 = lazy(() =>
+const Level3Module8MockExam3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module8MockExam3',
@@ -2183,7 +2183,7 @@ const Level3Module8MockExam3 = lazy(() =>
     )
   )
 );
-const Level3Module8MockExam4 = lazy(() =>
+const Level3Module8MockExam4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module8MockExam4',
@@ -2191,7 +2191,7 @@ const Level3Module8MockExam4 = lazy(() =>
     )
   )
 );
-const Level3Module8MockExam5 = lazy(() =>
+const Level3Module8MockExam5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module8MockExam5',
@@ -2199,7 +2199,7 @@ const Level3Module8MockExam5 = lazy(() =>
     )
   )
 );
-const Level3Module8MockExam6 = lazy(() =>
+const Level3Module8MockExam6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module8MockExam6',
@@ -2207,7 +2207,7 @@ const Level3Module8MockExam6 = lazy(() =>
     )
   )
 );
-const Level3Module8MockExam7 = lazy(() =>
+const Level3Module8MockExam7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module8MockExam7',
@@ -2215,7 +2215,7 @@ const Level3Module8MockExam7 = lazy(() =>
     )
   )
 );
-const Level3Module8MockExam8 = lazy(() =>
+const Level3Module8MockExam8 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level3Module8MockExam8',

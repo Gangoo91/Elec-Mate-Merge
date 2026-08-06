@@ -29,7 +29,7 @@ export function SearchResultsGrid({
     return (
       <div className="flex flex-col items-center justify-center py-16">
         <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-        <p className="mt-4 text-muted-foreground">Searching products...</p>
+        <p className="mt-4 text-white">Searching products...</p>
       </div>
     );
   }
@@ -38,9 +38,9 @@ export function SearchResultsGrid({
   if (!isLoading && products.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-16">
-        <Package className="h-16 w-16 text-muted-foreground/50" />
+        <Package className="h-16 w-16 text-white/50" />
         <h3 className="mt-4 text-lg font-medium">No products found</h3>
-        <p className="mt-2 text-muted-foreground text-center max-w-md">
+        <p className="mt-2 text-white text-center max-w-md">
           Try adjusting your search terms or filters to find what you're looking for.
         </p>
       </div>
@@ -50,12 +50,12 @@ export function SearchResultsGrid({
   return (
     <div className="space-y-0">
       {/* Results Header */}
-      <div className="flex items-center justify-between px-4 py-3 bg-muted/30 rounded-t-lg">
-        <p className="text-sm text-muted-foreground">
+      <div className="flex items-center justify-between px-4 py-3 bg-white/[0.04] rounded-t-lg">
+        <p className="text-sm text-white">
           Showing <span className="font-medium text-foreground">{products.length}</span> of{' '}
           <span className="font-medium text-foreground">{total.toLocaleString()}</span> results
         </p>
-        {isLoading && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />}
+        {isLoading && <Loader2 className="h-4 w-4 animate-spin text-white" />}
       </div>
 
       {/* Results List */}
@@ -139,7 +139,7 @@ function Pagination({
       <div className="hidden sm:flex items-center gap-1">
         {getPageNumbers().map((page, index) =>
           page === 'ellipsis' ? (
-            <span key={`ellipsis-${index}`} className="px-2 text-muted-foreground">
+            <span key={`ellipsis-${index}`} className="px-2 text-white">
               ...
             </span>
           ) : (
@@ -161,7 +161,7 @@ function Pagination({
       </div>
 
       {/* Mobile Page Indicator */}
-      <span className="sm:hidden px-4 text-sm text-muted-foreground">
+      <span className="sm:hidden px-4 text-sm text-white">
         Page {currentPage} of {totalPages}
       </span>
 

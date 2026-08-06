@@ -9,8 +9,8 @@ import { module2QuestionBank as module2Questions } from '@/data/apprentice-cours
 export default function L2ElectricalPrinciplesMockExamPage() {
   return (
     <PublicMockExamPage
-      title={`Free Level 2 Mock Exam: Electrical Principles (Unit 2)`}
-      description={`Free Level 2 Electrical Principles mock exam — 25 Qs from 301-Q bank. AC/DC theory, Ohm’s Law, power, magnetism, three-phase, capacitance, transformers.`}
+      title={`C&G 2365-02 Level 2 Mock Exam with Answers — Electrical Principles`}
+      description={`Free City & Guilds 2365-02 Level 2 mock exam with answers explained — Electrical Principles. 25 Qs from 301-Q bank. AC/DC theory, Ohm’s Law, power, magnetism, three-phase, capacitance, transformers.`}
       slug="level-2-electrical-principles"
       heading={`Level 2 Electrical Principles Mock Exam`}
       intro={`Free mock exam for Level 2 Electrical apprentices on Unit 202 (Electrical Principles). 25 questions from a 301-question bank covering AC and DC theory, Ohm’s Law and power, magnetism and induction, three-phase systems, capacitance and inductance, transformer principles and the SI unit system.`}

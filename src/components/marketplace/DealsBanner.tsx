@@ -53,7 +53,7 @@ export function DealsBanner({ className }: DealsBannerProps) {
           className
         )}
       >
-        <div className="h-24 bg-muted rounded-lg" />
+        <div className="h-24 bg-white/[0.06] rounded-lg" />
       </div>
     );
   }
@@ -77,7 +77,7 @@ export function DealsBanner({ className }: DealsBannerProps) {
           <Flame className="h-5 w-5 text-orange-500" />
           <span className="font-semibold text-orange-500">Deals of the Day</span>
         </div>
-        <div className="flex items-center gap-1 text-sm text-muted-foreground">
+        <div className="flex items-center gap-1 text-sm text-white">
           <Clock className="h-4 w-4" />
           <span>{currentDeal.time_remaining}</span>
         </div>
@@ -123,7 +123,7 @@ export function DealsBanner({ className }: DealsBannerProps) {
                     'w-2.5 h-2.5 rounded-full transition-all',
                     index === currentIndex
                       ? 'bg-orange-500 scale-125'
-                      : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                      : 'bg-white/[0.06]-foreground/30 hover:bg-white/[0.06]-foreground/50'
                   )}
                 />
               </button>
@@ -151,7 +151,7 @@ function DealCard({ deal }: { deal: MarketplaceDeal }) {
             loading="lazy"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-muted">
+          <div className="w-full h-full flex items-center justify-center bg-white/[0.06]">
             <Flame className="h-8 w-8 text-orange-500" />
           </div>
         )}
@@ -162,7 +162,7 @@ function DealCard({ deal }: { deal: MarketplaceDeal }) {
         <h3 className="font-medium line-clamp-2">{deal.product_name}</h3>
         <div className="flex items-center justify-center sm:justify-start gap-2 mt-1">
           <SupplierBadge name={deal.supplier_name} slug={deal.supplier_slug} />
-          <span className="text-sm font-bold text-green-500">{deal.discount_percentage}% OFF</span>
+          <span className="text-sm font-bold text-elec-yellow">{deal.discount_percentage}% OFF</span>
         </div>
       </div>
 
@@ -170,7 +170,7 @@ function DealCard({ deal }: { deal: MarketplaceDeal }) {
       <div className="text-center sm:text-right">
         <p className="text-2xl font-bold text-elec-yellow">£{formatPrice(deal.deal_price)}</p>
         {deal.original_price && (
-          <p className="text-sm text-muted-foreground line-through">
+          <p className="text-sm text-white line-through">
             £{formatPrice(deal.original_price)}
           </p>
         )}

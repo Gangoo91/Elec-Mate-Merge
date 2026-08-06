@@ -55,7 +55,7 @@ const faqs = [
   {
     question: 'Why does a replacement consumer unit in Cardiff need a metal enclosure?',
     answer:
-      'Amendment 2 to BS 7671:2008, in force since 1 July 2016, introduced Regulation 421.1.201. This requires that consumer units in domestic premises be enclosed in a cabinet or enclosure made of non-combustible material. Steel enclosures comply; plastic ones do not. The reason for the change was evidence from electrical fire investigations showing that plastic consumer unit enclosures could ignite during arcing faults and spread fire into the building structure. This requirement applies across the UK including Cardiff and all Welsh properties.',
+      'Amendment 3 to BS 7671:2008, with this requirement in force since 1 January 2016, introduced Regulation 421.1.201. This requires that consumer units in domestic premises be enclosed in a cabinet or enclosure made of non-combustible material. Steel enclosures comply; plastic ones do not. The reason for the change was evidence from electrical fire investigations showing that plastic consumer unit enclosures could ignite during arcing faults and spread fire into the building structure. This requirement applies across the UK including Cardiff and all Welsh properties.',
   },
   {
     question: 'How much does a consumer unit replacement cost in Cardiff?',
@@ -203,7 +203,7 @@ const sections = [
         <p>
           Regulation 421.1.201 of BS 7671 requires consumer units in domestic premises to be
           installed in enclosures made of non-combustible material. This requirement has applied
-          since 1 July 2016 (Amendment 2 to BS 7671:2008) and is carried forward in the current
+          since 1 January 2016 (Amendment 3 to BS 7671:2008) and is carried forward in the current
           standard BS 7671:2018+A4:2026. It applies throughout Wales, including Cardiff.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">

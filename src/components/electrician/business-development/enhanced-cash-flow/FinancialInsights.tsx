@@ -180,10 +180,18 @@ export const FinancialInsights = ({
                 <span className="text-sm text-elec-light/70">Break-Even</span>
               </div>
               <div className="text-2xl font-bold text-elec-light">
-                Month {financialMetrics.breakEvenMonth || 'N/A'}
+                {financialMetrics.breakEvenMonth > 0
+                  ? `Month ${financialMetrics.breakEvenMonth}`
+                  : 'Not in 12 months'}
               </div>
               <div className="text-xs text-elec-light/60">
-                {financialMetrics.breakEvenMonth <= 6 ? 'Healthy' : 'Needs attention'}
+                {/* breakEvenMonth is 0 when the business never breaks even.
+                    `0 <= 6` made that case read "Healthy". */}
+                {financialMetrics.breakEvenMonth === 0
+                  ? 'Never breaks even on this plan'
+                  : financialMetrics.breakEvenMonth <= 6
+                    ? 'Healthy'
+                    : 'Needs attention'}
               </div>
             </div>
           </div>

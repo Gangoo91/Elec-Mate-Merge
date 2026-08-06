@@ -46,7 +46,7 @@ const keyTakeaways = [
   'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 require all private landlords in Southampton to obtain an EICR before a new tenancy begins and at least every five years thereafter.',
   'Southampton City Council is the local housing authority responsible for enforcing the 2020 Regulations. Landlords in breach face civil penalties of up to £30,000 per breach.',
   'Southampton has a substantial student rental market centred on Portswood and Swaythling, driven by the University of Southampton and Southampton Solent University. HMOs in these areas face mandatory licensing and EICR compliance obligations.',
-  'If the EICR identifies C1 or C2 observations (classified under BS 7671 Section 631), landlords must complete remedial work within 28 days or sooner if specified by the inspector.',
+  'If the EICR identifies C1 or C2 observations (classified under BS 7671 Chapter 65), landlords must complete remedial work within 28 days or sooner if specified by the inspector.',
   'RCD protection is required on socket-outlet circuits under Regulation 411.3.3 of BS 7671. Many older Southampton terraced rental properties in Portswood and St Denys lack RCD protection, making C2 findings common in periodic inspections.',
 ];
 
@@ -162,7 +162,7 @@ const sections = [
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
-                (Section 631 covers periodic inspection and testing).
+                (Chapter 65 covers periodic inspection and testing).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -437,7 +437,7 @@ const sections = [
     content: (
       <>
         <p>
-          When an EICR identifies C1 or C2 observations (classified under BS 7671 Section 631), the
+          When an EICR identifies C1 or C2 observations (classified under BS 7671 Chapter 65), the
           landlord is legally required to complete remedial work within strict timescales.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

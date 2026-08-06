@@ -386,3 +386,11 @@ verify_jwt = false
 # verify_jwt=true here silently 401'd ALL RC deliveries (2026-08-01 incident).
 [functions.revenuecat-webhook]
 verify_jwt = false
+
+# proxy-image — served directly into <img src>, which cannot send an
+# Authorization header. With the default verify_jwt it answered every product
+# photo with 401, so the whole marketplace rendered blank. Safe to expose: the
+# function only fetches from a fixed allowlist of supplier domains, caps the
+# response at 2 MB and accepts GET only.
+[functions.proxy-image]
+verify_jwt = false

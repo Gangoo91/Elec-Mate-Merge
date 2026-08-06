@@ -29,7 +29,7 @@ const faqs = [
   {
     question: 'When should I issue an EIC instead of a Minor Works certificate?',
     answer:
-      'An Electrical Installation Certificate (EIC) must be issued whenever a new circuit is installed. This includes running a new cable from the distribution board with a new protective device (MCB, RCBO, or fuse). Examples include installing a new radial circuit for an electric shower, a new cooker circuit, a new ring final circuit, an EV charger circuit, or any circuit forming part of a complete rewire. If the work involves only additions or alterations to an existing circuit — such as adding a socket outlet to an existing ring — a Minor Electrical Installation Works Certificate is appropriate instead. The key distinction is whether a new circuit has been created. BS 7671 Section 631 covers the EIC requirement.',
+      'An Electrical Installation Certificate (EIC) must be issued whenever a new circuit is installed. This includes running a new cable from the distribution board with a new protective device (MCB, RCBO, or fuse). Examples include installing a new radial circuit for an electric shower, a new cooker circuit, a new ring final circuit, an EV charger circuit, or any circuit forming part of a complete rewire. If the work involves only additions or alterations to an existing circuit — such as adding a socket outlet to an existing ring — a Minor Electrical Installation Works Certificate is appropriate instead. The key distinction is whether a new circuit has been created. BS 7671 Chapter 65 covers the EIC requirement.',
   },
   {
     question: 'Can one person sign all three roles on an EIC?',
@@ -242,7 +242,7 @@ export default function EICCertificatePage() {
             <p>
               An Electrical Installation Certificate (EIC) is the formal document issued upon
               completion of a new electrical installation or the installation of new circuits. It is
-              required by BS 7671 Section 631, which states that upon completion of the verification
+              required by BS 7671 Chapter 65, which states that upon completion of the verification
               of a new installation or an addition or alteration to an existing installation which
               includes new circuits, an Electrical Installation Certificate shall be provided.
             </p>
@@ -543,9 +543,9 @@ export default function EICCertificatePage() {
                   AC final circuits supplying luminaires shall have additional protection by a 30 mA
                   RCD — this must be verified on the schedule of inspections for every lighting
                   circuit. Regulation 421.1.7 (new in A4:2026) recommends arc fault detection
-                  devices (AFDDs) on AC final circuits, and makes them mandatory for Higher Risk
-                  Residential Buildings, HMOs, purpose-built student accommodation, and care homes;
-                  where AFDDs are fitted their operational indication shall be confirmed (Regs
+                  devices (AFDDs) on AC final circuits. The wording is advisory — it does not make
+                  them mandatory, and it is not scoped to particular premises types such as HMOs or
+                  care homes. Where AFDDs are fitted their operational indication shall be confirmed (Regs
                   421.1.7, 532.6, 651.2(e)) and the A4:2026 Appendix 6 model form includes a field
                   to record AFDD details.
                 </p>

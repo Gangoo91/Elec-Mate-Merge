@@ -1,12 +1,21 @@
 import { useState } from 'react';
 import { CalculatorValidator, ValidationResult } from '@/services/calculatorValidation';
 
+/** Multiplier applied to V x I to obtain apparent power S. */
+const phaseFactor = (phases: 'single' | 'three') => (phases === 'three' ? Math.sqrt(3) : 1);
+
 export const useCalculator = () => {
   const [activePower, setActivePower] = useState<string>('');
   const [apparentPower, setApparentPower] = useState<string>('');
   const [current, setCurrent] = useState<string>('');
   const [voltage, setVoltage] = useState<string>('');
   const [calculationMethod, setCalculationMethod] = useState<'power' | 'currentVoltage'>('power');
+  // Supply arrangement. Apparent power from V and I is S = V x I single-phase but
+  // S = sqrt(3) x V(line) x I(line) three-phase. Without this the hook silently
+  // treated every V/I entry as single-phase and under-stated S by a factor of
+  // 1.732 on a three-phase load, which over-stated the power factor by the same
+  // factor (frequently past 1.0, where the clamp then hid it).
+  const [phases, setPhases] = useState<'single' | 'three'>('single');
   const [powerFactor, setPowerFactor] = useState<string | null>(null);
   const [targetPF, setTargetPF] = useState<string>('0.95');
   const [pfType, setPfType] = useState<string>('lagging');
@@ -122,11 +131,13 @@ export const useCalculator = () => {
       apparentValue = parseFloat(apparentPower);
       pf = activeValue / apparentValue;
     } else {
-      // Professional calculation: Power Factor = Active Power / (Voltage × Current)
+      // Power Factor = Active Power / Apparent Power, where
+      //   single-phase  S = V x I
+      //   three-phase   S = sqrt(3) x V(line) x I(line)
       activeValue = parseFloat(activePower);
       const volts = parseFloat(voltage);
       const amps = parseFloat(current);
-      apparentValue = volts * amps;
+      apparentValue = phaseFactor(phases) * volts * amps;
 
       // Enhanced validation: Active power cannot exceed apparent power
       if (activeValue > apparentValue) {
@@ -153,7 +164,14 @@ export const useCalculator = () => {
       const tpf = Math.min(Math.max(parseFloat(targetPF), 0.1), 1);
       const phi1 = Math.acos(pf);
       const phi2 = Math.acos(tpf);
-      const PkW = activeValue >= 1000 ? activeValue / 1000 : activeValue; // Accept W or kW input
+      // The Active Power field is declared in watts (unit="W", 1 MW ceiling), so the
+      // conversion to kW is unconditional. The previous guess-the-unit heuristic
+      // (`activeValue >= 1000 ? activeValue / 1000 : activeValue`) treated any load
+      // below 1 kW as if it were already in kW and over-stated the capacitor by
+      // 1000x — e.g. 800 W at 0.7 pf returned 559 kVAr instead of 0.56 kVAr.
+      // kVAr = P(kW) x (tan(arccos pf1) - tan(arccos pf2)) — fundamental PF-correction
+      // formula; BS 7671 publishes no table for it.
+      const PkW = activeValue / 1000;
       const kvar = Math.max(0, PkW * (Math.tan(phi1) - Math.tan(phi2)));
       setCapacitorKVAr(kvar.toFixed(2));
 
@@ -161,7 +179,7 @@ export const useCalculator = () => {
       if (calculationMethod === 'currentVoltage') {
         const volts = parseFloat(voltage);
         const newApparentPower = (PkW * 1000) / tpf; // Convert back to watts for apparent power
-        const newCurrent = newApparentPower / volts;
+        const newCurrent = newApparentPower / (phaseFactor(phases) * volts);
         setCurrentAfterCorrection(newCurrent.toFixed(2));
       }
     } else {
@@ -195,6 +213,7 @@ export const useCalculator = () => {
     setApparentPower('');
     setCurrent('');
     setVoltage('');
+    setPhases('single');
     setPowerFactor(null);
     setTargetPF('0.95');
     setPfType('lagging');
@@ -215,6 +234,8 @@ export const useCalculator = () => {
     setVoltage,
     calculationMethod,
     setCalculationMethod,
+    phases,
+    setPhases,
     powerFactor,
     setPowerFactor,
     targetPF,

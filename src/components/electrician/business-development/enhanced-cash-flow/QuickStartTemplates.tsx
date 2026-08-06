@@ -65,6 +65,7 @@ export const QuickStartTemplates = ({ onLoadTemplate }: QuickStartTemplatesProps
         timing: 3,
         variable: false,
         growth: 0.05,
+        vatable: false, // insurance is VAT exempt — nothing to reclaim
       },
       {
         name: 'Professional Fees (NICEIC/NAPIT)',
@@ -132,6 +133,7 @@ export const QuickStartTemplates = ({ onLoadTemplate }: QuickStartTemplatesProps
         frequency: 'monthly',
         variable: false,
         growth: 0.04,
+        vatable: false, // wages are outside the scope of VAT
       },
       {
         name: 'Vehicle Fleet Costs',
@@ -161,6 +163,7 @@ export const QuickStartTemplates = ({ onLoadTemplate }: QuickStartTemplatesProps
         timing: 3,
         variable: false,
         growth: 0.05,
+        vatable: false, // insurance is VAT exempt — nothing to reclaim
       },
       {
         name: 'Professional Fees & Memberships',

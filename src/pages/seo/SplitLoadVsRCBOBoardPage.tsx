@@ -231,7 +231,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 411.3.4</strong> — in domestic (household) premises, all socket
+                <strong>Regulation 411.3.3</strong> — in domestic (household) premises, socket
                 outlet circuits not exceeding 32A and all circuits in bathrooms must be protected by
                 a 30mA RCD. RCBO boards comply automatically; split load boards must ensure these
                 circuits are in an RCD group.

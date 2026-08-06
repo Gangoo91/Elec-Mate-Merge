@@ -1,5 +1,6 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { RecentReviews } from '@/components/seo/RecentReviews';
+import { CalculatorSurface } from '@/components/calculators/shared';
 import BatteryStorageCalculator from '@/components/apprentice/calculators/BatteryStorageCalculator';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
@@ -776,7 +777,7 @@ export default function BatteryStorageGuidePage() {
           <span className="text-yellow-400">Home Battery Guide for UK Electricians</span>
         </>
       }
-      embeddedTool={<BatteryStorageCalculator />}
+      embeddedTool={<CalculatorSurface><BatteryStorageCalculator /></CalculatorSurface>}
       heroSubtitle="Home battery storage is booming. This guide covers AC-coupled vs DC-coupled systems, battery sizing, inverters, safety requirements, MCS certification, DNO notification, and the electrical installation and certification process."
       readingTime={15}
       answerBox={{

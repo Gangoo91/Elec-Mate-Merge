@@ -44,7 +44,7 @@ const keyTakeaways = [
   'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 require all private landlords in Newcastle upon Tyne to obtain an EICR before a new tenancy begins and at least every five years thereafter.',
   'Newcastle City Council is one of the busier local authorities for EICR enforcement following the 2020 Regulations — particularly in HMO-dense areas such as Jesmond, Heaton, and Sandyford. Landlords in breach face civil penalties of up to £30,000 per breach.',
   "Newcastle and Northumbria Universities together generate one of the UK's largest student HMO markets. Jesmond, Heaton, and Sandyford carry especially high concentrations of student rental properties, and the council's HMO licensing team is active in all three areas.",
-  'If the EICR identifies C1 or C2 observations (classified under BS 7671 Section 631), landlords must complete remedial work within 28 days or sooner if specified by the inspector.',
+  'If the EICR identifies C1 or C2 observations (classified under BS 7671 Chapter 65), landlords must complete remedial work within 28 days or sooner if specified by the inspector.',
   "Newcastle's older housing stock — particularly Tyneside flats from the 1880s–1920s and Victorian terraces in Heaton and Byker — commonly presents absent RCDs (Regulation 411.3.3), rubber-insulated wiring, and outdated TN-S earthing arrangements. C2 findings on first EICRs are very common.",
 ];
 
@@ -160,7 +160,7 @@ const sections = [
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
-                (Section 631 covers periodic inspection and testing).
+                (Chapter 65 covers periodic inspection and testing).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -451,7 +451,7 @@ const sections = [
     content: (
       <>
         <p>
-          When an EICR identifies C1 or C2 observations (classified under BS 7671 Section 631), the
+          When an EICR identifies C1 or C2 observations (classified under BS 7671 Chapter 65), the
           landlord is legally required to complete remedial work within strict timescales.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

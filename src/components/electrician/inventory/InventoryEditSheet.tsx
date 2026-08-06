@@ -1,5 +1,9 @@
 import { useReducer, useState, useEffect } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
+import {
+  useInventoryMovements,
+  describeMovementReason,
+} from '@/hooks/useInventoryMovements';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -85,6 +89,7 @@ export function InventoryEditSheet({
   const [form, dispatch] = useReducer(formReducer, INITIAL_STATE);
   const [saving, setSaving] = useState(false);
   const [moving, setMoving] = useState(false);
+  const { movements, loading: movementsLoading } = useInventoryMovements(item?.id);
 
   // Sync form when item changes
   useEffect(() => {
@@ -143,10 +148,11 @@ export function InventoryEditSheet({
 
   return (
     <Sheet open={!!item} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
+      <SheetContent side="bottom"
+          className="h-[88vh] overflow-hidden rounded-t-2xl border-t border-white/[0.14] bg-[#141419] p-0 focus:outline-none focus-visible:outline-none">
+        <div className="flex h-full flex-col">
           {/* Header */}
-          <div className="px-4 pt-6 pb-3 border-b border-white/[0.06]">
+          <div className="mx-auto w-full max-w-5xl border-b border-white/[0.08] px-4 pb-4 pt-6">
             <h2 className="text-lg font-semibold text-white">Edit Item</h2>
             <p className="text-[12px] text-white mt-0.5">Update quantity, location or details</p>
           </div>
@@ -154,7 +160,7 @@ export function InventoryEditSheet({
           {/* Form */}
           <div
             className={cn(
-              'flex-1 overflow-y-auto px-4 py-4 space-y-6 transition-opacity',
+              'mx-auto w-full max-w-5xl flex-1 overflow-y-auto px-4 py-5 transition-opacity',
               saving && 'pointer-events-none opacity-60'
             )}
           >
@@ -206,17 +212,17 @@ export function InventoryEditSheet({
 
             {/* Name */}
             <div className="space-y-2">
-              <Label className="text-sm font-medium text-white">Item Name</Label>
+              <Label className="text-[12px] font-medium text-white mb-1 block">Item Name</Label>
               <Input
                 value={form.name}
                 onChange={(e) => dispatch({ type: 'SET', field: 'name', value: e.target.value })}
-                className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                className="input-underline h-12 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
               />
             </div>
 
             {/* Category pills */}
             <div className="space-y-2">
-              <Label className="text-sm font-medium text-white">Category</Label>
+              <Label className="text-[12px] font-medium text-white mb-1 block">Category</Label>
               <div className="flex flex-wrap gap-2">
                 {INVENTORY_CATEGORIES.map((cat) => (
                   <button
@@ -224,10 +230,10 @@ export function InventoryEditSheet({
                     type="button"
                     onClick={() => dispatch({ type: 'SET', field: 'category', value: cat.id })}
                     className={cn(
-                      'px-4 py-2.5 rounded-full text-[13px] font-medium touch-manipulation transition-all min-h-[44px]',
+                      'flex min-h-[44px] items-center rounded-xl border px-4 text-[13px] transition-colors touch-manipulation',
                       form.category === cat.id
                         ? cat.pillActiveClass
-                        : 'bg-white/[0.04] text-white border border-white/[0.06]'
+                        : 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:border-white/[0.25]'
                     )}
                   >
                     {cat.label}
@@ -238,15 +244,15 @@ export function InventoryEditSheet({
 
             {/* Unit */}
             <div className="space-y-2">
-              <Label className="text-sm font-medium text-white">Unit</Label>
+              <Label className="text-[12px] font-medium text-white mb-1 block">Unit</Label>
               <Select
                 value={form.unit}
                 onValueChange={(v) => dispatch({ type: 'SET', field: 'unit', value: v })}
               >
-                <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow">
+                <SelectTrigger className="h-12 rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white transition-colors hover:border-white/[0.24] focus:border-elec-yellow focus:ring-0 touch-manipulation">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-white">
+                <SelectContent className="border-white/[0.1] bg-[#111114] text-white">
                   {INVENTORY_UNITS.map((u) => (
                     <SelectItem key={u.id} value={u.id}>
                       {u.pluralLabel}
@@ -258,7 +264,7 @@ export function InventoryEditSheet({
 
             {/* Location — with instant move */}
             <div className="space-y-2">
-              <Label className="text-sm font-medium text-white">
+              <Label className="text-[12px] font-medium text-white mb-1 block">
                 Location{' '}
                 {moving && <Loader2 className="inline h-3 w-3 animate-spin text-teal-400 ml-1" />}
                 {!moving && form.location !== item.location && (
@@ -273,10 +279,10 @@ export function InventoryEditSheet({
                     onClick={() => handleMove(loc.id)}
                     disabled={moving}
                     className={cn(
-                      'px-4 py-2.5 rounded-full text-[13px] font-medium touch-manipulation transition-all min-h-[44px]',
+                      'flex min-h-[44px] items-center rounded-xl border px-4 text-[13px] transition-colors touch-manipulation',
                       form.location === loc.id
-                        ? 'bg-teal-500/20 text-white border border-teal-500/40'
-                        : 'bg-white/[0.04] text-white border border-white/[0.06]',
+                        ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                        : 'border-white/[0.12] bg-white/[0.06] font-medium text-white hover:border-white/[0.25]',
                       moving && 'opacity-50'
                     )}
                   >
@@ -287,23 +293,25 @@ export function InventoryEditSheet({
             </div>
 
             {/* Low stock / cost / supplier / notes */}
-            <div className="space-y-4">
+            <div className="grid gap-4 lg:grid-cols-2 lg:items-start [&>div]:rounded-2xl [&>div]:border [&>div]:border-white/[0.12] [&>div]:bg-white/[0.04] [&>div]:p-4">
               <div className="space-y-2">
-                <Label className="text-sm font-medium text-white">Low Stock Alert</Label>
+                <Label className="text-[12px] font-medium text-white mb-1 block">
+                  Tell me when it drops below
+                </Label>
                 <Input
                   type="number"
                   value={form.lowStockThreshold}
                   onChange={(e) =>
                     dispatch({ type: 'SET', field: 'lowStockThreshold', value: e.target.value })
                   }
-                  placeholder="Alert when below..."
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
+                  placeholder="No alert"
+                  className="input-underline h-12 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
                   min={0}
                   step={step}
                 />
               </div>
               <div className="space-y-2">
-                <Label className="text-sm font-medium text-white">Unit Cost (£)</Label>
+                <Label className="text-[12px] font-medium text-white mb-1 block">Unit Cost (£)</Label>
                 <Input
                   type="number"
                   value={form.unitCost}
@@ -311,13 +319,13 @@ export function InventoryEditSheet({
                     dispatch({ type: 'SET', field: 'unitCost', value: e.target.value })
                   }
                   placeholder="Cost per unit"
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
+                  className="input-underline h-12 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
                   min={0}
                   step={0.01}
                 />
               </div>
               <div className="space-y-2">
-                <Label className="text-sm font-medium text-white">Supplier</Label>
+                <Label className="text-[12px] font-medium text-white mb-1 block">Supplier</Label>
                 <Input
                   value={form.supplier}
                   onChange={(e) =>
@@ -325,7 +333,7 @@ export function InventoryEditSheet({
                   }
                   list="supplier-suggestions-edit"
                   placeholder="e.g. CEF, Edmundson, Screwfix"
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
+                  className="input-underline h-12 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
                 />
                 <datalist id="supplier-suggestions-edit">
                   <option value="CEF" />
@@ -339,23 +347,68 @@ export function InventoryEditSheet({
                 </datalist>
               </div>
               <div className="space-y-2">
-                <Label className="text-sm font-medium text-white">Notes</Label>
+                <Label className="text-[12px] font-medium text-white mb-1 block">Notes</Label>
                 <Textarea
                   value={form.notes}
                   onChange={(e) => dispatch({ type: 'SET', field: 'notes', value: e.target.value })}
                   placeholder="Any extra details..."
-                  className="touch-manipulation text-base min-h-[80px] border-white/30 focus:border-yellow-500"
+                  className="min-h-[96px] w-full resize-none rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 py-2.5 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
                 />
               </div>
+            </div>
+
+            {/* Stock history. The ledger has been written on every invoice that
+                carries stock-linked items since ELE-1014 and shown nowhere, so
+                "why has my socket count dropped?" had no answer in the app. */}
+            <div className="border-t border-white/[0.08] pt-4">
+              <p className="mb-2 text-[13px] font-semibold tracking-tight text-white">
+                Stock history
+              </p>
+              {movementsLoading ? (
+                <p className="text-[12.5px] text-white">Loading…</p>
+              ) : movements.length === 0 ? (
+                <p className="text-[12.5px] text-white">
+                  Nothing recorded yet. Movements appear here when this item is used on an invoice.
+                </p>
+              ) : (
+                <ul className="space-y-1.5">
+                  {movements.map((m) => (
+                    <li
+                      key={m.id}
+                      className="flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-2.5"
+                    >
+                      <span
+                        className={cn(
+                          'text-[14px] font-bold tabular-nums',
+                          m.direction === 'in' ? 'text-emerald-400' : 'text-amber-400'
+                        )}
+                      >
+                        {m.direction === 'in' ? '+' : '−'}
+                        {m.quantity}
+                      </span>
+                      <span className="min-w-0 flex-1 truncate text-[12.5px] text-white">
+                        {describeMovementReason(m.reason, m.direction)}
+                        {m.note ? ` · ${m.note}` : ''}
+                      </span>
+                      <span className="flex-shrink-0 text-[11.5px] text-white">
+                        {new Date(m.createdAt).toLocaleDateString('en-GB', {
+                          day: 'numeric',
+                          month: 'short',
+                        })}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
 
           {/* Sticky footer — save + delete always visible */}
-          <div className="p-4 border-t border-white/[0.06] space-y-2">
+          <div className="mx-auto w-full max-w-5xl space-y-2 border-t border-white/[0.08] p-4">
             <Button
               onClick={handleSave}
               disabled={saving || !form.name.trim()}
-              className="w-full h-12 text-base font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black rounded-xl touch-manipulation"
+              className="h-12 w-full rounded-xl bg-elec-yellow text-base font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation disabled:bg-white/[0.08] disabled:text-white/40 disabled:hover:bg-white/[0.08] disabled:cursor-not-allowed disabled:opacity-100"
             >
               {saving ? 'Saving...' : 'Save Changes'}
             </Button>

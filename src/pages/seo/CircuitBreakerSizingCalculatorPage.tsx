@@ -242,7 +242,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
                   type (115 for copper/PVC, 143 for copper/XLPE). If the installed cable CSA is
                   greater than or equal to S, the cable is adequately protected.
                 </p>
-                <p className="text-white/70 text-xs mt-3">
+                <p className="text-white text-xs mt-3">
                   k = 115 applies to copper conductors incorporated in a PVC cable at 70&deg;C
                   initial temperature (BS 7671 Table 54.3); k = 143 applies to a separately run
                   insulated copper conductor not incorporated in a cable at 30&deg;C initial

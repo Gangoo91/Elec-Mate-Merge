@@ -8,6 +8,8 @@ interface FormulaStep {
   label: string;
   formula?: string;
   value?: string;
+  /** Worked answer for this step, shown after the formula. */
+  result?: string;
   description?: string;
 }
 
@@ -37,12 +39,12 @@ export const CalculatorFormula = ({
           'hover:bg-white/[0.04] transition-colors touch-manipulation'
         )}
       >
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           {title}
         </span>
         <ChevronDown
           className={cn(
-            'h-4 w-4 text-white/55 transition-transform duration-200',
+            'h-4 w-4 text-white transition-transform duration-200',
             isOpen && 'rotate-180'
           )}
         />
@@ -76,7 +78,7 @@ const FormulaStepItem = ({ step, stepNumber, isLast = false }: FormulaStepItemPr
       {!isLast && <div className="absolute left-3 top-7 bottom-0 w-px bg-white/[0.06]" />}
 
       <div className="flex gap-3">
-        <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-[11px] font-mono bg-white/[0.04] text-white/85">
+        <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-[11px] font-mono bg-white/[0.04] text-white">
           {stepNumber}
         </div>
 
@@ -84,7 +86,7 @@ const FormulaStepItem = ({ step, stepNumber, isLast = false }: FormulaStepItemPr
           <p className="text-[14px] font-medium text-white">{step.label}</p>
 
           {step.formula && (
-            <code className="block text-[12px] px-2.5 py-1.5 rounded-lg bg-black/30 text-white/85 font-mono overflow-x-auto">
+            <code className="block text-[12px] px-2.5 py-1.5 rounded-lg bg-black/30 text-white font-mono overflow-x-auto">
               {step.formula}
             </code>
           )}
@@ -94,7 +96,7 @@ const FormulaStepItem = ({ step, stepNumber, isLast = false }: FormulaStepItemPr
           )}
 
           {step.description && (
-            <p className="text-[12px] text-white/70 leading-relaxed">{step.description}</p>
+            <p className="text-[12px] text-white leading-relaxed">{step.description}</p>
           )}
         </div>
       </div>
@@ -112,7 +114,7 @@ export const InlineFormula = ({ formula, className }: InlineFormulaProps) => {
     <code
       className={cn(
         'inline-flex items-center px-2 py-0.5 rounded-md',
-        'bg-white/[0.04] text-white/85 text-[12px] font-mono',
+        'bg-white/[0.04] text-white text-[12px] font-mono',
         className
       )}
     >
@@ -145,7 +147,7 @@ export const FormulaReference = ({
         className
       )}
     >
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         {name}
       </span>
 
@@ -160,7 +162,7 @@ export const FormulaReference = ({
               <code className="px-1.5 py-0.5 rounded bg-white/[0.04] font-mono text-white">
                 {variable.symbol}
               </code>
-              <span className="text-white/70">= {variable.description}</span>
+              <span className="text-white">= {variable.description}</span>
             </div>
           ))}
         </div>

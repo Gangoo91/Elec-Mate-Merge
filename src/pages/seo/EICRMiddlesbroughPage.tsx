@@ -42,7 +42,7 @@ const keyTakeaways = [
   'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 require all private landlords in Middlesbrough to hold a valid EICR and renew it at least every five years.',
   'Middlesbrough Council is the local housing authority responsible for enforcement and can impose civil penalties of up to £30,000 per breach.',
   'Middlesbrough has a significant proportion of pre-1960s terraced and semi-detached housing — many properties in Pallister, Berwick Hills, Grove Hill, and North Ormesby present C2 EICR findings including absent RCD protection and deteriorated wiring.',
-  'C1 (danger present) and C2 (potentially dangerous) observations under BS 7671 Section 631 render an EICR Unsatisfactory, requiring all remedial work to be completed within 28 days.',
+  'C1 (danger present) and C2 (potentially dangerous) observations under BS 7671 Chapter 65 render an EICR Unsatisfactory, requiring all remedial work to be completed within 28 days.',
   'Middlesbrough offers some of the most competitive EICR prices in England due to low local labour rates and compact geography, typically £100 to £180 for a two-bedroom property.',
 ];
 

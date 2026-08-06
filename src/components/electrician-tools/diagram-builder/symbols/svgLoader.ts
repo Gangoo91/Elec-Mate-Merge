@@ -57,11 +57,25 @@ export async function loadSymbolSvg(symbolId: string): Promise<string> {
  * Call once at page mount for snappy symbol placement.
  * Non-blocking — failures are silently skipped.
  */
-export async function preloadAllSymbols(): Promise<void> {
-  const promises = symbolRegistry.map(async (entry) => {
-    if (svgCache.has(entry.id)) return;
+/** Concurrent fetches per batch — see `preloadAllSymbols`. */
+const PRELOAD_BATCH_SIZE = 12;
 
-    // Fetch SVG file first (our proper symbols)
+/**
+ * Warm the cache for every registry symbol.
+ *
+ * Fetched in batches rather than all 114 at once. The previous version fired
+ * the whole registry in parallel on page mount, which on a phone with job-site
+ * signal saturates the connection and delays the things the user is actually
+ * waiting for — the canvas and their saved rooms. Batching keeps the pipe free
+ * while still finishing well before anyone opens the symbol picker.
+ *
+ * Never rejects; individual failures fall back to the legacy inline SVGs and,
+ * failing that, are resolved lazily by `loadSymbolSvg`.
+ */
+export async function preloadAllSymbols(): Promise<void> {
+  const pending = symbolRegistry.filter((entry) => !svgCache.has(entry.id));
+
+  const loadOne = async (entry: (typeof symbolRegistry)[number]) => {
     try {
       const resp = await fetch(entry.svgPath);
       if (resp.ok) {
@@ -72,14 +86,15 @@ export async function preloadAllSymbols(): Promise<void> {
       // Fall through to legacy
     }
 
-    // Fallback to legacy inline SVGs
     const legacy = electricalSymbols.find((s) => s.id === entry.id);
     if (legacy?.svgXml) {
       svgCache.set(entry.id, resolveCurrentColor(legacy.svgXml));
     }
-  });
+  };
 
-  await Promise.allSettled(promises);
+  for (let i = 0; i < pending.length; i += PRELOAD_BATCH_SIZE) {
+    await Promise.allSettled(pending.slice(i, i + PRELOAD_BATCH_SIZE).map(loadOne));
+  }
 }
 
 /**

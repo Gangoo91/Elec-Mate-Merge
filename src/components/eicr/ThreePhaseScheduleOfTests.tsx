@@ -31,6 +31,7 @@ import {
   ThreePhaseCircuitGroup,
 } from '@/utils/threePhaseCalculations';
 import { useOrientation } from '@/hooks/useOrientation';
+import { isDeviceRow } from '@/utils/circuitNumbering';
 
 // Recipe class constants — chrome styling only.
 const cardCn =
@@ -175,13 +176,23 @@ export const ThreePhaseScheduleOfTests: React.FC<ThreePhaseScheduleOfTestsProps>
     if (!autoDetect) return [];
 
     // Convert TestResults to format expected by detectThreePhaseGroups
-    const circuits = testResults.map((r, idx) => ({
-      position: parseInt(r.circuitNumber || String(idx + 1)) || idx + 1,
-      rating: r.protectiveDeviceRating ? parseInt(r.protectiveDeviceRating) : null,
-      device: r.protectiveDeviceType || '',
-      label: r.circuitDescription || r.circuitDesignation || '',
-      phase: r.phaseType as '1P' | '3P' | undefined,
-    }));
+    // Device rows are excluded: their number is a dash, so the `idx + 1`
+    // fallback would invent a position that collides with a real way and
+    // could fabricate a three-pole group. Index is taken from the original
+    // array so the remaining fallbacks are unaffected.
+    const circuits = testResults
+      .map((r, idx) =>
+        isDeviceRow(r)
+          ? null
+          : {
+              position: parseInt(r.circuitNumber || String(idx + 1)) || idx + 1,
+              rating: r.protectiveDeviceRating ? parseInt(r.protectiveDeviceRating) : null,
+              device: r.protectiveDeviceType || '',
+              label: r.circuitDescription || r.circuitDesignation || '',
+              phase: r.phaseType as '1P' | '3P' | undefined,
+            }
+      )
+      .filter((c): c is NonNullable<typeof c> => c !== null);
 
     return detectThreePhaseGroups(circuits);
   }, [testResults, autoDetect]);
@@ -212,6 +223,12 @@ export const ThreePhaseScheduleOfTests: React.FC<ThreePhaseScheduleOfTestsProps>
       L3 = 0;
 
     testResults.forEach((r) => {
+      // A device row (incoming RCD, SPD, main switch) carries a rating but is
+      // not a load — an 80 A incoming RCD is not 40 A hanging off a phase.
+      // Its number is a dash, so it would also fall through effectivePhase's
+      // NaN path and land on L3. See ELE-1484.
+      if (isDeviceRow(r)) return;
+
       if (r.phaseType === '3P') {
         L1 += parseFloat(r.phaseBalanceL1 || '0') || 0;
         L2 += parseFloat(r.phaseBalanceL2 || '0') || 0;
@@ -260,6 +277,8 @@ export const ThreePhaseScheduleOfTests: React.FC<ThreePhaseScheduleOfTestsProps>
     const baseLoads: PhaseLoadData = { L1: 0, L2: 0, L3: 0 };
 
     testResults.forEach((r) => {
+      if (isDeviceRow(r)) return; // not a load — mirrors the totals loop above
+
       if (r.phaseType === '3P') {
         baseLoads.L1 += parseFloat(r.phaseBalanceL1 || '0') || 0;
         baseLoads.L2 += parseFloat(r.phaseBalanceL2 || '0') || 0;

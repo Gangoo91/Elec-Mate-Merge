@@ -23,6 +23,102 @@ export const asbestosCategories = [
   'Identification & Surveys',
   'Safe Working & PPE',
   'Emergency Procedures',
+  {
+    id: 201,
+    question: 'Under CAR 2012, exposure is \'sporadic and of low intensity\' where the airborne concentration does not exceed what?',
+    options: [
+      '0.6 fibres per cubic centimetre measured over ten minutes',
+      '0.1 fibres per cubic centimetre measured over four hours',
+      '1.0 fibres per cubic centimetre measured over one hour',
+      '0.3 fibres per cubic centimetre measured over thirty minutes',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The ACOP sets this at 0.6 fibres per cubic centimetre measured over a ten-minute period. It matters because sporadic and low intensity exposure is one of the conditions that can take work outside the notification, medical surveillance and record-keeping requirements — get it wrong and the wrong regime is applied.',
+    difficulty: 'advanced',
+    topic: 'CAR 2012',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 202,
+    question: 'Which of these is normally licensable work with asbestos?',
+    options: [
+      'Drilling a single hole through weathered asbestos cement sheet',
+      'Removing asbestos insulating board in poor condition',
+      'Collecting a sample for laboratory identification',
+      'Painting over sound, undamaged asbestos cement cladding',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Asbestos insulating board is one of the higher-risk materials and work on it is generally licensable. Asbestos cement binds fibres in a matrix that prevents most from being released, so work on it is typically non-licensed. Sampling for identification is also non-licensed. The material and its condition drive the classification, not the size of the job.',
+    difficulty: 'advanced',
+    topic: 'Licensing',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 203,
+    question: 'The duty to manage asbestos applies to which premises?',
+    options: [
+      'Domestic dwellings only, where built before 2000',
+      'All premises constructed before 1985 without exception',
+      'Non-domestic premises, including the common parts of residential blocks',
+      'Only premises where an asbestos survey has already identified ACMs',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The duty falls on whoever is responsible for maintenance and repair of non-domestic premises, and it extends to the common parts of domestic blocks such as stairwells, lift shafts and boiler rooms. It is not conditional on a survey having been done — the duty is precisely what triggers finding out.',
+    difficulty: 'advanced',
+    topic: 'Duty to Manage',
+    category: 'Legislation & Duty to Manage',
+  },
+  {
+    id: 204,
+    question: 'An electrician drilling into a ceiling void finds a board they suspect is AIB. What is the correct action?',
+    options: [
+      'Continue carefully using a dust mask and damp the area down',
+      'Complete the drilling then seal the hole with sealant',
+      'Take a sample themselves for identification before deciding',
+      'Stop work, leave the area, prevent access and report it',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Stop immediately, withdraw, prevent others entering and report. Continuing with a dust mask is not a control — a disposable mask offers no meaningful protection against asbestos fibres, and damping down does not undo fibres already released. Sampling is work for a competent person following a defined procedure.',
+    difficulty: 'advanced',
+    topic: 'Unplanned Disturbance',
+    category: 'Emergency Procedures',
+  },
+  {
+    id: 205,
+    question: 'Why is asbestos cement generally treated as lower risk than asbestos insulating board?',
+    options: [
+      'Its fibres are bound in a matrix that prevents most from being released',
+      'It contains only chrysotile, which is not classed as hazardous',
+      'It was manufactured after the 1985 amphibole ban',
+      'It is always found externally where fibres disperse safely',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The controlling factor is fibre release. Asbestos cement binds fibres in a dense matrix so relatively few become airborne when it is worked, whereas AIB is a friable board that releases fibres readily. Chrysotile is still a hazardous material — the difference is the matrix, not the fibre type.',
+    difficulty: 'advanced',
+    topic: 'Material Types',
+    category: 'Asbestos Types & Properties',
+  },
+  {
+    id: 206,
+    question: 'Which survey type is required before refurbishment or demolition work?',
+    options: [
+      'A management survey, as it covers all accessible areas',
+      'A refurbishment and demolition survey, which is fully intrusive',
+      'A visual inspection recorded in the asbestos register',
+      'No survey, provided the register shows no ACMs recorded',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A management survey locates ACMs that could be disturbed during normal occupancy and is not intrusive enough for construction work. A refurbishment and demolition survey is fully intrusive, reaching into the fabric where work will take place. Relying on a register compiled from a management survey is a common and dangerous shortcut.',
+    difficulty: 'advanced',
+    topic: 'Survey Types',
+    category: 'Identification & Surveys',
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -1127,7 +1223,7 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     options: [
       'They are two names for exactly the same scoring exercise',
       'The material assessment is carried out by the HSE; the priority assessment by the dutyholder',
-      'The material assessment scores the condition and type of the ACM itself, while the priority assessment considers the likelihood of disturbance based on location and human activity',
+      'The material assessment scores the condition and type of the ACM itself',
       'The priority assessment is only required for licensed asbestos work',
     ],
     correctAnswer: 2,
@@ -1265,7 +1361,7 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     options: [
       'The HSE can only issue written advice and has no formal enforcement powers',
       'The HSE can revoke the building owner’s planning permission',
-      'The HSE can issue improvement notices, prohibition notices, and prosecute offenders, which may result in unlimited fines and/or imprisonment',
+      'The HSE can issue improvement notices, prohibition notices, and prosecute offenders',
       'The HSE can order the immediate demolition of the affected building',
     ],
     correctAnswer: 2,
@@ -2095,7 +2191,7 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'How many representative bulk samples should typically be taken from a homogeneous area of suspect material during a survey?',
     options: [
       'Exactly one sample is always sufficient for any area',
-      'A minimum number depending on the size and nature of the area, as specified in HSG264 guidance',
+      'A minimum number depending on the size and nature of the area',
       'A sample from every square metre of the material',
       'No samples are needed if the material looks like asbestos',
     ],
@@ -2840,7 +2936,7 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
       'Yes — both are FFP3 masks, so the existing test transfers across',
       'Yes — provided the worker performs a quick fit check before use',
       'Yes — as long as the Brand Y mask is the same size as Brand X',
-      'No — face-fit testing is specific to the make and model; a new test is required for the Brand Y respirator',
+      'No — face-fit testing is specific to the make and model',
     ],
     correctAnswer: 3,
     explanation:
@@ -2855,7 +2951,7 @@ export const asbestosQuestionBank: StandardMockQuestion[] = [
     question:
       'Medical surveillance for workers undertaking licensed asbestos work must include examinations at which intervals?',
     options: [
-      'An initial medical examination before first exposure, and then at least every 2 years',
+      'An initial medical examination before first exposure',
       'A single examination on the final day of each individual project',
       'An examination only if the worker reports breathing difficulties',
       'An examination every 10 years from the date of first exposure',

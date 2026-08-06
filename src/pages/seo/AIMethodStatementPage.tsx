@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 4:2024.',
+      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 4:2026.',
     icon: FileText,
     category: 'Guide',
   },

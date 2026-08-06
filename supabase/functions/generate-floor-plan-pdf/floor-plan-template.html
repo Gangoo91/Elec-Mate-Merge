@@ -4,367 +4,540 @@
     <meta charset="UTF-8">
     <title>Electrical Floor Plan</title>
     <style>
-        :root { --accent: #EAB308; --accent-bg: #fefce8; --dark: #0f172a; --mid: #1e293b; --light: #334155; --border: #e2e8f0; }
-        @page { size: A4 landscape; margin: 0; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; line-height: 1.5; color: var(--dark); background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        /* Accent follows the installer's branding, matching the certificate
+           templates. primary_color wins over accent_color; Elec-Mate yellow is
+           the fallback when no branding is set. */
+        :root {
+            --accent: {{ company_accent_color | default: "#EAB308" }};
+            --dark: #0a1628;
+            --mid: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --hair: #f1f5f9;
+        }
 
-        .page { width: 297mm; min-height: 210mm; position: relative; overflow: hidden; page-break-after: always; }
+        /* A named page lets the cover be full-bleed while inner pages keep a
+           margin — mixing the two on one @page rule is what produces a stray
+           blank sheet after the cover. */
+        @page { size: A4 landscape; margin: 8mm 10mm; }
+        @page cover { size: A4 landscape; margin: 0; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 10.5px; line-height: 1.5; color: var(--dark); background: #fff;
+            -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        }
+
+        .page { page-break-after: always; }
         .page:last-child { page-break-after: auto; }
 
-        /* ── Cover Page (dark premium — matches Cost Engineer style) ── */
-        .cover-page { width: 297mm; min-height: 210mm; background: linear-gradient(170deg, #0a0f1a 0%, #0f172a 40%, #1a2332 100%); color: #fff; position: relative; overflow: hidden; page-break-after: always; display: flex; flex-direction: column; }
+        /* ─────────────── Cover ─────────────── */
+        .cover-page {
+            page: cover; width: 297mm; height: 210mm;
+            display: flex; flex-direction: column; page-break-after: always; color: var(--dark);
+        }
+        .cover-hero {
+            position: relative; flex: 1;
+            background: linear-gradient(160deg, #0a1628 0%, #152238 60%, #1c2e4a 100%);
+            color: #fff; padding: 16mm 20mm 12mm;
+            display: flex; flex-direction: column;
+        }
+        .cover-hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 6px; background: var(--accent);
+        }
+        .cover-logos {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 10mm; min-height: 46px;
+        }
+        .cover-logos img { max-height: 46px; max-width: 190px; object-fit: contain; }
+        .cover-band-name { color: var(--accent); font-weight: 700; font-size: 17px; letter-spacing: 0.3px; }
+        .cover-band-contact { font-size: 9px; color: #94a3b8; text-align: right; line-height: 1.6; }
 
-        .cover-logo-area { padding: 20mm 25mm 0; }
-        .cover-logo-text { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; }
-        .cover-logo-area img { max-height: 40px; margin-bottom: 4px; }
+        .cover-eyebrow {
+            font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+            color: var(--accent); font-weight: 700; margin-bottom: 10px;
+        }
+        .cover-title { font-size: 34px; line-height: 1.08; font-weight: 800; letter-spacing: -0.5px; color: #fff; }
+        .cover-title-rule { width: 80px; height: 4px; background: var(--accent); margin-top: 14px; border-radius: 2px; }
+        .cover-subtitle { margin-top: 12px; font-size: 11px; color: #cbd5e1; }
 
-        .cover-main { flex: 1; padding: 12mm 25mm; display: flex; flex-direction: column; justify-content: center; }
-        .cover-title { margin-bottom: 8px; }
-        .cover-title-light { display: block; font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.5); letter-spacing: 0.5px; margin-bottom: 4px; }
-        .cover-title strong { display: block; font-size: 32px; font-weight: 800; color: #fff; line-height: 1.2; }
-        .cover-subtitle { font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 20px; }
+        .cover-status {
+            padding: 11px 20mm; display: flex; align-items: center; justify-content: space-between;
+            background: var(--accent); color: #1a1a00;
+        }
+        .cover-status-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; opacity: 0.85; }
+        .cover-status-value { font-size: 19px; font-weight: 800; }
 
-        .cover-badge { display: inline-block; background: rgba(234,179,8,0.15); border: 1px solid rgba(234,179,8,0.3); color: var(--accent); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 5px 14px; border-radius: 4px; margin-bottom: 20px; }
+        .cover-lower { display: flex; background: #fff; border-left: 4px solid var(--accent); }
+        .cover-details { flex: 1.35; padding: 8mm 10mm 8mm 20mm; }
+        .cover-revisions { flex: 1; padding: 8mm 20mm 8mm 10mm; border-left: 1px solid var(--border); }
+        .cover-h {
+            font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px;
+            color: var(--muted); font-weight: 700; margin-bottom: 5px;
+        }
+        .cover-row { display: flex; border-bottom: 1px solid var(--border); }
+        .cover-row:last-child { border-bottom: 0; }
+        .cover-k {
+            width: 132px; flex-shrink: 0; color: var(--dark); font-weight: 700;
+            text-transform: uppercase; font-size: 8.5px; letter-spacing: 0.4px; padding: 7px 0; align-self: center;
+        }
+        .cover-v { flex: 1; color: var(--dark); font-weight: 600; font-size: 11px; padding: 7px 0; align-self: center; }
 
-        .cover-info-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-        .cover-info-item { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 10px 14px; }
-        .cover-info-label { font-size: 8px; font-weight: 600; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
-        .cover-info-value { font-size: 12px; font-weight: 600; color: #fff; }
+        .rev-table { width: 100%; border-collapse: collapse; }
+        .rev-table th {
+            font-size: 8px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted);
+            text-align: left; padding: 4px 8px; border-bottom: 1px solid var(--border); font-weight: 700;
+        }
+        .rev-table td { font-size: 9.5px; padding: 6px 8px; border-bottom: 1px solid var(--hair); }
 
-        .cover-footer { padding: 0 25mm 15mm; text-align: center; }
-        .cover-footer-badge { display: inline-block; background: rgba(234,179,8,0.1); border: 1px solid rgba(234,179,8,0.2); color: var(--accent); font-size: 9px; font-weight: 600; padding: 4px 16px; border-radius: 20px; margin-bottom: 6px; }
-        .cover-compliance { font-size: 8px; color: rgba(255,255,255,0.35); }
+        .cover-footer {
+            background: var(--dark); color: #94a3b8; font-size: 8px;
+            padding: 8px 20mm; display: flex; justify-content: space-between;
+        }
 
-        /* ── Details grid (used on inner pages) ── */
-        .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; margin-bottom: 24px; }
-        .detail-row { display: flex; align-items: baseline; gap: 8px; padding: 4px 0; border-bottom: 1px solid #f1f5f9; }
-        .detail-label { font-size: 9px; font-weight: 700; color: var(--dark); text-transform: uppercase; letter-spacing: 0.5px; min-width: 90px; }
-        .detail-value { font-size: 11px; font-weight: 500; color: var(--dark); }
+        /* ─────────────── Shared page furniture ─────────────── */
+        .sheet-head {
+            display: flex; justify-content: space-between; align-items: baseline;
+            border-bottom: 2px solid var(--accent); padding-bottom: 5px; margin-bottom: 9px;
+        }
+        .sheet-title { font-size: 19px; font-weight: 800; color: var(--dark); letter-spacing: -0.2px; }
+        .sheet-meta { font-size: 9px; color: var(--muted); }
 
-        .rooms-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        .rooms-table th { background: var(--dark); color: #fff; font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 12px; text-align: left; }
-        .rooms-table td { padding: 6px 12px; border-bottom: 1px solid var(--border); font-size: 10px; }
-        .rooms-table tr:nth-child(even) td { background: #f8fafc; }
+        .caution {
+            border: 1px solid #f59e0b; background: #fffbeb; border-radius: 4px;
+            padding: 7px 10px; margin-bottom: 10px;
+        }
+        .caution-h { font-size: 9px; font-weight: 700; color: #92400e; text-transform: uppercase; letter-spacing: 0.4px; }
+        .caution-b { font-size: 8.5px; color: #78350f; margin-top: 2px; line-height: 1.45; }
 
-        .notes-section { background: #f8fafc; border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 4px; padding: 10px 14px; margin-bottom: 16px; }
-        .notes-title { font-size: 10px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-        .notes-text { font-size: 10px; color: var(--dark); white-space: pre-line; }
+        table.grid { width: 100%; border-collapse: collapse; }
+        table.grid thead th {
+            background: var(--dark); color: #fff; font-size: 8.5px; text-transform: uppercase;
+            letter-spacing: 0.5px; padding: 6px 9px; text-align: left; font-weight: 700;
+        }
+        table.grid tbody td { padding: 5px 9px; border-bottom: 1px solid var(--border); font-size: 9.5px; }
+        table.grid tbody tr:nth-child(even) td { background: #f8fafc; }
+        .num { text-align: right; font-variant-numeric: tabular-nums; }
+        .reg { color: var(--muted); font-size: 8px; }
 
-        /* ── Room Pages ── */
-        .room-page { padding: 12mm 15mm; }
-        .room-header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid var(--accent); padding-bottom: 6px; margin-bottom: 10px; }
-        .room-name { font-size: 22px; font-weight: 800; color: var(--dark); }
-        .room-address { font-size: 10px; color: var(--dark); }
+        /* ─────────────── Room sheets ─────────────── */
+        .room-body { display: flex; gap: 8mm; height: 152mm; }
+        .plan-frame {
+            flex: 1; border: 1px solid var(--border); border-radius: 4px; padding: 4px; background: #fff;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+        .plan-frame img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .room-aside { width: 68mm; flex-shrink: 0; display: flex; flex-direction: column; gap: 6px; }
+        .aside-h {
+            font-size: 8.5px; font-weight: 700; color: var(--accent);
+            text-transform: uppercase; letter-spacing: 0.6px; padding-bottom: 3px; border-bottom: 1px solid var(--accent);
+        }
+        .legend-row { display: flex; justify-content: space-between; font-size: 9px; padding: 2.5px 0; border-bottom: 1px solid var(--hair); }
+        .legend-row span:first-child { color: var(--dark); }
+        .legend-row span:last-child { font-weight: 700; color: var(--dark); font-variant-numeric: tabular-nums; }
+        .tblock { margin-top: auto; border: 1px solid var(--dark); }
+        .tblock td { padding: 3px 7px; border: 1px solid var(--border); font-size: 8px; }
+        .tblock td:first-child { font-weight: 700; background: #f8fafc; width: 62px; }
 
-        .floor-plan-container { text-align: center; margin-bottom: 8px; border: 1px solid var(--border); border-radius: 4px; padding: 4px; background: #fff; min-height: 140mm; display: flex; align-items: center; justify-content: center; }
-        .floor-plan-container img { max-width: 100%; max-height: 155mm; width: auto; object-fit: contain; }
+        /* ─────────────── Materials ─────────────── */
+        .cols-2 { column-count: 2; column-gap: 12mm; }
+        .cat { break-inside: avoid; margin-bottom: 9px; }
+        .cat-h {
+            font-size: 10px; font-weight: 700; color: var(--accent); text-transform: uppercase;
+            letter-spacing: 0.5px; padding-bottom: 3px; border-bottom: 1px solid var(--accent); margin-bottom: 3px;
+        }
+        .cat-row { display: flex; justify-content: space-between; font-size: 9.5px; padding: 2.5px 0; border-bottom: 1px solid var(--hair); }
+        .cat-row span:last-child { font-weight: 700; font-variant-numeric: tabular-nums; }
+        .total-bar {
+            background: var(--dark); color: #fff; font-size: 13px; font-weight: 800;
+            padding: 8px 14px; border-radius: 4px; margin-top: 10px; display: flex; justify-content: space-between;
+        }
 
-        .room-legend { margin-bottom: 8px; }
-        .room-legend-title { font-size: 9px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-        .legend-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px 8px; }
-        .legend-item { display: flex; align-items: center; gap: 4px; font-size: 9px; }
-        .legend-count { font-weight: 800; color: var(--accent); min-width: 18px; }
-        .legend-name { color: var(--dark); }
+        /* ─────────────── Symbol appendix ─────────────── */
+        .sym-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px 6px; }
+        .sym-cat { grid-column: 1 / -1; font-size: 8px; font-weight: 700; color: var(--accent);
+                   text-transform: uppercase; letter-spacing: 0.5px; padding: 5px 0 2px; border-bottom: 1px solid var(--accent); }
+        .sym { display: flex; align-items: center; gap: 4px; padding: 2px 4px; border: 1px solid var(--border); border-radius: 3px; }
+        .sym img { width: 17px; height: 17px; flex-shrink: 0; }
+        .sym span { font-size: 7px; line-height: 1.2; }
 
-        .title-block { position: absolute; bottom: 12mm; right: 15mm; border: 1px solid var(--dark); font-size: 8px; }
-        .title-block td { padding: 2px 8px; border: 1px solid var(--border); }
-        .title-block td:first-child { font-weight: 700; color: var(--dark); background: #f8fafc; min-width: 60px; }
-
-        /* ── Materials Schedule Page ── */
-        .materials-page { padding: 15mm 20mm; }
-        .materials-title { font-size: 22px; font-weight: 800; color: var(--dark); border-bottom: 3px solid var(--accent); padding-bottom: 8px; margin-bottom: 16px; }
-
-        .category-section { margin-bottom: 12px; }
-        .category-name { font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 0; border-bottom: 1px solid var(--accent); margin-bottom: 4px; }
-        .materials-table { width: 100%; border-collapse: collapse; }
-        .materials-table td { padding: 3px 12px; font-size: 10px; border-bottom: 1px solid #f1f5f9; }
-        .materials-table td:last-child { text-align: right; font-weight: 700; width: 50px; }
-
-        .total-bar { background: var(--dark); color: #fff; font-size: 14px; font-weight: 800; padding: 8px 16px; border-radius: 4px; margin-top: 16px; display: flex; justify-content: space-between; }
-
-        .compliance { margin-top: 20px; text-align: center; font-size: 9px; color: var(--dark); }
-        .compliance-ref { font-weight: 700; color: var(--dark); }
-
-        /* ── Legend / Appendix Page ── */
-        .appendix-page { padding: 15mm 20mm; }
-        .appendix-title { font-size: 22px; font-weight: 800; color: var(--dark); border-bottom: 3px solid var(--accent); padding-bottom: 8px; margin-bottom: 16px; }
-
-        .symbol-legend-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; margin-bottom: 16px; }
-        .symbol-card { display: flex; align-items: center; gap: 4px; padding: 2px 4px; border: 1px solid var(--border); border-radius: 3px; }
-        .symbol-preview { width: 18px; height: 18px; flex-shrink: 0; }
-        .symbol-preview img { width: 100%; height: 100%; }
-        .symbol-label { font-size: 7px; color: var(--dark); line-height: 1.2; }
-
-        .category-header-legend { font-size: 8px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; grid-column: 1 / -1; padding: 4px 0 2px; border-bottom: 1px solid var(--accent); margin-top: 4px; }
-
-        .signature-section { margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-        .signature-box { border-top: 1px solid var(--dark); padding-top: 6px; }
-        .signature-label { font-size: 9px; font-weight: 700; color: var(--dark); text-transform: uppercase; }
-        .signature-line { height: 30px; }
-        .signature-date { font-size: 8px; color: var(--dark); margin-top: 4px; }
+        /* ─────────────── Sign-off ─────────────── */
+        .declaration { font-size: 10px; line-height: 1.65; margin-bottom: 14px; }
+        .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24mm; margin-top: 14mm; }
+        .sig-line { height: 26px; border-bottom: 1px solid var(--dark); }
+        .sig-k { font-size: 8.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 5px; }
+        .sig-v { font-size: 8.5px; color: var(--muted); margin-top: 2px; }
+        .foot-note { margin-top: 12mm; text-align: center; font-size: 8px; color: var(--muted); line-height: 1.7; }
     </style>
 </head>
 <body>
 
-<!-- ════════════════════════ PAGE 1: COVER ════════════════════════ -->
+<!-- ══════════════════════════ COVER ══════════════════════════ -->
 <div class="cover-page">
-    <div class="cover-logo-area">
-        <div class="cover-logo-text">Electrical Floor Plan</div>
+    <div class="cover-hero">
+        <div class="cover-logos">
+            {% if company_logo and company_logo != "" %}
+                <img src="{{ company_logo }}" alt="{{ company_name }}" />
+            {% else %}
+                <span class="cover-band-name">{{ company_name | default: "Elec-Mate" }}</span>
+            {% endif %}
+            <div class="cover-band-contact">
+                {% if company_phone and company_phone != "" %}{{ company_phone }}<br />{% endif %}
+                {% if company_email and company_email != "" %}{{ company_email }}{% endif %}
+            </div>
+        </div>
+
+        <div class="cover-eyebrow">BS 7671:2018 + Amendment 4:2026</div>
+        <h1 class="cover-title">Electrical<br />Floor Plan</h1>
+        <div class="cover-title-rule"></div>
+        <div class="cover-subtitle">
+            Room-by-room installation layout, materials schedule and circuit reference
+            &middot; Symbols to BS EN 60617
+        </div>
     </div>
 
-    <div class="cover-main">
-        <div class="cover-title">
-            <span class="cover-title-light">Electrical Installation Layout</span>
-            <strong>{{property_address}}</strong>
-        </div>
-        <div class="cover-subtitle">Room-by-Room Electrical Floor Plan with Materials Schedule</div>
+    <div class="cover-status">
+        <span class="cover-status-label">{{ property_address }}</span>
+        <span class="cover-status-value">
+            {{ total_items }} item{% if total_items != 1 %}s{% endif %} &middot;
+            {{ rooms.size }} room{% if rooms.size != 1 %}s{% endif %}
+        </span>
+    </div>
 
-        <div class="cover-badge">
-            <span>{{total_items}} ELECTRICAL ITEMS ACROSS {{rooms.size}} ROOMS</span>
-        </div>
-
-        <div class="cover-info-grid">
-            <div class="cover-info-item">
-                <div class="cover-info-label">Client</div>
-                <div class="cover-info-value">{{client_name}}</div>
-            </div>
-            <div class="cover-info-item">
-                <div class="cover-info-label">Date</div>
-                <div class="cover-info-value">{{date}}</div>
-            </div>
-            <div class="cover-info-item">
-                <div class="cover-info-label">Drawing No.</div>
-                <div class="cover-info-value">{{drawing_number}}</div>
-            </div>
-            <div class="cover-info-item">
-                <div class="cover-info-label">Electrician</div>
-                <div class="cover-info-value">{{electrician_name}}</div>
-            </div>
-            <div class="cover-info-item">
-                <div class="cover-info-label">Total Items</div>
-                <div class="cover-info-value">{{total_items}}</div>
-            </div>
-            <div class="cover-info-item">
-                <div class="cover-info-label">Rooms</div>
-                <div class="cover-info-value">
-                    {% for room in rooms %}{{room.name}}{% unless forloop.last %}, {% endunless %}{% endfor %}
-                </div>
+    <div class="cover-lower">
+        <div class="cover-details">
+            <div class="cover-h">Drawing Details</div>
+            <div class="cover-row"><span class="cover-k">Property</span><span class="cover-v">{{ property_address }}</span></div>
+            <div class="cover-row"><span class="cover-k">Client</span><span class="cover-v">{{ client_name | default: "—" }}</span></div>
+            <div class="cover-row"><span class="cover-k">Drawn by</span><span class="cover-v">{{ electrician_name | default: "—" }}</span></div>
+            <div class="cover-row"><span class="cover-k">Date</span><span class="cover-v">{{ date }}</span></div>
+            <div class="cover-row"><span class="cover-k">Drawing No.</span><span class="cover-v">{{ drawing_number }}</span></div>
+            <div class="cover-row">
+                <span class="cover-k">Rooms</span>
+                <span class="cover-v">{% for room in rooms %}{{ room.name }}{% unless forloop.last %}, {% endunless %}{% endfor %}</span>
             </div>
         </div>
 
-        <div style="margin-top: 16px;">
-          <table style="width: 100%; border-collapse: collapse; border: 1px solid rgba(255,255,255,0.15);">
-            <thead><tr style="background: rgba(255,255,255,0.06);"><th style="padding: 4px 10px; font-size: 8px; color: rgba(255,255,255,0.5); text-transform: uppercase; text-align: left;">Rev</th><th style="padding: 4px 10px; font-size: 8px; color: rgba(255,255,255,0.5); text-transform: uppercase; text-align: left;">Date</th><th style="padding: 4px 10px; font-size: 8px; color: rgba(255,255,255,0.5); text-transform: uppercase; text-align: left;">Description</th><th style="padding: 4px 10px; font-size: 8px; color: rgba(255,255,255,0.5); text-transform: uppercase; text-align: left;">By</th></tr></thead>
-            <tbody>
-              <tr><td style="padding: 4px 10px; font-size: 9px; color: #fff; border-top: 1px solid rgba(255,255,255,0.1);">{{ revision.rev }}</td><td style="padding: 4px 10px; font-size: 9px; color: #fff; border-top: 1px solid rgba(255,255,255,0.1);">{{ revision.date }}</td><td style="padding: 4px 10px; font-size: 9px; color: #fff; border-top: 1px solid rgba(255,255,255,0.1);">{{ revision.description }}</td><td style="padding: 4px 10px; font-size: 9px; color: #fff; border-top: 1px solid rgba(255,255,255,0.1);">{{ revision.by }}</td></tr>
-              <tr><td style="padding: 4px 10px; font-size: 9px; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.05);">B</td><td colspan="3" style="padding: 4px 10px; border-top: 1px solid rgba(255,255,255,0.05);"></td></tr>
-            </tbody>
-          </table>
+        <div class="cover-revisions">
+            <div class="cover-h">Revision History</div>
+            <!-- Driven entirely by the payload. The previous template carried a
+                 hardcoded empty "Rev B" row, which printed a phantom revision
+                 on every drawing ever issued. -->
+            <table class="rev-table">
+                <thead><tr><th>Rev</th><th>Date</th><th>Description</th><th>By</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td><strong>{{ revision.rev }}</strong></td>
+                        <td>{{ revision.date }}</td>
+                        <td>{{ revision.description }}</td>
+                        <td>{{ revision.by }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
     <div class="cover-footer">
-        <div class="cover-footer-badge">Powered by Elec-Mate Floor Plan Tool</div>
-        <div class="cover-compliance">
-            Compliant with BS 7671:2018+A4:2026 Requirements for Electrical Installations
-        </div>
+        <span>{{ company_name | default: "Elec-Mate" }} &middot; Electrical installation floor plan</span>
+        <span>BS 7671:2018+A4:2026 &middot; BS EN 60617</span>
     </div>
 </div>
 
-<!-- ════════════════════════ PAGES 2-N: ROOMS ════════════════════════ -->
+<!-- ══════════════════════════ ROOM SHEETS ══════════════════════════ -->
 {% for room in rooms %}
-<div class="page room-page">
-    <div class="room-header">
-        <span class="room-name">{{ room.name }}</span>
-        <span class="room-address">{{ property_address }}</span>
+<div class="page">
+    <div class="sheet-head">
+        <span class="sheet-title">{{ room.name }}</span>
+        <span class="sheet-meta">{{ property_address }} &middot; {{ drawing_number }} Rev {{ revision.rev }}</span>
     </div>
 
-    <div class="floor-plan-container">
-        <img src="{{ room.floor_plan_image }}" alt="{{ room.name }} floor plan" />
-    </div>
+    <div class="room-body">
+        <div class="plan-frame">
+            <img src="{{ room.floor_plan_image }}" alt="{{ room.name }} floor plan" />
+        </div>
 
-    {% if room.items.size > 0 %}
-    <div class="room-legend">
-        <div class="room-legend-title">Symbols in this room</div>
-        <div class="legend-grid">
-            {% for item in room.items %}
-            <div class="legend-item">
-                <span class="legend-count">{{ item.count }}&times;</span>
-                <span class="legend-name">{{ item.name }}</span>
+        <div class="room-aside">
+            {% if room.items.size > 0 %}
+            <div>
+                <div class="aside-h">Items in this room ({{ room.item_count }})</div>
+                {% for item in room.items %}
+                <div class="legend-row"><span>{{ item.name }}</span><span>{{ item.count }}</span></div>
+                {% endfor %}
             </div>
-            {% endfor %}
+            {% endif %}
+
+            <table class="tblock">
+                <tr><td>Project</td><td>{{ property_address }}</td></tr>
+                <tr><td>Room</td><td>{{ room.name }}</td></tr>
+                <tr><td>Scale</td><td>{{ scale_note }}</td></tr>
+                <tr><td>Date</td><td>{{ date }}</td></tr>
+                <tr><td>Drawn by</td><td>{{ electrician_name }}</td></tr>
+                <tr><td>Dwg No.</td><td>{{ drawing_number }} Rev {{ revision.rev }}</td></tr>
+            </table>
         </div>
     </div>
-    {% endif %}
-
-    <table class="title-block">
-        <tr><td>Project</td><td>{{ property_address }}</td></tr>
-        <tr><td>Room</td><td>{{ room.name }}</td></tr>
-        <tr><td>Scale</td><td>Not to scale</td></tr>
-        <tr><td>Date</td><td>{{ date }}</td></tr>
-        <tr><td>Drawn by</td><td>{{ electrician_name }}</td></tr>
-        <tr><td>Dwg No.</td><td>{{ drawing_number }}</td></tr>
-    </table>
 </div>
 {% endfor %}
 
-<!-- ════════════════════════ MATERIALS SCHEDULE ════════════════════════ -->
-<div class="page materials-page">
-    <div class="materials-title">Materials Schedule</div>
-
-    {% for category in materials_by_category %}
-    <div class="category-section">
-        <div class="category-name">{{ category.name }}</div>
-        <table class="materials-table">
-            {% for item in category.items %}
-            <tr><td>{{ item.name }}</td><td>{{ item.count }}</td></tr>
-            {% endfor %}
-        </table>
+<!-- ══════════════════════════ MATERIALS ══════════════════════════ -->
+<div class="page">
+    <div class="sheet-head">
+        <span class="sheet-title">Materials Schedule</span>
+        <span class="sheet-meta">{{ property_address }} &middot; {{ date }}</span>
     </div>
-    {% endfor %}
+
+    <div class="cols-2">
+        {% for category in materials_by_category %}
+        <div class="cat">
+            <div class="cat-h">{{ category.name }}</div>
+            {% for item in category.items %}
+            <div class="cat-row"><span>{{ item.name }}</span><span>{{ item.count }}</span></div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="total-bar"><span>Total items</span><span>{{ total_items }}</span></div>
+</div>
+
+<!-- ══════════════════════════ CIRCUIT SCHEDULE ══════════════════════════ -->
+{% if circuit_schedule.size > 0 %}
+<div class="page">
+    <div class="sheet-head">
+        <span class="sheet-title">Circuit Schedule</span>
+        <span class="sheet-meta">{{ property_address }} &middot; {{ drawing_number }}</span>
+    </div>
+
+    <!-- The schedule is derived from the symbols placed on the drawing. Saying
+         so is the difference between a useful aid and an implied design. -->
+    <div class="caution">
+        <div class="caution-h">Indicative — subject to design verification</div>
+        <div class="caution-b">
+            Circuits, cable sizes and protective devices below are suggested defaults for a typical
+            domestic installation, derived from the items shown on this drawing. They are not a substitute
+            for design calculation. Cable sizing, volt drop, earth fault loop impedance and diversity must
+            be verified for the actual installation before work is carried out.
+        </div>
+    </div>
+
+    <table class="grid">
+        <thead>
+            <tr>
+                <th>Ref</th><th>Circuit</th><th>Cable</th><th>Protection</th>
+                <th>RCD</th><th class="num">Points</th><th class="num">Typical load</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for circuit in circuit_schedule %}
+            <tr>
+                <td style="font-weight:700; color: var(--accent);">{{ circuit.circuitRef }}</td>
+                <td>{{ circuit.circuitName }}</td>
+                <td>{{ circuit.cableSize }}</td>
+                <td>{{ circuit.protection }}</td>
+                <td>{{ circuit.rcd }}{% if circuit.rcdBasis and circuit.rcdBasis != "" %} <span class="reg">· {{ circuit.rcdBasis }}</span>{% endif %}</td>
+                <td class="num">{{ circuit.points }}</td>
+                <td class="num">{{ circuit.typicalLoad }}</td>
+            </tr>
+            {% if circuit.needsReview and circuit.needsReview != "" %}
+            <tr><td colspan="7" style="background:#fffbeb; color:#b45309; font-size:8.5px; padding:4px 9px;">
+                &#9888; {{ circuit.circuitRef }} — {{ circuit.needsReview }}
+            </td></tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p style="margin-top:8px; font-size:8px; color:var(--muted); line-height:1.6;">
+        The RCD column cites the regulation requiring additional protection: 411.3.4 (luminaires in
+        domestic premises), 411.3.3 (socket-outlets up to 32&nbsp;A), 522.6.202 (cables concealed less
+        than 50&nbsp;mm in a wall), Section 701 (locations containing a bath or shower), Section 722
+        (electric vehicle charging). References are to BS 7671:2018+A4:2026.
+    </p>
+</div>
+{% endif %}
+
+<!-- ══════════════════════════ CONSUMER UNIT SCHEDULE ══════════════════════════ -->
+{% if consumer_unit and consumer_unit.ways.size > 0 %}
+<div class="page">
+    <div class="sheet-head">
+        <span class="sheet-title">Consumer Unit Schedule</span>
+        <span class="sheet-meta">{{ consumer_unit.way_count }} way{% if consumer_unit.way_count != 1 %}s{% endif %} &middot; {{ property_address }}</span>
+    </div>
+
+    <div class="caution">
+        <div class="caution-h">Indicative — subject to design verification</div>
+        <div class="caution-b">
+            Board arrangement derived from the circuits on this drawing. Way numbering is sequential and
+            does not imply a physical board layout. The total below is CONNECTED load — diversity must be
+            applied to establish maximum demand for the actual installation.
+        </div>
+    </div>
+
+    <table class="grid">
+        <thead>
+            <tr>
+                <th class="num">Way</th><th>Ref</th><th>Circuit</th><th>Protective device</th>
+                <th>RCD</th><th>Cable</th><th class="num">Points</th><th class="num">Connected load</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for w in consumer_unit.ways %}
+            <tr>
+                <td class="num">{{ w.way }}</td>
+                <td style="font-weight:700; color: var(--accent);">{{ w.circuitRef }}</td>
+                <td>{{ w.circuitName }}</td>
+                <td>{{ w.protection }}</td>
+                <td>{{ w.rcd }}</td>
+                <td>{{ w.cableSize }}</td>
+                <td class="num">{{ w.points }}</td>
+                <td class="num">{{ w.connectedLoad }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
     <div class="total-bar">
-        <span>Total Items</span>
-        <span>{{ total_items }}</span>
+        <span>Total connected load (before diversity)</span>
+        <span>{{ consumer_unit.total_connected_load_kw }} kW</span>
     </div>
 
-    <div class="compliance">
-        <p><span class="compliance-ref">BS 7671:2018+A4:2026</span></p>
-        <p>Generated by Elec-Mate Floor Plan Tool</p>
-        <p>{{ date }}</p>
-    </div>
-</div>
-
-<!-- ════════════════════════ CIRCUIT SCHEDULE ════════════════════════ -->
-{% if circuit_schedule.size > 0 %}
-<div class="page" style="padding: 15mm 20mm; page-break-after: always;">
-  <div style="font-size: 22px; font-weight: 800; border-bottom: 3px solid #EAB308; padding-bottom: 8px; margin-bottom: 16px;">Circuit Schedule</div>
-  <table style="width: 100%; border-collapse: collapse;">
-    <thead>
-      <tr style="background: #0f172a; color: #fff;">
-        <th style="padding: 6px 10px; text-align: left; font-size: 9px; text-transform: uppercase;">Ref</th>
-        <th style="padding: 6px 10px; text-align: left; font-size: 9px; text-transform: uppercase;">Circuit</th>
-        <th style="padding: 6px 10px; text-align: left; font-size: 9px; text-transform: uppercase;">Cable</th>
-        <th style="padding: 6px 10px; text-align: left; font-size: 9px; text-transform: uppercase;">Protection</th>
-        <th style="padding: 6px 10px; text-align: left; font-size: 9px; text-transform: uppercase;">RCD</th>
-        <th style="padding: 6px 10px; text-align: right; font-size: 9px; text-transform: uppercase;">Points</th>
-        <th style="padding: 6px 10px; text-align: right; font-size: 9px; text-transform: uppercase;">Load</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for circuit in circuit_schedule %}
-      <tr>
-        <td style="padding: 5px 10px; border-bottom: 1px solid #e2e8f0; font-weight: 700; color: #EAB308;">{{ circuit.circuitRef }}</td>
-        <td style="padding: 5px 10px; border-bottom: 1px solid #e2e8f0;">{{ circuit.circuitName }}</td>
-        <td style="padding: 5px 10px; border-bottom: 1px solid #e2e8f0;">{{ circuit.cableSize }}</td>
-        <td style="padding: 5px 10px; border-bottom: 1px solid #e2e8f0;">{{ circuit.protection }}</td>
-        <td style="padding: 5px 10px; border-bottom: 1px solid #e2e8f0;">{{ circuit.rcd }}</td>
-        <td style="padding: 5px 10px; border-bottom: 1px solid #e2e8f0; text-align: right;">{{ circuit.points }}</td>
-        <td style="padding: 5px 10px; border-bottom: 1px solid #e2e8f0; text-align: right;">{{ circuit.typicalLoad }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+    <p style="margin-top:8px; font-size:8px; color:var(--muted); line-height:1.6;">
+        Voltage drop has not been calculated on this drawing. It must be verified per circuit against the
+        cable's tabulated mV/A/m value and the circuit length (BS 7671 Regulation 125.8, Appendix 4)
+        before the installation is energised.
+    </p>
 </div>
 {% endif %}
 
-<!-- ════════════════════════ STANDARD INSTALLATION NOTES ════════════════════════ -->
+<!-- ══════════════════════════ INSTALLATION NOTES ══════════════════════════ -->
 {% if standard_notes.mountingHeights %}
-<div class="page" style="padding: 15mm 20mm; page-break-after: always;">
-  <div style="font-size: 22px; font-weight: 800; border-bottom: 3px solid #EAB308; padding-bottom: 8px; margin-bottom: 16px;">Standard Installation Notes</div>
-
-  <div style="margin-bottom: 16px;">
-    <div style="font-size: 11px; font-weight: 700; color: #EAB308; text-transform: uppercase; margin-bottom: 6px;">Mounting Heights</div>
-    <table style="width: 100%; border-collapse: collapse;">
-      <thead><tr style="background: #f8fafc;"><th style="padding: 4px 8px; text-align: left; font-size: 9px;">Item</th><th style="padding: 4px 8px; text-align: left; font-size: 9px;">Height</th><th style="padding: 4px 8px; text-align: left; font-size: 9px;">Notes</th></tr></thead>
-      <tbody>
-        {% for item in standard_notes.mountingHeights %}
-        <tr><td style="padding: 3px 8px; border-bottom: 1px solid #f1f5f9; font-size: 9px;">{{ item.item }}</td><td style="padding: 3px 8px; border-bottom: 1px solid #f1f5f9; font-size: 9px; font-weight: 600;">{{ item.height }}</td><td style="padding: 3px 8px; border-bottom: 1px solid #f1f5f9; font-size: 9px; color: #1e293b;">{{ item.notes }}</td></tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-
-  <div style="margin-bottom: 16px;">
-    <div style="font-size: 11px; font-weight: 700; color: #EAB308; text-transform: uppercase; margin-bottom: 6px;">General Notes</div>
-    <ol style="padding-left: 16px; font-size: 9px; color: #1e293b; line-height: 1.6;">
-      {% for note in standard_notes.generalNotes %}
-      <li style="margin-bottom: 3px;">{{ note }}</li>
-      {% endfor %}
-    </ol>
-  </div>
-
-  <div>
-    <div style="font-size: 11px; font-weight: 700; color: #EAB308; text-transform: uppercase; margin-bottom: 6px;">Abbreviations</div>
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px 16px;">
-      {% for item in standard_notes.abbreviations %}
-      <div style="font-size: 8px; padding: 2px 0; border-bottom: 1px solid #f1f5f9;"><strong>{{ item.abbr }}</strong> — {{ item.meaning }}</div>
-      {% endfor %}
+<div class="page">
+    <div class="sheet-head">
+        <span class="sheet-title">Standard Installation Notes</span>
+        <span class="sheet-meta">{{ property_address }}</span>
     </div>
-  </div>
+
+    <div style="display:flex; gap:10mm; align-items:flex-start;">
+        <div style="flex:1.25;">
+            <div class="cat-h">Mounting heights</div>
+            <table class="grid" style="margin-top:4px;">
+                <thead><tr><th>Item</th><th>Height</th><th>Notes</th></tr></thead>
+                <tbody>
+                    {% for item in standard_notes.mountingHeights %}
+                    <tr><td>{{ item.item }}</td><td style="font-weight:700;">{{ item.height }}</td><td>{{ item.notes }}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div style="flex:1;">
+            <div class="cat-h">General notes</div>
+            <ol style="padding-left:14px; font-size:9px; line-height:1.6; margin-top:4px;">
+                {% for note in standard_notes.generalNotes %}
+                <li style="margin-bottom:3px;">{{ note }}</li>
+                {% endfor %}
+            </ol>
+
+            <div class="cat-h" style="margin-top:10px;">Abbreviations</div>
+            <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:1px 10px; margin-top:4px;">
+                {% for item in standard_notes.abbreviations %}
+                <div style="font-size:8px; padding:2px 0; border-bottom:1px solid var(--hair);">
+                    <strong>{{ item.abbr }}</strong> — {{ item.meaning }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </div>
 {% endif %}
 
-<!-- ════════════════════════ APPENDIX: FULL SYMBOL REFERENCE ════════════════════════ -->
-<div class="page appendix-page">
-    <div class="appendix-title">Appendix — BS EN 60617 Symbol Reference</div>
-    <p style="font-size: 9px; color: #1e293b; margin-bottom: 12px;">
-        114 electrical installation symbols conforming to BS EN 60617 / CIBSE conventions for UK floor plan drawings.
+<!-- ══════════════════════════ SYMBOL KEY ══════════════════════════ -->
+{% if all_symbols.size > 0 %}
+<div class="page">
+    <div class="sheet-head">
+        <span class="sheet-title">Symbol Key</span>
+        <span class="sheet-meta">{{ all_symbols.size }} symbol{% if all_symbols.size != 1 %}s{% endif %} used on this drawing</span>
+    </div>
+
+    <p style="font-size:9px; color:var(--muted); margin-bottom:8px;">
+        Symbols conform to BS EN 60617 / CIBSE conventions for UK electrical installation drawings.
+        Only symbols appearing on this drawing are listed.
     </p>
 
-    {% if all_symbols %}
-    <div class="symbol-legend-grid">
-        {% for symbol in all_symbols %}
-        <div class="symbol-card">
-            <div class="symbol-preview">
-                {% if symbol.svg_data_uri %}<img src="{{ symbol.svg_data_uri }}" alt="{{ symbol.name }}" />{% endif %}
+    <!-- Grouped by category. The payload has always carried `category`; the
+         previous template ignored it and printed one flat list. -->
+    <div class="sym-grid">
+        {%- comment -%}
+          Sort by category, then emit a heading whenever the category changes.
+          `group_by` is a Jekyll filter, not core Liquid — `sort` and `assign`
+          are, so this works wherever the template is rendered.
+        {%- endcomment -%}
+        {% assign sorted_symbols = all_symbols | sort: "category" %}
+        {% assign current_category = "" %}
+        {% for symbol in sorted_symbols %}
+            {% if symbol.category != current_category %}
+                <div class="sym-cat">{{ symbol.category }}</div>
+                {% assign current_category = symbol.category %}
+            {% endif %}
+            <div class="sym">
+                {% if symbol.svg_data_uri and symbol.svg_data_uri != "" %}<img src="{{ symbol.svg_data_uri }}" alt="{{ symbol.name }}" />{% endif %}
+                <span>{{ symbol.name }}</span>
             </div>
-            <span class="symbol-label">{{ symbol.name }}</span>
-        </div>
         {% endfor %}
     </div>
-    {% endif %}
 </div>
+{% endif %}
 
-<!-- ════════════════════════ DECLARATION + SIGNATURES ════════════════════════ -->
-<div class="page appendix-page">
-    <div class="appendix-title">Declaration &amp; Sign-Off</div>
+<!-- ══════════════════════════ NOTES + SIGN-OFF ══════════════════════════ -->
+<div class="page">
+    <div class="sheet-head">
+        <span class="sheet-title">Notes &amp; Sign-Off</span>
+        <span class="sheet-meta">{{ drawing_number }} Rev {{ revision.rev }} &middot; {{ date }}</span>
+    </div>
 
-    <div style="margin-bottom: 24px;">
-        <p style="font-size: 10px; color: #1e293b; line-height: 1.6; margin-bottom: 12px;">
-            I confirm that this electrical floor plan drawing has been prepared in accordance with
-            <strong>BS 7671:2018+A4:2026</strong> (Requirements for Electrical Installations — IET Wiring Regulations).
-            Symbols conform to <strong>BS EN 60617</strong> / CIBSE conventions for UK electrical installation drawings.
+    <!-- Project notes were captured in the app and rendered NOWHERE — typed by
+         the electrician on export and silently dropped from every PDF. -->
+    {% if notes and notes != "" %}
+    <div style="border-left:3px solid var(--accent); background:#f8fafc; padding:9px 12px; margin-bottom:14px;">
+        <div class="cat-h" style="border:0; padding:0; margin-bottom:3px;">Project notes</div>
+        <div style="font-size:10px; white-space:pre-line;">{{ notes }}</div>
+    </div>
+    {% endif %}
+
+    <div class="declaration">
+        <p style="margin-bottom:9px;">
+            This drawing records the intended electrical installation layout for the property above.
+            It has been prepared with reference to <strong>BS 7671:2018+A4:2026</strong>
+            (Requirements for Electrical Installations — IET Wiring Regulations), and symbols conform to
+            <strong>BS EN 60617</strong> / CIBSE conventions.
         </p>
-        <p style="font-size: 10px; color: #1e293b; line-height: 1.6;">
-            This drawing is intended for use as a reference for the electrical installation layout.
-            All work must be carried out by a competent person in accordance with the current edition of BS 7671.
+        <p>
+            Circuit information shown is indicative and subject to design verification. All work must be
+            carried out by a competent person, and the installation inspected, tested and certified in
+            accordance with the current edition of BS 7671 before it is put into service.
         </p>
     </div>
 
-    <div class="signature-section">
+    <div class="sig-grid">
         <div>
-            <div class="signature-line"></div>
-            <div class="signature-box">
-                <div class="signature-label">Electrician Signature</div>
-                <div class="signature-date">Name: {{ electrician_name }}</div>
-                <div class="signature-date">Date: {{ date }}</div>
-            </div>
+            <div class="sig-line"></div>
+            <div class="sig-k">Prepared by</div>
+            <div class="sig-v">Name: {{ electrician_name | default: "—" }}</div>
+            <div class="sig-v">Date: {{ date }}</div>
         </div>
         <div>
-            <div class="signature-line"></div>
-            <div class="signature-box">
-                <div class="signature-label">Client Signature</div>
-                <div class="signature-date">Name: {{ client_name }}</div>
-                <div class="signature-date">Date: _______________</div>
-            </div>
+            <div class="sig-line"></div>
+            <div class="sig-k">Client acknowledgement</div>
+            <div class="sig-v">Name: {{ client_name | default: "—" }}</div>
+            <div class="sig-v">Date: _______________</div>
         </div>
     </div>
 
-    <div class="compliance" style="margin-top: 40px;">
-        <p><strong>Elec-Mate</strong> &middot; Electrical Installation Floor Plan Tool</p>
-        <p style="margin-top: 4px;">BS 7671:2018+A4:2026 &middot; BS EN 60617 &middot; CIBSE TM6</p>
+    <div class="foot-note">
+        <div><strong>{{ company_name | default: "Elec-Mate" }}</strong>{% if company_phone and company_phone != "" %} &middot; {{ company_phone }}{% endif %}{% if company_email and company_email != "" %} &middot; {{ company_email }}{% endif %}</div>
+        <div style="margin-top:3px;">BS 7671:2018+A4:2026 &middot; BS EN 60617 &middot; Produced with Elec-Mate</div>
     </div>
 </div>
 

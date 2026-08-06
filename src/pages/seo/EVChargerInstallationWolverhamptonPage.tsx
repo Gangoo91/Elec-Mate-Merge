@@ -43,7 +43,7 @@ const keyTakeaways = [
   'A 7kW home EV charger installation in Wolverhampton typically costs £750 to £1,050 all-in — among the most affordable in England, reflecting West Midlands trade labour rates — with OZEV grants of up to £350 available for eligible properties.',
   'The West Midlands Clean Air Zone (CAZ) charges non-compliant diesel and petrol vehicles to drive in the zone — home EV charging significantly reduces the ongoing cost of EV ownership for Wolverhampton commuters.',
   "Wolverhampton's housing stock includes a large proportion of post-war and 1960s–1980s semis and terraces with garages and driveways, making home EV charger installation particularly straightforward.",
-  'All EV charger installations must comply with BS 7671:2018+A4:2026 Section 722, including a dedicated circuit, RCD protection under Regulation 722.531.2, and a PME earthing assessment under Regulation 722.411.4.',
+  'All EV charger installations must comply with BS 7671:2018+A4:2026 Section 722, including a dedicated circuit, RCD protection under Regulation 722.531.3.101, and a PME earthing assessment under Regulation 722.411.4.',
   'NICEIC and NAPIT registered, OZEV-approved electricians in Wolverhampton can self-certify the installation under Building Regulations Part P without the need to notify the City of Wolverhampton Council building control.',
   'BS 7671:2018+A4:2026 Regulation 722.311.201 provides the regulatory basis for smart charger load curtailment — overnight scheduled charging and dynamic load management can be taken into account in the installation design. Installations must also conform to the IET Code of Practice for Electric Vehicle Charging Equipment Installation alongside Section 722.',
 ];
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Full guide to the IET Wiring Regulations including Amendment 4:2024.',
+    description: 'Full guide to the IET Wiring Regulations including Amendment 4:2026.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -455,7 +455,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 722.531.2 — RCD protection</strong> — EV charger circuits must be
+                <strong>Regulation 722.531.3.101 — RCD protection</strong> — EV charger circuits must be
                 protected by an appropriate RCD. Most modern OZEV-approved smart chargers
                 incorporate Type B equivalent DC fault protection, allowing a Type A RCBO to be used
                 at the consumer unit.

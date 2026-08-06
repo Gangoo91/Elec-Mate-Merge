@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { storageSetJSONSync } from '@/utils/storage';
 import {
@@ -31,6 +31,17 @@ import { usePriceBookSettings } from '@/hooks/usePriceBookSettings';
 import { usePriceBookBundles, BundleLineItem } from '@/hooks/usePriceBookBundles';
 import { useInventoryStorage } from '@/hooks/useInventoryStorage';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import {
+  LABOUR_GRADES,
+  DEFAULT_LABOUR_GRADE,
+  shortGradeLabel,
+  rateForGrade,
+  labourLinesFor,
+  labourAllocations,
+  describeLabour,
+} from '@/utils/labourGrades';
+import { parseLabourMatrix, looksLikeLabourMatrix } from '@/utils/labourMatrixImport';
+import { rankMaterialMatches } from '@/data/materialSynonyms';
 import { useToast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -38,16 +49,35 @@ import { cn } from '@/lib/utils';
 // ─── Constants ──────────────────────────────────────────────────────────────
 
 const STALE_DAYS = 60;
+/** Cards rendered per page — the list is not virtualised (see visibleLimit). */
+const PAGE_SIZE = 60;
+/** Above this, bulk grading asks first — it has no undo. */
+const BULK_CONFIRM_ABOVE = 50;
 
 
-const CATEGORIES = ['All', 'Cable', 'Accessories', 'Tools', 'Safety', 'General'] as const;
-type Category = (typeof CATEGORIES)[number];
+/**
+ * Categories are derived from the items themselves, not a fixed list.
+ *
+ * The old fixed set (Cable/Accessories/Tools/Safety/General) was keyword-matched
+ * against merchant stock names. Against a trade labour book it put 55% of 1,256
+ * items in "General", which is no filter at all. Imported rows are named
+ * "SECTION — item — variant", so the section before the first dash IS the
+ * category the book itself uses.
+ */
+const ALL_CATEGORY = 'All';
 const TABS = ['Items', 'Bundles'] as const;
 type Tab = (typeof TABS)[number];
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
 function deriveCategory(name: string): string {
+  // Imported labour-book rows carry their own section: "ISOLATORS FUSED
+  // SWITCHES — 16 — Double Pole". Trust it over any keyword guess.
+  const emDash = name.indexOf(' — ');
+  if (emDash > 0) {
+    const section = name.slice(0, emDash).trim();
+    if (section.length > 2) return section;
+  }
   const n = name.toLowerCase();
   if (n.includes('cable') || n.includes('wire') || n.includes('flex') || n.includes('t&e') || n.includes('swa')) return 'Cable';
   if (n.includes('socket') || n.includes('switch') || n.includes('connector') || n.includes('terminal') || n.includes('plate')) return 'Accessories';
@@ -113,7 +143,7 @@ const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0
 // ─── Main ───────────────────────────────────────────────────────────────────
 
 export default function PriceBook() {
-  const { lists, updateItemDetails, addItem, bulkUpsertItems, createList, removeItem } = useMaterialsLists();
+  const { lists, updateItemDetails, addItem, bulkUpsertItems, createList, removeItem, bulkSetLabourGrade } = useMaterialsLists();
   const { settings, updateMarkup, calcSellPrice } = usePriceBookSettings();
   const { bundles, createBundle, deleteBundle, bundleTotal } = usePriceBookBundles();
   const { items: stockItems } = useInventoryStorage();
@@ -124,6 +154,17 @@ export default function PriceBook() {
   // Rate the labour allowance is costed at. Mirrors the quote builder so the
   // preview here matches what lands on the quote (ELE-1470).
   const hourlyRate = companyProfile?.hourly_rate ?? 0;
+  // Per-grade rates (ELE-1445). Already populated for every profile and edited
+  // from Profile -> Worker rates; the price book just needed to read them.
+  // Memoised: a fresh object each render re-ran every memo that depends on it,
+  // which with 1,200+ items meant recomputing the whole book on every keystroke.
+  const rateSources = useMemo(
+    () => ({
+      workerRates: companyProfile?.worker_rates,
+      hourlyRate: companyProfile?.hourly_rate,
+    }),
+    [companyProfile?.worker_rates, companyProfile?.hourly_rate]
+  );
 
   // Live stock lookup for price-book items linked to a `personal_inventory` row.
   const stockById = useMemo(
@@ -138,7 +179,7 @@ export default function PriceBook() {
 
   const [tab, setTab] = useState<Tab>('Items');
   const [search, setSearch] = useState('');
-  const [activeCategory, setActiveCategory] = useState<Category>('All');
+  const [activeCategory, setActiveCategory] = useState<string>(ALL_CATEGORY);
 
   // Edit item sheet
   const [editSheet, setEditSheet] = useState<PricedItem | null>(null);
@@ -148,7 +189,9 @@ export default function PriceBook() {
   const [editMarkup, setEditMarkup] = useState('');
   const [editUnit, setEditUnit] = useState('');
   const [editSupplier, setEditSupplier] = useState('');
-  const [editLabourHours, setEditLabourHours] = useState('');
+  /** Hours per grade, keyed by grade id — "0.5 electrician + 0.5 apprentice". */
+  const [editLabour, setEditLabour] = useState<Record<string, string>>({});
+  const [showAllGrades, setShowAllGrades] = useState(false);
   const [editMode, setEditMode] = useState<'cost' | 'sell'>('cost');
   const [editStockId, setEditStockId] = useState<string | undefined>(undefined);
 
@@ -168,7 +211,9 @@ export default function PriceBook() {
   // Import sheet
   const [importSheetOpen, setImportSheetOpen] = useState(false);
   const [importText, setImportText] = useState('');
-  const [importParsed, setImportParsed] = useState<{ name: string; price: number; unit: string; supplier: string; labourHours?: number }[]>([]);
+  const [importParsed, setImportParsed] = useState<{ name: string; price: number; unit: string; supplier: string; labourHours?: number; labourGrade?: string }[]>([]);
+  /** Grade applied to imported rows that don't name one (ELE-1445). */
+  const [importDefaultGrade, setImportDefaultGrade] = useState<string>(DEFAULT_LABOUR_GRADE);
   /** Which of the user's columns we mapped to what — null when the file had no usable header. */
   const [importCols, setImportCols] = useState<{ label: string; header: string }[] | null>(null);
   const [importing, setImporting] = useState(false);
@@ -195,6 +240,52 @@ export default function PriceBook() {
     return result;
   }, [lists]);
 
+  /** Real categories with counts, biggest first — 53 sections is too many to
+   *  read in a fixed order, but the ones you use most float to the front. */
+  const categories = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const p of pricedItems) {
+      const c = deriveCategory(p.item.name);
+      counts.set(c, (counts.get(c) ?? 0) + 1);
+    }
+    return [
+      { name: ALL_CATEGORY, count: pricedItems.length },
+      ...[...counts.entries()]
+        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+        .map(([name, count]) => ({ name, count })),
+    ];
+  }, [pricedItems]);
+
+  /** Book-wide figures. Labour is the bulk of this book now, so lead with it. */
+  const bookStats = useMemo(() => {
+    let priced = 0;
+    let withTime = 0;
+    let hours = 0;
+    let labourValue = 0;
+    for (const p of pricedItems) {
+      // Inlined rather than calling getSellPrice: that useCallback is declared
+      // below this memo, so referencing it here is a temporal dead zone.
+      if ((p.item.estimated_price ?? 0) > 0 || (p.item.cost_price ?? 0) > 0) priced++;
+      const l = labourLinesFor(p.item, 1, rateSources);
+      if (l.totalHours > 0) {
+        withTime++;
+        hours += l.totalHours;
+        labourValue += l.total;
+      }
+    }
+    return {
+      priced,
+      withTime,
+      hours: Math.round(hours * 10) / 10,
+      labourValue: Math.round(labourValue),
+    };
+  }, [pricedItems, rateSources]);
+
+  const [bulkGrading, setBulkGrading] = useState(false);
+  const [bulkMode, setBulkMode] = useState<'only' | 'add'>('only');
+  /** Grade awaiting a second tap when the batch is large. */
+  const [armedGrade, setArmedGrade] = useState<string | null>(null);
+
   const staleCount = useMemo(() => pricedItems.filter((p) => (daysOld(p.item.price_updated_at) ?? 0) >= STALE_DAYS).length, [pricedItems]);
 
   /** Every name already in the book, normalised the same way the importer
@@ -210,7 +301,7 @@ export default function PriceBook() {
   const bundlePickerItems = useMemo(() => {
     const q = bundlePickerSearch.trim().toLowerCase();
     if (!q) return pricedItems;
-    return pricedItems.filter((p) => p.item.name.toLowerCase().includes(q));
+    return rankMaterialMatches(pricedItems, q, (p) => p.item.name);
   }, [pricedItems, bundlePickerSearch]);
 
   /** What the import is actually about to do, counted before it runs. */
@@ -219,7 +310,14 @@ export default function PriceBook() {
     let updated = 0;
     let skipped = 0;
     for (const row of importParsed) {
-      if (!(row.price > 0) || !row.name) { skipped++; continue; }
+      // A row with a labour time but no price is still worth importing —
+      // Sean Mulcahy's labour book is times only, and read strictly every one
+      // of its rows was being skipped. Times merge onto the matching item
+      // without touching its price.
+      if (!row.name || (!(row.price > 0) && !((row.labourHours ?? 0) > 0))) {
+        skipped++;
+        continue;
+      }
       if (existingNames.has(normaliseItemName(row.name))) updated++;
       else added++;
     }
@@ -229,9 +327,42 @@ export default function PriceBook() {
   const filtered = useMemo(() => {
     let items = pricedItems;
     if (activeCategory !== 'All') items = items.filter((p) => deriveCategory(p.item.name) === activeCategory);
-    if (search.trim()) { const q = search.toLowerCase(); items = items.filter((p) => p.item.name.toLowerCase().includes(q)); }
+    // Was a bare substring filter — no synonyms, no ranking. Now the same
+    // ranked matcher the quote and invoice builders use, so all three agree.
+    if (search.trim()) items = rankMaterialMatches(items, search, (p) => p.item.name);
     return items;
   }, [pricedItems, activeCategory, search]);
+
+  /**
+   * The list renders a card per item with no virtualisation. That was fine at
+   * the 20–50 items a hand-built book holds; importing a trade labour book puts
+   * 1,200+ in it, and rendering the lot locks a phone up on the exact device
+   * this is used on. Render a page at a time instead.
+   */
+  const [visibleLimit, setVisibleLimit] = useState(PAGE_SIZE);
+  const visible = useMemo(() => filtered.slice(0, visibleLimit), [filtered, visibleLimit]);
+  // Any change of filter starts again from the top, or "Show more" would be
+  // paging through a list the user has already narrowed.
+  useEffect(() => setVisibleLimit(PAGE_SIZE), [activeCategory, search]);
+  // Never leave a grade armed against a different set of items than the one the
+  // user was looking at when they armed it.
+  useEffect(() => setArmedGrade(null), [activeCategory, search, bulkMode]);
+
+  /**
+   * Items in the current filter that carry hours — what bulk grading acts on.
+   * Grouped by list because an item's id only means something within its own
+   * list, and the price book can show several at once.
+   */
+  const gradeable = useMemo(() => {
+    const byList = new Map<string, string[]>();
+    for (const p of filtered) {
+      if (labourAllocations(p.item).length === 0) continue;
+      const ids = byList.get(p.listId) ?? [];
+      ids.push(p.item.id);
+      byList.set(p.listId, ids);
+    }
+    return { byList, total: [...byList.values()].reduce((n, ids) => n + ids.length, 0) };
+  }, [filtered]);
 
   const getSellPrice = useCallback((item: MaterialsListItem): number => {
     if ((item.estimated_price ?? 0) > 0) return item.estimated_price!;
@@ -246,7 +377,10 @@ export default function PriceBook() {
     setEditName(item.name);
     setEditUnit(item.unit || 'each');
     setEditSupplier(item.supplier || '');
-    setEditLabourHours(item.labour_hours != null ? String(item.labour_hours) : '');
+    const seeded: Record<string, string> = {};
+    for (const a of labourAllocations(item)) seeded[a.grade] = String(a.hours);
+    setEditLabour(seeded);
+    setShowAllGrades(false);
     setEditStockId(item.personal_inventory_id);
     if ((item.cost_price ?? 0) > 0) {
       setEditMode('cost');
@@ -282,8 +416,16 @@ export default function PriceBook() {
     const updates: Partial<MaterialsListItem> = { name: editName.trim() || editSheet.item.name, unit: editUnit.trim() || 'each', supplier: editSupplier.trim() || undefined, personal_inventory_id: editStockId };
     // Blank clears the allowance rather than storing 0, so "no labour on this
     // item" and "zero hours" stay the same thing (ELE-1470).
-    const labourHours = parseFloat(editLabourHours);
-    updates.labour_hours = editLabourHours.trim() === '' || isNaN(labourHours) || labourHours <= 0 ? undefined : labourHours;
+    // Multi-grade allocation. Blank or zero clears that grade entirely rather
+    // than storing 0, so "no apprentice on this" and "zero apprentice hours"
+    // stay the same thing.
+    const allocations = LABOUR_GRADES.map((g) => ({ grade: g.id, hours: parseFloat(editLabour[g.id] ?? '') }))
+      .filter((a) => !isNaN(a.hours) && a.hours > 0);
+    updates.labour = allocations.length > 0 ? allocations : undefined;
+    // Keep the legacy pair in step so anything still reading it stays correct;
+    // it mirrors the first allocation only.
+    updates.labour_hours = allocations[0]?.hours;
+    updates.labour_grade = allocations[0]?.grade;
     if (editMode === 'cost') {
       const cost = parseFloat(editCostPrice);
       if (isNaN(cost) || cost <= 0) { toast({ title: 'Invalid cost price', variant: 'destructive' }); return; }
@@ -430,6 +572,13 @@ export default function PriceBook() {
     const name = find('description', 'item', 'name', 'product', 'part');
     const unit = norm.findIndex((h, idx) => idx !== price && /\b(unit|uom|measure)\b/.test(h));
     const supplier = find('supplier', 'vendor', 'manufacturer', 'brand', 'merchant');
+    // Who does the work (ELE-1445). Excluded from the labour match above by
+    // being looked for separately — a "labour grade" column is not hours.
+    const grade = norm.findIndex(
+      (h, idx) =>
+        idx !== labour &&
+        ['grade', 'operative', 'worker', 'who', 'labour type', 'trade type'].some((c) => h.includes(c))
+    );
 
     if (name < 0 && price < 0 && labour < 0) return null;
 
@@ -437,7 +586,7 @@ export default function PriceBook() {
     // thing either way, and importing "30" as thirty hours would be absurd.
     const labourInMinutes = labour >= 0 && /\b(minutes|mins)\b/.test(norm[labour]);
 
-    return { name, price, unit, supplier, labour, labourInMinutes };
+    return { name, price, unit, supplier, labour, labourInMinutes, grade };
   };
 
   /**
@@ -451,6 +600,25 @@ export default function PriceBook() {
    * Returns undefined rather than a guess when nothing parses — a wrong labour
    * figure silently becomes a wrong invoice, so no value beats a bad one.
    */
+  /**
+   * Map a free-text grade from the electrician's own spreadsheet onto one of our
+   * worker types (ELE-1445). Sean writes "Electrician" and "Apprentice"; other
+   * books say "Spark", "Mate", "Improver". Anything unrecognised returns
+   * undefined so the item falls back to electrician rather than being silently
+   * costed at a labourer rate.
+   */
+  const cleanLabourGrade = (raw?: string): string | undefined => {
+    if (!raw) return undefined;
+    const v = raw.toLowerCase().replace(/[^a-z]/g, '');
+    if (!v) return undefined;
+    if (/(apprentice|improver|mate|trainee)/.test(v)) return 'apprentice';
+    if (/(labour|labor|groundwork|handyman)/.test(v)) return 'labourer';
+    if (/(design|engineer|estimat)/.test(v)) return 'designer';
+    if (/(owner|director|principal|supervisor)/.test(v)) return 'owner';
+    if (/(electrician|spark|qualified|jib|approved)/.test(v)) return 'electrician';
+    return undefined;
+  };
+
   const cleanLabourHours = (
     raw: string | undefined,
     columnIsMinutes = false
@@ -489,6 +657,41 @@ export default function PriceBook() {
   const parseImportText = (text: string) => {
     const lines = text.split(/\r?\n/).filter((l) => l.trim());
     const parsed: typeof importParsed = [];
+
+    // Cross-tab labour book (ELE-1445). Trade time guides are grids — item
+    // rating down the side, variant across the top, and often two tables side
+    // by side on the same rows. Read one-item-per-row, the first time value
+    // becomes the price and every other column is lost, so this has to be
+    // detected before the list readers get a look.
+    if (looksLikeLabourMatrix(text)) {
+      const matrix = parseLabourMatrix(text);
+      if (matrix.rows.length > 0) {
+        // Same "here is what we read" panel as the list importer, so a matrix
+        // paste is never silently reinterpreted.
+        setImportCols([
+          { label: 'Layout', header: 'Labour time guide (grid)' },
+          {
+            label: 'Sections',
+            header: matrix.sections.slice(0, 3).join(', ') || 'none found',
+          },
+          {
+            label: 'Variants',
+            header: matrix.variants.slice(0, 4).join(', ') || 'none found',
+          },
+          { label: 'Times found', header: String(matrix.rows.length) },
+        ]);
+        setImportParsed(
+          matrix.rows.map((r) => ({
+            name: r.name,
+            price: 0,
+            unit: 'each',
+            supplier: '',
+            labourHours: r.labourHours,
+          }))
+        );
+        return;
+      }
+    }
 
     // Delimiter is whichever separator the first line actually uses. Tabs come
     // from a spreadsheet paste, semicolons from Excel on a European locale.
@@ -531,6 +734,7 @@ export default function PriceBook() {
           unit: at(cols.unit)?.trim() || 'each',
           supplier: at(cols.supplier)?.trim() || '',
           labourHours: cleanLabourHours(at(cols.labour), cols.labourInMinutes),
+          labourGrade: cleanLabourGrade(at(cols.grade)),
         });
       }
       setImportParsed(parsed);
@@ -648,7 +852,9 @@ export default function PriceBook() {
   };
 
   const handleImport = async () => {
-    const validItems = importParsed.filter((i) => i.name && i.price > 0);
+    const validItems = importParsed.filter(
+      (i) => i.name && (i.price > 0 || (i.labourHours ?? 0) > 0)
+    );
     if (validItems.length === 0) return;
     setImporting(true);
     let list = lists.find((l) => l.name === 'Price Book');
@@ -664,6 +870,9 @@ export default function PriceBook() {
         markup_percent: settings.globalMarkupPercent,
         supplier_name: item.supplier || undefined,
         labour_hours: item.labourHours,
+        // Only stamp a grade on rows that actually carry hours, and fall back
+        // to the chosen default when the sheet does not name one.
+        labour_grade: (item.labourHours ?? 0) > 0 ? (item.labourGrade || importDefaultGrade) : undefined,
       }))
     );
     const count = added + updated;
@@ -679,13 +888,56 @@ export default function PriceBook() {
   };
 
   // Add item/bundle to quote
-  const handleAddToQuote = (name: string, price: number, unit: string) => {
+  const handleAddToQuote = (item: MaterialsListItem, price: number, unit: string) => {
     const sessionId = `pricebook_${crypto.randomUUID()}`;
-    const data = {
-      source: 'price_book',
-      sourceLabel: 'Price Book',
-      materials: [{ id: crypto.randomUUID(), description: name, category: 'materials' as const, quantity: 1, unitPrice: price, totalPrice: price, unit, notes: '' }],
-    };
+    const labour = labourLinesFor(item, 1, rateSources);
+    const lines: {
+      id: string;
+      description: string;
+      category: 'materials' | 'labour';
+      quantity: number;
+      unitPrice: number;
+      totalPrice: number;
+      unit: string;
+      notes: string;
+    }[] = [];
+
+    // A labour-book item has hours and no price. Sending a £0.00 materials line
+    // would put a free item on a customer quote; send the labour instead.
+    if (price > 0) {
+      lines.push({
+        id: crypto.randomUUID(),
+        description: item.name,
+        category: 'materials',
+        quantity: 1,
+        unitPrice: price,
+        totalPrice: price,
+        unit,
+        notes: '',
+      });
+    }
+    for (const line of labour.lines) {
+      lines.push({
+        id: crypto.randomUUID(),
+        description: `Labour — ${item.name} (${shortGradeLabel(line.grade)})`,
+        category: 'labour',
+        quantity: line.hours,
+        unitPrice: line.rate,
+        totalPrice: line.total,
+        unit: 'hour',
+        notes: '',
+      });
+    }
+    if (lines.length === 0) {
+      toast({
+        title: 'Nothing to add yet',
+        description: 'This item has no price and no labour time.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    const data = { source: 'price_book', sourceLabel: 'Price Book', materials: lines };
     storageSetJSONSync(sessionId, { materialsData: data });
     navigate(`/electrician/quote-builder/create?materialsSessionId=${sessionId}`);
   };
@@ -750,7 +1002,10 @@ export default function PriceBook() {
             <>
               {/* One surface split into three, rather than three boxes with
                   three borders competing for the same glance. */}
-              <motion.div variants={itemVariants} className={cn(cardCn, 'grid grid-cols-3 overflow-hidden')}>
+              {/* Six figures, not three. "Stale" measured price age, which says
+                  nothing about a book that is now mostly labour times — it moves
+                  below as a warning, where a warning belongs. */}
+              <motion.div variants={itemVariants} className={cn(cardCn, 'grid grid-cols-3 overflow-hidden sm:grid-cols-6')}>
                 <div className="px-3 py-3.5 sm:px-4">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">Items</p>
                   <p className="mt-1 text-[20px] font-bold tabular-nums leading-none tracking-tight text-white">
@@ -758,6 +1013,30 @@ export default function PriceBook() {
                   </p>
                 </div>
                 <div className="border-l border-white/[0.10] px-3 py-3.5 sm:px-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">Priced</p>
+                  <p className="mt-1 text-[20px] font-bold tabular-nums leading-none tracking-tight text-white">
+                    {bookStats.priced}
+                  </p>
+                </div>
+                <div className="border-l border-white/[0.10] px-3 py-3.5 sm:px-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">Timed</p>
+                  <p className="mt-1 text-[20px] font-bold tabular-nums leading-none tracking-tight text-blue-300">
+                    {bookStats.withTime}
+                  </p>
+                </div>
+                <div className="border-l border-white/[0.10] border-t sm:border-t-0 px-3 py-3.5 sm:px-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">Hours</p>
+                  <p className="mt-1 text-[20px] font-bold tabular-nums leading-none tracking-tight text-white">
+                    {bookStats.hours}
+                  </p>
+                </div>
+                <div className="border-l border-white/[0.10] border-t sm:border-t-0 px-3 py-3.5 sm:px-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">Labour</p>
+                  <p className="mt-1 text-[20px] font-bold tabular-nums leading-none tracking-tight text-blue-300">
+                    {bookStats.labourValue > 0 ? formatGBP(bookStats.labourValue).replace('.00', '') : '—'}
+                  </p>
+                </div>
+                <div className="border-l border-white/[0.10] border-t sm:border-t-0 px-3 py-3.5 sm:px-4">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">Markup</p>
                   {editingMarkup ? (
                     <div className="mt-1 flex items-baseline gap-1">
@@ -781,16 +1060,14 @@ export default function PriceBook() {
                     </button>
                   )}
                 </div>
-                <div className="border-l border-white/[0.10] px-3 py-3.5 sm:px-4">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">Stale</p>
-                  <p className={cn(
-                    'mt-1 text-[20px] font-bold tabular-nums leading-none tracking-tight',
-                    staleCount > 0 ? 'text-amber-400' : 'text-white'
-                  )}>
-                    {staleCount}
-                  </p>
-                </div>
               </motion.div>
+
+              {staleCount > 0 && (
+                <motion.p variants={itemVariants} className="-mt-2 px-1 text-[12px] text-amber-400">
+                  {staleCount} priced {staleCount === 1 ? 'item has' : 'items have'} not been
+                  re-priced in {STALE_DAYS} days.
+                </motion.p>
+              )}
 
               {/* Rate Card link */}
               <motion.div variants={itemVariants}>
@@ -820,16 +1097,108 @@ export default function PriceBook() {
 
               {/* Category filter */}
               <motion.div variants={itemVariants} className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 scrollbar-hide sm:mx-0 sm:px-0">
-                {CATEGORIES.map((cat) => (
+                {categories.map((cat) => (
                   <button
-                    key={cat}
-                    onClick={() => setActiveCategory(cat)}
-                    className={cn(chipBase, activeCategory === cat ? chipOn : chipOff)}
+                    key={cat.name}
+                    onClick={() => setActiveCategory(cat.name)}
+                    className={cn(chipBase, activeCategory === cat.name ? chipOn : chipOff)}
                   >
-                    {cat}
+                    {cat.name}
+                    <span className="ml-1.5 tabular-nums opacity-70">{cat.count}</span>
                   </button>
                 ))}
               </motion.div>
+
+              {/* Everything imported from a labour book lands as "electrician" —
+                  the book does not say who does the work. Re-grading a section
+                  is where the money is (an hour moved from £48 to £18 is £30),
+                  so offer it against whatever the current filter shows rather
+                  than one item at a time. */}
+              {gradeable.total > 1 && (
+                <motion.div variants={itemVariants} className={cn(cardCn, 'space-y-2')}>
+                  <p className="text-[12px] font-semibold text-white">
+                    Labour for {gradeable.total}{' '}
+                    {activeCategory === ALL_CATEGORY ? 'timed items' : `items in ${activeCategory}`}
+                  </p>
+                  {/* Two-man tasks are the normal case on a board change or a
+                      pull-in, so "add alongside" sits beside "move all to". */}
+                  <div className="flex gap-2">
+                    {([
+                      { id: 'only' as const, label: 'Move all to' },
+                      { id: 'add' as const, label: 'Add alongside' },
+                    ]).map((m) => (
+                      <button
+                        key={m.id}
+                        type="button"
+                        onClick={() => setBulkMode(m.id)}
+                        className={cn(
+                          'h-9 flex-1 rounded-full border text-[12px] transition-colors touch-manipulation',
+                          bulkMode === m.id
+                            ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                            : 'border-white/[0.12] bg-white/[0.04] font-medium text-white'
+                        )}
+                      >
+                        {m.label}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
+                    {LABOUR_GRADES.map((g) => {
+                      const rate = rateForGrade(g.id, rateSources);
+                      return (
+                        <button
+                          key={g.id}
+                          disabled={bulkGrading}
+                          onClick={async () => {
+                            // With no filter this is every timed item in the
+                            // book — re-grading 1,200 items on one tap, with no
+                            // undo. Arm it on the first tap instead of throwing
+                            // a browser confirm() at a mobile-first app.
+                            if (gradeable.total > BULK_CONFIRM_ABOVE && armedGrade !== g.id) {
+                              setArmedGrade(g.id);
+                              return;
+                            }
+                            setArmedGrade(null);
+                            setBulkGrading(true);
+                            let changed = 0;
+                            for (const [listId, ids] of gradeable.byList) {
+                              changed += await bulkSetLabourGrade(listId, ids, g.id, bulkMode);
+                            }
+                            setBulkGrading(false);
+                            toast({
+                              title: changed > 0
+                                ? bulkMode === 'add'
+                                  ? `${shortGradeLabel(g.id)} added to ${changed} ${changed === 1 ? 'item' : 'items'}`
+                                  : `${changed} ${changed === 1 ? 'item' : 'items'} moved to ${shortGradeLabel(g.id)}`
+                                : 'Nothing to change',
+                              description: changed > 0 && rate > 0
+                                ? `Now costed at ${formatGBP(rate)}/hr.`
+                                : undefined,
+                            });
+                          }}
+                          className={cn(
+                            'flex h-11 flex-col items-center justify-center rounded-xl border px-1 transition-all disabled:opacity-50 touch-manipulation',
+                            armedGrade === g.id
+                              ? 'border-elec-yellow bg-elec-yellow text-black'
+                              : 'border-white/[0.12] bg-white/[0.06] text-white hover:border-white/[0.25]'
+                          )}
+                        >
+                          <span className="text-[12px] font-medium">
+                            {armedGrade === g.id ? 'Tap again' : shortGradeLabel(g.id)}
+                          </span>
+                          <span className="text-[10px] tabular-nums">
+                            {armedGrade === g.id
+                              ? `${gradeable.total} items`
+                              : rate > 0
+                                ? `${formatGBP(rate)}/hr`
+                                : 'no rate'}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </motion.div>
+              )}
 
               {/* Items */}
               {filtered.length === 0 ? (
@@ -863,12 +1232,16 @@ export default function PriceBook() {
                 /* One column on a phone; two from lg, where a single column of
                    full-width cards leaves most of the screen empty. */
                 <div className="space-y-3 lg:grid lg:grid-cols-2 lg:gap-3 lg:space-y-0">
-                  {filtered.map((p) => {
+                  {visible.map((p) => {
                     const sellPrice = getSellPrice(p.item);
                     const hasCost = (p.item.cost_price ?? 0) > 0;
                     const days = daysOld(p.item.price_updated_at);
                     const stale = (days ?? 0) >= STALE_DAYS;
                     const cat = deriveCategory(p.item.name);
+                    // Costed at the item's OWN grade — the card must agree with
+                    // what the quote builder will charge, or he quotes one
+                    // number and sees another here.
+                    const itemLabour = labourLinesFor(p.item, 1, rateSources);
                     return (
                       <motion.div
                         key={`${p.listId}-${p.item.id}`}
@@ -880,7 +1253,13 @@ export default function PriceBook() {
                         <div className="flex-1">
                         <div className="flex items-start gap-4">
                           <div className="min-w-0 flex-1">
-                            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">{cat}</p>
+                            {/* Sections run to 40 characters ("CABLE LADDER &
+                                ACCESSORIES (MEDIUM DUTY)") and this is 10px
+                                uppercase with 0.16em tracking — unbounded it
+                                wraps to three lines above every item name. */}
+                            <p className="truncate text-[10px] font-semibold uppercase tracking-[0.16em] text-white" title={cat}>
+                              {cat}
+                            </p>
                             <p className="mt-1 text-[15px] font-semibold leading-snug tracking-tight text-white">
                               {p.item.name}
                             </p>
@@ -906,27 +1285,44 @@ export default function PriceBook() {
                               )}
                             </div>
                           </div>
+                          {/* A labour-book item has hours and no price. Showing
+                              £0.00 in 20px yellow made 1,256 of Sean's items
+                              read as worthless; the time IS the value, so lead
+                              with it and ask for the price quietly. */}
                           <div className="flex-shrink-0 text-right">
-                            <p className="text-[20px] font-bold leading-none tracking-tight text-elec-yellow tabular-nums">
-                              {formatGBP(sellPrice)}
-                            </p>
-                            <p className="mt-1 text-[12px] text-white">per {p.item.unit || 'each'}</p>
+                            {sellPrice > 0 ? (
+                              <>
+                                <p className="text-[20px] font-bold leading-none tracking-tight text-elec-yellow tabular-nums">
+                                  {formatGBP(sellPrice)}
+                                </p>
+                                <p className="mt-1 text-[12px] text-white">per {p.item.unit || 'each'}</p>
+                              </>
+                            ) : itemLabour.total > 0 ? (
+                              <>
+                                <p className="text-[20px] font-bold leading-none tracking-tight text-blue-300 tabular-nums">
+                                  {formatGBP(itemLabour.total)}
+                                </p>
+                                <p className="mt-1 text-[12px] text-white">labour only</p>
+                              </>
+                            ) : (
+                              <p className="text-[13px] font-medium text-white">No price yet</p>
+                            )}
                           </div>
                         </div>
 
                         {/* Cost basis and labour — the working behind the price,
                             kept apart from it so the sell price reads cleanly. */}
-                        {(hasCost || (p.item.labour_hours ?? 0) > 0) && (
+                        {(hasCost || labourAllocations(p.item).length > 0) && (
                           <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-white/[0.10] pt-3 text-[12px] text-white tabular-nums">
                             {hasCost && (
                               <span>
                                 Cost {formatGBP(p.item.cost_price!)} · {(p.item.markup_percent ?? settings.globalMarkupPercent).toFixed(0)}% markup
                               </span>
                             )}
-                            {(p.item.labour_hours ?? 0) > 0 && (
+                            {labourAllocations(p.item).length > 0 && (
                               <span>
-                                {p.item.labour_hours}h labour
-                                {hourlyRate > 0 && ` · ${formatGBP(p.item.labour_hours! * hourlyRate)}`}
+                                {describeLabour(labourAllocations(p.item))}
+                                {itemLabour.total > 0 && ` · ${formatGBP(itemLabour.total)}`}
                               </span>
                             )}
                           </div>
@@ -936,7 +1332,7 @@ export default function PriceBook() {
 
                         <div className="mt-3 flex items-center gap-2 border-t border-white/[0.10] pt-3">
                           <button
-                            onClick={() => handleAddToQuote(p.item.name, sellPrice, p.item.unit || 'each')}
+                            onClick={() => handleAddToQuote(p.item, sellPrice, p.item.unit || 'each')}
                             className="h-11 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[13px] font-semibold text-white transition-colors hover:bg-white/[0.08] touch-manipulation active:scale-[0.98]"
                           >
                             Add to quote
@@ -952,6 +1348,17 @@ export default function PriceBook() {
                     );
                   })}
                 </div>
+              )}
+
+              {/* Not virtualised — see visibleLimit. Always state the true total
+                  so a paged list never reads as the whole book. */}
+              {filtered.length > visible.length && (
+                <button
+                  onClick={() => setVisibleLimit((n) => n + PAGE_SIZE)}
+                  className="mt-3 h-12 w-full rounded-xl border border-white/[0.12] bg-white/[0.04] text-[13px] font-semibold text-white transition-colors hover:bg-white/[0.08] touch-manipulation"
+                >
+                  Show more · {visible.length} of {filtered.length}
+                </button>
               )}
             </>
           )}
@@ -1121,24 +1528,84 @@ export default function PriceBook() {
               </div>
             </div>
 
-            {/* Labour allowance — time to install one unit. Costed at the hourly
-                rate and added to the quote as its own labour line (ELE-1470). */}
+            {/* Labour per grade. A board change or a pull-in is an electrician
+                AND an apprentice on site together — pricing that at one rate is
+                wrong whichever rate you pick, so every grade gets its own box
+                and only the ones with hours are charged (ELE-1445). */}
             <div>
               <label className={labelCn}>Labour time (hours per {editUnit.trim() || 'each'})</label>
-              <input
-                type="text"
-                inputMode="decimal"
-                value={editLabourHours}
-                placeholder="e.g. 0.5"
-                onChange={(e) => { if (e.target.value === '' || /^\d*\.?\d*$/.test(e.target.value)) setEditLabourHours(e.target.value); }}
-                className={fieldCn}
-              />
-              <p className="mt-1.5 text-[12px] text-white">
+              {/* Electrician and apprentice cover nearly every item; labourer,
+                  designer and owner are rare. Showing all five always made an
+                  already-long sheet longer on a phone, so the rest sit behind a
+                  toggle — and any grade that already has hours stays visible. */}
+              <div className="mt-1 space-y-2">
+                {LABOUR_GRADES.filter(
+                  (g) =>
+                    showAllGrades ||
+                    g.id === 'electrician' ||
+                    g.id === 'apprentice' ||
+                    parseFloat(editLabour[g.id] ?? '') > 0
+                ).map((g) => {
+                  const gradeRate = rateForGrade(g.id, rateSources);
+                  const h = parseFloat(editLabour[g.id] ?? '');
+                  const has = !isNaN(h) && h > 0;
+                  return (
+                    <div
+                      key={g.id}
+                      className={cn(
+                        'flex items-center gap-3 rounded-xl border px-3 py-2 transition-colors',
+                        has ? 'border-elec-yellow/50 bg-elec-yellow/[0.06]' : 'border-white/[0.12] bg-white/[0.03]'
+                      )}
+                    >
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[13px] font-medium text-white">{shortGradeLabel(g.id)}</p>
+                        <p className="text-[11px] tabular-nums text-white">
+                          {gradeRate > 0 ? `${formatGBP(gradeRate)}/hr` : 'No rate set'}
+                        </p>
+                      </div>
+                      <input
+                        type="text"
+                        inputMode="decimal"
+                        value={editLabour[g.id] ?? ''}
+                        placeholder="0"
+                        aria-label={`${shortGradeLabel(g.id)} hours`}
+                        onChange={(e) => {
+                          const v = e.target.value;
+                          if (v !== '' && !/^\d*\.?\d*$/.test(v)) return;
+                          setEditLabour((prev) => ({ ...prev, [g.id]: v }));
+                        }}
+                        className="h-11 w-20 rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-right text-base font-medium tabular-nums text-white caret-elec-yellow placeholder:text-white/25 focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
+                      />
+                      <span className="w-14 text-right text-[12px] tabular-nums text-white">
+                        {has && gradeRate > 0 ? formatGBP(h * gradeRate) : '—'}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+              {LABOUR_GRADES.some(
+                (g) =>
+                  g.id !== 'electrician' &&
+                  g.id !== 'apprentice' &&
+                  !(parseFloat(editLabour[g.id] ?? '') > 0)
+              ) && (
+                <button
+                  type="button"
+                  onClick={() => setShowAllGrades((v) => !v)}
+                  className="mt-2 h-11 text-[12.5px] font-medium text-elec-yellow touch-manipulation"
+                >
+                  {showAllGrades ? 'Fewer grades' : 'More grades'}
+                </button>
+              )}
+              <p className="mt-2 text-[12px] text-white">
                 {(() => {
-                  const h = parseFloat(editLabourHours);
-                  if (isNaN(h) || h <= 0) return 'Leave blank to quote this item as materials only.';
-                  if (hourlyRate <= 0) return 'Set an hourly rate in Business Settings to cost this time.';
-                  return `${h}h at ${formatGBP(hourlyRate)}/hr adds ${formatGBP(h * hourlyRate)} labour per ${editUnit.trim() || 'each'}.`;
+                  const allocs = LABOUR_GRADES
+                    .map((g) => ({ grade: g.id, hours: parseFloat(editLabour[g.id] ?? '') }))
+                    .filter((a) => !isNaN(a.hours) && a.hours > 0);
+                  if (allocs.length === 0) return 'Leave blank to quote this item as materials only.';
+                  const { total, totalHours } = labourLinesFor({ labour: allocs }, 1, rateSources);
+                  if (total <= 0) return 'Set rates in Profile → Worker rates to cost this time.';
+                  return `${describeLabour(allocs)} — ${totalHours}h, ${formatGBP(total)} per ${editUnit.trim() || 'each'}.`;
                 })()}
               </p>
             </div>
@@ -1496,35 +1963,94 @@ export default function PriceBook() {
                     {importSplit.skipped > 0 && ` · ${importSplit.skipped} skipped`}
                   </span>
                 </div>
+                {/* Sean's book has a time against every item but no grade
+                    column, so one choice here beats editing 300 items by hand
+                    (ELE-1445). Rows that DO name a grade keep their own. */}
+                {importParsed.some((i) => (i.labourHours ?? 0) > 0 && !i.labourGrade) && (
+                  <div className="rounded-xl border border-white/[0.12] bg-white/[0.03] p-3">
+                    <p className="text-[12px] font-semibold text-white">Who does this labour</p>
+                    <p className="mt-0.5 text-[11px] text-white">
+                      Applied to rows with a time but no grade of their own. Change any item later.
+                    </p>
+                    <div className="mt-2 grid grid-cols-3 gap-2">
+                      {LABOUR_GRADES.map((g) => {
+                        const gradeRate = rateForGrade(g.id, rateSources);
+                        const active = importDefaultGrade === g.id;
+                        return (
+                          <button
+                            key={g.id}
+                            type="button"
+                            onClick={() => setImportDefaultGrade(g.id)}
+                            className={cn(
+                              'flex h-11 flex-col items-center justify-center rounded-xl border px-1 transition-all touch-manipulation',
+                              active
+                                ? 'border-elec-yellow bg-elec-yellow text-black'
+                                : 'border-white/[0.12] bg-white/[0.06] text-white hover:border-white/[0.25]'
+                            )}
+                          >
+                            <span className={cn('text-[12px]', active ? 'font-semibold' : 'font-medium')}>
+                              {shortGradeLabel(g.id)}
+                            </span>
+                            <span className="text-[10px] tabular-nums">
+                              {gradeRate > 0 ? `${formatGBP(gradeRate)}/hr` : 'no rate'}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
                 <div className="max-h-56 divide-y divide-white/[0.08] overflow-y-auto rounded-xl border border-white/[0.12] bg-white/[0.03]">
                   {importParsed.map((item, i) => {
                     const isUpdate = existingNames.has(normaliseItemName(item.name));
-                    const invalid = !(item.price > 0);
+                    const timeOnly = !(item.price > 0) && (item.labourHours ?? 0) > 0;
+                    const invalid = !(item.price > 0) && !timeOnly;
                     return (
                       <div key={i} className={cn('flex items-center gap-3 p-3', invalid && 'opacity-45')}>
                         <div className="min-w-0 flex-1">
                           <p className="line-clamp-1 text-[13px] font-medium text-white">{item.name}</p>
                           <p className="mt-0.5 text-[11px] text-white">
                             {invalid
-                              ? 'No price found — this row will be skipped'
+                              ? 'No price or time found — this row will be skipped'
                               : [
-                                  isUpdate ? 'Updating' : 'New',
+                                  timeOnly
+                                    ? isUpdate
+                                      ? 'Labour time only — price kept'
+                                      : 'Labour time only — add a price later'
+                                    : isUpdate
+                                      ? 'Updating'
+                                      : 'New',
                                   `per ${item.unit}`,
                                   item.supplier || null,
-                                  (item.labourHours ?? 0) > 0 ? `${item.labourHours}h labour` : null,
+                                  (item.labourHours ?? 0) > 0
+                                    ? `${item.labourHours}h ${shortGradeLabel(item.labourGrade || importDefaultGrade).toLowerCase()}`
+                                    : null,
                                 ]
                                   .filter(Boolean)
                                   .join(' · ')}
                           </p>
                         </div>
-                        {!invalid && (
-                          <div className="flex-shrink-0 text-right">
-                            <p className="text-[13px] font-semibold text-elec-yellow tabular-nums">
-                              {formatGBP(calcSellPrice(item.price))}
-                            </p>
-                            <p className="text-[11px] text-white tabular-nums">cost {formatGBP(item.price)}</p>
-                          </div>
-                        )}
+                        {!invalid &&
+                          (timeOnly ? (
+                            /* No price in the file — showing £0.00 here would
+                               read as "this item is free" rather than "this
+                               import carries times". */
+                            <div className="flex-shrink-0 text-right">
+                              <p className="text-[13px] font-semibold text-blue-300 tabular-nums">
+                                {item.labourHours}h
+                              </p>
+                              <p className="text-[11px] text-white">no price</p>
+                            </div>
+                          ) : (
+                            <div className="flex-shrink-0 text-right">
+                              <p className="text-[13px] font-semibold text-elec-yellow tabular-nums">
+                                {formatGBP(calcSellPrice(item.price))}
+                              </p>
+                              <p className="text-[11px] text-white tabular-nums">
+                                cost {formatGBP(item.price)}
+                              </p>
+                            </div>
+                          ))}
                       </div>
                     );
                   })}

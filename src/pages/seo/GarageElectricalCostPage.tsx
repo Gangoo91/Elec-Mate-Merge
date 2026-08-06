@@ -363,7 +363,7 @@ const sections = [
                 — are explicitly recorded on the Electrical Installation Certificate (Part 6). If
                 the garage consumer unit is installed or replaced after the A4:2026 effective date,
                 the electrician must complete these fields on the EIC. Regulation 421.1.7 recommends
-                AFDDs for final circuits supplying socket-outlets; they are mandatory in Higher Risk
+                AFDDs for final circuits supplying socket-outlets; they are recommended, not mandatory, in Higher Risk
                 Residential Buildings, HMOs, student accommodation, and care homes. For a standard
                 domestic garage, an AFDD is recommended but not mandatory — the decision and the
                 device type used must still be recorded on the EIC.

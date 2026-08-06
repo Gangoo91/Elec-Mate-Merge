@@ -793,7 +793,7 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bold text-white mb-1">
-                  AFDDs now required in HMOs and higher-risk premises (Reg 421.1.7)
+                  AFDDs recommended in HMOs and higher-risk premises (Reg 421.1.7)
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Regulation 421.1.7 was redrafted in A4:2026. Arc fault detection devices (AFDDs)

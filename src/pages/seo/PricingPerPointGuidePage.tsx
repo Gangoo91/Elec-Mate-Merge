@@ -489,7 +489,7 @@ const sections = [
             AFDD — Arc Fault Detection (Reg 421.1.7)
           </h4>
           <p className="text-white text-sm leading-relaxed">
-            BS 7671:2018+A4:2026 Reg 421.1.7 makes AFDDs <strong>mandatory</strong> on AC
+            BS 7671:2018+A4:2026 Reg 421.1.7 recommends AFDDs on AC
             socket-outlet final circuits (≤32 A) in Higher Risk Residential Buildings (HRRBs),
             Houses in Multiple Occupation (HMOs), purpose-built student accommodation, and care
             homes. For all other premises, AFDDs are strongly recommended. When pricing CU-inclusive

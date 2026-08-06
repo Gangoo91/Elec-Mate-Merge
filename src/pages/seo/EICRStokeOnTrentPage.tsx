@@ -42,7 +42,7 @@ const keyTakeaways = [
   'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 require all private landlords in Stoke-on-Trent to obtain a valid EICR and renew it at least every five years.',
   'Stoke-on-Trent City Council is the local housing authority responsible for enforcement and can issue civil penalties of up to £30,000 per breach.',
   'Stoke-on-Trent has a large proportion of pre-1960s terraced housing across its six towns — Burslem, Fenton, Hanley, Longton, Stoke, and Tunstall — which frequently present C2 EICR findings including absent RCD protection and deteriorated wiring.',
-  'C1 and C2 observations under BS 7671 Section 631 render an EICR Unsatisfactory, requiring landlords to complete all remedial work within 28 days.',
+  'C1 and C2 observations under BS 7671 Chapter 65 render an EICR Unsatisfactory, requiring landlords to complete all remedial work within 28 days.',
   'EICR prices in Stoke-on-Trent are among the more affordable in England, typically £120 to £180 for a two-bedroom terraced house.',
 ];
 

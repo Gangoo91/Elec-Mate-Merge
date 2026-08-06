@@ -67,7 +67,11 @@ export function SEOTableOfContents({ items }: SEOTableOfContentsProps) {
       {/* Quiet dark control, not a yellow pill. Yellow is the page's CTA
           colour and a floating "Contents" button should never outshout it —
           this is navigation, not the action we want. No glow, no icon. */}
+      {/* data-bottom-floating: the public sticky CTA is pinned to bottom-0 and is
+          100px tall, so this has to ride above it rather than sit underneath.
+          See body.has-sticky-cta in index.css. */}
       <div
+        data-bottom-floating
         className="fixed bottom-4 right-4 z-40"
         style={{ marginBottom: 'env(safe-area-inset-bottom, 0px)' }}
       >

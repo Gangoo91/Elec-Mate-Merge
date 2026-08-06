@@ -347,7 +347,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Periodic inspection</strong> — BS 7671 Section 631 covers periodic
+                <strong>Periodic inspection</strong> — BS 7671 Chapter 65 covers periodic
                 inspection requirements. Rental properties require an EICR every 5 years. HMO
                 properties must have current EICRs to maintain their HMO licence from Guildford
                 Borough Council.

@@ -27,7 +27,7 @@ export const checkDeviceDirectionality = (result: TestResult): RegulationWarning
       severity: 'warning',
       title: 'Check Protective Device Directionality',
       description: `Circuit "${result.circuitDescription}" may have bidirectional power flow. Verify protective device supports bidirectional operation or is correctly oriented.`,
-      regulation: 'BS 7671 Regulation 530.3.201 (Amendment 3:2024)',
+      regulation: 'BS 7671 Regulation 530.3.201',
       suggestion:
         'Check device markings for "line/load", "in/out", or directional arrows. Consult manufacturer data sheet to confirm bidirectional capability or correct orientation for reverse power flow.',
     });

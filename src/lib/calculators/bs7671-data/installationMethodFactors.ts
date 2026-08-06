@@ -246,6 +246,22 @@ export const installationCategories = {
   },
 };
 
+/**
+ * @deprecated DO NOT USE AS A DERATING FACTOR.
+ *
+ * BS 7671 publishes no installation-method multiplier. Appendix 4 gives every
+ * reference method its own tabulated Iz column, so the method is applied by
+ * SELECTING THE RIGHT COLUMN (see appendix4CurrentCapacity.ts, which carries
+ * method-a/b/c/e/f/d1/d2 and 100-103). Multiplying a column by one of these
+ * numbers applies the method twice.
+ *
+ * `useCableSizing` did exactly that until 2026-08-06. Method G carries 1.15
+ * here — a factor above 1.0, which INFLATED the cable's rating by 15% and
+ * under-sized the conductor. No rating factor in Appendix 4 exceeds 1.0.
+ *
+ * The `factor` field is retained only because these entries also carry the
+ * code/description/tableRef metadata that IS used. Read those, not this.
+ */
 export const getInstallationMethodFactor = (method: string): number => {
   return installationMethods[method]?.factor || 1.0;
 };
@@ -288,8 +304,15 @@ export const cableRunToReferenceMethod: Record<string, string> = {
   'trunking-flush': 'B2',
   'clipped-direct': 'C',
   'tray-non-perforated': 'C',
-  'buried-direct': 'D1',
-  'buried-duct': 'D2',
+  // 🔴 THESE WERE REVERSED. Verified against the printed A4:2026 Appendix 4:
+  //   D1 = "multicore armoured cable in conduit or duct in the ground"
+  //   D2 = "multicore armoured cable direct in the ground"
+  // A cable buried direct dissipates heat better than one in a duct, so the D2
+  // column carries the HIGHER ratings. Mapping 'buried-duct' to D2 therefore
+  // read the direct-burial column for a cable in a duct and OVER-STATED its
+  // capacity. (The mirror error merely under-stated, but both were wrong.)
+  'buried-direct': 'D2',
+  'buried-duct': 'D1',
   'tray-perforated': 'E',
   'cable-ladder': 'E',
   'tray-single-trefoil': 'F',
@@ -305,8 +328,18 @@ export const cableRunToReferenceMethod: Record<string, string> = {
   'free-air': 'E',
 };
 
-export const getReferenceMethod = (installationMethod: string): string => {
-  return cableRunToReferenceMethod[installationMethod] || 'C';
+/**
+ * Reference method for an installation-method key, or null if the key is unknown.
+ *
+ * 🔴 This used to fall back to `'C'`. Method C (clipped direct, open) carries
+ * higher ratings than A or B, so ANY typo, renamed UI value or unmapped option
+ * silently produced the most generous answer available — and said nothing. One
+ * calculator's entire Installation Method dropdown was inert for exactly this
+ * reason: five options, none of them in the map, all five resolving to C.
+ * Returning null forces the caller to decide, and makes a broken mapping loud.
+ */
+export const getReferenceMethod = (installationMethod: string): string | null => {
+  return cableRunToReferenceMethod[installationMethod] ?? null;
 };
 
 // Check if method requires underground-specific factors

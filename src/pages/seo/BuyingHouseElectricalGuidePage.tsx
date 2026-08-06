@@ -376,7 +376,7 @@ const sections = [
                 becomes brittle and cracks with age. The earthed conductors in early
                 rubber-insulated systems were often bare copper, creating exposed live conductors in
                 ceiling roses and junction boxes. This is a C1 (danger present) finding under BS
-                7671 Section 631.
+                7671 Chapter 65.
               </span>
             </li>
             <li className="flex items-start gap-3">

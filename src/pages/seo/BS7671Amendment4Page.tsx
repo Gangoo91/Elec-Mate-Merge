@@ -74,7 +74,7 @@ const faqs = [
   {
     question: 'Should I wait for Amendment 4 before doing CPD on BS 7671?',
     answer:
-      'Absolutely not. The current standard — BS 7671:2018+A3:2024 — is the one you must work to today. Understanding the current edition thoroughly, including the A3:2024 changes on bidirectional devices, is essential for your day-to-day work. CPD on the current standard is never wasted because the fundamentals of electrical installation design and inspection do not change between amendments. When Amendment 4 is published, the changes will build on the existing standard, so a strong understanding of the current edition makes it much easier to absorb the new requirements. Start your CPD now using Elec-Mate 46+ training courses, and the Amendment 4 content will be added automatically when it is published.',
+      'Amendment 4 is no longer forthcoming — BS 7671:2018+A4:2026 was issued on 15 April 2026 and is the standard you must work to today. CPD on the current standard is never wasted: the A3:2024 changes on bidirectional devices carried through into A4, and the fundamentals are unchanged. CPD on the current standard is never wasted because the fundamentals of electrical installation design and inspection do not change between amendments. When Amendment 4 is published, the changes will build on the existing standard, so a strong understanding of the current edition makes it much easier to absorb the new requirements. Start your CPD now using Elec-Mate 46+ training courses, and the Amendment 4 content will be added automatically when it is published.',
   },
   {
     question: 'How does Elec-Mate keep up to date with BS 7671 amendments?',
@@ -504,7 +504,7 @@ const sections = [
               <span>
                 <strong>Master the current standard.</strong> Read and understand{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671:2018+A3:2024
+                  BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
                 thoroughly. The fundamentals of circuit design, protection against overcurrent,
                 protection against electric shock, and earthing arrangements do not change between

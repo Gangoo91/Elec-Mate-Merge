@@ -25,8 +25,15 @@ import {
   CalculatorResult,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import {
+  cisInvoice,
+  CIS_DEDUCTION_RATES,
+  DOMESTIC_REVERSE_CHARGE,
+  VAT_SCHEME_THRESHOLDS,
+} from '@/data/uk-tax-rates';
 
 const currency = (n: number) => `£${n.toFixed(2)}`;
+const money = (n: number) => `£${n.toLocaleString('en-GB')}`;
 
 type Role = 'contractor' | 'subcontractor';
 
@@ -52,15 +59,27 @@ const CISDRCHelper = () => {
   const cisRateVal = parseFloat(cisRate) || 0;
   const vatRateVal = parseFloat(vatRate) || 0;
 
-  // Invoice logic:
-  const subTotal = labourVal + materialsVal;
-  const vat = vatRegistered && !drcApplies ? subTotal * (vatRateVal / 100) : 0;
-  const cisDeduction = role === 'subcontractor' ? labourVal * (cisRateVal / 100) : 0;
-  const totalDueFromCustomer = subTotal + vat;
-  const cashReceived = totalDueFromCustomer - cisDeduction;
+  // Invoice logic now lives in cisInvoice() in src/data/uk-tax-rates.ts, so the
+  // rules are stated once and proved in scripts/check-vat-cis.mjs rather than
+  // being re-derived inside the JSX.
+  const invoice = cisInvoice({
+    labourExVat: labourVal,
+    exemptCostsExVat: materialsVal,
+    cisRatePercent: cisRateVal,
+    vatRatePercent: vatRateVal,
+    vatRegistered,
+    reverseCharge: drcApplies,
+    suffersDeduction: role === 'subcontractor',
+  });
+
+  const subTotal = invoice.subTotal;
+  const vat = invoice.vat;
+  const cisDeduction = invoice.cisDeduction;
+  const totalDueFromCustomer = invoice.invoiceTotal;
+  const cashReceived = invoice.cashReceived;
 
   const getConditionalWarnings = () => {
-    const warnings = [];
+    const warnings: { type: string; text: string }[] = [];
     if (role === 'contractor' && cisRateVal > 0) {
       warnings.push({
         type: 'info',
@@ -73,16 +92,52 @@ const CISDRCHelper = () => {
         text: "DRC applies - don't charge VAT on invoice. Your contractor accounts for it.",
       });
     }
+    // The reverse charge needs BOTH parties VAT registered. Answering "DRC yes,
+    // VAT registered no" used to show £0 VAT with no explanation, which reads
+    // as confirmation that the reverse charge applies when it cannot.
+    if (drcApplies && !vatRegistered) {
+      warnings.push({
+        type: 'warning',
+        text: 'The reverse charge only works between two VAT-registered businesses. Not registered means you charge no VAT for that reason, not because of DRC.',
+      });
+    }
+    // Written end-user or intermediary confirmation switches the reverse charge
+    // OFF and normal VAT back on. Nothing in the tool asked about this.
+    if (drcApplies && vatRegistered) {
+      warnings.push({
+        type: 'warning',
+        text: 'Check first: if your customer has confirmed in writing that they are an end user or intermediary supplier, DRC does NOT apply and you charge VAT as normal.',
+      });
+    }
     if (!drcApplies && vatRegistered) {
       warnings.push({
         type: 'info',
         text: 'Standard VAT applies - charge VAT on invoice as normal.',
       });
     }
-    if (cisRateVal === 30) {
+    if (cisRateVal === CIS_DEDUCTION_RATES.unregistered) {
       warnings.push({
         type: 'warning',
         text: '30% CIS rate applies to unregistered subcontractors. Higher deduction!',
+      });
+    }
+    if (
+      role === 'subcontractor' &&
+      cisRateVal !== CIS_DEDUCTION_RATES.gross &&
+      cisRateVal !== CIS_DEDUCTION_RATES.registered &&
+      cisRateVal !== CIS_DEDUCTION_RATES.unregistered
+    ) {
+      warnings.push({
+        type: 'warning',
+        text: `${cisRateVal}% is not a CIS rate. The only rates are ${CIS_DEDUCTION_RATES.gross}% (gross payment status), ${CIS_DEDUCTION_RATES.registered}% (registered and verified) and ${CIS_DEDUCTION_RATES.unregistered}% (not registered or not matched).`,
+      });
+    }
+    // The 5% disregard is an all-or-nothing contract-level test, agreed at the
+    // outset — not an invoice-by-invoice calculation.
+    if (drcApplies && vatRegistered && subTotal > 0 && materialsVal / subTotal >= 0.95) {
+      warnings.push({
+        type: 'info',
+        text: 'If the reverse charge part of a contract is 5% or less of its total value, both sides can agree at the outset to disregard it and treat the whole contract as normal VAT.',
       });
     }
     if (materialsVal > labourVal * 2 && role === 'subcontractor') {
@@ -160,11 +215,23 @@ const CISDRCHelper = () => {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400 mt-1">•</span>
-                    Deductions: 20% (registered), 30% (not registered), 0% (gross)
+                    Deductions: {CIS_DEDUCTION_RATES.registered}% (registered and verified),{' '}
+                    {CIS_DEDUCTION_RATES.unregistered}% (not registered or not matched),{' '}
+                    {CIS_DEDUCTION_RATES.gross}% (gross payment status)
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400 mt-1">•</span>
-                    Deducted from labour costs only, not materials
+                    Taken from labour only. A "payment" under the scheme excludes VAT, the CITB levy
+                    and the cost of materials
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400 mt-1">•</span>
+                    Also outside the deduction: consumable stores, plant hired from a third party,
+                    fuel for that plant (but not travel) and prefabrication
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400 mt-1">•</span>
+                    You can only exclude materials you actually paid for, at what they cost you
                   </li>
                 </ul>
               </CollapsibleContent>
@@ -193,10 +260,31 @@ const CISDRCHelper = () => {
                   VAT rule where the customer (contractor) accounts for VAT, not the supplier
                   (subcontractor).
                 </p>
+                {/* The guide listed only three conditions and left out the two
+                    that most often switch DRC off for an electrician: the
+                    end-user exclusion and the zero-rated carve-out. */}
                 <ul className="space-y-1 text-sm text-blue-200/80">
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400 mt-1">•</span>
-                    Applies to specified CIS building/construction services
+                    All of these must be true: your customer is VAT registered in the UK, the
+                    services fall within CIS, and they are standard or reduced rated
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400 mt-1">•</span>
+                    It does NOT apply if your customer has confirmed in writing that they are an end
+                    user (they don't make an onward supply of construction services) or an
+                    intermediary supplier
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400 mt-1">•</span>
+                    Zero-rated work is outside it, so standard-rated items inside a zero-rated new
+                    build supply are not reverse charged
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400 mt-1">•</span>
+                    5% disregard: if the reverse charge part is 5% or less of the whole supply, both
+                    sides can agree at the start of the contract to ignore it — judged on overall
+                    contract value, never invoice by invoice
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400 mt-1">•</span>
@@ -208,7 +296,8 @@ const CISDRCHelper = () => {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400 mt-1">•</span>
-                    Prevents VAT fraud in construction supply chains
+                    On the Flat Rate Scheme, leave reverse charge sales out of your flat rate
+                    turnover entirely
                   </li>
                 </ul>
               </CollapsibleContent>
@@ -249,6 +338,11 @@ const CISDRCHelper = () => {
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400 mt-1">•</span>
                     Contractor accounts for the VAT separately
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400 mt-1">•</span>
+                    Your invoice must still say the reverse charge applies and show the VAT rate or
+                    the VAT amount the customer has to account for
                   </li>
                 </ul>
               </CollapsibleContent>
@@ -327,15 +421,20 @@ const CISDRCHelper = () => {
               hint="Day rate: £200-400"
             />
 
+            {/* CIS 340 keeps more than materials out of the deduction:
+                consumable stores, third-party plant hire, fuel for plant,
+                prefabrication and the CITB levy are all outside it too. The
+                label said "Materials", so users were folding those costs into
+                labour and suffering a deduction on them. */}
             <CalculatorInput
-              label="Materials (ex VAT)"
+              label="Materials & exempt (ex VAT)"
               unit="£"
               type="text"
               inputMode="decimal"
               value={materials}
               onChange={setMaterials}
               placeholder="e.g., 300"
-              hint="Cables, fittings"
+              hint="Materials you paid for, consumables, plant hire, fuel, CITB levy"
             />
           </div>
 
@@ -414,7 +513,10 @@ const CISDRCHelper = () => {
                   No
                 </button>
               </div>
-              <p className="text-xs text-white">Required if turnover &gt;£90k</p>
+              <p className="text-xs text-white">
+                Required once rolling 12-month taxable turnover passes{' '}
+                {money(VAT_SCHEME_THRESHOLDS.registration)}
+              </p>
             </div>
 
             <div className="space-y-2">
@@ -599,10 +701,8 @@ const CISDRCHelper = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-blue-400 mt-1">•</span>
                   Contractor accounts for{' '}
-                  <strong className="text-white">
-                    {currency(subTotal * (vatRateVal / 100))}
-                  </strong>{' '}
-                  VAT to HMRC (not on your invoice)
+                  <strong className="text-white">{currency(invoice.reverseChargeVat)}</strong> VAT
+                  to HMRC (not on your invoice)
                 </li>
               )}
               <li className="flex items-start gap-2">
@@ -636,25 +736,41 @@ const CISDRCHelper = () => {
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div className="space-y-1">
                   <p className="text-amber-300 font-medium">CIS Rates</p>
-                  <p className="text-amber-200/70">20% - Registered</p>
-                  <p className="text-amber-200/70">30% - Not registered</p>
-                  <p className="text-amber-200/70">0% - Gross status</p>
+                  <p className="text-amber-200/70">
+                    {CIS_DEDUCTION_RATES.registered}% - Registered and verified
+                  </p>
+                  <p className="text-amber-200/70">
+                    {CIS_DEDUCTION_RATES.unregistered}% - Not registered or not matched
+                  </p>
+                  <p className="text-amber-200/70">
+                    {CIS_DEDUCTION_RATES.gross}% - Gross payment status
+                  </p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-amber-300 font-medium">VAT Thresholds</p>
-                  <p className="text-amber-200/70">Registration: £90,000</p>
+                  <p className="text-amber-200/70">
+                    Register over {money(VAT_SCHEME_THRESHOLDS.registration)}
+                  </p>
+                  <p className="text-amber-200/70">
+                    Deregister under {money(VAT_SCHEME_THRESHOLDS.deregistration)}
+                  </p>
                   <p className="text-amber-200/70">Standard: 20%</p>
                   <p className="text-amber-200/70">Reduced: 5%</p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-amber-300 font-medium">DRC Rules</p>
                   <p className="text-amber-200/70">Since: March 2021</p>
-                  <p className="text-amber-200/70">CIS services only</p>
-                  <p className="text-amber-200/70">B2B construction</p>
+                  <p className="text-amber-200/70">CIS services, standard or reduced rated</p>
+                  <p className="text-amber-200/70">Both parties VAT registered</p>
+                  <p className="text-amber-200/70">Not for end users who confirm in writing</p>
+                  <p className="text-amber-200/70">
+                    {DOMESTIC_REVERSE_CHARGE.disregardShare * 100}% disregard by contract value
+                  </p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-amber-300 font-medium">Key Points</p>
                   <p className="text-amber-200/70">CIS on labour only</p>
+                  <p className="text-amber-200/70">VAT, CITB levy and materials are outside it</p>
                   <p className="text-amber-200/70">Claim on Self Assessment</p>
                   <p className="text-amber-200/70">Keep UTR number</p>
                 </div>

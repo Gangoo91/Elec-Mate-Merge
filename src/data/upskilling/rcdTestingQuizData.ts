@@ -60,7 +60,8 @@ export const rcdTestingQuizData = [
       'Testing from the furthest practical point includes the full circuit conductor resistance in the test, proving protection coverage throughout the circuit rather than just at the device.',
   },
   {
-    question: 'What is the maximum expected trip time for a non-delay Type AC RCD on the 5 × IΔn test?',
+    question:
+      'Under BS EN 61008/61009, what is the maximum operating time for a non-delay Type AC RCD at 5 × IΔn?',
     options: [
       '40ms',
       '150ms',
@@ -69,19 +70,20 @@ export const rcdTestingQuizData = [
     ],
     correctAnswer: 0,
     explanation:
-      'A non-delay RCD should trip within 40ms at 5 × IΔn; the equivalent figure for an S-type (time-delay) device is 150ms.',
+      '40ms is the product-standard figure for a non-delay device at 5 × IΔn; the equivalent for an S-type (time-delay) device is 150ms. Both describe the device under BS EN 61008/61009 rather than the test BS 7671 requires — Amendment 4 deleted Table 3A of Appendix 3, and Regulation 643.7.3.201 now verifies effectiveness with a single AC test at IΔn.',
   },
   {
-    question: 'What is the primary purpose of the 5 × IΔn test for additional protection?',
+    question:
+      'How does BS 7671:2018+A4:2026 require the effectiveness of an RCD to be verified?',
     options: [
-      'To verify the RCD survives repeated heavy operation',
-      'To confirm rapid disconnection for personal shock protection',
-      'To check the RCD does not nuisance-trip under load',
-      'To measure the prospective fault current at the board',
+      'A test at ½ × IΔn, then 1 × IΔn, then 5 × IΔn',
+      'A single alternating current test at IΔn, whatever the RCD type',
+      'A test at 5 × IΔn only, on both half-cycles',
+      'The integral test button alone',
     ],
     correctAnswer: 1,
     explanation:
-      'The high-current 5 × IΔn test confirms the RCD disconnects fast enough (within 40ms) to provide the rapid shock protection expected of a 30mA additional-protection device.',
+      'Amendment 4 simplified this considerably. Table 3A (time/current performance criteria for RCDs) has been deleted from Appendix 3, and Regulation 643.7.3.201 now calls for an alternating current test at the rated residual operating current (IΔn) to verify effectiveness, regardless of RCD type — AC, A, F or B. The ½ × and 5 × tests are no longer part of the required sequence, though 5 × remains useful when fault-finding. The integral test button checks the mechanism only and has never been a substitute for an instrument test.',
   },
   {
     question: 'What should you do if an RCD trips during the ½ × IΔn test?',

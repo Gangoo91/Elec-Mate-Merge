@@ -124,6 +124,20 @@ const TABLE_LAYOUT: Record<LogEntryType, { head: string[]; row: (e: FireAlarmLog
     head: ['Date', 'Variation description', 'Authorised by'],
     row: (e) => [fmtDate(e.entry_date), e.data.description || '—', e.data.authorised_by || '—'],
   },
+  // Added only to keep this exhaustive Record type-valid after 'deviation'
+  // joined LogEntryType. ⚠️ THIS FILE IS ORPHANED — the log book now renders
+  // through PDFMonkey (ELE-1483, `fireAlarmLogBookJsonFormatter.ts`). Nothing
+  // imports this. Delete it once a real PDFMonkey render has been eyeballed;
+  // leaving a second export that nobody calls is how the two drift apart.
+  deviation: {
+    head: ['Date', 'Deviation', 'Reason', 'Agreed with'],
+    row: (e) => [
+      fmtDate(e.entry_date),
+      e.data.description || '—',
+      e.data.reason || '—',
+      e.data.agreed_with || '—',
+    ],
+  },
 };
 
 const SECTION_ORDER: LogEntryType[] = [

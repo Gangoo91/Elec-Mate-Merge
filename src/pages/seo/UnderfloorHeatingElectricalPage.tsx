@@ -43,7 +43,7 @@ const keyTakeaways = [
   'Electric underfloor heating systems require a dedicated radial circuit from the consumer unit with appropriate MCB and RCD protection under BS 7671.',
   'Heating cables must not cross or overlap, and installation must follow the manufacturer spacing guidelines to prevent hot spots and cable damage.',
   'A floor-sensing thermostat with a dedicated back box is required, and the cable between the thermostat and the heating element must be correctly rated for the load.',
-  'RCD protection at 30mA is mandatory for all underfloor heating circuits. Under BS 7671:2018+A4:2026, Regulation 411.3.3 covers socket-outlets; the requirement for fixed heating circuits in bathrooms arises under Regulation 701.415.2 and the general additional-protection provisions of Regulation 415.1.',
+  'RCD protection at 30mA is mandatory for all underfloor heating circuits. Under BS 7671:2018+A4:2026, Regulation 411.3.3 covers socket-outlets; the requirement for additional protection on circuits supplying heating units arises under Regulation 753.415.1 — which also prohibits time-delayed RCDs on those circuits — while Regulation 701.415.2 covers supplementary protective equipotential bonding in rooms containing a bath or shower, and the general additional-protection provisions of Regulation 415.1.',
   "Before installation begins, measure and record the heating element resistance between the two cores and confirm it matches the manufacturer's specified value. Keep this record in the handover pack alongside the EIC — once the cable is embedded it cannot be accessed for comparison.",
   'Elec-Mate cable sizing and circuit design calculators let you size the radial feed, check voltage drop, and produce the EIC certificate on site.',
 ];
@@ -366,7 +366,7 @@ const sections = [
           BS 7671:2018+A4:2026, Regulation 411.3.3 has been revised and now applies specifically to
           socket-outlets with a rated current not exceeding 32A — it does not cover fixed heating
           circuits. For bathroom UFH installations the RCD requirement arises under Regulation
-          701.415.2 (additional protection for all circuits in rooms with a bath or shower) and the
+          701.415.2 (supplementary protective equipotential bonding in rooms containing a bath or shower), 753.415.1 (additional protection by RCD for circuits supplying heating units) and the
           general additional-protection provisions in Regulation 415.1. Heating cables embedded in
           floors are particularly susceptible to mechanical damage during installation and
           subsequent building work, making RCD protection essential regardless of the specific

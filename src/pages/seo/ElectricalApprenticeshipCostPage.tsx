@@ -456,7 +456,7 @@ const sections = [
                     topic: 'Arc fault detection devices (AFDDs)',
                     reg: '421.1.7',
                     detail:
-                      'AFDDs to BS EN 62606 shall be provided for single-phase AC final circuits supplying socket-outlets rated up to 32 A in high-rise residential buildings, HMOs, purpose-built student accommodation and care homes; recommended for all other premises.',
+                      'AFDDs to BS EN 62606 are recommended by Regulation 421.1.7 to mitigate the risk of fire in AC final circuits of a fixed installation. The wording is advisory, not a "shall", and the regulation names no premises types — the often-quoted list of HRRBs, HMOs and care homes is not in it.',
                   },
                   {
                     topic: 'RCD protection for lighting circuits',

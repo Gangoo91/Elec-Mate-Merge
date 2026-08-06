@@ -278,7 +278,7 @@ const sections = [
               Search BS 7671 in plain English. Ask "what are the Zs values for a 32A Type B MCB on a
               TN-C-S system?" or "what does Regulation 411.3.3 require?" and get the specific
               regulation text with practical guidance. Covers the complete 18th Edition including{' '}
-              <SEOInternalLink href="/guides/bs-7671-amendment-3-changes">Amendment 4:2024</SEOInternalLink>{' '}
+              <SEOInternalLink href="/guides/bs-7671-amendment-3-changes">Amendment 4:2026</SEOInternalLink>{' '}
               and Regulation 530.3.201.
             </p>
           </div>

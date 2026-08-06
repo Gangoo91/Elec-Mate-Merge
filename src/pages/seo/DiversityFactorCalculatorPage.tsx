@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet';
 import { RecentReviews } from '@/components/seo/RecentReviews';
+import { CalculatorSurface } from '@/components/calculators/shared';
 import DiversityFactorCalculator from '@/components/apprentice/calculators/DiversityFactorCalculator';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
@@ -179,7 +180,7 @@ export default function DiversityFactorCalculatorPage() {
       {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
       <section id="calculator" className="px-5 pb-12 scroll-mt-24">
         <div className="max-w-4xl mx-auto">
-          <DiversityFactorCalculator />
+          <CalculatorSurface><DiversityFactorCalculator /></CalculatorSurface>
         </div>
       </section>
 

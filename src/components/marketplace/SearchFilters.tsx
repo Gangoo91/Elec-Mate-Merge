@@ -69,7 +69,7 @@ export function SearchFilters({
             className="h-5 w-5 border-elec-yellow data-[state=checked]:bg-elec-yellow data-[state=checked]:text-black"
           />
           <span className="flex items-center gap-2">
-            <Tag className="h-4 w-4 text-green-500" />
+            <Tag className="h-4 w-4 text-elec-yellow" />
             Show deals only
           </span>
         </label>
@@ -82,7 +82,7 @@ export function SearchFilters({
             {facets.categories.slice(0, 10).map((cat) => (
               <label
                 key={cat.name}
-                className="flex items-center justify-between gap-3 cursor-pointer touch-manipulation min-h-[44px] px-2 hover:bg-muted/50 rounded-lg"
+                className="flex items-center justify-between gap-3 cursor-pointer touch-manipulation min-h-[44px] px-2 hover:bg-white/[0.06] rounded-lg"
               >
                 <div className="flex items-center gap-3">
                   <Checkbox
@@ -97,7 +97,7 @@ export function SearchFilters({
                   />
                   <span className="text-sm">{cat.name}</span>
                 </div>
-                <span className="text-xs text-muted-foreground">({cat.count})</span>
+                <span className="text-[11px] text-white">({cat.count})</span>
               </label>
             ))}
           </div>
@@ -111,7 +111,7 @@ export function SearchFilters({
             {facets.suppliers.map((supplier) => (
               <label
                 key={supplier.slug}
-                className="flex items-center justify-between gap-3 cursor-pointer touch-manipulation min-h-[44px] px-2 hover:bg-muted/50 rounded-lg"
+                className="flex items-center justify-between gap-3 cursor-pointer touch-manipulation min-h-[44px] px-2 hover:bg-white/[0.06] rounded-lg"
               >
                 <div className="flex items-center gap-3">
                   <Checkbox
@@ -130,7 +130,7 @@ export function SearchFilters({
                   />
                   <span className="text-sm">{supplier.name}</span>
                 </div>
-                <span className="text-xs text-muted-foreground">({supplier.count})</span>
+                <span className="text-[11px] text-white">({supplier.count})</span>
               </label>
             ))}
           </div>
@@ -150,7 +150,7 @@ export function SearchFilters({
 
       {/* Clear Filters */}
       {activeFilterCount > 0 && (
-        <Button variant="outline" onClick={clearFilters} className="w-full h-11 touch-manipulation">
+        <Button variant="outline" onClick={clearFilters} className="h-11 w-full rounded-xl border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-white hover:bg-white/[0.08] touch-manipulation">
           <X className="h-4 w-4 mr-2" />
           Clear all filters ({activeFilterCount})
         </Button>
@@ -182,7 +182,7 @@ export function SearchFilters({
       <div className="lg:hidden">
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <SheetTrigger asChild>
-            <Button variant="outline" className="h-11 touch-manipulation">
+            <Button variant="outline" className="h-11 rounded-xl border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-white hover:bg-white/[0.08] touch-manipulation">
               <Filter className="h-4 w-4 mr-2" />
               Filters
               {activeFilterCount > 0 && (
@@ -192,9 +192,9 @@ export function SearchFilters({
               )}
             </Button>
           </SheetTrigger>
-          <SheetContent side="bottom" className="h-[80vh] rounded-t-2xl">
+          <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl">
             <SheetHeader>
-              <SheetTitle className="flex items-center gap-2">
+              <SheetTitle className="text-left text-[17px] font-semibold tracking-tight text-white">
                 <Filter className="h-5 w-5" />
                 Filters
               </SheetTitle>
@@ -227,13 +227,13 @@ function FilterSection({
     <div className="border-b border-border pb-4">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between h-11 touch-manipulation -mx-2 px-2 hover:bg-muted/30 rounded-lg transition-colors"
+        className="w-full flex items-center justify-between h-11 touch-manipulation -mx-2 px-2 hover:bg-white/[0.06] rounded-lg transition-colors"
       >
         <span className="font-medium text-sm">{title}</span>
         {isOpen ? (
-          <ChevronUp className="h-5 w-5 text-muted-foreground" />
+          <ChevronUp className="h-4 w-4 text-elec-yellow" />
         ) : (
-          <ChevronDown className="h-5 w-5 text-muted-foreground" />
+          <ChevronDown className="h-4 w-4 text-elec-yellow" />
         )}
       </button>
       {isOpen && <div className="pt-2">{children}</div>}
@@ -263,7 +263,7 @@ function SortSelect({
       {options.map((option) => (
         <label
           key={option.value}
-          className="flex items-center gap-3 cursor-pointer touch-manipulation min-h-[44px] px-2 hover:bg-muted/50 rounded-lg"
+          className="flex items-center gap-3 cursor-pointer touch-manipulation min-h-[44px] px-2 hover:bg-white/[0.06] rounded-lg"
         >
           <input
             type="radio"
@@ -320,7 +320,7 @@ function PriceRangeFilter({
       />
       <div className="flex items-center justify-between text-sm">
         <span className="font-medium">£{localRange[0]}</span>
-        <span className="text-muted-foreground">to</span>
+        <span className="text-white">to</span>
         <span className="font-medium">£{localRange[1]}</span>
       </div>
     </div>

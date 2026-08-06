@@ -400,12 +400,18 @@ const SwimmingPoolCalculator = () => {
               {
                 label: 'Zone classification',
                 formula: `Installation zone: ${inputs.zone.replace('zone', 'Zone ')}`,
+                // Reg 702.410.3.4.1 ("Zones 0 and 1") sets 12 V AC RMS / 30 V
+                // ripple-free DC in zone 0 and 25 V AC RMS / 60 V ripple-free DC
+                // in zone 1. ⚠️ Zone 1 previously read "limited 230V with
+                // additional protection" — 230 V is not a general permission in
+                // zone 1. Zone 2 IP: Reg 702.512.2(c) makes IPX4 mandatory
+                // outdoors, IPX2 is the indoor figure.
                 description:
                   inputs.zone === 'zone0'
-                    ? 'Zone 0 (inside pool) — only SELV (12V max) equipment permitted. IPX8 required.'
+                    ? 'Zone 0 (inside pool) — SELV only, not exceeding 12V AC RMS or 30V ripple-free DC, source outside zones 0, 1 and 2 (Reg 702.410.3.4.1). IPX8 required.'
                     : inputs.zone === 'zone1'
-                      ? 'Zone 1 (up to 2m from pool) — limited 230V with additional protection. IPX4 minimum.'
-                      : 'Zone 2 (2-3.5m from pool) — 230V with RCD protection. IPX2 minimum.',
+                      ? 'Zone 1 (up to 2m from the rim) — SELV only, not exceeding 25V AC RMS or 60V ripple-free DC, source outside zones 0, 1 and 2 (Reg 702.410.3.4.1). Narrow exceptions for fixed pool equipment under Reg 702.55.4. IPX4 minimum, IPX5 where water jets are used for cleaning.'
+                      : 'Zone 2 (a further 1.5m, so to 3.5m) — equipment protected by SELV, a 30mA RCD or electrical separation (Reg 702.410.3.4.3). IPX2 indoors, IPX4 outdoors.',
               },
               {
                 label: 'Circuit analysis',
@@ -424,8 +430,12 @@ const SwimmingPoolCalculator = () => {
                 label: 'Bonding requirements',
                 formula: `${result.bondingRequirements.length} bonding connections required`,
                 value: '4mm² minimum bonding conductor',
+                // ⚠️ Was "all metalwork within 2m of pool". Reg 702.415.2 scopes
+                // supplementary bonding to zones 0, 1 AND 2 — zone 1 reaches 2 m
+                // from the rim (Reg 702.32(b)) and zone 2 a further 1.50 m
+                // (Reg 702.32(c)), so 3.5 m horizontally and 2.50 m vertically.
                 description:
-                  'Supplementary bonding connects all metalwork within 2m of pool to equipotential bonding system.',
+                  'Reg 702.415.2: all extraneous-conductive-parts in zones 0, 1 and 2 — 3.5m horizontally from the rim and 2.50m above the occupied surface — bonded to the protective conductors of exposed-conductive-parts in those zones.',
               },
             ]}
           />
@@ -453,9 +463,17 @@ const SwimmingPoolCalculator = () => {
                   <p className="text-sm text-white font-medium">Zone Rules (BS 7671 Section 702)</p>
                   <ul className="space-y-1">
                     {[
-                      'Zone 0 (inside pool): Only 12V SELV, IPX8 rated equipment. No sockets, switches, or 230V.',
-                      'Zone 1 (up to 2m): IPX4 minimum (IPX5 for commercial). Limited 230V with additional protection.',
-                      'Zone 2 (2-3.5m): IPX2 minimum. 230V with RCD permitted. No equipment without RCD.',
+                      // Reg 702.410.3.4.1 (zones 0 and 1 of pools/basins),
+                      // Reg 702.53 (no switchgear/controlgear or socket-outlets
+                      // in zones 0 or 1), Reg 702.512.2 (IP ratings).
+                      'Zone 0 (inside pool): SELV only, not exceeding 12V AC RMS or 30V ripple-free DC, source outside zones 0, 1 and 2. IPX8. No sockets, no switchgear or controlgear, no junction boxes.',
+                      // ⚠️ Was "IPX5 for commercial" — Reg 702.512.2(b) keys
+                      // IPX5 to water jets being likely for cleaning, not to the
+                      // pool being commercial. And zone 1 is not "limited 230V".
+                      'Zone 1 (up to 2m from the rim): SELV only, not exceeding 25V AC RMS or 60V ripple-free DC. IPX4 minimum, IPX5 where water jets are likely for cleaning. Narrow exceptions for fixed pool equipment under Reg 702.55.4.',
+                      // ⚠️ Was "IPX2 minimum" flat — Reg 702.512.2(c) makes IPX4
+                      // mandatory outdoors.
+                      'Zone 2 (a further 1.5m, so to 3.5m): IPX2 indoors, IPX4 outdoors, IPX5 where water jets are likely for cleaning. Socket-outlets and switches only where protected by SELV, a 30mA RCD or electrical separation.',
                     ].map((item, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm text-white">
                         <span
@@ -471,9 +489,16 @@ const SwimmingPoolCalculator = () => {
                   <p className="text-sm text-white font-medium">Supplementary Bonding</p>
                   <ul className="space-y-1">
                     {[
-                      'All metalwork within 2m must be bonded using 4mm² minimum conductor',
-                      'Includes pool structure, pipework, ladders, handrails, and reinforcing steel',
-                      'Bonding continuity must be tested at less than 0.05Ω',
+                      // ⚠️ Was "within 2m" — Reg 702.415.2 covers zones 0, 1 and 2.
+                      'Reg 702.415.2: every extraneous-conductive-part in zones 0, 1 and 2 must be bonded — 3.5m horizontally from the rim, 2.50m above the occupied surface — using 4mm² minimum conductor',
+                      'Includes pool structure, pipework, ladders, handrails, reinforcing steel, and any metallic sheath or covering of a wiring system (Reg 702.522.21)',
+                      // ⚠️ Was "must be tested at less than 0.05Ω", stated as a
+                      // pass/fail limit. GN3 2.16 says readings across clamp
+                      // joints should APPROACH 0.05Ω once instrument resolution,
+                      // low-value accuracy and contact resistance are allowed
+                      // for; GN3 Ch.6 uses 0.1Ω as the guideline acceptance. The
+                      // BS 7671 requirement is Reg 415.2.2, R ≤ 50V / Ia.
+                      'Bonding continuity readings should approach 0.05Ω across clamp joints (GN3 2.16), with 0.1Ω the guideline acceptance where the instrument cannot resolve lower (GN3 Ch.6). The requirement itself is R ≤ 50V / Ia (Reg 415.2.2)',
                       'Annual inspection of bonding connections recommended',
                     ].map((item, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm text-white">
@@ -491,8 +516,14 @@ const SwimmingPoolCalculator = () => {
                   <ul className="space-y-1">
                     {[
                       '30mA RCD protection mandatory for all circuits serving the pool area',
-                      'Public pools: additional 10mA RCD for underwater equipment',
-                      'RCD trip time: 300ms maximum at rated current',
+                      // ⚠️ Was "Public pools: additional 10mA RCD for underwater
+                      // equipment". Every RCD call in Section 702
+                      // (702.410.3.4.1/.2/.3, 702.53, 702.55.1, 702.55.4) points
+                      // at Reg 415.1.1, which specifies "a rated residual
+                      // operating current not exceeding 30 mA". No 10 mA device
+                      // appears anywhere in Section 702, for any pool type.
+                      'Section 702 refers to Reg 415.1.1 throughout — 30mA, whatever the pool type. There is no 10mA requirement in Section 702',
+                      'RCD operating time verified at IΔn (Reg 643.8)',
                       'Testing: monthly button test, 6-monthly instrument test recommended',
                     ].map((item, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm text-white">
@@ -536,15 +567,25 @@ const SwimmingPoolCalculator = () => {
                     },
                     {
                       reg: 'Regulation 702.410.3.4.1',
-                      desc: 'Zone 0 protection — only SELV at nominal voltage not exceeding 12V AC or 30V DC.',
+                      desc: 'Zones 0 and 1 — SELV only: 12V AC RMS / 30V ripple-free DC in zone 0, 25V AC RMS / 60V ripple-free DC in zone 1, the source installed outside zones 0, 1 and 2.',
                     },
                     {
                       reg: 'Regulation 702.415.2',
-                      desc: 'Supplementary equipotential bonding — connecting all metalwork within Zones 0, 1, and 2.',
+                      desc: 'Supplementary equipotential bonding — all extraneous-conductive-parts in zones 0, 1 and 2 connected to the protective conductors of exposed-conductive-parts in those zones.',
                     },
                     {
-                      reg: 'IET Code of Practice',
-                      desc: 'Swimming pool electrical installations — practical guidance on design, installation, and testing.',
+                      reg: 'Regulations 702.53 / 702.512.2',
+                      desc: 'No switchgear, controlgear or socket-outlet in zones 0 or 1. IP: IPX8 zone 0, IPX4 zone 1, IPX2 indoors / IPX4 outdoors zone 2 — IPX5 anywhere water jets are likely for cleaning.',
+                    },
+                    // ⚠️ Replaced "IET Code of Practice — Swimming pool
+                    // electrical installations". That publication was cited
+                    // without a source, and the boolean it fed
+                    // (`ietCodeOfPractice: poolType === 'private'`) carried no
+                    // meaning. These are the product standards Section 702
+                    // actually invokes.
+                    {
+                      reg: 'Product standards',
+                      desc: 'BS EN 60529 (IP code, Reg 702.512.2); BS EN 60598-2-18 (underwater luminaires, Regs 702.55.2/702.55.3); BS EN 60335-2-41 (pumps, Reg 702.55.3); BS EN 60335-2-60 (hot tubs, Reg 702.55.5).',
                     },
                   ].map((item) => (
                     <li key={item.reg} className="flex items-start gap-2 text-sm">
@@ -568,12 +609,27 @@ const SwimmingPoolCalculator = () => {
       <FormulaReference
         category={CAT}
         name="Pool Zone Classification"
-        formula="Zone 0 → SELV only (≤12V) | Zone 1 → IPX4+ | Zone 2 → RCD required"
+        formula="Zone 0 → SELV ≤12V AC | Zone 1 → SELV ≤25V AC | Zone 2 → SELV, 30mA RCD or electrical separation"
         variables={[
-          { symbol: 'Zone 0', description: 'Inside pool basin — 12V SELV, IPX8' },
-          { symbol: 'Zone 1', description: 'Up to 2m from pool edge — IPX4 minimum' },
-          { symbol: 'Zone 2', description: '2m to 3.5m from pool edge — IPX2 minimum' },
-          { symbol: 'Bonding', description: '4mm² min conductor to all metalwork within 2m' },
+          {
+            symbol: 'Zone 0',
+            description: 'Inside the basin — SELV ≤12V AC RMS / 30V ripple-free DC, IPX8',
+          },
+          {
+            symbol: 'Zone 1',
+            description:
+              'To 2m from the rim, 2.50m high — SELV ≤25V AC RMS / 60V ripple-free DC, IPX4 (IPX5 for water jets)',
+          },
+          {
+            symbol: 'Zone 2',
+            description: 'A further 1.5m (to 3.5m) — IPX2 indoors, IPX4 outdoors',
+          },
+          {
+            // ⚠️ Was "to all metalwork within 2m" — Reg 702.415.2 covers all
+            // three zones, i.e. 3.5m horizontally and 2.50m vertically.
+            symbol: 'Bonding',
+            description: '4mm² min conductor to all extraneous-conductive-parts in zones 0, 1 and 2',
+          },
         ]}
       />
       <CalculatorEditorial content={swimmingPoolContent} category={CAT} />

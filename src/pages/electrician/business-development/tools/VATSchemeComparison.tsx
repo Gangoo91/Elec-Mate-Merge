@@ -23,15 +23,25 @@ import {
   ResultsGrid,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import {
+  compareVatSchemes,
+  FLAT_RATE_SCHEME,
+  VAT_SCHEME_THRESHOLDS,
+} from '@/data/uk-tax-rates';
 
 const currency = (n: number) => `£${n.toFixed(2)}`;
+const money = (n: number) => `£${n.toLocaleString('en-GB')}`;
 
 const VATSchemeComparison: React.FC = () => {
   const config = CALCULATOR_CONFIG['business'];
 
   const [annualRevenue, setAnnualRevenue] = React.useState('120000');
   const [labourShare, setLabourShare] = React.useState('60');
-  const [flatRate, setFlatRate] = React.useState('14.5');
+  // Was hard-coded to 14.5%. There is no "electrician" flat rate sector: 14.5%
+  // is labour-ONLY building or construction services, which requires materials
+  // under 10% of turnover. The default 60/40 split is 40% materials, i.e.
+  // general building or construction services at 9.5%.
+  const [flatRate, setFlatRate] = React.useState(String(FLAT_RATE_SCHEME.generalConstruction));
   const [vatRate, setVatRate] = React.useState('20');
   const [vatRegistered, setVatRegistered] = React.useState(true);
 
@@ -45,21 +55,37 @@ const VATSchemeComparison: React.FC = () => {
   const flatRateNum = parseFloat(flatRate) || 0;
   const vatRateNum = parseFloat(vatRate) || 0;
 
-  const labour = annualRevenueNum * (labourShareNum / 100);
-  const materials = annualRevenueNum * (materialsShareNum / 100);
+  // All arithmetic now comes from the single verified table in
+  // src/data/uk-tax-rates.ts, proved against GOV.UK worked examples in
+  // scripts/check-vat-cis.mjs. Previously this component recomputed everything
+  // inline against a hard-coded 14.5% and never applied the mandatory 16.5%
+  // limited cost business rate.
+  const comparison = compareVatSchemes({
+    turnoverExVat: annualRevenueNum,
+    vatRatePercent: vatRateNum,
+    labourSharePercent: labourShareNum,
+    flatRatePercentOverride: flatRateNum > 0 ? flatRateNum : undefined,
+  });
+
+  const labour = comparison.labour;
+  const materials = comparison.materials;
 
   // Standard scheme
-  const standardOutputVat = vatRegistered ? annualRevenueNum * (vatRateNum / 100) : 0;
-  const standardInputVat = vatRegistered ? materials * (vatRateNum / 100) : 0;
-  const standardVatPayable = Math.max(0, standardOutputVat - standardInputVat);
+  const standardOutputVat = vatRegistered ? comparison.standard.outputVat : 0;
+  const standardInputVat = vatRegistered ? comparison.standard.inputVat : 0;
+  const standardVatPayable = vatRegistered ? comparison.standard.netVatPayable : 0;
 
-  // Flat Rate scheme
-  const vatInclusiveTurnover = annualRevenueNum * (1 + vatRateNum / 100);
-  const frsVatPayable = vatRegistered ? vatInclusiveTurnover * (flatRateNum / 100) : 0;
+  // Flat Rate scheme — the percentage goes on VAT-INCLUSIVE turnover.
+  const vatInclusiveTurnover = comparison.flatRate.flatRateTurnoverIncVat;
+  const frsVatPayable = vatRegistered ? comparison.flatRate.vatDue : 0;
+  /** What HMRC actually makes you use, which is not always what was typed in. */
+  const appliedFlatRate = comparison.flatRate.appliedPercentage;
 
   const diff = frsVatPayable - standardVatPayable;
   const betterScheme = diff > 0 ? 'Standard VAT' : 'Flat Rate VAT';
   const annualSaving = Math.abs(diff);
+
+  const schemeNotes = [...comparison.warnings, ...comparison.flatRate.notes];
 
   const handleCalculate = () => {
     setCalculated(true);
@@ -68,7 +94,7 @@ const VATSchemeComparison: React.FC = () => {
   const handleReset = () => {
     setAnnualRevenue('120000');
     setLabourShare('60');
-    setFlatRate('14.5');
+    setFlatRate(String(FLAT_RATE_SCHEME.generalConstruction));
     setVatRate('20');
     setVatRegistered(true);
     setCalculated(false);
@@ -168,8 +194,8 @@ const VATSchemeComparison: React.FC = () => {
                 setFlatRate(val);
                 setCalculated(false);
               }}
-              placeholder="e.g., 14.5"
-              hint="Electrical: 14.5% (12.5% after year 1)"
+              placeholder="e.g., 9.5"
+              hint="14.5% labour-only, 9.5% general — less 1% in year 1"
             />
 
             <CalculatorInput
@@ -271,9 +297,11 @@ const VATSchemeComparison: React.FC = () => {
               <span className="text-sm font-medium text-amber-400">Not VAT Registered</span>
             </div>
             <p className="text-sm text-amber-200/80">
-              VAT scheme comparison only applies if you're VAT registered. The VAT registration
-              threshold is £90,000 annual turnover. Below this, you can voluntarily register or
-              remain non-VAT registered.
+              VAT scheme comparison only applies if you're VAT registered. You must register once
+              your total taxable turnover over any rolling 12 months goes over{' '}
+              {money(VAT_SCHEME_THRESHOLDS.registration)}. Below this you can register voluntarily,
+              and if you are already registered you can ask HMRC to cancel it once turnover will
+              stay under {money(VAT_SCHEME_THRESHOLDS.deregistration)}.
             </p>
           </div>
         )}
@@ -281,6 +309,22 @@ const VATSchemeComparison: React.FC = () => {
         {/* Results Section */}
         {calculated && isValid && vatRegistered && (
           <div className="space-y-4 animate-fade-in">
+            {/* Eligibility and sector notes. The 16.5% limited cost business
+                rate is mandatory, so the user has to be told when it bites —
+                silently returning 14.5% understated the bill by thousands. */}
+            {schemeNotes.length > 0 && (
+              <div className="space-y-2">
+                {schemeNotes.map((note, idx) => (
+                  <div key={idx} className="p-4 rounded-xl border border-amber-500/30 bg-amber-500/10">
+                    <div className="flex items-start gap-2">
+                      <AlertCircle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-amber-200/80">{note}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {/* Recommendation Banner */}
             <div
               className={cn(
@@ -434,9 +478,12 @@ const VATSchemeComparison: React.FC = () => {
                             {currency(vatInclusiveTurnover)}
                           </span>
                         </div>
+                        {/* Was showing the typed-in rate even when the
+                            mandatory 16.5% limited cost rate was the one that
+                            actually applied. */}
                         <div className="flex justify-between items-center py-1 border-b border-white/10">
-                          <span className="text-white">Flat rate ({flatRateNum}%)</span>
-                          <span className="text-white font-mono">×{flatRateNum}%</span>
+                          <span className="text-white">Flat rate ({appliedFlatRate}%)</span>
+                          <span className="text-white font-mono">×{appliedFlatRate}%</span>
                         </div>
                         <div className="flex justify-between items-center py-1 font-medium">
                           <span className="text-white">= VAT payable</span>
@@ -513,26 +560,74 @@ const VATSchemeComparison: React.FC = () => {
                   <p className="text-amber-200/70">No input VAT reclaim</p>
                   <p className="text-amber-200/70">Best for: Labour-heavy</p>
                 </div>
+                {/* There is no "electrician" flat rate sector, and the 1%
+                    reduction is for the FIRST year of VAT registration — the
+                    rate RISES after year one. This card previously claimed
+                    14.5% in year one falling to 12.5% after, which is wrong in
+                    both direction and size, and never mentioned the mandatory
+                    16.5% limited cost business rate. */}
                 <div className="space-y-1">
-                  <p className="text-amber-300 font-medium">Electrical Flat Rates</p>
-                  <p className="text-amber-200/70">First year: 14.5%</p>
-                  <p className="text-amber-200/70">After year 1: 12.5%</p>
-                  <p className="text-amber-200/70">Category: Building services</p>
+                  <p className="text-amber-300 font-medium">Construction Flat Rates</p>
+                  <p className="text-amber-200/70">
+                    Labour-only: {FLAT_RATE_SCHEME.labourOnlyConstruction}% (materials under 10%)
+                  </p>
+                  <p className="text-amber-200/70">
+                    General: {FLAT_RATE_SCHEME.generalConstruction}% (materials 10% or more)
+                  </p>
+                  <p className="text-amber-200/70">
+                    Limited cost: {FLAT_RATE_SCHEME.limitedCostBusiness}% (goods under 2%)
+                  </p>
+                  <p className="text-amber-200/70">
+                    Less {FLAT_RATE_SCHEME.firstYearDiscount}% in your first year of registration
+                  </p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-amber-300 font-medium">Key Thresholds</p>
-                  <p className="text-amber-200/70">Registration: £90,000</p>
-                  <p className="text-amber-200/70">FRS limit: £150,000</p>
-                  <p className="text-amber-200/70">Quarterly returns</p>
+                  <p className="text-amber-200/70">
+                    Register over {money(VAT_SCHEME_THRESHOLDS.registration)}
+                  </p>
+                  <p className="text-amber-200/70">
+                    Deregister under {money(VAT_SCHEME_THRESHOLDS.deregistration)}
+                  </p>
+                  <p className="text-amber-200/70">
+                    Join FRS at {money(VAT_SCHEME_THRESHOLDS.flatRateJoin)} ex VAT
+                  </p>
+                  <p className="text-amber-200/70">
+                    Leave FRS over {money(VAT_SCHEME_THRESHOLDS.flatRateLeave)} inc VAT
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-amber-300 font-medium">Cash Accounting</p>
+                  <p className="text-amber-200/70">
+                    Join at {money(VAT_SCHEME_THRESHOLDS.cashAccountingJoin)} or less
+                  </p>
+                  <p className="text-amber-200/70">
+                    Leave over {money(VAT_SCHEME_THRESHOLDS.cashAccountingLeave)}
+                  </p>
+                  <p className="text-amber-200/70">Pay VAT only once the customer pays you</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-amber-300 font-medium">Annual Accounting</p>
+                  <p className="text-amber-200/70">
+                    Join at {money(VAT_SCHEME_THRESHOLDS.annualAccountingJoin)} or less
+                  </p>
+                  <p className="text-amber-200/70">
+                    Leave over {money(VAT_SCHEME_THRESHOLDS.annualAccountingLeave)}
+                  </p>
+                  <p className="text-amber-200/70">One return a year, instalments on account</p>
                 </div>
               </div>
 
               <div className="mt-4 pt-3 border-t border-amber-500/20">
                 <p className="text-xs text-amber-200/60">
                   <Info className="h-3 w-3 inline mr-1" />
-                  The Flat Rate Scheme is simpler to administer but may not suit businesses with
-                  high material costs. Standard VAT allows full input VAT recovery. Consult an
-                  accountant for specific advice.
+                  The flat rate percentage is charged on your VAT-INCLUSIVE turnover, not on your
+                  net sales. On the Flat Rate Scheme you cannot reclaim input VAT except on a single
+                  capital purchase of {money(FLAT_RATE_SCHEME.capitalGoodsReclaimFloorIncVat)} or
+                  more including VAT, and reverse charge sales are left out of your flat rate
+                  turnover altogether. This comparison assumes materials are billed on at cost and
+                  counts no other input VAT (van, tools, fuel, insurance), so it understates what
+                  standard VAT would give back. Consult an accountant for specific advice.
                 </p>
               </div>
             </CollapsibleContent>

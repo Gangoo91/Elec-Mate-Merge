@@ -63,8 +63,10 @@ export const testInstruments: FlashcardData[] = [
   },
   {
     id: 'ti9',
-    question: 'What is the maximum trip time for a 30mA RCD at 5x rated current (150mA)?',
-    answer: '40ms (0.04 seconds).',
+    question:
+      'Under BS EN 61008/61009, what is the maximum operating time for a general 30mA RCD at 5x rated current (150mA)?',
+    answer:
+      '40ms (0.04 seconds) — a device characteristic from the product standard. Note that BS 7671:2018+A4:2026 deleted Table 3A and now verifies an RCD with a single AC test at IΔn, so 5x is no longer part of the required test sequence.',
     category: 'Test Instruments',
     difficulty: 'hard',
   },

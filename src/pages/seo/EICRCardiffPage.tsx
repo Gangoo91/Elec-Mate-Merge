@@ -83,7 +83,7 @@ const faqs = [
   {
     question: 'Do I need an EICR for a Cardiff flat I own and live in?',
     answer:
-      'There is no legal requirement for owner-occupiers to obtain an EICR. However, it is strongly recommended every 10 years (or every 5 years for properties over 25 years old) as best practice under BS 7671 Regulation 134.2. If you are selling the property, an EICR is not legally required but mortgage lenders and conveyancers increasingly request one.',
+      'There is no legal requirement for owner-occupiers to obtain an EICR. However, it is strongly recommended every 10 years (or every 5 years for properties over 25 years old) as best practice under BS 7671 Regulation 135.1. If you are selling the property, an EICR is not legally required but mortgage lenders and conveyancers increasingly request one.',
   },
 ];
 

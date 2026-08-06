@@ -18,6 +18,8 @@ interface CableSizingResultProps {
   inputs: CableSizingInputs;
   deratingFactors?: DeratingFactors;
   nextCableSizeUp?: { size: number; capacity: number };
+  /** Rated current In the cable was actually sized on (Reg 433.1.1) */
+  deviceRating?: number;
 }
 
 const CableSizingResult = ({
@@ -27,6 +29,7 @@ const CableSizingResult = ({
   inputs,
   deratingFactors,
   nextCableSizeUp,
+  deviceRating,
 }: CableSizingResultProps) => {
   const [showDerivation, setShowDerivation] = useState(false);
   const designCurrent = parseFloat(inputs.current) || 0;
@@ -39,8 +42,11 @@ const CableSizingResult = ({
       B1: 'Trunking on surface',
       B2: 'Trunking flush in wall',
       C: 'Clipped direct to surface',
-      D1: 'Buried direct in ground',
-      D2: 'In buried ducts',
+      // App 4 Reference Methods: D1 = in ducting in the ground (Table 4A2
+      // Installation Method 70), D2 = buried direct (Methods 72/73). These two
+      // descriptions used to be swapped.
+      D1: 'In ducting in the ground',
+      D2: 'Buried direct in ground',
       E: 'On perforated tray/ladder',
       F: 'Single-core on tray',
       G: 'Free air, spaced',
@@ -72,7 +78,11 @@ const CableSizingResult = ({
   const Ci = deratingFactors?.Ci ?? 1.0;
   const Cs = deratingFactors?.Cs ?? 1.0;
   const Cd = deratingFactors?.Cd ?? 1.0;
+  const Cf = deratingFactors?.Cf ?? 1.0;
+  const Cc = deratingFactors?.Cc ?? 1.0;
   const totalDerating = deratingFactors?.total ?? 1.0;
+  // The cable is sized on the device rating In, not on Ib (Reg 433.1.1).
+  const ratedCurrent = deviceRating ?? designCurrent;
 
   return (
     <div className="space-y-6">
@@ -275,6 +285,28 @@ const CableSizingResult = ({
                               </span>
                             </div>
                           )}
+                          {Cf !== 1.0 && (
+                            <div className="flex items-center justify-between gap-2">
+                              <span className="text-white whitespace-nowrap">Cf (BS 3036):</span>
+                              <span className="text-white font-mono whitespace-nowrap">
+                                {Cf.toFixed(3)}{' '}
+                                <span className="text-white text-xs hidden sm:inline">
+                                  5.1.1(c)(i)
+                                </span>
+                              </span>
+                            </div>
+                          )}
+                          {Cc !== 1.0 && (
+                            <div className="flex items-center justify-between gap-2">
+                              <span className="text-white whitespace-nowrap">Cc (Buried):</span>
+                              <span className="text-white font-mono whitespace-nowrap">
+                                {Cc.toFixed(3)}{' '}
+                                <span className="text-white text-xs hidden sm:inline">
+                                  5.1.1(c)(ii)
+                                </span>
+                              </span>
+                            </div>
+                          )}
                           <div className="flex items-center justify-between gap-2 pt-2 mt-2 border-t border-white/[0.06]">
                             <span className="text-white font-medium whitespace-nowrap">
                               Overall:
@@ -298,14 +330,20 @@ const CableSizingResult = ({
                         <h4 className="font-semibold text-white text-base">
                           Required Tabulated Current (It)
                         </h4>
-                        <p className="text-sm text-white mt-1">
-                          It ≥ Ib ÷ (Ca × Cg × Ci{Cs !== 1.0 ? ' × Cs' : ''}
-                          {Cd !== 1.0 ? ' × Cd' : ''})
+                        <p className="text-xs text-white mb-1">
+                          Appendix 4 §5.1.1 — divide the rated current of the protective
+                          device, not the design current
                         </p>
                         <p className="text-sm text-white mt-1">
-                          It ≥ {inputs.current}A ÷ {totalDerating.toFixed(3)} ={' '}
+                          It ≥ In ÷ (Ca × Cg × Ci{Cs !== 1.0 ? ' × Cs' : ''}
+                          {Cd !== 1.0 ? ' × Cd' : ''}
+                          {Cf !== 1.0 ? ' × Cf' : ''}
+                          {Cc !== 1.0 ? ' × Cc' : ''})
+                        </p>
+                        <p className="text-sm text-white mt-1">
+                          It ≥ {ratedCurrent}A ÷ {totalDerating.toFixed(3)} ={' '}
                           <span className="font-mono text-white">
-                            {(parseFloat(inputs.current) / totalDerating).toFixed(1)}A
+                            {(ratedCurrent / totalDerating).toFixed(1)}A
                           </span>
                         </p>
                       </div>
@@ -338,9 +376,13 @@ const CableSizingResult = ({
                       </span>
                       <div className="flex-1">
                         <h4 className="font-semibold text-white text-base">Voltage Drop</h4>
+                        {/* The reference used to be manufactured by string-replacing
+                            'A' with 'B' in the capacity table reference, which either
+                            corrupted the string or left it unchanged and rendered
+                            "Table Table 4D5 Col C". Not every capacity table has a
+                            matching 'B' voltage-drop table. */}
                         <p className="text-xs text-white mb-1">
-                          Table{' '}
-                          {recommendedCable.tableReference.replace('4D', '4D').replace('A', 'B')}
+                          BS 7671 Appendix 4 voltage drop (mV/A/m)
                         </p>
                         <p className="text-sm text-white">
                           ΔV = {recommendedCable.voltageDropMvAm} mV/A/m × {inputs.current}A ×{' '}
@@ -362,11 +404,14 @@ const CableSizingResult = ({
             </CollapsibleContent>
           </Collapsible>
 
-          {/* Protective Device Check */}
+          {/* Protective Device Check — reads the SAME device the cable was
+              sized on, rather than keeping its own separate selection. */}
           <ProtectiveDeviceSection
             designCurrent={designCurrent}
             effectiveCapacity={recommendedCable.deratedCapacity}
             nextCableSizeUp={nextCableSizeUp}
+            deviceType={inputs.deviceType ?? 'mcb-b'}
+            rating={ratedCurrent}
           />
         </>
       )}

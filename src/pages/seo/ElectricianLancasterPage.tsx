@@ -203,8 +203,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Periodic inspection (Section 631)</strong> — EICRs must comply with BS 7671
-                Section 631 (Periodic Inspection and Testing). Landlords in Lancaster are required
+                <strong>Periodic inspection (Chapter 65)</strong> — EICRs must comply with BS 7671
+                Chapter 65 (Periodic Inspection and Testing). Landlords in Lancaster are required
                 by The Electrical Safety Standards in the Private Rented Sector (England)
                 Regulations 2020 to have a valid EICR every five years.
               </span>

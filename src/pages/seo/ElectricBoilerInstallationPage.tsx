@@ -285,7 +285,7 @@ const sections = [
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <span>
-                <strong>Double-pole isolation</strong> — Regulation 537.2.1 requires a means of
+                <strong>Double-pole isolation</strong> — Regulation 462.2 requires isolation of all live conductors, so a means of
                 isolation for each item of fixed equipment. For electric boilers, a lockable
                 double-pole isolator switch adjacent to the boiler (typically within 2m) is standard
                 practice. The isolator must interrupt both live and neutral conductors.

@@ -154,12 +154,16 @@ const MaximumDemandCalculator = () => {
     }
 
     const voltage = parseFloat(supplyVoltage);
+    // FIX: the per-load design current omitted √3 and was applied regardless of
+    // supply type, while the engine used √3 for the installation total — the
+    // two halves disagreed. For a balanced three-phase load Ib = P / (√3 · UL).
+    const phaseFactor = supplyType === 'three-phase' ? Math.sqrt(3) : 1;
     const circuits: CircuitLoad[] = loads
       .filter((load) => parseFloat(load.power) > 0)
       .map((load) => ({
         id: load.id.toString(),
         type: mapToEngineType(load.loadType),
-        designCurrent: (parseFloat(load.power) * 1000) / voltage,
+        designCurrent: (parseFloat(load.power) * 1000) / (phaseFactor * voltage),
         installedPower: parseFloat(load.power),
         quantity: 1,
         location,
@@ -203,19 +207,23 @@ const MaximumDemandCalculator = () => {
     setErrors({});
   };
 
+  // FIX: the kW thresholds used to be hard-coded (23 kW single-phase, 69 kW
+  // three-phase) independently of the selected voltage. 23 kW is 100 A × 230 V
+  // and 69 kW is 100 A × √3 × 400 V, so pairing "three-phase" with 230 V gave a
+  // 69 kW allowance where the real figure is 100 A × √3 × 230 V ≈ 39.8 kW. The
+  // limit is now derived from the same relation the current estimate uses.
   const calculateSupplyRequirements = (diversifiedLoadKW: number) => {
     const voltage = parseFloat(supplyVoltage);
-    const estimatedCurrent =
-      supplyType === 'three-phase'
-        ? (diversifiedLoadKW * 1000) / (Math.sqrt(3) * voltage)
-        : (diversifiedLoadKW * 1000) / voltage;
+    const phaseFactor = supplyType === 'three-phase' ? Math.sqrt(3) : 1;
+    const estimatedCurrent = (diversifiedLoadKW * 1000) / (phaseFactor * voltage);
+    const hundredAmpLimitKW = (100 * phaseFactor * voltage) / 1000;
 
     let supplyAdequacy = '';
     let mainSwitchRecommendation = '';
 
     if (supplyType === 'single-phase') {
-      if (diversifiedLoadKW <= 23) {
-        supplyAdequacy = 'Standard single-phase 100A supply adequate';
+      if (diversifiedLoadKW <= hundredAmpLimitKW) {
+        supplyAdequacy = `Standard single-phase 100A supply adequate (100A at ${voltage}V ≈ ${hundredAmpLimitKW.toFixed(1)} kW)`;
         if (estimatedCurrent <= 63) mainSwitchRecommendation = '63A Main Switch';
         else if (estimatedCurrent <= 80) mainSwitchRecommendation = '80A Main Switch';
         else mainSwitchRecommendation = '100A Main Switch';
@@ -224,8 +232,8 @@ const MaximumDemandCalculator = () => {
         mainSwitchRecommendation = 'Consider three-phase supply or load reduction';
       }
     } else {
-      if (diversifiedLoadKW <= 69) {
-        supplyAdequacy = 'Standard three-phase 100A/phase supply adequate';
+      if (diversifiedLoadKW <= hundredAmpLimitKW) {
+        supplyAdequacy = `Standard three-phase 100A/phase supply adequate (100A/phase at ${voltage}V ≈ ${hundredAmpLimitKW.toFixed(1)} kW)`;
         if (estimatedCurrent <= 63) mainSwitchRecommendation = '63A 3-Phase Main Switch';
         else if (estimatedCurrent <= 80) mainSwitchRecommendation = '80A 3-Phase Main Switch';
         else mainSwitchRecommendation = '100A 3-Phase Main Switch';
@@ -248,10 +256,19 @@ const MaximumDemandCalculator = () => {
     { value: 'single-phase', label: 'Single Phase' },
     { value: 'three-phase', label: 'Three Phase' },
   ];
-  const voltageOptions = [
-    { value: '230', label: '230V' },
-    { value: '400', label: '400V' },
-  ];
+  // A UK LV supply is 230 V line-to-neutral single-phase or 400 V line-to-line
+  // three-phase. These used to be independent dropdowns, so "three-phase at
+  // 230 V" was selectable while the kW adequacy thresholds assumed 400 V.
+  const voltageOptions =
+    supplyType === 'three-phase'
+      ? [{ value: '400', label: '400V (line-to-line)' }]
+      : [{ value: '230', label: '230V (line-to-neutral)' }];
+
+  const handleSupplyTypeChange = (v: string) => {
+    const next = v as 'single-phase' | 'three-phase';
+    setSupplyType(next);
+    setSupplyVoltage(next === 'three-phase' ? '400' : '230');
+  };
 
   return (
     <CalculatorCard
@@ -270,7 +287,7 @@ const MaximumDemandCalculator = () => {
         <CalculatorSelect
           label="Supply Type"
           value={supplyType}
-          onChange={(v) => setSupplyType(v as 'single-phase' | 'three-phase')}
+          onChange={handleSupplyTypeChange}
           options={supplyTypeOptions}
         />
         <CalculatorSelect
@@ -526,6 +543,25 @@ const MaximumDemandCalculator = () => {
                     </p>
                   </div>
                 </div>
+                {/*
+                  Reg 536.4.202 (new in A4:2026). The main switch suggestion
+                  above is sized from the DIVERSIFIED current only, which the
+                  regulation does not accept on its own: "Diversity shall not be
+                  used as a means of load curtailment, load control or overload
+                  protection." Stated explicitly so the figure is not read as an
+                  assembly rating.
+                */}
+                <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30">
+                  <p className="text-sm text-white">
+                    <strong>Reg 536.4.202 — the assembly rating is a separate check.</strong> The
+                    device protecting a consumer unit or distribution board against overload must
+                    satisfy one of: (a) In ≤ Ina and Inc, (b) documented load curtailment, or (c)
+                    the total connected load <em>without</em> diversity (
+                    {result.totalDesignCurrent.toFixed(1)} A here) not exceeding Ina and Inc.
+                    Diversity shall not be used as a means of load curtailment, load control or
+                    overload protection.
+                  </p>
+                </div>
                 {supplyInfo.estimatedCurrent > 60 && (
                   <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
                     <p className="text-xs text-white">
@@ -590,21 +626,22 @@ const MaximumDemandCalculator = () => {
                     MD = <span className="font-bold">{result.diversifiedLoad.toFixed(2)} kW</span>
                   </p>
                 </div>
+                {/* The engine now sums the per-type diversified line currents
+                    instead of re-deriving current from kW, so this step
+                    describes what actually happens. */}
                 <div className="pt-2 border-t border-purple-500/20">
                   <p className="text-xs text-purple-400 mb-1">
-                    Step 4: Current ({supplyType === 'three-phase' ? '3-phase' : '1-phase'})
+                    Step 4: Line current ({supplyType === 'three-phase' ? '3-phase' : '1-phase'} at{' '}
+                    {supplyVoltage}V)
                   </p>
-                  {supplyType === 'three-phase' ? (
-                    <p>
-                      I = ({result.diversifiedLoad.toFixed(2)} × 1000) / (1.732 × {supplyVoltage}) ={' '}
-                      <span className="font-bold">{result.diversifiedCurrent.toFixed(1)}A</span>
-                    </p>
-                  ) : (
-                    <p>
-                      I = ({result.diversifiedLoad.toFixed(2)} × 1000) / {supplyVoltage} ={' '}
-                      <span className="font-bold">{result.diversifiedCurrent.toFixed(1)}A</span>
-                    </p>
-                  )}
+                  <p>
+                    I = sum of the diversified line currents ={' '}
+                    <span className="font-bold">{result.diversifiedCurrent.toFixed(1)}A</span>
+                  </p>
+                  <p className="text-xs">
+                    Per load, Ib = P / ({supplyType === 'three-phase' ? '√3 × ' : ''}
+                    {supplyVoltage})
+                  </p>
                 </div>
               </div>
             </CollapsibleContent>
@@ -634,8 +671,13 @@ const MaximumDemandCalculator = () => {
                 </div>
                 <div className="border-l-2 border-blue-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong>Diversity Allowances:</strong> Published in the IET On-Site Guide (Table
-                    1B for domestic, Table H2 for commercial/industrial), not in BS 7671 directly.
+                    {/* FIX: there is no "Table 1B" and no diversity "Table H2"
+                        in the On-Site Guide. Appendix A holds Table A1 (typical
+                        current demands) and Table A2 (allowances for
+                        diversity); Appendix H is standard circuit
+                        arrangements. */}
+                    <strong>Diversity Allowances:</strong> Published in the IET On-Site Guide,
+                    Appendix A, Table A2 — not in BS 7671 directly.
                   </p>
                 </div>
                 <div className="border-l-2 border-blue-400/40 pl-3">
@@ -666,20 +708,40 @@ const MaximumDemandCalculator = () => {
             </CollapsibleTrigger>
             <CollapsibleContent className="pt-2">
               <div className="space-y-3 pl-1">
+                {/*
+                  FIX: Reg 311.1 was quoted as making diversity mandatory. The
+                  printed text is: "For economic and reliable design of an
+                  installation within thermal limits and admissible voltage
+                  drop, the maximum demand shall be determined. In determining
+                  the maximum demand of an installation or part thereof,
+                  diversity MAY be taken into account." The "shall" attaches to
+                  determining maximum demand; applying diversity is permissive.
+                  "Table H2" was also cited as the commercial/industrial
+                  diversity table — no such table exists.
+                */}
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong>Reg. 311.1:</strong> Assessment of maximum demand shall take diversity
-                    into account
+                    <strong>Reg 311.1:</strong> The maximum demand shall be determined. In
+                    determining maximum demand, diversity <em>may</em> be taken into account.
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong>Table A2:</strong> Diversity allowances for domestic installations
+                    <strong>On-Site Guide Appendix A:</strong> Table A1 gives typical current
+                    demands; Table A2 gives the allowances for diversity.
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong>Table H2:</strong> Diversity allowances for commercial/industrial
+                    <strong>Scope of Appendix A:</strong> household and similar premises. Blocks of
+                    dwellings, large hotels, industrial and large commercial premises are excluded
+                    and must be assessed case by case by the designer.
+                  </p>
+                </div>
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong>Reg 536.4.202:</strong> Diversity shall not be used as a means of load
+                    curtailment, load control or overload protection.
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
@@ -699,8 +761,8 @@ const MaximumDemandCalculator = () => {
         <div className="flex items-start gap-2">
           <Info className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
           <p className="text-sm text-white">
-            <strong>MD</strong> = Sum of diversified loads per IET On-Site Guide. I = (MD × 1000) /
-            V
+            <strong>MD</strong> = Sum of diversified loads per IET On-Site Guide Appendix A, Table
+            A2. Ib = P / V single-phase, P / (√3 × UL) three-phase.
           </p>
         </div>
       </div>

@@ -1,7 +1,9 @@
 import { useMemo, useEffect, useRef, useState } from 'react';
-import { format, differenceInMinutes, parseISO, isSameDay, isToday } from 'date-fns';
+import { format, differenceInMinutes, isToday, startOfDay } from 'date-fns';
 import { useSwipeable } from 'react-swipeable';
 import { cn } from '@/lib/utils';
+import { cardCn, eyebrowCn } from './calendarStyles';
+import { effectiveEnd, eventsOnDay, isMultiDay, layoutDayEvents } from './eventUtils';
 import type { CalendarEvent } from '@/types/calendar';
 
 interface CalendarDayViewProps {
@@ -15,8 +17,8 @@ interface CalendarDayViewProps {
   onSwipeRight: () => void;
 }
 
-const HOUR_HEIGHT = 64; // px per hour — slightly taller for breathing room
-const TIME_COL = 56; // width of time gutter
+const HOUR_HEIGHT = 64;
+const TIME_COL = 56;
 
 const CalendarDayView = ({
   currentDate,
@@ -44,186 +46,188 @@ const CalendarDayView = ({
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   }, [workingHoursStart, workingHoursEnd]);
 
-  const dayEvents = useMemo(
-    () => events.filter((e) => isSameDay(parseISO(e.start_at), currentDate)),
-    [events, currentDate]
+  // Every event touching this day, not only those starting on it — day two of
+  // a three-day job belongs here as much as day one.
+  const dayEvents = useMemo(() => eventsOnDay(events, currentDate), [events, currentDate]);
+  const bannerEvents = useMemo(
+    () => dayEvents.filter((e) => e.all_day || isMultiDay(e)),
+    [dayEvents]
   );
-
-  const allDayEvents = useMemo(() => dayEvents.filter((e) => e.all_day), [dayEvents]);
-  const timedEvents = useMemo(() => dayEvents.filter((e) => !e.all_day), [dayEvents]);
+  const positioned = useMemo(
+    () => layoutDayEvents(dayEvents.filter((e) => !isMultiDay(e)), currentDate),
+    [dayEvents, currentDate]
+  );
 
   const firstHour = hours[0];
   const showNowLine = isToday(currentDate);
 
-  // Update the "now" time every minute
   useEffect(() => {
     if (!showNowLine) return;
     const interval = setInterval(() => setNow(new Date()), 60_000);
     return () => clearInterval(interval);
   }, [showNowLine]);
 
-  // Auto-scroll to current time on mount
+  // Land on the current time rather than at midnight.
   useEffect(() => {
     if (!scrollRef.current || !showNowLine) return;
     const nowHour = new Date().getHours();
-    const scrollTarget = Math.max(0, (nowHour - firstHour - 2) * HOUR_HEIGHT);
-    scrollRef.current.scrollTop = scrollTarget;
+    scrollRef.current.scrollTop = Math.max(0, (nowHour - firstHour - 2) * HOUR_HEIGHT);
   }, [firstHour, showNowLine]);
 
-  // Current time indicator position
   const nowLineTop = useMemo(() => {
     if (!showNowLine) return -1;
-    const minutesSinceFirstHour = differenceInMinutes(
+    const minutes = differenceInMinutes(
       now,
       new Date(now.getFullYear(), now.getMonth(), now.getDate(), firstHour)
     );
-    return (minutesSinceFirstHour / 60) * HOUR_HEIGHT;
+    return (minutes / 60) * HOUR_HEIGHT;
   }, [now, firstHour, showNowLine]);
 
   return (
-    <div {...swipeHandlers} className="select-none">
-      <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] overflow-hidden">
-        {/* All-day events */}
-        {allDayEvents.length > 0 && (
-          <div className="px-4 py-3 border-b border-white/[0.06] space-y-2">
-            <span className="text-[10px] font-bold text-white uppercase tracking-wider">
-              All day
-            </span>
-            {allDayEvents.map((event) => (
+    <div {...swipeHandlers} className={cn(cardCn, 'select-none overflow-hidden')}>
+      {/* All-day and multi-day work — a banner, not a block in the grid. A job
+          running Mon–Wed has no start time on the Tuesday to place it at. */}
+      {bannerEvents.length > 0 && (
+        <div className="space-y-2 border-b border-white/[0.10] px-4 py-3 sm:px-5">
+          <span className={eyebrowCn}>All day</span>
+          {bannerEvents.map((event) => {
+            // startOfDay, not currentDate.setHours(...) — the latter mutates
+            // the prop, so the whole page would silently jump to midnight.
+            const continues = new Date(event.start_at) < startOfDay(currentDate);
+            return (
               <button
                 key={event.id}
                 type="button"
                 onClick={() => onEventTap(event)}
-                className="w-full text-left px-3 py-2.5 rounded-xl touch-manipulation active:scale-[0.98] transition-transform"
+                className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-left touch-manipulation active:scale-[0.98]"
                 style={{
-                  backgroundColor: event.colour + '25',
+                  backgroundColor: `${event.colour}25`,
                   borderLeft: `3px solid ${event.colour}`,
                 }}
               >
-                <span className="text-sm font-bold text-white">{event.title}</span>
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* Time grid (scrollable) */}
-        <div ref={scrollRef} className="relative overflow-y-auto max-h-[calc(100vh-260px)]">
-          {hours.map((hour) => {
-            const isWorkingHour = hour >= workingHoursStart && hour < workingHoursEnd;
-            return (
-              <button
-                key={hour}
-                type="button"
-                onClick={() => onTimeSlotTap(currentDate, hour)}
-                className={cn(
-                  'flex items-start w-full touch-manipulation active:bg-white/[0.06] relative',
-                  isWorkingHour ? 'bg-white/[0.025]' : 'bg-transparent'
-                )}
-                style={{ height: HOUR_HEIGHT }}
-              >
-                {/* Time label */}
-                <div
-                  className="flex-shrink-0 text-right pr-3 -mt-[7px]"
-                  style={{ width: TIME_COL }}
-                >
-                  <span
-                    className={cn(
-                      'text-[11px] font-bold tabular-nums',
-                      isWorkingHour ? 'text-white' : 'text-white opacity-50'
-                    )}
-                  >
-                    {format(new Date(2000, 0, 1, hour), 'HH:mm')}
-                  </span>
-                </div>
-
-                {/* Grid area */}
-                <div className="flex-1 h-full relative">
-                  {/* Hour line */}
-                  <div
-                    className={cn(
-                      'absolute top-0 left-0 right-0 h-px',
-                      isWorkingHour ? 'bg-white/[0.08]' : 'bg-white/[0.04]'
-                    )}
-                  />
-                  {/* Half-hour line */}
-                  <div
-                    className="absolute left-0 right-0 h-px bg-white/[0.03]"
-                    style={{ top: HOUR_HEIGHT / 2 }}
-                  />
-                </div>
-              </button>
-            );
-          })}
-
-          {/* Current time indicator */}
-          {showNowLine && nowLineTop >= 0 && nowLineTop <= hours.length * HOUR_HEIGHT && (
-            <div
-              className="absolute left-0 right-0 z-20 pointer-events-none flex items-center"
-              style={{ top: nowLineTop }}
-            >
-              <div className="flex items-center justify-end pr-1" style={{ width: TIME_COL }}>
-                <div className="px-1.5 py-0.5 rounded bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.4)]">
-                  <span className="text-[9px] font-bold text-white tabular-nums">
-                    {format(now, 'HH:mm')}
-                  </span>
-                </div>
-              </div>
-              <div className="flex-1 h-[2px] bg-red-500 shadow-[0_0_6px_rgba(239,68,68,0.3)]" />
-            </div>
-          )}
-
-          {/* Event blocks overlay */}
-          {timedEvents.map((event) => {
-            const eventStart = parseISO(event.start_at);
-            const eventEnd = parseISO(event.end_at);
-            const topMinutes = differenceInMinutes(
-              eventStart,
-              new Date(
-                currentDate.getFullYear(),
-                currentDate.getMonth(),
-                currentDate.getDate(),
-                firstHour
-              )
-            );
-            const durationMinutes = Math.max(differenceInMinutes(eventEnd, eventStart), 15);
-            const top = Math.max(0, (topMinutes / 60) * HOUR_HEIGHT);
-            const height = Math.max(32, (durationMinutes / 60) * HOUR_HEIGHT);
-
-            return (
-              <button
-                key={event.id}
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onEventTap(event);
-                }}
-                className="absolute rounded-xl px-3 py-2 overflow-hidden text-left touch-manipulation active:scale-[0.98] transition-transform z-10"
-                style={{
-                  top,
-                  height,
-                  left: TIME_COL + 4,
-                  right: 8,
-                  backgroundColor: event.colour + '20',
-                  borderLeft: `3px solid ${event.colour}`,
-                  backdropFilter: 'blur(12px)',
-                  boxShadow: `0 2px 8px ${event.colour}15`,
-                }}
-              >
-                <span className="text-sm font-bold text-white line-clamp-1">{event.title}</span>
-                {height > 40 && (
-                  <span className="text-xs text-white">
-                    {format(eventStart, 'HH:mm')} – {format(eventEnd, 'HH:mm')}
-                  </span>
-                )}
-                {height > 60 && event.location && (
-                  <span className="text-[11px] text-white line-clamp-1 mt-0.5">
-                    {event.location}
+                <span className="min-w-0 flex-1 truncate text-[14px] font-semibold text-white">
+                  {event.title}
+                </span>
+                {continues && (
+                  <span className="shrink-0 text-[11px] font-medium text-white">
+                    until {format(effectiveEnd(event), 'EEE d')}
                   </span>
                 )}
               </button>
             );
           })}
         </div>
+      )}
+
+      {/* Time grid */}
+      <div ref={scrollRef} className="relative max-h-[calc(100vh-320px)] overflow-y-auto">
+        {hours.map((hour) => {
+          const working = hour >= workingHoursStart && hour < workingHoursEnd;
+          return (
+            <button
+              key={hour}
+              type="button"
+              onClick={() => onTimeSlotTap(currentDate, hour)}
+              className={cn(
+                'relative flex w-full items-start touch-manipulation active:bg-white/[0.06]',
+                working ? 'bg-white/[0.03]' : 'bg-transparent'
+              )}
+              style={{ height: HOUR_HEIGHT }}
+            >
+              {/* Hours outside the working day dim as a unit rather than
+                  switching to a grey — the type stays white. */}
+              <span
+                className={cn('-mt-[7px] shrink-0 pr-3 text-right', !working && 'opacity-55')}
+                style={{ width: TIME_COL }}
+              >
+                <span className="text-[11px] font-semibold tabular-nums text-white">
+                  {format(new Date(2000, 0, 1, hour), 'HH:mm')}
+                </span>
+              </span>
+
+              <span className="relative h-full flex-1">
+                <span
+                  className={cn(
+                    'absolute inset-x-0 top-0 h-px',
+                    working ? 'bg-white/[0.10]' : 'bg-white/[0.05]'
+                  )}
+                />
+                <span
+                  className="absolute inset-x-0 h-px bg-white/[0.04]"
+                  style={{ top: HOUR_HEIGHT / 2 }}
+                />
+              </span>
+            </button>
+          );
+        })}
+
+        {/* Now line */}
+        {showNowLine && nowLineTop >= 0 && nowLineTop <= hours.length * HOUR_HEIGHT && (
+          <div
+            className="pointer-events-none absolute inset-x-0 z-20 flex items-center"
+            style={{ top: nowLineTop }}
+          >
+            <div className="flex justify-end pr-1" style={{ width: TIME_COL }}>
+              <span className="rounded bg-elec-yellow px-1.5 py-0.5 text-[9px] font-bold tabular-nums text-black">
+                {format(now, 'HH:mm')}
+              </span>
+            </div>
+            <div className="h-[2px] flex-1 bg-elec-yellow shadow-[0_0_8px_rgba(250,204,21,0.45)]" />
+          </div>
+        )}
+
+        {/* Event blocks */}
+        {positioned.map(({ event, start, end, column, columns }) => {
+          const topMinutes = differenceInMinutes(
+            start,
+            new Date(
+              currentDate.getFullYear(),
+              currentDate.getMonth(),
+              currentDate.getDate(),
+              firstHour
+            )
+          );
+          const duration = Math.max(differenceInMinutes(end, start), 15);
+          const top = Math.max(0, (topMinutes / 60) * HOUR_HEIGHT);
+          const height = Math.max(32, (duration / 60) * HOUR_HEIGHT);
+          const widthPct = 100 / columns;
+
+          return (
+            <button
+              key={event.id}
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onEventTap(event);
+              }}
+              className="absolute z-10 overflow-hidden rounded-xl px-3 py-2 text-left touch-manipulation active:scale-[0.98]"
+              style={{
+                top,
+                height,
+                left: `calc(${TIME_COL}px + 4px + (100% - ${TIME_COL}px - 12px) * ${
+                  (column * widthPct) / 100
+                })`,
+                width: `calc((100% - ${TIME_COL}px - 12px) * ${widthPct / 100} - 3px)`,
+                backgroundColor: `${event.colour}22`,
+                borderLeft: `3px solid ${event.colour}`,
+              }}
+            >
+              <span className="block truncate text-[14px] font-semibold text-white">
+                {event.title}
+              </span>
+              {height > 40 && (
+                <span className="block text-[12px] tabular-nums text-white">
+                  {format(start, 'HH:mm')} – {format(end, 'HH:mm')}
+                </span>
+              )}
+              {height > 62 && event.location && (
+                <span className="mt-0.5 block truncate text-[11px] text-white">
+                  {event.location}
+                </span>
+              )}
+            </button>
+          );
+        })}
       </div>
     </div>
   );

@@ -126,7 +126,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (Section 631 covers periodic inspection and testing).
+          (Chapter 65 covers periodic inspection and testing).
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -321,7 +321,7 @@ const sections = [
     content: (
       <>
         <p>
-          When C1 or C2 observations are identified (classified under BS 7671 Section 631), remedial
+          When C1 or C2 observations are identified (classified under BS 7671 Chapter 65), remedial
           work must be completed promptly.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

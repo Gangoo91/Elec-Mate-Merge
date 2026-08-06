@@ -49,177 +49,7 @@ const COLORS = [
 
 const LINE_WIDTHS = [2, 4, 6, 8];
 
-export default function AnnotationCanvas({ photo, onSave, onClose }: AnnotationCanvasProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [activeTool, setActiveTool] = useState<Tool>('pen');
-  const [activeColor, setActiveColor] = useState('#ef4444');
-  const [lineWidth, setLineWidth] = useState(4);
-  const [isDrawing, setIsDrawing] = useState(false);
-  const [actions, setActions] = useState<DrawAction[]>([]);
-  const [redoStack, setRedoStack] = useState<DrawAction[]>([]);
-  const [currentAction, setCurrentAction] = useState<DrawAction | null>(null);
-  const [showTextInput, setShowTextInput] = useState(false);
-  const [textPosition, setTextPosition] = useState({ x: 0, y: 0 });
-  const [textValue, setTextValue] = useState('');
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [showColorPicker, setShowColorPicker] = useState(false);
-  const imageRef = useRef<HTMLImageElement | null>(null);
-  const canvasDimensions = useRef({ width: 0, height: 0, scale: 1 });
-
-  // Load image and set up canvas
-  useEffect(() => {
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.onload = () => {
-      imageRef.current = img;
-      setupCanvas(img);
-      setImageLoaded(true);
-    };
-    img.src = photo.file_url;
-  }, [photo.file_url]);
-
-  const setupCanvas = useCallback((img: HTMLImageElement) => {
-    const canvas = canvasRef.current;
-    const container = containerRef.current;
-    if (!canvas || !container) return;
-
-    const containerRect = container.getBoundingClientRect();
-    const dpr = window.devicePixelRatio || 1;
-
-    // Fit image to container
-    const scaleX = containerRect.width / img.width;
-    const scaleY = containerRect.height / img.height;
-    const scale = Math.min(scaleX, scaleY);
-
-    const displayWidth = img.width * scale;
-    const displayHeight = img.height * scale;
-
-    canvas.style.width = `${displayWidth}px`;
-    canvas.style.height = `${displayHeight}px`;
-    canvas.width = displayWidth * dpr;
-    canvas.height = displayHeight * dpr;
-
-    canvasDimensions.current = { width: displayWidth, height: displayHeight, scale: dpr };
-
-    const ctx = canvas.getContext('2d');
-    if (ctx) {
-      ctx.scale(dpr, dpr);
-      redrawCanvas(ctx, img, []);
-    }
-  }, []);
-
-  const redrawCanvas = useCallback(
-    (ctx: CanvasRenderingContext2D, img: HTMLImageElement, actionList: DrawAction[]) => {
-      const { width, height } = canvasDimensions.current;
-      ctx.clearRect(0, 0, width, height);
-      ctx.drawImage(img, 0, 0, width, height);
-
-      // Replay all actions
-      actionList.forEach((action) => drawAction(ctx, action));
-    },
-    []
-  );
-
-  const drawAction = (ctx: CanvasRenderingContext2D, action: DrawAction) => {
-    ctx.strokeStyle = action.color;
-    ctx.fillStyle = action.color;
-    ctx.lineWidth = action.lineWidth;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-
-    if (action.tool === 'eraser') {
-      ctx.globalCompositeOperation = 'destination-out';
-      ctx.lineWidth = action.lineWidth * 4;
-    } else {
-      ctx.globalCompositeOperation = 'source-over';
-    }
-
-    switch (action.tool) {
-      case 'pen':
-      case 'eraser':
-        if (action.points && action.points.length > 1) {
-          ctx.beginPath();
-          ctx.moveTo(action.points[0].x, action.points[0].y);
-          for (let i = 1; i < action.points.length; i++) {
-            ctx.lineTo(action.points[i].x, action.points[i].y);
-          }
-          ctx.stroke();
-        }
-        break;
-
-      case 'arrow':
-        if (
-          action.startX !== undefined &&
-          action.startY !== undefined &&
-          action.endX !== undefined &&
-          action.endY !== undefined
-        ) {
-          drawArrow(ctx, action.startX, action.startY, action.endX, action.endY, action.lineWidth);
-        }
-        break;
-
-      case 'circle':
-        if (
-          action.startX !== undefined &&
-          action.startY !== undefined &&
-          action.endX !== undefined &&
-          action.endY !== undefined
-        ) {
-          const rx = Math.abs(action.endX - action.startX) / 2;
-          const ry = Math.abs(action.endY - action.startY) / 2;
-          const cx = (action.startX + action.endX) / 2;
-          const cy = (action.startY + action.endY) / 2;
-          ctx.beginPath();
-          ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
-          ctx.stroke();
-        }
-        break;
-
-      case 'rectangle':
-        if (
-          action.startX !== undefined &&
-          action.startY !== undefined &&
-          action.endX !== undefined &&
-          action.endY !== undefined
-        ) {
-          ctx.beginPath();
-          ctx.strokeRect(
-            action.startX,
-            action.startY,
-            action.endX - action.startX,
-            action.endY - action.startY
-          );
-        }
-        break;
-
-      case 'text':
-        if (action.text && action.startX !== undefined && action.startY !== undefined) {
-          ctx.globalCompositeOperation = 'source-over';
-          const fontSize = Math.max(14, action.lineWidth * 4);
-          ctx.font = `bold ${fontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
-
-          // Text background
-          const metrics = ctx.measureText(action.text);
-          const padding = 4;
-          ctx.fillStyle = 'rgba(0,0,0,0.6)';
-          ctx.fillRect(
-            action.startX - padding,
-            action.startY - fontSize - padding,
-            metrics.width + padding * 2,
-            fontSize + padding * 2
-          );
-
-          ctx.fillStyle = action.color;
-          ctx.fillText(action.text, action.startX, action.startY);
-        }
-        break;
-    }
-
-    ctx.globalCompositeOperation = 'source-over';
-  };
-
-  const drawArrow = (
+const drawArrow = (
     ctx: CanvasRenderingContext2D,
     x1: number,
     y1: number,
@@ -249,7 +79,187 @@ export default function AnnotationCanvas({ photo, onSave, onClose }: AnnotationC
       y2 - headLen * Math.sin(angle + Math.PI / 6)
     );
     ctx.stroke();
-  };
+};
+
+/**
+ * Draw one action onto a canvas context.
+ *
+ * Module-level on purpose: it reads nothing but its own arguments, and as a
+ * per-render function it was the root of three exhaustive-deps warnings —
+ * `redrawCanvas` and `setupCanvas` were both holding the first render's copy.
+ */
+const drawAction = (ctx: CanvasRenderingContext2D, action: DrawAction) => {
+  ctx.strokeStyle = action.color;
+  ctx.fillStyle = action.color;
+  ctx.lineWidth = action.lineWidth;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  if (action.tool === 'eraser') {
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.lineWidth = action.lineWidth * 4;
+  } else {
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  switch (action.tool) {
+    case 'pen':
+    case 'eraser':
+    if (action.points && action.points.length > 1) {
+      ctx.beginPath();
+      ctx.moveTo(action.points[0].x, action.points[0].y);
+      for (let i = 1; i < action.points.length; i++) {
+        ctx.lineTo(action.points[i].x, action.points[i].y);
+      }
+      ctx.stroke();
+    }
+    break;
+
+    case 'arrow':
+    if (
+      action.startX !== undefined &&
+      action.startY !== undefined &&
+      action.endX !== undefined &&
+      action.endY !== undefined
+    ) {
+      drawArrow(ctx, action.startX, action.startY, action.endX, action.endY, action.lineWidth);
+    }
+    break;
+
+    case 'circle':
+    if (
+      action.startX !== undefined &&
+      action.startY !== undefined &&
+      action.endX !== undefined &&
+      action.endY !== undefined
+    ) {
+      const rx = Math.abs(action.endX - action.startX) / 2;
+      const ry = Math.abs(action.endY - action.startY) / 2;
+      const cx = (action.startX + action.endX) / 2;
+      const cy = (action.startY + action.endY) / 2;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+    break;
+
+    case 'rectangle':
+    if (
+      action.startX !== undefined &&
+      action.startY !== undefined &&
+      action.endX !== undefined &&
+      action.endY !== undefined
+    ) {
+      ctx.beginPath();
+      ctx.strokeRect(
+        action.startX,
+        action.startY,
+        action.endX - action.startX,
+        action.endY - action.startY
+      );
+    }
+    break;
+
+    case 'text':
+    if (action.text && action.startX !== undefined && action.startY !== undefined) {
+      ctx.globalCompositeOperation = 'source-over';
+      const fontSize = Math.max(14, action.lineWidth * 4);
+      ctx.font = `bold ${fontSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
+
+      // Text background
+      const metrics = ctx.measureText(action.text);
+      const padding = 4;
+      ctx.fillStyle = 'rgba(0,0,0,0.6)';
+      ctx.fillRect(
+        action.startX - padding,
+        action.startY - fontSize - padding,
+        metrics.width + padding * 2,
+        fontSize + padding * 2
+      );
+
+      ctx.fillStyle = action.color;
+      ctx.fillText(action.text, action.startX, action.startY);
+    }
+    break;
+  }
+
+  ctx.globalCompositeOperation = 'source-over';
+};
+
+export default function AnnotationCanvas({ photo, onSave, onClose }: AnnotationCanvasProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [activeTool, setActiveTool] = useState<Tool>('pen');
+  const [activeColor, setActiveColor] = useState('#ef4444');
+  const [lineWidth, setLineWidth] = useState(4);
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [actions, setActions] = useState<DrawAction[]>([]);
+  const [redoStack, setRedoStack] = useState<DrawAction[]>([]);
+  const [currentAction, setCurrentAction] = useState<DrawAction | null>(null);
+  const [showTextInput, setShowTextInput] = useState(false);
+  const [textPosition, setTextPosition] = useState({ x: 0, y: 0 });
+  const [textValue, setTextValue] = useState('');
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const imageRef = useRef<HTMLImageElement | null>(null);
+  const canvasDimensions = useRef({ width: 0, height: 0, scale: 1 });
+
+  // Load image and set up canvas
+  const redrawCanvas = useCallback(
+    (ctx: CanvasRenderingContext2D, img: HTMLImageElement, actionList: DrawAction[]) => {
+      const { width, height } = canvasDimensions.current;
+      ctx.clearRect(0, 0, width, height);
+      ctx.drawImage(img, 0, 0, width, height);
+
+      // Replay all actions
+      actionList.forEach((action) => drawAction(ctx, action));
+    },
+    []
+  );
+
+  const setupCanvas = useCallback((img: HTMLImageElement) => {
+    const canvas = canvasRef.current;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+
+    // Fit image to container
+    const scaleX = containerRect.width / img.width;
+    const scaleY = containerRect.height / img.height;
+    const scale = Math.min(scaleX, scaleY);
+
+    const displayWidth = img.width * scale;
+    const displayHeight = img.height * scale;
+
+    canvas.style.width = `${displayWidth}px`;
+    canvas.style.height = `${displayHeight}px`;
+    canvas.width = displayWidth * dpr;
+    canvas.height = displayHeight * dpr;
+
+    canvasDimensions.current = { width: displayWidth, height: displayHeight, scale: dpr };
+
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.scale(dpr, dpr);
+      redrawCanvas(ctx, img, []);
+    }
+  }, [redrawCanvas]);
+
+  useEffect(() => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      imageRef.current = img;
+      setupCanvas(img);
+      setImageLoaded(true);
+    };
+    img.src = photo.file_url;
+  }, [photo.file_url, setupCanvas]);
+
+
+
 
   const getCanvasCoords = useCallback((e: React.TouchEvent | React.MouseEvent) => {
     const canvas = canvasRef.current;
@@ -528,7 +538,7 @@ export default function AnnotationCanvas({ photo, onSave, onClose }: AnnotationC
                 onChange={(e) => setTextValue(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleTextSubmit()}
                 placeholder="Enter text annotation..."
-                className="w-full h-11 bg-white/5 border border-white/10 rounded-lg px-3 text-sm text-white focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 touch-manipulation"
+                className="h-12 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation"
               />
               <div className="flex gap-2 mt-3">
                 <button
@@ -593,14 +603,14 @@ export default function AnnotationCanvas({ photo, onSave, onClose }: AnnotationC
             <button
               key={tool.id}
               onClick={() => setActiveTool(tool.id)}
-              className={`flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-all touch-manipulation ${
+              className={`flex min-h-[52px] flex-col items-center justify-center gap-0.5 rounded-xl px-3 py-1.5 transition-colors touch-manipulation ${
                 activeTool === tool.id
-                  ? 'bg-elec-yellow/20 text-elec-yellow'
-                  : 'text-white active:text-white active:bg-white/5'
+                  ? 'bg-elec-yellow text-black'
+                  : 'text-white hover:bg-white/[0.06]'
               }`}
             >
               <tool.icon className="h-5 w-5" />
-              <span className="text-[9px] font-medium">{tool.label}</span>
+              <span className="text-[10.5px] font-semibold">{tool.label}</span>
             </button>
           ))}
         </div>

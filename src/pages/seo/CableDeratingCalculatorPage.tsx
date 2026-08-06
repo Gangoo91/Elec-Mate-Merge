@@ -70,7 +70,7 @@ export default function CableDeratingCalculatorPage() {
           heading: 'What Is Cable Derating?',
           content: (
             <>
-              <div className="rounded-2xl bg-white/[0.04] border border-white/10 px-4 py-3 mb-4 flex items-center gap-3 text-sm text-white/70">
+              <div className="rounded-2xl bg-white/[0.04] border border-white/10 px-4 py-3 mb-4 flex items-center gap-3 text-sm text-white">
                 <BookOpen className="w-4 h-4 text-yellow-400 shrink-0" />
                 <span>
                   Content verified against BS 7671:2018+A4:2026 by a JIB-registered electrician.
@@ -177,7 +177,7 @@ export default function CableDeratingCalculatorPage() {
                     </tbody>
                   </table>
                 </div>
-                <p className="text-white/60 text-xs mt-3">
+                <p className="text-white text-xs mt-3">
                   90°C thermosetting (XLPE/LSOH) cable derates far less aggressively at high
                   temperatures, which is one reason it is preferred in hot locations such as plant
                   rooms and beneath PV modules.
@@ -269,7 +269,7 @@ export default function CableDeratingCalculatorPage() {
                     </tbody>
                   </table>
                 </div>
-                <p className="text-white/60 text-xs mt-3">
+                <p className="text-white text-xs mt-3">
                   Bunched factors apply when cables touch in conduit, trunking or clipped together;
                   the single-layer column applies to multicore cables spaced on a perforated
                   horizontal or vertical tray. No grouping factor is needed at all where horizontal
@@ -371,7 +371,7 @@ export default function CableDeratingCalculatorPage() {
                     </tbody>
                   </table>
                 </div>
-                <p className="text-white/60 text-xs mt-3">
+                <p className="text-white text-xs mt-3">
                   These factors apply to conductors up to 10mm&sup2; in insulation with a thermal
                   conductivity greater than 0.04 W/m·K. At 0.5m or more, the factor settles at 0.5 —
                   the same as the fully enclosed case.

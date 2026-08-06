@@ -37,7 +37,7 @@ const tocItems = [
 const keyTakeaways = [
   'Heat pumps draw significantly higher starting currents than their running currents — a 5 kW air source heat pump may have a compressor start current of 25 A or more. An undersized supply cable or MCB rated too close to the running current is a common cause of electrical faults.',
   'Heat pump control boards govern the entire system including compressor sequencing, defrost cycles, and communication with the domestic hot water cylinder. A failed control board typically causes the system to be completely inoperative or stuck in a fault or defrost loop.',
-  'Dedicated circuit requirements under BS 7671:2018+A2:2022 apply to heat pumps as high-load fixed equipment. The circuit must be sized for the maximum continuous current of the unit and protected by an MCB of appropriate type and rating.',
+  'Dedicated circuit requirements under BS 7671:2018+A4:2026 apply to heat pumps as high-load fixed equipment. The circuit must be sized for the maximum continuous current of the unit and protected by an MCB of appropriate type and rating.',
   'Low or fluctuating supply voltage is a common cause of compressor starting failures. The compressor motor requires its full starting torque to overcome the refrigerant pressure difference — voltage below approximately 207 V can prevent reliable starting.',
   'Any electrical work on the heat pump supply circuit, including fault finding, cable replacement, or protective device changes, must be carried out by a qualified electrician registered with a competent person scheme. The work must be notified to Building Control unless carried out by a scheme member.',
 ];
@@ -66,7 +66,7 @@ const faqs = [
   {
     question: 'Can the heat pump installation cause problems with my other circuits?',
     answer:
-      'A heat pump on an inadequately sized supply can cause voltage depression affecting other circuits in the property — particularly during compressor starting. Heat pump inverter drives can also introduce harmonic currents that may cause nuisance tripping of electronic RCDs. Surge protection devices (SPDs) at the consumer unit are best practice for properties with heat pumps, under BS 7671:2018+A2:2022 Regulation 443.',
+      'A heat pump on an inadequately sized supply can cause voltage depression affecting other circuits in the property — particularly during compressor starting. Heat pump inverter drives can also introduce harmonic currents that may cause nuisance tripping of electronic RCDs. Surge protection devices (SPDs) at the consumer unit are best practice for properties with heat pumps, under BS 7671:2018+A4:2026 Regulation 443.',
   },
   {
     question: 'Does a heat pump installation need to be notified to Building Control?',
@@ -280,7 +280,7 @@ const sections = [
     content: (
       <>
         <p>
-          Heat pump manufacturers and BS 7671:2018+A2:2022 both require a dedicated final circuit
+          Heat pump manufacturers and BS 7671:2018+A4:2026 both require a dedicated final circuit
           for the heat pump supply. This is not merely good practice — it is a mandatory requirement
           of most manufacturer warranties and the Building Regulations compliance package.
         </p>

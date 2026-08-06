@@ -227,7 +227,7 @@ const sections = [
               <Droplet className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Zone 2</strong> — extends 0.6 m horizontally from Zone 1 (and the area above
-                Zone 1 up to 3 m from the floor if the ceiling is above 2.25 m). Equipment must be
+                Zone 1 is bounded vertically by the finished floor level and the horizontal plane at the highest fixed shower head or water outlet, or 2.25 m above finished floor level, whichever is higher). Equipment must be
                 rated IPX4 minimum. Shaver supply units complying with BS EN 61558-2-5 are
                 permitted. Luminaires, fans, and heating appliances rated IPX4 are permitted.
               </span>

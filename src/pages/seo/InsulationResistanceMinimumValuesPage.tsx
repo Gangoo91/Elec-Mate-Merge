@@ -129,7 +129,7 @@ const sections = [
             <div>
               <h3 className="font-bold text-white mb-2">A4:2026 changes to Chapter 64</h3>
               <p className="text-white text-sm leading-relaxed">
-                BS 7671:2018+A4:2026 renumbered Chapter 61 (Inspection and Testing) to{' '}
+                BS 7671:2018+A4:2026 renumbered Chapter 64 (Inspection and Testing) to{' '}
                 <strong>Chapter 64</strong>. The insulation resistance requirements previously in
                 Reg 643.3 and Table 61 are now in <strong>Reg 643.3</strong> and{' '}
                 <strong>Table 64</strong>. Reg 643.3 was also redrafted to clarify testing
@@ -152,7 +152,7 @@ const sections = [
         <p>
           BS 7671 Table 64 (Regulation 643.3.2, Chapter 64) sets out the minimum insulation
           resistance values. In earlier editions this table appeared as Table 61 or Table 61.1 in
-          Chapter 61 — A4:2026 renumbered Chapter 61 to Chapter 64. The values themselves are
+          Chapter 64 — A4:2026 renumbered Chapter 64 to Chapter 64. The values themselves are
           unchanged:
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-4">

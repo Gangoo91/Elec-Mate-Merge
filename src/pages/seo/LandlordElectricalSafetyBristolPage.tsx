@@ -46,7 +46,7 @@ const keyTakeaways = [
   'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 require all private landlords in Bristol to obtain an EICR before a new tenancy begins and at least every five years thereafter.',
   'Bristol City Council enforces these regulations with civil penalties of up to £30,000 per breach. Bristol has an active private rented sector enforcement team and operates selective licensing schemes in several neighbourhoods.',
   'HMOs in Bristol face additional requirements — a valid EICR is a mandatory condition of both mandatory and additional HMO licensing schemes operated by Bristol City Council.',
-  'If the EICR identifies C1 or C2 observations (classified under BS 7671 Section 631), landlords must complete remedial work within 28 days or sooner if specified by the inspector.',
+  'If the EICR identifies C1 or C2 observations (classified under BS 7671 Chapter 65), landlords must complete remedial work within 28 days or sooner if specified by the inspector.',
   "RCD protection is required on socket-outlet circuits under Regulation 411.3.3 of BS 7671. Many of Bristol's older terraced and Victorian properties lack adequate RCD protection, making this a common C2 finding.",
 ];
 
@@ -153,7 +153,7 @@ const sections = [
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
-                (Section 631 covers periodic inspection and testing).
+                (Chapter 65 covers periodic inspection and testing).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -397,7 +397,7 @@ const sections = [
     content: (
       <>
         <p>
-          When an EICR identifies C1 or C2 observations (classified under BS 7671 Section 631),
+          When an EICR identifies C1 or C2 observations (classified under BS 7671 Chapter 65),
           Bristol landlords must complete remedial work within the timescales set by the 2020
           Regulations.
         </p>

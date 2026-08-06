@@ -66,6 +66,17 @@ const BreakEvenCalculator: React.FC = () => {
   const breakEvenHr = labourNum + overheadPerHour;
   const breakEvenDay = breakEvenHr * 8;
 
+  // MARGIN, not markup. Margin is a share of the SELLING price, so the price
+  // is cost / (1 − margin); markup is a share of cost, cost × (1 + markup).
+  //
+  // This screen used to show both. The example-job price below used the margin
+  // formula while the headline "add your X% margin to hit Y/hour" used
+  // cost × (1 + margin) — so one input produced two different answers on the
+  // same screen, and the headline one always under-priced. At a 20% target on
+  // a £40 break-even that is £48/hr shown against the £50/hr actually needed.
+  const targetHourlyRate =
+    marginNum > 0 && marginNum < 100 ? breakEvenHr / (1 - marginNum / 100) : breakEvenHr;
+
   // Example job pricing
   const exLabourCost = breakEvenHr * exHoursNum;
   const exMatsSell = exMatsNum * (1 + markupNum / 100);
@@ -444,7 +455,7 @@ const BreakEvenCalculator: React.FC = () => {
                     Any quote below {currency(breakEvenHr)}/hour will lose money. Add your{' '}
                     {marginNum}% margin to hit{' '}
                     <strong className="text-green-400">
-                      {currency(breakEvenHr * (1 + marginNum / 100))}/hour
+                      {currency(targetHourlyRate)}/hour
                     </strong>
                   </span>
                 </div>

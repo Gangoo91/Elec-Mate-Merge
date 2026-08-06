@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'Do I need to register for VAT as an electrician?',
     answer:
-      'You must register for VAT if your taxable turnover exceeds £90,000 in any rolling 12-month period (the 2025/26 threshold). You can also register voluntarily below this threshold. Once registered, you charge VAT at 20% on your invoices and reclaim VAT on business purchases. Domestic electrical work (new installations, rewires) in qualifying properties may be eligible for the reduced 5% VAT rate under certain conditions. Most electricians use the VAT Flat Rate Scheme, which simplifies accounting — you charge 20% VAT to customers but pay HMRC a fixed percentage of your gross turnover (typically 14.5% for electrical services in the first year with the 1% discount). The difference is your profit. MTD (Making Tax Digital) requires VAT-registered businesses to keep digital records and submit VAT returns using compatible software.',
+      'You must register for VAT if your taxable turnover exceeds £90,000 in any rolling 12-month period. You can also register voluntarily below this threshold. Once registered, you charge VAT at 20% on your invoices and reclaim VAT on business purchases. Domestic electrical work (new installations, rewires) in qualifying properties may be eligible for the reduced 5% VAT rate under certain conditions. Most electricians use the VAT Flat Rate Scheme, which simplifies accounting — you charge 20% VAT to customers but pay HMRC a fixed percentage of your gross turnover (9.5% if you supply materials, 14.5% labour-only, less a 1 percentage point discount in your first year of VAT registration). The difference is your profit. MTD (Making Tax Digital) requires VAT-registered businesses to keep digital records and submit VAT returns using compatible software.',
   },
   {
     question: 'Can I claim for my van as a business expense?',
@@ -468,9 +468,13 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Flat Rate Scheme (FRS):</strong> Charge 20% VAT to customers but pay HMRC a
-                fixed percentage of your gross turnover (14.5% for electrical services in year one
-                with the 1% new business discount, then 15.5%). You cannot reclaim VAT on purchases
-                (except capital items over £2,000). Simpler record-keeping.
+                fixed percentage of your gross (VAT-inclusive) turnover. There is no electrician
+                sector — HMRC classes you by how much material you supply: 9.5% for general
+                building or construction services, or 14.5% labour-only where materials are under
+                10% of turnover. Take 1 percentage point off in your first year of VAT
+                registration. If your goods cost less than 2% of turnover, or less than £1,000 a
+                year, you are a limited cost business and must use 16.5% instead. You cannot
+                reclaim VAT on purchases (except capital items over £2,000).
               </span>
             </li>
             <li className="flex items-start gap-3">

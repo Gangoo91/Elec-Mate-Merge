@@ -209,7 +209,7 @@ const sections = [
       <>
         <p>
           The requirement for non-combustible consumer unit enclosures in domestic premises was
-          introduced by Amendment 2 to BS 7671:2008, which took effect on 1 July 2016. It is now
+          introduced by Amendment 3 to BS 7671:2008, with this requirement taking effect on 1 January 2016. It is now
           carried forward in BS 7671:2018 including Amendment 4 (2026). Regulation 421.1.201 states
           that in domestic premises, a consumer unit or similar switchgear assembly shall be
           installed in a cabinet or enclosure constructed of non-combustible material.

@@ -175,7 +175,11 @@ const LightningProtectionCalculator = () => {
     text += `\nTolerable Risk (RT): ${result.tolerableRisk.toExponential(2)}`;
     text += `\nProtection Required: ${result.protectionRequired ? 'YES' : 'NO'}`;
     if (result.lpsClass) text += `\nLPS Class: ${result.lpsClass}`;
-    text += `\nSPD Required: ${result.spdRequired ? 'YES' : 'NO'}`;
+    // Reg 443.4.1 — SPDs are required by default; Reg 534.4.1.3/534.4.1.4 set the Type.
+    text += `\nSPDs (BS 7671 Reg 443.4.1): REQUIRED — ${result.spdType} at the origin`;
+    text += result.spdOwnerDeclarationRoute
+      ? '\nOmission route: owner written declaration under Reg 443.4.1 only'
+      : '\nOmission route: NOT available — Reg 443.4.1 (a)/(b)/(c) applies';
     if (result.costEstimate.max > 0) {
       text += `\nEstimated Cost: \u00A3${result.costEstimate.min.toLocaleString()} \u2013 \u00A3${result.costEstimate.max.toLocaleString()}`;
     }
@@ -318,13 +322,19 @@ const LightningProtectionCalculator = () => {
                 status={result.protectionRequired ? 'fail' : 'pass'}
                 label={
                   result.protectionRequired
-                    ? `Protection Required${result.lpsClass ? ` \u2014 Class ${result.lpsClass}` : ''}`
-                    : 'Protection Not Required'
+                    ? `Structural LPS Required${result.lpsClass ? ` \u2014 Class ${result.lpsClass}` : ''}`
+                    : 'Structural LPS Not Indicated'
                 }
               />
+              {/*
+                FIX — this badge could previously read a green "SPDs Not Required".
+                BS 7671:2018+A4:2026 Reg 443.4.1 makes protection against transient
+                overvoltages the default in every case; omission requires an owner
+                declaration, not a risk score. Type per Reg 534.4.1.3 / 534.4.1.4.
+              */}
               <ResultBadge
-                status={result.spdRequired ? 'warning' : 'pass'}
-                label={result.spdRequired ? 'SPDs Required' : 'SPDs Not Required'}
+                status="warning"
+                label={`${result.spdType} SPDs Required — Reg 443.4.1`}
               />
             </div>
             <button
@@ -520,11 +530,40 @@ const LightningProtectionCalculator = () => {
                 </div>
                 <div className="space-y-2">
                   <p className="text-sm text-white font-medium">Surge Protective Devices (SPDs)</p>
+                  {/*
+                    FIX — this used to say SPDs are "recommended" on a risk score and gave no
+                    Type selection or Iimp. BS 7671:2018+A4:2026 Reg 443.4.1 requires protection
+                    against transient overvoltages where the consequence could be (a) serious
+                    injury or loss of human life, (b) failure of a safety service, or (c)
+                    significant financial or data loss; for all other cases it shall be provided
+                    unless the owner declares it is not required. Type: Reg 534.4.1.3 /
+                    534.4.1.4. Iimp: Reg 534.4.4.4.2 + Table 534.4.
+                  */}
                   <p className="text-sm text-white">
-                    SPDs are recommended when the risk of internal electrical system failure (R3)
-                    exceeds the tolerable limit, when overhead supply lines are present, or when
-                    contents are high-value or critical. They should be installed at the origin and
-                    distribution boards to BS EN 62305-4.
+                    Under Reg 443.4.1 of BS 7671, protection against transient overvoltages shall
+                    be provided where the consequence could result in serious injury to or loss of
+                    human life, failure of a safety service, or significant financial or data loss.
+                    In all other cases it shall still be provided unless the owner of the
+                    installation declares in writing that it is not required, that any loss or
+                    damage is tolerable, and that they accept the risk of damage to equipment and
+                    any consequential loss. SPDs are the default, not an optional extra.
+                  </p>
+                  <p className="text-sm text-white">
+                    Type follows the structure. Where the structure has an external lightning
+                    protection system, or protection against the effects of direct lightning, Type 1
+                    SPDs shall be installed as close as possible to the origin of the installation
+                    (Reg 534.4.1.3). Where it does not, Type 2 SPDs go at the origin instead (Reg
+                    534.4.1.4). Type 2 or Type 3 devices further downstream shall be coordinated
+                    with the device at the origin (Reg 534.4.1.5).
+                  </p>
+                  <p className="text-sm text-white">
+                    For a Type 1 SPD where no BS EN 62305-2 risk analysis has been carried out, the
+                    impulse discharge current Iimp shall be not less than Table 534.4 — 12.5 kA for
+                    the L-N and L-PE connections at lightning protection level III/IV, with a higher
+                    value for the N-PE connection in CT2 systems (Reg 534.4.4.4.2(a)). Where a BS EN
+                    62305-2 risk analysis has been carried out, Iimp is determined to the BS EN 62305
+                    series instead (Reg 534.4.4.4.2(b)). For a Type 2 SPD at the origin, the nominal
+                    discharge current In shall be not less than Table 534.3 (Reg 534.4.4.4.1).
                   </p>
                 </div>
               </div>
@@ -551,9 +590,14 @@ const LightningProtectionCalculator = () => {
             description: 'Tolerable risk (10\u207B\u2075 per BS EN 62305-2 Table 7)',
           },
           {
+            symbol: 'SPDs',
+            description:
+              'BS 7671 Reg 443.4.1 — required unless the owner declares otherwise; Reg 534.4.1.3 Type 1 where an external LPS or direct-lightning protection is present, Reg 534.4.1.4 Type 2 where it is not; Iimp per Reg 534.4.4.4.2 and Table 534.4',
+          },
+          {
             symbol: 'Refs',
             description:
-              'BS EN 62305-1:2011, BS EN 62305-2:2012, BS EN 62305-3:2011, BS EN 62305-4:2011, IEC 62305',
+              'BS EN 62305-1:2011, BS EN 62305-2:2012, BS EN 62305-3:2011, BS EN 62305-4:2011, IEC 62305; BS 7671:2018+A4:2026 Section 443 and Section 534',
           },
         ]}
       />

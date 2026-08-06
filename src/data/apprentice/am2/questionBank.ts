@@ -225,7 +225,7 @@ export const am2QuestionBank: AM2Question[] = [
     ],
     correctAnswer: 0,
     explanation:
-      'The minimum insulation resistance for circuits up to 500V is 1.0MΩ when tested at 500V DC (Table 61 of BS 7671).',
+      'The minimum insulation resistance for circuits up to 500V is 1.0MΩ when tested at 500V DC (Table 64 of BS 7671).',
     section: 'Insulation Testing',
     difficulty: 'basic',
     topic: 'Test Values',

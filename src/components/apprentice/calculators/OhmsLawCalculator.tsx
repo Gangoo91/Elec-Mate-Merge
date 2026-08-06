@@ -364,10 +364,10 @@ const OhmsLawCalculator = () => {
           {/* Calculated Values */}
           <div className="space-y-4 animate-fade-in">
             <div className="space-y-1">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Formula
               </span>
-              <p className="text-[13px] text-white/85 font-mono">{result.formula}</p>
+              <p className="text-[13px] text-white font-mono">{result.formula}</p>
             </div>
 
             <ResultsGrid columns={2}>
@@ -413,7 +413,7 @@ const OhmsLawCalculator = () => {
 
             {result.protectionGuidance && (
               <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 sm:p-4">
-                <p className="text-[13px] text-white/85 leading-relaxed">
+                <p className="text-[13px] text-white leading-relaxed">
                   {result.protectionGuidance}
                 </p>
               </div>
@@ -435,25 +435,25 @@ const OhmsLawCalculator = () => {
 
                 {/* Input Values Summary */}
                 <div className="space-y-2">
-                  <p className="text-[13px] text-white/85">Your input values:</p>
+                  <p className="text-[13px] text-white">Your input values:</p>
                   <div className="flex flex-wrap gap-1.5">
                     {result.inputValues?.V && (
-                      <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                      <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
                         V = {result.inputValues.V} V
                       </span>
                     )}
                     {result.inputValues?.I && (
-                      <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                      <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
                         I = {result.inputValues.I} A
                       </span>
                     )}
                     {result.inputValues?.R && (
-                      <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                      <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
                         R = {result.inputValues.R} Ω
                       </span>
                     )}
                     {result.inputValues?.P && (
-                      <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
+                      <span className="text-[12px] text-white px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
                         P = {result.inputValues.P} W
                       </span>
                     )}
@@ -589,10 +589,10 @@ const OhmsLawCalculator = () => {
 
           {/* Quick Formula Reference */}
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 sm:p-4 space-y-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Ohm's law
             </span>
-            <p className="text-[13px] text-white/85 leading-relaxed font-mono">
+            <p className="text-[13px] text-white leading-relaxed font-mono">
               V = I{'×'}R, I = V/R, R = V/I, P = V{'×'}I = I{'²×'}R = V{'²'}/R
             </p>
           </div>

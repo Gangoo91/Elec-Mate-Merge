@@ -14,6 +14,7 @@ import { CustomerForm } from '@/components/customers/CustomerForm';
 import { CustomerOverviewTab } from '@/components/customers/CustomerOverviewTab';
 import { CustomerFinancialsTab } from '@/components/customers/CustomerFinancialsTab';
 import { CustomerPropertiesTab } from '@/components/customers/CustomerPropertiesTab';
+import { CustomerSiteNotesTab } from '@/components/customers/CustomerSiteNotesTab';
 import { CustomerTimelineTab } from '@/components/customers/CustomerTimelineTab';
 import { QuickNoteDialog } from '@/components/customers/QuickNoteDialog';
 import { StartCertificateDialog } from '@/components/customers/StartCertificateDialog';
@@ -235,7 +236,7 @@ export default function CustomerDetailPage() {
   const [showQuickNote, setShowQuickNote] = useState(false);
   const [showStartCertificate, setShowStartCertificate] = useState(false);
   const [activeSection, setActiveSection] = useState<
-    'work' | 'financials' | 'properties' | 'timeline'
+    'work' | 'financials' | 'properties' | 'site-notes' | 'timeline'
   >('work');
   const [stats, setStats] = useState<{
     quoteCount: number;
@@ -781,7 +782,10 @@ export default function CustomerDetailPage() {
 
         {/* Tabs */}
         <motion.section variants={itemVariants} className="space-y-4">
-          <div className="flex w-full gap-1 rounded-full border border-white/[0.08] bg-[hsl(0_0%_12%)] p-1">
+          {/* Five tabs no longer fit at flex-1 on a 360px phone — "Properties 3"
+              would truncate to nothing. The rail scrolls on mobile (a standard
+              native pattern) and goes back to equal widths from sm: up. */}
+          <div className="flex w-full gap-1 overflow-x-auto rounded-full border border-white/[0.08] bg-[hsl(0_0%_12%)] p-1 [scrollbar-width:none] sm:overflow-visible [&::-webkit-scrollbar]:hidden">
             {(
               [
                 { key: 'work' as const, label: 'Work' },
@@ -790,6 +794,7 @@ export default function CustomerDetailPage() {
                   key: 'properties' as const,
                   label: `Properties${customer.propertyCount ? ` ${customer.propertyCount}` : ''}`,
                 },
+                { key: 'site-notes' as const, label: 'Site notes' },
                 { key: 'timeline' as const, label: 'Timeline' },
               ]
             ).map((tab) => (
@@ -797,7 +802,7 @@ export default function CustomerDetailPage() {
                 key={tab.key}
                 onClick={() => setActiveSection(tab.key)}
                 className={cn(
-                  'h-9 min-w-0 flex-1 truncate rounded-full px-1 text-[11.5px] font-medium transition-colors touch-manipulation sm:px-4 sm:text-[13px]',
+                  'h-9 shrink-0 whitespace-nowrap rounded-full px-3 text-[11.5px] font-medium transition-colors touch-manipulation sm:min-w-0 sm:flex-1 sm:shrink sm:truncate sm:px-4 sm:text-[13px]',
                   activeSection === tab.key
                     ? 'bg-elec-yellow font-semibold text-black'
                     : 'text-white hover:bg-white/[0.04]'
@@ -826,6 +831,7 @@ export default function CustomerDetailPage() {
             {activeSection === 'properties' && (
               <CustomerPropertiesTab customerId={customer.id} onRefresh={refetch} />
             )}
+            {activeSection === 'site-notes' && <CustomerSiteNotesTab customerId={customer.id} />}
             {activeSection === 'timeline' && <CustomerTimelineTab customerId={customer.id} />}
           </motion.div>
         </motion.section>

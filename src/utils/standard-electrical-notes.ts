@@ -4,7 +4,11 @@ export const STANDARD_NOTES = {
     { item: 'Socket outlets (general)', height: '450mm', notes: 'Centre of plate from FFL' },
     { item: 'Socket outlets (worktop)', height: '1150mm', notes: 'Above worktop level' },
     { item: 'Cooker control unit', height: '1200mm', notes: 'Adjacent to cooker position' },
-    { item: 'Consumer unit', height: '1350mm', notes: 'Top of unit — max 1750mm per AMD3' },
+    // The old note cited "max 1750mm per AMD3". Amendment 3 (2015) covered
+    // non-combustible consumer unit enclosures, not mounting height — the
+    // citation was fabricated. Accessibility of switchgear comes from Approved
+    // Document M of the Building Regulations, so that is what is referenced.
+    { item: 'Consumer unit', height: '1350mm', notes: 'To main switch — accessible height per Approved Document M' },
     { item: 'Fused spur', height: '1200mm', notes: 'Or adjacent to appliance' },
     { item: 'TV / Data / Telephone', height: '450mm or 1200mm', notes: 'Low level or high level as specified' },
     { item: 'Extractor fan isolator', height: 'Above door frame', notes: 'Pull cord in bathrooms' },
@@ -16,8 +20,11 @@ export const STANDARD_NOTES = {
     'All work to comply with BS 7671:2018+A4:2026 (IET Wiring Regulations 18th Edition)',
     'All circuits to be tested and certified upon completion (EIC/EICR)',
     'Existing installation to be verified before connection of new work',
-    'All bathroom circuits to be protected by 30mA RCD (Regulation 701)',
-    'Cable routes to follow safe zones (Regulation 522.6)',
+    'Additional protection by 30mA RCD to AC final circuits supplying luminaires in domestic premises (Regulation 411.3.4)',
+    'Additional protection by 30mA RCD to socket-outlets rated up to 32A (Regulation 411.3.3)',
+    'Circuits in locations containing a bath or shower to be protected by 30mA RCD (Section 701)',
+    'Cables concealed in a wall or partition at a depth of less than 50mm to be protected by 30mA RCD (Regulation 522.6.202, Table 52.1)',
+    'Cable routes to follow prescribed zones (Regulation 522.6)',
     'All accessories to be flush mounted unless otherwise specified',
     'Fire stopping to be maintained at all penetrations through fire barriers',
     'Labelling to be applied to all circuits at the distribution board',

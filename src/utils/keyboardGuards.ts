@@ -60,6 +60,29 @@ export const isTypingContext = (target?: EventTarget | null): boolean => {
 };
 
 /**
+ * Check whether the event happened inside an open modal, sheet or dialog.
+ *
+ * Global keyboard shortcuts registered on `window` keep firing while a Radix
+ * Sheet or Dialog is open — the overlay traps focus but does not stop the
+ * event reaching window listeners. On a canvas tool that means pressing a
+ * tool-letter or Delete while a picker sheet is open silently mutates the
+ * drawing hidden behind it.
+ *
+ * Matching on role covers Dialog, AlertDialog and Sheet (which is a Dialog
+ * underneath), so new overlays are handled without touching this.
+ */
+export const isInOverlay = (target?: EventTarget | null): boolean => {
+  const el = target as HTMLElement | null;
+  const selector = '[role="dialog"], [role="alertdialog"], [data-radix-popper-content-wrapper]';
+  if (el?.closest?.(selector)) return true;
+  // Focus may sit on the overlay container rather than the event target.
+  const active = document.activeElement as HTMLElement | null;
+  if (active?.closest?.(selector)) return true;
+  // Nothing focused inside it yet (just-opened sheet) — fall back to presence.
+  return !!document.querySelector('[role="dialog"][data-state="open"], [role="alertdialog"][data-state="open"]');
+};
+
+/**
  * Check if an element is a form control
  * Special-case checkbox/radio so we never prevent default ticking behaviour
  */

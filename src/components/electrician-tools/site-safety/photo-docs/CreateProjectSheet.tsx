@@ -127,7 +127,7 @@ export default function CreateProjectSheet({
     <Sheet open={open} onOpenChange={handleClose}>
       <SheetContent
         side="bottom"
-        className="h-[65vh] p-0 rounded-t-2xl overflow-hidden bg-elec-dark border-white/10"
+        className="h-[85vh] overflow-hidden rounded-t-2xl border-t border-white/[0.14] bg-[#141419] p-0 focus:outline-none"
       >
         <div className="flex flex-col h-full">
           {/* Drag handle */}
@@ -153,7 +153,7 @@ export default function CreateProjectSheet({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. Kitchen Rewire"
-                className="mt-1.5 h-11 bg-white/5 border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation text-white placeholder:text-white/25"
+                className="mt-1.5 h-12 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation"
                 autoFocus
               />
             </div>
@@ -180,7 +180,7 @@ export default function CreateProjectSheet({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Brief description of the work"
-                className="mt-1.5 min-h-[80px] bg-white/5 border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation resize-none text-white placeholder:text-white/25"
+                className="mt-1.5 min-h-[96px] py-2.5 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation resize-none"
               />
             </div>
 
@@ -194,7 +194,7 @@ export default function CreateProjectSheet({
                   value={jobReference}
                   onChange={(e) => setJobReference(e.target.value)}
                   placeholder={generateJobReference()}
-                  className="mt-1.5 h-11 bg-white/5 border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation text-white placeholder:text-white/25"
+                  className="mt-1.5 h-12 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation"
                 />
               </div>
               <div>
@@ -205,7 +205,7 @@ export default function CreateProjectSheet({
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   placeholder="42 High St"
-                  className="mt-1.5 h-11 bg-white/5 border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation text-white placeholder:text-white/25"
+                  className="mt-1.5 h-12 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation"
                 />
               </div>
             </div>

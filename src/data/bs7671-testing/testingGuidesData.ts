@@ -206,12 +206,13 @@ export const testingGuides: TestGuide[] = [
       },
       {
         id: 'trip-time-5x',
-        title: 'Trip Time Test at 5× Rated Current',
-        instruction: 'Test RCD trip time at 5× rated current (150mA for 30mA RCD).',
-        expectedResult: 'Should trip within 40ms',
+        title: 'Optional: Trip Time at 5× Rated Current (diagnostic)',
+        instruction:
+          'Not part of the required verification. BS 7671:2018+A4:2026 deleted Table 3A of Appendix 3, and effectiveness is now verified by the single AC test at IΔn above. Run this only as a diagnostic — 5× rated current (150mA for a 30mA RCD).',
+        expectedResult: '40ms per BS EN 61008/61009 — a device characteristic, not a BS 7671 limit',
         tips: [
-          'This is the fastest trip time test',
-          'Ensures RCD provides adequate shock protection',
+          'Do not record this as the certified trip time — the certified value is the one at IΔn',
+          'Useful when investigating a device you suspect is degrading',
         ],
         equipment: ['RCD Tester', 'Test leads'],
       },

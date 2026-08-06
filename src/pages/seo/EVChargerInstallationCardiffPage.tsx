@@ -354,7 +354,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection (Regulation 722.531.101)</strong> — appropriate RCD
+                <strong>RCD protection (Regulation 722.531.3.101)</strong> — appropriate RCD
                 protection. Modern smart chargers typically include integrated DC fault detection,
                 satisfying the Type B RCD or Type A with 6mA DC RDC-DD requirement.
               </span>

@@ -24,11 +24,16 @@ export const checkTestValues = (result: TestResult): RegulationWarning[] => {
 
     if (!isNaN(ir)) {
       const description = result.circuitDescription?.toLowerCase() || '';
-      const isSELV =
-        description.includes('selv') ||
-        description.includes('pelv') ||
-        description.includes('12v') ||
-        description.includes('24v');
+      // The band comes from the recorded test voltage — 250 V DC is the
+      // SELV/PELV test and the only one with a 0.5 MΩ minimum. Searching the
+      // description for "selv" or "12v" was a guess at a fact the schedule
+      // already holds, and it disagreed with `testValidation`, which applied
+      // 1.0 MΩ to everything: the same 0.7 MΩ reading was compliant in one
+      // engine and a failure in the other. Both now read the same field.
+      const testVoltage = parseFloat(
+        String(result.insulationTestVoltage ?? '').replace(/[^\d.]/g, '')
+      );
+      const isSELV = testVoltage === 250;
       const hasElectronics =
         description.includes('control') ||
         description.includes('data') ||
@@ -89,7 +94,7 @@ export const checkTestValues = (result: TestResult): RegulationWarning[] => {
           severity: 'warning',
           title: 'High R1+R2 for Ring Circuit',
           description: `R1+R2 of ${result.r1r2}Ω is high for a ring final circuit.`,
-          regulation: 'BS 7671 Reg 643.2.1',
+          regulation: 'Elec-Mate check — threshold is ours, not BS 7671 (continuity: Reg 643.2)',
           suggestion: 'Check ring continuity and verify all connections are secure.',
         });
       }

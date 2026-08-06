@@ -1,5 +1,11 @@
 // Trunking, cable tray and cable basket sizing data
-// Based on standard UK manufacturer dimensions and BS 7671 Regulation 522.8.1
+// ⚠️ These are MANUFACTURER dimensions, not BS 7671 data. BS 7671 publishes no
+// trunking dimensions and no space factor — the 45% convention comes from IET
+// guidance (On-Site Guide), not the Regulations.
+// The header used to cite "BS 7671 Regulation 522.8.1". Verified against the
+// printed A4:2026: 522.8.1 requires a wiring system to be erected so as to avoid
+// damage to cable sheath/insulation and prohibits detrimental lubricants. It has
+// nothing to do with capacity or fill.
 
 export interface TrunkingSize {
   label: string;

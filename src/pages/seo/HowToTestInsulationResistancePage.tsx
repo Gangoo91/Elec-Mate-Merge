@@ -26,7 +26,7 @@ const faqs = [
   {
     question: 'What is the minimum acceptable insulation resistance value under BS 7671?',
     answer:
-      'BS 7671 Table 61 specifies a minimum insulation resistance of 1 megohm (1 MΩ) for circuits operating at voltages up to and including 500 V. This applies to the vast majority of domestic and commercial installations in the UK. For SELV and PELV circuits operating at up to 50 V, the minimum is 0.5 MΩ tested at 250 V DC. For circuits operating above 500 V, the minimum is also 1 MΩ but tested at 1000 V DC. In practice, a healthy new installation should return readings significantly higher than 1 MΩ — typically 200 MΩ or more. Readings close to the minimum threshold suggest deterioration and should prompt further investigation, even if the circuit technically passes.',
+      'BS 7671 Table 64 specifies a minimum insulation resistance of 1 megohm (1 MΩ) for circuits operating at voltages up to and including 500 V. This applies to the vast majority of domestic and commercial installations in the UK. For SELV and PELV circuits operating at up to 50 V, the minimum is 0.5 MΩ tested at 250 V DC. For circuits operating above 500 V, the minimum is also 1 MΩ but tested at 1000 V DC. In practice, a healthy new installation should return readings significantly higher than 1 MΩ — typically 200 MΩ or more. Readings close to the minimum threshold suggest deterioration and should prompt further investigation, even if the circuit technically passes.',
   },
   {
     question: 'Why must insulation resistance be tested with DC and not AC?',
@@ -93,7 +93,7 @@ const features = [
     icon: Calculator,
     title: 'Insulation Resistance Validation',
     description:
-      'Enter your IR readings and the app instantly checks them against BS 7671 Table 61 minimum values for 250 V, 500 V, and 1000 V DC test voltages.',
+      'Enter your IR readings and the app instantly checks them against BS 7671 Table 64 minimum values for 250 V, 500 V, and 1000 V DC test voltages.',
   },
   {
     icon: ClipboardCheck,
@@ -268,13 +268,13 @@ export default function HowToTestInsulationResistancePage() {
               <Zap className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
-              Test Voltages and Minimum Values — BS 7671 Table 61
+              Test Voltages and Minimum Values — BS 7671 Table 64
             </h2>
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               The test voltage and minimum acceptable insulation resistance value depend on the
-              nominal circuit voltage. BS 7671 Table 61 specifies the requirements clearly. Using
+              nominal circuit voltage. BS 7671 Table 64 specifies the requirements clearly. Using
               the wrong test voltage produces invalid results and does not comply with the standard.
             </p>
           </div>

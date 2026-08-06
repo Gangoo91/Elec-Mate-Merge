@@ -23,7 +23,7 @@ export const eicrNoMainBondingConfig: GeneratedGuideConfig = {
   heroSubtitle:
     'Across UK domestic EICRs, "no main protective bonding to incoming gas / water / oil services" is the single most common C2 observation. It makes the report unsatisfactory and triggers urgent remedial action under PRS Regs 2020 in rented properties. This guide explains what BS 7671 actually requires, how to identify the defect at inspection, and the exact remedial work that clears the C2.',
   keyTakeaways: [
-    'Main protective bonding to extraneous-conductive-parts is required by Regulation 411.3.1.1 and the bonding conductor is sized per Regulation 544.1.1 (and Table 54.8 on PME supplies).',
+    'Main protective bonding to extraneous-conductive-parts is required by Regulation 411.3.1.2 and the bonding conductor is sized per Regulation 544.1.1 (and Table 54.8 on PME supplies).',
     'Extraneous-conductive-parts that must be bonded: metallic gas installation pipes, metallic water installation pipes, metallic oil installation pipes, structural steel where applicable, lightning protection systems, other metallic services that could introduce a potential.',
     'Missing bonding is a C2 observation in almost all cases — danger could become present under fault conditions when the missing bonding allows touch voltage to appear on metalwork accessible throughout the dwelling.',
     'PME supplies require LARGER bonding conductors than non-PME TN-C-S — typically 10 mm² minimum on a 100 A service, going to 16 mm² on larger supplies. Refer to Table 54.8.',
@@ -38,12 +38,12 @@ export const eicrNoMainBondingConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text: "BS 7671 Regulation 411.3.1.1 requires main protective bonding to be applied to extraneous-conductive-parts as part of the Automatic Disconnection of Supply (ADS) protective measure. The bonding ensures that, under a fault condition that places a potential on the installation's exposed metalwork, the metallic services entering the dwelling are also raised to (approximately) the same potential — preventing dangerous touch-voltage differences across the building.",
+          text: "BS 7671 Regulation 411.3.1.2 requires main protective bonding to be applied to extraneous-conductive-parts as part of the Automatic Disconnection of Supply (ADS) protective measure. The bonding ensures that, under a fault condition that places a potential on the installation's exposed metalwork, the metallic services entering the dwelling are also raised to (approximately) the same potential — preventing dangerous touch-voltage differences across the building.",
         },
         {
           type: 'list',
           items: [
-            '**Regulation 411.3.1.1** — main protective bonding requirement: extraneous-conductive-parts shall be connected to the main earthing terminal.',
+            '**Regulation 411.3.1.2** — main protective bonding requirement: extraneous-conductive-parts shall be connected to the main earthing terminal.',
             '**Regulation 544.1.1** — sizing of main protective bonding conductors.',
             '**Table 54.8** — minimum main protective bonding conductor CSA on PME supplies, by PEN conductor size of the supply.',
             '**Regulation 411.3.1.2** — sets the maximum disconnection times (Table 41.1) that apply to socket-outlet and fixed-load final circuits under ADS.',

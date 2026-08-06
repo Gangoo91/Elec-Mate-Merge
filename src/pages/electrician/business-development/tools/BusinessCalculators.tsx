@@ -1,184 +1,176 @@
-import { Link } from 'react-router-dom';
-import { Card, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import {
-  Calculator,
-  TrendingUp,
-  PoundSterling,
-  BarChart3,
-  Target,
-  Clock,
-  Building,
-  DollarSign,
-  Scale,
-  Users,
-  ClipboardList,
-  Percent,
-} from 'lucide-react';
+/**
+ * Business calculators index.
+ *
+ * Rebuilt on the shared hub shell so it speaks the same language as the
+ * Business Hub and Inspection & Testing.
+ *
+ * What was here: fourteen identical tiles, each an icon over a title and
+ * nothing else. No description, no grouping, no indication of what any of them
+ * did — so choosing between "Business Cost Calculator" and "Break-even &
+ * Margin Guard" meant opening both. The header icon was blue on an otherwise
+ * volt-and-graphite page, the icon tiles used translucent volt (which goes
+ * muddy brown on this ground — the card recipe warns about exactly this), and
+ * a centred marketing paragraph sat between the title and the tools. Every
+ * entry also carried `status: 'available'`, so the unavailable branch had
+ * never rendered in its life.
+ *
+ * Now: four groups that match how the work actually breaks down, and every
+ * card says what the tool answers rather than what it is called.
+ */
 import { Helmet } from 'react-helmet';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
+import {
+  HubPage,
+  HubBody,
+  HubMasthead,
+  HubToolGrid,
+  type HubTool,
+} from '@/components/hub/HubPrimitives';
 
-const BusinessCalculators = () => {
-  const calculators = [
-    {
-      id: 'job-profitability',
-      title: 'Job Profitability Calculator',
-      icon: <Calculator className="h-12 w-12 text-elec-yellow" />,
-      status: 'available',
-    },
-    {
-      id: 'business-cost',
-      title: 'Business Cost Calculator',
-      icon: <PoundSterling className="h-12 w-12 text-elec-yellow" />,
-      status: 'available',
-    },
-    {
-      id: 'cash-flow',
-      title: 'Cash Flow Planner',
-      icon: <TrendingUp className="h-12 w-12 text-elec-yellow" />,
-      status: 'available',
-    },
-    {
-      id: 'pricing-strategy',
-      title: 'Pricing Strategy Calculator',
-      icon: <Target className="h-12 w-12 text-elec-yellow" />,
-      status: 'available',
-    },
-    {
-      id: 'roi-calculator',
-      title: 'Equipment ROI Calculator',
-      icon: <BarChart3 className="h-12 w-12 text-elec-yellow" />,
-      status: 'available',
-    },
-    {
-      id: 'hourly-rate',
-      title: 'Hourly Rate Calculator',
-      icon: <Clock className="h-12 w-12 text-elec-yellow" />,
-      status: 'available',
-    },
-    {
-      id: 'capacity-planner',
-      title: 'Capacity Planning Tool',
-      icon: <Building className="h-12 w-12 text-elec-yellow" />,
-      status: 'available',
-    },
-    {
-      id: 'tax-estimator',
-      title: 'Tax & NI Estimator',
-      icon: <PoundSterling className="h-12 w-12 text-elec-yellow" />,
-      status: 'available',
-    },
-    {
-      id: 'break-even',
-      title: 'Break-even & Margin Guard',
-      icon: <Scale className="h-12 w-12 text-elec-yellow" />,
-      status: 'available',
-    },
-    {
-      id: 'staff-cost',
-      title: 'Fully Loaded Staff Cost',
-      icon: <Users className="h-12 w-12 text-elec-yellow" />,
-      status: 'available',
-    },
-    {
-      id: 'quote-variance',
-      title: 'Quote vs Actual Tracker',
-      icon: <ClipboardList className="h-12 w-12 text-elec-yellow" />,
-      status: 'available',
-    },
-    {
-      id: 'minimum-charge',
-      title: 'Minimum Charge & First Hour',
-      icon: <PoundSterling className="h-12 w-12 text-elec-yellow" />,
-      status: 'available',
-    },
-    {
-      id: 'vat-scheme',
-      title: 'VAT Scheme Comparison',
-      icon: <Percent className="h-12 w-12 text-elec-yellow" />,
-      status: 'available',
-    },
-    {
-      id: 'cis-drc',
-      title: 'CIS & DRC Helper (UK)',
-      icon: <PoundSterling className="h-12 w-12 text-elec-yellow" />,
-      status: 'available',
-    },
-  ];
+const BASE = '/electrician/business-development/tools';
 
-  return (
-    <div className="bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark ">
-      <Helmet>
-        <title>Electrician Business Calculators UK | Pricing, ROI, Tax</title>
-        <meta
-          name="description"
-          content="UK electrician calculators: hourly rate, pricing, ROI, cash flow, capacity and tax. Mobile-first, fast and accurate."
-        />
-        <link rel="canonical" href="/electrician/business-development/tools" />
-      </Helmet>
+/** Price the work. */
+const pricing: HubTool[] = [
+  {
+    id: 'hourly-rate',
+    title: 'Hourly Rate',
+    description: 'What you must charge an hour to cover costs and pay yourself.',
+    to: `${BASE}/hourly-rate`,
+    meta: 'Start here',
+  },
+  {
+    id: 'pricing-strategy',
+    title: 'Pricing Strategy',
+    description: 'Build a quote from materials, labour, overhead and margin.',
+    to: `${BASE}/pricing-strategy`,
+    meta: 'Quote a job',
+  },
+  {
+    id: 'minimum-charge',
+    title: 'Minimum Charge',
+    description: 'The least a call-out can be worth before it costs you money.',
+    to: `${BASE}/minimum-charge`,
+    meta: 'Call-out floor',
+  },
+  {
+    id: 'break-even',
+    title: 'Break-even & Margin',
+    description: 'The rate below which every hour loses money.',
+    to: `${BASE}/break-even`,
+    meta: 'Know your floor',
+  },
+];
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8  ">
-        {/* Header */}
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20">
-              <Calculator className="h-6 w-6 sm:h-7 sm:w-7 text-blue-400" />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                Business Calculators
-              </h1>
-              <p className="text-sm text-white">Financial planning tools</p>
-            </div>
-          </div>
-          <SmartBackButton />
-        </header>
+/** Did the work make money? */
+const profit: HubTool[] = [
+  {
+    id: 'job-profitability',
+    title: 'Job Profitability',
+    description: 'True profit on a job once labour, materials and overhead land.',
+    to: `${BASE}/job-profitability`,
+    meta: 'Per job',
+  },
+  {
+    id: 'quote-variance',
+    title: 'Quote vs Actual',
+    description: 'Where jobs drift from what you quoted, and by how much.',
+    to: `${BASE}/quote-variance`,
+    meta: 'Track drift',
+  },
+];
 
-        {/* Subtitle */}
-        <p className="text-white text-center max-w-2xl mx-auto">
-          Professional calculators and tools to help you make informed business decisions and plan
-          for success.
-        </p>
+/** What HMRC wants. */
+const tax: HubTool[] = [
+  {
+    id: 'tax-estimator',
+    eyebrow: 'Self-employed',
+    title: 'Tax & NI',
+    description: 'Income tax and Class 4 NI on your profit, with what to set aside.',
+    to: `${BASE}/tax-estimator`,
+    meta: '2026/27 rates',
+  },
+  {
+    id: 'vat-scheme',
+    eyebrow: 'VAT',
+    title: 'Scheme Comparison',
+    description: 'Flat rate against standard — which leaves you better off.',
+    to: `${BASE}/vat-scheme`,
+    meta: '£90k threshold',
+  },
+  {
+    id: 'cis-drc',
+    eyebrow: 'Subcontracting',
+    title: 'CIS & Reverse Charge',
+    description: 'CIS deductions and when the domestic reverse charge applies.',
+    to: `${BASE}/cis-drc`,
+    meta: '20% / 30%',
+  },
+];
 
-        {/* Calculator Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-          {calculators.map((calculator) =>
-            calculator.status === 'available' ? (
-              <Link
-                key={calculator.id}
-                to={`/electrician/business-development/tools/${calculator.id}`}
-                className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-xl touch-manipulation"
-              >
-                <Card className="relative overflow-hidden border-white/10 bg-white/5 hover:bg-white/10 hover:border-elec-yellow/40 active:scale-[0.98] h-full transition-all duration-200">
-                  <CardHeader className="flex flex-col items-center justify-center text-center p-4 sm:p-5 space-y-2 sm:space-y-3">
-                    <div className="p-2 sm:p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-                      {calculator.icon}
-                    </div>
-                    <CardTitle className="text-xs sm:text-sm font-semibold text-white leading-tight">
-                      {calculator.title}
-                    </CardTitle>
-                  </CardHeader>
-                </Card>
-              </Link>
-            ) : (
-              <div key={calculator.id} className="cursor-not-allowed opacity-50">
-                <Card className="border-white/10 bg-white/5 h-full">
-                  <CardHeader className="flex flex-col items-center justify-center text-center p-4 sm:p-5 space-y-2 sm:space-y-3">
-                    <div className="p-2 sm:p-2.5 rounded-xl bg-white/5 border border-white/10">
-                      {calculator.icon}
-                    </div>
-                    <CardTitle className="text-xs sm:text-sm font-semibold text-white leading-tight">
-                      {calculator.title}
-                    </CardTitle>
-                  </CardHeader>
-                </Card>
-              </div>
-            )
-          )}
-        </div>
-      </main>
-    </div>
-  );
-};
+/** Running the business. */
+const running: HubTool[] = [
+  {
+    id: 'business-cost',
+    title: 'Business Costs',
+    description: 'Every overhead you carry, totalled and per working hour.',
+    to: `${BASE}/business-cost`,
+    meta: 'Your overhead',
+  },
+  {
+    id: 'cash-flow',
+    title: 'Cash Flow',
+    description: 'Money in and out month by month, including the tax bills.',
+    to: `${BASE}/cash-flow`,
+    meta: 'Plan ahead',
+  },
+  {
+    id: 'capacity-planner',
+    title: 'Capacity',
+    description: 'How many billable hours you actually have to sell.',
+    to: `${BASE}/capacity-planner`,
+    meta: '37.5h week',
+  },
+  {
+    id: 'staff-cost',
+    eyebrow: 'Employing',
+    title: 'Fully Loaded Staff Cost',
+    description: 'What someone really costs once NI, holiday and pension land.',
+    to: `${BASE}/staff-cost`,
+    meta: 'Per head',
+  },
+  {
+    id: 'roi-calculator',
+    eyebrow: 'Buying',
+    title: 'Equipment ROI',
+    description: 'Whether a van, tool or machine pays for itself.',
+    to: `${BASE}/roi-calculator`,
+    meta: 'Payback',
+  },
+];
+
+const BusinessCalculators = () => (
+  <HubPage>
+    <Helmet>
+      <title>Electrician Business Calculators UK | Pricing, ROI, Tax</title>
+      <meta
+        name="description"
+        content="UK electrician calculators: hourly rate, pricing, ROI, cash flow, capacity and tax. Mobile-first, fast and accurate."
+      />
+      <link rel="canonical" href="/electrician/business-development/tools" />
+    </Helmet>
+
+    <HubMasthead
+      section="Business"
+      title="Calculators"
+      backTo="/electrician/business-development"
+    />
+
+    <HubBody>
+      <HubToolGrid label="Price the work" cards={pricing} columns="four" />
+      <HubToolGrid label="Did it make money?" cards={profit} columns="two" />
+      <HubToolGrid label="Tax & VAT" cards={tax} columns="three" />
+      <HubToolGrid label="Running the business" cards={running} columns="four" />
+    </HubBody>
+  </HubPage>
+);
 
 export default BusinessCalculators;

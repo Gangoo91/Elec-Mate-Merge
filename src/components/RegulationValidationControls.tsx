@@ -9,6 +9,11 @@ interface RegulationValidationControlsProps {
   testResults: TestResult[];
   showRegulationStatus: boolean;
   onToggleRegulationStatus: (show: boolean) => void;
+  /**
+   * ELE-1505 — decides which limits apply. Without it a TT installation is
+   * judged against the TN tables and its electrode readings read as failures.
+   */
+  earthingArrangement?: string;
 }
 
 const chipOn = 'bg-elec-yellow border border-elec-yellow text-black font-semibold';
@@ -20,6 +25,7 @@ const RegulationValidationControls: React.FC<RegulationValidationControlsProps> 
   testResults,
   showRegulationStatus,
   onToggleRegulationStatus,
+  earthingArrangement,
 }) => {
   const [showBatchDialog, setShowBatchDialog] = useState(false);
   const [batchResults, setBatchResults] = useState<Map<string, RegulationCheckResult>>(new Map());
@@ -39,7 +45,7 @@ const RegulationValidationControls: React.FC<RegulationValidationControlsProps> 
   const analyseAllCircuits = () => {
     const results = new Map<string, RegulationCheckResult>();
     testResults.forEach((result) => {
-      results.set(result.id, checkRegulationCompliance(result));
+      results.set(result.id, checkRegulationCompliance(result, earthingArrangement));
     });
     setBatchResults(results);
     setShowBatchDialog(true);
@@ -53,7 +59,7 @@ const RegulationValidationControls: React.FC<RegulationValidationControlsProps> 
     let compliantCircuits = 0;
 
     testResults.forEach((result) => {
-      const check = checkRegulationCompliance(result);
+      const check = checkRegulationCompliance(result, earthingArrangement);
       if (check.warnings.length === 0) {
         compliantCircuits++;
       } else {
@@ -101,7 +107,7 @@ const RegulationValidationControls: React.FC<RegulationValidationControlsProps> 
     if (stats.totalIssues === 0) return null;
     const regCounts = new Map<string, { count: number; title: string }>();
     testResults.forEach((result) => {
-      const check = checkRegulationCompliance(result);
+      const check = checkRegulationCompliance(result, earthingArrangement);
       check.warnings.forEach((w) => {
         const key = w.regulation || w.title;
         const prev = regCounts.get(key);

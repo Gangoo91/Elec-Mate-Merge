@@ -54,7 +54,7 @@ const faqs = [
   {
     question: 'Why must replacement consumer units in Sheffield have a metal enclosure?',
     answer:
-      'Amendment 2 to BS 7671:2008, which came into force on 1 July 2016, introduced Regulation 421.1.201. This regulation requires that in domestic premises a consumer unit shall be installed in a cabinet or enclosure constructed of non-combustible material. Steel consumer unit enclosures meet this requirement; plastic ones do not. The change was made because investigations into domestic electrical fires found that plastic consumer unit enclosures could ignite and spread fire during arcing faults. Metal enclosures contain such events far more effectively. Any consumer unit installed in a Sheffield property from July 2016 onwards must comply — there is no grandfathering for replacements.',
+      'Amendment 3 to BS 7671:2008, with this requirement in force from 1 January 2016, introduced Regulation 421.1.201. This regulation requires that in domestic premises a consumer unit shall be installed in a cabinet or enclosure constructed of non-combustible material. Steel consumer unit enclosures meet this requirement; plastic ones do not. The change was made because investigations into domestic electrical fires found that plastic consumer unit enclosures could ignite and spread fire during arcing faults. Metal enclosures contain such events far more effectively. Any consumer unit installed in a Sheffield property from July 2016 onwards must comply — there is no grandfathering for replacements.',
   },
   {
     question: 'How much does a consumer unit replacement cost in Sheffield?',
@@ -200,7 +200,7 @@ const sections = [
     content: (
       <>
         <p>
-          Amendment 2 to BS 7671:2008, effective 1 July 2016, introduced Regulation 421.1.201: in
+          Amendment 3 to BS 7671:2008, with this requirement effective 1 January 2016, introduced Regulation 421.1.201: in
           domestic premises, consumer units and similar switchgear assemblies shall be installed in
           a cabinet or enclosure constructed of non-combustible material. This requirement is
           retained in the current edition, BS 7671:2018+A4:2026.

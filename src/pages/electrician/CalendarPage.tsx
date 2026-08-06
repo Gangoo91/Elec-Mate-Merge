@@ -1,19 +1,21 @@
 import { Helmet } from 'react-helmet';
-import { CalendarDays } from 'lucide-react';
-import BusinessPageLayout from '@/components/business-hub/BusinessPageLayout';
 import { CalendarPageContent } from '@/components/calendar';
 
+/**
+ * The calendar owns its own shell rather than sitting inside
+ * `BusinessPageLayout`.
+ *
+ * That layout's header scrolls away with the content, which is fine for a page
+ * you read top to bottom and wrong for a calendar: the period you are looking
+ * at, the arrows that change it and the view chips all have to stay put while
+ * the agenda underneath them moves. `CalendarHeader` is that sticky bar, and it
+ * carries the back button the layout used to provide.
+ */
 const CalendarPage = () => {
   const canonical = `${window.location.origin}/electrician/business/calendar`;
 
   return (
-    <BusinessPageLayout
-      title="Calendar"
-      subtitle="Jobs, meetings & appointments"
-      icon={CalendarDays}
-      backUrl="/electrician/business"
-      accentColor="blue"
-    >
+    <>
       <Helmet>
         <title>Calendar | Elec-Mate Business Hub</title>
         <meta
@@ -24,7 +26,7 @@ const CalendarPage = () => {
       </Helmet>
 
       <CalendarPageContent />
-    </BusinessPageLayout>
+    </>
   );
 };
 

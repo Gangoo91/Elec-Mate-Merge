@@ -22,7 +22,6 @@ import {
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import {
@@ -47,103 +46,10 @@ import {
   isValidReceiptUrl,
 } from '@/services/expenseReceiptService';
 import { cn } from '@/lib/utils';
+import { cardCn, inputCn, labelCn, selectTriggerCn, textareaCn } from '@/components/forms/fieldStyles';
+import { EVSectionHeader as SectionHeader } from '@/components/inspection/ev-charging/EVSectionHeader';
 import { toast } from '@/hooks/use-toast';
 import { sanitizeMoneyInput, parseMoney, moneyToText } from '@/utils/money-input';
-import {
-  Fuel,
-  Wrench,
-  HardHat,
-  Package,
-  Hotel,
-  Car,
-  GraduationCap,
-  Truck,
-  Shield,
-  CreditCard,
-  UtensilsCrossed,
-  MoreHorizontal,
-} from 'lucide-react';
-
-// Icon mapping
-const CATEGORY_ICONS: Record<string, React.ElementType> = {
-  fuel: Fuel,
-  tools: Wrench,
-  ppe: HardHat,
-  materials: Package,
-  hotels: Hotel,
-  mileage: Car,
-  training: GraduationCap,
-  vehicle: Truck,
-  insurance: Shield,
-  subscriptions: CreditCard,
-  meals: UtensilsCrossed,
-  other: MoreHorizontal,
-};
-
-// Colour classes for category buttons
-const COLOUR_CLASSES: Record<string, { bg: string; text: string; border: string }> = {
-  'orange-500': {
-    bg: 'bg-orange-500/15 hover:bg-orange-500/25',
-    text: 'text-orange-400',
-    border: 'border-orange-500/30',
-  },
-  'amber-500': {
-    bg: 'bg-amber-500/15 hover:bg-amber-500/25',
-    text: 'text-amber-400',
-    border: 'border-amber-500/30',
-  },
-  'red-500': {
-    bg: 'bg-red-500/15 hover:bg-red-500/25',
-    text: 'text-red-400',
-    border: 'border-red-500/30',
-  },
-  'cyan-500': {
-    bg: 'bg-cyan-500/15 hover:bg-cyan-500/25',
-    text: 'text-cyan-400',
-    border: 'border-cyan-500/30',
-  },
-  'purple-500': {
-    bg: 'bg-purple-500/15 hover:bg-purple-500/25',
-    text: 'text-purple-400',
-    border: 'border-purple-500/30',
-  },
-  'green-500': {
-    bg: 'bg-green-500/15 hover:bg-green-500/25',
-    text: 'text-green-400',
-    border: 'border-green-500/30',
-  },
-  'teal-500': {
-    bg: 'bg-teal-500/15 hover:bg-teal-500/25',
-    text: 'text-teal-400',
-    border: 'border-teal-500/30',
-  },
-  'slate-500': {
-    bg: 'bg-slate-500/15 hover:bg-slate-500/25',
-    text: 'text-slate-400',
-    border: 'border-slate-500/30',
-  },
-  'indigo-500': {
-    bg: 'bg-indigo-500/15 hover:bg-indigo-500/25',
-    text: 'text-indigo-400',
-    border: 'border-indigo-500/30',
-  },
-  'pink-500': {
-    bg: 'bg-pink-500/15 hover:bg-pink-500/25',
-    text: 'text-pink-400',
-    border: 'border-pink-500/30',
-  },
-  'rose-500': {
-    bg: 'bg-rose-500/15 hover:bg-rose-500/25',
-    text: 'text-rose-400',
-    border: 'border-rose-500/30',
-  },
-  'gray-500': {
-    bg: 'bg-gray-500/15 hover:bg-gray-500/25',
-    text: 'text-white',
-    border: 'border-gray-500/30',
-  },
-};
-
 type EditStep = 'form' | 'category' | 'receipt';
 
 // Sentinel for the "No project" option — Radix Select can't use an empty value.
@@ -304,8 +210,6 @@ export function ExpenseEditSheet({
   };
 
   const categoryConfig = getCategoryConfig(formData.category || expense.category);
-  const CategoryIcon = CATEGORY_ICONS[formData.category || expense.category] || MoreHorizontal;
-  const colours = COLOUR_CLASSES[categoryConfig.colour] || COLOUR_CLASSES['gray-500'];
 
   const getStepTitle = () => {
     switch (step) {
@@ -340,16 +244,9 @@ export function ExpenseEditSheet({
                   <ChevronLeft className="h-5 w-5" />
                 </Button>
               ) : (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={handleClose}
-                  className="h-10 w-10 touch-manipulation"
-                >
-                  <X className="h-5 w-5" />
-                </Button>
+                <div className="w-10" />
               )}
-              <SheetTitle className="text-lg font-semibold flex-1 text-center px-2">
+              <SheetTitle className="flex-1 px-2 text-center text-[17px] font-semibold tracking-tight text-white">
                 {getStepTitle()}
               </SheetTitle>
               <SheetDescription className="sr-only">
@@ -380,38 +277,28 @@ export function ExpenseEditSheet({
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
-                  className="p-4 space-y-4"
+                  className="p-4"
                 >
-                  {/* Category Selector */}
-                  <div className="space-y-2">
-                    <Label>Category</Label>
+                  <div className={cardCn}>
+                    <SectionHeader title="Expense details" />
+                  <div>
+                    <span className={labelCn}>Category</span>
                     <button
                       onClick={() => setStep('category')}
-                      className={cn(
-                        'w-full flex items-center gap-3 p-3 rounded-xl border touch-manipulation active:scale-[0.98] transition-all',
-                        colours.bg,
-                        colours.border
-                      )}
+                      className="flex h-12 w-full items-center gap-3 rounded-xl border border-white/[0.12] bg-white/[0.05] px-4 text-left transition-colors hover:bg-white/[0.08] touch-manipulation"
                     >
-                      <div
-                        className={cn(
-                          'w-10 h-10 rounded-lg flex items-center justify-center',
-                          colours.bg
-                        )}
-                      >
-                        <CategoryIcon className={cn('h-5 w-5', colours.text)} />
-                      </div>
-                      <span className="font-medium text-foreground">{categoryConfig.label}</span>
-                      <ChevronLeft className="h-4 w-4 text-white ml-auto rotate-180" />
+                      <span className="flex-1 text-[14px] font-medium text-white">
+                        {categoryConfig.label}
+                      </span>
+                      <span className="text-[12px] font-semibold text-elec-yellow">Change</span>
                     </button>
                   </div>
 
                   {/* Amount */}
                   <div className="space-y-2">
-                    <Label htmlFor="amount">Amount</Label>
+                    <label className={labelCn} htmlFor="amount">Amount (£)</label>
                     <div className="flex items-center gap-2">
-                      <span className="text-2xl font-semibold text-white">£</span>
-                      <Input
+                                            <Input
                         id="amount"
                         type="text"
                         inputMode="decimal"
@@ -422,47 +309,43 @@ export function ExpenseEditSheet({
                           setAmountText(s);
                           setFormData((prev) => ({ ...prev, amount: parseMoney(s) }));
                         }}
-                        className="h-14 text-2xl font-semibold touch-manipulation flex-1"
+                        className={cn(inputCn, 'text-[22px] font-bold')}
                       />
                     </div>
                   </div>
 
                   {/* Date */}
                   <div className="space-y-2">
-                    <Label htmlFor="date">Date</Label>
+                    <label className={labelCn} htmlFor="date">Date</label>
                     <Input
                       id="date"
                       type="date"
                       value={formData.date || ''}
                       onChange={(e) => setFormData((prev) => ({ ...prev, date: e.target.value }))}
-                      className="h-12 touch-manipulation text-base"
+                      className={inputCn}
                     />
-                    {formData.date && (
-                      <p className="text-sm text-elec-yellow font-medium">
-                        {format(new Date(formData.date), 'EEEE, d MMMM yyyy')}
-                      </p>
-                    )}
+
                   </div>
 
                   {/* Vendor */}
                   <div className="space-y-2">
-                    <Label htmlFor="vendor">Vendor / Store</Label>
+                    <label className={labelCn} htmlFor="vendor">Where from</label>
                     <Input
                       id="vendor"
                       placeholder="e.g. Screwfix, Shell, Toolstation"
                       value={formData.vendor || ''}
                       onChange={(e) => setFormData((prev) => ({ ...prev, vendor: e.target.value }))}
-                      className="h-11 touch-manipulation"
+                      className={inputCn}
                     />
                   </div>
 
                   {/* Project (optional) */}
                   <div className="space-y-2">
-                    <Label htmlFor="project">Project (optional)</Label>
+                    <label className={labelCn} htmlFor="project">Job</label>
                     <Select value={projectId} onValueChange={setProjectId}>
                       <SelectTrigger
                         id="project"
-                        className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2"
+                        className={selectTriggerCn}
                       >
                         <SelectValue placeholder="No project" />
                       </SelectTrigger>
@@ -479,7 +362,7 @@ export function ExpenseEditSheet({
 
                   {/* Description */}
                   <div className="space-y-2">
-                    <Label htmlFor="description">Description (optional)</Label>
+                    <label className={labelCn} htmlFor="description">What it was for</label>
                     <Textarea
                       id="description"
                       placeholder="What was this expense for?"
@@ -487,13 +370,12 @@ export function ExpenseEditSheet({
                       onChange={(e) =>
                         setFormData((prev) => ({ ...prev, description: e.target.value }))
                       }
-                      className="touch-manipulation min-h-[80px]"
+                      className={textareaCn}
                     />
                   </div>
 
-                  {/* Receipt Section */}
                   <div className="space-y-2">
-                    <Label>Receipt / Photo</Label>
+                    <span className={labelCn}>Receipt</span>
                     {formData.receipt_url ? (
                       <div className="relative rounded-xl overflow-hidden border border-white/10 bg-white/[0.03]">
                         {loadingReceipt ? (
@@ -583,10 +465,9 @@ export function ExpenseEditSheet({
 
                   {/* VAT Amount */}
                   <div className="space-y-2">
-                    <Label htmlFor="vat">VAT Amount (optional)</Label>
+                    <label className={labelCn} htmlFor="vat">VAT (£)</label>
                     <div className="flex items-center gap-2">
-                      <span className="text-lg font-medium text-white">£</span>
-                      <Input
+                                            <Input
                         id="vat"
                         type="text"
                         inputMode="decimal"
@@ -597,7 +478,7 @@ export function ExpenseEditSheet({
                           setVatText(s);
                           setFormData((prev) => ({ ...prev, vat_amount: parseMoney(s) }));
                         }}
-                        className="h-11 touch-manipulation flex-1"
+                        className={inputCn}
                       />
                     </div>
                   </div>
@@ -606,7 +487,7 @@ export function ExpenseEditSheet({
                   {formData.category === 'mileage' && (
                     <>
                       <div className="space-y-2">
-                        <Label htmlFor="miles">Miles</Label>
+                        <label className={labelCn} htmlFor="miles">Miles</label>
                         <Input
                           id="miles"
                           type="number"
@@ -624,12 +505,12 @@ export function ExpenseEditSheet({
                               amount: Math.round(miles * rate * 100) / 100,
                             }));
                           }}
-                          className="h-11 touch-manipulation"
+                          className={inputCn}
                         />
                       </div>
                       <div className="grid grid-cols-2 gap-3">
                         <div className="space-y-2">
-                          <Label htmlFor="from">From</Label>
+                          <label className={labelCn} htmlFor="from">From</label>
                           <Input
                             id="from"
                             placeholder="Start location"
@@ -637,11 +518,11 @@ export function ExpenseEditSheet({
                             onChange={(e) =>
                               setFormData((prev) => ({ ...prev, mileage_from: e.target.value }))
                             }
-                            className="h-11 touch-manipulation"
+                            className={inputCn}
                           />
                         </div>
                         <div className="space-y-2">
-                          <Label htmlFor="to">To</Label>
+                          <label className={labelCn} htmlFor="to">To</label>
                           <Input
                             id="to"
                             placeholder="End location"
@@ -649,7 +530,7 @@ export function ExpenseEditSheet({
                             onChange={(e) =>
                               setFormData((prev) => ({ ...prev, mileage_to: e.target.value }))
                             }
-                            className="h-11 touch-manipulation"
+                            className={inputCn}
                           />
                         </div>
                       </div>
@@ -659,7 +540,7 @@ export function ExpenseEditSheet({
                   {/* Tax Deductible Toggle */}
                   <div className="flex items-center justify-between py-2">
                     <div>
-                      <Label>Tax Deductible</Label>
+                      <p className="text-[14px] font-medium text-white">Tax deductible</p>
                       <p className="text-xs text-white">
                         Include in tax deduction calculations
                       </p>
@@ -670,6 +551,7 @@ export function ExpenseEditSheet({
                         setFormData((prev) => ({ ...prev, tax_deductible: checked }))
                       }
                     />
+                  </div>
                   </div>
                 </motion.div>
               )}
@@ -683,50 +565,36 @@ export function ExpenseEditSheet({
                   exit={{ opacity: 0, x: 20 }}
                   className="p-4 sm:p-6"
                 >
-                  <p className="text-base text-white mb-6 text-center">
-                    Select a new category
+                  <p className="mb-4 text-[15px] font-semibold tracking-tight text-white">
+                    Change the category
                   </p>
-                  <div className="space-y-2">
+                  <div className="divide-y divide-white/[0.10] overflow-hidden rounded-2xl border border-white/[0.12]">
                     {EXPENSE_CATEGORIES.map((category) => {
-                      const Icon = CATEGORY_ICONS[category.id] || MoreHorizontal;
-                      const catColours =
-                        COLOUR_CLASSES[category.colour] || COLOUR_CLASSES['gray-500'];
                       const isSelected = formData.category === category.id;
-
                       return (
                         <button
                           key={category.id}
                           onClick={() => handleCategorySelect(category.id)}
                           className={cn(
-                            'w-full flex items-center gap-4 p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all',
-                            'bg-white/[0.02] border-white/[0.08] hover:bg-white/[0.05] hover:border-white/[0.15]',
-                            isSelected && 'ring-2 ring-elec-yellow bg-elec-yellow/5'
+                            'flex h-14 w-full items-center gap-3 px-4 text-left transition-colors touch-manipulation',
+                            isSelected
+                              ? 'bg-elec-yellow/[0.12]'
+                              : 'bg-white/[0.03] hover:bg-white/[0.06]'
                           )}
                         >
-                          <div
-                            className={cn(
-                              'w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0',
-                              catColours.bg
-                            )}
-                          >
-                            <Icon className={cn('h-5 w-5', catColours.text)} />
-                          </div>
-                          <div className="flex-1 text-left">
-                            <span className="font-medium text-foreground">{category.label}</span>
+                          <span className="flex-1 text-[14px] font-medium text-white">
+                            {category.label}
                             {category.taxNote && (
-                              <span className="text-xs text-white ml-2">
+                              <span className="ml-2 text-[12px] text-white">
                                 ({category.taxNote})
                               </span>
                             )}
-                          </div>
-                          <div
-                            className={cn(
-                              'w-5 h-5 rounded-full border-2 flex items-center justify-center',
-                              isSelected ? 'border-elec-yellow bg-elec-yellow' : 'border-white/20'
-                            )}
-                          >
-                            {isSelected && <div className="w-2 h-2 rounded-full bg-black" />}
-                          </div>
+                          </span>
+                          {isSelected && (
+                            <span className="text-[12px] font-semibold text-elec-yellow">
+                              Selected
+                            </span>
+                          )}
                         </button>
                       );
                     })}
@@ -828,14 +696,13 @@ export function ExpenseEditSheet({
               >
                 {isSubmitting ? 'Saving...' : 'Save Changes'}
               </Button>
-              <Button
-                variant="ghost"
+              <button
+                type="button"
                 onClick={() => onDelete(expense.id)}
-                className="w-full h-11 text-red-400 hover:text-red-300 hover:bg-red-500/10 touch-manipulation"
+                className="h-11 w-full rounded-xl text-[14px] font-medium text-red-300 transition-colors hover:bg-red-500/10 touch-manipulation"
               >
-                <Trash2 className="h-4 w-4 mr-2" />
-                Delete Expense
-              </Button>
+                Delete expense
+              </button>
             </div>
           )}
         </div>

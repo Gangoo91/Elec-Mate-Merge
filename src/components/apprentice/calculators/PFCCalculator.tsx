@@ -24,20 +24,38 @@ const CAT = 'protection' as const;
 const config = CALCULATOR_CONFIG[CAT];
 
 interface PFCResult {
+  /** The reported PFC — the greatest of the values determined below. */
   pfcValue: number;
+  /** Which fault the reported PFC comes from. */
+  pfcBasis: string;
+  /** Prospective earth fault current, U₀ / (Ze + R1+R2). */
+  earthFaultCurrent: number;
+  /** Prospective short-circuit current, line–neutral, U₀ / Z(L-N). */
+  shortCircuitLN: number;
+  /** Three-phase values (null on a single-phase system). */
+  shortCircuit3Ph: number | null;
+  shortCircuitLL: number | null;
   assessmentLevel: string;
   recommendations: string[];
   breakingCapacity: string;
   zsTotal: number;
   zeValue: number;
   r1r2Value: number;
+  zLineNeutralValue: number;
   voltage: number;
+  isThreePhase: boolean;
 }
 
 const systemTypeOptions = [
-  { value: 'single-phase', label: 'Single Phase (230V)' },
-  { value: 'three-phase', label: 'Three Phase (400V)' },
+  { value: 'single-phase', label: 'Single Phase (230V line–neutral)' },
+  { value: 'three-phase', label: 'Three Phase (400V line–line, 230V line–neutral)' },
 ];
+
+/** Parse a user-entered number, returning null unless it is finite and > 0. */
+const parsePositive = (raw: string): number | null => {
+  const n = parseFloat(raw);
+  return Number.isFinite(n) && n > 0 ? n : null;
+};
 
 const PFCCalculator = () => {
   const { toast } = useToast();
@@ -47,88 +65,151 @@ const PFCCalculator = () => {
   const [systemType, setSystemType] = useState('');
   const [zeValue, setZeValue] = useState('');
   const [r1r2Value, setR1r2Value] = useState('');
+  const [zLineNeutral, setZLineNeutral] = useState('');
   const [result, setResult] = useState<PFCResult | null>(null);
 
   // Collapsibles
   const [showGuidance, setShowGuidance] = useState(false);
 
   const handleCalculate = useCallback(() => {
-    if (!voltage || !zeValue || !r1r2Value || !systemType) return;
+    if (!systemType) return;
 
-    const supplyVoltage = parseFloat(voltage);
-    const ze = parseFloat(zeValue);
-    const r1r2 = parseFloat(r1r2Value);
+    // FIX (audit): the previous guard used truthiness on the raw strings, so
+    // Ze = '0' and R1+R2 = '0' passed it and the division produced Infinity.
+    // A PFC is only defined for a loop impedance greater than zero.
+    const uo = parsePositive(voltage);
+    const ze = parsePositive(zeValue);
+    const r1r2 = parsePositive(r1r2Value);
+    const zln = parsePositive(zLineNeutral);
+    if (uo === null || ze === null || r1r2 === null || zln === null) {
+      toast({
+        title: 'Check the inputs',
+        description: 'Voltage and every impedance must be a number greater than zero.',
+      });
+      return;
+    }
 
+    const isThreePhase = systemType === 'three-phase';
+
+    // U₀ is the nominal LINE-TO-NEUTRAL voltage on both single- and three-phase
+    // supplies. The 400 V figure is line-to-line and is not used here — every
+    // loop impedance entered is measured against neutral or Earth.
     const zsTotal = ze + r1r2;
-    const phaseVoltage = systemType === 'three-phase' ? 230 : supplyVoltage;
-    const pfcValue = phaseVoltage / zsTotal;
+
+    // BS 7671 Appendix 14: "In a single-phase system the prospective fault
+    // current is the greater of either the fault current between the line
+    // conductor and neutral or the fault current between line conductor and
+    // Earth." The tool previously only ever computed the line–earth value.
+    const earthFaultCurrent = uo / zsTotal;
+    const shortCircuitLN = uo / zln;
+
+    // BS 7671 Appendix 14: "In a three-phase installation the highest
+    // prospective fault current occurs with a simultaneous fault between all
+    // line conductors... determined by measurement between line and neutral
+    // multiplied by 2", and the line-to-line value is the line–neutral
+    // measurement multiplied by √3. Corroborated by GN3 clause 2.29 and OSG
+    // clause 10.3.7 (three-phase level ≈ twice the single-phase value).
+    // Previously the three-phase selection applied no multiplier at all, so a
+    // three-phase board returned the single-phase figure.
+    const shortCircuit3Ph = isThreePhase ? shortCircuitLN * 2 : null;
+    const shortCircuitLL = isThreePhase ? shortCircuitLN * Math.sqrt(3) : null;
+
+    const candidates: { value: number; basis: string }[] = [
+      { value: earthFaultCurrent, basis: 'line–earth (earth fault loop)' },
+      { value: shortCircuitLN, basis: 'line–neutral short-circuit' },
+    ];
+    if (shortCircuit3Ph !== null) {
+      candidates.push({ value: shortCircuit3Ph, basis: 'three-phase (all line conductors)' });
+    }
+    const highest = candidates.reduce((a, b) => (b.value > a.value ? b : a));
+    const pfcValue = highest.value;
 
     let assessmentLevel: string;
     let recommendations: string[];
     let breakingCapacity: string;
 
+    // Reg 432.1/432.3: the device shall be capable of breaking any overcurrent
+    // up to and including the maximum prospective fault current at the point
+    // where it is installed, except as permitted by Reg 434.5.1.
     if (pfcValue < 1000) {
       assessmentLevel = 'Low';
       recommendations = [
-        'PFC is relatively low — standard MCBs should be adequate',
-        'Check if protective device will operate within required time',
-        'Consider cable sizing and length factors',
+        'PFC is low — a device with a 6 kA rated breaking capacity covers it (Reg 432.1)',
+        'Still confirm the device disconnects within the time required by Reg 411.3.2.2',
+        'Remember PFC is highest at the origin — check the main switch position too',
       ];
-      breakingCapacity = '6kA';
-    } else if (pfcValue < 6000) {
+      breakingCapacity = '6 kA';
+    } else if (pfcValue <= 6000) {
       assessmentLevel = 'Medium';
       recommendations = [
-        'Moderate PFC — ensure MCBs have adequate breaking capacity',
-        'Standard 6kA MCBs should be sufficient',
-        'Check manufacturer specifications for exact requirements',
+        'A device with a rated breaking capacity of at least 6 kA is required (Reg 432.1)',
+        'Check the manufacturer’s declared breaking capacity for the actual device — not the range',
+        'Where an RCCB or switch is used, its manufacturer-declared rated conditional short-circuit current (with the declared upstream device) must also exceed this value',
       ];
-      breakingCapacity = '6kA';
-    } else if (pfcValue < 10000) {
+      breakingCapacity = '6 kA';
+    } else if (pfcValue <= 10000) {
       assessmentLevel = 'High';
       recommendations = [
-        'High PFC — use MCBs with higher breaking capacity',
-        'Consider 10kA or higher rated protective devices',
-        'Additional protection coordination may be required',
+        'A device with a rated breaking capacity of at least 10 kA is required (Reg 432.1)',
+        'Where the device standard declares both a service (Ics) and an ultimate (Icu) short-circuit breaking capacity, selection on the ultimate value for maximum fault conditions is acceptable (Reg 533.3)',
+        'Verify coordination with the upstream device before relying on it',
       ];
-      breakingCapacity = '10kA';
+      breakingCapacity = '10 kA';
     } else {
       assessmentLevel = 'Very High';
+      // FIX (audit): this branch used to demand "16 kA MCBs". BS 7671 does not
+      // publish device breaking capacities, and 16 kA appears in it only as the
+      // CONDITIONAL short-circuit rating of a consumer unit assembly type-tested
+      // to Annex ZB of BS EN 61439-3 (Reg 536.4.5) — not as an MCB rating.
       recommendations = [
-        'Very high PFC — specialist equipment required',
-        'Use MCBs with 16kA or higher breaking capacity',
-        'Consider current limiting devices',
-        'Professional assessment recommended',
+        'Above 10 kA the device must carry a manufacturer-declared breaking capacity not less than this PFC (Reg 432.1) — typically a device to BS EN 60947-2 rather than a household MCB',
+        'Alternatively, Reg 434.5.1 permits a device with a LOWER rated breaking capacity where combined short-circuit protection is provided by an upstream device; the downstream manufacturer’s instructions must declare the combination (Reg 536.4.2.1, 536.6)',
+        'Assemblies are rated by conditional short-circuit current (Icc), short-time withstand (Icw) and peak withstand (Ipk) — check the assembly, not just the breaker (Reg 536.4.5)',
+        'Domestic note: a consumer unit to BS EN 61439-3 carries a 16 kA conditional short-circuit rating from the Annex ZB test; that is an assembly rating, not a device breaking capacity',
       ];
-      breakingCapacity = '16kA+';
+      breakingCapacity = 'Above 10 kA';
     }
 
     setResult({
       pfcValue,
+      pfcBasis: highest.basis,
+      earthFaultCurrent,
+      shortCircuitLN,
+      shortCircuit3Ph,
+      shortCircuitLL,
       assessmentLevel,
       recommendations,
       breakingCapacity,
       zsTotal,
       zeValue: ze,
       r1r2Value: r1r2,
-      voltage: phaseVoltage,
+      zLineNeutralValue: zln,
+      voltage: uo,
+      isThreePhase,
     });
-  }, [voltage, zeValue, r1r2Value, systemType]);
+  }, [voltage, zeValue, r1r2Value, zLineNeutral, systemType, toast]);
 
   const handleReset = useCallback(() => {
     setVoltage('230');
     setSystemType('');
     setZeValue('');
     setR1r2Value('');
+    setZLineNeutral('');
     setResult(null);
   }, []);
 
   const handleCopy = () => {
     if (!result) return;
-    let text = `Prospective Fault Current\nPFC: ${result.pfcValue.toFixed(0)} A (${(result.pfcValue / 1000).toFixed(2)} kA)`;
-    text += `\nZs: ${result.zsTotal.toFixed(3)} Ω`;
-    text += `\nZe: ${result.zeValue} Ω | R1+R2: ${result.r1r2Value} Ω`;
+    let text = `Prospective Fault Current\nPFC: ${result.pfcValue.toFixed(0)} A (${(result.pfcValue / 1000).toFixed(2)} kA) — ${result.pfcBasis}`;
+    text += `\nLine–earth: ${result.earthFaultCurrent.toFixed(0)} A (Zs ${result.zsTotal.toFixed(3)} Ω)`;
+    text += `\nLine–neutral: ${result.shortCircuitLN.toFixed(0)} A (Z ${result.zLineNeutralValue} Ω)`;
+    if (result.shortCircuit3Ph !== null && result.shortCircuitLL !== null) {
+      text += `\nLine–line (×√3): ${result.shortCircuitLL.toFixed(0)} A`;
+      text += `\nThree-phase (×2): ${result.shortCircuit3Ph.toFixed(0)} A`;
+    }
+    text += `\nZe: ${result.zeValue} Ω | R1+R2: ${result.r1r2Value} Ω | U₀: ${result.voltage} V`;
     text += `\nAssessment: ${result.assessmentLevel}`;
-    text += `\nBreaking Capacity: ${result.breakingCapacity} required`;
+    text += `\nMinimum breaking capacity: ${result.breakingCapacity}`;
     copyToClipboard(text).then((ok) => {
       if (ok) {
         setCopied(true);
@@ -153,7 +234,12 @@ const PFCCalculator = () => {
     }
   };
 
-  const isValid = systemType && zeValue && r1r2Value;
+  const isValid =
+    !!systemType &&
+    parsePositive(voltage) !== null &&
+    parsePositive(zeValue) !== null &&
+    parsePositive(r1r2Value) !== null &&
+    parsePositive(zLineNeutral) !== null;
 
   return (
     <CalculatorCard
@@ -170,13 +256,14 @@ const PFCCalculator = () => {
       />
 
       <CalculatorInput
-        label="Supply Voltage"
+        label="U₀ — Nominal Line-to-Neutral Voltage"
         unit="V"
         type="text"
         inputMode="decimal"
         value={voltage}
         onChange={setVoltage}
         placeholder="e.g., 230"
+        hint="230 V on both single- and three-phase UK supplies — 400 V is the line-to-line figure and is not used here"
       />
 
       <CalculatorInput
@@ -199,6 +286,17 @@ const PFCCalculator = () => {
         onChange={setR1r2Value}
         placeholder="e.g., 0.15"
         hint="Circuit conductor resistance (line + protective)"
+      />
+
+      <CalculatorInput
+        label="Line–Neutral Loop Impedance"
+        unit="Ω"
+        type="text"
+        inputMode="decimal"
+        value={zLineNeutral}
+        onChange={setZLineNeutral}
+        placeholder="e.g., 0.30"
+        hint="Measured or calculated line–neutral loop. Appendix 14 takes the PFC as the greater of the line–neutral and line–earth values, so both are needed"
       />
 
       <CalculatorActions
@@ -240,19 +338,56 @@ const PFCCalculator = () => {
               {result.pfcValue.toFixed(0)} A
             </p>
             <p className="text-sm text-white mt-2">({(result.pfcValue / 1000).toFixed(2)} kA)</p>
+            <p className="text-xs text-white mt-1">Greatest value — {result.pfcBasis}</p>
           </div>
 
-          {/* Result cards */}
+          {/* Result cards — every fault type Appendix 14 asks for, not just the loop */}
           <ResultsGrid columns={2}>
             <ResultValue
-              label="Zs (Total Impedance)"
+              label="Line–earth fault current"
+              value={result.earthFaultCurrent.toFixed(0)}
+              unit="A"
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Line–neutral fault current"
+              value={result.shortCircuitLN.toFixed(0)}
+              unit="A"
+              category={CAT}
+              size="sm"
+            />
+          </ResultsGrid>
+
+          {result.isThreePhase && result.shortCircuit3Ph !== null && result.shortCircuitLL !== null && (
+            <ResultsGrid columns={2}>
+              <ResultValue
+                label="Line–line (× √3)"
+                value={result.shortCircuitLL.toFixed(0)}
+                unit="A"
+                category={CAT}
+                size="sm"
+              />
+              <ResultValue
+                label="All three lines (× 2)"
+                value={result.shortCircuit3Ph.toFixed(0)}
+                unit="A"
+                category={CAT}
+                size="sm"
+              />
+            </ResultsGrid>
+          )}
+
+          <ResultsGrid columns={2}>
+            <ResultValue
+              label="Zs (Earth Fault Loop)"
               value={result.zsTotal.toFixed(3)}
               unit="Ω"
               category={CAT}
               size="sm"
             />
             <ResultValue
-              label="Breaking Capacity"
+              label="Min. Breaking Capacity"
               value={result.breakingCapacity}
               category={CAT}
               size="sm"
@@ -277,7 +412,7 @@ const PFCCalculator = () => {
               <span className="text-white font-medium">Device Requirement</span>
             </div>
             <span className="text-white shrink-0 ml-2">
-              {result.breakingCapacity} MCBs required
+              {result.breakingCapacity} breaking capacity
             </span>
           </div>
 
@@ -304,32 +439,56 @@ const PFCCalculator = () => {
             steps={[
               {
                 label: 'Input values',
-                formula: `Uo = ${result.voltage}V | Ze = ${result.zeValue} Ω | R1+R2 = ${result.r1r2Value} Ω`,
-                description: `Ze (${result.zeValue} Ω) is the supply impedance from the DNO transformer. R1+R2 (${result.r1r2Value} Ω) is the circuit conductor resistance from the board to the furthest point.`,
+                formula: `U₀ = ${result.voltage} V | Ze = ${result.zeValue} Ω | R1+R2 = ${result.r1r2Value} Ω | Z(L–N) = ${result.zLineNeutralValue} Ω`,
+                description: `Ze (${result.zeValue} Ω) is the supply impedance from the DNO transformer. R1+R2 (${result.r1r2Value} Ω) is the circuit conductor resistance from the board to the furthest point. U₀ is the nominal line-to-neutral voltage — 230 V on both single- and three-phase supplies.`,
               },
               {
-                label: 'Total loop impedance',
+                label: 'Earth fault loop impedance',
                 formula: `Zs = Ze + (R1+R2) = ${result.zeValue} + ${result.r1r2Value}`,
                 value: `${result.zsTotal.toFixed(3)} Ω`,
                 description:
-                  'The total earth fault loop impedance determines how much current flows during a fault — lower impedance means higher fault current.',
+                  'The total earth fault loop impedance determines how much current flows during a line-to-earth fault — lower impedance means higher fault current.',
               },
               {
-                label: 'Prospective fault current',
-                formula: `PFC = Uo / Zs = ${result.voltage} / ${result.zsTotal.toFixed(3)}`,
-                value: `${result.pfcValue.toFixed(0)} A (${(result.pfcValue / 1000).toFixed(2)} kA)`,
+                label: 'Line–earth fault current',
+                formula: `I = U₀ / Zs = ${result.voltage} / ${result.zsTotal.toFixed(3)}`,
+                value: `${result.earthFaultCurrent.toFixed(0)} A`,
                 description:
-                  'This is the maximum current that would flow during a dead short circuit at this point. Every protective device downstream must be able to safely interrupt this current.',
+                  'The prospective earth fault current at this point.',
+              },
+              {
+                label: 'Line–neutral fault current',
+                formula: `I = U₀ / Z(L–N) = ${result.voltage} / ${result.zLineNeutralValue}`,
+                value: `${result.shortCircuitLN.toFixed(0)} A`,
+                description:
+                  'The prospective short-circuit current. BS 7671 Appendix 14: in a single-phase system the PFC is the greater of the line–neutral and the line–earth value, so both have to be worked out.',
+              },
+              ...(result.isThreePhase && result.shortCircuitLL !== null && result.shortCircuit3Ph !== null
+                ? [
+                    {
+                      label: 'Three-phase fault currents',
+                      formula: `Line–line ≈ ${result.shortCircuitLN.toFixed(0)} × √3 = ${result.shortCircuitLL.toFixed(0)} A | All three lines ≈ ${result.shortCircuitLN.toFixed(0)} × 2 = ${result.shortCircuit3Ph.toFixed(0)} A`,
+                      value: `${result.shortCircuit3Ph.toFixed(0)} A`,
+                      description:
+                        'BS 7671 Appendix 14: the highest prospective fault current in a three-phase installation occurs on a simultaneous fault between all line conductors, approximated as the line–neutral measurement × 2. The line-to-line value is the line–neutral measurement × √3.',
+                    },
+                  ]
+                : []),
+              {
+                label: 'Prospective fault current',
+                value: `${result.pfcValue.toFixed(0)} A (${(result.pfcValue / 1000).toFixed(2)} kA) — ${result.pfcBasis}`,
+                description:
+                  'The greatest of the values above. Every protective device at this point must be able to safely interrupt it.',
               },
               {
                 label: 'Breaking capacity assessment',
-                value: `${result.assessmentLevel} level — minimum ${result.breakingCapacity} breaking capacity required`,
+                value: `${result.assessmentLevel} level — minimum ${result.breakingCapacity} rated breaking capacity`,
                 description:
-                  result.pfcValue < 6000
-                    ? 'Standard 6kA MCBs are suitable for this PFC level. Most domestic consumer units use 6kA devices.'
-                    : result.pfcValue < 10000
-                      ? 'Standard 6kA MCBs may not be adequate. Specify 10kA or higher rated devices for this installation.'
-                      : 'Very high fault level — specialist high breaking capacity devices required. Consider current-limiting devices or back-up protection.',
+                  result.pfcValue <= 6000
+                    ? 'A device with a declared breaking capacity of at least 6 kA satisfies Reg 432.1 here. Most domestic consumer units use 6 kA devices.'
+                    : result.pfcValue <= 10000
+                      ? 'A 6 kA device is not adequate. Specify a device with a declared breaking capacity of at least 10 kA (Reg 432.1).'
+                      : 'Above 10 kA the device needs a manufacturer-declared breaking capacity not less than this PFC — or Reg 434.5.1 combined short-circuit protection with an upstream device, declared by the downstream manufacturer (Reg 536.4.2.1, 536.6).',
               },
             ]}
           />
@@ -363,6 +522,17 @@ const PFCCalculator = () => {
                   </p>
                 </div>
                 <div className="space-y-2">
+                  <p className="text-sm text-white font-medium">Which Fault Counts</p>
+                  <p className="text-sm text-white">
+                    BS 7671 Appendix 14: in a single-phase system the PFC is the greater of the
+                    line–neutral fault current and the line–earth fault current. In a three-phase
+                    installation the highest value comes from a simultaneous fault between all
+                    three line conductors — roughly twice the line–neutral figure. Reporting the
+                    earth fault loop value alone, or the single-phase value on a three-phase board,
+                    under-states the answer.
+                  </p>
+                </div>
+                <div className="space-y-2">
                   <p className="text-sm text-white font-medium">What Happens If You Get It Wrong</p>
                   <p className="text-sm text-white">
                     If the fault current exceeds the breaking capacity of the protective device, the
@@ -379,21 +549,45 @@ const PFCCalculator = () => {
                         className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
                         style={{ backgroundColor: config.gradientFrom }}
                       />
-                      6kA MCBs: Suitable for most domestic installations (PFC under 6000A)
+                      6 kA devices: suitable for most domestic installations (PFC up to 6000 A)
                     </li>
                     <li className="flex items-start gap-2 text-sm text-white">
                       <span
                         className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
                         style={{ backgroundColor: config.gradientFrom }}
                       />
-                      10kA MCBs: Commercial premises or installations close to a transformer
+                      10 kA devices: commercial premises or installations close to a transformer
+                    </li>
+                    {/* FIX (audit): this list used to advertise "16kA+ devices". BS 7671
+                        publishes no device breaking capacities, and 16 kA appears in it only
+                        as the conditional short-circuit rating of a consumer unit assembly
+                        type-tested to Annex ZB of BS EN 61439-3 (Reg 536.4.5). */}
+                    <li className="flex items-start gap-2 text-sm text-white">
+                      <span
+                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                        style={{ backgroundColor: config.gradientFrom }}
+                      />
+                      Above 10 kA: the device must carry a manufacturer-declared breaking capacity
+                      not less than the PFC (Reg 432.1) — usually a device to BS EN 60947-2 rather
+                      than a household MCB
                     </li>
                     <li className="flex items-start gap-2 text-sm text-white">
                       <span
                         className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
                         style={{ backgroundColor: config.gradientFrom }}
                       />
-                      16kA+ devices: Large commercial/industrial — specialist assessment needed
+                      Reg 434.5.1 also permits a LOWER breaking capacity where combined
+                      short-circuit protection is provided by an upstream device — but only where
+                      the downstream manufacturer declares the combination (Reg 536.4.2.1, 536.6)
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-white">
+                      <span
+                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                        style={{ backgroundColor: config.gradientFrom }}
+                      />
+                      &ldquo;16 kA&rdquo; is an assembly rating, not an MCB rating: a consumer unit
+                      to BS EN 61439-3 carries a 16 kA conditional short-circuit rating from the
+                      Annex ZB test (Reg 536.4.5)
                     </li>
                   </ul>
                 </div>
@@ -436,11 +630,14 @@ const PFCCalculator = () => {
       <FormulaReference
         category={CAT}
         name="Prospective Fault Current"
-        formula="PFC = Uo / Zs"
+        formula="PFC = greatest of  U₀/Zs,  U₀/Z(L–N),  and (three-phase) 2 × U₀/Z(L–N)"
         variables={[
-          { symbol: 'PFC', description: 'Fault current (A)' },
-          { symbol: 'Uo', description: 'Nominal voltage to earth (V)' },
-          { symbol: 'Zs', description: 'Earth fault loop impedance (Ω)' },
+          { symbol: 'PFC', description: 'Prospective fault current (A) — BS 7671 Appendix 14' },
+          { symbol: 'U₀', description: 'Nominal line-to-neutral voltage (V), 230 V in the UK' },
+          { symbol: 'Zs', description: 'Earth fault loop impedance, Ze + (R1+R2) (Ω)' },
+          { symbol: 'Z(L–N)', description: 'Line–neutral loop impedance (Ω)' },
+          { symbol: '× √3', description: 'Line-to-line value from the line–neutral measurement' },
+          { symbol: '× 2', description: 'Simultaneous fault on all three line conductors' },
         ]}
       />
     </CalculatorCard>

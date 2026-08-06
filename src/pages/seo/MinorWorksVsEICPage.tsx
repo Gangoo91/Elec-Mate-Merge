@@ -151,9 +151,11 @@ const sections = [
           installation of a new circuit.
         </p>
         <p>
-          Reg 120.3 also provides a practical option for jobs involving multiple circuit
-          alterations: a single EIC may be used as an alternative to issuing multiple Minor Works
-          certificates, where the work does not extend to new circuits.
+          There is also a practical option for jobs involving multiple circuit alterations: a
+          single EIC may be used as an alternative to issuing multiple Minor Works certificates,
+          where the work does not extend to new circuits. This follows from the Appendix 6 guidance
+          on the use of the model forms rather than from Regulation 120.3, which deals with
+          departures from the Regulations — worth knowing if a scheme assessor asks you to cite it.
         </p>
         <p>
           Getting this right matters. Issuing the wrong certificate can result in scheme provider

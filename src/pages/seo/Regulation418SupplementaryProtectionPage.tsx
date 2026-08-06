@@ -41,7 +41,7 @@ const tocItems = [
 const keyTakeaways = [
   'Regulation 411.3.3 requires additional protection by an RCD with a rated residual operating current (I delta n) not exceeding 30mA for socket outlets with a rated current not exceeding 32A and for mobile equipment with a rated current not exceeding 32A for use outdoors.',
   'Since Amendment 4 to BS 7671, additional protection by 30mA RCD is also required for all AC final circuits supplying luminaires within domestic premises (Regulation 411.3.4).',
-  'Regulation 411.3.4 provides a specific exemption: a socket outlet may be excluded from 30mA RCD protection where a documented risk assessment determines that the socket is for connection of a specific item of equipment and is suitably labelled.',
+  'Regulation 411.3.3 provides a specific exemption: a socket outlet may be excluded from 30mA RCD protection where a documented risk assessment determines that the socket is for connection of a specific item of equipment and is suitably labelled.',
   'Type AC RCDs detect sinusoidal AC fault currents only. Type A detects AC and pulsating DC fault currents. Type F adds protection against fault currents from frequency-controlled equipment. Type B detects all fault current types including smooth DC.',
   'Nuisance tripping is the most common complaint with RCD-protected installations. The main causes are accumulated earth leakage from multiple circuits on one RCD, faulty appliances, damp or moisture in outdoor circuits, and long cable runs with high capacitive leakage.',
 ];
@@ -80,7 +80,7 @@ const faqs = [
   {
     question: 'Can I use the freezer socket exemption on any circuit?',
     answer:
-      'The exemption in Regulation 411.3.4 is not limited to freezer sockets, but it is most commonly applied there. The regulation allows a socket outlet to be excluded from 30mA RCD protection where the socket is for connection of a particular item of equipment, the socket is suitably labelled or identified, and a documented risk assessment determines that the exemption is appropriate. The risk assessment must weigh the risk of nuisance tripping (and the consequence — spoiled food in a freezer, for example) against the reduced shock protection. The socket must be clearly labelled (for example, "FREEZER ONLY — NOT RCD PROTECTED") so that the exemption is not misused. This exemption should be used sparingly and only where there is a genuine and documented reason.',
+      'The exemption in Regulation 411.3.3 is not limited to freezer sockets, but it is most commonly applied there. The regulation allows a socket outlet to be excluded from 30mA RCD protection where the socket is for connection of a particular item of equipment, the socket is suitably labelled or identified, and a documented risk assessment determines that the exemption is appropriate. The risk assessment must weigh the risk of nuisance tripping (and the consequence — spoiled food in a freezer, for example) against the reduced shock protection. The socket must be clearly labelled (for example, "FREEZER ONLY — NOT RCD PROTECTED") so that the exemption is not misused. This exemption should be used sparingly and only where there is a genuine and documented reason.',
   },
 ];
 
@@ -280,7 +280,7 @@ const sections = [
     content: (
       <>
         <p>
-          Regulation 411.3.4 provides a narrow exemption from the 30mA RCD requirement for socket
+          Regulation 411.3.3 provides a narrow exemption from the 30mA RCD requirement for socket
           outlets. A socket outlet may be excluded from additional protection where:
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">

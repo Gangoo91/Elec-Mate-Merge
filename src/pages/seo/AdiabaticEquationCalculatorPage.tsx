@@ -1,3 +1,4 @@
+import { useState, useCallback } from 'react';
 import { Helmet } from 'react-helmet';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
@@ -6,7 +7,12 @@ import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import { RecentReviews } from '@/components/seo/RecentReviews';
+import { CalculatorSurface } from '@/components/calculators/shared';
 import AdiabaticCalculator from '@/components/apprentice/calculators/AdiabaticCalculator';
+import {
+  CalculatorResultEmail,
+  type CalculatorResultSummary,
+} from '@/components/seo/CalculatorResultEmail';
 import { combinedStoreRating } from '@/constants/app-ratings';
 import {
   Calculator,
@@ -198,6 +204,42 @@ const howToSchema = {
 };
 
 export default function AdiabaticEquationCalculatorPage() {
+  // Feed the calculator's result into the email capture below it. Shape is
+  // whatever the calculator hands back; we translate it here rather than
+  // teaching the shared calculator about email.
+  const [summary, setSummary] = useState<CalculatorResultSummary | null>(null);
+
+  const handleResult = useCallback(
+    (r: {
+      roundedCsa: number;
+      minimumCsa: number;
+      k: number;
+      usedFaultCurrent: number;
+      disconnectionTime: number;
+      material: string;
+    } | null) => {
+      if (!r) return setSummary(null);
+      setSummary({
+        calculatorName: 'Adiabatic Equation Calculator',
+        calculatorPath: '/tools/adiabatic-equation-calculator',
+        headline: `${r.roundedCsa} mm²`,
+        headlineLabel: 'Minimum CPC',
+        inputs: [
+          { label: 'Fault current', value: `${Math.round(r.usedFaultCurrent)} A` },
+          { label: 'Disconnection time', value: `${r.disconnectionTime} s` },
+          { label: 'Conductor material', value: r.material },
+          { label: 'k value', value: String(r.k) },
+        ],
+        outputs: [
+          { label: 'Calculated minimum', value: `${r.minimumCsa.toFixed(2)} mm²` },
+          { label: 'Nearest standard size', value: `${r.roundedCsa} mm²` },
+        ],
+        basis: 'S = √(I²t) / k — BS 7671:2018+A4:2026. Compare against Table 54.7, which may require a larger CPC.',
+      });
+    },
+    []
+  );
+
   useSEO({
     title: 'Adiabatic Equation Calculator: CPC Sizing UK (Free)',
     description: PAGE_DESCRIPTION,
@@ -254,11 +296,12 @@ export default function AdiabaticEquationCalculatorPage() {
       {/* Live Calculator — free, no signup, BS 7671 A4:2026 compliant */}
       <section id="calculator" className="px-5 pb-12 scroll-mt-24">
         <div className="max-w-4xl mx-auto">
-          <div className="mb-4 flex items-center gap-2 text-sm text-white/70">
+          <div className="mb-4 flex items-center gap-2 text-sm text-white">
             <span>Free to use. No sign-up. BS 7671:2018+A4:2026 compliant.</span>
           </div>
-          <AdiabaticCalculator />
-          <p className="mt-4 text-sm text-white/60">
+          <CalculatorSurface><AdiabaticCalculator onResult={handleResult} /></CalculatorSurface>
+          <CalculatorResultEmail result={summary} />
+          <p className="mt-4 text-sm text-white">
             Want this calc and 69 others built into a mobile app, with saved projects, PDF export
             and offline use?{' '}
             <SEOInternalLink href="/auth/signup">Start a 7-day free trial</SEOInternalLink>.
@@ -645,7 +688,7 @@ export default function AdiabaticEquationCalculatorPage() {
               to use a smaller CPC than Table 54.7 would require to reduce costs.
             </p>
             <p>
-              Amendment 4 to BS 7671 (A4:2026), issued in July 2024, did not change the fundamental
+              Amendment 4 to BS 7671 (A4:2026), published 15 April 2026, did not change the fundamental
               adiabatic equation requirements but added Regulation 530.3.201 covering requirements
               for bidirectional and unidirectional protective devices. The core CPC sizing
               requirements in Regulation 543.1 remain as established in the 18th Edition.

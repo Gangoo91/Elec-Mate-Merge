@@ -10,7 +10,9 @@ import {
   InventoryFilters,
   InventoryCategory,
   InventoryLocation,
+  InventoryUnit,
   INVENTORY_LOCATIONS,
+  defaultThresholdFor,
   formatQuantity,
 } from '@/types/inventory';
 
@@ -187,9 +189,26 @@ export function useInventoryStorage() {
       } = await supabase.auth.getUser();
       if (!user) return null;
 
+      /**
+       * Default the alert level here rather than in each caller. Three paths
+       * create stock — the add sheet, quick-add from the empty state, and CSV
+       * import — and only the sheet ever set one, so two thirds of new items
+       * arrived untrackable however carefully the form was designed.
+       *
+       * `undefined` means "nobody said", so we fill it. `null` means the
+       * electrician explicitly chose no alert, and that is left alone.
+       */
+      const withDefaults = {
+        ...input,
+        low_stock_threshold:
+          input.low_stock_threshold === undefined
+            ? defaultThresholdFor((input.unit ?? 'each') as InventoryUnit)
+            : input.low_stock_threshold,
+      };
+
       const { data, error } = await supabase
         .from(TABLE)
-        .insert({ ...input, user_id: user.id })
+        .insert({ ...withDefaults, user_id: user.id })
         .select()
         .single();
 
@@ -343,8 +362,55 @@ export function useInventoryStorage() {
     setLoading(false);
   }, [fetchItems]);
 
+  /**
+   * Items with no alert level. They can never report as low however empty they
+   * get, so a "0 low stock" reading against a pile of these means "nobody told
+   * us what low is" — not "you have plenty". In production this was 39 of 42.
+   */
+  const itemsMissingThreshold = useMemo(
+    () => items.filter((i) => i.low_stock_threshold == null),
+    [items]
+  );
+
+  /**
+   * Give every untracked item a starting alert level from its unit, in one
+   * write. Existing levels are never touched.
+   */
+  const applyDefaultThresholds = useCallback(async (): Promise<number> => {
+    const targets = items.filter((i) => i.low_stock_threshold == null);
+    if (targets.length === 0) return 0;
+
+    const results = await Promise.all(
+      targets.map(async (item) => {
+        const threshold = defaultThresholdFor(item.unit as InventoryUnit);
+        const { error } = await supabase
+          .from(TABLE)
+          .update({ low_stock_threshold: threshold })
+          .eq('id', item.id);
+        if (error) {
+          console.error('[useInventoryStorage] threshold backfill failed', item.id, error);
+          return null;
+        }
+        return { id: item.id, threshold };
+      })
+    );
+
+    const applied = results.filter(Boolean) as { id: string; threshold: number }[];
+    if (applied.length > 0) {
+      const byId = new Map(applied.map((a) => [a.id, a.threshold]));
+      setItems((prev) =>
+        prev.map((i) =>
+          byId.has(i.id) ? { ...i, low_stock_threshold: byId.get(i.id)! } : i
+        )
+      );
+    }
+    return applied.length;
+  }, [items]);
+
   return {
     items,
+    itemsMissingThreshold,
+    applyDefaultThresholds,
     filteredItems,
     lowStockItems,
     recentlyUsedItems,

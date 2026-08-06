@@ -26,7 +26,7 @@ export const ScenarioPlanner = ({
 }: ScenarioPlannerProps) => {
   const [whatIfMultiplier, setWhatIfMultiplier] = useState([1.0]);
   const [whatIfAnalysis, setWhatIfAnalysis] = useState<{
-    newNetProfit: number;
+    newNetCashFlow: number;
     newMinBalance: number;
     impactDescription: string;
   } | null>(null);
@@ -46,23 +46,26 @@ export const ScenarioPlanner = ({
       return { ...p, cumulativeBalance };
     });
 
-    const newNetProfit = updatedProjections.reduce((sum, p) => sum + p.netFlow, 0);
+    // This sums NET FLOW, so it is annual CASH generated, not profit. It must
+    // be compared against netCashFlow — differencing it against the accruals
+    // netProfit would subtract two different measures from each other.
+    const newNetCashFlow = updatedProjections.reduce((sum, p) => sum + p.netFlow, 0);
     const newMinBalance = Math.min(...updatedProjections.map((p) => p.cumulativeBalance));
 
     let impactDescription = '';
     const changePercent = ((multiplier - 1) * 100).toFixed(0);
-    const profitChange = newNetProfit - financialMetrics.netProfit;
+    const cashChange = newNetCashFlow - (financialMetrics.netCashFlow ?? 0);
 
     if (multiplier > 1) {
-      impactDescription = `${changePercent}% income increase would add £${profitChange.toLocaleString(undefined, { maximumFractionDigits: 0 })} annual profit`;
+      impactDescription = `${changePercent}% income increase would add £${cashChange.toLocaleString(undefined, { maximumFractionDigits: 0 })} of annual cash`;
     } else if (multiplier < 1) {
-      impactDescription = `${Math.abs(Number(changePercent))}% income decrease would reduce annual profit by £${Math.abs(profitChange).toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
+      impactDescription = `${Math.abs(Number(changePercent))}% income decrease would reduce annual cash by £${Math.abs(cashChange).toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
     } else {
       impactDescription = 'No change from current projections';
     }
 
     setWhatIfAnalysis({
-      newNetProfit,
+      newNetCashFlow,
       newMinBalance,
       impactDescription,
     });
@@ -276,21 +279,24 @@ export const ScenarioPlanner = ({
                   {/* Live results grid */}
                   <div className="grid grid-cols-2 gap-3">
                     <div className="p-3 rounded-lg bg-elec-dark/50">
-                      <p className="text-xs text-elec-light/70">New Annual Profit</p>
+                      <p className="text-xs text-elec-light/70">New Annual Cash Generated</p>
                       <p
                         className={`text-xl font-bold ${
-                          whatIfAnalysis.newNetProfit >= 0 ? 'text-green-400' : 'text-red-400'
+                          whatIfAnalysis.newNetCashFlow >= 0 ? 'text-green-400' : 'text-red-400'
                         }`}
                       >
                         £
-                        {whatIfAnalysis.newNetProfit.toLocaleString(undefined, {
+                        {whatIfAnalysis.newNetCashFlow.toLocaleString(undefined, {
                           maximumFractionDigits: 0,
                         })}
                       </p>
                       <p className="text-xs text-elec-light/60 mt-1">
-                        {whatIfAnalysis.newNetProfit - financialMetrics.netProfit >= 0 ? '+' : ''}£
+                        {whatIfAnalysis.newNetCashFlow - (financialMetrics.netCashFlow ?? 0) >= 0
+                          ? '+'
+                          : ''}
+                        £
                         {Math.abs(
-                          whatIfAnalysis.newNetProfit - financialMetrics.netProfit
+                          whatIfAnalysis.newNetCashFlow - (financialMetrics.netCashFlow ?? 0)
                         ).toLocaleString(undefined, { maximumFractionDigits: 0 })}{' '}
                         change
                       </p>

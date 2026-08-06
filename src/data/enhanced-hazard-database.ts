@@ -2146,7 +2146,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     bs7671References: [
       'Part 6 - Section 612',
       '643.3 - Insulation resistance testing',
-      'Table 61 - Minimum values of insulation resistance',
+      'Table 64 - Minimum values of insulation resistance',
     ],
     category: 'testing-inspection',
     workType: ['testing', 'inspection', 'commissioning'],
@@ -3221,7 +3221,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     },
     bs7671References: [
       '643.3 - Insulation resistance testing',
-      'Table 61 - Minimum insulation resistance values',
+      'Table 64 - Minimum insulation resistance values',
     ],
     category: 'specialised-equipment',
     workType: ['testing'],

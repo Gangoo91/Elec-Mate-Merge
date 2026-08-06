@@ -1,11 +1,14 @@
 import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 import { CALCULATOR_CONFIG, CalculatorCategory } from './CalculatorConfig';
+import { CalculatorSurfaceContext, useCalculatorSurface } from './calculatorSurface';
 
 interface CalculatorCardProps {
   category: CalculatorCategory;
   title: string;
   description?: string;
+  /** Short qualifier shown beside the title, e.g. "2025 Data". */
+  badge?: string;
   children: ReactNode;
   className?: string;
 }
@@ -18,30 +21,55 @@ interface CalculatorCardProps {
 // runtime will accept any string.
 const FALLBACK_CATEGORY: CalculatorCategory = 'power';
 
+/** Marks its subtree as the public tool surface (edge-to-edge on mobile). */
+export const CalculatorSurface = ({
+  edgeToEdge = true,
+  children,
+}: {
+  edgeToEdge?: boolean;
+  children: ReactNode;
+}) => (
+  <CalculatorSurfaceContext.Provider value={{ edgeToEdge }}>
+    {children}
+  </CalculatorSurfaceContext.Provider>
+);
+
 export const CalculatorCard = ({
   category,
   title,
   description,
+  badge,
   children,
   className,
 }: CalculatorCardProps) => {
   // Resolve category for fallback safety; chrome stays neutral regardless.
   const _config = CALCULATOR_CONFIG[category] ?? CALCULATOR_CONFIG[FALLBACK_CATEGORY];
   void _config;
+  const { edgeToEdge } = useCalculatorSurface();
 
   return (
     <div
       className={cn(
-        'rounded-2xl border border-white/[0.06] bg-white/[0.02] overflow-hidden',
+        'border border-white/[0.06] bg-white/[0.02] overflow-hidden',
+        edgeToEdge
+          ? '-mx-4 rounded-none border-x-0 sm:mx-0 sm:rounded-2xl sm:border-x'
+          : 'rounded-2xl',
         className
       )}
     >
       <div className="px-4 sm:px-6 pt-5 pb-4 space-y-1">
-        <h2 className="text-[18px] sm:text-[20px] font-medium text-white leading-tight">
-          {title}
-        </h2>
+        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+          <h2 className="text-[18px] sm:text-[20px] font-medium text-white leading-tight">
+            {title}
+          </h2>
+          {badge && (
+            <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+              {badge}
+            </span>
+          )}
+        </div>
         {description && (
-          <p className="text-[13px] text-white/70 leading-relaxed">{description}</p>
+          <p className="text-[13px] text-white leading-relaxed">{description}</p>
         )}
       </div>
 
@@ -72,7 +100,7 @@ export const CalculatorSection = ({ title, children, className }: CalculatorSect
   return (
     <div className={cn('space-y-3', className)}>
       {title && (
-        <h3 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <h3 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           {title}
         </h3>
       )}

@@ -345,6 +345,7 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       else if (rt === 'g99-commissioning') edgeFunctionName = 'generate-g99-commissioning-pdf';
       else if (rt === 'bess') edgeFunctionName = 'generate-bess-pdf';
       else if (rt === 'smoke-co-alarm') edgeFunctionName = 'generate-smoke-co-alarm-pdf';
+      else if (rt === 'fire-alarm-log-book') edgeFunctionName = 'generate-fire-alarm-log-book-pdf';
       else if (rt === 'danger-notice') edgeFunctionName = 'generate-danger-notice-pdf';
       else if (rt === 'isolation-cert') edgeFunctionName = 'generate-isolation-cert-pdf';
       else if (rt === 'permit-to-work') edgeFunctionName = 'generate-permit-to-work-pdf';

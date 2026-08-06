@@ -29,7 +29,11 @@ export type ReportType =
   | 'g99-commissioning'
   | 'smoke-co-alarm'
   | 'heat-pump'
-  | 'testing-only';
+  | 'testing-only'
+  // An Annex H log book export is a certificate in every way that matters:
+  // it is generated, saved, downloaded and emailed the same way, so it is a
+  // report row rather than a parallel mechanism (ELE-1483).
+  | 'fire-alarm-log-book';
 
 export interface CloudReport {
   id: string;
@@ -167,7 +171,9 @@ const reportTypeFromId = (reportId: string): string => {
                                       ? 'safe-isolation'
                                       : lc.startsWith('warning-labels')
                                         ? 'warning-labels'
-                                        : lc.startsWith('minor-works')
+                                        : lc.startsWith('fa-logbook')
+                                          ? 'fire-alarm-log-book'
+                                          : lc.startsWith('minor-works')
                                           ? 'minor-works'
                                           : lc.startsWith('eic-')
                                             ? 'eic'
@@ -261,6 +267,13 @@ const calculateReportStatus = ({
     data.testerSignature &&
     (data.clientName || data.installationAddress)
   )
+    return 'completed';
+  // A log book export is not a form someone fills in over time — it is a
+  // snapshot of a record that already exists, generated complete or not at all.
+  // So it completes on having a premises to identify it, with no signature
+  // condition: the countersignatures on the document are optional, and gating
+  // on one would leave every unsigned export sat as a draft forever.
+  if (reportType === 'fire-alarm-log-book' && (data.premises_name || data.building_name))
     return 'completed';
   if (reportType === 'disconnection' && data.inspectorSignature && data.workDate)
     return 'completed';

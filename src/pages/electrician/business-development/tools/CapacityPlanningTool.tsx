@@ -27,41 +27,34 @@ import {
   ResultsGrid,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import {
+  calculateCapacityMetrics,
+  CapacityInputs,
+  CALENDAR_WEEKS_PER_YEAR,
+  JIB_WEEKLY_HOURS,
+  STATUTORY_HOLIDAY_WEEKS,
+} from '@/utils/business-planning-maths';
 
-interface CapacityInputs {
-  totalElectricians: number;
-  workingHoursPerDay: number;
-  workingDaysPerWeek: number;
-  weeksPerYear: number;
-  adminTimePercentage: number;
-  travelTimePercentage: number;
-  holidayDays: number;
-  sickDays: number;
-  trainingDays: number;
-  averageJobHours: number;
-  emergencyWorkPercentage: number;
-  plannedMaintenancePercentage: number;
-  growthTargetPercentage: number;
-}
+const DEFAULT_INPUTS: CapacityInputs = {
+  totalElectricians: 1,
+  workingHoursPerDay: JIB_WEEKLY_HOURS / 5, // 7.5, not 8
+  workingDaysPerWeek: 5,
+  weeksPerYear: CALENDAR_WEEKS_PER_YEAR,
+  adminTimePercentage: 15,
+  travelTimePercentage: 20,
+  holidayDays: STATUTORY_HOLIDAY_WEEKS * 5, // 28 days for a 5-day week
+  sickDays: 5,
+  trainingDays: 3,
+  averageJobHours: 6,
+  emergencyWorkPercentage: 20,
+  plannedMaintenancePercentage: 30,
+  growthTargetPercentage: 25,
+};
 
 const CapacityPlanningTool = () => {
   const config = CALCULATOR_CONFIG['business'];
 
-  const [inputs, setInputs] = useState<CapacityInputs>({
-    totalElectricians: 1,
-    workingHoursPerDay: 8,
-    workingDaysPerWeek: 5,
-    weeksPerYear: 52,
-    adminTimePercentage: 15,
-    travelTimePercentage: 20,
-    holidayDays: 28,
-    sickDays: 5,
-    trainingDays: 3,
-    averageJobHours: 6,
-    emergencyWorkPercentage: 20,
-    plannedMaintenancePercentage: 30,
-    growthTargetPercentage: 25,
-  });
+  const [inputs, setInputs] = useState<CapacityInputs>(DEFAULT_INPUTS);
 
   const [calculated, setCalculated] = useState(false);
   const [showGuidance, setShowGuidance] = useState(false);
@@ -80,33 +73,18 @@ const CapacityPlanningTool = () => {
   };
 
   const resetTool = () => {
-    setInputs({
-      totalElectricians: 1,
-      workingHoursPerDay: 8,
-      workingDaysPerWeek: 5,
-      weeksPerYear: 52,
-      adminTimePercentage: 15,
-      travelTimePercentage: 20,
-      holidayDays: 28,
-      sickDays: 5,
-      trainingDays: 3,
-      averageJobHours: 6,
-      emergencyWorkPercentage: 20,
-      plannedMaintenancePercentage: 30,
-      growthTargetPercentage: 25,
-    });
+    setInputs(DEFAULT_INPUTS);
     setCalculated(false);
   };
 
   const loadExample = () => {
+    // Weeks per year stays at 52. The old example used 50 AND deducted 28
+    // holiday days, double-counting two weeks of leave.
     setInputs({
+      ...DEFAULT_INPUTS,
       totalElectricians: 3,
-      workingHoursPerDay: 8,
-      workingDaysPerWeek: 5,
-      weeksPerYear: 50,
       adminTimePercentage: 18,
       travelTimePercentage: 25,
-      holidayDays: 28,
       sickDays: 7,
       trainingDays: 5,
       averageJobHours: 4,
@@ -117,98 +95,48 @@ const CapacityPlanningTool = () => {
     setCalculated(false);
   };
 
-  // Calculate capacity metrics
-  const calculateMetrics = () => {
-    // Calculate total available hours
-    const totalWorkingDays =
-      inputs.weeksPerYear * inputs.workingDaysPerWeek -
-      inputs.holidayDays -
-      inputs.sickDays -
-      inputs.trainingDays;
-    const totalAvailableHours =
-      inputs.totalElectricians * totalWorkingDays * inputs.workingHoursPerDay;
+  const metrics = calculateCapacityMetrics(inputs);
 
-    // Calculate non-billable time
-    const adminHours = totalAvailableHours * (inputs.adminTimePercentage / 100);
-    const travelHours = totalAvailableHours * (inputs.travelTimePercentage / 100);
-    const nonBillableHours = adminHours + travelHours;
-
-    // Calculate billable hours
-    const billableHours = totalAvailableHours - nonBillableHours;
-
-    // Calculate job capacity
-    const jobsPerYear = inputs.averageJobHours > 0 ? billableHours / inputs.averageJobHours : 0;
-    const jobsPerWeek = jobsPerYear / inputs.weeksPerYear;
-    const jobsPerDay = jobsPerWeek / inputs.workingDaysPerWeek;
-
-    // Calculate utilization
-    const utilizationRate =
-      totalAvailableHours > 0 ? (billableHours / totalAvailableHours) * 100 : 0;
-
-    // Calculate work type distribution
-    const emergencyCapacity = billableHours * (inputs.emergencyWorkPercentage / 100);
-    const maintenanceCapacity = billableHours * (inputs.plannedMaintenancePercentage / 100);
-    const newWorkCapacity = billableHours - emergencyCapacity - maintenanceCapacity;
-
-    // Calculate growth capacity
-    const targetHours = billableHours * (1 + inputs.growthTargetPercentage / 100);
-    const capacityGap = targetHours - billableHours;
-    const additionalStaffNeeded =
-      capacityGap > 0
-        ? Math.ceil(
-            capacityGap /
-              ((totalAvailableHours / inputs.totalElectricians) * (utilizationRate / 100))
-          )
-        : 0;
-
-    return {
-      totalAvailableHours,
-      billableHours,
-      nonBillableHours,
-      jobsPerYear: Math.round(jobsPerYear),
-      jobsPerWeek: Math.round(jobsPerWeek * 10) / 10,
-      jobsPerDay: Math.round(jobsPerDay * 10) / 10,
-      utilizationRate,
-      additionalStaffNeeded,
-      emergencyCapacity,
-      maintenanceCapacity,
-      newWorkCapacity,
-    };
-  };
-
-  const metrics = calculateMetrics();
-
+  // Bands describe how much of a paid hour is chargeable. A healthy field
+  // trade loses 25-35% to travel and paperwork, so 65-75% billable is normal;
+  // above 85% usually means quoting and certification are not being counted.
   const getCapacityStatus = () => {
-    if (metrics.utilizationRate >= 85) {
+    if (metrics.billableRatio >= 85) {
       return {
-        color: 'text-red-400',
-        label: 'Overutilized',
-        bg: 'bg-red-500/10 border-red-500/30',
+        color: 'text-amber-400',
+        label: 'Overhead looks understated',
+        bg: 'bg-amber-500/10 border-amber-500/30',
       };
     }
-    if (metrics.utilizationRate >= 70) {
+    if (metrics.billableRatio >= 65) {
       return {
         color: 'text-green-400',
-        label: 'Optimal',
+        label: 'Typical',
         bg: 'bg-green-500/10 border-green-500/30',
       };
     }
-    if (metrics.utilizationRate >= 50) {
+    if (metrics.billableRatio >= 50) {
       return {
         color: 'text-amber-400',
-        label: 'Underutilized',
+        label: 'High overhead',
         bg: 'bg-amber-500/10 border-amber-500/30',
       };
     }
     return {
       color: 'text-orange-400',
-      label: 'Very Low',
+      label: 'Very high overhead',
       bg: 'bg-orange-500/10 border-orange-500/30',
     };
   };
 
+  // workingDaysPerWeek was missing from this guard, so a blank value reached
+  // the maths and produced Infinity in the jobs-per-day figure.
   const isValid =
-    inputs.totalElectricians > 0 && inputs.workingHoursPerDay > 0 && inputs.weeksPerYear > 0;
+    inputs.totalElectricians > 0 &&
+    inputs.workingHoursPerDay > 0 &&
+    inputs.workingDaysPerWeek > 0 &&
+    inputs.weeksPerYear > 0 &&
+    metrics.workingDaysPerHead > 0;
   const capacityStatus = getCapacityStatus();
 
   return (
@@ -273,8 +201,8 @@ const CapacityPlanningTool = () => {
               inputMode="decimal"
               value={inputs.workingHoursPerDay.toString()}
               onChange={(val) => updateInput('workingHoursPerDay', val)}
-              placeholder="e.g., 8"
-              hint="Working hours"
+              placeholder="e.g., 7.5"
+              hint="JIB week is 37.5h"
             />
           </div>
 
@@ -295,8 +223,8 @@ const CapacityPlanningTool = () => {
               inputMode="decimal"
               value={inputs.weeksPerYear.toString()}
               onChange={(val) => updateInput('weeksPerYear', val)}
-              placeholder="e.g., 52"
-              hint="Annual weeks"
+              placeholder="52"
+              hint="Calendar weeks - leave is deducted below"
             />
           </div>
 
@@ -344,7 +272,7 @@ const CapacityPlanningTool = () => {
               value={inputs.holidayDays.toString()}
               onChange={(val) => updateInput('holidayDays', val)}
               placeholder="28"
-              hint="Leave + bank"
+              hint="5.6 weeks statutory"
             />
 
             <CalculatorInput
@@ -462,15 +390,26 @@ const CapacityPlanningTool = () => {
           <div className="space-y-4 animate-fade-in">
             {/* Utilization Status */}
             <div className={cn('flex items-center gap-2 p-3 rounded-xl border', capacityStatus.bg)}>
-              {metrics.utilizationRate >= 70 && metrics.utilizationRate < 85 ? (
+              {metrics.billableRatio >= 65 && metrics.billableRatio < 85 ? (
                 <CheckCircle className={cn('h-5 w-5', capacityStatus.color)} />
               ) : (
                 <AlertCircle className={cn('h-5 w-5', capacityStatus.color)} />
               )}
               <span className={cn('font-medium text-sm', capacityStatus.color)}>
-                {capacityStatus.label} - {metrics.utilizationRate.toFixed(1)}% Utilization
+                {capacityStatus.label} - {metrics.billableRatio.toFixed(1)}% of paid hours are
+                chargeable
               </span>
             </div>
+
+            {metrics.mixOverAllocated && (
+              <div className="flex items-center gap-2 p-3 rounded-xl border border-orange-500/30 bg-orange-500/10">
+                <AlertCircle className="h-5 w-5 text-orange-400" />
+                <span className="font-medium text-sm text-orange-300">
+                  Emergency and maintenance together exceed 100% of billable hours - there is no
+                  room left for new projects.
+                </span>
+              </div>
+            )}
 
             <CalculatorResult category="business">
               <div className="text-center pb-4 border-b border-white/10">
@@ -486,6 +425,11 @@ const CapacityPlanningTool = () => {
                 >
                   {metrics.billableHours.toFixed(0)}
                 </div>
+                <p className="text-xs text-white mt-2">
+                  {metrics.workingDaysPerHead.toFixed(0)} working days per electrician after leave,
+                  sickness and training, at {inputs.workingHoursPerDay}h/day. Chargeable hours only
+                  &mdash; not hours sold.
+                </p>
               </div>
 
               <ResultsGrid columns={2}>
@@ -575,13 +519,13 @@ const CapacityPlanningTool = () => {
                 <div>
                   <h4 className="text-white font-medium mb-2">Planning Insight</h4>
                   <p className="text-sm text-white">
-                    {metrics.utilizationRate >= 85
-                      ? 'Consider hiring additional staff or reducing workload to prevent burnout and maintain quality standards. High utilization can lead to mistakes and safety issues.'
-                      : metrics.utilizationRate >= 70
-                        ? 'Your team is operating at an ideal utilization level. You have capacity for emergency work while maintaining quality and work-life balance.'
-                        : metrics.utilizationRate >= 50
-                          ? "There's opportunity to take on more work or improve efficiency. Consider marketing efforts, expanding services, or optimizing scheduling."
-                          : 'Very low utilization suggests serious capacity management issues. Review pricing, marketing, and operational efficiency.'}
+                    {metrics.billableRatio >= 85
+                      ? 'Under 15% for admin and travel is unusually low for a field trade. Check that quoting, certification, van stock runs and merchant trips are all being counted - if they are not, your charge-out rate is being spread over hours you cannot sell.'
+                      : metrics.billableRatio >= 65
+                        ? 'Admin and travel are in the normal range for an electrical contractor. Remember this is the share of paid hours you CAN bill, not the share you have actually sold - price against the billable figure, not the headline hours.'
+                        : metrics.billableRatio >= 50
+                          ? 'A third to a half of every paid hour is going on travel and paperwork. Tighter job clustering by postcode and moving certification onto site usually recovers the most.'
+                          : 'More than half of every paid hour is non-chargeable. Either the overhead percentages are overstated, or routing and administration need serious attention before taking on more work.'}
                   </p>
                 </div>
               </div>
@@ -609,23 +553,25 @@ const CapacityPlanningTool = () => {
                   <ul className="space-y-2 text-sm text-blue-200/80">
                     <li className="flex items-start gap-2">
                       <span className="text-blue-400 mt-1">•</span>
-                      <strong className="text-blue-300">Utilization 70-80%:</strong> Optimal range
-                      with flexibility for emergencies
+                      <strong className="text-blue-300">Billable ratio:</strong> the share of paid
+                      hours you can charge for. It is 100% less admin and travel - it does not
+                      measure whether those hours were sold.
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-blue-400 mt-1">•</span>
-                      <strong className="text-blue-300">Above 85%:</strong> Risk of burnout and
-                      quality issues
+                      <strong className="text-blue-300">65-75% is normal</strong> for a field trade.
+                      Above 85% usually means quoting or certification time is uncounted.
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-blue-400 mt-1">•</span>
-                      <strong className="text-blue-300">Below 50%:</strong> Capacity being wasted,
-                      review marketing
+                      <strong className="text-blue-300">Assumptions:</strong> 37.5-hour JIB week
+                      over 52 calendar weeks, less 5.6 weeks statutory holiday, sickness and
+                      training. Overtime and on-call are not modelled.
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-blue-400 mt-1">•</span>
-                      <strong className="text-blue-300">Staff for growth:</strong> Additional
-                      electricians needed to hit target
+                      <strong className="text-blue-300">Staff for growth:</strong> the shortfall
+                      divided by the billable hours one electrician delivers, rounded up.
                     </li>
                   </ul>
                 </CollapsibleContent>
@@ -655,10 +601,10 @@ const CapacityPlanningTool = () => {
             <CollapsibleContent className="p-4 pt-0">
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div className="space-y-1">
-                  <p className="text-amber-300 font-medium">Optimal Utilization</p>
-                  <p className="text-amber-200/70">Target: 70-80%</p>
-                  <p className="text-amber-200/70">Buffer for emergencies</p>
-                  <p className="text-amber-200/70">Prevents burnout</p>
+                  <p className="text-amber-300 font-medium">JIB Working Week</p>
+                  <p className="text-amber-200/70">37.5 hours (NWR 3.1)</p>
+                  <p className="text-amber-200/70">1,950h/yr before leave</p>
+                  <p className="text-amber-200/70">Not 40h / 2,080h</p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-amber-300 font-medium">Growth Planning</p>
@@ -667,10 +613,10 @@ const CapacityPlanningTool = () => {
                   <p className="text-amber-200/70">BS7671 compliance</p>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-amber-300 font-medium">UK Holidays</p>
-                  <p className="text-amber-200/70">Min: 28 days (inc bank)</p>
+                  <p className="text-amber-300 font-medium">Statutory Leave</p>
+                  <p className="text-amber-200/70">5.6 weeks (28 days at 5/wk)</p>
+                  <p className="text-amber-200/70">Bank holidays may count in</p>
                   <p className="text-amber-200/70">Avg sick: 4-7 days</p>
-                  <p className="text-amber-200/70">CPD: 35hrs/year</p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-amber-300 font-medium">Efficiency</p>

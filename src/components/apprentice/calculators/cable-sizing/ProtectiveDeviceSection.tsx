@@ -1,20 +1,9 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { CheckCircle2, XCircle, ChevronDown } from 'lucide-react';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
-import { RequiredFieldTooltip } from '@/components/ui/required-field-tooltip';
 import {
   DeviceType,
-  deviceTypeOptions,
-  ratingsByDevice,
-  getFilteredRatings,
   validateProtectiveDevice,
   getDeviceInfo,
   getI2Multiplier,
@@ -24,29 +13,20 @@ interface ProtectiveDeviceSectionProps {
   designCurrent: number;
   effectiveCapacity: number; // Iz
   nextCableSizeUp?: { size: number; capacity: number };
+  /** The device the cable was sized on — selected on the input form so that
+      the coordination check and the sizing cannot disagree. */
+  deviceType: DeviceType;
+  rating: number;
 }
 
 const ProtectiveDeviceSection = ({
   designCurrent,
   effectiveCapacity,
   nextCableSizeUp,
+  deviceType,
+  rating,
 }: ProtectiveDeviceSectionProps) => {
   const [isOpen, setIsOpen] = useState(true);
-  const [deviceType, setDeviceType] = useState<DeviceType>('mcb-b');
-  const [rating, setRating] = useState<number>(0);
-
-  // Get available ratings for selected device type
-  const availableRatings = useMemo(() => {
-    return getFilteredRatings(deviceType, designCurrent);
-  }, [deviceType, designCurrent]);
-
-  // Auto-select sensible default rating when device type changes
-  useEffect(() => {
-    const ratings = ratingsByDevice[deviceType];
-    // Find the smallest rating >= design current
-    const defaultRating = ratings.find((r) => r >= designCurrent) || ratings[0];
-    setRating(defaultRating);
-  }, [deviceType, designCurrent]);
 
   // Validate the current selection
   const validation = useMemo(() => {
@@ -94,53 +74,20 @@ const ProtectiveDeviceSection = ({
       </CollapsibleTrigger>
 
       <CollapsibleContent className="pt-6 space-y-6">
-        {/* Device Selection */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <label className="text-[13px] font-medium text-white flex items-center gap-1">
-              Device Type
-              <RequiredFieldTooltip content="Select the type of protective device for overload protection" />
-            </label>
-            <Select value={deviceType} onValueChange={(v) => setDeviceType(v as DeviceType)}>
-              <SelectTrigger className="h-11 bg-white/[0.04] border-white/10 focus:border-yellow-500 focus:ring-yellow-500 touch-manipulation">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {deviceTypeOptions.map((option) => (
-                  <SelectItem key={option.value} value={option.value} className="py-3">
-                    <div className="flex flex-col">
-                      <span className="text-white">{option.label}</span>
-                      <span className="text-xs text-white/55">{option.standard}</span>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {deviceInfo && (
-              <p className="text-[12px] text-white/55 font-mono">
-                I₂ = {i2Multiplier} × In ({deviceInfo.standard})
-              </p>
-            )}
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-[13px] font-medium text-white flex items-center gap-1">
-              Rating (In)
-              <RequiredFieldTooltip content="Nominal current rating of the protective device" />
-            </label>
-            <Select value={rating.toString()} onValueChange={(v) => setRating(parseInt(v))}>
-              <SelectTrigger className="h-11 bg-white/[0.04] border-white/10 focus:border-yellow-500 focus:ring-yellow-500 touch-manipulation">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="max-h-60">
-                {availableRatings.map((r) => (
-                  <SelectItem key={r} value={r.toString()} className="py-3 text-white">
-                    {r}A
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+        {/* Device summary — the selection itself lives on the input form, since
+            App 4 §5.1.1 sizes the cable on In and Cf depends on the device. */}
+        <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Device sized on
+          </span>
+          <p className="text-[14px] font-medium text-white">
+            {deviceInfo?.label ?? deviceType} — {rating}A
+          </p>
+          {deviceInfo && (
+            <p className="text-[12px] text-white font-mono">
+              I₂ = {i2Multiplier} × In ({deviceInfo.standard})
+            </p>
+          )}
         </div>
 
         {/* Validation Results */}

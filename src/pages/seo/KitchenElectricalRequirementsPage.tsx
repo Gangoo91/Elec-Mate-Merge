@@ -506,7 +506,7 @@ const sections = [
               <span>
                 <strong>C2 observation on EICR</strong> — absence of RCD protection on kitchen
                 socket circuits is classified as C2 (potentially dangerous) on an EICR under BS 7671
-                Section 631. This makes the EICR Unsatisfactory and requires remedial action within
+                Chapter 65. This makes the EICR Unsatisfactory and requires remedial action within
                 28 days for landlord properties.
               </span>
             </li>

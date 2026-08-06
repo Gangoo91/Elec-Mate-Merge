@@ -82,7 +82,7 @@ const faqs = [
   {
     question: 'What happens if an Exeter rental fails its EICR?',
     answer:
-      'An EICR is Unsatisfactory if it contains C1 (danger present) or C2 (potentially dangerous) observations under BS 7671 Section 631. The landlord must complete all required remedial work within 28 days (or sooner as specified by the inspector) and obtain written confirmation from a qualified electrician. The confirmation must be provided to the tenant and to Exeter City Council. Failure to complete remedial work is a separate breach with its own penalty of up to £30,000.',
+      'An EICR is Unsatisfactory if it contains C1 (danger present) or C2 (potentially dangerous) observations under BS 7671 Chapter 65. The landlord must complete all required remedial work within 28 days (or sooner as specified by the inspector) and obtain written confirmation from a qualified electrician. The confirmation must be provided to the tenant and to Exeter City Council. Failure to complete remedial work is a separate breach with its own penalty of up to £30,000.',
   },
   {
     question: 'Do Devon rural rental properties have different EICR requirements?',
@@ -160,7 +160,7 @@ const sections = [
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
-                (Section 631 covers periodic inspection and testing requirements).
+                (Chapter 65 covers periodic inspection and testing requirements).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -506,7 +506,7 @@ const sections = [
       <>
         <p>
           When an Exeter or Devon EICR identifies C1 or C2 observations (classified under BS 7671
-          Section 631), landlords must complete remedial work within the strict timescales set by
+          Chapter 65), landlords must complete remedial work within the strict timescales set by
           the 2020 Regulations. In rural Devon, finding available electricians quickly can be more
           challenging than in urban areas — planning ahead is essential.
         </p>

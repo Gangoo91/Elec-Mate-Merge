@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect, useMemo, Fragment } from 'react';
+import { useState, useRef, useEffect, useMemo, Fragment, type SetStateAction } from 'react';
+import { createPortal } from 'react-dom';
 import {
   ArrowLeft,
   MousePointer2,
@@ -42,13 +43,15 @@ import { SymbolCountPanel } from '@/components/electrician-tools/diagram-builder
 import { ExportReviewSheet } from '@/components/electrician-tools/diagram-builder/ExportReviewSheet';
 import { MyPlansSheet } from '@/components/electrician-tools/diagram-builder/MyPlansSheet';
 import { symbolRegistry } from '@/components/electrician-tools/diagram-builder/symbols/symbolRegistry';
-import { assignCircuits } from '@/utils/circuit-assignment';
 import { STANDARD_NOTES } from '@/utils/standard-electrical-notes';
-import { useFloorPlanRooms, type SavedRoom } from '@/hooks/useFloorPlanRooms';
+import { buildConsumerUnitSchedule } from '@/utils/circuit-assignment';
+import { useFloorPlanRooms, FLOOR_PLAN_ROOMS_KEY, type SavedRoom } from '@/hooks/useFloorPlanRooms';
+import { resnapWallSymbols } from '@/components/electrician-tools/diagram-builder/wallSnap';
 import { useFloorPlanCloud } from '@/hooks/useFloorPlanCloud';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { storageSetJSONSync, storageGetJSONSync } from '@/utils/storage';
+import { isTypingContext, isInOverlay } from '@/utils/keyboardGuards';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -202,8 +205,20 @@ const duplicateCanvasObject = (obj: CanvasObject, offset = 24): CanvasObject => 
  * displayed HTML canvas, which produced blank images whenever the user had
  * panned/zoomed so the room sat outside the visible canvas pixel bounds.
  */
+type ExportableCanvas = {
+  toCanvasElement: (
+    multiplier: number,
+    options?: { left: number; top: number; width: number; height: number }
+  ) => HTMLCanvasElement;
+  getObjects?: () => { visible?: boolean; isGridLine?: boolean }[];
+  renderAll?: () => unknown;
+  getZoom?: () => number;
+  viewportTransform?: number[];
+  setViewportTransform?: (vpt: number[]) => unknown;
+};
+
 const renderCenteredRoomImage = (
-  fabricCanvas: { toCanvasElement: (multiplier: number, options?: { left: number; top: number; width: number; height: number }) => HTMLCanvasElement } | null | undefined,
+  fabricCanvas: ExportableCanvas | null | undefined,
   bounds: ReturnType<typeof getObjectBounds>,
   targetSize: { width: number; height: number },
   padding: number,
@@ -229,8 +244,28 @@ const renderCenteredRoomImage = (
   const cropH = bounds.height + cropPad * 2;
   const multiplier = 2;
 
+  // The on-screen grid is a drawing aid, not drawing content — it has no place
+  // on a document handed to a client. Hide the grid lines for the capture and
+  // put them straight back, so the export is the drawing alone.
+  const gridLines = (fabricCanvas.getObjects?.() ?? []).filter((o) => o.isGridLine);
+  const gridWasVisible = gridLines.map((o) => o.visible !== false);
+  gridLines.forEach((o) => { o.visible = false; });
+
+  // Capture at identity viewport.
+  //
+  // Fabric v6's toCanvasElement does NOT ignore the viewport — it computes
+  // newZoom = zoom * multiplier and offsets the crop by the current pan. The
+  // crop rect here is in world coordinates, so any zoom other than 1 aimed it
+  // somewhere other than the drawing and produced a blank white sheet. This
+  // silently worked only because the canvas happened to sit at zoom 1 until
+  // fit-to-view started setting it. Neutralise the viewport for the capture
+  // and restore it after, so the image is correct at any zoom or pan.
+  const savedVpt = fabricCanvas.viewportTransform ? [...fabricCanvas.viewportTransform] : null;
+  const canResetViewport = typeof fabricCanvas.setViewportTransform === 'function';
+
   let tightCanvas: HTMLCanvasElement;
   try {
+    if (canResetViewport) fabricCanvas.setViewportTransform!([1, 0, 0, 1, 0, 0]);
     tightCanvas = fabricCanvas.toCanvasElement(multiplier, {
       left: cropL,
       top: cropT,
@@ -239,6 +274,10 @@ const renderCenteredRoomImage = (
     });
   } catch {
     return outputCanvas.toDataURL('image/png', quality);
+  } finally {
+    if (savedVpt && canResetViewport) fabricCanvas.setViewportTransform!(savedVpt);
+    gridLines.forEach((o, i) => { o.visible = gridWasVisible[i]; });
+    fabricCanvas.renderAll?.();
   }
 
   const scale = Math.min(
@@ -267,10 +306,39 @@ const DiagramBuilderPage = () => {
     storageGetJSONSync<{
       objects?: CanvasObject[];
       settings?: { gridEnabled?: boolean; snapEnabled?: boolean };
+      activeRoomId?: string | null;
     } | null>('diagram-builder-project', null)
   ).current;
+  /**
+   * The saved room the restored canvas belongs to, or null.
+   *
+   * `activeRoomId` used to live only in React state, so any reload — or the OS
+   * evicting a backgrounded tab — brought the drawing back but forgot which
+   * saved room it was. Export then refused with "Save this room first" for a
+   * room that WAS saved, and obeying that toast appended a duplicate room
+   * instead of updating the original.
+   *
+   * Resolved against storage rather than trusted blindly: a stale id (room
+   * deleted in another tab) would reopen the same hole, and `updateRoom` on a
+   * missing id no-ops silently, losing the save.
+   */
+  const restoredRoom = useRef<SavedRoom | null>(
+    (() => {
+      const id = restoredProject?.activeRoomId;
+      if (!id) return null;
+      return (
+        storageGetJSONSync<SavedRoom[]>(FLOOR_PLAN_ROOMS_KEY, []).find((r) => r.id === id) ?? null
+      );
+    })()
+  ).current;
+  // Drawings saved before the wall-snap rotation fix carry symbols that are
+  // 90° out and standing off the wall, so every existing plan would have gone
+  // on looking wrong. Re-seating on load fixes them wherever the user goes.
+  const restoredResnap = useRef(
+    resnapWallSymbols(restoredProject?.objects ?? [])
+  ).current;
   const [canvasObjects, setCanvasObjects] = useState<CanvasObject[]>(
-    () => restoredProject?.objects ?? []
+    () => restoredResnap.objects
   );
   const [gridEnabled, setGridEnabled] = useState<boolean>(
     () => restoredProject?.settings?.gridEnabled ?? true
@@ -300,12 +368,13 @@ const DiagramBuilderPage = () => {
   // covers the canvas — so the thumbnail is always generated from a clean,
   // fully-rendered fabric canvas.
   const [pendingSave, setPendingSave] = useState<{ thumbnail: string; fullImage: string } | null>(null);
-  const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
+  const [activeRoomId, setActiveRoomId] = useState<string | null>(restoredRoom?.id ?? null);
   const [exportReviewOpen, setExportReviewOpen] = useState(false);
   const [myPlansOpen, setMyPlansOpen] = useState(false);
   const [viewportWidth, setViewportWidth] = useState(() => window.innerWidth);
   const [mobileUiOffset, setMobileUiOffset] = useState(0);
-  const { rooms, saveRoom, deleteRoom, updateRoom, clearAllRooms } = useFloorPlanRooms();
+  const { rooms, saveRoom, deleteRoom, updateRoom, clearAllRooms, persistFailed, didLastWriteFail } =
+    useFloorPlanRooms();
   const { saveToCloud, loadFromCloud } = useFloorPlanCloud();
   const canvasRef = useRef<any>(null);
   const [searchParams] = useSearchParams();
@@ -326,6 +395,12 @@ const DiagramBuilderPage = () => {
   const [projectLocation, setProjectLocation] = useState<string | null>(null);
   const [projectClientName, setProjectClientName] = useState<string | null>(null);
   const [electricianName, setElectricianName] = useState<string | null>(null);
+  // Company branding for the PDF. Every certificate template carries the
+  // installer's logo and accent colour; the floor plan was the only client-
+  // facing document going out unbranded.
+  const [companyBrand, setCompanyBrand] = useState<{
+    name: string; logo: string; accent: string; phone: string; email: string;
+  } | null>(null);
   // Short label for the "Linked to report" pill + cloud plan name (e.g. the
   // installation address or certificate number of the attached report).
   const [reportLabel, setReportLabel] = useState<string | null>(null);
@@ -342,13 +417,58 @@ const DiagramBuilderPage = () => {
   // than firing in parallel.
   const cloudSaveChainRef = useRef<Promise<unknown>>(Promise.resolve());
   const haptic = useHaptic();
+  // useHaptic() returns a NEW object literal each render (its methods are
+  // memoised, the container isn't). Effects that need it must read it through
+  // this ref — depending on `haptic` directly would re-run them every render.
+  const hapticRef = useRef(haptic);
+  hapticRef.current = haptic;
+  // Latest-handler mirror for the window keydown effect — see the shortcuts
+  // effect below for why this can't be a plain closure capture.
+  const shortcutsRef = useRef<{ save: () => void; undo: () => void; redo: () => void }>({
+    save: () => {},
+    undo: () => {},
+    redo: () => {},
+  });
   const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Raised immediately before a programmatic objects swap (loading a room /
+  // starting a new one) so it isn't mistaken for a user edit.
+  //
+  // Seeded true when the restored canvas is byte-identical to the restored
+  // room's saved state: the mount run of the roomDirty effect below would
+  // otherwise flag a freshly-reloaded, fully-saved room as having unsaved
+  // changes and block export on the second gate. When the two differ the user
+  // really did edit after saving, so it stays false and dirty is set — which
+  // is exactly what that gate is for.
+  //
+  // A re-seat on restore counts as a real change: the drawing on screen no
+  // longer matches the room's stored image, and the PDF is built from that
+  // image. Leaving dirty set makes the export gate ask for a re-save, which is
+  // exactly what regenerates the corrected drawing.
+  const suppressRoomDirtyRef = useRef(
+    !!restoredRoom &&
+      !restoredResnap.changed &&
+      restoredRoom.canvasState === JSON.stringify(restoredProject?.objects ?? [])
+  );
   const propertiesTipShown = useRef<boolean>(
     storageGetJSONSync<boolean>('floor-plan-tip-properties-shown', false)
   );
   const [isDirty, setIsDirty] = useState(false);
   const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null);
   const [savedAgoTick, setSavedAgoTick] = useState(0);
+  // True when the canvas has been edited since the active room was last saved.
+  // The PDF is built from each room's stored image, so exporting while this is
+  // set would silently ship the previous drawing — the edits on screen would
+  // simply be missing from the document.
+  const [roomDirty, setRoomDirty] = useState(false);
+  // Set when a write to device storage is rejected (quota). Drives the header
+  // badge so the failure is visible for as long as it lasts, not just in the
+  // toast the user may have missed.
+  const [autosaveFailed, setAutosaveFailed] = useState(false);
+  const autosaveWarnedRef = useRef(false);
+  // Parked destructive My Plans action awaiting confirmation.
+  const [pendingPlanAction, setPendingPlanAction] = useState<
+    { kind: 'load'; plan: { name: string; rooms: SavedRoom[] } } | { kind: 'new' } | null
+  >(null);
 
   // Auto-assign circuitRef to symbols that don't have one
   useEffect(() => {
@@ -404,6 +524,9 @@ const DiagramBuilderPage = () => {
     () => rooms.find((room) => room.id === activeRoomId) || null,
     [activeRoomId, rooms]
   );
+  // Either the debounced project autosave or a room write was rejected. Both
+  // mean the same thing to the user: this device can't store any more.
+  const storageBlocked = autosaveFailed || persistFailed;
   const isMobileViewport = viewportWidth < 768;
   const floatingUiBottom = 72 + mobileUiOffset;
   const overlayBottom = mobileUiOffset;
@@ -449,22 +572,62 @@ const DiagramBuilderPage = () => {
   // Debounced autosave on every change so progress is never lost.
   // 300ms means at most a third of a second of work can disappear if the
   // page is killed mid-edit; in practice almost nothing.
+  // Track edits to the ACTIVE ROOM separately from the autosave dirty flag,
+  // keyed on objects alone so toggling grid/snap doesn't count as an edit.
+  // Loading a room is not an edit, so those paths raise `suppressRoomDirtyRef`
+  // first — the flag is set before the state update, so this effect (which
+  // always runs after) is guaranteed to see it.
+  useEffect(() => {
+    if (suppressRoomDirtyRef.current) {
+      suppressRoomDirtyRef.current = false;
+      return;
+    }
+    setRoomDirty(true);
+  }, [canvasObjects]);
+
   useEffect(() => {
     if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
     setIsDirty(true);
     autoSaveTimerRef.current = setTimeout(() => {
-      storageSetJSONSync('diagram-builder-project', {
+      // Autosave is the primary safety net, so it must never claim to have
+      // written when it hasn't. A full quota used to be swallowed here while
+      // the header carried on showing a green "Saved" — the single most
+      // misleading state the planner could be in.
+      const ok = storageSetJSONSync('diagram-builder-project', {
         objects: canvasObjects,
         settings: { gridEnabled, snapEnabled },
+        activeRoomId,
         timestamp: new Date().toISOString(),
       });
+      setAutosaveFailed(!ok);
+      if (!ok) {
+        // Warn once per outage, not every 300ms.
+        if (!autosaveWarnedRef.current) {
+          autosaveWarnedRef.current = true;
+          hapticRef.current.error();
+          toast({
+            title: 'Autosave stopped — device storage is full',
+            description: 'Export this plan or delete a saved one. Changes are only in memory until then.',
+            variant: 'destructive',
+          });
+        }
+        return; // leave `isDirty` set — nothing was written
+      }
+      autosaveWarnedRef.current = false;
       setLastSavedAt(new Date());
       setIsDirty(false);
     }, 300);
     return () => {
       if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
     };
-  }, [canvasObjects, gridEnabled, snapEnabled]);
+    // Haptics are read through `hapticRef`, not listed as a dependency:
+    // useHaptic() returns a fresh object literal on every render, so depending
+    // on it would re-run this effect constantly, clearing and restarting the
+    // 300ms debounce each time and starving the autosave completely.
+    //
+    // `activeRoomId` IS a dependency: it's part of the persisted record, and
+    // the very first save of a room changes it without touching the objects.
+  }, [canvasObjects, gridEnabled, snapEnabled, activeRoomId]);
 
   // Tick "Saved Xs ago" label once a minute so it stays accurate without
   // re-rendering on every frame.
@@ -487,6 +650,23 @@ const DiagramBuilderPage = () => {
         .eq('id', authData.user.id)
         .maybeSingle();
       if (!cancelled && profile?.full_name) setElectricianName(profile.full_name);
+
+      const { data: company } = await supabase
+        .from('company_profiles')
+        .select('company_name, company_phone, company_email, logo_data_url, logo_url, accent_color, primary_color')
+        .eq('user_id', authData.user.id)
+        .maybeSingle();
+      if (!cancelled && company) {
+        setCompanyBrand({
+          name: company.company_name ?? '',
+          // Inline data URL first — PDFMonkey can't reach a signed storage URL.
+          logo: company.logo_data_url ?? company.logo_url ?? '',
+          // primary_color wins over accent_color, per the house branding rule.
+          accent: company.primary_color ?? company.accent_color ?? '',
+          phone: company.company_phone ?? '',
+          email: company.company_email ?? '',
+        });
+      }
     })();
     return () => {
       cancelled = true;
@@ -670,25 +850,30 @@ const DiagramBuilderPage = () => {
   }, [canvasObjects]);
 
   // Desktop keyboard shortcuts — Figma-style. Skipped on mobile (no keyboard).
-  // Shortcuts are gated by `target` so they don't fire while typing in inputs.
+  //
+  // The handlers are read through `shortcutsRef` rather than captured in the
+  // effect closure. This effect registers once ([] deps), so closing over
+  // `handleSave` directly captured the FIRST render's copy — and with it the
+  // first render's `canvasObjects`. Cmd+S after an hour of drawing then wrote
+  // the original (usually empty) objects back over the autosave and toasted
+  // "Saved". Reading from a ref means the shortcut always runs current state.
   useEffect(() => {
-    const isTypingTarget = (el: EventTarget | null) => {
-      if (!(el instanceof HTMLElement)) return false;
-      const tag = el.tagName;
-      return tag === 'INPUT' || tag === 'TEXTAREA' || el.isContentEditable;
-    };
     const onKey = (e: KeyboardEvent) => {
-      if (isTypingTarget(e.target)) return;
+      if (isTypingContext(e.target)) return;
+      // A sheet or dialog on top owns the keyboard. Without this, pressing a
+      // tool letter while the symbol picker was open switched the tool on the
+      // canvas hidden behind it.
+      if (isInOverlay(e.target)) return;
       const meta = e.ctrlKey || e.metaKey;
       const k = e.key.toLowerCase();
 
-      if (meta && k === 's') { e.preventDefault(); handleSave(); return; }
+      if (meta && k === 's') { e.preventDefault(); shortcutsRef.current.save(); return; }
       if (meta && k === 'z') {
         e.preventDefault();
-        if (e.shiftKey) handleRedo(); else handleUndo();
+        if (e.shiftKey) shortcutsRef.current.redo(); else shortcutsRef.current.undo();
         return;
       }
-      if (meta && k === 'y') { e.preventDefault(); handleRedo(); return; }
+      if (meta && k === 'y') { e.preventDefault(); shortcutsRef.current.redo(); return; }
 
       if (e.shiftKey || e.altKey || meta) return;
       switch (k) {
@@ -711,24 +896,61 @@ const DiagramBuilderPage = () => {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
+  /**
+   * Apply a page-originated mutation to the canvas objects, recording an undo
+   * snapshot first.
+   *
+   * Every mutation that starts in this page — room shapes, multi-place,
+   * properties edits, duplicate, rotate-all, wall length, AI auto-place — must
+   * go through here. Previously they called `setCanvasObjects` directly, which
+   * bypassed the undo stack entirely: undo skipped straight past them and
+   * Rotate All could not be reversed at all.
+   *
+   * Do NOT use this inside `onObjectsChange` — edits that originate on the
+   * canvas already push their own snapshot and would double up.
+   */
+  const commitObjects = (next: SetStateAction<CanvasObject[]>) => {
+    canvasRef.current?.saveState?.();
+    setCanvasObjects(next);
+  };
+
   const handleSave = () => {
     haptic.success();
     const projectData = {
       objects: canvasObjects,
       settings: { gridEnabled, snapEnabled },
+      activeRoomId,
       timestamp: new Date().toISOString(),
     };
-    storageSetJSONSync('diagram-builder-project', projectData);
+    const ok = storageSetJSONSync('diagram-builder-project', projectData);
+    if (!ok) {
+      haptic.error();
+      toast({
+        title: 'Could not save',
+        description: 'This device is out of storage. Export or delete a saved plan to free space.',
+        variant: 'destructive',
+      });
+      return;
+    }
     toast({
       title: 'Saved',
       variant: 'success',
     });
   };
 
+  /**
+   * "Open Draft" — restores the autosaved project.
+   *
+   * Note this reads the SAME key the 300ms autosave writes to, so in practice
+   * it reloads what is already on screen; it only differs after an edit that
+   * has not yet been autosaved. Left in place, but routed through
+   * `commitObjects` so replacing the canvas is at least undoable — it used to
+   * overwrite everything with no confirmation and no way back.
+   */
   const handleLoad = () => {
     const data = storageGetJSONSync<any>('diagram-builder-project', null);
     if (data) {
-      setCanvasObjects(data.objects || []);
+      commitObjects(data.objects || []);
       setGridEnabled(data.settings?.gridEnabled ?? true);
       setSnapEnabled(data.settings?.snapEnabled ?? true);
       setSelectedObject(null);
@@ -795,6 +1017,11 @@ const DiagramBuilderPage = () => {
     canvasRef.current?.redo?.();
   };
 
+  // Mirror the latest handlers so the keyboard effect (registered once) always
+  // calls the current closures rather than the first render's. Assigned during
+  // render, which is synchronous and always ahead of the effect firing.
+  shortcutsRef.current = { save: handleSave, undo: handleUndo, redo: handleRedo };
+
   // Clear placement indicator when objects change (symbol was placed)
   useEffect(() => {
     if (placingSymbolName && activeTool !== 'symbol') {
@@ -849,7 +1076,7 @@ const DiagramBuilderPage = () => {
 
     // Force full re-render with rotated positions
     canvasRef.current?.forceFullRedraw?.();
-    setCanvasObjects(rotated);
+    commitObjects(rotated);
     setTimeout(() => canvasRef.current?.zoomToFit?.(), 300);
     toast({ title: 'Rotated 90°' });
   };
@@ -859,13 +1086,13 @@ const DiagramBuilderPage = () => {
     const updatedObjects = canvasObjects.map((obj) =>
       obj.id === selectedObject.id ? applyCanvasObjectUpdates(obj, updates) : obj
     );
-    setCanvasObjects(updatedObjects);
+    commitObjects(updatedObjects);
     setSelectedObject(applyCanvasObjectUpdates(selectedObject, updates));
   };
 
   const handleObjectDelete = () => {
     if (!selectedObject) return;
-    setCanvasObjects((prev) => prev.filter((obj) => obj.id !== selectedObject.id));
+    commitObjects((prev) => prev.filter((obj) => obj.id !== selectedObject.id));
     setSelectedObject(null);
     canvasRef.current?.deleteSelected?.();
   };
@@ -873,7 +1100,7 @@ const DiagramBuilderPage = () => {
   const handleDuplicateSelected = () => {
     if (!selectedObject) return;
     const duplicated = duplicateCanvasObject(selectedObject);
-    setCanvasObjects((prev) => [...prev, duplicated]);
+    commitObjects((prev) => [...prev, duplicated]);
     setSelectedObject(duplicated);
     setTimeout(() => canvasRef.current?.focusOnObject?.(duplicated.id), 120);
     toast({ title: 'Item duplicated' });
@@ -933,7 +1160,11 @@ const DiagramBuilderPage = () => {
     };
 
     let nextRooms: SavedRoom[];
-    if (activeRoomId) {
+    // Only update in place if that room still exists. `updateRoom` maps over
+    // the list, so a stale id (room deleted in another tab, or storage cleared
+    // under us) matches nothing and the save vanishes without a word — falling
+    // through to a fresh save keeps the user's work.
+    if (activeRoomId && rooms.some((r) => r.id === activeRoomId)) {
       updateRoom(activeRoomId, roomPayload);
       nextRooms = rooms.map((r) =>
         r.id === activeRoomId ? { ...r, ...roomPayload } : r
@@ -946,6 +1177,21 @@ const DiagramBuilderPage = () => {
 
     setSaveSheetOpen(false);
     setPendingSave(null);
+    // Room images are large; on web they can exhaust the localStorage quota.
+    // `persistFailed` is set synchronously by the hook, so read the storage
+    // result rather than assuming the write landed — the old code always
+    // claimed success.
+    if (didLastWriteFail()) {
+      haptic.error();
+      toast({
+        title: 'Room not saved',
+        description:
+          'This device is out of storage. Export or delete a saved plan to free space, then try again.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    setRoomDirty(false);
     haptic.success();
     toast({
       title: `${name} saved`,
@@ -987,9 +1233,14 @@ const DiagramBuilderPage = () => {
     const room = rooms.find((r) => r.id === roomId);
     if (room) {
       try {
-        const objects = JSON.parse(room.canvasState);
+        // Same re-seat as on restore. If it corrected anything the room is
+        // genuinely out of step with its stored image, so leave it dirty and
+        // let the export gate ask for a re-save.
+        const { objects, changed } = resnapWallSymbols(JSON.parse(room.canvasState));
         canvasRef.current?.forceFullRedraw?.();
+        suppressRoomDirtyRef.current = !changed;
         setCanvasObjects(objects);
+        setRoomDirty(changed);
         setActiveRoomId(roomId);
         setSelectedObject(null);
         const bounds = getObjectBounds(objects);
@@ -1003,9 +1254,47 @@ const DiagramBuilderPage = () => {
     }
   };
 
+  /** Replace every local room with the chosen plan's rooms. Destructive. */
+  const applyPlanLoad = (plan: { name: string; rooms: SavedRoom[] }) => {
+    canvasRef.current?.forceFullRedraw?.();
+    clearAllRooms();
+    plan.rooms.forEach((room) =>
+      saveRoom({
+        name: room.name,
+        thumbnail: room.thumbnail,
+        fullImage: room.fullImage,
+        canvasState: room.canvasState,
+        symbolIds: room.symbolIds,
+        photoBase64: room.photoBase64,
+      })
+    );
+    suppressRoomDirtyRef.current = true;
+    setCanvasObjects([]);
+    setRoomDirty(false);
+    setActiveRoomId(null);
+    setSelectedObject(null);
+    toast({
+      title: `Loaded: ${plan.name}`,
+      description: `${plan.rooms.length} room${plan.rooms.length !== 1 ? 's' : ''}`,
+    });
+  };
+
+  /** Clear every local room to start a fresh plan. Destructive. */
+  const applyPlanReset = () => {
+    canvasRef.current?.forceFullRedraw?.();
+    clearAllRooms();
+    suppressRoomDirtyRef.current = true;
+    setCanvasObjects([]);
+    setRoomDirty(false);
+    setActiveRoomId(null);
+    setSelectedObject(null);
+  };
+
   const handleNewRoom = () => {
     canvasRef.current?.forceFullRedraw?.();
+    suppressRoomDirtyRef.current = true;
     setCanvasObjects([]);
+    setRoomDirty(false);
     setActiveRoomId(null);
     setSelectedObject(null);
   };
@@ -1039,18 +1328,30 @@ const DiagramBuilderPage = () => {
   };
 
   // Primary toolbar — the tools electricians need most
-  const toolButtons: { id: DrawingTool | 'add-symbol' | 'ai-room' | 'undo' | 'redo' | 'shapes'; icon: any; label: string; group: 'select' | 'draw' | 'place' | 'edit' | 'ai' | 'history' }[] = [
-    { id: 'select', icon: MousePointer2, label: 'Select', group: 'select' },
-    { id: 'wall', icon: PenTool, label: 'Wall', group: 'draw' },
-    { id: 'shapes', icon: LayoutGrid, label: 'Room', group: 'draw' },
-    { id: 'add-symbol', icon: Plus, label: 'Add Item', group: 'place' },
-    { id: 'cable', icon: Spline, label: 'Cable', group: 'place' },
-    { id: 'dimension', icon: Ruler, label: 'Size', group: 'edit' },
-    { id: 'eraser', icon: Eraser, label: 'Erase', group: 'edit' },
+  const toolButtons: {
+    id: DrawingTool | 'add-symbol' | 'ai-room' | 'undo' | 'redo' | 'shapes';
+    icon: any;
+    label: string;
+    group: 'select' | 'draw' | 'place' | 'edit' | 'ai' | 'history';
+    /** Shown on the desktop rail — the shortcuts existed but were invisible. */
+    key?: string;
+  }[] = [
+    { id: 'select', icon: MousePointer2, label: 'Select', group: 'select', key: 'V' },
+    { id: 'wall', icon: PenTool, label: 'Wall', group: 'draw', key: 'W' },
+    { id: 'shapes', icon: LayoutGrid, label: 'Room', group: 'draw', key: 'R' },
+    { id: 'add-symbol', icon: Plus, label: 'Add Item', group: 'place', key: 'A' },
+    { id: 'cable', icon: Spline, label: 'Cable', group: 'place', key: 'C' },
+    { id: 'dimension', icon: Ruler, label: 'Size', group: 'edit', key: 'D' },
+    { id: 'eraser', icon: Eraser, label: 'Erase', group: 'edit', key: 'E' },
     { id: 'ai-room', icon: Sparkles, label: 'AI Help', group: 'ai' },
-    { id: 'undo', icon: Undo2, label: 'Undo', group: 'history' },
-    { id: 'redo', icon: Redo2, label: 'Redo', group: 'history' },
+    { id: 'undo', icon: Undo2, label: 'Undo', group: 'history', key: '⌘Z' },
+    { id: 'redo', icon: Redo2, label: 'Redo', group: 'history', key: '⇧⌘Z' },
   ];
+
+  // The mobile bar scrolls the drawing tools but pins undo/redo, so the two
+  // are separated here rather than at the render site.
+  const drawingTools = toolButtons.filter((t) => t.group !== 'history');
+  const historyTools = toolButtons.filter((t) => t.group === 'history');
 
   const handleToolTap = (id: string) => {
     haptic.light();
@@ -1081,6 +1382,9 @@ const DiagramBuilderPage = () => {
     const parsedLength = parseFloat(wallEditLength);
     if (!wallEditState || isNaN(parsedLength) || parsedLength < 0.3) return;
     haptic.light();
+    // One snapshot for the whole operation — the branches below each commit a
+    // different object set, but to the user this is a single "set wall length".
+    canvasRef.current?.saveState?.();
 
     const SCALE_PX = 52;
     const newLengthPx = parsedLength * SCALE_PX;
@@ -1155,9 +1459,32 @@ const DiagramBuilderPage = () => {
     setWallEditState(null);
   };
 
-  return (
+  // Rendered through a portal to <body>.
+  //
+  // The planner is a full-screen tool, but it mounts inside the app shell's
+  // route-transition wrapper — and that wrapper animates `opacity`, which
+  // creates a STACKING CONTEXT. Inside one, no z-index can lift a child above
+  // an element outside it, so the app header (z-[60]) painted straight over
+  // the planner's header and Save Room / Export / My Plans were literally
+  // unclickable on desktop. Raising the z-index only appeared to work in the
+  // instants the wrapper's opacity sat at exactly 1.
+  //
+  // Portalling to <body> puts the planner in the root stacking context, where
+  // z-[70] reliably clears the header and sidebar (both z-[60]) while staying
+  // under sheets and dialogs (z-[100]) so its own pickers layer on top.
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 bg-[#1a1a1a] flex flex-col"
+      className={cn(
+        'fixed inset-0 z-[70] bg-[#1a1a1a] flex flex-col',
+        // Desktop docks into the content column so the sidebar and app header
+        // stay usable — you can still reach the rest of Elec-Mate without
+        // leaving the drawing. `--sidebar-width` and `--header-height` are
+        // published live by Layout/Header, so this follows the sidebar being
+        // collapsed or expanded without the planner tracking that state.
+        // Phones keep the full-bleed canvas: there is no sidebar there and
+        // every pixel counts.
+        'lg:top-[var(--header-height,56px)] lg:left-[var(--sidebar-width,0px)]'
+      )}
       style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
     >
       {/* Minimal sticky header */}
@@ -1169,7 +1496,7 @@ const DiagramBuilderPage = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="h-9 w-9 text-white hover:text-white hover:bg-white/10 touch-manipulation"
+            className="h-11 w-11 sm:h-9 sm:w-9 text-white hover:text-white hover:bg-white/10 touch-manipulation"
             aria-label={projectId ? 'Back to project' : 'Back'}
             onClick={() => navigate(projectId ? `/electrician/projects/${projectId}` : '/electrician/business')}
           >
@@ -1195,6 +1522,20 @@ const DiagramBuilderPage = () => {
             </span>
           )}
           {(() => {
+            // Storage rejected a write — this outranks every other status.
+            // Showing "Saved" here while nothing is being persisted is the
+            // failure mode this badge exists to prevent.
+            if (storageBlocked) {
+              return (
+                <span
+                  className="flex items-center gap-1.5 text-[11px] text-white px-2 py-1 rounded-md bg-red-500/20 border border-red-500/40"
+                  title="Device storage is full — changes are not being saved"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-red-400 animate-pulse" />
+                  <span className="whitespace-nowrap">Not saved — storage full</span>
+                </span>
+              );
+            }
             if (canvasObjects.length === 0 && !lastSavedAt) return null;
             const diffSec = lastSavedAt
               ? Math.max(0, Math.floor((Date.now() - lastSavedAt.getTime()) / 1000))
@@ -1213,9 +1554,14 @@ const DiagramBuilderPage = () => {
             // Reference the tick state so React knows to re-render this branch.
             void savedAgoTick;
             return (
-              <span className="flex items-center gap-1.5 text-[11px] text-white/70 px-2 py-1 rounded-md bg-white/5">
+              <span
+                className="flex items-center gap-1.5 text-[11px] text-white/70 px-2 py-1 rounded-md bg-white/5"
+                title={label}
+              >
                 <span className={`h-1.5 w-1.5 rounded-full ${dotColour}`} />
-                <span className="whitespace-nowrap">{label}</span>
+                {/* Wording is dropped below sm: on a 390px phone the header
+                    has to fit Back, this pill and three actions. */}
+                <span className="hidden sm:inline whitespace-nowrap">{label}</span>
               </span>
             );
           })()}
@@ -1227,7 +1573,7 @@ const DiagramBuilderPage = () => {
             onClick={() => { haptic.light(); setMyPlansOpen(true); }}
             aria-label="My Plans"
             variant="ghost"
-            className="h-9 px-2 sm:px-3 text-white hover:bg-white/10 text-xs font-medium touch-manipulation rounded-lg border border-white/10"
+            className="h-11 sm:h-9 px-3 text-white hover:bg-white/10 text-xs font-medium touch-manipulation rounded-lg border border-white/10"
           >
             <FolderOpen className="h-3.5 w-3.5 sm:mr-1" />
             <span className="hidden sm:inline">My Plans</span>
@@ -1262,7 +1608,7 @@ const DiagramBuilderPage = () => {
               setSaveSheetOpen(true);
             }}
             aria-label="Save Room"
-            className="h-9 px-3 bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs font-bold touch-manipulation rounded-lg shrink-0"
+            className="h-11 sm:h-9 px-3 bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs font-bold touch-manipulation rounded-lg shrink-0"
           >
             <Save className="h-3.5 w-3.5 mr-1" />
             <span className="sm:hidden">Save</span>
@@ -1279,8 +1625,19 @@ const DiagramBuilderPage = () => {
                 toast({ title: 'Nothing to export', description: 'Draw a room or place symbols first' });
                 return;
               }
-              if (canvasObjects.length > 0 && !rooms.find(r => r.id === activeRoomId)) {
+              if (canvasObjects.length > 0 && !rooms.find((r) => r.id === activeRoomId)) {
                 toast({ title: 'Save this room first', description: 'Tap Save Room before exporting' });
+                return;
+              }
+              // The PDF is built from each room's SAVED image. Editing a room
+              // and exporting without re-saving used to silently produce a
+              // document missing every change made since the last save.
+              if (roomDirty && activeRoomId && canvasObjects.length > 0) {
+                haptic.warning();
+                toast({
+                  title: 'Unsaved changes to this room',
+                  description: 'Tap Save Room first, or the PDF will show the previous version.',
+                });
                 return;
               }
               haptic.light();
@@ -1288,7 +1645,7 @@ const DiagramBuilderPage = () => {
             }}
             aria-label="Export PDF"
             variant="ghost"
-            className="flex h-9 px-2 sm:px-3 text-white hover:bg-white/10 text-xs font-medium touch-manipulation rounded-lg border border-white/10"
+            className="flex h-11 sm:h-9 px-3 text-white hover:bg-white/10 text-xs font-medium touch-manipulation rounded-lg border border-white/10"
           >
             <Download className="h-3.5 w-3.5 sm:mr-1" />
             <span className="hidden sm:inline">Export</span>
@@ -1300,7 +1657,7 @@ const DiagramBuilderPage = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-9 w-9 text-white hover:text-white hover:bg-white/10 touch-manipulation"
+                className="h-11 w-11 sm:h-9 sm:w-9 text-white hover:text-white hover:bg-white/10 touch-manipulation"
               >
                 <MoreVertical className="h-4 w-4" />
               </Button>
@@ -1464,8 +1821,15 @@ const DiagramBuilderPage = () => {
           }}
           onSelectionChange={(object) => {
             setSelectedObject(object);
+            // Only recentre when the selection is actually off-screen. It used
+            // to recentre on EVERY tap, so simply picking a socket yanked the
+            // whole drawing under your thumb and lost your place.
             if (object && isMobileViewport) {
-              setTimeout(() => canvasRef.current?.focusOnObject?.(object.id), 90);
+              setTimeout(() => {
+                if (canvasRef.current?.isObjectVisible?.(object.id) === false) {
+                  canvasRef.current?.focusOnObject?.(object.id);
+                }
+              }, 90);
             }
           }}
           onRequestProperties={(object) => {
@@ -1475,86 +1839,169 @@ const DiagramBuilderPage = () => {
           }}
           showMinimap={!isMobileViewport && canvasObjects.length > 0}
         />
+        {/* Desktop tool rail — DESKTOP ONLY (lg+).
+            A centred pill of icon-only buttons at the bottom of a 1900px screen
+            is a phone layout stranded on a monitor: the tools sit miles from
+            the drawing and the labels are hidden exactly where there is room
+            for them. The rail follows the convention of every desktop drawing
+            tool — anchored left, full labels, and the keyboard shortcuts made
+            visible (they already existed but nothing advertised them). */}
+        <div className="pointer-events-none absolute left-3 top-1/2 z-20 hidden -translate-y-1/2 lg:block">
+          <div className="pointer-events-auto flex flex-col gap-0.5 rounded-2xl border border-white/10 bg-black/75 p-1.5 shadow-2xl backdrop-blur-xl">
+            {toolButtons.map((tool, idx) => {
+              const Icon = tool.icon;
+              const active = isToolActive(tool.id);
+              const prev = toolButtons[idx - 1];
+              const showDivider = prev && prev.group !== tool.group;
+              return (
+                <Fragment key={tool.id}>
+                  {showDivider && <span aria-hidden className="my-1 h-px w-full bg-white/10" />}
+                  <button
+                    onClick={() => handleToolTap(tool.id)}
+                    aria-label={tool.label}
+                    aria-pressed={active}
+                    title={tool.key ? `${tool.label} (${tool.key})` : tool.label}
+                    className={cn(
+                      'group flex h-11 w-[150px] items-center gap-2.5 rounded-xl px-2.5 text-left transition-colors touch-manipulation',
+                      active
+                        ? 'bg-elec-yellow text-black'
+                        : 'text-white hover:bg-white/10'
+                    )}
+                  >
+                    <Icon className="h-[18px] w-[18px] shrink-0" />
+                    <span className="flex-1 truncate text-[13px] font-medium leading-none">
+                      {tool.label}
+                    </span>
+                    {tool.key && (
+                      <kbd
+                        className={cn(
+                          'rounded px-1 py-0.5 text-[10px] font-semibold leading-none tabular-nums',
+                          active ? 'bg-black/15 text-black' : 'bg-white/10 text-white'
+                        )}
+                      >
+                        {tool.key}
+                      </kbd>
+                    )}
+                  </button>
+                </Fragment>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Empty canvas hint */}
         {canvasObjects.length === 0 && rooms.length === 0 && (
           <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
-            <div className="text-center pointer-events-auto px-6 max-w-sm rounded-3xl bg-black/45 backdrop-blur-md border border-white/10 shadow-2xl py-6">
+            <div className="text-center pointer-events-auto px-6 w-[min(26rem,calc(100vw-2rem))] rounded-3xl bg-[#141414]/95 backdrop-blur-xl border border-white/[0.12] shadow-[0_24px_70px_-12px_rgba(0,0,0,0.9)] py-7">
               <h2 className="text-white text-lg font-bold mb-1">Start Your First Room</h2>
               <p className="text-white text-xs mb-5">Pick a starting point — or open one you've already saved.</p>
               <div className="space-y-2">
-                <button onClick={() => { haptic.light(); setMyPlansOpen(true); }} className="w-full p-3 bg-white/[0.05] border border-white/10 rounded-xl touch-manipulation active:scale-95 text-left flex items-center gap-3">
+                <button onClick={() => { haptic.light(); setMyPlansOpen(true); }} className="w-full p-3.5 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.12] rounded-2xl touch-manipulation active:scale-[0.98] transition-colors text-left flex items-center gap-3">
                   <FolderOpen className="h-5 w-5 text-blue-400 shrink-0" />
                   <div>
                     <p className="text-sm font-semibold text-white">Open a Saved Plan</p>
-                    <p className="text-[10px] text-white">Pick up where you left off on a previous job.</p>
+                    <p className="text-[11px] text-white/90">Pick up where you left off on a previous job.</p>
                   </div>
                 </button>
-                <button onClick={() => setShapesSheetOpen(true)} className="w-full p-3 bg-white/[0.08] border border-white/15 rounded-xl touch-manipulation active:scale-95 text-left flex items-center gap-3">
+                <button onClick={() => setShapesSheetOpen(true)} className="w-full p-3.5 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.12] rounded-2xl touch-manipulation active:scale-[0.98] transition-colors text-left flex items-center gap-3">
                   <LayoutGrid className="h-5 w-5 text-elec-yellow shrink-0" />
                   <div>
                     <p className="text-sm font-semibold text-white">Use a Room Shape</p>
-                    <p className="text-[10px] text-white">Start with a rectangle, L-shape, T-shape, or corridor.</p>
+                    <p className="text-[11px] text-white/90">Start with a rectangle, L-shape, T-shape, or corridor.</p>
                   </div>
                 </button>
-                <button onClick={() => setAiDialogOpen(true)} className="w-full p-3 bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl touch-manipulation active:scale-95 text-left flex items-center gap-3">
+                <button onClick={() => setAiDialogOpen(true)} className="w-full p-3.5 bg-elec-yellow/[0.12] hover:bg-elec-yellow/20 border border-elec-yellow/30 rounded-2xl touch-manipulation active:scale-[0.98] transition-colors text-left flex items-center gap-3">
                   <Sparkles className="h-5 w-5 text-elec-yellow shrink-0" />
                   <div>
                     <p className="text-sm font-semibold text-elec-yellow">Use AI Help</p>
-                    <p className="text-[10px] text-elec-yellow/70">Generate from a template, voice description, or photo.</p>
+                    <p className="text-[11px] text-elec-yellow/80">Generate from a template, voice description, or photo.</p>
                   </div>
                 </button>
               </div>
-              <p className="text-white text-[10px] mt-4">You can also draw walls manually from the toolbar below.</p>
+              <p className="text-white/80 text-[11px] mt-5">
+                {/* The toolbar is below on phones and to the left on desktop —
+                    the copy has to follow the layout it is describing. */}
+                <span className="lg:hidden">You can also draw walls manually from the toolbar below.</span>
+                <span className="hidden lg:inline">You can also draw walls manually — the tools are on the left.</span>
+              </p>
             </div>
           </div>
         )}
       </div>
 
-      {/* Bottom toolbar — native tab-bar feel. Horizontally scrollable so
-          every tool keeps a full 44px+ tap target on a 360px phone instead of
-          being crushed into a fixed row. The active tool expands to show its
-          label (iOS segmented-control style); the rest stay icon-only on
-          mobile and gain labels on tablet+. Group dividers (Select / Draw /
-          Place / Edit / AI / History) are visible on every size. */}
-      <div className="shrink-0 bg-[#111] border-t border-white/10 safe-area-pb">
-        <div className="flex items-center justify-start gap-1 overflow-x-auto scrollbar-hide px-2 py-1.5 sm:justify-center">
-          {toolButtons.map((tool, idx) => {
-            const Icon = tool.icon;
-            const active = isToolActive(tool.id);
-            const prev = toolButtons[idx - 1];
-            const showDivider = prev && prev.group !== tool.group;
-            return (
-              <Fragment key={tool.id}>
-                {showDivider && (
-                  <span aria-hidden className="self-center h-7 w-px shrink-0 bg-white/10 mx-0.5" />
-                )}
+      {/* Bottom toolbar — PHONE AND TABLET ONLY.
+          Native tab-bar feel, horizontally scrollable so every tool keeps a
+          full 44px+ thumb target on a 360px phone. The active tool expands to
+          show its label (iOS segmented-control style). Group dividers
+          (Select / Draw / Place / Edit / AI / History) are visible at every
+          size. Desktop gets the vertical rail instead — see below. */}
+      <div className="shrink-0 bg-[#111] border-t border-white/10 safe-area-pb lg:hidden">
+        <div className="flex items-stretch">
+          {/* Scrolling tool list. Ten tools cannot fit a 374px phone, so this
+              scrolls — with a fade on the right edge so it is obvious there
+              is more, which a plain overflow gave no hint of. */}
+          <div className="relative min-w-0 flex-1">
+            <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide px-2 py-1.5">
+              {drawingTools.map((tool, idx) => {
+                const Icon = tool.icon;
+                const active = isToolActive(tool.id);
+                const prev = drawingTools[idx - 1];
+                const showDivider = prev && prev.group !== tool.group;
+                return (
+                  <Fragment key={tool.id}>
+                    {showDivider && (
+                      <span aria-hidden className="self-center h-7 w-px shrink-0 bg-white/10 mx-0.5" />
+                    )}
+                    <button
+                      onClick={() => handleToolTap(tool.id)}
+                      aria-label={tool.label}
+                      aria-pressed={active}
+                      className={cn(
+                        'flex h-12 min-w-[48px] shrink-0 items-center justify-center rounded-xl px-2.5 touch-manipulation transition-colors duration-200 active:scale-90',
+                        active
+                          ? 'bg-elec-yellow text-black'
+                          : 'text-white/90 hover:bg-white/5 active:bg-white/10'
+                      )}
+                    >
+                      <Icon className="h-5 w-5 shrink-0" />
+                      <span
+                        className={cn(
+                          'overflow-hidden whitespace-nowrap text-[12px] font-semibold leading-none transition-all duration-200',
+                          active ? 'ml-1.5 max-w-[80px] opacity-100' : 'ml-0 max-w-0 opacity-0'
+                        )}
+                      >
+                        {tool.label}
+                      </span>
+                    </button>
+                  </Fragment>
+                );
+              })}
+            </div>
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#111] to-transparent"
+            />
+          </div>
+
+          {/* Undo / Redo are PINNED, never scrolled away.
+              They used to sit at the end of the scrolling row, which put the
+              two controls you reach for most often off the right edge of a
+              phone with nothing to say they existed. */}
+          <div className="flex shrink-0 items-center gap-1 border-l border-white/10 px-2 py-1.5">
+            {historyTools.map((tool) => {
+              const Icon = tool.icon;
+              return (
                 <button
+                  key={tool.id}
                   onClick={() => handleToolTap(tool.id)}
                   aria-label={tool.label}
-                  aria-pressed={active}
-                  className={cn(
-                    'flex h-12 min-w-[48px] shrink-0 items-center justify-center rounded-xl px-2.5 touch-manipulation transition-colors duration-200 active:scale-90',
-                    active
-                      ? 'bg-elec-yellow text-black'
-                      : 'text-white/90 hover:bg-white/5 active:bg-white/10'
-                  )}
+                  className="flex h-12 min-w-[48px] shrink-0 items-center justify-center rounded-xl text-white/90 touch-manipulation transition-colors duration-200 active:scale-90 hover:bg-white/5 active:bg-white/10"
                 >
                   <Icon className="h-5 w-5 shrink-0" />
-                  {/* Label only on the active tool (ticket spec) — keeps the
-                      row compact (~580px) so it fits centred on tablet/desktop
-                      and only needs to scroll on phones. */}
-                  <span
-                    className={cn(
-                      'overflow-hidden whitespace-nowrap text-[12px] font-semibold leading-none transition-all duration-200',
-                      active ? 'ml-1.5 max-w-[80px] opacity-100' : 'ml-0 max-w-0 opacity-0'
-                    )}
-                  >
-                    {tool.label}
-                  </span>
                 </button>
-              </Fragment>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -1566,28 +2013,28 @@ const DiagramBuilderPage = () => {
           <div className="flex items-center gap-1.5 min-w-max">
             <button
               onClick={handleDuplicateSelected}
-              className="flex items-center gap-1 rounded-xl px-3 py-2.5 text-xs font-medium text-white hover:bg-white/10 touch-manipulation active:scale-95"
+              className="flex min-h-11 items-center gap-1 rounded-xl px-3 py-2.5 text-xs font-medium text-white hover:bg-white/10 touch-manipulation active:scale-95"
             >
               <Copy className="h-3.5 w-3.5" />
               Duplicate
             </button>
             <button
               onClick={() => canvasRef.current?.focusOnObject?.(selectedObject.id)}
-              className="flex items-center gap-1 rounded-xl px-3 py-2.5 text-xs font-medium text-white hover:bg-white/10 touch-manipulation active:scale-95"
+              className="flex min-h-11 items-center gap-1 rounded-xl px-3 py-2.5 text-xs font-medium text-white hover:bg-white/10 touch-manipulation active:scale-95"
             >
               <Crosshair className="h-3.5 w-3.5" />
               Focus
             </button>
             <button
               onClick={() => canvasRef.current?.handleRotate?.()}
-              className="flex items-center gap-1 rounded-xl px-3 py-2.5 text-xs font-medium text-white hover:bg-white/10 touch-manipulation active:scale-95"
+              className="flex min-h-11 items-center gap-1 rounded-xl px-3 py-2.5 text-xs font-medium text-white hover:bg-white/10 touch-manipulation active:scale-95"
             >
               <RotateCw className="h-3.5 w-3.5" />
               Rotate
             </button>
             <button
               onClick={() => canvasRef.current?.deleteSelected?.()}
-              className="flex items-center gap-1 rounded-xl px-3 py-2.5 text-xs font-medium text-red-300 hover:bg-red-500/10 touch-manipulation active:scale-95"
+              className="flex min-h-11 items-center gap-1 rounded-xl px-3 py-2.5 text-xs font-medium text-red-300 hover:bg-red-500/10 touch-manipulation active:scale-95"
             >
               <Trash2 className="h-3.5 w-3.5" />
               Delete
@@ -1602,7 +2049,21 @@ const DiagramBuilderPage = () => {
         circuits={circuitSummary}
         mobile={isMobileViewport}
         bottomOffset={overlayBottom}
-        hidden={isMobileViewport && (!!propertiesTarget || !!wallEditState || saveSheetOpen || symbolSheetOpen || shapesSheetOpen)}
+        // Any overlay covering the canvas should hide this too — it used to stay
+        // pinned above the Export, My Plans and AI sheets on mobile.
+        hidden={
+          isMobileViewport &&
+          (!!propertiesTarget ||
+            !!wallEditState ||
+            saveSheetOpen ||
+            symbolSheetOpen ||
+            shapesSheetOpen ||
+            exportReviewOpen ||
+            myPlansOpen ||
+            aiDialogOpen ||
+            !!pendingPlanAction ||
+            !!pendingCloudPlan)
+        }
       />
 
       {/* Scale bar is rendered by DiagramCanvas — no duplicate needed */}
@@ -1652,7 +2113,7 @@ const DiagramBuilderPage = () => {
                 symbolId,
               });
             }
-            setCanvasObjects((prev) => [...prev, ...newObjects]);
+            commitObjects((prev) => [...prev, ...newObjects]);
             setSymbolSheetOpen(false);
             setPlacingSymbolName(null);
             setSelectedSymbolId(null);
@@ -1694,30 +2155,24 @@ const DiagramBuilderPage = () => {
         open={myPlansOpen}
         onOpenChange={setMyPlansOpen}
         currentRooms={rooms}
+        // Both of these wipe every room on the device. The deep-link path has
+        // always confirmed first; these two did it silently, which meant an
+        // accidental tap could destroy a day's survey with no undo. Route them
+        // through the same confirmation instead.
         onLoadPlan={(plan) => {
           haptic.light();
-          canvasRef.current?.forceFullRedraw?.();
-          // Clear current rooms and load the plan's rooms
-          rooms.forEach((r) => deleteRoom(r.id));
-          plan.rooms.forEach((room) => {
-            saveRoom({
-              name: room.name,
-              thumbnail: room.thumbnail,
-              fullImage: room.fullImage,
-              canvasState: room.canvasState,
-              symbolIds: room.symbolIds,
-            });
-          });
-          setCanvasObjects([]);
-          setActiveRoomId(null);
-          setSelectedObject(null);
-          toast({ title: `Loaded: ${plan.name}`, description: `${plan.rooms.length} rooms` });
+          if (rooms.length > 0) {
+            setPendingPlanAction({ kind: 'load', plan });
+            return;
+          }
+          applyPlanLoad(plan);
         }}
         onNewPlan={() => {
-          canvasRef.current?.forceFullRedraw?.();
-          rooms.forEach((r) => deleteRoom(r.id));
-          setCanvasObjects([]);
-          setActiveRoomId(null);
+          if (rooms.length > 0) {
+            setPendingPlanAction({ kind: 'new' });
+            return;
+          }
+          applyPlanReset();
         }}
       />
 
@@ -1728,7 +2183,7 @@ const DiagramBuilderPage = () => {
         onRoomGenerated={handleRoomGenerated}
         canvasObjects={canvasObjects}
         savedRooms={rooms}
-        onSymbolsAutoPlaced={(symbols) => setCanvasObjects((prev) => [...prev, ...symbols])}
+        onSymbolsAutoPlaced={(symbols) => commitObjects((prev) => [...prev, ...symbols])}
       />
 
       {/* Save Room Sheet */}
@@ -1802,6 +2257,43 @@ const DiagramBuilderPage = () => {
         </AlertDialogContent>
       </AlertDialog>
 
+      {/* My Plans destructive-action confirmation — loading a plan or starting
+          a new one replaces every room held on this device. */}
+      <AlertDialog
+        open={!!pendingPlanAction}
+        onOpenChange={(open) => { if (!open) setPendingPlanAction(null); }}
+      >
+        <AlertDialogContent className="bg-elec-gray border-white/10">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white">
+              {pendingPlanAction?.kind === 'load' ? 'Replace your current rooms?' : 'Start a new plan?'}
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-white">
+              You have {rooms.length} room{rooms.length !== 1 ? 's' : ''} on this device.{' '}
+              {pendingPlanAction?.kind === 'load'
+                ? `Opening "${pendingPlanAction.plan.name}" replaces ${rooms.length === 1 ? 'it' : 'them'} with ${pendingPlanAction.plan.rooms.length} room${pendingPlanAction.plan.rooms.length !== 1 ? 's' : ''}.`
+                : `Starting a new plan clears ${rooms.length === 1 ? 'it' : 'them'}.`}{' '}
+              This can't be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="border-white/20 text-white hover:bg-white/10 hover:text-white">
+              Keep my rooms
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-500 hover:bg-red-600 text-white"
+              onClick={() => {
+                if (pendingPlanAction?.kind === 'load') applyPlanLoad(pendingPlanAction.plan);
+                else if (pendingPlanAction?.kind === 'new') applyPlanReset();
+                setPendingPlanAction(null);
+              }}
+            >
+              {pendingPlanAction?.kind === 'load' ? 'Replace' : 'Clear and start new'}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       {/* Export Review Sheet */}
       <ExportReviewSheet
         open={exportReviewOpen}
@@ -1839,50 +2331,87 @@ const DiagramBuilderPage = () => {
               }, {})
             ).map(([name, items]) => ({ name, items }));
 
-            // Build full symbol legend (all 114 symbols as SVG data URIs)
+            // Symbol legend — only the symbols this drawing actually uses.
+            //
+            // This used to embed all 114 registry symbols as base64 SVG data
+            // URIs on every export, alongside a full-resolution PNG per room.
+            // On a multi-room plan that pushed the request body into the tens
+            // of megabytes for a legend that was mostly irrelevant to the job.
+            // A legend of what's on the drawing is also what the electrician
+            // actually wants in front of a client.
+            const usedSymbolIds = new Set(data.rooms.flatMap((room) => room.symbolIds));
+            const { loadSymbolSvg } = await import(
+              '@/components/electrician-tools/diagram-builder/symbols/svgLoader'
+            );
             const allSymbolsLegend = await Promise.all(
-              symbolRegistry.map(async (sym) => {
-                try {
-                  const { loadSymbolSvg } = await import('@/components/electrician-tools/diagram-builder/symbols/svgLoader');
-                  const svgContent = await loadSymbolSvg(sym.id);
-                  const b64 = btoa(unescape(encodeURIComponent(svgContent)));
-                  return {
-                    name: sym.name,
-                    category: sym.category.charAt(0).toUpperCase() + sym.category.slice(1),
-                    svg_data_uri: `data:image/svg+xml;base64,${b64}`,
-                  };
-                } catch {
-                  return { name: sym.name, category: sym.category, svg_data_uri: '' };
-                }
-              })
+              symbolRegistry
+                .filter((sym) => usedSymbolIds.has(sym.id))
+                .map(async (sym) => {
+                  try {
+                    const svgContent = await loadSymbolSvg(sym.id);
+                    // btoa throws on non-Latin1; encode first.
+                    const b64 = btoa(unescape(encodeURIComponent(svgContent)));
+                    return {
+                      name: sym.name,
+                      category: sym.category.charAt(0).toUpperCase() + sym.category.slice(1),
+                      svg_data_uri: `data:image/svg+xml;base64,${b64}`,
+                    };
+                  } catch {
+                    return { name: sym.name, category: sym.category, svg_data_uri: '' };
+                  }
+                })
             );
 
-            // Auto-assign circuits from all symbols across all rooms
-            const allSymbolIds = data.rooms.flatMap((room) => room.symbolIds);
-            const { circuitSchedule } = assignCircuits(allSymbolIds);
+            // The schedule comes from the export sheet, where the electrician
+            // has had the chance to correct it. Recomputing it here would throw
+            // their edits away and silently issue the auto-generated defaults.
+            const circuitSchedule = data.circuitSchedule;
+            // Board schedule is derived from the circuits the user just
+            // reviewed, so it always agrees with the circuit page.
+            const cu = buildConsumerUnitSchedule(circuitSchedule);
 
             const revision = {
-              rev: 'A',
+              rev: data.revision,
               date: data.date,
-              description: 'Initial Issue',
+              description: data.revisionNote,
               by: data.electrician,
             };
 
             const { data: result, error } = await supabase.functions.invoke('generate-floor-plan-pdf', {
               body: {
+                // Without this the function's writeback is skipped entirely, so
+                // `pdf_url` / `status: 'exported'` were never set on the row and
+                // a linked project or report never showed its drawing.
+                floor_plan_id: linkedFloorPlanIdRef.current ?? undefined,
                 property_address: data.property,
                 client_name: data.client,
                 electrician_name: data.electrician,
                 date: data.date,
-                drawing_number: 'EL-001',
+                drawing_number: data.drawingNumber,
                 notes: data.notes,
                 rooms: roomsPayload,
                 materials_by_category: materialsByCategory,
                 total_items: data.totalItems,
                 all_symbols: allSymbolsLegend,
                 circuit_schedule: circuitSchedule,
+                consumer_unit: {
+                  ways: cu.ways,
+                  way_count: cu.wayCount,
+                  total_connected_load_kw: cu.totalConnectedLoadKw,
+                },
                 standard_notes: STANDARD_NOTES,
                 revision,
+                // Branding — the floor plan was the only client-facing document
+                // in the app going out with no company identity on it.
+                company_name: companyBrand?.name ?? '',
+                company_logo: companyBrand?.logo ?? '',
+                company_accent_color: companyBrand?.accent ?? '',
+                company_phone: companyBrand?.phone ?? '',
+                company_email: companyBrand?.email ?? '',
+                // The drawing is dimensioned in metres but rasterised to fit the
+                // page, so it is not reproduced at a fixed printed ratio. Say so
+                // honestly rather than the old blanket "Not to scale".
+                scale_note: 'Dimensions in metres — not reproduced to printed scale',
               },
             });
 
@@ -1915,7 +2444,7 @@ const DiagramBuilderPage = () => {
         getPlacementCenter={() => canvasRef.current?.getPlacementCenter?.() ?? null}
         onShapePlaced={(walls) => {
           haptic.success();
-          setCanvasObjects((prev) => [...prev, ...walls]);
+          commitObjects((prev) => [...prev, ...walls]);
           const bounds = getObjectBounds(walls);
           if (bounds) {
             setTimeout(() => canvasRef.current?.focusOnPoint?.(bounds.centreX, bounds.centreY), 90);
@@ -1927,7 +2456,15 @@ const DiagramBuilderPage = () => {
       {/* Wall length edit — fixed bottom bar */}
       {wallEditState && (
         <div
-          className="fixed left-0 right-0 z-50 bg-[#111] border-t border-elec-yellow/30 px-4 py-3 safe-area-pb"
+          className={cn(
+            // Phones: a full-width bar pinned to the bottom, which is right for
+            // a thumb. Desktop: a floating card in the content column instead —
+            // as a full-width slab it spanned the whole window (including under
+            // the sidebar) and covered the bottom of the tool rail.
+            'fixed left-0 right-0 z-50 bg-[#111] border-t border-elec-yellow/30 px-4 py-3 safe-area-pb',
+            'lg:left-[calc(var(--sidebar-width,0px)+1rem)] lg:right-4 lg:mx-auto lg:mb-4 lg:max-w-xl',
+            'lg:rounded-2xl lg:border lg:border-elec-yellow/30 lg:shadow-2xl'
+          )}
           style={{ bottom: `${overlayBottom}px` }}
         >
           <div className="flex items-center justify-between gap-3 max-w-md mx-auto">
@@ -1969,7 +2506,8 @@ const DiagramBuilderPage = () => {
           </div>
         </div>
       )}
-    </div>
+    </div>,
+    document.body
   );
 };
 

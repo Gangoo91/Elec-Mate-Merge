@@ -46,7 +46,7 @@ const keyTakeaways = [
   'Section 702 of BS 7671 applies to swimming pools, paddling pools, hot tubs, fountains, and their surrounding zones — any location with a basin intended for immersion or wading.',
   'Zone 0 (inside the pool) permits only SELV at 12 V AC RMS or 30 V ripple-free DC. Equipment must be rated IPX8. The safety source must be located outside Zones 0, 1 and 2 (Reg 702.410.3.4.2).',
   'Supplementary equipotential bonding is mandatory — all extraneous conductive parts in Zones 0, 1, and 2 must be bonded together and to the protective conductor.',
-  'Hot tubs installed outdoors follow Section 702 zones, and the electrical supply must not use PME earthing if outdoors — a TT system or separate earth electrode is required.',
+  'Hot tubs installed outdoors follow Section 702 zones. BS 7671 does not ban PME earthing here — Regulation 702.410.3.4 recommends that where PME is used, an earth mat or electrode of suitably low resistance (20 ohms or less is the example given) is connected to the supplementary bonding. Converting to TT is a common design choice, not a Regulation requirement.',
   'Elec-Mate AI regulations lookup gives instant answers on Section 702 requirements, and the EICR certificate app handles swimming pool inspections with all the zone-specific fields.',
 ];
 
@@ -54,7 +54,7 @@ const faqs = [
   {
     question: 'Does Section 702 apply to domestic hot tubs?',
     answer:
-      'Yes. Section 702 applies to all locations containing a basin designed for immersion or wading, which includes domestic hot tubs, swim spas, and paddling pools. The zone dimensions for hot tubs are the same as for swimming pools — Zone 0 is the interior of the tub, Zone 1 extends 2 m from the edge, and Zone 2 extends a further 1.5 m. The electrical supply to an outdoor hot tub must not use PME (TN-C-S) earthing because of the risk of a broken PEN conductor — a TT earthing system with a separate earth electrode or a confirmed TN-S supply is required. The supply circuit must be protected by a 30 mA RCD and must include a means of isolation within sight of the hot tub. An IP-rated rotary isolator mounted on a post or wall is the standard solution. Indoor hot tubs in a purpose-built room follow the same Section 702 zone requirements.',
+      'Yes. Section 702 applies to all locations containing a basin designed for immersion or wading, which includes domestic hot tubs, swim spas, and paddling pools. The zone dimensions for hot tubs are the same as for swimming pools — Zone 0 is the interior of the tub, Zone 1 extends 2 m from the edge, and Zone 2 extends a further 1.5 m. On earthing, be careful with the common claim that PME is banned outdoors — it is not. Regulation 702.410.3.4 contemplates a PME earthing facility being used and recommends that where it is, an earth mat or earth electrode of suitably low resistance (20 ohms or less is the example given) is installed and connected to the supplementary protective equipotential bonding, because a wet barefoot person may perceive a shock from voltage imported on the PEN conductor. Converting the hot tub circuit to TT with its own electrode, or taking a confirmed TN-S supply, is a widely used and sensible design response to that risk — but it is a design decision rather than a Regulation requirement. The supply circuit must be protected by a 30 mA RCD and must include a means of isolation within sight of the hot tub. An IP-rated rotary isolator mounted on a post or wall is the standard solution. Indoor hot tubs in a purpose-built room follow the same Section 702 zone requirements.',
   },
   {
     question: 'What is SELV and why is it required in Zone 0?',
@@ -79,7 +79,7 @@ const faqs = [
   {
     question: 'What earthing system should be used for an outdoor swimming pool?',
     answer:
-      'PME (TN-C-S) earthing must not be used for outdoor swimming pool installations. This is because a broken PEN conductor in a PME system can cause the exposed and extraneous conductive parts to rise to a dangerous potential relative to true earth. Since people in and around a swimming pool are often barefoot on wet ground (which provides a low-impedance path to true earth), the risk is unacceptable. The preferred options are a TT earthing system with a separate earth electrode, or a confirmed TN-S supply from the distribution network operator. If the existing property supply is TN-C-S (PME), the pool circuit must be provided with its own earth electrode and effectively operated as a TT system for that circuit. The earth electrode resistance must be low enough to ensure the 30 mA RCD operates within the required disconnection time.',
+      'BS 7671 does not prohibit PME (TN-C-S) earthing at a swimming pool — this is a common misconception, and it is worth being precise about what Section 702 actually says. Regulation 702.410.3.4 carries a NOTE that expressly contemplates PME being used as the means of earthing for a pool or other basin, and recommends that where it is, an earth mat or earth electrode of suitably low resistance (the NOTE gives 20 ohms or less as an example) is installed and connected to the supplementary protective equipotential bonding. The reason is given in the same regulation: wet barefoot persons may perceive an electric shock from voltage imported via the PEN conductor when they are in contact with Earth and with accessible conductive parts connected to the PME earthing facility. So the requirement is not a ban — it is a recommendation to hold the bonded metalwork close to the potential of the ground people are standing on. Many designers do convert an outdoor pool to a TT arrangement with its own electrode, or take a confirmed TN-S supply, and that is a sound design decision. Present it as a design decision, though, not as a Regulation that forbids PME. Whichever earthing arrangement is used, supplementary protective equipotential bonding to Regulation 702.415.2 and 30 mA RCD protection still apply.',
   },
 ];
 
@@ -577,11 +577,14 @@ const sections = [
             <li className="flex items-start gap-3">
               <Droplet className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Outdoor hot tubs must not use PME earthing.</strong> If the property supply
-                is TN-C-S (PME), the hot tub circuit must be provided with a separate TT earthing
-                system — its own earth electrode and a 30 mA RCD. This is because a broken PEN
-                conductor could make the hot tub shell live relative to true earth, and a person
-                standing on wet ground while touching the tub could receive a fatal shock.
+                <strong>PME needs an earth electrode, not an outright ban.</strong> Where a PME
+                earthing facility is used for a pool or hot tub, Regulation 702.410.3.4 recommends
+                an earth mat or earth electrode of suitably low resistance — 20 ohms or less is the
+                example the NOTE gives — connected to the supplementary protective equipotential
+                bonding. The concern it names is that a wet barefoot person in contact with Earth
+                and with bonded metalwork may perceive a shock from voltage imported on the PEN
+                conductor. Converting the circuit to TT with its own electrode is a common and
+                sound design response, but it is a design decision, not a Regulation requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -648,9 +651,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD testing</strong> — verify that all RCDs protecting pool circuits operate
-                within the required time at their rated residual current. Test at both 1x and 5x
-                rated current.
+                <strong>RCD testing</strong> — verify that all RCDs protecting pool circuits
+                operate within the required time. Amendment 4 changed this: Table 3A of Appendix 3
+                has been deleted, and Regulation 643.3 now calls for a single alternating current
+                test at the rated residual operating current (IΔn), whatever the RCD type. The
+                old 1× and 5× sequence is no longer what BS 7671 asks for.
               </span>
             </li>
             <li className="flex items-start gap-3">

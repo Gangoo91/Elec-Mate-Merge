@@ -9,6 +9,7 @@ export {
 // Calculator Card
 export {
   CalculatorCard,
+  CalculatorSurface,
   CalculatorDivider,
   CalculatorSection,
   CalculatorInputGrid,

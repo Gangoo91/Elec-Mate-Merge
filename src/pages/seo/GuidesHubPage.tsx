@@ -78,7 +78,7 @@ const guideCollections = [
       { href: '/guides/bs-7671-amendment-4-2026', label: 'Amendment 4 (2026) Overview' },
       { href: '/guides/bs-7671-a4-2026-afdd-changes', label: 'A4:2026 AFDD Changes' },
       {
-        href: '/guides/afdd-mandatory-hmo-care-home-a4-2026',
+        href: '/guides/afdd-hmo-care-home-a4-2026',
         label: 'AFDDs in HMOs and Care Homes',
       },
       { href: '/guides/spd-chapter-443-a4-2026', label: 'SPDs and Chapter 443' },

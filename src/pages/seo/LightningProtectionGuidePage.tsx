@@ -1,5 +1,6 @@
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { RecentReviews } from '@/components/seo/RecentReviews';
+import { CalculatorSurface } from '@/components/calculators/shared';
 import LightningProtectionCalculator from '@/components/apprentice/calculators/LightningProtectionCalculator';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
@@ -305,7 +306,7 @@ const sections = [
           against transient overvoltages shall be provided where the consequence caused by the
           overvoltage could result in (a) serious injury to, or loss of, human life, or (c)
           significant financial or data loss — limb (b) having been deleted by the BS 7671:2018+A2:2022
-          Corrigendum of May 2023. For all other cases, protection shall be provided unless the owner
+          Corrigendum of May 2023, and remains absent in BS 7671:2018+A4:2026. For all other cases, protection shall be provided unless the owner
           of the installation declares it is not required because any loss or damage is tolerable and
           they accept the risk of damage to equipment and any consequential loss. In practice, SPDs
           are now installed in most new domestic and commercial installations.
@@ -533,7 +534,7 @@ export default function LightningProtectionGuidePage() {
           <span className="text-yellow-400">BS EN 62305, SPDs, and Earth Termination</span>
         </>
       }
-              embeddedTool={<LightningProtectionCalculator />}
+              embeddedTool={<CalculatorSurface><LightningProtectionCalculator /></CalculatorSurface>}
       heroSubtitle="A practical guide to lightning protection for UK electricians. Covers BS EN 62305, risk assessment methodology, surge protection devices under BS 7671 Chapter 44, earth termination systems, and when lightning protection is required."
       readingTime={12}
       keyTakeaways={keyTakeaways}

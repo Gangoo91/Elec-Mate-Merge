@@ -74,7 +74,7 @@ const faqs = [
   {
     question: 'What is the best way to supply a kitchen island with power?',
     answer:
-      'Kitchen island power can be supplied by: (1) a pop-up socket unit installed in the island worktop surface — these are purpose-designed for worktop installation and retract when not in use; (2) a floor-mounted power outlet, used where the island is fixed and where cable routing through the floor is practical; (3) a worktop-level socket on the end panel of the island — positioning depends on the island layout and sink proximity rules. The supply cable should run from the consumer unit or from a dedicated spur point via armoured cable or conduit under the floor if a floor-mounted outlet is used, or via the island cabinetry if a worktop unit is used. All island socket outlets must be RCD protected at 30mA under BS 7671 Regulation 411.3.4.',
+      'Kitchen island power can be supplied by: (1) a pop-up socket unit installed in the island worktop surface — these are purpose-designed for worktop installation and retract when not in use; (2) a floor-mounted power outlet, used where the island is fixed and where cable routing through the floor is practical; (3) a worktop-level socket on the end panel of the island — positioning depends on the island layout and sink proximity rules. The supply cable should run from the consumer unit or from a dedicated spur point via armoured cable or conduit under the floor if a floor-mounted outlet is used, or via the island cabinetry if a worktop unit is used. All island socket outlets must be RCD protected at 30mA under BS 7671 Regulation 411.3.3.',
   },
   {
     question: 'Is a separate fridge circuit needed in a kitchen?',
@@ -320,7 +320,7 @@ const sections = [
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Protection:</strong> 32A Type B MCB or RCBO. Kitchen ring final circuits
-                must be RCD protected under BS 7671 Regulation 411.3.4 (socket outlets used by
+                must be RCD protected under BS 7671 Regulation 411.3.3 (socket outlets used by
                 ordinary persons). RCBOs on each way, or the circuit connected to an RCD-protected
                 bank in the consumer unit.
               </span>

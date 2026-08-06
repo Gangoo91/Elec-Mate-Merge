@@ -5,13 +5,25 @@ import type { CalculatorContent } from './types';
  */
 export const batteryStorageContent: CalculatorContent = {
   slug: 'battery-storage',
-  governingStandards: ['BS 7671', 'ENA EREC G98', 'ENA EREC G99', 'MCS'],
+  // BS 7671:2018+A4:2026 Chapter 57 is now THE home for stationary secondary battery
+  // requirements (Reg 551.8 was deleted and redirected to it). Reg 570.6.1.1.1 makes the
+  // BS EN IEC 62485 series normative and Reg 570.6.7.203 brings PAS 63100 in for dwellings,
+  // so both belong in the governing list — they were previously omitted.
+  governingStandards: [
+    'BS 7671 Chapter 57',
+    'BS EN IEC 62485 series',
+    'PAS 63100',
+    'ENA EREC G98',
+    'ENA EREC G99',
+    'MCS',
+  ],
 
   whyItMatters: [
     'Usable storage is always less than the nameplate kWh — depth of discharge, round-trip efficiency and temperature all eat into it, so size to usable energy, not the label.',
     'A storage inverter is a form of generation for connection purposes: up to 16 A/phase (≈3.68 kW) it connects under G98; above that, G99 applies before energising.',
     'Lithium chemistries (LiFePO₄) give deeper discharge and far more cycles than lead-acid — the right chemistry depends on cycle life and budget, not just capacity.',
     'Domestic GB installs of battery storage are currently 0%-rated for VAT (to 31 March 2027).',
+    'BS 7671:2018+A4:2026 added Chapter 57 for stationary secondary batteries — it applies irrespective of the nominal voltage and irrespective of capacity, and it treats the battery as a generating set rather than a load (Reg 551.7.2.1).',
   ],
 
   whenToCheck: [
@@ -50,18 +62,33 @@ export const batteryStorageContent: CalculatorContent = {
       clauseText:
         'A storage system that can export is treated as generation for connection: up to and including 16 A per phase connects under G98 (notify); above that, G99 application and agreement are required before connection.',
     },
+    // Previously this pointed readers at the IET Code of Practice for Electrical Energy Storage
+    // Systems as the source of detail, with no mention of the chapter that actually governs.
+    // A4:2026 deleted Reg 551.8 and moved the stationary battery requirements into Chapter 57.
     {
       standard: 'BS 7671',
-      citation: 'BS 7671 — installation of the storage system',
+      citation: 'BS 7671:2018+A4:2026 Chapter 57 — stationary secondary batteries',
       clauseText:
-        'The storage installation must comply with BS 7671 for cabling, isolation, protection and earthing, with manufacturer requirements for the battery and inverter. The IET Code of Practice for Electrical Energy Storage Systems gives further guidance.',
+        'Chapter 57 is the governing chapter for a stationary secondary battery installation (Regulation 551.8 was deleted and its requirements moved here). Reg 570.6.1.1.1 requires conformance to the relevant parts of the BS EN IEC 62485 series. Reg 570.6.2.2 requires a Type B RCD on the AC supply circuit unless the power conversion equipment provides at least simple separation between the AC and DC sides. Reg 570.6.3 requires the location or enclosure to be adequately ventilated. Reg 570.6.4 requires the DC prospective fault current to account for both the battery and the PCE that charges it. Reg 570.6.5 requires isolation conforming to Section 462. Regs 570.6.8.201 to 570.6.8.203 require the warning notices.',
+    },
+    {
+      standard: 'BS 7671',
+      citation: 'BS 7671:2018+A4:2026 Reg 551.7.2.1 — connection point',
+      clauseText:
+        'A stationary secondary battery in accordance with Chapter 57 is considered a generating set and not a load, so it is installed on the supply side of all the protective devices for the final circuits of a distribution board, on its own dedicated circuit. Where an installation is supplied from more than one source, Reg 826.1.1.4 requires a main switch suitable for isolation for each source plus a durable warning notice.',
+    },
+    {
+      standard: 'PAS 63100',
+      citation: 'BS 7671:2018+A4:2026 Reg 570.6.7.203 — batteries in dwellings',
+      clauseText:
+        'Stationary secondary batteries in dwellings shall be installed in a suitable location taking account of the manufacturer’s instructions and PAS 63100. In other premises the location of storage batteries and the fire protection requirements shall be selected taking into account the fire strategy for the premises.',
     },
   ],
 
   _grounding: {
     status: 'needs-review',
-    generatedAt: '2026-06-01',
+    generatedAt: '2026-08-06',
     notes:
-      'G98/G99 thresholds match the engine; BS 7671 + IET EESS Code of Practice authored from established practice. VAT 0% domestic GB per HMRC relief.',
+      'Chapter 57 clauses (570.6.1.1.1, 570.6.2.2, 570.6.3, 570.6.4, 570.6.5, 570.6.7.203, 570.6.8.201–203), Reg 551.7.2.1 and Reg 826.1.1.4 verified word-for-word against BS 7671:2018+A4:2026. G98/G99 thresholds match the engine. VAT 0% domestic GB per HMRC relief — NOT verified against BS 7671.',
   },
 };

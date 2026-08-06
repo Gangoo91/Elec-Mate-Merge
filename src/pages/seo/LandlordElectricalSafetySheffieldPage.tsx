@@ -46,7 +46,7 @@ const keyTakeaways = [
   'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 require all private landlords in Sheffield to obtain an EICR before a new tenancy begins and at least every five years thereafter.',
   'Sheffield City Council enforces these regulations with civil penalties of up to £30,000 per breach. Sheffield has a large student rental sector and operates HMO licensing across the city.',
   'HMOs in Sheffield face additional requirements — a valid EICR is a mandatory condition of both mandatory and additional HMO licensing schemes operated by Sheffield City Council.',
-  'If the EICR identifies C1 or C2 observations (classified under BS 7671 Section 631), landlords must complete remedial work within 28 days or sooner if specified by the inspector.',
+  'If the EICR identifies C1 or C2 observations (classified under BS 7671 Chapter 65), landlords must complete remedial work within 28 days or sooner if specified by the inspector.',
   'Sheffield has a large stock of Victorian and Edwardian terraced housing in areas such as Broomhall, Nether Edge, and Walkley — many with ageing electrical installations where absence of RCD protection is a common C2 finding.',
 ];
 
@@ -153,7 +153,7 @@ const sections = [
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
-                (Section 631 covers periodic inspection and testing).
+                (Chapter 65 covers periodic inspection and testing).
               </span>
             </li>
             <li className="flex items-start gap-3">

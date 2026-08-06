@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, Zap } from 'lucide-react';
 import { CIRCUIT_COLOURS } from '@/pages/electrician-tools/ai-tools/DiagramBuilderPage';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface SymbolCountPanelProps {
   counts: { id: string; name: string; category: string; count: number }[];
@@ -13,6 +14,7 @@ interface SymbolCountPanelProps {
 export const SymbolCountPanel = ({ counts, circuits, hidden = false, mobile = false, bottomOffset = 0 }: SymbolCountPanelProps) => {
   const [expanded, setExpanded] = useState(false);
   const [tab, setTab] = useState<'items' | 'circuits'>('items');
+  const haptic = useHaptic();
 
   if (counts.length === 0 || hidden) return null;
 
@@ -29,12 +31,19 @@ export const SymbolCountPanel = ({ counts, circuits, hidden = false, mobile = fa
 
   return (
     <div
-      className={`absolute z-20 rounded-xl bg-black/70 backdrop-blur-lg ${mobile ? 'left-2 right-2 min-w-0 max-w-none' : 'left-4 min-w-[140px] max-w-[220px]'}`}
+      className={`absolute z-20 rounded-xl bg-black/70 backdrop-blur-lg ${
+        mobile
+          ? 'left-2 right-2 min-w-0 max-w-none'
+          // Desktop clears the vertical tool rail (left-3, 150px wide),
+          // which this used to sit directly on top of — it covered the
+          // rail's Undo button.
+          : 'left-4 lg:left-[178px] min-w-[140px] max-w-[220px]'
+      }`}
       style={{ bottom: `${112 + bottomOffset}px` }}
     >
       {/* Pill toggle */}
       <button
-        onClick={() => setExpanded(!expanded)}
+        onClick={() => { haptic.selection(); setExpanded(!expanded); }}
         className="w-full flex items-center justify-between px-3 py-2.5 touch-manipulation h-11"
       >
         <span className="text-white text-xs font-medium">{totalItems} item{totalItems !== 1 ? 's' : ''}</span>
@@ -52,13 +61,13 @@ export const SymbolCountPanel = ({ counts, circuits, hidden = false, mobile = fa
           {circuits && circuits.length > 0 && (
             <div className="flex gap-1 mb-1.5">
               <button
-                onClick={() => setTab('items')}
+                onClick={() => { haptic.selection(); setTab('items'); }}
                 className={`text-[10px] px-2 py-0.5 rounded-full font-medium touch-manipulation ${tab === 'items' ? 'bg-elec-yellow text-black' : 'bg-white/10 text-white'}`}
               >
                 Items
               </button>
               <button
-                onClick={() => setTab('circuits')}
+                onClick={() => { haptic.selection(); setTab('circuits'); }}
                 className={`text-[10px] px-2 py-0.5 rounded-full font-medium touch-manipulation flex items-center gap-1 ${tab === 'circuits' ? 'bg-elec-yellow text-black' : 'bg-white/10 text-white'}`}
               >
                 <Zap className="h-2.5 w-2.5" />

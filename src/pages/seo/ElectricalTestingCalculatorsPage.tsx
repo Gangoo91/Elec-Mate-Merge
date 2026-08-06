@@ -254,7 +254,7 @@ export default function ElectricalTestingCalculatorsPage() {
             7671:2018+A4:2026. Enter your measured values and get instant pass/fail results with the
             correct BS 7671 table values applied.
           </p>
-          <p className="text-base text-white/70 max-w-2xl mx-auto mb-8 leading-relaxed">
+          <p className="text-base text-white max-w-2xl mx-auto mb-8 leading-relaxed">
             Every calculation you need on site, from earth loop impedance and fault current to
             conduit fill and maximum demand. All values cross-referenced against BS
             7671:2018+A4:2026.

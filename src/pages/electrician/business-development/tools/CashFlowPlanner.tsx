@@ -194,6 +194,7 @@ const CashFlowPlanner = () => {
               <CashFlowSettings
                 startingBalance={state.startingBalance}
                 emergencyFundTarget={state.emergencyFundTarget}
+                vatRegistered={state.vatRegistered}
                 vatQuarter={state.vatQuarter}
                 selectedScenario={state.selectedScenario}
                 vatScheme={state.vatScheme}
@@ -201,6 +202,7 @@ const CashFlowPlanner = () => {
                 cardFeesPercent={state.cardFeesPercent}
                 monthlyLoanRepayments={state.monthlyLoanRepayments}
                 flatRatePercent={state.flatRatePercent}
+                priorYearTaxAndNI={state.priorYearTaxAndNI}
                 scenarios={state.scenarios}
                 onUpdate={updateSettings}
               />

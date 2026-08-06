@@ -34,6 +34,7 @@ import { AfddCell } from './table-cells/AfddCell';
 import { FunctionalTestCell } from './table-cells/FunctionalTestCell';
 import { RemarksCell } from './table-cells/RemarksCell';
 import { PhaseTypeCell } from './table-cells/PhaseTypeCell';
+import CircuitDescriptionInput from './table-cells/CircuitDescriptionInput';
 
 interface EnhancedTestResultDesktopTableRowProps {
   result: TestResult;
@@ -85,7 +86,13 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
   };
 
   // Check regulation compliance - memoized to prevent expensive recalculation
-  const regulationCompliance = useMemo(() => checkRegulationCompliance(result), [result]);
+  // ELE-1505 — the earthing arrangement decides which limits apply. Without it
+  // a TT circuit is judged against the TN tables, so a perfectly normal
+  // electrode reading of 60–100 Ω reads as a critical fault-protection failure.
+  const regulationCompliance = useMemo(
+    () => checkRegulationCompliance(result, earthingArrangement),
+    [result, earthingArrangement]
+  );
 
   // Memoized row background class - prevents expensive recalculation on every render
   // Default rows take base/zebra tones from the .sot-row CSS; error/warning
@@ -221,6 +228,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
           <EnhancedValidatedInput
             value={result.circuitDesignation}
             onChange={(value) => onUpdate(result.id, 'circuitDesignation', value)}
+            placeholder="Way 1 or —"
             className="h-8 text-[11px] text-center px-2 w-full tracking-tight whitespace-nowrap"
             disabled={!!result.sourceCircuitId}
           />
@@ -229,9 +237,15 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
         {/* Description — always visible, sticky flush after Way (founder call:
             sits before 1P/3P), last frozen column */}
         <TableCell className="sot-sticky-col-2 sot-sticky-last p-0 h-8 align-middle min-w-[244px] max-w-[244px]">
-          <EnhancedValidatedInput
+          {/* Type-ahead: typing "kit" offers Kitchen Ring and fills the
+              device, cable and RCD on tap. Still free text — most real
+              descriptions are nothing a preset list would hold. */}
+          <CircuitDescriptionInput
             value={result.circuitDescription}
             onChange={(value) => onUpdate(result.id, 'circuitDescription', value)}
+            onApplyPreset={
+              onBulkUpdate ? (updates) => onBulkUpdate(result.id, updates) : undefined
+            }
             onCommit={(value) => {
               // Typing "spare" in the description cascades N/A to every
               // test + detail field — saves hunting for the Spare button
@@ -242,7 +256,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
               }
             }}
             placeholder="e.g. Kitchen Ring — type 'spare' to N/A all fields"
-            className="h-8 text-sm px-2 w-full"
+            className="h-8 w-full bg-transparent px-2 text-sm text-white placeholder:text-white/25 focus:outline-none"
             disabled={!!result.sourceCircuitId}
           />
         </TableCell>

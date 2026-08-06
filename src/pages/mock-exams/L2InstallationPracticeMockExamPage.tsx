@@ -9,8 +9,8 @@ import { module4QuestionBank as module4Questions } from '@/data/apprentice-cours
 export default function L2InstallationPracticeMockExamPage() {
   return (
     <PublicMockExamPage
-      title={`Free Level 2 Mock Exam: Installation Practice (Unit 4)`}
-      description={`Free Level 2 Installation Practice mock exam — 25 Qs from 301-Q bank. Risk assessment, safe isolation, installation method statements, tools and PPE.`}
+      title={`C&G 2365-02 Level 2 Mock Exam with Answers — Installation Practice`}
+      description={`Free City & Guilds 2365-02 Level 2 mock exam with answers explained — Installation Practice (Unit 4). 25 questions from a 301-question bank. Risk assessment, safe isolation, method statements, tools and PPE. Instant results, no sign-up.`}
       slug="level-2-installation-practice"
       heading={`Free Level 2 Mock Exam: Installation Practice (Unit 4)`}
       intro={`Free mock exam for Level 2 Electrical apprentices on Unit 204 (Electrical Installation Practices). 25 questions from a 301-question bank covering risk assessment, safe isolation procedure, tool selection, PPE, working in occupied premises, installation method statements and good site practice.`}

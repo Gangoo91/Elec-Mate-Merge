@@ -3,6 +3,11 @@ import { useState } from 'react';
 
 import { CableSizingInputs, CableSizingErrors, CableType } from './useCableSizing';
 import {
+  DeviceType,
+  deviceTypeOptions,
+  ratingsByDevice,
+} from './useProtectiveDeviceCheck';
+import {
   installationCategories,
   getMethodsByCategory,
   isUndergroundMethod,
@@ -46,9 +51,12 @@ const installationOptionsByCategory: Record<string, Array<{ value: string; label
     { value: 'clipped-direct', label: 'Clipped direct to surface (Method C)' },
     { value: 'tray-non-perforated', label: 'On non-perforated tray (Method C)' },
   ],
+  // BS 7671 App 4 Reference Methods: D1 = in ducting in the ground,
+  // D2 = buried direct. These two labels used to carry the codes the wrong
+  // way round.
   underground: [
-    { value: 'buried-direct', label: 'Buried direct in ground (Method D1)' },
-    { value: 'buried-duct', label: 'In buried ducts (Method D2)' },
+    { value: 'buried-direct', label: 'Buried direct in ground (Method D2)' },
+    { value: 'buried-duct', label: 'In buried ducts (Method D1)' },
   ],
   'free-air': [
     { value: 'tray-perforated', label: 'Multicore on perforated tray (Method E)' },
@@ -65,13 +73,17 @@ const installationOptionsByCategory: Record<string, Array<{ value: string; label
   ],
 };
 
+// Table citations verified against the printed BS 7671 Appendix 4 table index:
+// 4D1A single-core 70 °C thermoplastic, 4D5 flat cable with protective
+// conductor, 4E1A single-core 90 °C thermosetting, 4D4A multicore armoured
+// 70 °C, 4G1A mineral. XLPE T&E is deliberately sized on the 70 °C 4D5 columns.
 const cableTypeOptions = [
   { value: 'pvc-twin-earth', label: 'Flat Twin & Earth 70°C (Table 4D5)' },
   { value: 'pvc-single', label: 'PVC Single-core 70°C (Table 4D1A)' },
-  { value: 'xlpe-single', label: 'XLPE Single-core 90°C (Table 4D2A)' },
-  { value: 'xlpe-twin-earth', label: 'XLPE Twin & Earth 90°C' },
+  { value: 'xlpe-single', label: 'XLPE Single-core 90°C (Table 4E1A)' },
+  { value: 'xlpe-twin-earth', label: 'XLPE Twin & Earth (sized on Table 4D5)' },
   { value: 'swa', label: 'SWA Multicore Armoured (Table 4D4A)' },
-  { value: 'micc', label: 'Mineral Insulated (MICC)' },
+  { value: 'micc', label: 'Mineral Insulated MICC (Table 4G1A)' },
 ];
 
 const loadTypeOptions = [
@@ -123,6 +135,18 @@ const CableSizingForm = ({
 
   const showUndergroundFields = isUndergroundMethod(uiSelections.installationMethodUI);
   const showDomesticFields = isDomesticInsulationMethod(uiSelections.installationMethodUI);
+
+  // BS 7671 App 4 §5.1.1 sizes the cable on the rated current In of the
+  // protective device, and Cf (0.725) depends on whether that device is a
+  // BS 3036 semi-enclosed fuse — so both belong on the input form.
+  const selectedDeviceType: DeviceType = inputs.deviceType ?? 'mcb-b';
+  const deviceRatingOptions = [
+    { value: 'auto', label: 'Auto — smallest standard rating ≥ Ib' },
+    ...(ratingsByDevice[selectedDeviceType] ?? []).map((r) => ({
+      value: String(r),
+      label: `${r}A`,
+    })),
+  ];
 
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
@@ -298,6 +322,41 @@ const CableSizingForm = ({
         )}
       </div>
 
+      {/* Section: Protective Device — BS 7671 Reg 433.1.1 / App 4 §5.1.1 */}
+      <div className="space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Protective device (BS 7671 Reg 433.1.1)
+        </span>
+        <CalculatorInputGrid columns={2}>
+          <CalculatorSelect
+            label="Device Type"
+            value={selectedDeviceType}
+            onChange={(value) => {
+              updateInput('deviceType', value);
+              // Ratings differ by device standard — fall back to Auto so an
+              // out-of-range rating cannot survive the change.
+              updateInput('deviceRating', 'auto');
+            }}
+            placeholder="Select device type"
+            options={deviceTypeOptions.map((d) => ({
+              value: d.value,
+              label: `${d.label} (${d.standard})`,
+            }))}
+          />
+          <CalculatorSelect
+            label="Rating (In)"
+            value={inputs.deviceRating ?? 'auto'}
+            onChange={(value) => updateInput('deviceRating', value)}
+            placeholder="Select rating"
+            options={deviceRatingOptions}
+          />
+        </CalculatorInputGrid>
+        <p className="text-[12px] text-white">
+          The cable is sized on In, not on Ib (Reg 433.1.1: Ib ≤ In ≤ Iz). A BS 3036
+          semi-enclosed fuse also applies Cf = 0.725 per Appendix 4 §5.1.1(c)(i).
+        </p>
+      </div>
+
       {/* Section: Underground-Specific Fields (Conditional) */}
       {showUndergroundFields && (
         <div className="space-y-3">
@@ -398,14 +457,17 @@ const CableSizingForm = ({
               placeholder="Select voltage"
               options={voltageOptions}
             />
+            {/* The fallback was '0.9' here while the calculation read
+                `inputs.powerFactor || '1.0'` — the field displayed a value the
+                maths never used until the user touched it. */}
             <CalculatorInput
               label="Power Factor"
               type="text"
               inputMode="decimal"
-              value={inputs.powerFactor ?? '0.9'}
+              value={inputs.powerFactor ?? '1.0'}
               onChange={(value) => updateInput('powerFactor', value)}
-              placeholder="0.9"
-              hint="For voltage drop calculation. Typical: 0.8-0.9"
+              placeholder="1.0"
+              hint="Voltage drop, App 4 §6.2. Resistive 1.0, inductive 0.8-0.9"
             />
           </CalculatorInputGrid>
         </div>

@@ -18,304 +18,48 @@ import {
 import { TestResult } from '@/types/testResult';
 import { checkRegulationCompliance } from '@/utils/autoRegChecker';
 import RegulationWarningDialog from './RegulationWarningDialog';
+import { presetsByCategory } from '@/constants/circuitPresets';
 
 interface CompactCircuitAutoFillSectionProps {
+  /** ELE-1505 — decides whether TN or TT Zs limits apply to the preview warning. */
+  earthingArrangement?: string;
   testResults: TestResult[];
   onUpdate: (id: string, updates: Partial<TestResult>) => void;
 }
 
 // Enhanced circuit types with more specific options organised by category
-const enhancedCircuitTypes = [
-  {
-    category: 'Lighting',
-    icon: Lightbulb,
-    color: 'bg-elec-gray-dark border-elec-gray hover:bg-elec-gray',
-    options: [
-      {
-        type: 'Downstairs Lights',
-        label: 'Downstairs',
-        color: 'bg-elec-gray hover:bg-elec-gray-light text-foreground border-elec-gray',
-        suggestions: {
-          liveSize: '1.5',
-          cpcSize: '1.5',
-          protectiveDeviceRating: '6',
-          referenceMethod: 'C',
-          protectiveDeviceType: 'MCB',
-          bsStandard: 'MCB',
-          protectiveDeviceCurve: 'B',
-        },
-      },
-      {
-        type: 'Upstairs Lights',
-        label: 'Upstairs',
-        color: 'bg-elec-gray hover:bg-elec-gray-light text-foreground border-elec-gray',
-        suggestions: {
-          liveSize: '1.5',
-          cpcSize: '1.5',
-          protectiveDeviceRating: '6',
-          referenceMethod: 'C',
-          protectiveDeviceType: 'MCB',
-          bsStandard: 'MCB',
-          protectiveDeviceCurve: 'B',
-        },
-      },
-      {
-        type: 'Kitchen Lights',
-        label: 'Kitchen',
-        color: 'bg-elec-gray hover:bg-elec-gray-light text-foreground border-elec-gray',
-        suggestions: {
-          liveSize: '1.5',
-          cpcSize: '1.5',
-          protectiveDeviceRating: '10',
-          referenceMethod: 'C',
-          protectiveDeviceType: 'MCB',
-          bsStandard: 'MCB',
-          protectiveDeviceCurve: 'B',
-        },
-      },
-      {
-        type: 'Outdoor Lights',
-        label: 'Outdoor',
-        color: 'bg-elec-gray hover:bg-elec-gray-light text-foreground border-elec-gray',
-        suggestions: {
-          liveSize: '1.5',
-          cpcSize: '1.5',
-          protectiveDeviceRating: '6',
-          referenceMethod: 'C',
-          protectiveDeviceType: 'MCB',
-          bsStandard: 'MCB',
-          protectiveDeviceCurve: 'B',
-        },
-      },
-    ],
-  },
-  {
-    category: 'Sockets',
-    icon: Plug,
-    color: 'bg-elec-gray-dark border-elec-gray hover:bg-elec-gray',
-    options: [
-      {
-        type: 'Downstairs Ring',
-        label: 'Down Ring',
-        color: 'bg-elec-gray hover:bg-elec-gray-light text-foreground border-elec-gray',
-        suggestions: {
-          liveSize: '2.5',
-          cpcSize: '1.5',
-          protectiveDeviceRating: '32',
-          referenceMethod: 'C',
-          protectiveDeviceType: 'MCB',
-          bsStandard: 'MCB',
-          protectiveDeviceCurve: 'B',
-        },
-      },
-      {
-        type: 'Upstairs Ring',
-        label: 'Up Ring',
-        color: 'bg-elec-gray hover:bg-elec-gray-light text-foreground border-elec-gray',
-        suggestions: {
-          liveSize: '2.5',
-          cpcSize: '1.5',
-          protectiveDeviceRating: '32',
-          referenceMethod: 'C',
-          protectiveDeviceType: 'MCB',
-          bsStandard: 'MCB',
-          protectiveDeviceCurve: 'B',
-        },
-      },
-      {
-        type: 'Kitchen Ring',
-        label: 'Kitchen',
-        color: 'bg-elec-gray hover:bg-elec-gray-light text-foreground border-elec-gray',
-        suggestions: {
-          liveSize: '2.5',
-          cpcSize: '1.5',
-          protectiveDeviceRating: '32',
-          referenceMethod: 'C',
-          protectiveDeviceType: 'MCB',
-          bsStandard: 'MCB',
-          protectiveDeviceCurve: 'B',
-        },
-      },
-      {
-        type: 'Utility Radial',
-        label: 'Utility',
-        color: 'bg-elec-gray hover:bg-elec-gray-light text-foreground border-elec-gray',
-        suggestions: {
-          liveSize: '2.5',
-          cpcSize: '1.5',
-          protectiveDeviceRating: '20',
-          referenceMethod: 'C',
-          protectiveDeviceType: 'MCB',
-          bsStandard: 'MCB',
-          protectiveDeviceCurve: 'B',
-        },
-      },
-    ],
-  },
-  {
-    category: 'Fixed Appliances',
-    icon: ChefHat,
-    color: 'bg-elec-gray-dark border-elec-gray hover:bg-elec-gray',
-    options: [
-      {
-        type: 'Electric Cooker',
-        label: 'Cooker',
-        color: 'bg-elec-gray hover:bg-elec-gray-light text-foreground border-elec-gray',
-        suggestions: {
-          liveSize: '6',
-          cpcSize: '2.5',
-          protectiveDeviceRating: '32',
-          referenceMethod: 'C',
-          protectiveDeviceType: 'MCB',
-          bsStandard: 'MCB',
-          protectiveDeviceCurve: 'B',
-        },
-      },
-      {
-        type: 'Electric Shower',
-        label: 'Shower',
-        color: 'bg-elec-gray hover:bg-elec-gray-light text-foreground border-elec-gray',
-        suggestions: {
-          liveSize: '10',
-          cpcSize: '4',
-          protectiveDeviceRating: '40',
-          referenceMethod: 'C',
-          protectiveDeviceType: 'MCB',
-          bsStandard: 'MCB',
-          protectiveDeviceCurve: 'B',
-        },
-      },
-      {
-        type: 'Instantaneous Water Heater',
-        label: 'Water Heater',
-        color: 'bg-elec-gray hover:bg-elec-gray-light text-foreground border-elec-gray',
-        suggestions: {
-          liveSize: '6',
-          cpcSize: '2.5',
-          protectiveDeviceRating: '32',
-          referenceMethod: 'C',
-          protectiveDeviceType: 'MCB',
-          bsStandard: 'MCB',
-          protectiveDeviceCurve: 'B',
-        },
-      },
-      {
-        type: 'Immersion Heater',
-        label: 'Immersion',
-        color: 'bg-elec-gray hover:bg-elec-gray-light text-foreground border-elec-gray',
-        suggestions: {
-          liveSize: '2.5',
-          cpcSize: '1.5',
-          protectiveDeviceRating: '16',
-          referenceMethod: 'C',
-          protectiveDeviceType: 'MCB',
-          bsStandard: 'MCB',
-          protectiveDeviceCurve: 'B',
-        },
-      },
-    ],
-  },
-  {
-    category: 'Distribution Boards',
-    icon: Building2,
-    color: 'bg-elec-gray-dark border-elec-gray hover:bg-elec-gray',
-    options: [
-      {
-        type: 'Garage DB',
-        label: 'Garage DB',
-        color: 'bg-elec-gray hover:bg-elec-gray-light text-foreground border-elec-gray',
-        suggestions: {
-          liveSize: '4',
-          cpcSize: '1.5',
-          protectiveDeviceRating: '25',
-          referenceMethod: 'C',
-          protectiveDeviceType: 'MCB',
-          bsStandard: 'MCB',
-          protectiveDeviceCurve: 'B',
-        },
-      },
-      {
-        type: 'Outside Shed DB',
-        label: 'Shed DB',
-        color: 'bg-elec-gray hover:bg-elec-gray-light text-foreground border-elec-gray',
-        suggestions: {
-          liveSize: '2.5',
-          cpcSize: '1.5',
-          protectiveDeviceRating: '20',
-          referenceMethod: 'C',
-          protectiveDeviceType: 'MCB',
-          bsStandard: 'MCB',
-          protectiveDeviceCurve: 'B',
-        },
-      },
-    ],
-  },
-  {
-    category: 'Modern Systems',
-    icon: Car,
-    color: 'bg-elec-gray-dark border-elec-gray hover:bg-elec-gray',
-    options: [
-      {
-        type: 'EV Charging Point',
-        label: 'EV Charge',
-        color: 'bg-elec-gray hover:bg-elec-gray-light text-foreground border-elec-gray',
-        suggestions: {
-          liveSize: '6',
-          cpcSize: '2.5',
-          protectiveDeviceRating: '32',
-          referenceMethod: 'C',
-          protectiveDeviceType: 'MCB',
-          bsStandard: 'MCB',
-          protectiveDeviceCurve: 'B',
-        },
-      },
-      {
-        type: 'Heat Pump',
-        label: 'Heat Pump',
-        color: 'bg-elec-gray hover:bg-elec-gray-light text-foreground border-elec-gray',
-        suggestions: {
-          liveSize: '4',
-          cpcSize: '1.5',
-          protectiveDeviceRating: '25',
-          referenceMethod: 'C',
-          protectiveDeviceType: 'MCB',
-          bsStandard: 'MCB',
-          protectiveDeviceCurve: 'B',
-        },
-      },
-      {
-        type: 'Solar PV',
-        label: 'Solar PV',
-        color: 'bg-elec-gray hover:bg-elec-gray-light text-foreground border-elec-gray',
-        suggestions: {
-          liveSize: '4',
-          cpcSize: '1.5',
-          protectiveDeviceRating: '16',
-          referenceMethod: 'C',
-          protectiveDeviceType: 'MCB',
-          bsStandard: 'MCB',
-          protectiveDeviceCurve: 'B',
-        },
-      },
-      {
-        type: 'Central Heating',
-        label: 'Heating',
-        color: 'bg-elec-gray hover:bg-elec-gray-light text-foreground border-elec-gray',
-        suggestions: {
-          liveSize: '1.5',
-          cpcSize: '1.5',
-          protectiveDeviceRating: '6',
-          referenceMethod: 'C',
-          protectiveDeviceType: 'MCB',
-          bsStandard: 'MCB',
-          protectiveDeviceCurve: 'B',
-        },
-      },
-    ],
-  },
-];
+// Presets come from `@/constants/circuitPresets` — one list, shared with the
+// add-circuit sheet and the description type-ahead. This file used to hold its
+// own copy, and it had drifted: `liveSize: '2.5'` instead of the canonical
+// `'2.5mm'` (so the ring detector could not recognise its own preset as a ring),
+// reference method C where the sheet said A, and `bsStandard: 'MCB'` — which
+// resolves no maximum Zs, so the Zs check silently skipped the circuit.
+//
+// Icons and colours stay local; only the electrical data is shared.
+const CATEGORY_STYLE: Record<string, { icon: typeof Lightbulb; color: string }> = {
+  'Lighting': { icon: Lightbulb, color: 'bg-elec-gray-dark border-elec-gray hover:bg-elec-gray' },
+  'Sockets': { icon: Plug, color: 'bg-elec-gray-dark border-elec-gray hover:bg-elec-gray' },
+  'Fixed Appliances': { icon: ChefHat, color: 'bg-elec-gray-dark border-elec-gray hover:bg-elec-gray' },
+  'Distribution Boards': { icon: Building2, color: 'bg-elec-gray-dark border-elec-gray hover:bg-elec-gray' },
+  'Modern Systems': { icon: Car, color: 'bg-elec-gray-dark border-elec-gray hover:bg-elec-gray' }
+};
+
+const OPTION_STYLE = 'bg-elec-gray hover:bg-elec-gray-light text-foreground border-elec-gray';
+
+const enhancedCircuitTypes = presetsByCategory().map(({ category, options }) => ({
+  category,
+  icon: CATEGORY_STYLE[category]?.icon,
+  color: CATEGORY_STYLE[category]?.color ?? '',
+  options: options.map((preset) => ({
+    type: preset.type,
+    label: preset.type,
+    color: OPTION_STYLE,
+    suggestions: preset.suggestions,
+  })),
+}));
 
 const CompactCircuitAutoFillSection: React.FC<CompactCircuitAutoFillSectionProps> = ({
+  earthingArrangement,
   testResults,
   onUpdate,
 }) => {
@@ -349,7 +93,7 @@ const CompactCircuitAutoFillSection: React.FC<CompactCircuitAutoFillSectionProps
     };
 
     // Check for regulation compliance
-    const complianceCheck = checkRegulationCompliance(updatedResult);
+    const complianceCheck = checkRegulationCompliance(updatedResult, earthingArrangement);
 
     if (complianceCheck.warnings.length > 0) {
       // Show warning dialog

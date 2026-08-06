@@ -1,7 +1,9 @@
 import { useMemo, useEffect, useRef, useState } from 'react';
-import { startOfWeek, addDays, isToday, format, differenceInMinutes, parseISO } from 'date-fns';
+import { startOfWeek, addDays, isToday, format, differenceInMinutes } from 'date-fns';
 import { useSwipeable } from 'react-swipeable';
 import { cn } from '@/lib/utils';
+import { cardCn, eyebrowCn } from './calendarStyles';
+import { eventsOnDay, isMultiDay, layoutDayEvents } from './eventUtils';
 import type { CalendarEvent } from '@/types/calendar';
 
 interface CalendarWeekViewProps {
@@ -15,8 +17,8 @@ interface CalendarWeekViewProps {
   onSwipeRight: () => void;
 }
 
-const HOUR_HEIGHT = 56; // px per hour
-const TIME_COL = 42; // width of time gutter
+const HOUR_HEIGHT = 56;
+const TIME_COL = 42;
 
 const CalendarWeekView = ({
   currentDate,
@@ -52,215 +54,232 @@ const CalendarWeekView = ({
 
   const firstHour = hours[0];
   const showNowLine = weekDays.some((d) => isToday(d));
+  const todayIndex = weekDays.findIndex((d) => isToday(d));
 
-  // Update "now" every minute
+  /**
+   * Per-day layout. Timed events are positioned in the grid; anything all-day
+   * or running across days goes to the banner instead — it has no start time on
+   * the middle days to place it against.
+   */
+  const perDay = useMemo(
+    () =>
+      weekDays.map((day) => {
+        const onDay = eventsOnDay(events, day);
+        return {
+          day,
+          banner: onDay.filter((e) => e.all_day || isMultiDay(e)),
+          timed: layoutDayEvents(
+            onDay.filter((e) => !isMultiDay(e)),
+            day
+          ),
+        };
+      }),
+    [weekDays, events]
+  );
+
+  const hasBanner = perDay.some((d) => d.banner.length > 0);
+
   useEffect(() => {
     if (!showNowLine) return;
     const interval = setInterval(() => setNow(new Date()), 60_000);
     return () => clearInterval(interval);
   }, [showNowLine]);
 
-  // Auto-scroll to current time on mount
   useEffect(() => {
     if (!scrollRef.current || !showNowLine) return;
     const nowHour = new Date().getHours();
-    const scrollTarget = Math.max(0, (nowHour - firstHour - 2) * HOUR_HEIGHT);
-    scrollRef.current.scrollTop = scrollTarget;
+    scrollRef.current.scrollTop = Math.max(0, (nowHour - firstHour - 2) * HOUR_HEIGHT);
   }, [firstHour, showNowLine]);
 
-  // Current time indicator position
   const nowLineTop = useMemo(() => {
     if (!showNowLine) return -1;
-    const minutesSinceFirstHour = differenceInMinutes(
+    const minutes = differenceInMinutes(
       now,
       new Date(now.getFullYear(), now.getMonth(), now.getDate(), firstHour)
     );
-    return (minutesSinceFirstHour / 60) * HOUR_HEIGHT;
+    return (minutes / 60) * HOUR_HEIGHT;
   }, [now, firstHour, showNowLine]);
 
-  // Today column index for the now-line
-  const todayIndex = weekDays.findIndex((d) => isToday(d));
-
-  // Group events by day
-  const eventsByDay = useMemo(() => {
-    const map = new Map<string, CalendarEvent[]>();
-    events.forEach((event) => {
-      const key = format(parseISO(event.start_at), 'yyyy-MM-dd');
-      const existing = map.get(key) ?? [];
-      existing.push(event);
-      map.set(key, existing);
-    });
-    return map;
-  }, [events]);
+  const gridColumns = `${TIME_COL}px repeat(7, 1fr)`;
 
   return (
-    <div {...swipeHandlers} className="select-none">
-      <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] overflow-hidden">
-        {/* Day headers */}
-        <div
-          className="grid border-b border-white/[0.06]"
-          style={{ gridTemplateColumns: `${TIME_COL}px repeat(7, 1fr)` }}
-        >
-          <div className="h-14" />
-          {weekDays.map((day, i) => {
-            const today = isToday(day);
-            const isWeekend = i >= 5;
-            return (
-              <div
-                key={day.toISOString()}
+    <div {...swipeHandlers} className={cn(cardCn, 'select-none overflow-hidden')}>
+      {/* Day headers */}
+      <div
+        className="grid border-b border-white/[0.10]"
+        style={{ gridTemplateColumns: gridColumns }}
+      >
+        <div className="h-14" />
+        {weekDays.map((day) => {
+          const today = isToday(day);
+          return (
+            <div
+              key={day.toISOString()}
+              className={cn(
+                'flex h-14 flex-col items-center justify-center gap-0.5',
+                today && 'bg-elec-yellow/[0.06]'
+              )}
+            >
+              <span className={eyebrowCn}>{format(day, 'EEEEE')}</span>
+              <span
                 className={cn(
-                  'flex flex-col items-center justify-center h-14 gap-0.5',
-                  today && 'bg-elec-yellow/5'
+                  'flex h-7 w-7 items-center justify-center rounded-full text-xs font-semibold tabular-nums',
+                  today ? 'bg-elec-yellow text-black' : 'text-white'
                 )}
               >
-                <span
-                  className={cn(
-                    'text-[10px] font-bold uppercase tracking-wider',
-                    today ? 'text-elec-yellow' : isWeekend ? 'text-elec-yellow/60' : 'text-white'
-                  )}
+                {format(day, 'd')}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* All-day / multi-day banner row */}
+      {hasBanner && (
+        <div
+          className="grid border-b border-white/[0.10]"
+          style={{ gridTemplateColumns: gridColumns }}
+        >
+          <div className="flex items-start justify-end pr-1.5 pt-2">
+            <span className="text-[9px] font-semibold uppercase tracking-[0.1em] text-white">
+              All
+            </span>
+          </div>
+          {perDay.map(({ day, banner }) => (
+            <div key={day.toISOString()} className="space-y-1 px-0.5 py-1.5">
+              {banner.slice(0, 2).map((event) => (
+                <button
+                  key={event.id}
+                  type="button"
+                  onClick={() => onEventTap(event)}
+                  className="block w-full truncate rounded px-1 py-0.5 text-left text-[9px] font-semibold text-white touch-manipulation"
+                  style={{
+                    backgroundColor: `${event.colour}30`,
+                    borderLeft: `2px solid ${event.colour}`,
+                  }}
                 >
-                  {format(day, 'EEE')}
+                  {event.title}
+                </button>
+              ))}
+              {banner.length > 2 && (
+                <span className="block px-1 text-[9px] font-semibold tabular-nums text-white">
+                  +{banner.length - 2}
                 </span>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Time grid */}
+      <div ref={scrollRef} className="max-h-[calc(100vh-340px)] overflow-y-auto">
+        <div className="relative grid" style={{ gridTemplateColumns: gridColumns }}>
+          {hours.map((hour) => {
+            const working = hour >= workingHoursStart && hour < workingHoursEnd;
+            return (
+              <div key={hour} className="contents">
                 <div
                   className={cn(
-                    'w-7 h-7 flex items-center justify-center rounded-full text-xs font-bold',
-                    today && 'bg-elec-yellow text-black',
-                    !today && 'text-white'
+                    '-mt-[6px] flex items-start justify-end pr-1.5',
+                    !working && 'opacity-55'
                   )}
+                  style={{ height: HOUR_HEIGHT }}
                 >
-                  {format(day, 'd')}
+                  <span className="text-[10px] font-semibold tabular-nums text-white">
+                    {format(new Date(2000, 0, 1, hour), 'HH')}
+                  </span>
                 </div>
-              </div>
-            );
-          })}
-        </div>
 
-        {/* Time grid (scrollable) */}
-        <div ref={scrollRef} className="overflow-y-auto max-h-[calc(100vh-280px)]">
-          <div
-            className="grid relative"
-            style={{ gridTemplateColumns: `${TIME_COL}px repeat(7, 1fr)` }}
-          >
-            {hours.map((hour) => {
-              const isWorkingHour = hour >= workingHoursStart && hour < workingHoursEnd;
-              return (
-                <div key={hour} className="contents">
-                  {/* Time label */}
-                  <div
+                {weekDays.map((day, dayIdx) => (
+                  <button
+                    key={`${day.toISOString()}-${hour}`}
+                    type="button"
+                    onClick={() => onTimeSlotTap(day, hour)}
                     className={cn(
-                      'flex items-start justify-end pr-1.5 -mt-[6px] text-[10px] font-bold tabular-nums',
-                      isWorkingHour ? 'text-white' : 'text-white opacity-50'
+                      'relative border-l border-t border-white/[0.05] touch-manipulation active:bg-white/[0.06]',
+                      working
+                        ? dayIdx >= 5
+                          ? 'bg-white/[0.02]'
+                          : 'bg-white/[0.03]'
+                        : 'bg-transparent'
                     )}
                     style={{ height: HOUR_HEIGHT }}
                   >
-                    {format(new Date(2000, 0, 1, hour), 'HH')}
-                  </div>
-
-                  {/* Day columns */}
-                  {weekDays.map((day, dayIdx) => {
-                    const isWeekend = dayIdx >= 5;
-                    return (
-                      <button
-                        key={`${day.toISOString()}-${hour}`}
-                        type="button"
-                        onClick={() => onTimeSlotTap(day, hour)}
-                        className={cn(
-                          'border-t border-l border-white/[0.04] touch-manipulation active:bg-white/[0.06] relative',
-                          isWorkingHour
-                            ? isWeekend
-                              ? 'bg-white/[0.015]'
-                              : 'bg-white/[0.025]'
-                            : 'bg-transparent'
-                        )}
-                        style={{ height: HOUR_HEIGHT }}
-                      >
-                        {/* Half-hour line */}
-                        <div
-                          className="absolute left-0 right-0 h-px bg-white/[0.025]"
-                          style={{ top: HOUR_HEIGHT / 2 }}
-                        />
-                      </button>
-                    );
-                  })}
-                </div>
-              );
-            })}
-
-            {/* Current time indicator */}
-            {showNowLine && nowLineTop >= 0 && nowLineTop <= hours.length * HOUR_HEIGHT && (
-              <div
-                className="absolute left-0 right-0 z-20 pointer-events-none"
-                style={{
-                  top: nowLineTop,
-                  gridTemplateColumns: `${TIME_COL}px repeat(7, 1fr)`,
-                  display: 'grid',
-                }}
-              >
-                <div className="flex items-center justify-end pr-0.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_6px_rgba(239,68,68,0.5)]" />
-                </div>
-                {weekDays.map((day, i) => (
-                  <div
-                    key={day.toISOString()}
-                    className={cn(
-                      'h-[2px]',
-                      i === todayIndex
-                        ? 'bg-red-500 shadow-[0_0_4px_rgba(239,68,68,0.3)]'
-                        : 'bg-transparent'
-                    )}
-                  />
+                    <span
+                      className="absolute inset-x-0 h-px bg-white/[0.03]"
+                      style={{ top: HOUR_HEIGHT / 2 }}
+                    />
+                  </button>
                 ))}
               </div>
-            )}
+            );
+          })}
 
-            {/* Event blocks overlay */}
-            {weekDays.map((day, dayIndex) => {
-              const key = format(day, 'yyyy-MM-dd');
-              const dayEvents = eventsByDay.get(key) ?? [];
+          {/* Now line — yellow, matching the day view and the rest of the app */}
+          {showNowLine && nowLineTop >= 0 && nowLineTop <= hours.length * HOUR_HEIGHT && (
+            <div
+              className="pointer-events-none absolute inset-x-0 z-20 grid"
+              style={{ top: nowLineTop, gridTemplateColumns: gridColumns }}
+            >
+              <div className="flex items-center justify-end pr-0.5">
+                <span className="h-2.5 w-2.5 rounded-full bg-elec-yellow shadow-[0_0_8px_rgba(250,204,21,0.5)]" />
+              </div>
+              {weekDays.map((day, i) => (
+                <div
+                  key={day.toISOString()}
+                  className={cn('h-[2px]', i === todayIndex ? 'bg-elec-yellow' : 'bg-transparent')}
+                />
+              ))}
+            </div>
+          )}
 
-              return dayEvents.map((event) => {
-                const eventStart = parseISO(event.start_at);
-                const eventEnd = parseISO(event.end_at);
-                const topMinutes = differenceInMinutes(
-                  eventStart,
-                  new Date(day.getFullYear(), day.getMonth(), day.getDate(), firstHour)
-                );
-                const durationMinutes = Math.max(differenceInMinutes(eventEnd, eventStart), 15);
-                const top = Math.max(0, (topMinutes / 60) * HOUR_HEIGHT);
-                const height = Math.max(20, (durationMinutes / 60) * HOUR_HEIGHT);
+          {/* Event blocks */}
+          {perDay.map(({ day, timed }, dayIndex) =>
+            timed.map(({ event, start, end, column, columns }) => {
+              const topMinutes = differenceInMinutes(
+                start,
+                new Date(day.getFullYear(), day.getMonth(), day.getDate(), firstHour)
+              );
+              const duration = Math.max(differenceInMinutes(end, start), 15);
+              const top = Math.max(0, (topMinutes / 60) * HOUR_HEIGHT);
+              const height = Math.max(20, (duration / 60) * HOUR_HEIGHT);
+              // The seven day columns share the width LEFT OVER after the time
+              // gutter, so a plain `dayIndex * (100/7)%` — which is what this
+              // used to do — drifts a whole gutter's width by Sunday.
+              const track = `(100% - ${TIME_COL}px)`;
+              const offset = dayIndex / 7 + column / columns / 7;
+              const widthFraction = 1 / 7 / columns;
 
-                return (
-                  <button
-                    key={event.id}
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onEventTap(event);
-                    }}
-                    className="absolute rounded-lg px-1 py-0.5 overflow-hidden text-left touch-manipulation active:scale-[0.97] transition-transform z-10"
-                    style={{
-                      top,
-                      height,
-                      left: `calc(${TIME_COL}px + ${(dayIndex / 7) * 100}% * (7 / 7) + 2px)`,
-                      width: `calc(${100 / 7}% - 3px)`,
-                      backgroundColor: event.colour + '28',
-                      borderLeft: `2px solid ${event.colour}`,
-                      boxShadow: `0 1px 4px ${event.colour}15`,
-                    }}
-                  >
-                    <span className="text-[9px] font-bold text-white line-clamp-1 leading-tight">
-                      {event.title}
+              return (
+                <button
+                  key={event.id}
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onEventTap(event);
+                  }}
+                  className="absolute z-10 overflow-hidden rounded-md px-1 py-0.5 text-left touch-manipulation active:scale-[0.97]"
+                  style={{
+                    top,
+                    height,
+                    left: `calc(${TIME_COL}px + ${track} * ${offset.toFixed(6)} + 2px)`,
+                    width: `calc(${track} * ${widthFraction.toFixed(6)} - 3px)`,
+                    backgroundColor: `${event.colour}2E`,
+                    borderLeft: `2px solid ${event.colour}`,
+                  }}
+                >
+                  <span className="line-clamp-1 text-[9px] font-semibold leading-tight text-white">
+                    {event.title}
+                  </span>
+                  {height > 28 && (
+                    <span className="text-[8px] tabular-nums text-white">
+                      {format(start, 'HH:mm')}
                     </span>
-                    {height > 28 && (
-                      <span className="text-[8px] text-white line-clamp-1">
-                        {format(eventStart, 'HH:mm')}
-                      </span>
-                    )}
-                  </button>
-                );
-              });
-            })}
-          </div>
+                  )}
+                </button>
+              );
+            })
+          )}
         </div>
       </div>
     </div>

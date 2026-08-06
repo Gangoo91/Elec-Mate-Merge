@@ -1,72 +1,73 @@
 import { Routes, Route } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
+import { Suspense } from 'react';
+import { lazyWithRetry } from '@/utils/lazyWithRetry';
 import { CertificateSkeleton } from '@/components/ui/page-skeleton';
 
 // Lazy load the main inspection app page
-const InspectionIndex = lazy(() => import('@/pages/inspection/InspectionIndex'));
-const LegacyCertificates = lazy(() => import('@/pages/inspection/LegacyCertificates'));
-const NewCertificate = lazy(() => import('@/pages/inspection/NewCertificate'));
+const InspectionIndex = lazyWithRetry(() => import('@/pages/inspection/InspectionIndex'));
+const LegacyCertificates = lazyWithRetry(() => import('@/pages/inspection/LegacyCertificates'));
+const NewCertificate = lazyWithRetry(() => import('@/pages/inspection/NewCertificate'));
 
 // New certificate types
-const FireAlarmCertificate = lazy(() => import('@/pages/inspection/FireAlarmCertificate'));
-const FireAlarmDesignCertificate = lazy(
+const FireAlarmCertificate = lazyWithRetry(() => import('@/pages/inspection/FireAlarmCertificate'));
+const FireAlarmDesignCertificate = lazyWithRetry(
   () => import('@/pages/inspection/FireAlarmDesignCertificate')
 );
-const FireAlarmCommissioningCertificate = lazy(
+const FireAlarmCommissioningCertificate = lazyWithRetry(
   () => import('@/pages/inspection/FireAlarmCommissioningCertificate')
 );
-const FireAlarmInspectionCertificate = lazy(
+const FireAlarmInspectionCertificate = lazyWithRetry(
   () => import('@/pages/inspection/FireAlarmInspectionCertificate')
 );
-const FireAlarmModificationCertificate = lazy(
+const FireAlarmModificationCertificate = lazyWithRetry(
   () => import('@/pages/inspection/FireAlarmModificationCertificate')
 );
-const FireAlarmLogBooks = lazy(() => import('@/pages/inspection/FireAlarmLogBooks'));
-const FireAlarmLogBookDetail = lazy(() => import('@/pages/inspection/FireAlarmLogBookDetail'));
-const EVChargingCertificate = lazy(() => import('@/pages/inspection/EVChargingCertificate'));
-const EmergencyLightingCertificate = lazy(
+const FireAlarmLogBooks = lazyWithRetry(() => import('@/pages/inspection/FireAlarmLogBooks'));
+const FireAlarmLogBookDetail = lazyWithRetry(() => import('@/pages/inspection/FireAlarmLogBookDetail'));
+const EVChargingCertificate = lazyWithRetry(() => import('@/pages/inspection/EVChargingCertificate'));
+const EmergencyLightingCertificate = lazyWithRetry(
   () => import('@/pages/inspection/EmergencyLightingCertificate')
 );
-const SolarPVCertificate = lazy(() => import('@/pages/inspection/SolarPVCertificate'));
-const PATTestingCertificate = lazy(() => import('@/pages/inspection/PATTestingCertificate'));
+const SolarPVCertificate = lazyWithRetry(() => import('@/pages/inspection/SolarPVCertificate'));
+const PATTestingCertificate = lazyWithRetry(() => import('@/pages/inspection/PATTestingCertificate'));
 
 // BESS Certificate
-const BESSCertificate = lazy(() => import('@/pages/inspection/BESSCertificate'));
+const BESSCertificate = lazyWithRetry(() => import('@/pages/inspection/BESSCertificate'));
 // Heat Pump Commissioning Certificate (MCS MIS 3005)
-const HeatPumpCertificate = lazy(() => import('@/pages/inspection/HeatPumpCertificate'));
+const HeatPumpCertificate = lazyWithRetry(() => import('@/pages/inspection/HeatPumpCertificate'));
 // Lightning Protection Certificate
-const LightningProtectionCertificate = lazy(
+const LightningProtectionCertificate = lazyWithRetry(
   () => import('@/pages/inspection/LightningProtectionCertificate')
 );
 // Smoke & CO Alarm
-const SmokeCOAlarmCertificate = lazy(() => import('@/pages/inspection/SmokeCOAlarmCertificate'));
+const SmokeCOAlarmCertificate = lazyWithRetry(() => import('@/pages/inspection/SmokeCOAlarmCertificate'));
 // G98/G99 Commissioning
-const G98CommissioningCertificate = lazy(
+const G98CommissioningCertificate = lazyWithRetry(
   () => import('@/pages/inspection/G98CommissioningCertificate')
 );
-const G99CommissioningCertificate = lazy(
+const G99CommissioningCertificate = lazyWithRetry(
   () => import('@/pages/inspection/G99CommissioningCertificate')
 );
 // Testing Only
-const TestingOnlyCertificate = lazy(
+const TestingOnlyCertificate = lazyWithRetry(
   () => import('@/pages/inspection/TestingOnlyCertificate')
 );
 // Disconnection Certificate
-const DisconnectionCertificate = lazy(
+const DisconnectionCertificate = lazyWithRetry(
   () => import('@/pages/inspection/DisconnectionCertificate')
 );
 
 // Labels & Warnings
-const DangerNoticePage = lazy(() => import('@/pages/inspection/DangerNoticePage'));
-const IsolationCertificatePage = lazy(() => import('@/pages/inspection/IsolationCertificatePage'));
-const PermitToWorkPage = lazy(() => import('@/pages/inspection/PermitToWorkPage'));
-const WarningLabelsPage = lazy(() => import('@/pages/inspection/WarningLabelsPage'));
-const BoardSchedulePage = lazy(() => import('@/pages/inspection/BoardSchedulePage'));
-const ClientHandoutsPage = lazy(() => import('@/pages/inspection/ClientHandoutsPage'));
-const SafeIsolationPage = lazy(() => import('@/pages/inspection/SafeIsolationPage'));
-const LimitationNoticePage = lazy(() => import('@/pages/inspection/LimitationNoticePage'));
-const NonComplianceNoticePage = lazy(() => import('@/pages/inspection/NonComplianceNoticePage'));
-const CompletionNoticePage = lazy(() => import('@/pages/inspection/CompletionNoticePage'));
+const DangerNoticePage = lazyWithRetry(() => import('@/pages/inspection/DangerNoticePage'));
+const IsolationCertificatePage = lazyWithRetry(() => import('@/pages/inspection/IsolationCertificatePage'));
+const PermitToWorkPage = lazyWithRetry(() => import('@/pages/inspection/PermitToWorkPage'));
+const WarningLabelsPage = lazyWithRetry(() => import('@/pages/inspection/WarningLabelsPage'));
+const BoardSchedulePage = lazyWithRetry(() => import('@/pages/inspection/BoardSchedulePage'));
+const ClientHandoutsPage = lazyWithRetry(() => import('@/pages/inspection/ClientHandoutsPage'));
+const SafeIsolationPage = lazyWithRetry(() => import('@/pages/inspection/SafeIsolationPage'));
+const LimitationNoticePage = lazyWithRetry(() => import('@/pages/inspection/LimitationNoticePage'));
+const NonComplianceNoticePage = lazyWithRetry(() => import('@/pages/inspection/NonComplianceNoticePage'));
+const CompletionNoticePage = lazyWithRetry(() => import('@/pages/inspection/CompletionNoticePage'));
 
 const LoadingFallback = CertificateSkeleton;
 

@@ -37,8 +37,8 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'BS 7671 Table 61 specifies test voltage by circuit nominal voltage: 500V DC for circuits up to 500V, and 1000V DC for circuits above 500V up to 1000V.',
-  'The minimum acceptable insulation resistance value is 1MΩ per BS 7671 Table 61. In practice, a healthy circuit should read significantly higher — often hundreds of megaohms on a new installation.',
+  'BS 7671 Table 64 specifies test voltage by circuit nominal voltage: 500V DC for circuits up to 500V, and 1000V DC for circuits above 500V up to 1000V.',
+  'The minimum acceptable insulation resistance value is 1MΩ per BS 7671 Table 64. In practice, a healthy circuit should read significantly higher — often hundreds of megaohms on a new installation.',
   'All electronic components susceptible to damage from test voltage must be disconnected before testing. This includes dimmers, electronic timers, RCDs, surge protective devices (SPDs), and some luminaire control gear.',
   'A declining result on repeated tests — or a reading that is borderline at 1MΩ — warrants investigation even if the test technically passes. IR testing reveals insulation condition at the moment of test only.',
   'On EICR work, insulation resistance is tested between live conductors and earth, and between live conductors (line and neutral), with all circuit breakers closed and lamps removed.',
@@ -48,12 +48,12 @@ const faqs = [
   {
     question: 'What test voltage is used for insulation resistance testing?',
     answer:
-      'BS 7671 Table 61 specifies 500V DC for circuits with a nominal voltage up to and including 500V (which covers all standard 230V single-phase and 400V three-phase circuits). 1000V DC is used for circuits with a nominal voltage above 500V up to 1000V. The test voltage must be maintained for at least 1 minute before the result is recorded, or until the reading stabilises.',
+      'BS 7671 Table 64 specifies 500V DC for circuits with a nominal voltage up to and including 500V (which covers all standard 230V single-phase and 400V three-phase circuits). 1000V DC is used for circuits with a nominal voltage above 500V up to 1000V. The test voltage must be maintained for at least 1 minute before the result is recorded, or until the reading stabilises.',
   },
   {
     question: 'What is the minimum insulation resistance value to pass?',
     answer:
-      'The minimum acceptable insulation resistance value per BS 7671 Table 61 is 1MΩ for circuits up to 500V. However, this is a minimum pass threshold for an existing installation — a reading close to 1MΩ on an otherwise healthy-looking installation warrants further investigation. New installations should read substantially higher. A reading of 1MΩ on a new installation would indicate a fault.',
+      'The minimum acceptable insulation resistance value per BS 7671 Table 64 is 1MΩ for circuits up to 500V. However, this is a minimum pass threshold for an existing installation — a reading close to 1MΩ on an otherwise healthy-looking installation warrants further investigation. New installations should read substantially higher. A reading of 1MΩ on a new installation would indicate a fault.',
   },
   {
     question: 'Which components must be disconnected before IR testing?',
@@ -144,7 +144,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (Chapter 61) and must be carried out on every new installation and as part of every
+          (Chapter 64) and must be carried out on every new installation and as part of every
           periodic inspection and testing (EICR).
         </p>
         <p>
@@ -172,11 +172,11 @@ const sections = [
   },
   {
     id: 'test-voltages',
-    heading: 'Test Voltages — BS 7671 Table 61 Requirements',
+    heading: 'Test Voltages — BS 7671 Table 64 Requirements',
     content: (
       <>
         <p>
-          BS 7671 Table 61 (Minimum values of insulation resistance) specifies both the test voltage
+          BS 7671 Table 64 (Minimum values of insulation resistance) specifies both the test voltage
           to be applied and the minimum acceptable result. The test voltage is selected based on the
           nominal voltage of the circuit under test.
         </p>
@@ -227,7 +227,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671 Table 61 sets a minimum insulation resistance of <strong>1MΩ</strong> for all
+          BS 7671 Table 64 sets a minimum insulation resistance of <strong>1MΩ</strong> for all
           circuits up to 500V (including both 230V and 400V circuits). For SELV and PELV circuits
           tested at 250V DC, the minimum is also 1MΩ.
         </p>
@@ -436,7 +436,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <XCircle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Below 1MΩ</strong>: Fails BS 7671 Table 61. The circuit has a significant
+                <strong>Below 1MΩ</strong>: Fails BS 7671 Table 64. The circuit has a significant
                 insulation fault. Locate and remedy before re-testing. Record as C2 (potentially
                 dangerous) on the EICR if the low reading indicates a fire or shock risk.
               </span>
@@ -626,7 +626,7 @@ export default function InsulationResistanceTestingGuidePage() {
   return (
     <GuideTemplate
       title="Insulation Resistance Testing Guide | IR Testing BS 7671"
-      description="Complete guide to insulation resistance (IR) testing. Test voltages per BS 7671 Table 61, minimum values, disconnecting electronic components…"
+      description="Complete guide to insulation resistance (IR) testing. Test voltages per BS 7671 Table 64, minimum values, disconnecting electronic components…"
       datePublished="2026-03-27"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
@@ -640,7 +640,7 @@ export default function InsulationResistanceTestingGuidePage() {
         </>
       }
               noindex={true}
-      heroSubtitle="Everything UK electricians need to know about insulation resistance testing — test voltages (500V DC and 1000V DC), minimum acceptable values (1MΩ per BS 7671 Table 61), disconnecting dimmers and RCDs, interpreting results, and locating common failures."
+      heroSubtitle="Everything UK electricians need to know about insulation resistance testing — test voltages (500V DC and 1000V DC), minimum acceptable values (1MΩ per BS 7671 Table 64), disconnecting dimmers and RCDs, interpreting results, and locating common failures."
       readingTime={12}
       keyTakeaways={keyTakeaways}
       sections={sections}

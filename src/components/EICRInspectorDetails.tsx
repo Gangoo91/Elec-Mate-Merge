@@ -420,7 +420,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
             </span>
           )}
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2" data-field="inspectorQualifications">
           {availableQualifications.map((qualification) => {
             const isSelected = selectedQualifications.includes(qualification);
             return (

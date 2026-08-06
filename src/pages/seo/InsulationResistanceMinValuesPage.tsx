@@ -42,23 +42,23 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'BS 7671 Table 61 specifies minimum insulation resistance values based on circuit voltage. For SELV and PELV circuits (up to 50V), the minimum is 0.5 megohms. For circuits up to 500V (including standard 230V domestic), the minimum is 1.0 megohms. For circuits above 500V, the minimum is 1.0 megohms.',
+  'BS 7671 Table 64 specifies minimum insulation resistance values based on circuit voltage. For SELV and PELV circuits (up to 50V), the minimum is 0.5 megohms. For circuits up to 500V (including standard 230V domestic), the minimum is 1.0 megohms. For circuits above 500V, the minimum is 1.0 megohms.',
   'The test voltage must match the circuit voltage: 250V DC for SELV/PELV circuits, 500V DC for circuits up to 500V (standard domestic and commercial), and 1000V DC for circuits above 500V. Using the wrong test voltage gives unreliable results.',
   'While 1.0 megohm is the absolute minimum for a 230V circuit, a reading below 2.0 megohms on a domestic circuit should prompt further investigation. New installations typically produce readings of 200 megohms or higher. Low readings indicate deteriorating insulation.',
   'Low insulation resistance can be caused by moisture, damaged cable insulation, contamination, excessive cable age, rodent damage, or equipment connected to the circuit during testing. Always disconnect all loads and electronic equipment before testing.',
-  'Elec-Mate auto-validates every insulation resistance reading against BS 7671 Table 61 minimum values. Readings below the minimum are flagged immediately, with the relevant regulation reference and guidance on further investigation.',
+  'Elec-Mate auto-validates every insulation resistance reading against BS 7671 Table 64 minimum values. Readings below the minimum are flagged immediately, with the relevant regulation reference and guidance on further investigation.',
 ];
 
 const faqs = [
   {
     question: 'What is the minimum insulation resistance for a 230V circuit?',
     answer:
-      'The minimum acceptable insulation resistance for a 230V circuit is 1.0 megohm (1 million ohms) when tested at 500V DC. This is specified in BS 7671 Table 61. However, 1.0 megohm is the absolute minimum — any reading at or near this value on a standard domestic circuit should be investigated further, as new cable and accessories typically produce readings of 200 megohms or higher. A reading of 2 megohms or less on a domestic circuit suggests significant insulation deterioration that is likely to worsen over time. On an EICR, a reading at the minimum limit would typically warrant a C3 (improvement recommended) observation, while a reading below the minimum would be a C2 (potentially dangerous) or even C1 (danger present) depending on the circumstances.',
+      'The minimum acceptable insulation resistance for a 230V circuit is 1.0 megohm (1 million ohms) when tested at 500V DC. This is specified in BS 7671 Table 64. However, 1.0 megohm is the absolute minimum — any reading at or near this value on a standard domestic circuit should be investigated further, as new cable and accessories typically produce readings of 200 megohms or higher. A reading of 2 megohms or less on a domestic circuit suggests significant insulation deterioration that is likely to worsen over time. On an EICR, a reading at the minimum limit would typically warrant a C3 (improvement recommended) observation, while a reading below the minimum would be a C2 (potentially dangerous) or even C1 (danger present) depending on the circumstances.',
   },
   {
     question: 'What test voltage should I use for insulation resistance testing?',
     answer:
-      'The test voltage depends on the nominal circuit voltage. For SELV and PELV circuits (up to 50V), use 250V DC test voltage. For standard circuits up to 500V nominal (which includes all standard 230V single-phase and 400V three-phase installations), use 500V DC test voltage. For circuits above 500V nominal, use 1000V DC test voltage. These test voltages are specified in BS 7671 Table 61. Using too low a test voltage may fail to reveal insulation defects. Using too high a test voltage could damage sensitive electronic equipment — which is why all electronic equipment must be disconnected before testing. Most multifunction testers have selectable test voltages of 250V, 500V, and 1000V DC.',
+      'The test voltage depends on the nominal circuit voltage. For SELV and PELV circuits (up to 50V), use 250V DC test voltage. For standard circuits up to 500V nominal (which includes all standard 230V single-phase and 400V three-phase installations), use 500V DC test voltage. For circuits above 500V nominal, use 1000V DC test voltage. These test voltages are specified in BS 7671 Table 64. Using too low a test voltage may fail to reveal insulation defects. Using too high a test voltage could damage sensitive electronic equipment — which is why all electronic equipment must be disconnected before testing. Most multifunction testers have selectable test voltages of 250V, 500V, and 1000V DC.',
   },
   {
     question: 'Why is my insulation resistance reading low?',
@@ -189,7 +189,7 @@ const sections = [
           affect readings.
         </p>
         <p>
-          The minimum acceptable values are defined in Table 61 of BS 7671. These are absolute
+          The minimum acceptable values are defined in Table 64 of BS 7671. These are absolute
           minimum limits — any reading at or below these values indicates that the insulation has
           deteriorated to the point where further investigation is required. In practice, readings
           significantly above the minimum are expected for installations in good condition.
@@ -208,7 +208,7 @@ const sections = [
   },
   {
     id: 'minimum-values-table',
-    heading: 'Minimum Insulation Resistance Values (BS 7671 Table 61)',
+    heading: 'Minimum Insulation Resistance Values (BS 7671 Table 64)',
     content: (
       <>
         <p>
@@ -221,7 +221,7 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <h3 className="font-bold text-white text-lg mb-4">
-            BS 7671 Table 61 — Minimum Insulation Resistance
+            BS 7671 Table 64 — Minimum Insulation Resistance
           </h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/10">
@@ -273,7 +273,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Auto-Validated IR Readings"
-          description="Enter your insulation resistance readings into Elec-Mate and the app instantly compares them against BS 7671 Table 61 minimum values."
+          description="Enter your insulation resistance readings into Elec-Mate and the app instantly compares them against BS 7671 Table 64 minimum values."
           icon={Calculator}
         />
       </>
@@ -340,7 +340,7 @@ const sections = [
     content: (
       <>
         <p>
-          If an insulation resistance reading falls below the minimum value in BS 7671 Table 61, or
+          If an insulation resistance reading falls below the minimum value in BS 7671 Table 64, or
           is significantly lower than expected for the age and type of installation, further
           investigation is required. The first step is to confirm that the low reading is genuine
           and not caused by testing error.
@@ -467,7 +467,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Insulation Resistance Auto-Validation"
-          description="Elec-Mate validates every insulation resistance reading against BS 7671 Table 61 as you enter it."
+          description="Elec-Mate validates every insulation resistance reading against BS 7671 Table 64 as you enter it."
           icon={FileCheck2}
         />
       </>
@@ -543,7 +543,7 @@ export default function InsulationResistanceMinValuesPage() {
   return (
     <GuideTemplate
       title="Insulation Resistance Minimum Values BS 7671 | Complete"
-      description="Complete reference for insulation resistance minimum values under BS 7671 Table 61. Test voltages by circuit type (250V, 500V, 1000V DC)…"
+      description="Complete reference for insulation resistance minimum values under BS 7671 Table 64. Test voltages by circuit type (250V, 500V, 1000V DC)…"
       datePublished="2025-07-01"
       dateModified="2026-05-18"
       breadcrumbs={breadcrumbs}
@@ -554,7 +554,7 @@ export default function InsulationResistanceMinValuesPage() {
         <>
           Insulation Resistance Minimum Values
           <br />
-          <span className="text-yellow-400">BS 7671 Table 61 Complete Reference</span>
+          <span className="text-yellow-400">BS 7671 Table 64 Complete Reference</span>
         </>
       }
       heroSubtitle="Know the minimum insulation resistance values for every circuit type under BS 7671. This guide covers test voltages, minimum acceptable values, what to do when readings are too low, factors that affect IR, and how to record results correctly on the schedule of test results."
@@ -564,7 +564,7 @@ export default function InsulationResistanceMinValuesPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Auto-Validate Every IR Reading"
-      ctaSubheading="Elec-Mate compares every insulation resistance reading against BS 7671 Table 61 minimum values in real time. Readings below minimum are flagged instantly. Join 1,000+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate compares every insulation resistance reading against BS 7671 Table 64 minimum values in real time. Readings below minimum are flagged instantly. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

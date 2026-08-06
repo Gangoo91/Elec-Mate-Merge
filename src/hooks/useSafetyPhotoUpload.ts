@@ -24,6 +24,8 @@ export interface UploadOptions {
   gpsLatitude?: number;
   gpsLongitude?: number;
   addWatermark?: boolean;
+  /** ELE-1478 — attaches the photo to a site note on the customer record. */
+  siteNoteId?: string;
 }
 
 export interface CopyFromInspectionOptions {
@@ -450,6 +452,7 @@ export function useSafetyPhotoUpload() {
             tags: options.tags || null,
             project_reference: options.projectReference || null,
             project_id: options.projectId || null,
+            site_note_id: options.siteNoteId || null,
             photo_type: options.photoType || 'general',
             storage_path: filePath,
             gps_latitude: gpsLat || null,
@@ -457,7 +460,11 @@ export function useSafetyPhotoUpload() {
             file_size: processedFile.size,
             mime_type: processedFile.type || file.type,
             thumbnail_url: thumbnailUrl,
-          })
+            // ELE-1478 — types.ts predates the site_note_id column, so the
+            // generated insert type narrows the unknown key to `never`. Cast
+            // the payload rather than the field, which keeps every other
+            // column type-checked.
+          } as never)
           .select()
           .single();
 

@@ -36,8 +36,15 @@ serve(async (req) => {
       total_items,
       all_symbols,
       circuit_schedule,
+      consumer_unit,
       standard_notes,
       revision,
+      company_name,
+      company_logo,
+      company_accent_color,
+      company_phone,
+      company_email,
+      scale_note,
     } = body;
 
     const pdfMonkeyKey = Deno.env.get('PDFMONKEY_API_KEY');
@@ -69,8 +76,17 @@ serve(async (req) => {
             total_items: total_items || 0,
             all_symbols: all_symbols || [],
             circuit_schedule: circuit_schedule || [],
+            consumer_unit: consumer_unit || null,
             standard_notes: standard_notes || {},
             revision: revision || { rev: 'A', date: date || '', description: 'Initial Issue', by: electrician_name || '' },
+            // Branding — the template falls back to Elec-Mate styling when the
+            // installer has not set a logo or accent colour.
+            company_name: company_name || '',
+            company_logo: company_logo || '',
+            company_accent_color: company_accent_color || '',
+            company_phone: company_phone || '',
+            company_email: company_email || '',
+            scale_note: scale_note || 'Dimensions in metres — not reproduced to printed scale',
           },
         },
       }),

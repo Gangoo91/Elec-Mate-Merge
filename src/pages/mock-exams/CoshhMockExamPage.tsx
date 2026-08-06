@@ -9,8 +9,8 @@ import { coshhQuestionBank } from '@/data/general-upskilling/coshhMockExamData';
 export default function CoshhMockExamPage() {
   return (
     <PublicMockExamPage
-      title={`COSHH Mock Test 2026: Free Hazardous Substances Quiz`}
-      description={`Free COSHH mock test (COSHH 2002): 25 questions from a 200-Q bank. WELs, safety data sheets, RPE selection, hierarchy of control, biological agents.`}
+      title={`COSHH Mock Test 2026 with Answers — Free Practice Exam`}
+      description={`Free COSHH mock test with answers explained, covering the COSHH Regulations 2002. 25 questions from a 200-question bank, 30-min timer. WELs, safety data sheets, RPE selection, hierarchy of control, biological agents. Instant results, no sign-up.`}
       slug="coshh"
       heading={`COSHH Mock Test — Free Practice`}
       intro={`Free Control of Substances Hazardous to Health Regulations 2002 mock test. 25 questions from a 200-question bank covering Workplace Exposure Limits (WELs), safety data sheet structure (16 sections), hierarchy of control, respiratory protective equipment selection, biological agents and emergency exposure response.`}

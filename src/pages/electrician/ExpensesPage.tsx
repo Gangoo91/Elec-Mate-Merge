@@ -9,9 +9,6 @@ import {
   Download,
   Search,
   X,
-  CloudUpload,
-  Check,
-  Loader2,
   Receipt,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -20,8 +17,10 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { chipBase, chipOff, chipOn } from '@/components/shared/surfaceStyles';
 import { useExpensesStorage } from '@/hooks/useExpensesStorage';
 import { useAccountingIntegrations } from '@/hooks/useAccountingIntegrations';
+import { useExpenseSyncRecords } from '@/hooks/useExpenseSyncRecords';
 import {
   ExpenseSummaryCard,
   ExpenseCard,
@@ -35,6 +34,7 @@ import {
   CreateExpenseInput,
   Expense,
   UpdateExpenseInput,
+  taxYearStart,
 } from '@/types/expense';
 import { AccountingProvider } from '@/types/accounting';
 
@@ -55,7 +55,6 @@ const ExpensesPage = () => {
     expenses,
     filteredExpenses,
     dateGroupedExpenses,
-    unsyncedCount,
     stats,
     loading,
     filters,
@@ -74,6 +73,22 @@ const ExpensesPage = () => {
     syncExpenses: syncToAccounting,
   } = useAccountingIntegrations();
 
+  /**
+   * Sync outcomes, read from the records the sync itself writes.
+   *
+   * Success is taken from a 'synced' record OR the row flag — either is proof.
+   * Failures matter just as much: every attempt on record so far has been
+   * rejected by the provider over account codes, and the reason only ever
+   * appeared in a toast that disappeared. Now it stays on the expense.
+   */
+  const { data: syncState, refetch: refetchSyncRecords } = useExpenseSyncRecords(
+    hasConnectedProvider
+  );
+  const isSynced = useCallback(
+    (expense: Expense) => !!expense.synced_to_accounting || !!syncState?.synced.has(expense.id),
+    [syncState]
+  );
+
   const connectedProvider = useMemo(() => {
     const connected = integrations.find(
       (i) => i.status === 'connected' && (i.provider === 'xero' || i.provider === 'quickbooks')
@@ -87,27 +102,31 @@ const ExpensesPage = () => {
       setSyncingExpenseId(expenseId);
       try {
         const success = await syncToAccounting([expenseId], connectedProvider);
-        if (success) await refreshExpenses();
+        if (success) {
+          await Promise.all([refreshExpenses(), refetchSyncRecords()]);
+        }
       } finally {
         setSyncingExpenseId(null);
       }
     },
-    [connectedProvider, syncToAccounting, refreshExpenses]
+    [connectedProvider, syncToAccounting, refreshExpenses, refetchSyncRecords]
   );
 
   const handleSyncAll = useCallback(async () => {
     if (!connectedProvider) return;
-    const unsyncedExpenses = expenses.filter((exp) => !exp.synced_to_accounting);
+    const unsyncedExpenses = expenses.filter((exp) => !isSynced(exp));
     if (unsyncedExpenses.length === 0) return;
     setIsSyncing(true);
     try {
       const expenseIds = unsyncedExpenses.map((exp) => exp.id);
       const success = await syncToAccounting(expenseIds, connectedProvider);
-      if (success) await refreshExpenses();
+      if (success) {
+        await Promise.all([refreshExpenses(), refetchSyncRecords()]);
+      }
     } finally {
       setIsSyncing(false);
     }
-  }, [connectedProvider, expenses, syncToAccounting, refreshExpenses]);
+  }, [connectedProvider, expenses, isSynced, syncToAccounting, refreshExpenses, refetchSyncRecords]);
 
   const handleCreateExpense = async (data: CreateExpenseInput) => {
     const result = await createExpense(data);
@@ -169,10 +188,28 @@ const ExpensesPage = () => {
     ];
   }, [expenses]);
 
+  /**
+   * Business miles already claimed since 6 April. Feeds the mileage form so a
+   * journey crossing 10,000 miles is costed at HMRC's two rates rather than
+   * flat 45p — the form stated that rule and then ignored it.
+   */
+  const milesClaimedThisTaxYear = useMemo(() => {
+    const from = taxYearStart();
+    return expenses.reduce((sum, exp) => {
+      if (exp.category !== 'mileage' || !exp.mileage_miles) return sum;
+      return new Date(exp.date) >= from ? sum + exp.mileage_miles : sum;
+    }, 0);
+  }, [expenses]);
+
+  const trueUnsyncedCount = useMemo(
+    () => (hasConnectedProvider ? expenses.filter((exp) => !isSynced(exp)).length : 0),
+    [expenses, isSynced, hasConnectedProvider]
+  );
+
   const canonical = `${window.location.origin}/electrician/expenses`;
 
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background animate-fade-in">
+    <div className="-mt-3 min-h-screen bg-background sm:-mt-4 md:-mt-6">
       <Helmet>
         <title>Expenses | Sole Trader Expense Tracking for Electricians</title>
         <meta
@@ -182,7 +219,8 @@ const ExpensesPage = () => {
         <link rel="canonical" href={canonical} />
       </Helmet>
 
-      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md">
+      <header className="sticky top-0 z-40 border-b border-white/[0.10] bg-background/95 backdrop-blur-md">
+        <div className="mx-auto max-w-[1400px] lg:px-8">
         {showSearch ? (
           <div className="flex items-center h-14 px-4 gap-2">
             <div className="relative flex-1">
@@ -230,7 +268,9 @@ const ExpensesPage = () => {
               >
                 <ArrowLeft className="h-5 w-5" />
               </button>
-              <h1 className="flex-1 text-xl font-bold">Expenses</h1>
+              <h1 className="min-w-0 flex-1 truncate text-[19px] font-semibold tracking-tight text-white">
+                Expenses
+              </h1>
               <button
                 onClick={() => setShowSearch(true)}
                 aria-label="Search expenses"
@@ -276,17 +316,16 @@ const ExpensesPage = () => {
                 key={option.id}
                 onClick={() => handleCategoryFilter(option.id as ExpenseCategory | 'all')}
                 className={cn(
-                  'shrink-0 flex items-center gap-1.5 h-9 px-3.5 rounded-full text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]',
-                  selectedCategory === option.id
-                    ? 'bg-elec-yellow text-black'
-                    : 'bg-white/[0.08] text-white'
+                  chipBase,
+                  'flex shrink-0 items-center gap-1.5',
+                  selectedCategory === option.id ? chipOn : chipOff
                 )}
               >
                 {option.label}
                 {option.count > 0 && (
                   <span
                     className={cn(
-                      'text-[11px] px-1.5 py-0.5 rounded-full min-w-[18px] text-center font-semibold',
+                      'min-w-[18px] rounded-full px-1.5 py-0.5 text-center text-[11px] font-semibold tabular-nums',
                       selectedCategory === option.id ? 'bg-black/20' : 'bg-white/[0.15]'
                     )}
                   >
@@ -297,50 +336,17 @@ const ExpensesPage = () => {
             ))}
           </div>
         )}
+        </div>
       </header>
 
-      <div className="px-4 py-4 space-y-4 pb-24">
+      <div className="mx-auto max-w-[1400px] space-y-4 px-4 py-4 pb-24 lg:px-8">
         <ExpenseSummaryCard
           stats={stats}
-          unsyncedCount={unsyncedCount}
+          unsyncedCount={trueUnsyncedCount}
           hasConnectedProvider={hasConnectedProvider}
+          onShowUnsynced={handleSyncAll}
+          isSyncing={isSyncing}
         />
-
-        {hasConnectedProvider && (
-          <motion.div
-            initial={{ opacity: 0, y: -5 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-          >
-            <button
-              onClick={handleSyncAll}
-              disabled={isSyncing || unsyncedCount === 0}
-              className={cn(
-                'w-full h-12 rounded-xl flex items-center justify-center gap-2 font-semibold text-sm transition-all touch-manipulation active:scale-[0.98]',
-                unsyncedCount > 0
-                  ? 'bg-elec-yellow text-black'
-                  : 'bg-green-500/15 text-green-400 border border-green-500/20'
-              )}
-            >
-              {isSyncing ? (
-                <>
-                  <Loader2 className="h-4.5 w-4.5 animate-spin" />
-                  Syncing...
-                </>
-              ) : unsyncedCount > 0 ? (
-                <>
-                  <CloudUpload className="h-4.5 w-4.5" />
-                  Sync All ({unsyncedCount})
-                </>
-              ) : (
-                <>
-                  <Check className="h-4.5 w-4.5" />
-                  All Synced
-                </>
-              )}
-            </button>
-          </motion.div>
-        )}
 
         <section className="space-y-1">
           <div className="flex items-center justify-between mb-2">
@@ -396,14 +402,14 @@ const ExpensesPage = () => {
                 {dateGroupedExpenses.map((group) => (
                   <div key={group.date}>
                     <div className="flex items-center justify-between py-2">
-                      <span className="text-xs font-semibold text-white uppercase tracking-wider">
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
                         {group.label}
                       </span>
-                      <span className="text-xs text-white">
+                      <span className="text-[12px] font-semibold text-white tabular-nums">
                         £{group.total.toFixed(2)}
                       </span>
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-3 lg:grid lg:grid-cols-2 lg:gap-3 lg:space-y-0 xl:grid-cols-3">
                       {group.expenses.map((expense, index) => (
                         <ExpenseCard
                           key={expense.id}
@@ -414,6 +420,9 @@ const ExpensesPage = () => {
                           onSync={() => handleSyncSingleExpense(expense.id)}
                           isSyncing={syncingExpenseId === expense.id}
                           showSyncButton={hasConnectedProvider}
+                          isSynced={isSynced(expense)}
+                          syncUrl={syncState?.synced.get(expense.id)?.externalUrl ?? null}
+                          syncError={syncState?.failed.get(expense.id)?.errorMessage ?? null}
                           delay={index * 0.03}
                         />
                       ))}
@@ -430,6 +439,7 @@ const ExpensesPage = () => {
         open={showAddSheet}
         onOpenChange={setShowAddSheet}
         onSave={handleCreateExpense}
+        milesClaimedThisTaxYear={milesClaimedThisTaxYear}
       />
 
       <ExpenseExportSheet

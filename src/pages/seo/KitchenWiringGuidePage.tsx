@@ -410,7 +410,7 @@ const sections = [
           <p className="text-white/80 text-sm leading-relaxed mb-4">
             BS 7671:2018+A4:2026 Regulation 421.1.7 introduces an AFDD requirement that depends on
             the premises type. For single-phase AC final circuits supplying socket outlets rated up
-            to 32A, AFDDs conforming to BS EN 62606 are <strong>mandatory</strong> in four
+            to 32A, AFDDs conforming to BS EN 62606 are <strong>recommended</strong>, not mandatory, in
             building types, and <strong>recommended</strong> in all others — which includes an
             ordinary dwelling kitchen. Where used, the AFDD must be placed at the origin of the
             circuit it protects.
@@ -418,7 +418,7 @@ const sections = [
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl bg-red-900/30 border border-red-700/40 p-4">
               <p className="text-xs font-semibold text-red-300 uppercase tracking-wide mb-2">
-                AFDD mandatory (shall)
+                AFDD recommended (not "shall")
               </p>
               <ul className="text-white/80 text-sm space-y-1">
                 <li>High-rise residential buildings (over 18m / six storeys)</li>

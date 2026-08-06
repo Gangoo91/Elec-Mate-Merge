@@ -40,7 +40,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Initial verification is the process of inspecting and testing a new or altered electrical installation before it is put into service, as required by BS 7671 Chapter 61.',
+  'Initial verification is the process of inspecting and testing a new or altered electrical installation before it is put into service, as required by BS 7671 Chapter 64.',
   'Every circuit must be fully tested — no sampling is permitted on initial verification, unlike periodic inspection.',
   'The test sequence follows BS 7671 strictly: visual inspection first, then dead tests (continuity, IR, polarity), then live tests (Zs, PFC, RCD).',
   'The outcome is an Electrical Installation Certificate (EIC) which must be issued by the person responsible for the design, construction, and verification of the installation.',
@@ -141,7 +141,7 @@ const sections = [
           Initial verification is the process of inspecting and testing a new or altered electrical
           installation before it is put into service. It is required by{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671 Chapter 61
+            BS 7671 Chapter 64
           </SEOInternalLink>{' '}
           and covers the complete installation from the origin (usually the consumer unit) to every
           final circuit, socket outlet, light fitting, and fixed appliance.
@@ -152,7 +152,7 @@ const sections = [
           check before the installation is energised and handed over to the client.
         </p>
         <p>
-          Initial verification consists of three stages: visual inspection (Chapter 611), dead
+          Initial verification consists of three stages: visual inspection (Regulation 642), dead
           testing (Section 643), and live testing (Section 644). The inspection and all tests must
           be completed satisfactorily before the installation can be certified. The certificate
           issued for initial verification is the Electrical Installation Certificate (EIC).
@@ -304,7 +304,7 @@ const sections = [
       <>
         <p>
           The <SEOInternalLink href="/guides/dead-vs-live-testing">test sequence</SEOInternalLink>{' '}
-          for initial verification follows BS 7671 Chapter 61 strictly. Dead tests are performed
+          for initial verification follows BS 7671 Chapter 64 strictly. Dead tests are performed
           first (with the supply isolated), followed by live tests (with the supply energised).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -634,7 +634,7 @@ const sections = [
 export default function InitialVerificationGuidePage() {
   return (
     <GuideTemplate
-      title="Initial Verification Guide | BS 7671 Chapter 61"
+      title="Initial Verification Guide | BS 7671 Chapter 64"
       description="Complete guide to initial verification of electrical installations under BS 7671. When required, the full test sequence, inspection schedule…"
       datePublished="2025-09-01"
       dateModified="2026-05-18"
@@ -645,7 +645,7 @@ export default function InitialVerificationGuidePage() {
       heroTitle={
         <>
           Initial Verification:{' '}
-          <span className="text-yellow-400">The Complete Guide to BS 7671 Chapter 61</span>
+          <span className="text-yellow-400">The Complete Guide to BS 7671 Chapter 64</span>
         </>
       }
       heroSubtitle="Every new or altered electrical installation must be inspected and tested before it is put into service. Initial verification covers visual inspection, dead testing, and live testing of every circuit — no sampling allowed. The result is an Electrical Installation Certificate (EIC). This guide explains the entire process."

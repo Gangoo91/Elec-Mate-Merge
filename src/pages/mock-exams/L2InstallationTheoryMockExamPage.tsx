@@ -9,8 +9,8 @@ import { module3QuestionBank as module3Questions } from '@/data/apprentice-cours
 export default function L2InstallationTheoryMockExamPage() {
   return (
     <PublicMockExamPage
-      title={`Free Level 2 Mock Exam: Installation Theory (Unit 3)`}
-      description={`Free Level 2 Installation Theory mock exam — 25 Qs, 301-Q bank. Cable types (T&E, SWA, MICC), conduit, trunking, accessories, BS 7671 selection.`}
+      title={`C&G 2365-02 Level 2 Mock Exam with Answers — Installation Theory`}
+      description={`Free City & Guilds 2365-02 Level 2 mock exam with answers explained — Installation Theory. 25 Qs, 301-Q bank. Cable types (T&E, SWA, MICC), conduit, trunking, accessories, BS 7671 selection.`}
       slug="level-2-installation-theory"
       heading={`Free Level 2 Mock Exam: Installation Theory (Unit 3)`}
       intro={`Free mock exam for Level 2 Electrical apprentices on Unit 203 (Electrical Installation Theory). 25 questions from a 301-question bank covering cable types (twin and earth, SWA, MICC), conduit and trunking systems, accessories, joints and terminations, and BS 7671 cable selection principles.`}

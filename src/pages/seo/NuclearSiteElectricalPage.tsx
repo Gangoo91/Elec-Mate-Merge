@@ -499,7 +499,7 @@ const sections = [
                 <strong>City & Guilds 2391 / 2394/2395</strong> — inspection and testing
                 qualifications are valued on nuclear sites where periodic testing of safety systems
                 and emergency equipment is part of the maintenance programme. The ability to carry
-                out formal inspection and testing to BS 7671 Section 631 is an asset for nuclear
+                out formal inspection and testing to BS 7671 Chapter 65 is an asset for nuclear
                 site electricians.
               </span>
             </li>

@@ -28,6 +28,7 @@ import {
   ResultsGrid,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { AIA_ANNUAL_LIMIT, calculateEquipmentRoi } from '@/utils/business-planning-maths';
 import {
   ResponsiveContainer,
   LineChart,
@@ -51,6 +52,16 @@ interface ROIInputs {
 }
 
 const STORAGE_KEY = 'equipment_roi_scenarios';
+
+/**
+ * Parse a numeric field without the classic `parseFloat(x) || fallback` bug:
+ * `0` is falsy, so entering 0% utilisation silently became 100%, a 0% discount
+ * rate became 5%, and a 0-year lifespan became 5 years.
+ */
+const num = (raw: string, fallback: number) => {
+  const parsed = parseFloat(raw);
+  return Number.isFinite(parsed) ? parsed : fallback;
+};
 
 const EquipmentROICalculator = () => {
   const config = CALCULATOR_CONFIG['business'];
@@ -90,97 +101,39 @@ const EquipmentROICalculator = () => {
     { value: '10', label: '10 years' },
   ];
 
-  const equipmentCostNum = parseFloat(inputs.equipmentCost) || 0;
-  const installationCostNum = parseFloat(inputs.installationCost) || 0;
-  const maintenancePerYearNum = parseFloat(inputs.maintenancePerYear) || 0;
-  const lifespanYearsNum = parseFloat(inputs.lifespanYears) || 5;
-  const residualValueNum = parseFloat(inputs.residualValue) || 0;
-  const annualSavingsNum = parseFloat(inputs.annualSavings) || 0;
-  const utilisationRateNum = parseFloat(inputs.utilisationRate) || 100;
-  const discountRateNum = parseFloat(inputs.discountRate) || 5;
+  const equipmentCostNum = Math.max(0, num(inputs.equipmentCost, 0));
+  const installationCostNum = Math.max(0, num(inputs.installationCost, 0));
+  const maintenancePerYearNum = Math.max(0, num(inputs.maintenancePerYear, 0));
+  // Lifespan drives loop counts, so it must be a whole number of at least 1.
+  const lifespanYearsNum = Math.max(1, Math.round(num(inputs.lifespanYears, 5)));
+  const residualValueNum = Math.max(0, num(inputs.residualValue, 0));
+  const annualSavingsNum = num(inputs.annualSavings, 0);
+  const utilisationRateNum = Math.max(0, num(inputs.utilisationRate, 100));
+  const discountRateNum = num(inputs.discountRate, 5);
 
-  const results = useMemo(() => {
-    const capex = equipmentCostNum + installationCostNum;
-    const annualNetBenefit = annualSavingsNum * (utilisationRateNum / 100) - maintenancePerYearNum;
-
-    // Cumulative cashflow
-    let cumulative = -capex;
-    const series: { year: number; cumulative: number }[] = [{ year: 0, cumulative }];
-    let payback: number | null = null;
-    for (let y = 1; y <= lifespanYearsNum; y++) {
-      cumulative += annualNetBenefit;
-      series.push({ year: y, cumulative });
-      if (payback === null && cumulative >= 0) payback = y;
-    }
-
-    // NPV
-    const r = discountRateNum / 100;
-    let npv = -capex;
-    for (let y = 1; y <= lifespanYearsNum; y++) {
-      npv += annualNetBenefit / Math.pow(1 + r, y);
-    }
-    npv += residualValueNum / Math.pow(1 + r, lifespanYearsNum);
-
-    const rLow = Math.max(r - 0.05, 0.001);
-    const rHigh = r + 0.05;
-    const calcNPV = (rate: number) => {
-      let val = -capex;
-      for (let y = 1; y <= lifespanYearsNum; y++) val += annualNetBenefit / Math.pow(1 + rate, y);
-      val += residualValueNum / Math.pow(1 + rate, lifespanYearsNum);
-      return val;
-    };
-
-    const npvLow = calcNPV(rLow);
-    const npvHigh = calcNPV(rHigh);
-
-    // ROI
-    const totalReturn = annualNetBenefit * lifespanYearsNum + residualValueNum;
-    const roiPercent = capex > 0 ? ((totalReturn - capex) / capex) * 100 : 0;
-
-    // IRR
-    const cashflows: number[] = [
-      -capex,
-      ...Array.from({ length: lifespanYearsNum }, () => annualNetBenefit),
-    ];
-    cashflows[cashflows.length - 1] += residualValueNum;
-    const irr = (() => {
-      let low = -0.9,
-        high = 1.0;
-      const npvAt = (rate: number) =>
-        cashflows.reduce((acc, cf, i) => acc + cf / Math.pow(1 + rate, i), 0);
-      let mid = 0;
-      for (let i = 0; i < 60; i++) {
-        mid = (low + high) / 2;
-        const v = npvAt(mid);
-        if (Math.abs(v) < 0.01) break;
-        if (v > 0) low = mid;
-        else high = mid;
-      }
-      const candidate = mid * 100;
-      return isFinite(candidate) ? candidate : null;
-    })();
-
-    return {
-      capex,
-      annualNetBenefit,
-      simplePaybackYears: payback,
-      npv,
-      npvLow,
-      npvHigh,
-      roiPercent,
-      irrPercent: irr,
-      cashflowSeries: series,
-    };
-  }, [
-    equipmentCostNum,
-    installationCostNum,
-    maintenancePerYearNum,
-    lifespanYearsNum,
-    residualValueNum,
-    annualSavingsNum,
-    utilisationRateNum,
-    discountRateNum,
-  ]);
+  const results = useMemo(
+    () =>
+      calculateEquipmentRoi({
+        equipmentCost: equipmentCostNum,
+        installationCost: installationCostNum,
+        maintenancePerYear: maintenancePerYearNum,
+        lifespanYears: lifespanYearsNum,
+        residualValue: residualValueNum,
+        annualSavings: annualSavingsNum,
+        utilisationRate: utilisationRateNum,
+        discountRate: discountRateNum,
+      }),
+    [
+      equipmentCostNum,
+      installationCostNum,
+      maintenancePerYearNum,
+      lifespanYearsNum,
+      residualValueNum,
+      annualSavingsNum,
+      utilisationRateNum,
+      discountRateNum,
+    ]
+  );
 
   const calculateROI = () => {
     setCalculated(true);
@@ -478,9 +431,13 @@ const EquipmentROICalculator = () => {
                       backgroundClip: 'text',
                     }}
                   >
-                    {results.simplePaybackYears ?? '—'} yrs
+                    {results.simplePaybackYears !== null
+                      ? `${results.simplePaybackYears.toFixed(1)} yrs`
+                      : 'Never'}
                   </div>
-                  <p className="text-xs text-white mt-1">Simple payback</p>
+                  <p className="text-xs text-white mt-1">
+                    Undiscounted, excludes residual value
+                  </p>
                 </div>
               </CalculatorResult>
             </div>
@@ -513,14 +470,14 @@ const EquipmentROICalculator = () => {
                   size="sm"
                 />
                 <ResultValue
-                  label="NPV Low"
-                  value={currency(results.npvLow)}
+                  label={`NPV @ ${Math.max(discountRateNum - 5, 0.1).toFixed(1)}%`}
+                  value={currency(results.npvBest)}
                   category="business"
                   size="sm"
                 />
                 <ResultValue
-                  label="NPV High"
-                  value={currency(results.npvHigh)}
+                  label={`NPV @ ${(discountRateNum + 5).toFixed(1)}%`}
+                  value={currency(results.npvWorst)}
                   category="business"
                   size="sm"
                 />
@@ -594,10 +551,12 @@ const EquipmentROICalculator = () => {
               <div className="flex items-start gap-2">
                 <Info className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
                 <p className="text-sm text-blue-200/80">
-                  <strong className="text-blue-300">NPV Sensitivity:</strong> At ±5% discount rate
-                  variation, NPV ranges from {currency(results.npvLow)} to{' '}
-                  {currency(results.npvHigh)}. Always verify assumptions for BS 7671 compliant
-                  installation and HMRC capital allowances.
+                  <strong className="text-blue-300">NPV sensitivity:</strong> move the discount
+                  rate 5 percentage points either way and NPV runs from{' '}
+                  {currency(results.npvWorst)} at {(discountRateNum + 5).toFixed(1)}% up to{' '}
+                  {currency(results.npvBest)} at{' '}
+                  {Math.max(discountRateNum - 5, 0.1).toFixed(1)}%. A lower discount rate always
+                  gives a higher NPV.
                 </p>
               </div>
             </div>
@@ -662,12 +621,30 @@ const EquipmentROICalculator = () => {
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-amber-500/20">
-                <p className="text-xs text-amber-200/60">
+              <div className="mt-4 pt-3 border-t border-amber-500/20 space-y-2">
+                <p className="text-xs text-amber-200/70">
                   <Info className="h-3 w-3 inline mr-1" />
-                  Capital equipment purchases may qualify for Annual Investment Allowance (AIA) or
-                  Full Expensing for tax relief. Consult an accountant for specific advice on your
-                  situation.
+                  <strong className="text-amber-300">What this model does not include.</strong> Every
+                  figure here is <strong>pre-tax</strong> and assumes you pay cash up front.
+                </p>
+                <p className="text-xs text-amber-200/70">
+                  <strong className="text-amber-300">Capital allowances:</strong> the Annual
+                  Investment Allowance lets you deduct the full cost of qualifying plant and
+                  machinery in the year of purchase, up to £
+                  {AIA_ANNUAL_LIMIT.toLocaleString('en-GB')} a year. For a basic-rate sole trader
+                  that is worth roughly 26% of the cost (20% income tax plus 6% Class 4 NI) in year
+                  one, which shortens the real payback. Cars do not qualify.
+                </p>
+                <p className="text-xs text-amber-200/70">
+                  <strong className="text-amber-300">Financing:</strong> if you fund the purchase on
+                  finance or HP, the interest is a real cost this calculator does not deduct. Add
+                  the annual interest to the maintenance figure to approximate it, or use a discount
+                  rate at least equal to your borrowing rate.
+                </p>
+                <p className="text-xs text-amber-200/70">
+                  <strong className="text-amber-300">Savings are taxable:</strong> the annual benefit
+                  is modelled gross. Consult an accountant before committing to a purchase on these
+                  numbers.
                 </p>
               </div>
             </CollapsibleContent>

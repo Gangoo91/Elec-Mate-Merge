@@ -477,7 +477,7 @@ const sections = [
               <BookOpen className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Amendment notification</strong> — ECA members are informed of BS 7671
-                amendments (such as Amendment 4:2024) before they come into force, with practical
+                amendments (such as Amendment 4:2026) before they come into force, with practical
                 guidance on what changes affect day-to-day work. This helps contractors update their
                 procedures ahead of amendment implementation dates.
               </span>

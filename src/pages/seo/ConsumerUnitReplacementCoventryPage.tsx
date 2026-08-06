@@ -37,7 +37,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Consumer unit replacement in Coventry typically costs £400 to £800 for a standard domestic installation, covering labour, the new metal consumer unit, testing, and the Electrical Installation Certificate.',
-  'Metal enclosures have been mandatory for all new and replacement domestic consumer units since January 2016 under Amendment 4 to BS 7671:2008, carried forward in BS 7671:2018+A4:2026.',
+  'Metal enclosures have been mandatory for all new and replacement domestic consumer units since January 2016 under Amendment 3 to BS 7671:2008, carried forward in BS 7671:2018+A4:2026.',
   'Consumer unit replacement is notifiable Part P electrical work. In Coventry this means using a registered competent person (NICEIC, NAPIT, or ELECSA) who self-certifies, or notifying Coventry City Council Building Control.',
   'Coventry has significant post-war housing stock including 1950s and 1960s properties that may still have original wiring and rewireable fuse boards — replacement of these is strongly recommended.',
   'RCD protection on all socket-outlet circuits is required under Regulation 411.3.3 of BS 7671. A modern RCBO consumer unit provides individual RCD protection for each circuit.',
@@ -57,7 +57,7 @@ const faqs = [
   {
     question: 'Is a metal consumer unit required in Coventry?',
     answer:
-      'Yes. Amendment 4 to BS 7671:2008, in force from 1 January 2016, introduced Regulation 421.1.201 requiring metal enclosures for all consumer units and similar switchgear in domestic premises. This requirement remains in BS 7671:2018+A4:2026. Any electrician installing a plastic consumer unit in Coventry is not complying with the current edition of the wiring regulations.',
+      'Yes. Amendment 3 to BS 7671:2008, in force from 1 January 2016, introduced Regulation 421.1.201 requiring metal enclosures for all consumer units and similar switchgear in domestic premises. This requirement remains in BS 7671:2018+A4:2026. Any electrician installing a plastic consumer unit in Coventry is not complying with the current edition of the wiring regulations.',
   },
   {
     question: 'How long will the work take and will I be without power?',
@@ -240,7 +240,7 @@ const sections = [
     content: (
       <>
         <p>
-          Regulation 421.1.201, introduced by Amendment 4 to BS 7671:2008 on 1 January 2016,
+          Regulation 421.1.201, introduced by Amendment 3 to BS 7671:2008 on 1 January 2016,
           requires that consumer units and similar switchgear assemblies in domestic premises have
           an enclosure made of non-combustible material. The only practical option is a metal
           enclosure. This requirement was carried through to BS 7671:2018 and remains in BS 7671:2018+A4:2026.
@@ -288,7 +288,7 @@ const sections = [
         <p>
           Coventry labour rates are competitive for the West Midlands region. The following costs
           reflect a complete consumer unit replacement including the metal consumer unit, all
-          labour, testing to BS 7671 Chapter 61, Electrical Installation Certificate, and Part P
+          labour, testing to BS 7671 Chapter 64, Electrical Installation Certificate, and Part P
           self-certification via the competent person scheme.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -414,7 +414,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Testing</strong> — all circuits are tested to BS 7671 Chapter 61: continuity
+                <strong>Testing</strong> — all circuits are tested to BS 7671 Chapter 64: continuity
                 of protective conductors, ring final circuit continuity (where applicable),
                 insulation resistance, polarity verification, earth fault loop impedance, and RCD
                 operating time tests.

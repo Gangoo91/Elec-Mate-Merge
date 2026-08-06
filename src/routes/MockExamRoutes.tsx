@@ -4,108 +4,109 @@
  * 1 hub + 25 individual mock exam pages, all unauthenticated.
  * Mounted under "mock-exams/*" from AppRouter.tsx (Public section).
  */
-import { lazy, type ComponentType } from 'react';
+import { type ComponentType } from 'react';
+import { lazyWithRetry } from '@/utils/lazyWithRetry';
 import { Route, Routes } from 'react-router-dom';
 import { LazyRoute } from '@/components/LazyRoute';
 
-const MockExamsHubPage = lazy(() => import('@/pages/mock-exams/MockExamsHubPage'));
+const MockExamsHubPage = lazyWithRetry(() => import('@/pages/mock-exams/MockExamsHubPage'));
 
 // Trade certifications
-const FirstAidMockExamPage = lazy(() => import('@/pages/mock-exams/FirstAidMockExamPage'));
-const CSCSCardMockExamPage = lazy(() => import('@/pages/mock-exams/CSCSCardMockExamPage'));
-const IPAFMockExamPage = lazy(() => import('@/pages/mock-exams/IPAFMockExamPage'));
-const PASMAMockExamPage = lazy(() => import('@/pages/mock-exams/PASMAMockExamPage'));
-const AsbestosAwarenessMockExamPage = lazy(
+const FirstAidMockExamPage = lazyWithRetry(() => import('@/pages/mock-exams/FirstAidMockExamPage'));
+const CSCSCardMockExamPage = lazyWithRetry(() => import('@/pages/mock-exams/CSCSCardMockExamPage'));
+const IPAFMockExamPage = lazyWithRetry(() => import('@/pages/mock-exams/IPAFMockExamPage'));
+const PASMAMockExamPage = lazyWithRetry(() => import('@/pages/mock-exams/PASMAMockExamPage'));
+const AsbestosAwarenessMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/AsbestosAwarenessMockExamPage')
 );
-const WorkingAtHeightMockExamPage = lazy(
+const WorkingAtHeightMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/WorkingAtHeightMockExamPage')
 );
-const ManualHandlingMockExamPage = lazy(
+const ManualHandlingMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/ManualHandlingMockExamPage')
 );
-const CoshhMockExamPage = lazy(() => import('@/pages/mock-exams/CoshhMockExamPage'));
-const FireSafetyMockExamPage = lazy(() => import('@/pages/mock-exams/FireSafetyMockExamPage'));
-const ConfinedSpacesMockExamPage = lazy(
+const CoshhMockExamPage = lazyWithRetry(() => import('@/pages/mock-exams/CoshhMockExamPage'));
+const FireSafetyMockExamPage = lazyWithRetry(() => import('@/pages/mock-exams/FireSafetyMockExamPage'));
+const ConfinedSpacesMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/ConfinedSpacesMockExamPage')
 );
 
 // Electrical exams
-const EighteenthEditionMockExamPage = lazy(
+const EighteenthEditionMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/EighteenthEditionMockExamPage')
 );
-const C2391MockExamPage = lazy(() => import('@/pages/mock-exams/C2391MockExamPage'));
-const C239151PeriodicMockExamPage = lazy(
+const C2391MockExamPage = lazyWithRetry(() => import('@/pages/mock-exams/C2391MockExamPage'));
+const C239151PeriodicMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/C239151PeriodicMockExamPage')
 );
-const C239150InitialMockExamPage = lazy(
+const C239150InitialMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/C239150InitialMockExamPage')
 );
-const AM2OnlineMockExamPage = lazy(() => import('@/pages/mock-exams/AM2OnlineMockExamPage'));
+const AM2OnlineMockExamPage = lazyWithRetry(() => import('@/pages/mock-exams/AM2OnlineMockExamPage'));
 
 // Upskilling / specialist electrical
-const PATTestingMockExamPage = lazy(() => import('@/pages/mock-exams/PATTestingMockExamPage'));
-const EmergencyLightingMockExamPage = lazy(
+const PATTestingMockExamPage = lazyWithRetry(() => import('@/pages/mock-exams/PATTestingMockExamPage'));
+const EmergencyLightingMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/EmergencyLightingMockExamPage')
 );
-const FireAlarmMockExamPage = lazy(() => import('@/pages/mock-exams/FireAlarmMockExamPage'));
-const EVChargingMockExamPage = lazy(() => import('@/pages/mock-exams/EVChargingMockExamPage'));
-const DataCablingMockExamPage = lazy(() => import('@/pages/mock-exams/DataCablingMockExamPage'));
-const RenewableEnergyMockExamPage = lazy(
+const FireAlarmMockExamPage = lazyWithRetry(() => import('@/pages/mock-exams/FireAlarmMockExamPage'));
+const EVChargingMockExamPage = lazyWithRetry(() => import('@/pages/mock-exams/EVChargingMockExamPage'));
+const DataCablingMockExamPage = lazyWithRetry(() => import('@/pages/mock-exams/DataCablingMockExamPage'));
+const RenewableEnergyMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/RenewableEnergyMockExamPage')
 );
-const SmartHomeMockExamPage = lazy(() => import('@/pages/mock-exams/SmartHomeMockExamPage'));
-const IndustrialElectricalMockExamPage = lazy(
+const SmartHomeMockExamPage = lazyWithRetry(() => import('@/pages/mock-exams/SmartHomeMockExamPage'));
+const IndustrialElectricalMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/IndustrialElectricalMockExamPage')
 );
-const InstrumentationMockExamPage = lazy(
+const InstrumentationMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/InstrumentationMockExamPage')
 );
-const BMSMockExamPage = lazy(() => import('@/pages/mock-exams/BMSMockExamPage'));
-const FibreOpticsMockExamPage = lazy(() => import('@/pages/mock-exams/FibreOpticsMockExamPage'));
+const BMSMockExamPage = lazyWithRetry(() => import('@/pages/mock-exams/BMSMockExamPage'));
+const FibreOpticsMockExamPage = lazyWithRetry(() => import('@/pages/mock-exams/FibreOpticsMockExamPage'));
 
 // Level 2
-const L2HealthSafetyMockExamPage = lazy(
+const L2HealthSafetyMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/L2HealthSafetyMockExamPage')
 );
-const L2ElectricalPrinciplesMockExamPage = lazy(
+const L2ElectricalPrinciplesMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/L2ElectricalPrinciplesMockExamPage')
 );
-const L2InstallationTheoryMockExamPage = lazy(
+const L2InstallationTheoryMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/L2InstallationTheoryMockExamPage')
 );
-const L2InstallationPracticeMockExamPage = lazy(
+const L2InstallationPracticeMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/L2InstallationPracticeMockExamPage')
 );
-const L2CommsCareerMockExamPage = lazy(
+const L2CommsCareerMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/L2CommsCareerMockExamPage')
 );
 
 // Level 3
-const L3HealthSafetyMockExamPage = lazy(
+const L3HealthSafetyMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/L3HealthSafetyMockExamPage')
 );
-const L3EnvironmentalTechMockExamPage = lazy(
+const L3EnvironmentalTechMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/L3EnvironmentalTechMockExamPage')
 );
-const L3ElectricalScienceMockExamPage = lazy(
+const L3ElectricalScienceMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/L3ElectricalScienceMockExamPage')
 );
-const L3FaultDiagnosisMockExamPage = lazy(
+const L3FaultDiagnosisMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/L3FaultDiagnosisMockExamPage')
 );
-const L3InspectionTestingMockExamPage = lazy(
+const L3InspectionTestingMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/L3InspectionTestingMockExamPage')
 );
-const L3SystemsDesignMockExamPage = lazy(
+const L3SystemsDesignMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/L3SystemsDesignMockExamPage')
 );
-const L3CareerDevelopmentMockExamPage = lazy(
+const L3CareerDevelopmentMockExamPage = lazyWithRetry(
   () => import('@/pages/mock-exams/L3CareerDevelopmentMockExamPage')
 );
 
 // Dynamic topic landings — /mock-exams/:examSlug/:topicSlug
-const MockExamTopicPage = lazy(() => import('@/pages/mock-exams/MockExamTopicPage'));
+const MockExamTopicPage = lazyWithRetry(() => import('@/pages/mock-exams/MockExamTopicPage'));
 
 const wrap = (El: ComponentType) => (
   <LazyRoute>

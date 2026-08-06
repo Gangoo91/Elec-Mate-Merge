@@ -4051,7 +4051,7 @@ export const module3QuestionBank: QuestionBank[] = [
   },
   {
     id: 248,
-    question: 'When used for additional protection, what is the maximum operating time for a 30mA RCD tested at 5 times its rated residual current (5 × IΔn)?',
+    question: 'Under BS EN 61008/61009, what is the maximum operating time for a general (non-delay) 30mA RCD at five times its rated residual current (5 × IΔn)?',
     options: [
       '300ms',
       '40ms',
@@ -4060,7 +4060,7 @@ export const module3QuestionBank: QuestionBank[] = [
     ],
     correctAnswer: 1,
     explanation:
-      'For additional protection, a 30mA RCD must trip within 40ms when tested at 5 × IΔn (it must also trip within 300ms at 1 × IΔn) per BS 7671 / GN3.',
+      '40ms is the figure given in the product standards BS EN 61008/61009 for a general non-delay device at 5 × IΔn. Note where it comes from: it is a characteristic of the device, not a BS 7671 test requirement. BS 7671:2018+A4:2026 deleted Table 3A of Appendix 3, and Regulation 643.7.3.201 now calls for a single alternating current test at IΔn to verify effectiveness, whatever the RCD type — so the 5 × IΔn test is no longer part of the required verification sequence.',
     section: '3.6.3',
     difficulty: 'intermediate',
     topic: 'RCD Testing',

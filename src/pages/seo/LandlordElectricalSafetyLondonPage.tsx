@@ -44,7 +44,7 @@ const keyTakeaways = [
   'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 require all private landlords in London to obtain an EICR before a new tenancy begins and at least every five years thereafter.',
   'London borough councils enforce these regulations with civil penalties of up to £30,000 per breach. Boroughs such as Newham, Tower Hamlets, Hackney, and Lambeth have dedicated enforcement teams actively pursuing non-compliant landlords.',
   'HMOs in London face additional requirements — a valid EICR is a mandatory condition of both mandatory and additional HMO licensing schemes operated by London boroughs.',
-  'If the EICR identifies C1 or C2 observations (classified under BS 7671 Section 631), landlords must complete remedial work within 28 days or sooner if specified by the inspector.',
+  'If the EICR identifies C1 or C2 observations (classified under BS 7671 Chapter 65), landlords must complete remedial work within 28 days or sooner if specified by the inspector.',
   'RCD protection is required on socket-outlet circuits under Regulation 411.3.3 of BS 7671. Absence of RCD protection is one of the most common C2 findings in older London rental properties.',
 ];
 
@@ -160,7 +160,7 @@ const sections = [
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
-                (Section 631 covers periodic inspection and testing).
+                (Chapter 65 covers periodic inspection and testing).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -442,7 +442,7 @@ const sections = [
     content: (
       <>
         <p>
-          When an EICR identifies C1 or C2 observations (classified under BS 7671 Section 631), the
+          When an EICR identifies C1 or C2 observations (classified under BS 7671 Chapter 65), the
           landlord is legally required to complete remedial work within strict timescales.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

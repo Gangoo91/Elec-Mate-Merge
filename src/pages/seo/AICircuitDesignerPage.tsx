@@ -466,7 +466,7 @@ export default function AICircuitDesignerPage() {
               installation case studies and worked examples.
             </p>
             <p>
-              Amendment 4:2024 (A4:2026) is particularly relevant for the Circuit Designer because
+              Amendment 4:2026 (A4:2026) is particularly relevant for the Circuit Designer because
               it introduces several new requirements. Regulation 530.3.201 requires that the
               selection and erection of protective devices shall take account of whether a device is
               unidirectional or bidirectional — critical for installations with battery energy
@@ -482,7 +482,7 @@ export default function AICircuitDesignerPage() {
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
             {[
               'BS 7671:2018+A4:2026 (18th Edition)',
-              'Amendment 4:2024 — Regs 411.3.3, 411.3.4, 530.3.201',
+              'Amendment 4:2026 — Regs 411.3.3, 411.3.4, 530.3.201',
               'IET On-Site Guide',
               'IET Guidance Notes 1-8',
               'GN3: Inspection & Testing (9th Edition)',

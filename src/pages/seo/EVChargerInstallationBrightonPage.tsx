@@ -41,7 +41,7 @@ const keyTakeaways = [
   'A 7kW home EV charger installation in Brighton & Hove typically costs £800 to £1,200 all-in, including the charger unit, dedicated circuit, RCD protection, and all certification.',
   'The OZEV EV Chargepoint Grant provides up to £350 towards home charger installation for eligible residents — primarily those in flats and rented accommodation.',
   "Brighton & Hove has one of the highest concentrations of EVs per capita in the South East, driven by the city's sustainability commitments and significant student and professional populations.",
-  'All EV charger installations must comply with BS 7671:2018+A4:2026 Section 722, which requires a dedicated circuit, appropriate RCD protection (Regulation 722.531.2), and a PME earthing risk assessment (Regulation 722.411.4).',
+  'All EV charger installations must comply with BS 7671:2018+A4:2026 Section 722, which requires a dedicated circuit, appropriate RCD protection (Regulation 722.531.3.101), and a PME earthing risk assessment (Regulation 722.411.4).',
   'Many Brighton properties are Victorian terraced houses without driveways — options include communal chargers for residential blocks and lamppost chargers managed by Brighton & Hove City Council.',
 ];
 
@@ -64,7 +64,7 @@ const faqs = [
   {
     question: 'What are the BS 7671 requirements for EV charger installation in Brighton?',
     answer:
-      'EV charger installations in Brighton must comply with BS 7671:2018+A4:2026, specifically Section 722 (Electric Vehicle Charging Installations). Key requirements include: Regulation 722.411.4 (PME earthing risk assessment — most Brighton properties are on PME supplies from the DNO), Regulation 722.531.2 (RCD protection — typically a Type A or Type B RCD or RCBO), a dedicated final circuit for the charger, and compliance with Building Regulations Part P (requiring either self-certification by a registered competent person or notification to Brighton & Hove City Council building control).',
+      'EV charger installations in Brighton must comply with BS 7671:2018+A4:2026, specifically Section 722 (Electric Vehicle Charging Installations). Key requirements include: Regulation 722.411.4 (PME earthing risk assessment — most Brighton properties are on PME supplies from the DNO), Regulation 722.531.3.101 (RCD protection — typically a Type A or Type B RCD or RCBO), a dedicated final circuit for the charger, and compliance with Building Regulations Part P (requiring either self-certification by a registered competent person or notification to Brighton & Hove City Council building control).',
   },
   {
     question: 'How long does EV charger installation take in Brighton?',
@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Full guide to the IET Wiring Regulations including Amendment 4:2024.',
+    description: 'Full guide to the IET Wiring Regulations including Amendment 4:2026.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -289,7 +289,7 @@ const sections = [
                 <strong>Charger installation and commissioning</strong> — the charger unit is
                 wall-mounted, connected, and commissioned. Smart charging features are configured,
                 and the unit is paired with your home wifi and EV charging app. The installer
-                completes testing per BS 7671 Chapter 61.
+                completes testing per BS 7671 Chapter 64.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -442,7 +442,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 722.531.2 — RCD protection</strong> — the EV charger circuit must
+                <strong>Regulation 722.531.3.101 — RCD protection</strong> — the EV charger circuit must
                 be protected by an appropriate RCD. Many modern OZEV-eligible smart chargers
                 incorporate Type B equivalent DC fault protection, enabling a Type A RCBO to be used
                 at the consumer unit. Your installer will specify the correct protection device

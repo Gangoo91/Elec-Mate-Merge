@@ -15,6 +15,35 @@ import {
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
 import { threePhasePowerContent } from './content/three-phase-power';
+// AUDIT FIX (consolidation): this component previously inlined its own protective-device
+// ladder. The canonical BS 7671 ratings live in bs7671-data/protectiveDevices.ts and are
+// already used by TransformerCalculator / CircuitBreakerSelectorCalculator — import, never copy.
+import { standardDeviceRatings } from '@/lib/calculators/bs7671-data/protectiveDevices';
+
+const ROOT3 = Math.sqrt(3);
+const KW_PER_HP = 0.746;
+
+/**
+ * Smallest standard device rating that satisfies Ib <= In (BS 7671 Reg 433.1.1).
+ *
+ * AUDIT FIX: the old in-component ladder stopped at 63 A for MCB/RCBO, labelled 80 A and
+ * 100 A as "MCCB" (BS EN 60898 MCBs are published up to 125 A), omitted the 13 A and 125 A
+ * standard ratings, and above 100 A fell back to `Math.ceil(I / 50) * 50`, which emits
+ * 150/300/350/450 A — frame sizes that are not standard ratings — while skipping 125 A and
+ * 160 A entirely. Rounding up past the next standard rating over-states the protection the
+ * circuit actually has.
+ */
+const selectProtectiveDevice = (designCurrent: number): string => {
+  const mcbRating = standardDeviceRatings.mcb.find((rating) => rating >= designCurrent);
+  if (mcbRating !== undefined) {
+    return standardDeviceRatings.rcbo.includes(mcbRating)
+      ? `${mcbRating}A MCB/RCBO`
+      : `${mcbRating}A MCB`;
+  }
+  const mccbRating = standardDeviceRatings.mccb.find((rating) => rating >= designCurrent);
+  if (mccbRating !== undefined) return `${mccbRating}A MCCB`;
+  return 'Above standard MCCB ratings — specialist selection required';
+};
 
 interface ThreePhaseResult {
   apparentPower: number;
@@ -29,6 +58,14 @@ interface ThreePhaseResult {
   protectiveDevice: string;
   unbalance?: number;
   correctionCapacitor?: number;
+  /** Set when a target PF is given but shunt capacitance is not the right correction. */
+  correctionNote?: string;
+  /** How the line current used for sizing was arrived at. */
+  currentSource: 'entered' | 'from-power' | 'from-motor';
+  /** Motor electrical INPUT power (kW) — P_mech / efficiency. Motor Sizing mode only. */
+  motorInputPower?: number;
+  /** True when the selected frequency is not the UK nominal 50 Hz. */
+  frequencyMismatch: boolean;
   perPhase: {
     voltage: number;
     current: number;
@@ -49,6 +86,7 @@ const ThreePhasePowerCalculator = () => {
   const [frequency, setFrequency] = useState<string>('50');
   const [mode, setMode] = useState<string>('power');
   const [solveFor, setSolveFor] = useState<string>('power');
+  const [activePowerInput, setActivePowerInput] = useState<string>('');
   const [mechanicalPower, setMechanicalPower] = useState<string>('');
   const [mechanicalPowerUnit, setMechanicalPowerUnit] = useState<string>('kW');
   const [efficiency, setEfficiency] = useState<string>('85');
@@ -66,41 +104,67 @@ const ThreePhasePowerCalculator = () => {
 
   const calculateThreePhasePower = () => {
     const V = parseFloat(voltage);
-    const I = parseFloat(current);
     const pf = parseFloat(powerFactor);
-    const freq = parseFloat(frequency);
-    const eff = parseFloat(efficiency) / 100;
-    const mechPower = parseFloat(mechanicalPower);
 
-    if (V <= 0 || I <= 0 || pf <= 0 || pf > 1) return;
+    if (!Number.isFinite(V) || V <= 0 || !Number.isFinite(pf) || pf <= 0 || pf > 1) return;
 
-    // Normalize inputs to line-to-line voltage and line current
-    let VLL = V;
-    let IL = I;
+    // ---- Voltage: normalise to line-to-line -------------------------------------------
+    // AUDIT FIX: the previous code applied the √3 conversion only when the connection was
+    // "star", and left VLN untouched for "delta" on the reasoning that "in delta,
+    // line-neutral doesn't apply". Star/delta describes how the LOAD is wound; it does not
+    // change the supply. On a UK 230/400 V supply (nominal voltage per Reg 512.1.1) the
+    // line-to-line voltage is VLN × √3 = 400 V however the load is connected, so entering
+    // 230 V line-to-neutral with a delta load produced S = √3 × 230 × IL — every power and
+    // sizing figure low by a factor of √3. The conversion now depends on the voltage type
+    // only. (The "How It Worked Out" panel already printed VLL = VLN × √3 unconditionally,
+    // so it had been contradicting the engine.)
+    const VLL = voltageType === 'line-neutral' ? V * ROOT3 : V;
 
-    // Convert voltage based on type and connection
-    if (voltageType === 'line-neutral' && connection === 'star') {
-      VLL = V * Math.sqrt(3);
-    } else if (voltageType === 'line-neutral' && connection === 'delta') {
-      VLL = V; // In delta, line-neutral doesn't apply
-    }
+    // ---- Current: derive or normalise to line current ---------------------------------
+    let IL: number;
+    let currentSource: ThreePhaseResult['currentSource'] = 'entered';
+    let motorInputPower: number | undefined;
 
-    // Convert current based on type and connection
-    if (currentType === 'phase' && connection === 'star') {
-      IL = I; // In star, line current = phase current
-    } else if (currentType === 'phase' && connection === 'delta') {
-      IL = I * Math.sqrt(3); // In delta, line current = √3 × phase current
+    if (mode === 'motor') {
+      // AUDIT FIX: Motor Sizing mode parsed mechanical power, its unit and the efficiency
+      // and then discarded all three — the answer was identical to Power mode. The design
+      // current of a motor circuit is the motor's electrical INPUT current, not its shaft
+      // rating: P_in = P_mech / η, with 1 HP = 0.746 kW. Selecting equipment on the duty
+      // actually demanded is Reg 512.1.4 (Power); the load to be expected is Reg 132.3.
+      const mechPower = parseFloat(mechanicalPower);
+      const eff = parseFloat(efficiency) / 100;
+      if (!Number.isFinite(mechPower) || mechPower <= 0) return;
+      if (!Number.isFinite(eff) || eff <= 0 || eff > 1) return;
+      const mechKw = mechanicalPowerUnit === 'HP' ? mechPower * KW_PER_HP : mechPower;
+      motorInputPower = mechKw / eff;
+      IL = (motorInputPower * 1000) / (ROOT3 * VLL * pf);
+      currentSource = 'from-motor';
+    } else if (solveFor === 'current') {
+      // AUDIT FIX: the "Current (from V & P)" option was wired to state that nothing read —
+      // choosing it silently produced a power calculation instead. It now solves the
+      // relationship the editorial worked example teaches: IL = P ÷ (√3 × VL × pf).
+      const P = parseFloat(activePowerInput);
+      if (!Number.isFinite(P) || P <= 0) return;
+      IL = (P * 1000) / (ROOT3 * VLL * pf);
+      currentSource = 'from-power';
+    } else {
+      const I = parseFloat(current);
+      if (!Number.isFinite(I) || I <= 0) return;
+      // In star the line current equals the phase current; in delta IL = √3 × IP.
+      IL = currentType === 'phase' && connection === 'delta' ? I * ROOT3 : I;
     }
 
     // Calculate power values
-    const apparentPower = (Math.sqrt(3) * VLL * IL) / 1000; // kVA
+    const apparentPower = (ROOT3 * VLL * IL) / 1000; // kVA
     const activePower = apparentPower * pf; // kW
     const phaseAngle = Math.acos(pf) * (180 / Math.PI);
     const reactivePower = apparentPower * Math.sin(Math.acos(pf)) * (pfType === 'lagging' ? 1 : -1); // kVAR
 
     // Calculate per-phase values
-    const phaseVoltage = connection === 'star' ? VLL / Math.sqrt(3) : VLL;
-    const phaseCurrent = connection === 'star' ? IL : IL / Math.sqrt(3);
+    const phaseVoltage = connection === 'star' ? VLL / ROOT3 : VLL;
+    const phaseCurrent = connection === 'star' ? IL : IL / ROOT3;
+    // NOTE: P/3 holds only for a BALANCED load. Unbalanced loads are an assessable
+    // characteristic in their own right — Reg 331.1(c). Labelled as such in the results.
     const phasePower = activePower / 3;
 
     // Power factor quality assessment
@@ -109,45 +173,53 @@ const ThreePhasePowerCalculator = () => {
     else if (pf >= 0.85) pfQuality = 'Acceptable';
     else pfQuality = 'Poor';
 
-    // Protective device sizing (indicative only)
-    const ratedCurrent = IL;
-    let protectiveDevice = '';
-    if (ratedCurrent <= 6) protectiveDevice = '6A MCB/RCBO';
-    else if (ratedCurrent <= 10) protectiveDevice = '10A MCB/RCBO';
-    else if (ratedCurrent <= 16) protectiveDevice = '16A MCB/RCBO';
-    else if (ratedCurrent <= 20) protectiveDevice = '20A MCB/RCBO';
-    else if (ratedCurrent <= 25) protectiveDevice = '25A MCB/RCBO';
-    else if (ratedCurrent <= 32) protectiveDevice = '32A MCB/RCBO';
-    else if (ratedCurrent <= 40) protectiveDevice = '40A MCB/RCBO';
-    else if (ratedCurrent <= 50) protectiveDevice = '50A MCB/RCBO';
-    else if (ratedCurrent <= 63) protectiveDevice = '63A MCB/RCBO';
-    else if (ratedCurrent <= 80) protectiveDevice = '80A MCCB';
-    else if (ratedCurrent <= 100) protectiveDevice = '100A MCCB';
-    else protectiveDevice = `${Math.ceil(ratedCurrent / 50) * 50}A MCCB`;
+    // Protective device sizing (indicative only) — Ib <= In, Reg 433.1.1.
+    const protectiveDevice = selectProtectiveDevice(IL);
 
     // Calculate unbalance if all phase currents provided
-    let unbalance = undefined;
+    let unbalance: number | undefined = undefined;
     if (currentA && currentB && currentC) {
       const IA = parseFloat(currentA);
       const IB = parseFloat(currentB);
       const IC = parseFloat(currentC);
       const avgCurrent = (IA + IB + IC) / 3;
-      const maxDeviation = Math.max(
-        Math.abs(IA - avgCurrent),
-        Math.abs(IB - avgCurrent),
-        Math.abs(IC - avgCurrent)
-      );
-      unbalance = (maxDeviation / avgCurrent) * 100;
+      // AUDIT FIX: guard against NaN/all-zero entries, which previously produced NaN% or
+      // Infinity% and rendered as a red "High unbalance" chip.
+      if (
+        Number.isFinite(IA) &&
+        Number.isFinite(IB) &&
+        Number.isFinite(IC) &&
+        IA >= 0 &&
+        IB >= 0 &&
+        IC >= 0 &&
+        avgCurrent > 0
+      ) {
+        const maxDeviation = Math.max(
+          Math.abs(IA - avgCurrent),
+          Math.abs(IB - avgCurrent),
+          Math.abs(IC - avgCurrent)
+        );
+        unbalance = (maxDeviation / avgCurrent) * 100;
+      }
     }
 
     // Calculate power factor correction capacitor if target PF provided
-    let correctionCapacitor = undefined;
-    if (targetPf && parseFloat(targetPf) > pf) {
-      const targetPfValue = parseFloat(targetPf);
-      const targetAngle = Math.acos(targetPfValue);
-      const currentAngle = Math.acos(pf);
-      const Qc = activePower * (Math.tan(currentAngle) - Math.tan(targetAngle));
-      correctionCapacitor = Qc; // kVAR
+    // AUDIT FIX: Qc = P(tan φ1 − tan φ2) sizes SHUNT CAPACITANCE, which is only the right
+    // correction for a LAGGING (inductive) load. The leading/lagging selector was ignored,
+    // so a leading load was told to add capacitors — which drives the power factor further
+    // from unity. Power factor is an assessable characteristic under Reg 331.1(l).
+    let correctionCapacitor: number | undefined = undefined;
+    let correctionNote: string | undefined = undefined;
+    const targetPfValue = parseFloat(targetPf);
+    if (targetPf && Number.isFinite(targetPfValue) && targetPfValue > pf && targetPfValue <= 1) {
+      if (pfType === 'lagging') {
+        const targetAngle = Math.acos(targetPfValue);
+        const currentAngle = Math.acos(pf);
+        correctionCapacitor = activePower * (Math.tan(currentAngle) - Math.tan(targetAngle)); // kVAR
+      } else {
+        correctionNote =
+          'Load power factor is leading (capacitive), so the reactive power is already capacitive. Adding shunt capacitors would move the power factor further from unity — leading power factor is corrected with inductive compensation, and the cause (over-sized capacitor bank, lightly loaded cable runs) should be investigated first.';
+      }
     }
 
     setResult({
@@ -163,6 +235,12 @@ const ThreePhasePowerCalculator = () => {
       protectiveDevice,
       unbalance,
       correctionCapacitor,
+      correctionNote,
+      currentSource,
+      motorInputPower,
+      // Reg 512.1.3 — where frequency influences equipment characteristics, rated frequency
+      // shall correspond to the nominal frequency of the supply. UK nominal is 50 Hz.
+      frequencyMismatch: frequency !== '50',
       perPhase: {
         voltage: phaseVoltage,
         current: phaseCurrent,
@@ -182,6 +260,7 @@ const ThreePhasePowerCalculator = () => {
     setFrequency('50');
     setMode('power');
     setSolveFor('power');
+    setActivePowerInput('');
     setMechanicalPower('');
     setMechanicalPowerUnit('kW');
     setEfficiency('85');
@@ -193,9 +272,17 @@ const ThreePhasePowerCalculator = () => {
     setResult(null);
   };
 
+  // Which quantity the user supplies changes with the mode, so the guard has to follow it —
+  // Motor Sizing needs the mechanical rating, "Current (from V & P)" needs the power.
   const hasValidInputs = () => {
-    return voltage && current && powerFactor;
+    if (!voltage || !powerFactor) return false;
+    if (mode === 'motor') return Boolean(mechanicalPower && efficiency);
+    if (solveFor === 'current') return Boolean(activePowerInput);
+    return Boolean(current);
   };
+
+  /** True when the line current is derived rather than entered (motor rating, or P & V). */
+  const derivesCurrent = mode === 'motor' || solveFor === 'current';
 
   const getPfStatusColour = () => {
     if (!result) return 'text-white';
@@ -255,35 +342,57 @@ const ThreePhasePowerCalculator = () => {
 
       <CalculatorInputGrid columns={2}>
         <CalculatorInput
-          label={voltageType === 'line-line' ? 'Line Voltage' : 'Phase Voltage'}
+          label={
+            voltageType === 'line-line' ? 'Line Voltage (VLL)' : 'Line-to-Neutral Voltage (VLN)'
+          }
           unit="V"
           type="text"
           inputMode="decimal"
           value={voltage}
           onChange={setVoltage}
           placeholder={voltageType === 'line-line' ? 'e.g., 400' : 'e.g., 230'}
+          hint={
+            voltageType === 'line-neutral'
+              ? 'Converted to VLL × √3 — the supply voltage does not change with load connection'
+              : undefined
+          }
         />
-        <CalculatorInput
-          label={currentType === 'line' ? 'Line Current' : 'Phase Current'}
-          unit="A"
-          type="text"
-          inputMode="decimal"
-          value={current}
-          onChange={setCurrent}
-          placeholder="e.g., 25"
-        />
+        {mode === 'motor' ? null : solveFor === 'current' ? (
+          <CalculatorInput
+            label="Active Power (P)"
+            unit="kW"
+            type="text"
+            inputMode="decimal"
+            value={activePowerInput}
+            onChange={setActivePowerInput}
+            placeholder="e.g., 15"
+            hint="Real power drawn by the load"
+          />
+        ) : (
+          <CalculatorInput
+            label={currentType === 'line' ? 'Line Current' : 'Phase Current'}
+            unit="A"
+            type="text"
+            inputMode="decimal"
+            value={current}
+            onChange={setCurrent}
+            placeholder="e.g., 25"
+          />
+        )}
       </CalculatorInputGrid>
 
       <CalculatorInputGrid columns={2}>
-        <CalculatorSelect
-          label="Current Type"
-          value={currentType}
-          onChange={setCurrentType}
-          options={[
-            { value: 'line', label: 'Line Current' },
-            { value: 'phase', label: 'Phase Current' },
-          ]}
-        />
+        {derivesCurrent ? null : (
+          <CalculatorSelect
+            label="Current Type"
+            value={currentType}
+            onChange={setCurrentType}
+            options={[
+              { value: 'line', label: 'Line Current' },
+              { value: 'phase', label: 'Phase Current' },
+            ]}
+          />
+        )}
         <CalculatorSelect
           label="Frequency"
           value={frequency}
@@ -500,6 +609,22 @@ const ThreePhasePowerCalculator = () => {
               />
             </ResultsGrid>
 
+            {/* Motor input power — Reg 512.1.4, duty demanded of the equipment */}
+            {result.motorInputPower !== undefined && (
+              <div className="rounded-xl p-3 bg-white/[0.04]">
+                <div className="flex justify-between text-sm">
+                  <span className="text-white">Motor Input Power (P ÷ η):</span>
+                  <span className="text-amber-400 font-mono text-lg font-bold">
+                    {result.motorInputPower.toFixed(2)} kW
+                  </span>
+                </div>
+                <p className="text-xs text-white mt-1">
+                  Design current (Ib) is the motor&apos;s electrical input current, not its shaft
+                  rating.
+                </p>
+              </div>
+            )}
+
             {/* Per-Phase Power */}
             <div className="rounded-xl p-3 bg-white/[0.04]">
               <div className="flex justify-between text-sm">
@@ -508,6 +633,12 @@ const ThreePhasePowerCalculator = () => {
                   {result.perPhase.power.toFixed(2)} kW
                 </span>
               </div>
+              {/* P/3 is only true for a balanced load — unbalanced loads are an assessable
+                  characteristic in their own right (Reg 331.1(c)). */}
+              <p className="text-xs text-white mt-1">
+                Assumes a balanced load. Where the three phases differ, work each phase from its own
+                current — unbalanced loads must be assessed under Reg 331.1(c).
+              </p>
             </div>
 
             {/* Unbalance Analysis */}
@@ -555,6 +686,29 @@ const ThreePhasePowerCalculator = () => {
               </div>
             )}
 
+            {/* Leading PF — shunt capacitance is the wrong correction (see engine comment) */}
+            {result.correctionNote !== undefined && (
+              <div className="rounded-xl p-3 bg-orange-500/10 border border-orange-500/30">
+                <h4 className="text-sm font-medium text-orange-300 mb-1">
+                  Power Factor Correction
+                </h4>
+                <p className="text-sm text-white">{result.correctionNote}</p>
+              </div>
+            )}
+
+            {/* Frequency — Reg 512.1.3 */}
+            {result.frequencyMismatch && (
+              <div className="rounded-xl p-3 bg-orange-500/10 border border-orange-500/30">
+                <p className="text-sm text-white">
+                  <strong className="text-orange-300">Frequency</strong> {'—'} {frequency} Hz is not
+                  the UK nominal supply frequency of 50 Hz. None of the figures above are
+                  frequency-dependent, but where frequency influences equipment characteristics the
+                  rated frequency of the equipment must correspond to the nominal frequency of the
+                  supply (Reg 512.1.3).
+                </p>
+              </div>
+            )}
+
             {/* Protective Device */}
             <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
               <div className="flex items-start gap-2">
@@ -567,7 +721,10 @@ const ThreePhasePowerCalculator = () => {
                     <span className="text-amber-400 font-mono ml-2">{result.protectiveDevice}</span>
                   </div>
                   <p className="text-xs text-white mt-1">
-                    Indicative only - proper circuit design required per BS 7671
+                    Smallest standard rating satisfying Ib ≤ In. Reg 433.1.1 requires Ib ≤ In ≤ Iz —
+                    Iz is not checked here, so the cable must still be sized and the device
+                    coordinated to it. Motor circuits also need starting current and, where a
+                    starter is used, coordination per Reg 435.2.
                   </p>
                 </div>
               </div>
@@ -608,9 +765,18 @@ const ThreePhasePowerCalculator = () => {
                       Voltage: {voltage}V (
                       {voltageType === 'line-line' ? 'Line-to-Line' : 'Line-to-Neutral'})
                     </span>
-                    <span className="block">
-                      Current: {current}A ({currentType === 'line' ? 'Line' : 'Phase'})
-                    </span>
+                    {result.currentSource === 'from-motor' ? (
+                      <span className="block">
+                        Motor: {mechanicalPower}
+                        {mechanicalPowerUnit} shaft, η = {efficiency}%
+                      </span>
+                    ) : result.currentSource === 'from-power' ? (
+                      <span className="block">Active Power: {activePowerInput} kW</span>
+                    ) : (
+                      <span className="block">
+                        Current: {current}A ({currentType === 'line' ? 'Line' : 'Phase'})
+                      </span>
+                    )}
                     <span className="block">
                       Power Factor: {powerFactor} {pfType}
                     </span>
@@ -630,7 +796,27 @@ const ThreePhasePowerCalculator = () => {
                     ) : (
                       <span className="block">VLL = {voltage}V (already line-to-line)</span>
                     )}
-                    {currentType === 'phase' && connection === 'delta' ? (
+                    {result.currentSource === 'from-motor' ? (
+                      <>
+                        <span className="block">
+                          P_in = P_mech ÷ η ={' '}
+                          {mechanicalPowerUnit === 'HP'
+                            ? `${mechanicalPower} × 0.746 ÷ ${efficiency}%`
+                            : `${mechanicalPower} ÷ ${efficiency}%`}{' '}
+                          = {result.motorInputPower?.toFixed(2)} kW
+                        </span>
+                        <span className="block">
+                          IL = P_in ÷ (√3 × VLL × pf) = {result.lineCurrent.toFixed(2)}A
+                        </span>
+                      </>
+                    ) : result.currentSource === 'from-power' ? (
+                      <span className="block">
+                        IL = P ÷ (√3 × VLL × pf) ={' '}
+                        {(parseFloat(activePowerInput) * 1000).toFixed(0)} ÷ (1.732 ×{' '}
+                        {result.lineVoltage.toFixed(1)} × {powerFactor}) ={' '}
+                        {result.lineCurrent.toFixed(2)}A
+                      </span>
+                    ) : currentType === 'phase' && connection === 'delta' ? (
                       <span className="block">
                         IL = IP × √3 = {current} × 1.732 = {result.lineCurrent.toFixed(2)}A
                       </span>
@@ -802,11 +988,33 @@ const ThreePhasePowerCalculator = () => {
 
             <CollapsibleContent className="pt-2">
               <div className="space-y-3 pl-1">
+                {/* AUDIT FIX: this previously read "Use BS EN 60947-4-1 rated devices" for final
+                    circuit protection. BS EN 60947-4-1 is the standard for CONTACTORS AND MOTOR
+                    STARTERS. Reg 536.4.2.2 states contactors to BS EN 60947-4-1 (or BS EN 61095)
+                    do NOT provide short-circuit protection, and Reg 536.4.3.1 requires them to be
+                    protected by a separate overload protective device where they have no integral
+                    overload protection. The suitable overload devices are listed at Reg 536.4.5
+                    NOTE 3. Telling an apprentice a starter is the circuit's protection understates
+                    the risk. */}
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">Protection</strong> {'—'} Final circuit
-                    protection must account for motor starting currents (typically 6-8× full load).
-                    Use BS EN 60947-4-1 rated devices.
+                    <strong className="text-amber-300">Protection</strong> {'—'} Overload and
+                    short-circuit protection comes from an overcurrent protective device: a gG fuse
+                    to BS 88-2 or BS 88-3, a circuit-breaker to BS EN 60898 or BS EN 60947-2, or an
+                    RCBO to BS EN 61009-1 (Reg 536.4.5 NOTE 3). A contactor or starter to BS EN
+                    60947-4-1 does <strong>not</strong> provide short-circuit protection (Reg
+                    536.4.2.2) and itself needs an overload protective device where it has none
+                    built in (Reg 536.4.3.1).
+                  </p>
+                </div>
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-amber-300">Motor Circuits</strong> {'—'} Direct-on-line
+                    starting current is typically several times full-load current, so the device
+                    must ride through it without tripping while still satisfying Ib ≤ In ≤ Iz (Reg
+                    433.1.1). Where a starter is used, coordination is to Reg 435.2, which permits
+                    the type of coordination described in BS EN 60947-4-1 — seek the starter
+                    manufacturer&apos;s advice.
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
@@ -815,10 +1023,30 @@ const ThreePhasePowerCalculator = () => {
                     drop (Section 525), current-carrying capacity with grouping/temperature factors.
                   </p>
                 </div>
+                {/* AUDIT FIX: 512.1.2 is titled "Current" — it requires equipment to be suitable
+                    for the design current (taking capacitive and inductive effects into account)
+                    and for the current likely to flow in abnormal conditions. It says nothing
+                    about efficiency. Power-based selection is 512.1.4 (Power); the duty to assess
+                    power factor as a characteristic likely to have harmful effects is 331.1(l). */}
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">512.1.2</strong> {'—'} Equipment selection
-                    must consider power factor and efficiency.
+                    <strong className="text-amber-300">512.1.2 — Current</strong> {'—'} Equipment
+                    must be suitable for the design current, taking capacitive and inductive effects
+                    into account, and for the current likely to flow in abnormal conditions.
+                  </p>
+                </div>
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-amber-300">512.1.4 — Power</strong> {'—'} Equipment
+                    selected on its power characteristics must be suitable for the duty demanded of
+                    it. For a motor that means the electrical input power, not the shaft rating.
+                  </p>
+                </div>
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-amber-300">331.1</strong> {'—'} Power factor (l),
+                    unbalanced loads (c) and starting currents (e) are all listed characteristics
+                    that must be assessed for harmful effects on other equipment or the supply.
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">

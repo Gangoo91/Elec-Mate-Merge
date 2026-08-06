@@ -34,6 +34,16 @@ export interface BoardToolCallbacks {
   onVoiceToggle?: () => void;
   voiceActive?: boolean;
   voiceConnecting?: boolean;
+  /**
+   * Check every circuit on this board against BS 7671 in one action.
+   *
+   * The checks already ran per cell and in a panel below the desktop table —
+   * neither reachable at a consumer unit, and the panel does not exist on a
+   * phone at all. This puts the answer one tap from the schedule.
+   */
+  onValidate?: () => void;
+  /** Outstanding issues, shown on the button so they are visible unopened. */
+  validateIssueCount?: number;
 }
 
 interface BoardSectionProps {
@@ -866,6 +876,22 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                     >
                       AI scan
                     </Button>
+                    {tools.onValidate && (
+                      <Button
+                        onClick={tools.onValidate}
+                        className={cn(
+                          'h-11 px-3 rounded-xl text-[13px] font-semibold touch-manipulation border',
+                          tools.validateIssueCount
+                            ? 'border-orange-500/40 bg-orange-500/15 text-orange-200 hover:bg-orange-500/25'
+                            : 'border-white/[0.12] bg-white/[0.06] text-white hover:bg-white/[0.1]'
+                        )}
+                      >
+                        Validate
+                        {tools.validateIssueCount ? (
+                          <span className="ml-1.5 tabular-nums">{tools.validateIssueCount}</span>
+                        ) : null}
+                      </Button>
+                    )}
                     <Button
                       onClick={onAddCircuit}
                       className="h-11 px-3 rounded-xl bg-elec-yellow text-black hover:bg-elec-yellow/90 text-[13px] font-semibold touch-manipulation"
@@ -896,7 +922,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
             {/* Mobile tools bar — text-only buttons on the neutral recipe */}
             {isMobile && showTools && tools && (
               <div className="py-3 border-t border-white/10">
-                <div className="grid grid-cols-3 gap-2 items-center">
+                <div className="grid grid-cols-2 gap-2 items-center">
                   <Button
                     onClick={tools.onScanBoard}
                     className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] hover:bg-white/[0.1] text-white text-[13px] font-semibold touch-manipulation active:scale-95"
@@ -925,6 +951,22 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                         ? 'Connecting'
                         : 'Voice'}
                   </Button>
+                  {tools.onValidate && (
+                    <Button
+                      onClick={tools.onValidate}
+                      className={cn(
+                        'h-11 rounded-xl text-[13px] font-semibold touch-manipulation active:scale-95 border',
+                        tools.validateIssueCount
+                          ? 'border-orange-500/40 bg-orange-500/15 text-orange-200'
+                          : 'border-white/[0.12] bg-white/[0.06] text-white hover:bg-white/[0.1]'
+                      )}
+                    >
+                      Validate
+                      {tools.validateIssueCount ? (
+                        <span className="ml-1.5 tabular-nums">{tools.validateIssueCount}</span>
+                      ) : null}
+                    </Button>
+                  )}
                 </div>
               </div>
             )}

@@ -142,7 +142,7 @@ const sections = [
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
-                (Section 631 covers periodic inspection and testing). The inspector assesses the
+                (Chapter 65 covers periodic inspection and testing). The inspector assesses the
                 condition of the fixed electrical installation and classifies any defects using the
                 C1, C2, C3, and FI code system.
               </span>

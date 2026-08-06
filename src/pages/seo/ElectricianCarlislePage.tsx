@@ -194,7 +194,7 @@ const sections = [
                 <strong>BS 7671:2018+A4:2026</strong> — the 18th Edition Wiring Regulations apply to
                 all installations. RCD protection requirements under regulation 411.3.3 apply to
                 circuits in domestic premises. All new work requires an Electrical Installation
-                Certificate (EIC), and periodic inspections require an EICR under Section 631.
+                Certificate (EIC), and periodic inspections require an EICR under Chapter 65.
               </span>
             </li>
             <li className="flex items-start gap-3">

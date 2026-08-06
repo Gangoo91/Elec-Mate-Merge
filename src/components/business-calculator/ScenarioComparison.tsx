@@ -103,6 +103,20 @@ const ScenarioComparison: React.FC<ScenarioComparisonProps> = ({
     });
   };
 
+  /**
+   * Signed delta against the current scenario.
+   *
+   * The three cards each rendered `{a > b ? '+' : ''}£{Math.abs(a - b)}`, so a
+   * scenario £10,000 CHEAPER than the current one printed "£10,000" — visually
+   * identical to one £10,000 dearer, minus a plus sign. Math.abs had stripped
+   * the only thing that distinguished them.
+   */
+  const formatDelta = (value: number, current: number) => {
+    const delta = value - current;
+    if (delta === 0) return 'Same';
+    return `${delta > 0 ? '+' : '−'}£${Math.abs(delta).toLocaleString()}`;
+  };
+
   const getComparisonIcon = (value1: number, value2: number) => {
     if (value1 > value2) return <TrendingUp className="h-4 w-4 text-red-400" />;
     if (value1 < value2) return <TrendingDown className="h-4 w-4 text-green-400" />;
@@ -187,10 +201,7 @@ const ScenarioComparison: React.FC<ScenarioComparisonProps> = ({
                           £{scenario.totalStartup.toLocaleString()}
                         </p>
                         <p className="text-xs text-muted-foreground">
-                          {scenario.totalStartup > currentScenario.totalStartup ? '+' : ''}£
-                          {Math.abs(
-                            scenario.totalStartup - currentScenario.totalStartup
-                          ).toLocaleString()}
+                          {formatDelta(scenario.totalStartup, currentScenario.totalStartup)}
                         </p>
                       </div>
 
@@ -203,10 +214,7 @@ const ScenarioComparison: React.FC<ScenarioComparisonProps> = ({
                           £{scenario.totalMonthly.toLocaleString()}
                         </p>
                         <p className="text-xs text-muted-foreground">
-                          {scenario.totalMonthly > currentScenario.totalMonthly ? '+' : ''}£
-                          {Math.abs(
-                            scenario.totalMonthly - currentScenario.totalMonthly
-                          ).toLocaleString()}
+                          {formatDelta(scenario.totalMonthly, currentScenario.totalMonthly)}
                         </p>
                       </div>
 
@@ -219,10 +227,7 @@ const ScenarioComparison: React.FC<ScenarioComparisonProps> = ({
                           £{scenario.yearOneTotal.toLocaleString()}
                         </p>
                         <p className="text-xs text-muted-foreground">
-                          {scenario.yearOneTotal > currentScenario.yearOneTotal ? '+' : ''}£
-                          {Math.abs(
-                            scenario.yearOneTotal - currentScenario.yearOneTotal
-                          ).toLocaleString()}
+                          {formatDelta(scenario.yearOneTotal, currentScenario.yearOneTotal)}
                         </p>
                       </div>
                     </div>

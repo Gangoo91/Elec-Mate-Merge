@@ -880,10 +880,12 @@ export default function TestingSequenceGuidePage() {
                 and confirm the device trips and resets correctly.
               </p>
               <p>
-                <strong className="text-yellow-400">Pass/fail (RCDs):</strong> At 0.5x IΔn — must
-                NOT trip. At 1x IΔn — must trip within 300 ms (general type) or 130-500 ms (Type S).
-                At 5x IΔn — must trip within 40 ms (general type) or 50-200 ms (Type S). Failure at
-                any stage requires investigation and may require device replacement.
+                <strong className="text-yellow-400">Pass/fail (RCDs):</strong> Amendment 4 deleted
+                Table 3A of Appendix 3. Verification is now a single alternating current test at
+                IΔn, whatever the RCD type — a general (non-delay) device must operate within
+                300 ms, a Type S within 130-500 ms per BS EN 61008/61009. The ½x and 5x tests are
+                no longer part of the required sequence, though 5x remains useful for fault-finding.
+                Failure requires investigation and may require device replacement.
               </p>
               <p>
                 <strong className="text-yellow-400">Why it is last:</strong> Functional testing is

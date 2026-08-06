@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet';
 import { RecentReviews } from '@/components/seo/RecentReviews';
+import { CalculatorSurface } from '@/components/calculators/shared';
 import ConduitFillCalculator from '@/components/apprentice/calculators/ConduitFillCalculator';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
@@ -203,7 +204,7 @@ export default function ConduitFillCalculatorPage() {
       {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
       <section id="calculator" className="px-5 pb-12 scroll-mt-24">
         <div className="max-w-4xl mx-auto">
-          <ConduitFillCalculator />
+          <CalculatorSurface><ConduitFillCalculator /></CalculatorSurface>
         </div>
       </section>
 
@@ -520,7 +521,7 @@ export default function ConduitFillCalculatorPage() {
                   circuit.
                 </li>
               </ul>
-              <p className="text-white/70 text-xs mt-3">
+              <p className="text-white text-xs mt-3">
                 Source: IET On-Site Guide 9th Ed (A4:2026), Reg 7.4.1; BS 7671 Reg 528.1.
               </p>
             </div>

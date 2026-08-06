@@ -1,31 +1,40 @@
 /**
- * BusinessHub — editorial redesign matching ElectricianHub / SiteSafety.
+ * Business Hub.
  *
- * Sticky text-only masthead, date-eyebrow Hero with thematic two-tone
- * headline + state-aware verdict + CTA, `01 · AT A GLANCE` HeadlineStats
- * (Paid this month · Outstanding · Overdue · Win rate), then numbered
- * hairline tool grids:
- *   02 · YOUR DAY
- *   03 · FINANCIALS
- *   04 · ON THE JOB
- *   05 · MONEY & STOCK
- *   06 · GROW
- *   07 · INSIGHTS  (live analytics, inline)
+ * Rebuilt on the shared hub shell (`@/components/hub/HubPrimitives`), the same
+ * one Inspection & Testing uses, so the two pages can't drift into separate
+ * dialects again.
  *
- * BusinessCard chrome and the Insights collapsible are gone — uniform
- * hairline cells, single yellow accent per row, mobile-flat per the project
- * working agreement.
+ *   masthead → alert (only when something is overdue) → Mate → start → tools
+ *
+ * Three things went, and it is worth saying why:
+ *
+ * The HERO. A date eyebrow, a slogan picked from a pool by hour and
+ * day-of-year, a verdict paragraph and a CTA — roughly 300px of page before an
+ * electrician reached a single tool, most of it restating numbers that appear
+ * again immediately below. Inspection & Testing dropped its hero for exactly
+ * this reason; the only load-bearing part was the overdue warning, which is
+ * now one AlertLine that appears only when there is something to warn about.
+ *
+ * The STAT BOARD. Four cells with 56px numbers — Paid, Outstanding, Overdue,
+ * Win rate. Every one of those numbers already lives on the card that owns it
+ * (Invoices carries the overdue figure, Quotes carries the win rate), so the
+ * board was repeating the page back to itself. A number next to the thing it
+ * counts beats a scoreboard at the top.
+ *
+ * MATE's introduction. See MateBar — it is a row now, not a section.
+ *
+ * Everything is `text-white`. The old grid ran on white/60, /55, /50, /45 and
+ * /40, which renders as grey and is not allowed.
  */
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
+import { containerVariants, itemVariants } from '@/components/college/primitives';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
-import { QuoteInvoiceAnalytics } from '@/components/electrician/analytics/QuoteInvoiceAnalytics';
+import { BusinessInsights } from '@/components/electrician/analytics/BusinessInsights';
 import { useBusinessHubData } from '@/hooks/useBusinessHubData';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { useSparkTasks } from '@/hooks/useSparkTasks';
@@ -34,369 +43,18 @@ import { useSnags } from '@/hooks/useSnags';
 import { useTimeTracker, formatDuration } from '@/hooks/useTimeTracker';
 import { shareContent } from '@/utils/share';
 import { Assistant } from '@/components/business-hub/Assistant';
-
-// ─────────────────────────────────────────────────────────────────────────
-// Editorial helpers
-// ─────────────────────────────────────────────────────────────────────────
-
-const partOfDay = (): 'MORNING' | 'AFTERNOON' | 'EVENING' => {
-  const h = new Date().getHours();
-  if (h < 12) return 'MORNING';
-  if (h < 18) return 'AFTERNOON';
-  return 'EVENING';
-};
-
-const dateEyebrow = (): string => {
-  const d = new Date();
-  const weekday = d.toLocaleDateString('en-GB', { weekday: 'long' }).toUpperCase();
-  const day = d.getDate();
-  const month = d.toLocaleDateString('en-GB', { month: 'long' }).toUpperCase();
-  return `${weekday} · ${day} ${month} · ${partOfDay()}`;
-};
-
-interface HeroHeadline {
-  yellow: string;
-  white: string;
-}
-
-const HEADLINES_OVERDUE: HeroHeadline[] = [
-  { yellow: 'Time', white: 'to follow up.' },
-  { yellow: 'Close', white: 'the open invoices.' },
-  { yellow: 'Tidy', white: 'the books.' },
-];
-
-const HEADLINES_PIPELINE: HeroHeadline[] = [
-  { yellow: 'Quote', white: 'into job.' },
-  { yellow: 'Pipeline', white: 'in motion.' },
-  { yellow: 'Send', white: 'today, win Friday.' },
-];
-
-const HEADLINES_HEALTHY: HeroHeadline[] = [
-  { yellow: 'Stay', white: 'in the black.' },
-  { yellow: 'Quiet', white: 'books, sharp moves.' },
-  { yellow: 'Push', white: 'a quote out.' },
-  { yellow: 'Run', white: 'the business right.' },
-];
-
-const HEADLINES_EMPTY: HeroHeadline[] = [
-  { yellow: 'First', white: 'quote, first job.' },
-  { yellow: 'Start', white: 'the books.' },
-];
-
-const pickHeadline = (pool: HeroHeadline[]): HeroHeadline => {
-  const now = new Date();
-  const hour = now.getHours();
-  const dayOfYear = Math.floor(
-    (now.getTime() - new Date(now.getFullYear(), 0, 0).getTime()) / 86400000
-  );
-  return pool[(hour + dayOfYear) % pool.length];
-};
-
-// ─────────────────────────────────────────────────────────────────────────
-// Sticky masthead — College pattern
-// ─────────────────────────────────────────────────────────────────────────
-
-const PageMasthead = () => {
-  const navigate = useNavigate();
-  return (
-    <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06]">
-      <div className="mx-auto max-w-7xl px-4">
-        <div className="flex items-center h-12 gap-4 sm:gap-6">
-          <button
-            type="button"
-            onClick={() => navigate('/electrician')}
-            className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation whitespace-nowrap"
-          >
-            ← Back
-          </button>
-          <div className="flex-1 min-w-0 flex items-baseline gap-2.5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white hidden sm:inline">
-              Electrician
-            </span>
-            <span className="hidden sm:inline h-3 w-px bg-white/10" aria-hidden />
-            <h1 className="text-[13px] sm:text-sm font-semibold text-white truncate tracking-tight">
-              Business Hub
-            </h1>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// ─────────────────────────────────────────────────────────────────────────
-// Hero
-// ─────────────────────────────────────────────────────────────────────────
-
-const Hero = ({
-  headline,
-  verdict,
-  cta,
-}: {
-  headline: HeroHeadline;
-  verdict: string;
-  cta?: { label: string; onClick: () => void };
-}) => (
-  <motion.section
-    variants={containerVariants}
-    initial="hidden"
-    animate="visible"
-    className="relative pt-2 sm:pt-4"
-  >
-    <motion.div variants={itemVariants}>
-      <Eyebrow>{dateEyebrow()}</Eyebrow>
-    </motion.div>
-
-    <motion.h1
-      variants={itemVariants}
-      className="mt-3 font-semibold tracking-tight leading-[1.05] text-[34px] sm:text-[44px] lg:text-[56px]"
-    >
-      <span className="text-elec-yellow">{headline.yellow}</span>{' '}
-      <span className="text-white">{headline.white}</span>
-    </motion.h1>
-
-    <motion.p
-      variants={itemVariants}
-      className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] leading-relaxed text-white/90 max-w-2xl"
-    >
-      {verdict}
-    </motion.p>
-
-    {cta && (
-      <motion.div variants={itemVariants} className="mt-5 sm:mt-6">
-        <button
-          type="button"
-          onClick={cta.onClick}
-          className={cn(
-            'group inline-flex items-center gap-2 h-10 px-4 rounded-full',
-            'border border-elec-yellow/25 bg-elec-yellow/10 hover:bg-elec-yellow/20',
-            'text-[13px] font-medium text-elec-yellow touch-manipulation transition-colors'
-          )}
-        >
-          <span>{cta.label}</span>
-          <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-        </button>
-      </motion.div>
-    )}
-  </motion.section>
-);
-
-// ─────────────────────────────────────────────────────────────────────────
-// HeadlineStats — business variant
-// ─────────────────────────────────────────────────────────────────────────
-
-interface BusinessStat {
-  label: string;
-  value: string;
-  sub?: string;
-  accent?: boolean;
-  onClick: () => void;
-}
-
-const BusinessHeadlineStats = ({
-  stats,
-  number = '01',
-  label = 'AT A GLANCE',
-}: {
-  stats: BusinessStat[];
-  number?: string;
-  label?: string;
-}) => (
-  <motion.section
-    variants={containerVariants}
-    initial="hidden"
-    animate="visible"
-    className="space-y-4"
-  >
-    <motion.div variants={itemVariants}>
-      <Eyebrow>
-        {number} · {label}
-      </Eyebrow>
-    </motion.div>
-
-    <motion.div
-      variants={itemVariants}
-      className="relative grid grid-cols-2 lg:grid-cols-4 gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden"
-    >
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
-
-      {stats.map((stat) => {
-        const valueStr = String(stat.value);
-        const isNumericish = /^[\d.,+\-/%hkm£]+$/i.test(valueStr);
-        const sizeClass =
-          isNumericish || valueStr.length <= 5
-            ? 'text-4xl sm:text-5xl lg:text-[56px]'
-            : valueStr.length <= 8
-              ? 'text-3xl sm:text-4xl lg:text-5xl'
-              : 'text-2xl sm:text-3xl lg:text-4xl';
-
-        return (
-          <button
-            key={stat.label}
-            type="button"
-            onClick={stat.onClick}
-            className={cn(
-              'group relative bg-[hsl(0_0%_10%)] px-5 py-6 sm:px-7 sm:py-8 flex flex-col text-left touch-manipulation',
-              'hover:bg-[hsl(0_0%_15%)] transition-colors',
-              stat.accent &&
-                'bg-gradient-to-br from-elec-yellow/[0.06] via-amber-500/[0.02] to-transparent hover:from-elec-yellow/[0.10]'
-            )}
-          >
-            <div
-              className={cn(
-                'text-[10px] font-medium uppercase tracking-[0.18em]',
-                stat.accent ? 'text-elec-yellow/80' : 'text-white/50'
-              )}
-            >
-              {stat.label}
-            </div>
-            <span
-              className={cn(
-                'mt-3 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none',
-                sizeClass,
-                stat.accent ? 'text-elec-yellow' : 'text-white'
-              )}
-            >
-              {stat.value}
-            </span>
-            {stat.sub && (
-              <span className="mt-3 text-[11.5px] text-white/55 group-hover:text-white/75 transition-colors">
-                {stat.sub}
-              </span>
-            )}
-          </button>
-        );
-      })}
-    </motion.div>
-  </motion.section>
-);
-
-// ─────────────────────────────────────────────────────────────────────────
-// EditorialToolGrid — supports either a real route (`to`) or callback
-// (`onClick`) per card, since Booking Link is a share action.
-// ─────────────────────────────────────────────────────────────────────────
-
-interface ToolCard {
-  id: string;
-  eyebrow: string;
-  title: string;
-  description: string;
-  to?: string;
-  onClick?: () => void;
-  meta?: string;
-  alert?: boolean;
-}
-
-const EditorialToolGrid = ({
-  number,
-  label,
-  cards,
-  columns = 'three',
-}: {
-  number: string;
-  label: string;
-  cards: ToolCard[];
-  columns?: 'two' | 'three';
-}) => {
-  const navigate = useNavigate();
-  if (cards.length === 0) return null;
-
-  const colClass =
-    columns === 'two' ? 'grid-cols-2' : 'grid-cols-2 lg:grid-cols-3';
-
-  // Pad the final row with non-interactive filler cells so the rounded grid
-  // never shows the bleed-through grey from `bg-white/[0.12]` between gaps.
-  // The grid is 2-up on mobile and (for 'three') 3-up on lg, so the filler
-  // count differs per breakpoint — render each set scoped to its width.
-  const lgColCount = columns === 'two' ? 2 : 3;
-  const lgFillerCount = (lgColCount - (cards.length % lgColCount)) % lgColCount;
-  const mobileFillerCount = cards.length % 2;
-
-  return (
-    <motion.section
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="space-y-4"
-    >
-      <motion.div variants={itemVariants}>
-        <Eyebrow>
-          {number} · {label}
-        </Eyebrow>
-      </motion.div>
-
-      <motion.div
-        variants={itemVariants}
-        className={cn(
-          'relative grid auto-rows-[185px] sm:auto-rows-[240px] gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden',
-          colClass
-        )}
-      >
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
-
-        {cards.map((card, i) => (
-          <button
-            key={card.id}
-            type="button"
-            onClick={() => {
-              if (card.onClick) card.onClick();
-              else if (card.to) navigate(card.to);
-            }}
-            className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-4 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full"
-          >
-            <div className="flex items-baseline justify-between gap-2">
-              <div className="flex items-baseline gap-2">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-                  · {card.eyebrow}
-                </span>
-              </div>
-              {card.alert && (
-                <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-red-300 border border-red-400/30 bg-red-500/10 px-1.5 py-0.5 rounded">
-                  Action
-                </span>
-              )}
-            </div>
-
-            <h3 className="mt-2.5 sm:mt-4 text-[16px] sm:text-[22px] lg:text-[24px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
-              {card.title}
-            </h3>
-            <p className="mt-1.5 text-[11.5px] sm:text-[12.5px] leading-snug sm:leading-relaxed text-white/60 max-w-[34ch] line-clamp-2 sm:line-clamp-none">
-              {card.description}
-            </p>
-
-            <div className="flex-grow" />
-
-            <div className="mt-5 flex items-center justify-between gap-3 pt-3 border-t border-white/[0.05]">
-              <span className="hidden sm:inline text-[11px] text-white/55 truncate tabular-nums">
-                {card.meta ?? 'Open'}
-              </span>
-              <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow shrink-0">
-                Open
-                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
-              </span>
-            </div>
-          </button>
-        ))}
-
-        {/* Trailing filler cells — match active-cell bg so the row looks
-            complete instead of revealing the white/0.12 grid background. */}
-        {Array.from({ length: lgFillerCount }).map((_, i) => (
-          <div key={`filler-lg-${i}`} aria-hidden className="hidden lg:block bg-[hsl(0_0%_10%)]" />
-        ))}
-        {Array.from({ length: mobileFillerCount }).map((_, i) => (
-          <div key={`filler-m-${i}`} aria-hidden className="block lg:hidden bg-[hsl(0_0%_10%)]" />
-        ))}
-      </motion.div>
-    </motion.section>
-  );
-};
-
-// ─────────────────────────────────────────────────────────────────────────
-// Main page
-// ─────────────────────────────────────────────────────────────────────────
+import { MateBar } from '@/components/business-hub/MateBar';
+import {
+  HubPage,
+  HubBody,
+  HubMasthead,
+  HubAlertLine,
+  HubQuickStart,
+  HubToolGrid,
+  HubSectionHeading,
+  type HubTool,
+  type HubQuickAction,
+} from '@/components/hub/HubPrimitives';
 
 const BusinessHub = () => {
   const navigate = useNavigate();
@@ -409,9 +67,7 @@ const BusinessHub = () => {
     winRate,
     quotes,
     invoices,
-    isLoading,
     lastUpdated,
-    refresh,
     formatCurrency,
   } = useBusinessHubData();
   const {
@@ -424,8 +80,8 @@ const BusinessHub = () => {
   } = useSparkProjects('active');
   const { counts: snagCounts } = useSnags();
 
-  // In-progress site visits — drafts now reach the cloud as they're captured,
-  // so the hub can honestly say "2 in progress" (feeds ELE-1070's recents idea)
+  // In-progress site visits — drafts reach the cloud as they're captured, so
+  // the hub can honestly say "2 in progress".
   const [draftVisitCount, setDraftVisitCount] = useState(0);
   useEffect(() => {
     let cancelled = false;
@@ -461,7 +117,7 @@ const BusinessHub = () => {
     setMatePrompt(undefined);
   };
 
-  // ⌘+K / Ctrl+K — open Assistant globally on the Business Hub
+  // ⌘+K / Ctrl+K — open Mate from anywhere on the page
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
@@ -472,10 +128,6 @@ const BusinessHub = () => {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, []);
-
-  const timeTrackerSubtitle = activeSession
-    ? `Running · ${formatDuration(elapsedSeconds)}`
-    : 'Log hours';
 
   const handleShareBookingLink = async () => {
     const {
@@ -493,89 +145,96 @@ const BusinessHub = () => {
     });
   };
 
-  // ── Hero state ───────────────────────────────────────────────────────
-  const { headline, verdict, cta } = useMemo(() => {
-    const overduePounds = formatCurrency(overdueAmount);
-    const outstandingPounds = formatCurrency(outstanding);
-    const paidPounds = formatCurrency(paidThisMonth);
+  // `TaskStatus` is 'open' | 'done' | 'snoozed' | 'cancelled'. This used to
+  // read `t.status !== 'completed'` — a status that does not exist — so the
+  // test was always true and the card reported every task ever created as
+  // open, including the done ones.
+  const openTaskCount = tasks.filter((t) => t.status === 'open').length;
 
-    if (overdueAmount > 0) {
-      return {
-        headline: pickHeadline(HEADLINES_OVERDUE),
-        verdict: `${overduePounds} overdue across your books — a single chase email today turns into payment next week.`,
-        cta: {
-          label: 'View overdue',
+  // ── Alert — the one thing that genuinely needs attention today ────────
+  const alert =
+    overdueAmount > 0
+      ? {
+          text: `${formatCurrency(overdueAmount)} overdue — chase today`,
           onClick: () => navigate('/electrician/invoices?filter=overdue'),
-        },
-      };
-    }
-    if (outstanding > 0) {
-      return {
-        headline: pickHeadline(HEADLINES_PIPELINE),
-        verdict: `${outstandingPounds} out for payment, nothing overdue. Push a quote out while the books are quiet.`,
-        cta: { label: 'New quote', onClick: () => navigate('/electrician/quotes') },
-      };
-    }
-    if (revenue > 0) {
-      return {
-        headline: pickHeadline(HEADLINES_HEALTHY),
-        verdict: `${paidPounds} paid this month, books all closed out. Plan the next quote, line up the next job.`,
-        cta: { label: 'Open quotes', onClick: () => navigate('/electrician/quotes') },
-      };
-    }
-    return {
-      headline: pickHeadline(HEADLINES_EMPTY),
-      verdict:
-        'Set up your first quote and invoice — Elec-Mate handles the maths, the formatting, and the chase.',
-      cta: { label: 'New quote', onClick: () => navigate('/electrician/quotes') },
-    };
-  }, [overdueAmount, outstanding, revenue, paidThisMonth, formatCurrency, navigate]);
+        }
+      : null;
 
-  // ── Stats ────────────────────────────────────────────────────────────
-  const stats: BusinessStat[] = [
+  // ── Start something ──────────────────────────────────────────────────
+  // What someone opens this page to BEGIN. A quote is the one that leads to
+  // money, so it takes the single solid volt card.
+  const quickStart: HubQuickAction[] = [
     {
-      label: 'Paid · month',
-      value: formatCurrency(paidThisMonth),
-      sub: 'Cleared',
-      accent: true,
-      onClick: () => navigate('/electrician/invoices?filter=paid_month'),
-    },
-    {
-      label: 'Outstanding',
-      value: formatCurrency(outstanding),
-      sub: outstanding > 0 ? 'Waiting on payment' : 'All clear',
-      onClick: () => navigate('/electrician/invoices?filter=outstanding'),
-    },
-    {
-      label: 'Overdue',
-      value: formatCurrency(overdueAmount),
-      sub: overdueAmount > 0 ? 'Chase today' : 'Nothing overdue',
-      onClick: () => navigate('/electrician/invoices?filter=overdue'),
-    },
-    {
-      label: 'Win rate',
-      value: winRate != null ? `${winRate}%` : '—',
-      sub: winRate != null ? 'Quotes → won' : 'No data yet',
+      title: 'New quote',
+      description: 'Price up a job',
       onClick: () => navigate('/electrician/quotes'),
+      primary: true,
+    },
+    {
+      title: 'New invoice',
+      description: 'Bill completed work',
+      onClick: () => navigate('/electrician/invoices'),
+    },
+    {
+      title: 'Log expense',
+      description: 'Receipt or mileage',
+      onClick: () => navigate('/electrician/expenses'),
+    },
+    {
+      title: 'New job',
+      description: 'Open a project',
+      onClick: () => navigate('/electrician/projects'),
     },
   ];
 
-  // ── Tool grids ───────────────────────────────────────────────────────
-  const yourDay: ToolCard[] = [
+  // ── Tool groups ──────────────────────────────────────────────────────
+  const money: HubTool[] = [
     {
-      id: 'tasks',
-      eyebrow: 'Tasks',
-      title: 'Tasks',
-      description: 'To-dos, reminders and follow-ups.',
-      to: '/electrician/tasks',
+      id: 'quotes',
+      title: 'Quotes',
+      description: 'Build, send and track quotes.',
+      to: '/electrician/quotes',
       meta: (() => {
-        const open = tasks.filter((t) => t.status !== 'completed').length;
-        return open > 0 ? `${open} open` : 'All clear';
+        const awaiting = quotes.filter(
+          (q) => q.status === 'sent' && q.acceptance_status !== 'accepted'
+        ).length;
+        if (awaiting > 0) return `${awaiting} awaiting reply`;
+        return winRate != null ? `${winRate}% win rate` : 'Open quotes';
       })(),
     },
     {
+      id: 'invoices',
+      title: 'Invoices',
+      description: 'Billing, payments and reminders.',
+      to: '/electrician/invoices',
+      meta:
+        overdueAmount > 0
+          ? `${formatCurrency(overdueAmount)} overdue`
+          : outstanding > 0
+            ? `${formatCurrency(outstanding)} out`
+            : `${formatCurrency(paidThisMonth)} paid this month`,
+      alert: overdueAmount > 0,
+    },
+    {
+      id: 'expenses',
+      title: 'Expenses',
+      description: 'Receipts, mileage and reimbursables.',
+      to: '/electrician/expenses',
+      meta: 'Log an expense',
+    },
+  ];
+
+  const yourDay: HubTool[] = [
+    {
+      id: 'tasks',
+      title: 'Tasks',
+      description: 'To-dos, reminders and follow-ups.',
+      to: '/electrician/tasks',
+      meta: openTaskCount > 0 ? `${openTaskCount} open` : 'All clear',
+      alert: openTaskCount > 0,
+    },
+    {
       id: 'calendar',
-      eyebrow: 'Calendar',
       title: 'Calendar',
       description: 'Jobs, appointments and bookings.',
       to: '/electrician/business/calendar',
@@ -591,50 +250,54 @@ const BusinessHub = () => {
       title: 'Time Tracker',
       description: 'Log hours on site, billable or otherwise.',
       to: '/electrician/time-tracker',
-      meta: timeTrackerSubtitle,
+      meta: activeSession ? `Running · ${formatDuration(elapsedSeconds)}` : 'Log hours',
+      alert: !!activeSession,
     },
   ];
 
-  const money: ToolCard[] = [
+  const onTheJob: HubTool[] = [
     {
-      id: 'quotes',
-      eyebrow: 'Quotes',
-      title: 'Quotes',
-      description: 'Build, send and track quotes.',
-      to: '/electrician/quotes',
-      meta: (() => {
-        const awaiting = quotes.filter(
-          (q) => q.status === 'sent' && q.acceptance_status !== 'accepted'
-        ).length;
-        return awaiting > 0 ? `${awaiting} awaiting reply` : 'Open quotes';
-      })(),
+      id: 'projects',
+      eyebrow: 'Work',
+      title: 'Jobs',
+      description: 'Quotes, certs, invoices and tasks — every job in one place.',
+      to: '/electrician/projects',
+      meta: projectCounts.active > 0 ? `${projectCounts.active} active` : 'Start a job',
     },
     {
-      id: 'invoices',
-      eyebrow: 'Invoices',
-      title: 'Invoices',
-      description: 'Billing, payments and reminders.',
-      to: '/electrician/invoices',
-      meta:
-        overdueAmount > 0
-          ? `${formatCurrency(overdueAmount)} overdue`
-          : outstanding > 0
-            ? `${formatCurrency(outstanding)} out`
-            : 'Nothing outstanding',
-      alert: overdueAmount > 0,
+      id: 'site-visits',
+      eyebrow: 'Visits',
+      title: 'Site Visits',
+      description: 'Pre-job and post-job site visit records.',
+      to: '/electrician/site-visits',
+      meta: draftVisitCount > 0 ? `${draftVisitCount} in progress` : 'New visit',
+      alert: draftVisitCount > 0,
     },
     {
-      id: 'expenses',
-      eyebrow: 'Expenses',
-      title: 'Expenses',
-      description: 'Receipts, mileage and reimbursables.',
-      to: '/electrician/expenses',
-      meta: 'Log an expense',
+      id: 'snagging',
+      eyebrow: 'Snags',
+      title: 'Snagging',
+      description: 'Track and resolve outstanding snags.',
+      to: '/electrician/snagging',
+      meta: snagCounts.open > 0 ? `${snagCounts.open} open` : 'All clear',
+      alert: snagCounts.open > 0,
     },
-  ];
-
-
-  const people: ToolCard[] = [
+    {
+      id: 'photo-docs',
+      eyebrow: 'Photos',
+      title: 'Photo Docs',
+      description: 'Project photos with timestamps and notes.',
+      to: '/electrician/photo-docs',
+      meta: 'Capture',
+    },
+    {
+      id: 'room-planner',
+      eyebrow: 'Plans',
+      title: 'Room Planner',
+      description: 'Quick electrical floor plans and layouts.',
+      to: '/electrician/business/room-planner',
+      meta: 'Open planner',
+    },
     {
       id: 'customers',
       eyebrow: 'Clients',
@@ -653,69 +316,7 @@ const BusinessHub = () => {
     },
   ];
 
-  const onTheJob: ToolCard[] = [
-    {
-      id: 'projects',
-      eyebrow: 'Work',
-      title: 'Jobs',
-      description: 'Quotes, certs, invoices and tasks — every job in one place.',
-      to: '/electrician/projects',
-      meta: projectCounts.active > 0 ? `${projectCounts.active} active` : 'Start a job',
-    },
-
-    {
-      id: 'site-visits',
-      eyebrow: 'Visits',
-      title: 'Site Visits',
-      description: 'Pre-job and post-job site visit records.',
-      to: '/electrician/site-visits',
-      meta: draftVisitCount > 0 ? `${draftVisitCount} in progress` : 'New visit',
-      alert: draftVisitCount > 0,
-    },
-    {
-      id: 'photo-docs',
-      eyebrow: 'Photos',
-      title: 'Photo Docs',
-      description: 'Project photos with timestamps and notes.',
-      to: '/electrician/photo-docs',
-      meta: 'Capture',
-    },
-    {
-      id: 'snagging',
-      eyebrow: 'Snags',
-      title: 'Snagging',
-      description: 'Track and resolve outstanding snags.',
-      to: '/electrician/snagging',
-      meta: snagCounts.open > 0 ? `${snagCounts.open} open` : 'All clear',
-      alert: snagCounts.open > 0,
-    },
-    {
-      id: 'room-planner',
-      eyebrow: 'Plans',
-      title: 'Room Planner',
-      description: 'Quick electrical floor plans and layouts.',
-      to: '/electrician/business/room-planner',
-      meta: 'Open planner',
-    },
-  ];
-
-  const moneyAndStock: ToolCard[] = [
-    {
-      id: 'materials',
-      eyebrow: 'Stock',
-      title: 'Materials',
-      description: 'Stock and inventory levels.',
-      to: '/electrician/materials',
-      meta: 'Open stock',
-    },
-    {
-      id: 'tools',
-      eyebrow: 'Tools',
-      title: 'Tools',
-      description: 'Equipment and asset tracking.',
-      to: '/electrician/tools',
-      meta: 'Open tools',
-    },
+  const pricingAndStock: HubTool[] = [
     {
       id: 'live-pricing',
       eyebrow: 'Pricing',
@@ -733,6 +334,14 @@ const BusinessHub = () => {
       meta: 'Edit rates',
     },
     {
+      id: 'materials',
+      eyebrow: 'Stock',
+      title: 'Materials',
+      description: 'Stock and inventory levels.',
+      to: '/electrician/materials',
+      meta: 'Open stock',
+    },
+    {
       id: 'stock-tracker',
       eyebrow: 'Inventory',
       title: 'Stock Tracker',
@@ -740,9 +349,16 @@ const BusinessHub = () => {
       to: '/electrician/inventory',
       meta: 'Open inventory',
     },
+    {
+      id: 'tools',
+      title: 'Tools',
+      description: 'Equipment and asset tracking.',
+      to: '/electrician/tools',
+      meta: 'Open tools',
+    },
   ];
 
-  const grow: ToolCard[] = [
+  const grow: HubTool[] = [
     {
       id: 'renewals',
       eyebrow: 'Repeat work',
@@ -772,7 +388,7 @@ const BusinessHub = () => {
   const canonical = `${window.location.origin}/electrician/business`;
 
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-elec-dark min-h-screen pb-24">
+    <HubPage>
       <Helmet>
         <title>Business Hub for Electricians | Quotes, Invoices & More</title>
         <meta
@@ -782,168 +398,45 @@ const BusinessHub = () => {
         <link rel="canonical" href={canonical} />
       </Helmet>
 
-      <PageMasthead />
+      <HubMasthead title="Business" />
 
-      <div className="px-4 py-4 space-y-12 sm:space-y-16 max-w-7xl mx-auto">
-        <Hero headline={headline} verdict={verdict} cta={cta} />
+      <HubBody>
+        {alert && <HubAlertLine text={alert.text} onClick={alert.onClick} />}
 
-        {/* ── MATE — live AI partner. Single panel, mobile-flat, above the fold. ── */}
+        <MateBar onOpen={() => openMate()} />
+
+        <HubQuickStart label="Start something" items={quickStart} />
+
+        <HubToolGrid label="Money" cards={money} columns="three" />
+
+        <HubToolGrid label="Your day" cards={yourDay} columns="three" />
+
+        <HubToolGrid label="On the job" cards={onTheJob} columns="four" />
+
+        <HubToolGrid label="Pricing & stock" cards={pricingAndStock} columns="four" />
+
+        <HubToolGrid label="Grow" cards={grow} columns="three" />
+
+        {/* Insights last — this is the one place a chart earns its keep, and
+            it is where you go to review rather than to act. */}
         <motion.section
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="relative"
-          aria-labelledby="mate-heading"
-        >
-          {/* Eyebrow with breathing pulse — signals Mate is live */}
-          <motion.div variants={itemVariants} className="flex items-center gap-2 mb-3 sm:mb-4">
-            <span className="relative flex h-2 w-2" aria-hidden="true">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-elec-yellow opacity-75 animate-ping" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-elec-yellow" />
-            </span>
-            <p className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.22em] text-elec-yellow">
-              Mate · Your AI partner
-            </p>
-          </motion.div>
-
-          <motion.h2
-            id="mate-heading"
-            variants={itemVariants}
-            className="font-semibold tracking-tight leading-[1.05] text-[26px] sm:text-[34px] lg:text-[40px]"
-          >
-            <span className="text-white">I'm Mate.</span>{' '}
-            <span className="text-elec-yellow">What needs sorting?</span>
-          </motion.h2>
-
-          <motion.p
-            variants={itemVariants}
-            className="mt-2.5 sm:mt-3 text-[13.5px] sm:text-[15px] leading-relaxed text-white/55 max-w-[620px]"
-          >
-            Plain English — tasks, snags, projects, customers, regs. I propose, you approve, it
-            saves.
-          </motion.p>
-
-          {/* Chat input bar — looks live, opens the sheet on tap */}
-          <motion.div variants={itemVariants} className="mt-5 sm:mt-6">
-            <button
-              type="button"
-              onClick={() => openMate()}
-              aria-label="Open Mate"
-              className="group w-full flex items-center gap-2.5 sm:gap-3 rounded-2xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.07] hover:border-white/[0.18] focus-visible:outline-none focus-visible:border-elec-yellow/60 focus-visible:bg-white/[0.07] transition-colors pl-4 pr-2 sm:pl-5 sm:pr-2.5 py-2 touch-manipulation active:scale-[0.995] text-left"
-            >
-              <span className="flex-1 truncate text-[14px] sm:text-[15px] text-white/55 py-1.5">
-                Message Mate — tasks, snags, regs, anything…
-              </span>
-              <kbd className="hidden md:inline-flex items-center gap-1 text-[10px] font-semibold text-white/40 px-1.5 py-0.5 rounded-md border border-white/[0.12] bg-white/[0.04]">
-                ⌘K
-              </kbd>
-              <span className="flex items-center justify-center h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-elec-yellow text-black transition-transform group-hover:scale-[1.04] group-active:scale-[0.96] shrink-0">
-                <ArrowRight className="h-[18px] w-[18px]" />
-              </span>
-            </button>
-          </motion.div>
-
-          {/* Starter cards — 2×2 mobile, 4-up desktop. Each = prompt + outcome hint. */}
-          <motion.div variants={itemVariants} className="mt-6 sm:mt-8">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40 mb-3">
-              I can help with
-            </p>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
-              {[
-                {
-                  label: 'Plan my day',
-                  prompt: 'Plan my day',
-                  outcome: 'Routed, ordered, ready',
-                },
-                {
-                  label: 'Add snags to a job',
-                  prompt: 'Add 3 snags for Oak Lane',
-                  outcome: 'Tagged, linked, saved',
-                },
-                {
-                  label: 'New customer',
-                  prompt: 'New customer Mrs Patel · 07700 900900',
-                  outcome: 'CRM card created',
-                },
-                {
-                  label: 'Ask the regs',
-                  prompt: 'RCDs for kitchen sockets — what do the regs say?',
-                  outcome: 'BS 7671 answer, cited',
-                },
-              ].map((s) => (
-                <button
-                  key={s.label}
-                  type="button"
-                  onClick={() => openMate(s.prompt)}
-                  className="group text-left rounded-xl bg-white/[0.03] border border-white/[0.08] hover:bg-white/[0.06] hover:border-white/[0.18] transition-colors px-3 sm:px-4 py-3 sm:py-3.5 touch-manipulation active:scale-[0.98] min-h-[68px]"
-                >
-                  <p className="text-[13px] sm:text-[14px] font-semibold text-white leading-snug">
-                    {s.label}
-                  </p>
-                  <p className="mt-1 text-[11px] sm:text-[12px] text-white/45 leading-snug">
-                    {s.outcome}
-                  </p>
-                </button>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Trust tag — replaces the buried "Grounded in BS 7671" in the old paragraph */}
-          <motion.div variants={itemVariants} className="mt-6 sm:mt-8 flex items-center gap-3">
-            <span className="h-px flex-1 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40">
-              Grounded in BS 7671
-            </p>
-            <span className="h-px flex-1 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-          </motion.div>
-        </motion.section>
-
-        <BusinessHeadlineStats stats={stats} />
-
-        <EditorialToolGrid number="02" label="YOUR DAY" cards={yourDay} columns="three" />
-
-        <EditorialToolGrid number="03" label="MONEY" cards={money} columns="three" />
-
-        <EditorialToolGrid number="04" label="PEOPLE" cards={people} columns="two" />
-
-        <EditorialToolGrid number="05" label="ON THE JOB" cards={onTheJob} columns="three" />
-
-        <EditorialToolGrid
-          number="06"
-          label="PRICING & STOCK"
-          cards={moneyAndStock}
-          columns="three"
-        />
-
-        <EditorialToolGrid number="07" label="GROW" cards={grow} columns="two" />
-
-        {/* 08 · INSIGHTS — live quote/invoice analytics, no collapsible */}
-        <motion.section
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-4"
+          className="space-y-3"
         >
           <motion.div variants={itemVariants} className="flex items-end justify-between gap-4">
-            <Eyebrow>08 · INSIGHTS</Eyebrow>
-            <span className="text-[11px] text-white/55 tabular-nums">
+            <HubSectionHeading>Insights</HubSectionHeading>
+            <span className="text-[11px] tabular-nums text-white">
               {formatCurrency(revenue)} revenue
             </span>
           </motion.div>
           <motion.div variants={itemVariants}>
-            <QuoteInvoiceAnalytics
-              quotes={quotes}
-              invoices={invoices}
-              formatCurrency={formatCurrency}
-              lastUpdated={lastUpdated}
-              onRefresh={refresh}
-              isLoading={isLoading}
-            />
+            <BusinessInsights quotes={quotes} invoices={invoices} lastUpdated={lastUpdated} />
           </motion.div>
         </motion.section>
-      </div>
+      </HubBody>
 
-      {/* Business Hub AI assistant */}
       <Assistant
         isOpen={mateOpen}
         onClose={closeMate}
@@ -963,7 +456,7 @@ const BusinessHub = () => {
         onUpdateCustomer={updateCustomer}
         onDeleteCustomer={deleteCustomer}
       />
-    </div>
+    </HubPage>
   );
 };
 

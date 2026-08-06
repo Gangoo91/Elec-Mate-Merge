@@ -37,6 +37,17 @@ export const MATERIAL_SYNONYM_GROUPS: SynonymGroup[] = [
   ['cooker switch', 'cooker outlet', 'cooker control unit', '45a switch', 'cooker unit'],
   ['pull cord switch', 'pull cord', 'ceiling switch', 'pull switch'],
 
+  // --- BS cable type codes (ELE-1445) ---
+  // Trade labour books and wholesaler catalogues print the BS code; electricians
+  // type the common name. Without these, searching "t&e" against Sean Mulcahy's
+  // imported book returned NOTHING — every twin-and-earth row is "6242YH".
+  ['6242y', '6242yh', 't and e', 'twin and earth', 'twin earth', 'flat twin and earth'],
+  ['6491b', '6491x', 'singles', 'single core', 'conduit cable'],
+  ['6181y', '6181yh', 'single insulated', 'meter tail', 'meter tails', 'tails'],
+  ['swa', 'armoured', 'armoured cable', 'steel wire armoured', 'xlpe swa'],
+  ['mi cable', 'mineral insulated', 'pyro', 'micc'],
+  ['3093y', 'heat resistant flex', 'butyl flex'],
+
   // --- Consumer unit / protection ---
   ['consumer unit', 'fuse box', 'fuse board', 'fuseboard', 'distribution board', 'consumer box', 'cu', 'db'],
   ['rcbo', 'circuit breaker', 'trip', 'breaker'],
@@ -78,6 +89,13 @@ export function normaliseMaterialPhrase(input: string): string {
     .replace(/&/g, ' and ')
     // "2g" / "1g" → "2 gang" / "1 gang"
     .replace(/\b(\d)\s*g\b/g, '$1 gang')
+    // Amp shorthand. Electricians type "63a"; trade labour books print
+    // "63amp". Without this, searching "63a" or "20a isolator" returns
+    // NOTHING against an imported book — measured on Sean Mulcahy's, where
+    // both scored zero hits across 1,256 items.
+    .replace(/\b(\d+(?:\.\d+)?)\s*(?:a|amp|amps|ampere|amperes)\b/g, '$1 amp')
+    // Millimetre shorthand, same reasoning: "2.5" / "2.5mm" / "2.5 mm".
+    .replace(/\b(\d+(?:\.\d+)?)\s*mm\b/g, '$1 mm')
     // drop anything that isn't a letter, number or space
     .replace(/[^a-z0-9]+/g, ' ')
     .replace(/\s+/g, ' ')
@@ -150,4 +168,67 @@ export function materialQueryMatches(itemName: string, query: string): boolean {
     if (phraseMatchesTokens(nameTokens, phrase)) return true;
   }
   return false;
+}
+
+/**
+ * Relevance score for a match — 0 means no match at all.
+ *
+ * `materialQueryMatches` is a FILTER: it answers yes/no and leaves results in
+ * whatever order the array happened to be in. Against a 1,256-item labour book
+ * that is close to useless — searching "2.5 t&e" returned 154 rows led by a
+ * length of PVC conduit, and "downlight" led by a CCTV dome camera. The right
+ * answer was in there both times, buried.
+ *
+ * Higher is better. Ties break on brevity, because a shorter name that matched
+ * is nearly always the more specific item.
+ */
+export function materialMatchScore(itemName: string, query: string): number {
+  const q = normaliseMaterialPhrase(query);
+  if (!q) return 1;
+  const name = normaliseMaterialPhrase(itemName);
+  if (!name) return 0;
+  const nameTokens = name.split(' ').filter(Boolean);
+
+  // Imported rows are "SECTION — item — variant". A hit in the SECTION means the
+  // item IS that thing; a hit in the variant often means it merely mentions it.
+  // Searching "trunking" was returning lengths of cable installed IN trunking
+  // ahead of actual trunking, because both contain the word.
+  const sectionTokens = normaliseMaterialPhrase(itemName.split(' — ')[0] || '')
+    .split(' ')
+    .filter(Boolean);
+
+  let best = 0;
+  const expansions = expandMaterialQuery(query);
+  for (let i = 0; i < expansions.length; i++) {
+    const phrase = expansions[i];
+    if (!phraseMatchesTokens(nameTokens, phrase)) continue;
+
+    let score: number;
+    if (name === phrase) score = 1000;
+    else if (name.startsWith(phrase)) score = 600;
+    else if (name.includes(phrase)) score = 400;
+    else score = 200; // tokens present but scattered
+    if (sectionTokens.length > 0 && phraseMatchesTokens(sectionTokens, phrase)) score += 250;
+    // A hit on the literal query beats one reached through a synonym.
+    if (i > 0) score -= 120;
+    best = Math.max(best, score);
+  }
+  if (best === 0) return 0;
+
+  // Brevity bonus, capped so it can never outrank a better match class.
+  return best + Math.max(0, 60 - nameTokens.length * 4);
+}
+
+/** Filter and rank in one pass — what every search box should call. */
+export function rankMaterialMatches<T>(
+  items: T[],
+  query: string,
+  nameOf: (item: T) => string
+): T[] {
+  if (!normaliseMaterialPhrase(query)) return items;
+  return items
+    .map((item) => ({ item, score: materialMatchScore(nameOf(item), query) }))
+    .filter((x) => x.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .map((x) => x.item);
 }

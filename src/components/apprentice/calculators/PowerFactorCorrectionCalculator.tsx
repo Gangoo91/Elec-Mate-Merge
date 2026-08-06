@@ -22,6 +22,7 @@ import {
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
 import { powerFactorCorrectionContent } from './content/power-factor-correction';
+import { standardDeviceRatings } from '@/lib/calculators/bs7671-data/protectiveDevices';
 
 interface CorrectionResult {
   currentPF: number;
@@ -41,6 +42,7 @@ interface CorrectionResult {
   annualTotalSavings: number;
   capacitorBankSize: number;
   capacitorCurrent: number;
+  protectiveDeviceLabel: string;
   stagesRecommended: number;
   warnings: string[];
 }
@@ -49,6 +51,43 @@ interface CorrectionResult {
 const standardCapacitorSizes = [
   5, 10, 15, 20, 25, 30, 40, 50, 60, 75, 100, 125, 150, 200, 250, 300, 400, 500,
 ];
+
+/**
+ * FIX (audit 2026-08): the protective device was previously produced by ad-hoc arithmetic
+ * rounding — `Math.ceil(I / 5) * 5` below 63 A and `Math.ceil(I / 10) * 10` above — which
+ * yields ratings that no manufacturer makes (45 A, 55 A, 70 A, 90 A…).
+ * BS 7671:2018+A4:2026 Reg 533.1.1 requires a device for protection against overcurrent to
+ * comply with one or more of BS 88 series, BS 1362, BS 3036, BS EN 60898 series, BS EN 60947
+ * series, BS EN 61009 series — each of which publishes a fixed rating series. We therefore
+ * round up into the real series, taken from the shared, already-verified
+ * `bs7671-data/protectiveDevices.ts` rather than re-inlining another private copy of it.
+ *
+ * NOTE on the 1.5 multiplier: BS 7671 gives no capacitor-bank uplift factor. The 1.43–1.5×
+ * figure is manufacturer / IEC 61921 practice covering capacitor tolerance, harmonic current
+ * and switching inrush. It is applied as a design allowance, not as a BS 7671 requirement.
+ */
+const CAPACITOR_DEVICE_UPLIFT = 1.5;
+
+function selectProtectiveDevice(capacitorCurrent: number): {
+  rating: number;
+  label: string;
+} {
+  const designCurrent = capacitorCurrent * CAPACITOR_DEVICE_UPLIFT;
+
+  // MCB to BS EN 60898 is only offered up to 125 A; beyond that use the BS 88 fuse series.
+  const mcbRating = standardDeviceRatings.mcb.find((r) => r >= designCurrent);
+  if (mcbRating !== undefined) {
+    return { rating: mcbRating, label: `${mcbRating}A HRC fuse (BS 88) or MCB (BS EN 60898)` };
+  }
+
+  const fuseRating = standardDeviceRatings.bs88.find((r) => r >= designCurrent);
+  if (fuseRating !== undefined) {
+    return { rating: fuseRating, label: `${fuseRating}A HRC fuse (BS 88)` };
+  }
+
+  const largest = standardDeviceRatings.bs88[standardDeviceRatings.bs88.length - 1];
+  return { rating: largest, label: `Above ${largest}A — specialist device selection required` };
+}
 
 // Power triangle SVG component
 function PowerTriangle({
@@ -230,7 +269,10 @@ const PowerFactorCorrectionCalculator = () => {
   const [targetPowerFactor, setTargetPowerFactor] = useState<string>('0.95');
   const [supplyVoltage, setSupplyVoltage] = useState<string>('400');
   const [phases, setPhases] = useState<string>('3');
-  const [electricityRate, setElectricityRate] = useState<string>('0.30');
+  // FIX (audit 2026-08): an `electricityRate` state was declared here, defaulted to £0.30/kWh,
+  // reset, and listed as a useMemo dependency, but was never read by the maths and never
+  // rendered as an input. Removed rather than wired up — the cost model charges on kVArh and
+  // kVA demand, not on kWh, so a unit rate has no part in it.
   const [reactiveCharge, setReactiveCharge] = useState<string>('0.005');
   const [kvaChargeRate, setKvaChargeRate] = useState<string>('');
   const [operatingHours, setOperatingHours] = useState<string>('2000');
@@ -255,7 +297,14 @@ const PowerFactorCorrectionCalculator = () => {
     } else {
       kVACurrent = parseFloat(currentKVA);
       kVARCurrent = parseFloat(currentKVAR);
-      if (!kVACurrent || !kVARCurrent) return null;
+      if (!kVACurrent || !kVARCurrent || kVACurrent <= 0 || kVARCurrent <= 0) return null;
+
+      // FIX (audit 2026-08): the guard here only tested truthiness, so a meter pair with
+      // kVAr >= kVA (mistyped, or read off different instruments) took the square root of a
+      // negative number. kW became NaN, pfCurrent became NaN, and every downstream figure —
+      // kVAr required, bank size, capacitor current, savings — rendered as NaN.
+      // In a passive load kVAr can never equal or exceed kVA, so reject the pair outright.
+      if (kVARCurrent >= kVACurrent) return null;
 
       kW = Math.sqrt(Math.pow(kVACurrent, 2) - Math.pow(kVARCurrent, 2));
       pfCurrent = kW / kVACurrent;
@@ -306,12 +355,23 @@ const PowerFactorCorrectionCalculator = () => {
       Math.ceil(kVARRequired / 50) * 50;
 
     // Capacitor current
+    // FIX (audit 2026-08): this was derived from kVARRequired (the exact theoretical figure),
+    // while the "Capacitor Bank Specification" panel above it specifies — and the installer
+    // actually buys and connects — capacitorBankSize, the next standard size UP. The current
+    // shown was therefore lower than the bank's real current, and the protective device sized
+    // from it was undersized (e.g. 27.7 kVAr required -> 30 kVAr bank: 40.0 A shown against
+    // 43.3 A actual). BS 7671:2018+A4:2026 Reg 512.1.2(a) requires every item of equipment to
+    // be suitable for the design current "taking into account any capacitive and inductive
+    // effects" — i.e. the current of the equipment installed, not of the ideal calculation.
     let capacitorCurrent: number;
     if (isThreePhase) {
-      capacitorCurrent = (kVARRequired * 1000) / (Math.sqrt(3) * voltage);
+      capacitorCurrent = (capacitorBankSize * 1000) / (Math.sqrt(3) * voltage);
     } else {
-      capacitorCurrent = (kVARRequired * 1000) / voltage;
+      capacitorCurrent = (capacitorBankSize * 1000) / voltage;
     }
+
+    // Protective device from the real BS EN 60898 / BS 88 rating series (Reg 533.1.1)
+    const { label: protectiveDeviceLabel } = selectProtectiveDevice(capacitorCurrent);
 
     // Recommend stages for large banks
     let stagesRecommended = 1;
@@ -348,6 +408,7 @@ const PowerFactorCorrectionCalculator = () => {
       annualTotalSavings,
       capacitorBankSize,
       capacitorCurrent,
+      protectiveDeviceLabel,
       stagesRecommended,
       warnings,
     };
@@ -360,7 +421,6 @@ const PowerFactorCorrectionCalculator = () => {
     targetPowerFactor,
     supplyVoltage,
     phases,
-    electricityRate,
     reactiveCharge,
     kvaChargeRate,
     operatingHours,
@@ -375,7 +435,6 @@ const PowerFactorCorrectionCalculator = () => {
     setTargetPowerFactor('0.95');
     setSupplyVoltage('400');
     setPhases('3');
-    setElectricityRate('0.30');
     setReactiveCharge('0.005');
     setKvaChargeRate('');
     setOperatingHours('2000');
@@ -721,11 +780,7 @@ const PowerFactorCorrectionCalculator = () => {
               </div>
               <div className="flex justify-between p-2 rounded-lg bg-white/[0.04]">
                 <span className="text-white">Protection</span>
-                <span className="text-white font-medium">
-                  {result.capacitorCurrent <= 63
-                    ? `${Math.ceil((result.capacitorCurrent * 1.5) / 5) * 5}A HRC fuse or MCB`
-                    : `${Math.ceil((result.capacitorCurrent * 1.5) / 10) * 10}A HRC fuse`}
-                </span>
+                <span className="text-white font-medium">{result.protectiveDeviceLabel}</span>
               </div>
               <div className="flex justify-between p-2 rounded-lg bg-white/[0.04]">
                 <span className="text-white">Switching</span>
@@ -735,13 +790,33 @@ const PowerFactorCorrectionCalculator = () => {
                     : `Automatic ${result.stagesRecommended}-stage`}
                 </span>
               </div>
-              <div className="flex justify-between p-2 rounded-lg bg-white/[0.04]">
-                <span className="text-white">Detuning Reactor</span>
-                <span className="text-white font-medium">7% (5.67% if THDv &gt; 5%)</span>
+              {/*
+                FIX (audit 2026-08): this row previously read "7% (5.67% if THDv > 5%)" as though
+                it were a determinate specification, and contradicted the guidance panel below
+                which said "5% or 7%". Neither BS 7671:2018+A4:2026, GN3 nor the On-Site Guide
+                specifies a detuning ratio — searching bs7671/gn3/osg for "detun" and "harmonic
+                resonance" returns nothing, and the printed standard has no hit for "detuning".
+                The ratio follows from the site harmonic spectrum and the manufacturer's / IEC
+                61921 selection, so the row now points at that rather than asserting a number.
+                What BS 7671 does require is that harmonic currents be assessed (Reg 331.1(f))
+                and that switching overvoltages from capacitor banks be considered (Reg 443.4.2,
+                which names capacitor banks explicitly).
+              */}
+              <div className="flex justify-between gap-3 p-2 rounded-lg bg-white/[0.04]">
+                <span className="text-white shrink-0">Detuning Reactor</span>
+                <span className="text-white font-medium text-right">
+                  Select from harmonic survey (manufacturer / IEC 61921)
+                </span>
               </div>
-              <div className="flex justify-between p-2 rounded-lg bg-white/[0.04]">
-                <span className="text-white">Type</span>
-                <span className="text-white font-medium">
+              <div className="flex justify-between gap-3 p-2 rounded-lg bg-white/[0.04]">
+                <span className="text-white shrink-0">Discharge &amp; Labelling</span>
+                <span className="text-white font-medium text-right">
+                  Means of discharge + warning label required
+                </span>
+              </div>
+              <div className="flex justify-between gap-3 p-2 rounded-lg bg-white/[0.04]">
+                <span className="text-white shrink-0">Type</span>
+                <span className="text-white font-medium text-right">
                   Dry type (indoor) / Oil-filled (outdoor)
                 </span>
               </div>
@@ -750,6 +825,26 @@ const PowerFactorCorrectionCalculator = () => {
               <p className="text-xs text-white">
                 <strong>Inrush current:</strong> Capacitors draw high inrush on energisation. For
                 staged banks, use contactors with pre-insertion resistors to limit inrush.
+              </p>
+            </div>
+            {/*
+              FIX (audit 2026-08): the specification block listed kVAr, voltage, current,
+              protection, switching, detuning and type but said nothing about residual charge —
+              the one thing about a capacitor bank that can kill someone opening the enclosure.
+              Both regulations below were read verbatim from the printed A4:2026 text.
+            */}
+            <div className="mt-2 p-2 bg-red-500/10 border border-red-500/30 rounded-lg">
+              <p className="text-xs text-white">
+                <strong>Residual charge — BS 7671 requirements:</strong> Reg 462.4 — where
+                residual electrical energy is potentially present, suitable means shall be
+                provided for its discharge, and where relevant a warning label indicating the
+                discharge time required before the enclosure can be safely opened. Reg 416.2.5 —
+                where a capacitor that may retain a dangerous charge after switch-off is installed
+                behind a barrier or in an enclosure, a warning label shall be provided (a charge
+                is not treated as dangerous if the static-charge voltage falls below 120 V DC in
+                under 5 s). Reg 559.7 additionally requires compensation capacitors of total
+                capacitance exceeding 0.5 µF to be used only with discharge resistors, though
+                that clause sits in the luminaires section.
               </p>
             </div>
           </div>
@@ -940,12 +1035,41 @@ const PowerFactorCorrectionCalculator = () => {
             <p className="pt-2 border-t border-white/10">
               <strong style={{ color: config.gradientFrom }}>BS 7671 / IET Guidance:</strong>
             </p>
+            {/*
+              FIX (audit 2026-08): both citations here were wrong.
+              "Section 331: Consider power factor when sizing cables" — Section 331 is
+              Compatibility of Characteristics, and power factor is item (l) of the Reg 331.1
+              assessment list; it says nothing about cable sizing. (The audit proposed Reg 125.8
+              as the cable-sizing citation — that regulation does not exist in the printed
+              A4:2026 text, so it has NOT been used.)
+              "Section 555: PFC equipment must be rated for harmonics" — Section 555 is
+              TRANSFORMERS (555.1 autotransformers and step-up transformers, 555.1.1–555.1.3),
+              and Section 556 is NOT USED. Nothing in Section 555 concerns power-factor
+              correction or harmonics. Harmonic currents are Reg 331.1(f); capacitor-bank
+              switching overvoltages are Reg 443.4.2, which names capacitor banks explicitly.
+            */}
             <ul className="space-y-1 ml-4 text-xs">
               <li>
-                • <strong>Section 331:</strong> Consider power factor when sizing cables
+                • <strong>Reg 331.1(l):</strong> Power factor shall be assessed as a characteristic
+                of equipment likely to have harmful effects on other equipment or services, or to
+                impair the supply
               </li>
               <li>
-                • <strong>Section 555:</strong> PFC equipment must be rated for harmonics
+                • <strong>Reg 331.1(f):</strong> Harmonic currents shall be assessed — relevant
+                wherever capacitors are added to a distorted supply
+              </li>
+              <li>
+                • <strong>Reg 443.4.2:</strong> Protection against switching overvoltages shall be
+                considered where capacitive equipment such as capacitor banks is installed
+              </li>
+              <li>
+                • <strong>Reg 512.1.2(a):</strong> Equipment shall be suitable for the design
+                current, taking capacitive and inductive effects into account
+              </li>
+              <li>
+                • <strong>Regs 462.4 / 416.2.5:</strong> Means of discharge for residual energy,
+                plus a warning label on enclosures holding a capacitor that may retain a dangerous
+                charge
               </li>
               <li>• Target PF of 0.95+ avoids most utility penalties</li>
               <li>• Over-correction (leading PF) can cause voltage rise</li>
@@ -953,8 +1077,12 @@ const PowerFactorCorrectionCalculator = () => {
 
             <div className="mt-2 p-2 bg-red-500/10 border border-red-500/20 rounded-lg">
               <p className="text-xs text-white">
-                <strong>Warning:</strong> Always install detuned reactors (5% or 7%) with capacitors
-                to avoid harmonic resonance with VFDs, LED drivers, and switch-mode power supplies.
+                <strong>Warning:</strong> Where the supply is distorted by VFDs, LED drivers or
+                switch-mode power supplies, plain capacitors can resonate with the supply
+                impedance and amplify harmonics. Detuned reactors are the usual remedy — the
+                detuning ratio is set by the site harmonic survey and the manufacturer&apos;s
+                selection, not by BS 7671, which requires only that harmonic currents be assessed
+                (Reg 331.1(f)).
               </p>
             </div>
           </div>

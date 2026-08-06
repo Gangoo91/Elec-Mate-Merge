@@ -65,7 +65,7 @@ export const ResultValue = ({
         className
       )}
     >
-      <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 truncate">
+      <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white truncate">
         {label}
       </p>
       <div className="flex items-baseline gap-1.5 min-w-0">
@@ -73,7 +73,7 @@ export const ResultValue = ({
           {typeof value === 'number' ? value.toLocaleString() : value}
         </span>
         {unit && (
-          <span className={cn('text-white/55 font-mono shrink-0', sizes.unit)}>{unit}</span>
+          <span className={cn('text-white font-mono shrink-0', sizes.unit)}>{unit}</span>
         )}
       </div>
     </div>
@@ -118,11 +118,11 @@ export const ResultDetails = ({
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className={className}>
       <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2 touch-manipulation">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           {title}
         </span>
         <ChevronDown
-          className={cn('h-4 w-4 text-white/55 transition-transform duration-200', isOpen && 'rotate-180')}
+          className={cn('h-4 w-4 text-white transition-transform duration-200', isOpen && 'rotate-180')}
         />
       </CollapsibleTrigger>
       <CollapsibleContent className="pt-2">
@@ -146,7 +146,7 @@ export const ResultBadge = ({ status, label, className }: ResultBadgeProps) => {
       ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow'
       : status === 'fail'
         ? 'border-red-500/30 bg-red-500/[0.06] text-red-300'
-        : 'border-white/[0.08] bg-white/[0.03] text-white/85';
+        : 'border-white/[0.08] bg-white/[0.03] text-white';
 
   return (
     <span

@@ -50,7 +50,7 @@ const faqs = [
   {
     question: 'How many questions are on the C&G 2382 exam?',
     answer:
-      'The City & Guilds 2382-22 exam consists of 60 multiple-choice questions to be answered in 2 hours. The pass mark is 60%, meaning you need to answer at least 36 questions correctly. The questions cover the full scope of BS 7671:2018+A2:2022, including the IET Wiring Regulations, the On-Site Guide, and Guidance Note 3. Some questions are straightforward recall of regulation numbers, while others require you to interpret tables, calculate values, or apply regulations to scenarios. The exam is open-book, so you can bring your copy of BS 7671 into the exam room. However, you cannot bring in the On-Site Guide, Guidance Notes, or any other supplementary material — only the main BS 7671 book (the "brown book"). Your book can have tabs but no handwritten notes on the pages.',
+      'The City & Guilds 2382-22 exam consists of 60 multiple-choice questions to be answered in 2 hours. The pass mark is 60%, meaning you need to answer at least 36 questions correctly. The questions cover the full scope of BS 7671:2018+A4:2026, including the IET Wiring Regulations, the On-Site Guide, and Guidance Note 3. Some questions are straightforward recall of regulation numbers, while others require you to interpret tables, calculate values, or apply regulations to scenarios. The exam is open-book, so you can bring your copy of BS 7671 into the exam room. However, you cannot bring in the On-Site Guide, Guidance Notes, or any other supplementary material — only the main BS 7671 book (the "brown book"). Your book can have tabs but no handwritten notes on the pages.',
   },
   {
     question: 'Can I use tabs in my BS 7671 book during the exam?',
@@ -140,7 +140,7 @@ const sections = [
           The City & Guilds 2382-22 is the current 18th Edition IET Wiring Regulations exam. It
           assesses your knowledge of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671:2018+A2:2022
+            BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
           — the standard that governs electrical installation work across the UK. Passing this exam
           is a requirement for most electrical qualifications and is essential for anyone working in
@@ -561,7 +561,7 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 Check your BS 7671 book: all tabs in place, no notes written on pages, book is the
-                current edition (2018+A2:2022).
+                current edition (2018+A4:2026).
               </span>
             </li>
             <li className="flex items-start gap-3">

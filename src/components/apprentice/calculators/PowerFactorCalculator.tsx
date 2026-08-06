@@ -29,6 +29,8 @@ const PowerFactorCalculator = () => {
     setVoltage,
     calculationMethod,
     setCalculationMethod,
+    phases,
+    setPhases,
     powerFactor,
     errors,
     calculatePowerFactor,
@@ -51,7 +53,14 @@ const PowerFactorCalculator = () => {
     const pf = parseFloat(powerFactor);
     if (pf >= 0.95) return { text: 'Excellent efficiency', color: 'text-green-400' };
     if (pf >= 0.85) return { text: 'Good efficiency', color: 'text-amber-400' };
-    return { text: 'Poor efficiency - consider correction', color: 'text-red-400' };
+    // A leading power factor is corrected by removing capacitance or adding
+    // inductance. The old copy said "consider correction" for both types, which on
+    // a leading system reads as "add capacitors" — that makes it worse. These
+    // thresholds are UI guidance only: BS 7671 sets no numeric power-factor limit
+    // (Reg 331.1(l) requires power factor to be assessed, no value given).
+    return pfType === 'leading'
+      ? { text: 'Poor efficiency - reduce capacitance', color: 'text-red-400' }
+      : { text: 'Poor efficiency - consider correction', color: 'text-red-400' };
   };
 
   const hasValidInputs = () => {
@@ -105,7 +114,19 @@ const PowerFactorCalculator = () => {
           />
         </CalculatorInputGrid>
       ) : (
-        <CalculatorInputGrid columns={2}>
+        <>
+          {/* Apparent power from V and I depends on the supply arrangement:
+              single-phase S = V x I; three-phase S = sqrt(3) x V(line) x I(line). */}
+          <CalculatorSelect
+            label="Supply"
+            value={phases}
+            onChange={(value) => setPhases(value as 'single' | 'three')}
+            options={[
+              { value: 'single', label: 'Single-phase (S = V × I)' },
+              { value: 'three', label: 'Three-phase (S = √3 × V × I)' },
+            ]}
+          />
+          <CalculatorInputGrid columns={2}>
           <CalculatorInput
             label="Voltage"
             unit="V"
@@ -137,7 +158,8 @@ const PowerFactorCalculator = () => {
             error={errors.activePower}
             className="sm:col-span-2"
           />
-        </CalculatorInputGrid>
+          </CalculatorInputGrid>
+        </>
       )}
 
       {/* PF Type and Target */}
@@ -202,7 +224,9 @@ const PowerFactorCalculator = () => {
               <div className="flex justify-between text-sm">
                 <span className="text-white">Method:</span>
                 <span className="text-white">
-                  {calculationMethod === 'power' ? 'Power Values' : 'V/I Parameters'}
+                  {calculationMethod === 'power'
+                    ? 'Power Values'
+                    : `V/I Parameters (${phases === 'three' ? 'three-phase' : 'single-phase'})`}
                 </span>
               </div>
               <div className="flex justify-between text-sm">
@@ -245,6 +269,26 @@ const PowerFactorCalculator = () => {
                   />
                 )}
               </ResultsGrid>
+            )}
+
+            {/* Capacitor safety note — the kVAr figure was previously presented with no
+                mention of stored charge. BS 7671:2018+A4:2026 Reg 416.2.5 requires a
+                warning label where a capacitor that may retain a dangerous charge is
+                behind a barrier or in an enclosure; Reg 559.7 requires discharge
+                resistors for compensation capacitors over 0.5 µF and compliance with
+                BS EN 61048. */}
+            {capacitorKVAr && targetPF && pfType === 'lagging' && (
+              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
+                <p className="text-sm text-white">
+                  <strong>Before you fit it</strong> {'—'} a capacitor can hold a dangerous charge
+                  after switch-off. Reg 416.2.5 requires a warning label where such a capacitor is
+                  behind a barrier or in an enclosure, and Reg 559.7 requires discharge resistors
+                  for compensation capacitors over 0.5 µF (to BS EN 61048). Where the installation
+                  has significant harmonic content, capacitor banks can resonate with the supply
+                  inductance {'—'} that needs a specialist harmonic study, which this calculator
+                  does not do.
+                </p>
+              </div>
             )}
           </div>
 
@@ -342,29 +386,69 @@ const PowerFactorCalculator = () => {
             </CollapsibleTrigger>
 
             <CollapsibleContent className="pt-2">
+              {/*
+                Citations rewritten against BS 7671:2018+A4:2026. What was here before:
+                  512.1.2 "power factor and efficiency" — 512.1.2 is headed "Current";
+                    efficiency is not a BS 7671 equipment-selection criterion at all.
+                    The index entry for "Power factor" points at 331.1(l) and 512.1.4.
+                  525 "must account for active and reactive power" — 525 is headed
+                    "Voltage drop in consumers' installations" and says nothing about
+                    reactive power. The load-power-factor correction of mV/A/m is
+                    Appendix 4 Section 6.2, and Section 6 is explicitly optional
+                    ("where a more accurate assessment ... the following methods may be
+                    used") and approximate.
+                  523 "not reduced current from poor PF" — poor power factor RAISES the
+                    current for a given kW (I = P / (V cos φ)); it never reduces it.
+                  534 "capacitor banks" — Section 534 is headed "Devices for protection
+                    against overvoltage" (SPDs). The capacitor regulations are 416.2.5
+                    and 559.7.
+              */}
               <div className="space-y-3 pl-1">
+                <p className="text-sm text-white">
+                  BS 7671 does not govern the power-factor arithmetic itself and sets no minimum
+                  power factor. These are the regulations that touch on it.
+                </p>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">512.1.2</strong> {'—'} Equipment selection
-                    must consider power factor and efficiency
+                    <strong className="text-amber-300">331.1(l)</strong> {'—'} Power factor is one of
+                    the equipment characteristics that shall be assessed for harmful effects on
+                    other equipment or the supply. No numerical limit is set.
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">525</strong> {'—'} Voltage drop calculations
-                    must account for both active and reactive power
+                    <strong className="text-amber-300">512.1.2</strong> {'—'} Current: equipment
+                    shall be suitable for the design current, taking into account any capacitive and
+                    inductive effects.
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">523</strong> {'—'} Conductor sizing based on
-                    design current, not reduced current from poor PF
+                    <strong className="text-amber-300">523</strong> {'—'} Current-carrying capacities
+                    of cables. Size on the actual design current: a poorer power factor means MORE
+                    current for the same kW, not less.
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">534</strong> {'—'} Capacitor banks require
-                    appropriate protection and switching
+                    <strong className="text-amber-300">Appendix 4, Section 6.2</strong> {'—'} Voltage
+                    drop (Section 525) may optionally be refined for load power factor by multiplying
+                    the tabulated mV/A/m by cos φ for conductors up to 16 mm². It is an approximation,
+                    not a requirement.
+                  </p>
+                </div>
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-amber-300">416.2.5</strong> {'—'} Where a capacitor that
+                    may retain a dangerous charge after switch-off sits behind a barrier or in an
+                    enclosure, a warning label shall be provided.
+                  </p>
+                </div>
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-amber-300">559.7</strong> {'—'} Compensation capacitors
+                    (lighting installations): total capacitance over 0.5 µF shall only be used with
+                    discharge resistors, and capacitors and their marking shall be to BS EN 61048.
                   </p>
                 </div>
               </div>

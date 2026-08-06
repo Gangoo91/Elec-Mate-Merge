@@ -229,6 +229,19 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
     setMobileMenuOpen(false);
   }, [location.pathname]);
 
+  // Tell the page a 100px bar is pinned to the bottom, so anything else anchored
+  // there can sit ABOVE it instead of under it. The Contents button in
+  // SEOTableOfContents is fixed bottom-4 at z-40 against this bar's z-50, which
+  // put it entirely inside the bar's band and made it untappable on mobile for
+  // every logged-out visitor — the ELE-1503 failure again, on the tool and guide
+  // templates this time. Driven from here because this is the only component
+  // that knows whether the bar is rendered at all.
+  useEffect(() => {
+    if (user) return;
+    document.body.classList.add('has-sticky-cta');
+    return () => document.body.classList.remove('has-sticky-cta');
+  }, [user]);
+
   return (
     <div className="bg-[#0a0a0a] text-white min-h-screen">
       <Helmet>
@@ -356,7 +369,21 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
       </nav>
 
       {/* Content */}
-      <main className="pt-[calc(4rem+env(safe-area-inset-top,0px))]">{children}</main>
+      {/* The top padding clears the fixed 64px nav. The BOTTOM padding clears the
+          fixed sticky CTA below, which is 100px tall, mobile-only and rendered
+          only when logged out — without it the last 100px of every public page
+          sits under the bar at maximum scroll, with nothing left to scroll.
+          Same class of bug as ELE-1503, by starvation rather than z-index.
+          data-sticky-cta-pad lets an exam stand the spacer down alongside the
+          bar itself (see body.exam-active in index.css). */}
+      <main
+        data-sticky-cta-pad={!user ? '' : undefined}
+        className={`pt-[calc(4rem+env(safe-area-inset-top,0px))] ${
+          !user ? 'pb-28 sm:pb-0' : ''
+        }`}
+      >
+        {children}
+      </main>
 
       {/* Pre-footer figures — raised onto the neutral card ground so the page
           ends on two distinct bands (light strip, then the dark footer) rather
@@ -520,9 +547,15 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
         </div>
       </footer>
 
-      {/* Sticky Mobile CTA — social proof + price + badges */}
+      {/* Sticky Mobile CTA — social proof + price + badges.
+          ELE-1503: this is fixed bottom-0 at z-50 and covered the Next button on
+          the free public mock exams, which are mobile-first and logged-out — the
+          exact audience this bar targets. data-exam-obstructs lets an exam stand
+          it down (see body.exam-active in index.css). */}
       {!user && (
-        <div className="fixed bottom-0 left-0 right-0 sm:hidden z-50 px-4 pt-6 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-gradient-to-t from-black via-black/95 to-transparent">
+        <div
+          data-exam-obstructs
+          className="fixed bottom-0 left-0 right-0 sm:hidden z-50 px-4 pt-6 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-gradient-to-t from-black via-black/95 to-transparent">
           <p className="text-center text-[11px] text-white mb-2">
             <span className="text-green-400 font-semibold">1,000+ electricians</span>
             {' · '}From £6.99/mo after trial

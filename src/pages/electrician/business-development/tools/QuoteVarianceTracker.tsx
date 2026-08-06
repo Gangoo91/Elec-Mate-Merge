@@ -22,15 +22,22 @@ import {
   CalculatorResult,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import { varianceSummary, ON_TARGET_TOLERANCE_PERCENT } from '@/data/job-costing';
 
 const currency = (n: number) => `£${n.toFixed(2)}`;
+/** A percentage that cannot be computed prints as a dash, never as 0%. */
+const pct = (n: number | null) => (n === null ? '—' : `${n > 0 ? '+' : ''}${n.toFixed(1)}%`);
 
 const QuoteVarianceTracker = () => {
   const config = CALCULATOR_CONFIG['business'];
 
   const [quotedHours, setQuotedHours] = useState('16');
   const [actualHours, setActualHours] = useState('18');
-  const [hourlyRate, setHourlyRate] = useState('55');
+  // Was '55' under the label "Charge-Out Rate". Every figure downstream is a
+  // COST ("Labour Cost Variance", "the job cost £X more than quoted"), so a
+  // charge-out rate here inflated the reported loss by the labour margin —
+  // roughly double. This is now the cost per hour.
+  const [hourlyRate, setHourlyRate] = useState('28');
   const [quotedMats, setQuotedMats] = useState('300');
   const [actualMats, setActualMats] = useState('380');
   const [notes, setNotes] = useState('');
@@ -45,17 +52,19 @@ const QuoteVarianceTracker = () => {
   const quotedMatsVal = parseFloat(quotedMats) || 0;
   const actualMatsVal = parseFloat(actualMats) || 0;
 
-  // Calculations
-  const hoursVar = actualHoursVal - quotedHoursVal;
-  const hoursVarCost = hoursVar * hourlyRateVal;
-  const matsVar = actualMatsVal - quotedMatsVal;
-  const totalVar = hoursVarCost + matsVar;
+  const v = varianceSummary({
+    quotedHours: quotedHoursVal,
+    actualHours: actualHoursVal,
+    labourCostPerHour: hourlyRateVal,
+    quotedMaterials: quotedMatsVal,
+    actualMaterials: actualMatsVal,
+  });
 
-  // Percentage calculations
-  const hoursVarPercent = quotedHoursVal > 0 ? ((hoursVar / quotedHoursVal) * 100).toFixed(1) : '0';
-  const matsVarPercent = quotedMatsVal > 0 ? ((matsVar / quotedMatsVal) * 100).toFixed(1) : '0';
-  const quotedTotal = quotedHoursVal * hourlyRateVal + quotedMatsVal;
-  const totalVarPercent = quotedTotal > 0 ? ((totalVar / quotedTotal) * 100).toFixed(1) : '0';
+  const hoursVar = v.hoursVariance;
+  const hoursVarCost = v.labourCostVariance;
+  const matsVar = v.materialsVariance;
+  const totalVar = v.totalVariance;
+  const totalVarPercent = v.totalVariancePercent;
 
   // Variance indicators
   const getVarianceColor = (variance: number) => {
@@ -64,31 +73,43 @@ const QuoteVarianceTracker = () => {
   };
 
   const getVarianceIcon = (variance: number) => {
-    if (Math.abs(variance) < 0.01) return <AlertCircle className="h-4 w-4" />;
+    if (Math.abs(variance) < 0.01) return <CheckCircle className="h-4 w-4" />;
     return variance > 0 ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />;
   };
 
+  /**
+   * With nothing quoted there is no variance to measure. The old version fell
+   * back to a literal '0' percent, so clearing the form — or logging a job that
+   * had no quote at all — produced "On Target · 0.0% Variance · excellent
+   * estimating" over an unbudgeted overspend.
+   */
   const getVarianceStatus = () => {
-    const absPercent = Math.abs(parseFloat(totalVarPercent));
-    if (absPercent < 5) {
-      return {
-        color: 'text-green-400',
-        label: 'On Target',
-        bg: 'bg-green-500/10 border-green-500/30',
-      };
+    switch (v.status) {
+      case 'on-target':
+        return {
+          color: 'text-green-400',
+          label: 'On Target',
+          bg: 'bg-green-500/10 border-green-500/30',
+        };
+      case 'over':
+        return {
+          color: 'text-red-400',
+          label: 'Over Budget',
+          bg: 'bg-red-500/10 border-red-500/30',
+        };
+      case 'under':
+        return {
+          color: 'text-amber-400',
+          label: 'Under Budget',
+          bg: 'bg-amber-500/10 border-amber-500/30',
+        };
+      default:
+        return {
+          color: 'text-white',
+          label: 'Nothing quoted to compare against',
+          bg: 'bg-white/5 border-white/15',
+        };
     }
-    if (totalVar > 0) {
-      return {
-        color: 'text-red-400',
-        label: 'Over Budget',
-        bg: 'bg-red-500/10 border-red-500/30',
-      };
-    }
-    return {
-      color: 'text-amber-400',
-      label: 'Under Budget',
-      bg: 'bg-amber-500/10 border-amber-500/30',
-    };
   };
 
   const varianceStatus = getVarianceStatus();
@@ -164,14 +185,14 @@ const QuoteVarianceTracker = () => {
           </div>
 
           <CalculatorInput
-            label="Charge-Out Rate"
+            label="Labour Cost Rate"
             unit="£/hr"
             type="text"
             inputMode="decimal"
             value={hourlyRate}
             onChange={setHourlyRate}
-            placeholder="e.g., 55"
-            hint="Your hourly rate"
+            placeholder="e.g., 28"
+            hint="What an hour costs you, incl. employer NI and holiday - not the charge-out rate"
           />
 
           {/* Materials */}
@@ -189,7 +210,7 @@ const QuoteVarianceTracker = () => {
               value={quotedMats}
               onChange={setQuotedMats}
               placeholder="e.g., 300"
-              hint="In your quote"
+              hint="Allowed for, at cost ex VAT"
             />
 
             <CalculatorInput
@@ -200,9 +221,18 @@ const QuoteVarianceTracker = () => {
               value={actualMats}
               onChange={setActualMats}
               placeholder="e.g., 380"
-              hint="Actually spent"
+              hint="Actually spent, at cost ex VAT"
             />
           </div>
+
+          {/* Both sides must be on the same basis. Comparing quoted materials
+              that carry your markup against supplier invoices at trade cost
+              invents a favourable variance equal to the markup; comparing an
+              inc-VAT invoice against an ex-VAT allowance inflates it by 20%. */}
+          <p className="text-xs text-white mt-2">
+            Enter both sides at cost and ex VAT. Comparing a marked-up quote line against what you
+            actually paid the wholesaler will flatter the variance.
+          </p>
 
           {/* Notes */}
           <div className="flex items-center gap-2 mb-2 mt-4">
@@ -223,13 +253,15 @@ const QuoteVarianceTracker = () => {
 
         {/* Variance Status */}
         <div className={cn('flex items-center gap-2 p-3 rounded-xl border', varianceStatus.bg)}>
-          {Math.abs(parseFloat(totalVarPercent)) < 5 ? (
+          {v.status === 'on-target' ? (
             <CheckCircle className={cn('h-5 w-5', varianceStatus.color)} />
           ) : (
             <AlertCircle className={cn('h-5 w-5', varianceStatus.color)} />
           )}
           <span className={cn('font-medium text-sm', varianceStatus.color)}>
-            {varianceStatus.label} - {Math.abs(parseFloat(totalVarPercent)).toFixed(1)}% Variance
+            {varianceStatus.label}
+            {totalVarPercent !== null &&
+              ` - ${Math.abs(totalVarPercent).toFixed(1)}% Variance`}
           </span>
         </div>
 
@@ -248,8 +280,7 @@ const QuoteVarianceTracker = () => {
                 <span className={getVarianceColor(hoursVar)}>{getVarianceIcon(hoursVar)}</span>
                 <strong className={cn('text-sm', getVarianceColor(hoursVar))}>
                   {hoursVar > 0 ? '+' : ''}
-                  {hoursVar.toFixed(1)} hrs ({hoursVar > 0 ? '+' : ''}
-                  {hoursVarPercent}%)
+                  {hoursVar.toFixed(1)} hrs ({pct(v.hoursVariancePercent)})
                 </strong>
               </div>
             </div>
@@ -275,8 +306,7 @@ const QuoteVarianceTracker = () => {
                 <span className={getVarianceColor(matsVar)}>{getVarianceIcon(matsVar)}</span>
                 <strong className={cn('text-sm', getVarianceColor(matsVar))}>
                   {matsVar > 0 ? '+' : ''}
-                  {currency(matsVar)} ({matsVar > 0 ? '+' : ''}
-                  {matsVarPercent}%)
+                  {currency(matsVar)} ({pct(v.materialsVariancePercent)})
                 </strong>
               </div>
             </div>
@@ -299,8 +329,7 @@ const QuoteVarianceTracker = () => {
                   }}
                 >
                   {totalVar > 0 ? '+' : ''}
-                  {currency(totalVar)} ({totalVar > 0 ? '+' : ''}
-                  {totalVarPercent}%)
+                  {currency(totalVar)} ({pct(totalVarPercent)})
                 </strong>
               </div>
             </div>
@@ -308,10 +337,16 @@ const QuoteVarianceTracker = () => {
             {/* Interpretation */}
             <div className="mt-3 p-3 bg-white/5 rounded-lg border border-white/10">
               <p className="text-sm text-white">
-                {Math.abs(parseFloat(totalVarPercent)) < 5 ? (
+                {v.status === 'unknown' ? (
                   <>
-                    <strong className="text-green-400">On target!</strong> Your quote was within 5%
-                    of actual costs - excellent estimating.
+                    <strong className="text-white">Nothing to compare.</strong> Enter the hours and
+                    materials you quoted before the outturn can be judged - an overspend against a
+                    blank quote is not a 0% variance.
+                  </>
+                ) : v.status === 'on-target' ? (
+                  <>
+                    <strong className="text-green-400">On target!</strong> Your quote was within{' '}
+                    {ON_TARGET_TOLERANCE_PERCENT}% of actual costs - excellent estimating.
                   </>
                 ) : totalVar > 0 ? (
                   <>

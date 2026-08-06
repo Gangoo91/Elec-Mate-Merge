@@ -71,7 +71,7 @@ const faqs = [
   {
     question: 'What happens if a Reading rental fails its EICR?',
     answer:
-      'An EICR is Unsatisfactory if it contains C1 (danger present) or C2 (potentially dangerous) observations under BS 7671 Section 631. The landlord must complete all required remedial work within 28 days (or sooner as specified) and obtain written confirmation from a qualified electrician. The confirmation must be provided to the tenant and to Reading Borough Council. Failure to act is a separate breach carrying its own penalty.',
+      'An EICR is Unsatisfactory if it contains C1 (danger present) or C2 (potentially dangerous) observations under BS 7671 Chapter 65. The landlord must complete all required remedial work within 28 days (or sooner as specified) and obtain written confirmation from a qualified electrician. The confirmation must be provided to the tenant and to Reading Borough Council. Failure to act is a separate breach carrying its own penalty.',
   },
   {
     question: 'How much does an EICR cost in Reading?',
@@ -160,7 +160,7 @@ const sections = [
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
-                (Section 631 covers periodic inspection and testing requirements).
+                (Chapter 65 covers periodic inspection and testing requirements).
               </span>
             </li>
             <li className="flex items-start gap-3">

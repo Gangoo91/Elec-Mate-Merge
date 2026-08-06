@@ -42,7 +42,7 @@ const keyTakeaways = [
   'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 require all private landlords in Cheltenham to hold a valid EICR and renew it at least every five years.',
   'Cheltenham Borough Council enforces the 2020 Regulations and can issue civil penalties of up to £30,000 per breach for non-compliant landlords.',
   'Cheltenham has a high concentration of Regency and Victorian period properties across Montpellier, Pittville, and the Promenade area — their original electrical installations present specific inspection challenges including degraded fabric-covered wiring and complex earthing arrangements.',
-  'C1 (danger present) and C2 (potentially dangerous) observations under BS 7671 Section 631 result in an Unsatisfactory EICR, requiring all remedial work within 28 days.',
+  'C1 (danger present) and C2 (potentially dangerous) observations under BS 7671 Chapter 65 result in an Unsatisfactory EICR, requiring all remedial work within 28 days.',
   'Cheltenham EICR prices are broadly in line with the South West and Gloucestershire average, typically £130 to £220 for a two-bedroom property.',
 ];
 
@@ -162,7 +162,7 @@ const sections = [
         </div>
         <p>
           The EICR replaced the older Periodic Inspection Report (PIR) format and follows the
-          requirements set out in BS 7671 Section 631. It is the document required by both the 2020
+          requirements set out in BS 7671 Chapter 65. It is the document required by both the 2020
           private rented sector regulations and by HMO licensing schemes operated by Cheltenham
           Borough Council.
         </p>

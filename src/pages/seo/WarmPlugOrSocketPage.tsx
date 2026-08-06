@@ -453,7 +453,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Metal consumer units</strong> — since Amendment 4 to BS 7671 (January 2016),
+                <strong>Metal consumer units</strong> — since Amendment 3 to BS 7671:2008 (effective January 2016),
                 new consumer units in domestic premises must be enclosed in a non-combustible
                 material (metal). This provides fire containment at the consumer unit. If your
                 consumer unit is still plastic, a{' '}

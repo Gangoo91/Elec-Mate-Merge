@@ -37,7 +37,7 @@ export const EighteenthEditionAmendment42026ExamPrepConfig: GeneratedGuideConfig
       blocks: [
         {
           type: 'paragraph',
-          text: 'Amendment 4:2026 was published 15 April 2026 and introduces: significantly expanded AFDD requirements (now mandatory in HMOs, care homes, certain residential high-rise), updated SPD risk methodology in Chapter 443 (Calculated Risk Level replacing AQ classification), new TN-C-S (PNB) earthing classification in Chapter 312, EV charging Section 722 reorganisation (RDC-DD, PME exception updates), new Schedule of Inspections + Schedule of Test Results columns, and cable reaction-to-fire classification (Cca-s1b,d1,a1 etc) under Chapter 422.',
+          text: 'Amendment 4:2026 was published 15 April 2026 and introduces: significantly expanded AFDD requirements (now recommended in HMOs, care homes, certain residential high-rise), updated SPD risk methodology in Chapter 443 (Calculated Risk Level replacing AQ classification), new TN-C-S (PNB) earthing classification in Chapter 312, EV charging Section 722 reorganisation (RDC-DD, PME exception updates), new Schedule of Inspections + Schedule of Test Results columns, and cable reaction-to-fire classification (Cca-s1b,d1,a1 etc) under Chapter 422.',
         },
       ],
     },

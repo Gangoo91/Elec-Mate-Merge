@@ -30,7 +30,7 @@ export const eicrCostBristolConfig: GeneratedGuideConfig = {
   keyTakeaways: [
     'A 1-bed flat EICR in Bristol typically costs £250–340, a 3-bed terrace £310–420, and a 4-bed house £385–520 (2026 prices for a scheme-registered electrician, excluding remedial work).',
     'Commercial EICRs in Bristol are priced per socket / fitting — typically £18–27 per item, with minimum visit fees of £85–£128.',
-    'Below-market quotes (substantially below these bands) are usually missing one or more of: the EIC certificate, RCD/RCBO test sweep, supplementary bonding verification, or the contractor\u2019s scheme registration fee — pay close attention to what is included before booking.',
+    'Below-market quotes (substantially below these bands) are usually missing one or more of: the written EICR itself, RCD/RCBO test sweep, supplementary bonding verification, or the contractor\u2019s scheme registration fee — pay close attention to what is included before booking.',
     'Hourly rates for Bristol sit at £65–£85 because a NICEIC / NAPIT registered electrician carries professional indemnity insurance, scheme fees, calibrated test equipment (typically £1,200+ MFT), and is liable for the certificate they sign.',
     'Property size, consumer unit condition, accessibility, age of the installation, and number of circuits all push the price within or above these bands. Older properties with cellars, lofts and outbuildings cost more.',
     'South West\u2019s DNO is National Grid Electricity Distribution (NGED). Any remedial work involving DNO notification (PME, supply upgrades) routes through them.',
@@ -63,7 +63,7 @@ export const eicrCostBristolConfig: GeneratedGuideConfig = {
           tone: 'warning',
           title: 'Why these bands exist — and what cheap quotes are hiding',
           body:
-            'A scheme-registered electrician carries: professional indemnity insurance (~£500–1,000/year), NICEIC or NAPIT scheme fees (~£500/year), calibrated test equipment (~£1,200 MFT replaced every 3-5 years), van + tools, ongoing CPD, and liability for every certificate signed. Quotes substantially below these bands usually mean the contractor is uninsured, unregistered, or the EIC certificate / test sweep is being skipped. Choose a scheme-registered electrician with insurance — the certificate is the legal record.',
+            'A scheme-registered electrician carries: professional indemnity insurance (~£500–1,000/year), NICEIC or NAPIT scheme fees (~£500/year), calibrated test equipment (~£1,200 MFT replaced every 3-5 years), van + tools, ongoing CPD, and liability for every certificate signed. Quotes substantially below these bands usually mean the contractor is uninsured, unregistered, or the EICR itself / test sweep is being skipped. Choose a scheme-registered electrician with insurance — the certificate is the legal record.',
         },
         {
           type: 'callout',
@@ -161,7 +161,7 @@ export const eicrCostBristolConfig: GeneratedGuideConfig = {
   faqs: [
     {
       question: 'How much does a standard EICR cost in Bristol?',
-      answer: 'For a 3-bedroom property in Bristol the typical 2026 EICR price from a NICEIC or NAPIT scheme-registered electrician is £310–420, excluding any remedial work. Prices vary with property size, consumer unit condition, and number of circuits. Quotes substantially below this band usually mean the EIC certificate, RCD test sweep or insurance is missing — verify what is included.',
+      answer: 'For a 3-bedroom property in Bristol the typical 2026 EICR price from a NICEIC or NAPIT scheme-registered electrician is £310–420, excluding any remedial work. Prices vary with property size, consumer unit condition, and number of circuits. Quotes substantially below this band usually mean the written EICR itself, RCD test sweep or insurance is missing — verify what is included.',
     },
     {
       question: 'How long is an EICR valid for in Bristol?',
@@ -169,7 +169,7 @@ export const eicrCostBristolConfig: GeneratedGuideConfig = {
     },
     {
       question: 'Who can carry out an EICR in Bristol?',
-      answer: 'EICRs must be carried out by a qualified and competent person — typically NICEIC, NAPIT, ELECSA or Stroma registered electricians. The inspector must be insured and competent for the size and complexity of the installation. Always verify scheme membership directly on the scheme operator\u2019s public register using the contractor\u2019s postcode — unregistered electricians cannot sign a compliant EIC.',
+      answer: 'EICRs must be carried out by a qualified and competent person — typically NICEIC, NAPIT, ELECSA or Stroma registered electricians. The inspector must be insured and competent for the size and complexity of the installation. Always verify scheme membership directly on the scheme operator\u2019s public register using the contractor\u2019s postcode — an EICR must be carried out by a qualified and competent person, and scheme registration is the simplest way to evidence that.',
     },
     {
       question: 'What happens if my EICR fails?',

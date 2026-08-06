@@ -92,7 +92,7 @@ export function ProductGrid({
         variants={gridContainerVariants}
         initial="hidden"
         animate="visible"
-        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4"
+        className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-4 xl:grid-cols-5"
       >
         {products.map((product) => (
           <motion.div key={product.id} variants={gridItemVariants} className="h-full">
@@ -157,7 +157,7 @@ export function ProductGridSkeleton() {
         <div className="h-4 w-32 bg-white/[0.03] rounded animate-pulse" />
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-4 xl:grid-cols-5">
         {Array.from({ length: 8 }).map((_, i) => (
           <div
             key={i}

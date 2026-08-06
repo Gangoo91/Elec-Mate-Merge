@@ -479,10 +479,20 @@ export function getDisconnectionTimeForCircuit(circuitDescription: string): Disc
 export function getZsLimitFromDeviceString(
   deviceType: string,
   rating: number,
-  circuitDescription: string = ''
+  circuitDescription: string = '',
+  /**
+   * Explicit disconnection time, overriding the guess made from the circuit
+   * description. Reg 411.3.2.2 decides this from the circuit's rating and
+   * whether it has socket-outlets, not from its label — a 40 A cooker circuit
+   * belongs at 5 s, and reading "cooker" cannot tell you that.
+   *
+   * Optional so existing callers are unaffected; new callers state the time.
+   */
+  disconnectionTimeOverride?: DisconnectionTime
 ): ZsLookupResult | null {
   const device = deviceType.toLowerCase();
-  const disconnectionTime = getDisconnectionTimeForCircuit(circuitDescription);
+  const disconnectionTime =
+    disconnectionTimeOverride ?? getDisconnectionTimeForCircuit(circuitDescription);
 
   // MCCB detection - treat similar to MCB Type C/D depending on context
   if (device.includes('mccb') || device.includes('moulded case')) {

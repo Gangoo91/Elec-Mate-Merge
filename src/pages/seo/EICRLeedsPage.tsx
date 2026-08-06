@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented per BS 7671:2018+A4:2026 (Section 631). It classifies defects as C1 (danger present), C2 (potentially dangerous), C3 (improvement recommended), or FI (further investigation).",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented per BS 7671:2018+A4:2026 (Chapter 65). It classifies defects as C1 (danger present), C2 (potentially dangerous), C3 (improvement recommended), or FI (further investigation).",
   'Leeds EICR costs are competitive. Expect £110 to £190 for a two-bedroom flat, £160 to £270 for a three-bedroom terraced house, and £230 to £380 for a four-bedroom detached house.',
   'Since 1 April 2021, landlords in England must have a valid EICR renewed at least every five years. Leeds City Council enforces through its Private Rented Sector team and can impose fines of up to £30,000.',
   'Leeds has a large student housing market centred on Headingley, Hyde Park, Woodhouse, and Burley. Student HMOs require HMO licensing with a valid EICR as a mandatory condition.',
@@ -156,7 +156,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (Section 631), which requires an EICR for periodic inspection of existing installations.
+          (Chapter 65), which requires an EICR for periodic inspection of existing installations.
           The inspector carries out a visual inspection and programme of testing, classifying each
           observation using codes (C1, C2, C3, FI). The overall installation is assessed as
           Satisfactory or Unsatisfactory.
@@ -237,7 +237,7 @@ const sections = [
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Mandatory EICR</strong> — every private rented property must have a valid
-                EICR, renewed at least every five years. Regulation 134.2 of BS 7671 requires
+                EICR, renewed at least every five years. Regulation 135.1 of BS 7671 requires
                 periodic inspection to confirm installations remain safe.
               </span>
             </li>
@@ -482,7 +482,7 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Report</strong> — EICR with Schedules of Circuit Details and Test Results
-                per Section 631, observations with codes, overall assessment, and recommended next
+                per Chapter 65, observations with codes, overall assessment, and recommended next
                 inspection date.
               </span>
             </li>

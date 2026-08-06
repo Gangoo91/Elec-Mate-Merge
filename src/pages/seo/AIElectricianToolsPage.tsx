@@ -53,7 +53,7 @@ const faqData = [
   {
     question: 'How is the AI trained on BS 7671 regulations?',
     answer:
-      'Each of the eight Elec-AI specialists is built on a large language model trained on the full text of BS 7671:2018+A4:2026, Amendment 4:2024, the IET On-Site Guide, IET Guidance Notes 1 through 8, and a curated library of real-world installation scenarios. The AI retrieves the exact regulation text before generating an answer, so responses cite specific regulation numbers (for example, Regulation 411.3.2 for disconnection time requirements). The knowledge base is updated whenever new amendments or guidance notes are published, and all responses include regulation references so you can verify them independently.',
+      'Each of the eight Elec-AI specialists is built on a large language model trained on the full text of BS 7671:2018+A4:2026, Amendment 4:2026, the IET On-Site Guide, IET Guidance Notes 1 through 8, and a curated library of real-world installation scenarios. The AI retrieves the exact regulation text before generating an answer, so responses cite specific regulation numbers (for example, Regulation 411.3.2 for disconnection time requirements). The knowledge base is updated whenever new amendments or guidance notes are published, and all responses include regulation references so you can verify them independently.',
   },
   {
     question: 'Can the AI Circuit Designer produce a complete consumer unit schedule?',
@@ -512,7 +512,7 @@ export default function AIElectricianToolsPage() {
       <section className="py-16 px-5 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
-            Trained on BS 7671:2018 + Amendment 4:2024
+            Trained on BS 7671:2018 + Amendment 4:2026
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
@@ -523,7 +523,7 @@ export default function AIElectricianToolsPage() {
             <p>
               The core training data includes BS 7671:2018+A4:2026, which is the current 18th
               Edition of the IET Wiring Regulations — the standard that governs every electrical
-              installation in the United Kingdom. It also includes Amendment 4:2024 (A4:2026),
+              installation in the United Kingdom. It also includes Amendment 4:2026 (A4:2026),
               issued on 31 July 2024, which adds Regulation 530.3.2 covering the requirements for
               bidirectional and unidirectional protective devices. This amendment is particularly
               relevant for installations with battery storage systems, solar PV, and other sources
@@ -543,7 +543,7 @@ export default function AIElectricianToolsPage() {
           <div className="mt-8 grid sm:grid-cols-2 gap-4">
             {[
               'BS 7671:2018+A4:2026 (18th Edition)',
-              'Amendment 4:2024 (A4:2026)',
+              'Amendment 4:2026 (A4:2026)',
               'IET On-Site Guide',
               'IET Guidance Notes 1-8',
               'GN3: Inspection & Testing (9th Edition)',

@@ -6,6 +6,8 @@ import { MobileHorizontalScrollTableRow } from './MobileHorizontalScrollTableRow
 import { toast } from 'sonner';
 
 interface MobileHorizontalScrollTableProps {
+  /** ELE-1505 — decides whether TN or TT limits apply. */
+  earthingArrangement?: string;
   testResults: TestResult[];
   onUpdate: (id: string, field: keyof TestResult, value: string) => void;
   onRemove: (id: string) => void;
@@ -33,6 +35,7 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
   onBulkFieldUpdate,
   onMoveUp,
   onMoveDown,
+  earthingArrangement,
 }) => {
   // ELE-857 — per-board first/last identification
   const firstOfBoardIds = new Set<string>();
@@ -275,6 +278,7 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
           <TableBody>
             {testResults.map((result) => (
               <MobileHorizontalScrollTableRow
+                earthingArrangement={earthingArrangement}
                 key={result.id}
                 result={result}
                 onUpdate={onUpdate}

@@ -21,7 +21,7 @@ import {
 
 const PAGE_TITLE = 'BS 7671 18th Edition Guide | A4:2026 Changes Explained';
 const PAGE_DESCRIPTION =
-  'BS 7671:2018+A4:2026 — all 7 parts, key shifts since 17th Ed, A2:2022 + A4:2026 (AFDD, TN-C-S PNB, bidirectional devices, EV updates) in plain English.';
+  'BS 7671:2018+A4:2026 — all 7 parts, key shifts since the 17th Ed, and what A4:2026 actually changed (AFDD recommendation, lighting RCDs, bidirectional devices) in plain English.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -40,10 +40,10 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'BS 7671:2018+A2:2022 is the current base standard (the "brown book") — all new electrical work in the UK must comply.',
-  'Amendment 4 (A4:2026), issued 31 July 2024, adds a new regulation within Section 530 covering bidirectional and unidirectional protective devices for battery storage and V2G installations.',
+  'BS 7671:2018+A4:2026 is the current standard — all new electrical work in the UK must comply with it. The 18th Edition has had four amendments: A1:2020, A2:2022, A3:2024 and A4:2026.',
+  'Amendment 4 is A4:2026 — do not confuse it with Amendment 3, which was the free PDF supplement issued on 31 July 2024. A4 is a substantive amendment that inserts and deletes numbered regulations.',
   'The 18th Edition introduced major changes including AFDDs (Regulation 421.1.1 and Section 421), surge protection (Section 534), metal consumer unit requirements, and EV charging provisions (Section 722).',
-  'Amendment 4 (A4:2026) is now published. Key new requirements include mandatory AFDDs for socket-outlet circuits in higher-risk residential buildings and HMOs (Reg 421.1.7), mandatory 30 mA RCD protection on domestic lighting circuits (Reg 411.3.4), and a completely revised Section 534 with updated voltage protection level selection rules for SPDs.',
+  'Amendment 4 (A4:2026) is published. Key changes include Reg 411.3.4 — 30 mA RCD additional protection is now required for AC final circuits supplying luminaires in domestic premises — Reg 421.1.7 recommending (not mandating) AFDDs in AC final circuits, and Reg 551.7.1(c) requiring a suitable protective device wherever energy flow is bidirectional.',
   'Elec-Mate has every BS 7671 regulation built into the app — tap any certificate field to see the relevant clause, with 70+ calculators based on BS 7671 tables.',
 ];
 
@@ -66,7 +66,7 @@ const faqs = [
   {
     question: 'Do I need to buy a new copy of BS 7671 for each amendment?',
     answer:
-      'Not necessarily. Amendment 1 (2020) and Amendment 2 (2022) were incorporated into reprints of the main publication, so the current standard book sold by the IET is BS 7671:2018+A2:2022 and includes both amendments. Amendment 4 (A4:2026) was issued as a free PDF supplement on 31 July 2024 and is not printed as a separate book — you download it from the IET website and use it alongside your existing copy. The IET may issue an updated consolidated reprint in due course. Elec-Mate includes all current regulation text within the app, including Amendment 4, so you always have the current version in your pocket without needing to carry the physical book on site.',
+      'Not necessarily. Amendment 1 (2020) and Amendment 2 (2022) were incorporated into reprints of the main publication. Amendment 3 (A3:2024) was the free PDF supplement issued on 31 July 2024 — that date belongs to A3, not A4, and the two are constantly confused. Amendment 4 (A4:2026) is the current amendment — you download it from the IET website and use it alongside your existing copy. The IET may issue an updated consolidated reprint in due course. Elec-Mate includes all current regulation text within the app, including Amendment 4, so you always have the current version in your pocket without needing to carry the physical book on site.',
   },
   {
     question: 'What qualifications do I need to work to BS 7671?',
@@ -81,7 +81,7 @@ const faqs = [
   {
     question: 'What did Amendment 4 introduce for bidirectional devices?',
     answer:
-      'Amendment 4 (A4:2026), issued on 31 July 2024, added Regulation 530.3.201 within Section 530 of BS 7671, requiring that the selection and erection of protective equipment shall take account of the appropriate use of either a unidirectional or a bidirectional protective device. This applies to installations where the supply can operate in both directions — specifically, installations with battery energy storage systems (BESS), solar PV with battery backup, or vehicle-to-grid (V2G) EV chargers that can export energy back to the grid. Standard MCBs and RCDs are designed for unidirectional fault current flow. When energy can flow in reverse (from the battery or EV back through the consumer unit to the grid), fault current can also flow in reverse. Regulation 530.3.201 requires that protective devices are suitable for the direction(s) of fault current that can occur. Additionally, under Reg 133.1.3, the use of unidirectional or bidirectional devices must be recorded on the appropriate Part 6 electrical certificate.',
+      'Regulation 530.3.201 requires that the selection and erection of protective equipment take account of the appropriate use of either a unidirectional or a bidirectional protective device. A4:2026 also redrafted Regulation 551.7.1, adding indent (c) — a suitable protective device shall be provided where energy flow is bidirectional — and indent (d), which prohibits connecting a source to the load side of an RCD in certain conditions. For a generating set in parallel with another source, 551.7.1 refers device selection back to 530.3.201. This applies to installations where the supply can operate in both directions — specifically, installations with battery energy storage systems (BESS), solar PV with battery backup, or vehicle-to-grid (V2G) EV chargers that can export energy back to the grid. Standard MCBs and RCDs are designed for unidirectional fault current flow. When energy can flow in reverse (from the battery or EV back through the consumer unit to the grid), fault current can also flow in reverse. Regulation 530.3.201 requires that protective devices are suitable for the direction(s) of fault current that can occur. Additionally, under Reg 133.1.3, the use of unidirectional or bidirectional devices must be recorded on the appropriate Part 6 electrical certificate.',
   },
 ];
 
@@ -96,8 +96,8 @@ const sections = [
           and verification of electrical installations in the United Kingdom. Published jointly by
           the British Standards Institution (BSI) and the Institution of Engineering and Technology
           (IET), it is the single most important document for every working electrician in the UK.
-          The current edition is BS 7671:2018+A2:2022 — the 18th Edition of the IET Wiring
-          Regulations — commonly known as the "brown book."
+          The current edition is BS 7671:2018+A4:2026 — the 18th Edition of the IET Wiring
+          Regulations, as amended by A1:2020, A2:2022, A3:2024 and A4:2026.
         </p>
         <p>
           The standard applies to all electrical installations operating at nominal voltages up to
@@ -265,13 +265,14 @@ const sections = [
                   final circuits in premises with sleeping accommodation where fire risk is
                   elevated. AFDDs detect dangerous arcing faults that do not trip conventional MCBs
                   or RCDs — for example, a loose connection in a junction box or a damaged cable
-                  behind plasterwork. Under A4:2026, Reg 421.1.7 was redrafted: AFDD protection is
-                  now
-                  <strong> mandatory</strong> for socket-outlet final circuits (rated current not
-                  exceeding 32 A) in Higher Risk Residential Buildings, Houses in Multiple
-                  Occupation (HMOs), purpose-built student accommodation, and care homes. For
-                  standard domestic dwellings that do not fall into those categories, installation
-                  remains a recommendation rather than a prescriptive requirement.
+                  behind plasterwork. Be careful with what A4:2026 actually says here, because it
+                  is widely overstated. Regulation 421.1.7 was introduced by A4:2026{' '}
+                  <strong>recommending</strong> the installation of AFDDs to mitigate the risk of
+                  fire in AC final circuits of a fixed installation. The wording is advisory — it
+                  recommends rather than using "shall" — so this is not a prescriptive obligation,
+                  and it is not written around a list of premises types such as HMOs or care homes.
+                  Treat AFDDs as a strongly signposted recommendation you should be able to justify
+                  departing from, not as a mandatory requirement.
                 </p>
               </div>
             </div>
@@ -359,8 +360,8 @@ const sections = [
         <p>
           Amendment 2 to BS 7671:2018 was published in March 2022 and came into effect immediately.
           It consolidated Amendment 1 (2020) and introduced additional changes and corrections. The
-          current base document is therefore BS 7671:2018+A2:2022, which is the version sold by the
-          IET and referenced by competent person schemes.
+          current base document is therefore BS 7671:2018+A4:2026. Any reference to "the
+          Regulations" means the 2018 edition as amended by A1:2020, A2:2022, A3:2024 and A4:2026.
         </p>
         <p>
           Key changes in Amendment 2 include updated requirements for prosumer installations
@@ -387,30 +388,38 @@ const sections = [
     content: (
       <>
         <p>
-          Amendment 4 to BS 7671:2018 (A4:2026) was issued on 31 July 2024 as a free PDF supplement.
-          It is not a new book — it is a concise document that electricians download from the IET
-          website and use alongside their existing copy of BS 7671:2018+A2:2022.
+          A point of frequent confusion: the free PDF supplement issued on 31 July 2024 was{' '}
+          <strong>Amendment 3 (A3:2024)</strong>, not Amendment 4. Amendment 4 is A4:2026, and it is
+          a substantive amendment rather than a light-touch supplement — it inserts new regulations
+          (for example 411.6.5 and an entirely new Regulation group 419), redrafts others such as
+          411.4.5 and 411.3.3, and deletes material including Appendix 3 Table 3A. References to
+          "the Regulations" now mean BS 7671:2018 as amended by A1:2020, A2:2022, A3:2024 and
+          A4:2026.
         </p>
         <p>
-          Amendment 4 introduces several significant new requirements. The headline addition is
-          Regulation 530.3.201 within Section 530, which addresses the selection of bidirectional
-          and unidirectional protective devices. This is a direct response to the growth of domestic
-          battery energy storage systems (BESS), solar PV installations with battery backup, and
-          vehicle-to-grid (V2G) electric vehicle charging — all of which can cause electrical energy
-          to flow in the reverse direction, from the installation back through the consumer unit
-          towards the supply. Under Reg 133.1.3 (also modified by A4:2026), use of unidirectional or
-          bidirectional devices must now be recorded on the appropriate Part 6 electrical
-          certificate.
+          Amendment 4 introduces several significant new requirements. One that matters on almost
+          every modern domestic job is bidirectional energy flow. Regulation 530.3.201 — introduced
+          by Amendment 3 and carried into A4:2026 — requires that the selection and erection of
+          equipment for protection shall take account of the appropriate use of either a
+          unidirectional or a bidirectional protective device, a mandatory consideration rather
+          than an optional one. Building on it, A4:2026 redrafted Regulation
+          551.7.1 and added indent (c), requiring a suitable protective device where energy flow is
+          bidirectional, and indent (d), which prohibits connecting a source to the load side of an
+          RCD in certain conditions. Where a generating set runs in parallel with another source,
+          551.7.1 sends you back to 530.3.201 for device selection. This responds to the growth of
+          battery storage and solar PV with battery backup, where energy can flow from the
+          installation back towards the supply.
         </p>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-5 my-6">
           <h3 className="font-bold text-white text-lg mb-3">
-            Reg 530.3.201 — Bidirectional and unidirectional device selection
+            Reg 530.3.201 and 551.7.1(c) — bidirectional energy flow
           </h3>
           <p className="text-white text-sm leading-relaxed mb-3">
-            Standard MCBs, RCDs, and RCBOs are designed to interrupt fault current flowing in one
-            direction — from the supply, through the device, to the load. When a battery or V2G
-            charger exports energy, fault current can flow in the opposite direction. Regulation
-            530.3.201 states that:
+            Standard MCBs, RCDs and RCBOs are designed to interrupt fault current flowing in one
+            direction — from the supply, through the device, to the load. Where a source such as a
+            battery or PV inverter can export, fault current can flow the other way. Regulation
+            530.3.201 requires that directional characteristic to be taken into account when
+            selecting and erecting protective equipment. In outline:
           </p>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
@@ -437,9 +446,12 @@ const sections = [
           </ul>
         </div>
         <p>
-          Amendment 4 also includes various corrections, clarifications, and editorial updates to
-          the standard. It does not change the fundamental structure or numbering of BS 7671 — it is
-          a targeted amendment addressing specific technical gaps identified since Amendment 2.
+          Amendment 4 also includes corrections, clarifications and editorial updates. It does,
+          however, change numbering — this is not a purely editorial amendment. A4:2026 inserts
+          Regulation 411.6.5 and a new Regulation group 419, redrafts 411.4.5 and 411.3.3, and
+          deletes numbered material including Appendix 3 Table 3A (the RCD time/current performance
+          criteria). Work through the amendment properly rather than assuming your existing
+          regulation numbers still point where they used to.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-6">
           <div className="flex items-start gap-3">

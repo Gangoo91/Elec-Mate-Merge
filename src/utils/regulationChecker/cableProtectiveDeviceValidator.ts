@@ -2,7 +2,8 @@ import { TestResult } from '@/types/testResult';
 import { RegulationWarning } from './types';
 import { isRingCircuit } from './ringCircuitDetector';
 import { getCableCapacity, getCableSizeForRating } from './cableCapacityCalculator';
-import { capacityTables, type CableTypeKey } from '@/lib/calculators/bs7671-data/appendix4CurrentCapacity';
+import { getVerifiedCableCapacity } from './cableCapacity';
+import { overloadProtectionRule } from '@/utils/validation/rules/overloadProtection';
 
 // ── ELE-1366: Iz from the circuit's ACTUAL wiring type + reference method ──
 // The old check used one generic capacity column (16mm = 76A) and hardcoded
@@ -14,56 +15,6 @@ import { capacityTables, type CableTypeKey } from '@/lib/calculators/bs7671-data
 // Reference Method (col 4) codes. Defaults lean conservative (understate → more
 // likely to warn), and any unresolved case falls back to the generic column so
 // behaviour is never worse than before.
-
-// Type of Wiring (col 3): A=T&E B=Singles C=Thermosetting D=MICC E=Flexible F=SWA/AWA O=Other
-const WIRING_TO_CABLE_KEY: Record<string, CableTypeKey> = {
-  A: 'twin-earth', // flat T&E — Table 4D5
-  B: 'pvc-single', // singles — Table 4D1A
-  C: 'xlpe-multicore', // thermosetting (90°C) — Table 4E2A (multicore = conservative)
-  D: 'mineral-light', // MICC — light duty (conservative)
-  F: 'swa-pvc', // armoured — Table 4D4A (PVC = conservative vs XLPE SWA)
-  // E (Flexible) / O (Other) intentionally unmapped → generic fallback
-};
-
-// Reference Method (col 4): A=Conduit B=Open/Enclosed C=Clipped D=Ground E=Free air F=Trunking
-const METHOD_TO_KEY: Record<string, string> = {
-  A: 'method-a',
-  B: 'method-b',
-  C: 'method-c',
-  D: 'method-d2', // buried direct
-  E: 'method-e',
-  F: 'method-b', // trunking on a wall
-};
-
-// '16mm' → '16.0', '2.5mm' → '2.5', '10mm' → '10.0' (module CSA key format)
-const toCsaKey = (liveSize: string): string => {
-  const n = parseFloat(String(liveSize).replace(/[^\d.]/g, ''));
-  if (!isFinite(n) || n <= 0) return '';
-  return Number.isInteger(n) ? `${n}.0` : `${n}`;
-};
-
-/**
- * Verified Iz (A) for this circuit, or null when it can't be resolved (caller
- * then falls back to the generic column). Strict: no cross-method / cross-phase
- * substitution, so we never overstate capacity into a false PASS.
- */
-const getVerifiedCableCapacity = (result: TestResult, isRing: boolean): number | null => {
-  const wiring = (result.typeOfWiring || 'A').toUpperCase();
-  const method = (result.referenceMethod || 'C').toUpperCase();
-  const cableKey = WIRING_TO_CABLE_KEY[wiring];
-  const methodKey = METHOD_TO_KEY[method];
-  if (!cableKey || !methodKey) return null;
-
-  const col = capacityTables[cableKey]?.methods[methodKey];
-  if (!col) return null;
-
-  const set = result.phaseType === '3P' ? col.threePhase : col.singlePhase;
-  const iz = set?.[toCsaKey(result.liveSize)];
-  if (iz == null) return null;
-
-  // A ring is two legs in parallel (matches the generic path's ×2).
-  return isRing ? iz * 2 : iz;
-};
 
 // Helper function to detect lighting circuits
 const isLightingCircuit = (result: TestResult): boolean => {
@@ -91,45 +42,56 @@ const isLightingCircuit = (result: TestResult): boolean => {
 };
 
 // Check cable and protective device compatibility
+//
+// Delegates to the rule in `utils/validation/rules/overloadProtection.ts` so
+// there is ONE implementation of Regulation 433. That rule covers three things
+// this validator never did, each verified against the printed standard:
+//
+//   433.1.1(c) / 433.1.202 — a semi-enclosed fuse to BS 3036 must not exceed
+//     0.725 × Iz. For a BS EN 60898 breaker this follows from In ≤ Iz, which is
+//     why it went unnoticed; for a rewireable fuse it does not. A 20 A BS 3036
+//     on 2.5 mm² (Iz 27 A) passed here and is over by 0.4 A.
+//
+//   433.1.204 — a ring final supplying BS 1363 accessories is judged on
+//     Iz ≥ 20 A, not on the device rating. Doubling Iz and comparing to In (the
+//     old behaviour) passes any 32 A ring whose single-cable Iz is 16 A or more
+//     — a 2.5 mm² ring on reference method 101 has Iz 17 A and passed.
+//
+//   The same regulation expressly permits BS 3036 on a 30/32 A ring, so the
+//     0.725 factor must NOT be applied there.
+//
+// The rule abstains rather than guesses when it cannot establish its inputs;
+// those become warnings here so an unverifiable circuit is never silently
+// indistinguishable from a passing one.
 export const checkCableProtectiveDeviceMatch = (result: TestResult): RegulationWarning[] => {
-  const warnings: RegulationWarning[] = [];
+  const outcome = overloadProtectionRule.evaluate(result, {
+    revision: 'A4:2026',
+    nominalVoltage: 230,
+  });
 
-  if (!result.liveSize || !result.protectiveDeviceRating) {
-    return warnings;
+  if (outcome.status === 'fail') {
+    return [
+      {
+        severity: 'critical',
+        title: outcome.title ?? 'Cable Undersized for Protective Device',
+        description: [outcome.message, outcome.detail].filter(Boolean).join(' '),
+        regulation: 'BS 7671 Regulation 433.1.1 (and 433.1.202 / 433.1.204)',
+        suggestion: outcome.suggestion ?? 'Increase the cable size or reduce the device rating.',
+      },
+    ];
   }
 
-  const isRing = isRingCircuit(result);
-  const isLighting = isLightingCircuit(result);
-  // In ≤ Iz (Reg 433.1.1) — verified Appendix 4 capacity for the circuit's
-  // actual wiring type + reference method, falling back to the generic column
-  // only when it can't be resolved (never worse than before). ELE-1366.
-  const cableCapacity =
-    getVerifiedCableCapacity(result, isRing) ??
-    getCableCapacity(result.liveSize, 'method_c', isRing);
-  const deviceRating = parseInt(result.protectiveDeviceRating);
-
-  if (cableCapacity === 0 || isNaN(deviceRating)) {
-    return warnings;
+  if (outcome.status === 'abstain') {
+    return [
+      {
+        severity: 'warning',
+        title: 'Overload Protection Not Verified',
+        description: outcome.message,
+        regulation: 'BS 7671 Regulation 433.1.1',
+        suggestion: `Record: ${outcome.missing.join(', ').toLowerCase()}.`,
+      },
+    ];
   }
 
-  // BS 7671 Regulation 433.1.1 - Cable capacity must exceed protective device rating
-  if (deviceRating > cableCapacity) {
-    const capacityNote = isRing
-      ? ` (${cableCapacity / 2}A × 2 parallel paths = ${cableCapacity}A effective capacity)`
-      : ` (${cableCapacity}A capacity)`;
-    warnings.push({
-      severity: 'critical',
-      title: 'Cable Undersized for Protective Device',
-      description: `${result.liveSize} cable${capacityNote} cannot safely carry ${deviceRating}A protective device rating.`,
-      regulation: 'BS 7671 Regulation 433.1.1',
-      suggestion: `Use minimum ${getCableSizeForRating(deviceRating, 'method_c', isRing)} cable for ${deviceRating}A protection${isRing ? ' in ring configuration' : ''}.`,
-    });
-  }
-
-  // "Cable May Be Oversized" warning REMOVED (ELE-709).
-  // BS 7671 Section 433 defines MINIMUM cable size — using a larger cable is always
-  // safer and never a compliance issue. The warning confused electricians doing
-  // standard work (e.g. 1.5mm/6A lighting circuits) and provided no safety value.
-
-  return warnings;
+  return [];
 };

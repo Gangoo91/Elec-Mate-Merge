@@ -248,6 +248,17 @@ const BatteryStorageCalculator = () => {
 
     if (!consumption || !criticalLoadKw || !autonomyDays || !systemV || !unitV || !unitAh) return;
 
+    // A battery unit cannot exceed the bank's system voltage. systemVoltage and
+    // batteryUnitVoltage both draw from the same 12/24/48 V list, so 12 V system + 24 V unit
+    // was selectable and produced a fractional series count (see batteriesInSeries below).
+    if (unitV > systemV) {
+      toast({
+        title: 'Battery unit voltage cannot exceed the system voltage',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     const batteryData = BATTERY_DATA_2025[batteryType as keyof typeof BATTERY_DATA_2025];
     const envFactors = ENVIRONMENT_FACTORS[batteryType] ?? ENVIRONMENT_FACTORS['lithium'];
     const envData = envFactors[installEnvironment] ?? envFactors['indoor'];
@@ -259,7 +270,10 @@ const BatteryStorageCalculator = () => {
     const usableCapacityKwh = deratedEnergyKwh;
     const totalBankCapacityKwh = usableCapacityKwh / (batteryData.dod / 100);
 
-    const batteriesInSeries = systemV / unitV;
+    // Series count must be a whole number of units. Previously left unrounded, so a 12 V system
+    // with a 24 V unit gave 0.5 strings, a fractional numberOfBatteries, and BMS (£45/battery)
+    // and wiring (£35/battery) costs computed on a fraction of a battery.
+    const batteriesInSeries = Math.max(1, Math.round(systemV / unitV));
     const bankAh = (totalBankCapacityKwh * 1000) / systemV;
     const batteriesInParallel = Math.ceil(bankAh / unitAh);
     const totalBatteries = batteriesInSeries * batteriesInParallel;
@@ -277,8 +291,14 @@ const BatteryStorageCalculator = () => {
       : undefined;
 
     const actualBackupHours = actualUsableKwh / criticalLoadKw;
+    // Charging time = energy to replace ÷ charge POWER. The no-charger branch previously divided
+    // kWh by the dimensionless C-rate, which is not a time — for a 20 kWh LiFePO4 bank (C = 0.5)
+    // it printed 40.0 hours instead of 19.0 / (20 × 0.5) ≈ 1.9 hours, a ~21× over-statement that
+    // also spuriously fired the "higher power charger" recommendation. C-rate × bank kWh gives
+    // the charge power in kW, exactly as the discharge branch above already does.
+    const maxChargePowerKw = actualBankCapacityKwh * batteryData.chargingC;
     const chargingTimeHours =
-      chargerKw > 0 ? actualUsableKwh / chargerKw : actualBankCapacityKwh / batteryData.chargingC;
+      chargerKw > 0 ? actualUsableKwh / chargerKw : actualUsableKwh / maxChargePowerKw;
 
     // Itemised BOP costs (replacing flat ×1.4 multiplier)
     const batteryCost = actualBankCapacityKwh * batteryData.costPerKwh;
@@ -311,21 +331,111 @@ const BatteryStorageCalculator = () => {
       if (!powerSufficient) recs.push('Increase parallel strings to meet power requirements');
       if (chargingTimeHours > 12)
         recs.push('Consider higher power charger to reduce charging time');
-      else if (chargingTimeHours < 4) recs.push('Fast charging — ensure adequate ventilation');
+      // Ventilation was previously surfaced here as a conditional "recommendation" tied to fast
+      // charging. Reg 570.6.3 makes it an unconditional requirement for the battery location or
+      // enclosure, so it now sits in the BS 7671 notes below and this rec covers charge rate only.
+      else if (chargingTimeHours < 4)
+        recs.push('Fast charging — verify the charge rate is within the manufacturer’s C-rate');
       if (batteryData.cycles < 2000) recs.push('Lead acid — plan for replacement every 3–5 years');
       else recs.push('Long-life chemistry — expect 10+ years with proper maintenance');
       return recs;
     };
 
+    // ── BS 7671 compliance notes ──
+    // Rewritten against BS 7671:2018+A4:2026 Chapter 57 'Stationary secondary batteries', which
+    // is the governing chapter for this calculator's subject (the requirements formerly
+    // signposted at Reg 551.8 were moved into it). The previous notes were wrong on four counts:
+    //   • they cited only Sections 414, 512 and 542, none of which govern a battery installation;
+    //   • the 48 V trigger for "Section 414" does not exist — 414 is the SELV/PELV protective
+    //     measure (Band I limit 50 V AC / 120 V ripple-free DC) and a battery bank is not
+    //     automatically SELV/PELV; Chapter 57's threshold is a 120 V potential difference
+    //     (Reg 570.6.2.1.201), not a 48 V system voltage;
+    //   • 12 V and 24 V banks were called "low voltage" and waved through as "standard domestic
+    //     wiring practices". Per Part 2, extra-low voltage is "not exceeding 50 V AC or 120 V
+    //     ripple-free DC", so 12/24/48 V DC are all EXTRA-low voltage, and Reg 570.6.1.1.3
+    //     applies "irrespective of the nominal voltage";
+    //   • "IP65+ enclosure (Section 512)" was fabricated — the string "IP65" does not appear
+    //     anywhere in BS 7671:2018+A4:2026 and Section 512 specifies no IP figure for batteries.
     const generateBS7671Notes = (): string[] => {
-      const notes = [];
-      if (systemV >= 48)
-        notes.push('48V system requires appropriate safety measures (Section 414)');
-      else notes.push('Low voltage system — standard domestic wiring practices apply');
-      if (installEnvironment === 'outdoor')
-        notes.push('Outdoor installation requires IP65+ enclosure (Section 512)');
-      notes.push('Install appropriate DC isolation switches and overcurrent protection');
-      notes.push('Ensure earthing arrangements comply with Section 542');
+      const notes: string[] = [];
+      const isLeadAcid = !batteryType.includes('lithium');
+
+      // Reg 570.6.1.1.1 — conformance to the BS EN IEC 62485 series is normative.
+      notes.push(
+        'Chapter 57 (stationary secondary batteries) governs this installation — it shall conform to the relevant parts of the BS EN IEC 62485 series, and bidirectional protective devices shall be selected where appropriate (Reg 570.6.1.1.1).'
+      );
+
+      // Regs 570.6.1.1.2 / 570.6.1.1.3 — apply irrespective of the nominal voltage, so a 12 V or
+      // 24 V bank is NOT exempt. All three options here are extra-low voltage, not low voltage.
+      notes.push(
+        `Terminal voltage shall be assumed to be always present. Irrespective of the nominal voltage — this ${systemV} V DC bank is extra-low voltage, not low voltage — live parts of batteries, cells and connections shall be accessible only to skilled or instructed persons (Regs 570.6.1.1.2, 570.6.1.1.3).`
+      );
+
+      // Reg 570.6.2.1.201 — the threshold is a 120 V potential difference between simultaneously
+      // touchable conductive parts, not a system-voltage trigger.
+      notes.push(
+        'Battery connections shall have basic protection by insulation or enclosure, or be arranged so that conductive parts with more than 120 V between them cannot be inadvertently touched simultaneously (Reg 570.6.2.1.201).'
+      );
+
+      // Reg 570.6.2.2 — Type B RCD on the AC supply circuit unless (a), (b) or (c) applies.
+      notes.push(
+        'Where an RCD protects the AC supply circuit it shall be Type B to BS EN 62423 or BS EN 60947-2, unless the power conversion equipment provides at least simple separation between AC and DC sides, separation is provided by separate transformer windings, or the PCE manufacturer states Type B is not required (Reg 570.6.2.2).'
+      );
+
+      // Reg 570.6.3 — unconditional requirement, not a fast-charging caveat.
+      notes.push(
+        'The location or enclosure shall be adequately ventilated, taking account of the manufacturer’s instructions (Reg 570.6.3).'
+      );
+
+      // Reg 570.6.7.202 — gas-evolving chemistries. Flooded/AGM/gel lead-acid evolve hydrogen.
+      if (isLeadAcid)
+        notes.push(
+          'Lead-acid can evolve flammable gas — ventilate per the manufacturer’s instructions and safety data sheet (this can require ventilation to an outdoor space, and shall not itself create a hazard), and site it a safe distance from equipment liable to arc, spark or flame in normal use (Reg 570.6.7.202).'
+        );
+
+      // Regs 570.6.4 / 570.6.4.201 / 570.6.4.202 — DC-side fault current and wiring system.
+      notes.push(
+        'Determine the DC prospective fault current taking account of the contribution of both the battery and the PCE that charges it, using the lowest usable battery voltage for disconnection coordination (Reg 570.6.4). Wiring shall be selected and erected to minimise the risk of earth faults and short-circuits (Reg 570.6.4.201).'
+      );
+      notes.push(
+        'Where the PCE gives no simple separation AND the DC side is unearthed, an inherently short-circuit and earth-fault-proof wiring system is required — single-core non-metallic-sheathed cables (BS EN 50618 considered appropriate), or insulated conductors in individually insulated conduit or trunking (Reg 570.6.4.202).'
+      );
+
+      // Regs 570.6.5 / 570.6.5.201 / 570.6.7.201 — isolation and DC fuses.
+      notes.push(
+        'Every power circuit connecting to the battery shall have appropriate means of isolation conforming to Section 462, likely at both ends of the circuit (Reg 570.6.5). DC fuses shall be accessible only by key or tool, or removable only after opening a means of isolation suitable for on-load DC isolation (Reg 570.6.7.201).'
+      );
+
+      // Regs 570.6.1.2.1 / 570.6.1.2.2 — replaces the generic "Section 542" note.
+      notes.push(
+        'Earthing one live conductor of the DC side is permitted only where there is at least simple separation between the AC and DC sides; TN-S and TT systems shall be earthed at one point only to prevent circulating currents (Regs 570.6.1.2.1, 570.6.1.2.2).'
+      );
+
+      // Reg 570.6.7 — replaces the fabricated IP65 note. Reg 570.6.7.203 — dwellings/PAS 63100.
+      if (installEnvironment === 'outdoor' || installEnvironment === 'garage')
+        notes.push(
+          'The location or enclosure shall provide the manufacturer’s specified measures to mitigate the risk of arcing and explosion (Reg 570.6.7). BS 7671 specifies no IP rating for battery enclosures — select the enclosure against the assessed external influences (Section 512) and the manufacturer’s instructions.'
+        );
+      notes.push(
+        'In dwellings the location shall take account of the manufacturer’s instructions and PAS 63100; in other premises, location and fire protection shall be selected taking the premises fire strategy into account (Reg 570.6.7.203).'
+      );
+
+      // Reg 551.7.2.1 — A4:2026 reclassifies a stationary secondary battery as a generating set.
+      notes.push(
+        'A stationary secondary battery in accordance with Chapter 57 is a generating set, not a load — install it on the supply side of all the protective devices for the final circuits of the distribution board, on its own dedicated circuit (Reg 551.7.2.1).'
+      );
+
+      // Regs 570.6.8.201 / .202 / .203 and 826.1.1.4 — notices were absent entirely.
+      notes.push(
+        'Fix a warning notice indicating the presence and location of the battery system at the origin of the installation, at any metering position remote from the origin, and at each consumer unit or distribution board fed from the battery (Reg 570.6.8.201).'
+      );
+      notes.push(
+        'Fix a permanent warning that live parts may still be energised after isolation at each point of access to the battery room or enclosure (Reg 570.6.8.202, Figure 57.3), and fix "WARNING — Isolate both AC and DC sides before servicing" to all PCE (Reg 570.6.8.203).'
+      );
+      notes.push(
+        'With more than one source of supply, provide a main switch suitable for isolation for each source, plus a durable warning notice at those switches (Reg 826.1.1.4).'
+      );
+
       return notes;
     };
 
@@ -397,6 +507,7 @@ const BatteryStorageCalculator = () => {
     designReserve,
     batteryType,
     installEnvironment,
+    toast,
   ]);
 
   const handleReset = useCallback(() => {

@@ -307,7 +307,7 @@ const sections = [
           (before a new installation is put into service) and periodic inspection and testing.
         </p>
         <p>
-          <strong>Chapter 61 — Initial verification.</strong> Every new installation, addition, or
+          <strong>Chapter 64 — Initial verification.</strong> Every new installation, addition, or
           alteration must be inspected and tested before being put into service. The inspection
           verifies that the installation complies with BS 7671, while the testing confirms that the
           installation is safe. The tests must be carried out in a specific sequence: continuity of

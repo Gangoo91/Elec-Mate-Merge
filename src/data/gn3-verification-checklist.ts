@@ -186,7 +186,7 @@ export const gn3VerificationChecklist: GN3VerificationChecklist = {
         'Type B 16A': '≤2.73Ω (Table 41.3, 0.4s)',
         'Type B 32A': '≤1.37Ω (Table 41.3, 0.4s)',
         'Type B 40A': '≤1.09Ω (Table 41.3, 0.4s)',
-        'Type C 32A': '≤0.68Ω (Table 41.4, 0.4s)',
+        'Type C 32A': '≤0.68Ω (Table 41.3, 0.4s)',
         '30mA RCD TT': '≤1667Ω (50V/0.03A)',
         'Temperature adjustment':
           'See GN3 Appendix A3 - multiply rule-of-thumb factor or use tables',

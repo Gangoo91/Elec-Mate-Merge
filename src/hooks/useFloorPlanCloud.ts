@@ -20,6 +20,52 @@ interface FloorPlanRow {
 }
 
 /**
+ * Soft ceiling for the serialised `rooms` JSONB payload. Room images are
+ * base64 PNGs, so a large multi-room plan can otherwise push a single row into
+ * the tens of megabytes. Base64 is ASCII, so string length ≈ bytes here.
+ */
+const MAX_ROOMS_PAYLOAD_BYTES = 4_000_000;
+
+/**
+ * Keep every room's high-res `fullImage` where the payload allows it, dropping
+ * them oldest-first (falling back to the thumbnail) only once the ceiling is
+ * hit. Rooms are otherwise returned untouched.
+ *
+ * Each room is serialised exactly once and the running total adjusted
+ * arithmetically — re-serialising the whole array per iteration would be
+ * quadratic on the largest payloads, which is precisely when it runs.
+ */
+function capRoomPayload(rooms: SavedRoom[]): SavedRoom[] {
+  let total = rooms.reduce((sum, room) => sum + JSON.stringify(room).length, 0);
+  if (total <= MAX_ROOMS_PAYLOAD_BYTES) return rooms;
+
+  const next = [...rooms];
+  let dropped = 0;
+  // Oldest first — the room being worked on now is the one most likely to be
+  // exported next, so it keeps its full-resolution image longest.
+  for (let i = 0; i < next.length && total > MAX_ROOMS_PAYLOAD_BYTES; i++) {
+    const image = next[i].fullImage;
+    if (!image) continue;
+    const { fullImage: _omitted, ...rest } = next[i];
+    next[i] = rest as SavedRoom;
+    total -= image.length;
+    dropped++;
+  }
+
+  if (total > MAX_ROOMS_PAYLOAD_BYTES) {
+    console.warn(
+      `[floor-plan] rooms payload still ~${total} bytes with every full image dropped — ` +
+        'thumbnails alone exceed the ceiling. The save may be rejected.'
+    );
+  } else {
+    console.warn(
+      `[floor-plan] rooms payload over ceiling — dropped full images from ${dropped} room(s)`
+    );
+  }
+  return next;
+}
+
+/**
  * Cloud sync for floor plans — saves to Supabase `floor_plans` table.
  * Uses local-first approach: localStorage is primary, Supabase is backup/sync.
  */
@@ -49,9 +95,16 @@ export function useFloorPlanCloud() {
       (sum, r) => sum + (r.symbolIds?.length || 0), 0
     );
 
-    // Strip fullImage from rooms before saving (too large for JSONB)
-    // Keep thumbnails only — fullImage regenerated from canvasState when needed
-    const roomsForDb = plan.rooms.map(({ fullImage, ...rest }) => rest);
+    // `fullImage` is the high-res render the PDF is built from. It used to be
+    // stripped here, with a comment claiming it was "regenerated from
+    // canvasState when needed" — nothing ever regenerated it. The result was
+    // that any plan which round-tripped through the cloud (every deep-linked
+    // project plan) exported its PDF from the 120x90 THUMBNAIL blown up to A4.
+    //
+    // So we keep it, and cap instead: if the payload would be unreasonably
+    // large for a JSONB column, drop full images oldest-first and keep the
+    // most recent rooms sharp rather than degrading all of them.
+    const roomsForDb = capRoomPayload(plan.rooms);
 
     const baseRow = {
       user_id: user.id,

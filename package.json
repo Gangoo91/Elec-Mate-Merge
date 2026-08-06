@@ -40,7 +40,13 @@
     "seo:bump-dates": "node scripts/seo-engine/bump-dates.mjs",
     "seo:bump-dates:dry": "node scripts/seo-engine/bump-dates.mjs --dry-run",
     "seo:bump-dates:force": "node scripts/seo-engine/bump-dates.mjs --force",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "check:question-quality": "node scripts/check-question-quality.mjs",
+    "check:tax": "npx tsx scripts/check-tax-rates.mjs",
+    "check:business-planning": "npx tsx scripts/check-business-planning.mjs",
+    "check:job-costing": "npx tsx scripts/check-job-costing.mjs",
+    "check:vat-cis": "npx tsx scripts/check-vat-cis.mjs",
+    "check:costing": "npx tsx scripts/check-costing-calculators.mjs"
   },
   "dependencies": {
     "@capacitor-community/contacts": "^7.2.0",

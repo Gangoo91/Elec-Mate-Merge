@@ -8,6 +8,8 @@ import { checkRegulationCompliance } from '@/utils/autoRegChecker';
 import RegulationWarningDialog from '../RegulationWarningDialog';
 
 interface MobileSmartAutoFillProps {
+  /** ELE-1505 — decides whether TN or TT Zs limits apply to the preview warning. */
+  earthingArrangement?: string;
   testResults: TestResult[];
   onUpdate: (id: string, updates: Partial<TestResult>) => void;
 }
@@ -187,7 +189,7 @@ const quickCircuitPresets = [
   },
 ];
 
-const MobileSmartAutoFill: React.FC<MobileSmartAutoFillProps> = ({ testResults, onUpdate }) => {
+const MobileSmartAutoFill: React.FC<MobileSmartAutoFillProps> = ({ testResults, onUpdate, earthingArrangement }) => {
   const [selectedCircuit, setSelectedCircuit] = useState<TestResult | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [showWarningDialog, setShowWarningDialog] = useState(false);
@@ -211,7 +213,7 @@ const MobileSmartAutoFill: React.FC<MobileSmartAutoFillProps> = ({ testResults, 
       autoFilled: true,
     };
 
-    const complianceCheck = checkRegulationCompliance(updatedResult);
+    const complianceCheck = checkRegulationCompliance(updatedResult, earthingArrangement);
 
     if (complianceCheck.warnings.length > 0) {
       setPendingUpdate({

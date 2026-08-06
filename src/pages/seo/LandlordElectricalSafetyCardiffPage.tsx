@@ -43,7 +43,7 @@ const keyTakeaways = [
   'Cardiff landlords are subject to the Renting Homes (Wales) Act 2022 — a separate and more comprehensive Welsh law than the England-only 2020 Regulations. All rental properties in Wales must have an up-to-date EICR, and Welsh Government has taken a more aggressive stance on rental property standards than England.',
   'Cardiff Council enforces landlord electrical safety through Shared Regulatory Services. Enforcement is active in Cathays — known as "Studentville" — Roath, Canton, and Pontcanna, where Victorian and Edwardian terraces house a large student HMO population.',
   'Cardiff University and Cardiff Metropolitan University generate significant demand for student HMOs, concentrated in Cathays and Roath. HMOs in these areas face mandatory licensing and EICR compliance obligations enforced by Cardiff Council.',
-  'If an EICR identifies C1 or C2 observations (classified under BS 7671 Section 631), Cardiff landlords must complete remedial work promptly. Cardiff Council can take enforcement action under the Housing Health and Safety Rating System (HHSRS) and the Renting Homes (Wales) Act 2022.',
+  'If an EICR identifies C1 or C2 observations (classified under BS 7671 Chapter 65), Cardiff landlords must complete remedial work promptly. Cardiff Council can take enforcement action under the Housing Health and Safety Rating System (HHSRS) and the Renting Homes (Wales) Act 2022.',
   "Common defects in Cardiff's older stock include rubber-insulated cabling in pre-1970s Roath and Canton terraces, absent RCDs on socket circuits (Regulation 411.3.3), and TT earthing systems in some older Cardiff properties — all of which generate C2 findings and require remedial work.",
 ];
 
@@ -466,7 +466,7 @@ const sections = [
     content: (
       <>
         <p>
-          When an EICR identifies C1 or C2 observations (classified under BS 7671 Section 631),
+          When an EICR identifies C1 or C2 observations (classified under BS 7671 Chapter 65),
           Cardiff landlords should complete remedial work within strict timescales — both to meet
           HHSRS compliance requirements, satisfy HMO licence conditions, and fulfil the fitness for
           human habitation duty under the Renting Homes (Wales) Act 2022.

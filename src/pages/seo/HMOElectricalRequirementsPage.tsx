@@ -106,8 +106,8 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/afdd-mandatory-hmo-care-home-a4-2026',
-    title: 'AFDD Mandatory in HMOs & Care Homes (A4:2026)',
+    href: '/guides/afdd-hmo-care-home-a4-2026',
+    title: 'AFDD Recommended in HMOs & Care Homes (A4:2026)',
     description: 'BS 7671:2018+A4:2026 expanded AFDD scope. Where, when, and EICR coding.',
     icon: ShieldCheck,
     category: 'Guide',
@@ -543,7 +543,7 @@ const sections = [
             <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <div>
               <p className="font-bold text-white mb-1">
-                AFDD now mandatory for HMO socket circuits
+                AFDD recommended for HMO socket circuits
               </p>
               <p className="text-white/90 text-sm leading-relaxed">
                 Under BS 7671:2018+A4:2026 Regulation 421.1.7, Arc Fault Detection Devices (AFDDs)
@@ -551,7 +551,7 @@ const sections = [
                 supplying socket-outlets rated up to 32A in HMOs. RCBOs alone are no longer
                 sufficient for new HMO installations. On an EICR, absence of AFDDs on qualifying
                 socket circuits in a new installation is a C2 observation. See our dedicated{' '}
-                <SEOInternalLink href="/guides/afdd-mandatory-hmo-care-home-a4-2026">
+                <SEOInternalLink href="/guides/afdd-hmo-care-home-a4-2026">
                   AFDD guide for HMOs
                 </SEOInternalLink>{' '}
                 for full EICR coding guidance.

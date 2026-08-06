@@ -165,7 +165,7 @@ const sections = [
             <li>• Standard for all UK domestic properties</li>
             <li>• Small commercial premises (offices, small retail): single phase 100A common</li>
             <li>
-              • RCD requirement: Regulation 411.3.4 — 30mA RCD for all socket outlet circuits in
+              • RCD requirement: Regulation 411.3.3 — 30mA RCD for socket outlet circuits in
               domestic installations
             </li>
           </ul>

@@ -122,7 +122,7 @@ export function MarketplaceSearchBar({
       {/* Search Input */}
       <div className="relative">
         {!query && (
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white pointer-events-none" />
         )}
         <Input
           ref={inputRef}
@@ -144,13 +144,13 @@ export function MarketplaceSearchBar({
               setQuery('');
               inputRef.current?.focus();
             }}
-            className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-muted rounded-full touch-manipulation"
+            className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-white/[0.06] rounded-full touch-manipulation"
           >
-            <X className="h-5 w-5 text-muted-foreground" />
+            <X className="h-5 w-5 text-white" />
           </button>
         )}
         {isLoading && (
-          <Loader2 className="absolute right-12 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground animate-spin" />
+          <Loader2 className="absolute right-12 top-1/2 -translate-y-1/2 h-5 w-5 text-white animate-spin" />
         )}
       </div>
 
@@ -164,12 +164,12 @@ export function MarketplaceSearchBar({
           {showRecent && (
             <div className="p-2">
               <div className="flex items-center justify-between px-3 py-2">
-                <span className="text-xs text-muted-foreground font-medium uppercase tracking-wide">
+                <span className="text-xs text-white font-medium uppercase tracking-wide">
                   Recent Searches
                 </span>
                 <button
                   onClick={clearSearches}
-                  className="text-xs text-muted-foreground hover:text-foreground touch-manipulation"
+                  className="text-xs text-white hover:text-foreground touch-manipulation"
                 >
                   Clear
                 </button>
@@ -179,11 +179,11 @@ export function MarketplaceSearchBar({
                   key={search}
                   onClick={() => handleSearch(search)}
                   className={cn(
-                    'w-full flex items-center gap-3 px-3 py-3 text-left hover:bg-muted rounded-lg touch-manipulation transition-colors',
-                    selectedIndex === index && 'bg-muted'
+                    'w-full flex items-center gap-3 px-3 py-3 text-left hover:bg-white/[0.06] rounded-lg touch-manipulation transition-colors',
+                    selectedIndex === index && 'bg-white/[0.06]'
                   )}
                 >
-                  <Clock className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                  <Clock className="h-4 w-4 text-white flex-shrink-0" />
                   <span className="truncate">{search}</span>
                 </button>
               ))}
@@ -194,7 +194,7 @@ export function MarketplaceSearchBar({
           {hasResults && (
             <div className="p-2">
               <div className="px-3 py-2">
-                <span className="text-xs text-muted-foreground font-medium uppercase tracking-wide">
+                <span className="text-xs text-white font-medium uppercase tracking-wide">
                   Products
                 </span>
               </div>
@@ -203,8 +203,8 @@ export function MarketplaceSearchBar({
                   key={product.id}
                   onClick={() => handleProductClick(product)}
                   className={cn(
-                    'w-full flex items-center gap-3 px-3 py-3 hover:bg-muted rounded-lg touch-manipulation transition-colors',
-                    selectedIndex === index && 'bg-muted'
+                    'w-full flex items-center gap-3 px-3 py-3 hover:bg-white/[0.06] rounded-lg touch-manipulation transition-colors',
+                    selectedIndex === index && 'bg-white/[0.06]'
                   )}
                 >
                   {/* Product Image */}
@@ -217,8 +217,8 @@ export function MarketplaceSearchBar({
                         loading="lazy"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-muted">
-                        <Search className="h-4 w-4 text-muted-foreground" />
+                      <div className="w-full h-full flex items-center justify-center bg-white/[0.06]">
+                        <Search className="h-4 w-4 text-white" />
                       </div>
                     )}
                   </div>
@@ -227,9 +227,9 @@ export function MarketplaceSearchBar({
                   <div className="flex-1 min-w-0 text-left">
                     <p className="font-medium truncate">{product.name}</p>
                     <div className="flex items-center gap-2 text-sm">
-                      <span className="text-muted-foreground">{product.supplier_name}</span>
+                      <span className="text-white">{product.supplier_name}</span>
                       {product.is_on_sale && (
-                        <span className="text-green-500 font-medium">
+                        <span className="text-elec-yellow font-medium">
                           {product.discount_percentage}% off
                         </span>
                       )}
@@ -242,7 +242,7 @@ export function MarketplaceSearchBar({
                       £{formatPrice(product.current_price)}
                     </p>
                     {product.regular_price && product.is_on_sale && (
-                      <p className="text-sm text-muted-foreground line-through">
+                      <p className="text-sm text-white line-through">
                         £{formatPrice(product.regular_price)}
                       </p>
                     )}
@@ -254,7 +254,7 @@ export function MarketplaceSearchBar({
               {searchResults?.hasMore && (
                 <button
                   onClick={() => handleSearch(query)}
-                  className="w-full flex items-center justify-center gap-2 px-3 py-3 text-elec-yellow hover:bg-muted rounded-lg touch-manipulation font-medium"
+                  className="w-full flex items-center justify-center gap-2 px-3 py-3 text-elec-yellow hover:bg-white/[0.06] rounded-lg touch-manipulation font-medium"
                 >
                   <TrendingUp className="h-4 w-4" />
                   View all results for "{query}"
@@ -266,16 +266,16 @@ export function MarketplaceSearchBar({
           {/* Loading State */}
           {isLoading && !hasResults && (
             <div className="p-8 text-center">
-              <Loader2 className="h-6 w-6 animate-spin mx-auto text-muted-foreground" />
-              <p className="mt-2 text-sm text-muted-foreground">Searching...</p>
+              <Loader2 className="h-6 w-6 animate-spin mx-auto text-white" />
+              <p className="mt-2 text-sm text-white">Searching...</p>
             </div>
           )}
 
           {/* No Results */}
           {!isLoading && query.length >= 2 && !hasResults && !showRecent && (
             <div className="p-8 text-center">
-              <Search className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
-              <p className="text-muted-foreground">No products found for "{query}"</p>
+              <Search className="h-8 w-8 mx-auto text-white mb-2" />
+              <p className="text-white">No products found for "{query}"</p>
               <button
                 onClick={() => handleSearch(query)}
                 className="mt-2 text-sm text-elec-yellow hover:underline touch-manipulation"

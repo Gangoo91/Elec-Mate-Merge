@@ -40,7 +40,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'BS 7671:2018+A2:2022 (the Brown Book) is the essential reference — every electrician must own the current edition and keep it accessible on site or at home.',
+  'BS 7671:2018+A4:2026 is the essential reference — every electrician must own the current edition and keep it accessible on site or at home.',
   'The On-Site Guide (OSG) is the practical companion to BS 7671, providing quick-reference tables for cable sizing, Zs limits, disconnection times, and correction factors.',
   'Guidance Note 3 (GN3) is the definitive reference for inspection and testing — essential reading for anyone doing EICRs, EICs, or preparing for the 2391 exam.',
   'Brian Scaddan books are the best-selling electrical training textbooks in the UK, covering the 18th Edition in accessible, apprentice-friendly language.',
@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'Which edition of BS 7671 should I buy?',
     answer:
-      'Buy BS 7671:2018+A2:2022, which is the 18th Edition including Amendment 1 and Amendment 2. This is the current printed book available from the IET. Amendment 4 (A4:2026) is published as a free PDF supplement — download it from the IET website and keep it with your book. Do not buy a second-hand copy of an older edition (16th or 17th Edition) unless you specifically need it for reference — all current work must be to the 18th Edition. When searching online, look for ISBN 978-1-78561-170-4 to ensure you get the correct current edition.',
+      'Buy the current 18th Edition, BS 7671:2018+A4:2026. The 18th Edition has had four amendments — A1:2020, A2:2022, A3:2024 and A4:2026 — so check what your copy incorporates before relying on it. Amendment 4 (A4:2026) is published as a free PDF supplement — download it from the IET website and keep it with your book. Do not buy a second-hand copy of an older edition (16th or 17th Edition) unless you specifically need it for reference — all current work must be to the 18th Edition. When searching online, look for ISBN 978-1-78561-170-4 to ensure you get the correct current edition.',
   },
   {
     question: 'What is Guidance Note 3 and do I need it?',
@@ -71,7 +71,7 @@ const faqs = [
   {
     question: 'What books do I need for the 2391 exam?',
     answer:
-      'For the City and Guilds 2391-52 (Initial Verification and Periodic Inspection and Testing), you need: BS 7671:2018+A2:2022 (the full regulation book), the On-Site Guide (OSG), Guidance Note 3 (GN3), and the IET model forms for EIC, EICR, and Minor Works Certificate. Many candidates also use a study guide such as "Inspection and Testing" by Chris Kitcher or "The City & Guilds 2391 Exam Guide" (check for 18th Edition versions). You are permitted to take BS 7671, the OSG, and GN3 into the exam, so ensure your copies are well-tabbed and you know where to find key tables quickly. Practice completing certificates and schedules of test results by hand — speed and accuracy under exam conditions are crucial.',
+      'For the City and Guilds 2391-52 (Initial Verification and Periodic Inspection and Testing), you need: BS 7671:2018+A4:2026 (the full regulation book), the On-Site Guide (OSG), Guidance Note 3 (GN3), and the IET model forms for EIC, EICR, and Minor Works Certificate. Many candidates also use a study guide such as "Inspection and Testing" by Chris Kitcher or "The City & Guilds 2391 Exam Guide" (check for 18th Edition versions). You are permitted to take BS 7671, the OSG, and GN3 into the exam, so ensure your copies are well-tabbed and you know where to find key tables quickly. Practice completing certificates and schedules of test results by hand — speed and accuracy under exam conditions are crucial.',
   },
   {
     question: 'Is Guidance Note 8 worth buying?',
@@ -205,7 +205,7 @@ const sections = [
   },
   {
     id: 'bs7671-brown-book',
-    heading: 'BS 7671:2018+A2:2022 — The Brown Book',
+    heading: 'BS 7671:2018+A4:2026 — The Wiring Regulations',
     content: (
       <>
         <div className="rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] p-6 my-4">
@@ -226,7 +226,7 @@ const sections = [
                 </div>
                 <div>
                   <div className="text-sm text-white mb-1">Edition</div>
-                  <div className="text-base font-bold text-white">18th (2018+A2:2022)</div>
+                  <div className="text-base font-bold text-white">18th (2018+A4:2026)</div>
                 </div>
                 <div>
                   <div className="text-sm text-white mb-1">Essential For</div>
@@ -253,7 +253,7 @@ const sections = [
           competent person scheme auditor visits, BS 7671 should be on your shelf.
         </p>
         <p>
-          The current printed edition is BS 7671:2018+A2:2022 (incorporating Amendments 1 and 2).
+          The current edition is BS 7671:2018+A4:2026, published 15 April 2026.
           Amendment 4 (A4:2026) is a free PDF supplement available from the IET website — download
           it and keep it with your Brown Book. Among the A4:2026 changes, Regulation 530.3.201
           requires the selection and erection of protective equipment to take account of whether a
@@ -735,7 +735,7 @@ export default function BestElectricalBooksPage() {
       answerBox={{
         question: 'What are the best electrical books for UK electricians?',
         answer:
-          'The four essentials are BS 7671:2018+A2:2022 (the Brown Book), the IET On-Site Guide, IET Guidance Note 3 (Inspection and Testing), and a Brian Scaddan training textbook. Domestic installers should add the Electrician’s Guide to the Building Regulations for Part P. Keep the free A4:2026 amendment PDF with your Brown Book.',
+          'The four essentials are BS 7671:2018+A4:2026, the IET On-Site Guide, IET Guidance Note 3 (Inspection and Testing), and a Brian Scaddan training textbook. Domestic installers should add the Electrician’s Guide to the Building Regulations for Part P. Keep the free A4:2026 amendment PDF with your Brown Book.',
       }}
       keyTakeaways={keyTakeaways}
       sections={sections}

@@ -10,6 +10,19 @@ import {
   SheetTitle,
 } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
+import { useHaptic } from '@/hooks/useHaptic';
+
+/**
+ * Room-specific starter sets. Hoisted to module scope so the arrays keep a
+ * stable identity across renders and can be looked up by label.
+ */
+const QUICK_PACKS: { label: string; symbols: string[] }[] = [
+  { label: 'Kitchen', symbols: ['socket-double-13a', 'socket-cooker-45a', 'socket-fused-spur', 'light-ceiling', 'switch-1way', 'extractor-fan', 'socket-switched-fused-spur'] },
+  { label: 'Bedroom', symbols: ['socket-double-13a', 'light-ceiling', 'switch-2way', 'smoke-detector', 'socket-usb', 'socket-tv-aerial'] },
+  { label: 'Bathroom', symbols: ['light-downlight', 'switch-pull-cord', 'socket-shaver', 'extractor-fan', 'light-bulkhead'] },
+  { label: 'Living Room', symbols: ['socket-double-13a', 'light-ceiling', 'switch-dimmer', 'socket-tv-aerial', 'socket-data', 'smoke-detector'] },
+  { label: 'Hallway', symbols: ['light-ceiling', 'switch-2way', 'smoke-detector', 'co-detector'] },
+];
 
 interface SymbolLibraryProps {
   open: boolean;
@@ -52,11 +65,17 @@ export const SymbolLibrary = ({
 }: SymbolLibraryProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState<SymbolCategory | 'all'>('all');
-  const [quickPackFilter, setQuickPackFilter] = useState<string[] | null>(null);
+  // Tracked by pack LABEL, not by the symbol array. The packs are defined as
+  // literals inside the render, so a new array is built every render and the
+  // old identity comparison (`quickPackFilter === pack.symbols`) was never
+  // true — the active pill never highlighted, so there was no way to tell
+  // which pack was applied or that one was applied at all.
+  const [activePack, setActivePack] = useState<string | null>(null);
   const [searchActive, setSearchActive] = useState(false);
   const [pendingSymbolId, setPendingSymbolId] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const haptic = useHaptic();
 
   // Reset search state when sheet closes
   useEffect(() => {
@@ -65,12 +84,17 @@ export const SymbolLibrary = ({
       setSearchTerm('');
       setPendingSymbolId(null);
       setQuantity(1);
+      setActivePack(null);
     }
   }, [open]);
 
+  const activePackSymbols = activePack
+    ? QUICK_PACKS.find((p) => p.label === activePack)?.symbols ?? null
+    : null;
+
   const filteredSymbols = symbolRegistry.filter((symbol) => {
-    if (quickPackFilter) {
-      return quickPackFilter.includes(symbol.id);
+    if (activePackSymbols) {
+      return activePackSymbols.includes(symbol.id);
     }
     const matchesSearch =
       !searchTerm ||
@@ -83,6 +107,7 @@ export const SymbolLibrary = ({
   const pendingSymbol = pendingSymbolId ? symbolRegistry.find((s) => s.id === pendingSymbolId) : null;
 
   const handleSymbolTap = (symbolId: string) => {
+    haptic.selection();
     if (pendingSymbolId === symbolId) {
       // Tapping same symbol again — deselect
       setPendingSymbolId(null);
@@ -95,6 +120,7 @@ export const SymbolLibrary = ({
 
   const handlePlace = () => {
     if (pendingSymbolId) {
+      haptic.success();
       onSymbolSelect(pendingSymbolId, quantity);
       setPendingSymbolId(null);
       setQuantity(1);
@@ -105,14 +131,14 @@ export const SymbolLibrary = ({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
-        className="h-[70vh] p-0 rounded-t-2xl overflow-hidden bg-elec-card border-white/10 flex flex-col"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-elec-card border-white/10 flex flex-col"
       >
         {/* Drag handle */}
         <div className="flex justify-center pt-2 pb-1">
           <div className="w-10 h-1 rounded-full bg-white/20" />
         </div>
 
-        <SheetHeader className="px-4 pb-3">
+        <SheetHeader className="w-full max-w-5xl mx-auto px-4 pb-3">
           <SheetTitle className="text-white text-lg font-semibold">Electrical Items</SheetTitle>
           <div className="relative mt-2">
             {!searchActive ? (
@@ -153,42 +179,43 @@ export const SymbolLibrary = ({
         </SheetHeader>
 
         {/* Quick Packs — common room-specific symbol sets */}
-        <div className="px-4 pb-2">
+        <div className="w-full max-w-5xl mx-auto px-4 pb-2">
           <div className="flex gap-2 overflow-x-auto scrollbar-hide">
-            {[
-              { label: 'Kitchen', symbols: ['socket-double-13a', 'socket-cooker-45a', 'socket-fused-spur', 'light-ceiling', 'switch-1way', 'extractor-fan', 'socket-switched-fused-spur'] },
-              { label: 'Bedroom', symbols: ['socket-double-13a', 'light-ceiling', 'switch-2way', 'smoke-detector', 'socket-usb', 'socket-tv-aerial'] },
-              { label: 'Bathroom', symbols: ['light-downlight', 'switch-pull-cord', 'socket-shaver', 'extractor-fan', 'light-bulkhead'] },
-              { label: 'Living Room', symbols: ['socket-double-13a', 'light-ceiling', 'switch-dimmer', 'socket-tv-aerial', 'socket-data', 'smoke-detector'] },
-              { label: 'Hallway', symbols: ['light-ceiling', 'switch-2way', 'smoke-detector', 'co-detector'] },
-            ].map((pack) => (
-              <button
-                key={pack.label}
-                onClick={() => {
-                  setSearchTerm('');
-                  setActiveCategory('all');
-                  setQuickPackFilter(pack.symbols);
-                }}
-                className={cn(
-                  'flex-shrink-0 px-3 py-1.5 rounded-full text-[10px] font-medium touch-manipulation active:scale-95 whitespace-nowrap',
-                  quickPackFilter === pack.symbols
-                    ? 'bg-elec-yellow/30 border border-elec-yellow/50 text-elec-yellow'
-                    : 'bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow'
-                )}
-              >
-                {pack.label}
-              </button>
-            ))}
+            {QUICK_PACKS.map((pack) => {
+              const isActive = activePack === pack.label;
+              return (
+                <button
+                  key={pack.label}
+                  aria-pressed={isActive}
+                  onClick={() => {
+                    setSearchTerm('');
+                    setActiveCategory('all');
+                    // Tapping the active pack clears it — otherwise the only
+                    // way out of a pack filter was to pick a category.
+                    haptic.light();
+                    setActivePack(isActive ? null : pack.label);
+                  }}
+                  className={cn(
+                    'flex-shrink-0 h-11 sm:h-8 px-3 rounded-full text-[11px] font-medium touch-manipulation active:scale-95 whitespace-nowrap border',
+                    isActive
+                      ? 'bg-elec-yellow border-elec-yellow text-black font-semibold'
+                      : 'bg-elec-yellow/10 border-elec-yellow/20 text-elec-yellow'
+                  )}
+                >
+                  {pack.label}
+                </button>
+              );
+            })}
           </div>
         </div>
 
         {/* Category pills — horizontal scroll */}
-        <div className="flex gap-1.5 overflow-x-auto px-4 pb-3 scrollbar-hide">
+        <div className="flex gap-1.5 overflow-x-auto w-full max-w-5xl mx-auto px-4 pb-3 scrollbar-hide">
           <button
-            onClick={() => { setActiveCategory('all'); setQuickPackFilter(null); }}
+            onClick={() => { setActiveCategory('all'); setActivePack(null); }}
             className={cn(
-              'flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-all touch-manipulation h-8',
-              activeCategory === 'all' && !quickPackFilter
+              'flex-shrink-0 px-3 rounded-full text-xs font-medium transition-all touch-manipulation h-11 sm:h-8',
+              activeCategory === 'all' && !activePack
                 ? 'bg-elec-yellow text-black'
                 : 'bg-white/5 border border-white/10 text-white'
             )}
@@ -198,10 +225,10 @@ export const SymbolLibrary = ({
           {categories.map((cat) => (
             <button
               key={cat.id}
-              onClick={() => { setActiveCategory(cat.id); setQuickPackFilter(null); }}
+              onClick={() => { setActiveCategory(cat.id); setActivePack(null); }}
               className={cn(
-                'flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-all touch-manipulation whitespace-nowrap h-8',
-                activeCategory === cat.id && !quickPackFilter
+                'flex-shrink-0 px-3 rounded-full text-xs font-medium transition-all touch-manipulation whitespace-nowrap h-11 sm:h-8',
+                activeCategory === cat.id && !activePack
                   ? 'bg-elec-yellow text-black'
                   : 'bg-white/5 border border-white/10 text-white'
               )}
@@ -212,8 +239,8 @@ export const SymbolLibrary = ({
         </div>
 
         {/* 4-col symbol grid — scrollable */}
-        <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-6">
-          <div className="grid grid-cols-4 gap-2">
+        <div className="flex-1 min-h-0 overflow-y-auto w-full max-w-5xl mx-auto px-4 pb-6">
+          <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-2">
             {filteredSymbols.map((symbol) => (
               <button
                 key={symbol.id}
@@ -242,7 +269,7 @@ export const SymbolLibrary = ({
 
         {/* Quantity picker + Place button — shown when a symbol is selected */}
         {pendingSymbol && (
-          <div className="px-4 py-3 border-t border-white/10 bg-elec-dark flex items-center gap-3">
+          <div className="w-full max-w-5xl mx-auto px-4 py-3 border-t border-white/10 bg-elec-dark flex items-center gap-3">
             <div className="flex items-center gap-1">
               <SymbolPreview symbolId={pendingSymbol.id} />
               <span className="text-white text-xs font-medium ml-1 max-w-[100px] truncate">{pendingSymbol.name}</span>
@@ -250,18 +277,18 @@ export const SymbolLibrary = ({
             <div className="flex items-center gap-0 ml-auto">
               <button
                 type="button"
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="h-10 w-10 rounded-l-lg bg-white/10 flex items-center justify-center touch-manipulation active:bg-white/20"
+                onClick={() => { haptic.selection(); setQuantity(Math.max(1, quantity - 1)); }}
+                className="h-11 w-11 rounded-l-lg bg-white/10 flex items-center justify-center touch-manipulation active:bg-white/20"
               >
                 <Minus className="h-4 w-4 text-white" />
               </button>
-              <div className="h-10 w-12 bg-white/5 flex items-center justify-center border-x border-white/10">
+              <div className="h-11 w-12 bg-white/5 flex items-center justify-center border-x border-white/10">
                 <span className="text-white text-lg font-bold">{quantity}</span>
               </div>
               <button
                 type="button"
-                onClick={() => setQuantity(Math.min(20, quantity + 1))}
-                className="h-10 w-10 rounded-r-lg bg-white/10 flex items-center justify-center touch-manipulation active:bg-white/20"
+                onClick={() => { haptic.selection(); setQuantity(Math.min(20, quantity + 1)); }}
+                className="h-11 w-11 rounded-r-lg bg-white/10 flex items-center justify-center touch-manipulation active:bg-white/20"
               >
                 <Plus className="h-4 w-4 text-white" />
               </button>
@@ -269,7 +296,7 @@ export const SymbolLibrary = ({
             <button
               type="button"
               onClick={handlePlace}
-              className="h-10 px-5 rounded-lg bg-elec-yellow text-black text-sm font-bold touch-manipulation active:scale-95"
+              className="h-11 px-5 rounded-lg bg-elec-yellow text-black text-sm font-bold touch-manipulation active:scale-95"
             >
               Place {quantity > 1 ? quantity : ''}
             </button>

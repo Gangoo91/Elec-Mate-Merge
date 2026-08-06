@@ -19,6 +19,27 @@ interface CalculatorInputProps extends Omit<InputHTMLAttributes<HTMLInputElement
   onChange?: (value: string) => void;
 }
 
+/**
+ * The calculator field style — the underline language from the design system.
+ *
+ * ⚠️ These MUST be utility classes passed through `cn()`, not an `@apply`'d
+ * class in index.css. The base shadcn <Input> carries its own utilities
+ * (`rounded-lg bg-input border border-border/50 placeholder:text-white`), and a
+ * component-layer class loses to them every time — a `.calculator-input` rule
+ * was doing exactly nothing here, and the fields still rendered as filled
+ * rounded boxes with a placeholder the same colour as a real value. `cn()` uses
+ * tailwind-merge, so utilities listed here beat the base component's.
+ *
+ * `md:text-base` is deliberate: the base sets `md:text-sm`, and anything under
+ * 16px makes iOS zoom the viewport when the field is focused.
+ */
+const FIELD =
+  'h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 ' +
+  'text-base md:text-base font-medium text-white placeholder:text-white/25 ' +
+  'caret-elec-yellow transition-colors hover:border-white/[0.3] ' +
+  'focus:border-elec-yellow focus:outline-none focus:ring-0 focus-visible:ring-0 ' +
+  '[color-scheme:dark] touch-manipulation';
+
 export const CalculatorInput = forwardRef<HTMLInputElement, CalculatorInputProps>(
   ({ label, unit, hint, error, onChange, className, id, ...props }, ref) => {
     const inputId = id || label.toLowerCase().replace(/\s+/g, '-');
@@ -34,11 +55,9 @@ export const CalculatorInput = forwardRef<HTMLInputElement, CalculatorInputProps
             id={inputId}
             onChange={(e) => onChange?.(e.target.value)}
             className={cn(
-              'calculator-input h-12 rounded-xl',
-              'text-white touch-manipulation',
-              'transition-all duration-200',
+              FIELD,
               unit && 'pr-14',
-              error && 'border-red-500/50 focus:border-red-500/50 focus:ring-red-500/10',
+              error && 'border-b-red-500/60 focus:border-b-red-500/60',
               className
             )}
             {...props}
@@ -98,10 +117,8 @@ export const CalculatorSelect = ({
         <SelectTrigger
           id={selectId}
           className={cn(
-            'calculator-input h-12 rounded-xl',
-            'text-white touch-manipulation',
-            'transition-all duration-200',
-            error && 'border-red-500/50',
+            FIELD,
+            error && 'border-b-red-500/60',
             className
           )}
         >
@@ -197,12 +214,10 @@ export const CalculatorNumberInput = ({
           onChange={(e) => handleChange(e.target.value)}
           onBlur={handleBlur}
           className={cn(
-            'calculator-input h-12 rounded-xl',
-            'text-white touch-manipulation',
-            'transition-all duration-200',
+            FIELD,
             '[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none',
             unit && 'pr-14',
-            error && 'border-red-500/50 focus:border-red-500/50 focus:ring-red-500/10',
+            error && 'border-b-red-500/60 focus:border-b-red-500/60',
             className
           )}
           {...props}

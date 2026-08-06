@@ -70,7 +70,7 @@ const sections = [
           </div>
         </div>
         <p className="mt-3 text-xs text-white/55">
-          Limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023).
+          Limb (b) was deleted by the BS 7671:2018+A2:2022 Corrigendum (May 2023) and remains absent in BS 7671:2018+A4:2026.
         </p>
         <div className="mt-4 rounded-2xl bg-amber-900/20 border border-amber-700/40 p-4">
           <p className="text-sm text-white/85">

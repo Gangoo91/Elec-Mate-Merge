@@ -31,7 +31,11 @@ export type LogEntryType =
   | 'variation'
   | 'fire_event'
   | 'drill'
-  | 'monthly_check';
+  | 'monthly_check'
+  // 2025 requires every deviation from the standard to be documented. Kept
+  // separate from 'variation': an agreed variation is sanctioned, a deviation
+  // may not be, and an enforcing authority treats them differently.
+  | 'deviation';
 
 export const ENTRY_TYPE_LABELS: Record<LogEntryType, string> = {
   weekly_test: 'Weekly call point test',
@@ -44,6 +48,7 @@ export const ENTRY_TYPE_LABELS: Record<LogEntryType, string> = {
   battery: 'Battery change',
   panel_event: 'Panel event',
   variation: 'Agreed variation',
+  deviation: 'Deviation from BS 5839-1',
 };
 
 /** BS 5839-1 clause 30 false alarm categories. */

@@ -2,6 +2,7 @@ import { TestResult } from '@/types/testResult';
 import { protectiveDeviceOptions } from '@/types/protectiveDeviceTypes';
 import { ZS_TEMP_FACTOR_GN3 } from '@/data/zsLimits';
 import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
+import { isRealCircuit } from '@/utils/validation/applicability';
 
 // BS 7671 limits and validation rules
 // Table 41.3 - MCBs to BS EN 60898 and RCBOs to BS EN 61009. The table's values
@@ -118,14 +119,61 @@ export interface TestValidationResults {
   functionalTesting: ValidationResult;
 }
 
+/**
+ * A row that carries no circuit, so has nothing to measure.
+ *
+ * A spare way has nothing connected to it; a device row (ELE-1484) records an
+ * incoming RCD, SPD or main switch, which protects several ways and is not a
+ * circuit. Neither should be asked for an R1+R2 or an insulation reading.
+ *
+ * `regulationChecker` learned this for device rows; this engine never knew
+ * about either, so every spare way on every certificate has carried a full set
+ * of phantom "value required" errors, and ELE-1484's exemption was only half
+ * applied. One definition, shared with the new registry.
+ */
+const carriesNoCircuit = (result: TestResult): boolean => !isRealCircuit(result);
+
+/** Nothing to validate — used for every field on a spare or device row. */
+const NOT_A_CIRCUIT: ValidationResult = {
+  isValid: true,
+  level: 'pass',
+  message: 'Not a circuit — no measurement required',
+};
+
 export const validateTestResult = (result: TestResult, earthingArrangement?: string): TestValidationResults => {
+  if (carriesNoCircuit(result)) {
+    return {
+      r1r2: NOT_A_CIRCUIT,
+      ringContinuityLive: NOT_A_CIRCUIT,
+      ringContinuityNeutral: NOT_A_CIRCUIT,
+      insulationLiveNeutral: NOT_A_CIRCUIT,
+      insulationLiveEarth: NOT_A_CIRCUIT,
+      insulationNeutralEarth: NOT_A_CIRCUIT,
+      polarity: NOT_A_CIRCUIT,
+      zs: NOT_A_CIRCUIT,
+      rcdTiming: NOT_A_CIRCUIT,
+      pfcLiveNeutral: NOT_A_CIRCUIT,
+      pfcLiveEarth: NOT_A_CIRCUIT,
+      functionalTesting: NOT_A_CIRCUIT,
+    };
+  }
+
   const validation: TestValidationResults = {
     r1r2: validateR1R2(result.r1r2, result.type),
     ringContinuityLive: validateRingContinuity(result.ringContinuityLive),
     ringContinuityNeutral: validateRingContinuity(result.ringContinuityNeutral),
-    insulationLiveNeutral: validateInsulationResistance(result.insulationLiveNeutral),
-    insulationLiveEarth: validateInsulationResistance(result.insulationLiveEarth),
-    insulationNeutralEarth: validateInsulationResistance(result.insulationNeutralEarth),
+    insulationLiveNeutral: validateInsulationResistance(
+      result.insulationLiveNeutral,
+      result.insulationTestVoltage
+    ),
+    insulationLiveEarth: validateInsulationResistance(
+      result.insulationLiveEarth,
+      result.insulationTestVoltage
+    ),
+    insulationNeutralEarth: validateInsulationResistance(
+      result.insulationNeutralEarth,
+      result.insulationTestVoltage
+    ),
     polarity: validatePolarity(result.polarity),
     zs: validateZs(result.zs, result.protectiveDevice, earthingArrangement, result.rcdRating, result),
     rcdTiming: validateRCDTiming(result.rcdRating, result.rcdOneX),
@@ -155,7 +203,7 @@ const validateR1R2 = (value: string, circuitType: string): ValidationResult => {
     return {
       isValid: false,
       level: 'warning',
-      message: 'R1+R2 value seems high - check connections',
+      message: 'R1+R2 seems high — Elec-Mate check, not a BS 7671 limit',
     };
   }
 
@@ -163,7 +211,7 @@ const validateR1R2 = (value: string, circuitType: string): ValidationResult => {
     return {
       isValid: false,
       level: 'warning',
-      message: 'R1+R2 value seems low - verify measurement',
+      message: 'R1+R2 seems low — Elec-Mate check, not a BS 7671 limit',
     };
   }
 
@@ -187,14 +235,43 @@ const validateRingContinuity = (value: string): ValidationResult => {
     return {
       isValid: false,
       level: 'warning',
-      message: 'Ring continuity high - check for loose connections',
+      message: 'Ring continuity high — Elec-Mate check, not a BS 7671 limit',
     };
   }
 
   return { isValid: true, level: 'pass', message: 'Ring continuity acceptable' };
 };
 
-const validateInsulationResistance = (value: string): ValidationResult => {
+/**
+ * Insulation resistance against BS 7671 Table 64 (Reg 643.3).
+ *
+ * Table 64 sets the minimum by the circuit's nominal voltage, and the test
+ * voltage identifies which band applies:
+ *
+ *   SELV / PELV          — 250 V DC test,  minimum 0.5 MΩ
+ *   circuits ≤ 500 V     — 500 V DC test,  minimum 1.0 MΩ
+ *   circuits > 500 V     — 1000 V DC test, minimum 1.0 MΩ
+ *
+ * This engine previously applied 1.0 MΩ to everything — the word "SELV" does
+ * not appear in this file — while `regulationChecker` allowed 0.5 MΩ for
+ * SELV/PELV. The same 0.7 MΩ reading was therefore compliant according to one
+ * engine and a failure according to the other, both shown in the same app.
+ *
+ * The band is read from `insulationTestVoltage`, which the schedule records,
+ * rather than searching the description for "12v" or "selv" as the other
+ * engine does. The recorded test voltage is the answer; the description is a
+ * guess at it.
+ */
+const validateInsulationResistance = (
+  value: string,
+  testVoltage?: string
+): ValidationResult => {
+  // 250 V is the SELV/PELV test, and the only band with a 0.5 MΩ minimum.
+  const isSelvBand = parseFloat(String(testVoltage ?? '').replace(/[^\d.]/g, '')) === 250;
+  const minimum = isSelvBand
+    ? 0.5
+    : BS7671_LIMITS.INSULATION_RESISTANCE.nominal_voltage_up_to_500V;
+
   if (!value || value.trim() === '') {
     return {
       isValid: false,
@@ -215,26 +292,28 @@ const validateInsulationResistance = (value: string): ValidationResult => {
     return { isValid: false, level: 'fail', message: 'Invalid insulation resistance format' };
   }
 
-  if (
-    value.includes('>') &&
-    numValue >= BS7671_LIMITS.INSULATION_RESISTANCE.nominal_voltage_up_to_500V
-  ) {
+  if (value.includes('>') && numValue >= minimum) {
     return { isValid: true, level: 'pass', message: 'Excellent insulation resistance' };
   }
 
-  if (numValue < BS7671_LIMITS.INSULATION_RESISTANCE.nominal_voltage_up_to_500V) {
+  if (numValue < minimum) {
     return {
       isValid: false,
       level: 'fail',
-      message: `Insulation resistance below BS 7671 minimum (${BS7671_LIMITS.INSULATION_RESISTANCE.nominal_voltage_up_to_500V}MΩ)`,
+      message: `Insulation resistance below BS 7671 Table 64 minimum (${minimum}MΩ${
+        isSelvBand ? ', SELV/PELV tested at 250V' : ''
+      })`,
     };
   }
 
-  if (numValue < 2.0) {
+  // Not a BS 7671 threshold — an Elec-Mate check. Table 64's minimum is the
+  // requirement; this is our own prompt to look at a reading that is legal but
+  // low. Labelled so it cannot be mistaken for a regulation.
+  if (!isSelvBand && numValue < 2.0) {
     return {
       isValid: false,
       level: 'warning',
-      message: 'Low insulation resistance - investigate further',
+      message: 'Low insulation resistance — Elec-Mate check, not a BS 7671 limit',
     };
   }
 
@@ -456,7 +535,7 @@ const validateZs = (
     return {
       isValid: false,
       level: 'warning',
-      message: 'Zs value high - verify protective device compatibility',
+      message: 'Zs high — Elec-Mate plausibility check; the BS 7671 limit depends on the device',
     };
   }
 
@@ -464,7 +543,7 @@ const validateZs = (
     return {
       isValid: false,
       level: 'warning',
-      message: 'Zs value low - verify measurement accuracy',
+      message: 'Zs low — Elec-Mate plausibility check, verify the measurement',
     };
   }
 
@@ -531,7 +610,7 @@ const validatePFC = (value: string): ValidationResult => {
     return {
       isValid: false,
       level: 'warning',
-      message: 'PFC value seems low - verify supply adequacy',
+      message: 'PFC low — Elec-Mate plausibility check, not a BS 7671 limit',
     };
   }
 
@@ -539,7 +618,7 @@ const validatePFC = (value: string): ValidationResult => {
     return {
       isValid: false,
       level: 'warning',
-      message: 'PFC value very high - check protective device ratings',
+      message: 'PFC high — Elec-Mate check; compare against the device breaking capacity',
     };
   }
 

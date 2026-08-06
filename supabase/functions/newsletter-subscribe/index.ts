@@ -26,6 +26,11 @@ import {
   type MockResultPayload,
   type MockResultMissedQuestion,
 } from '../_shared/mock-result-email.ts';
+import {
+  sendCalculatorResultEmail,
+  type CalculatorResultPayload,
+  type CalculatorResultRow,
+} from '../_shared/calculator-result-email.ts';
 
 const BREVO_CONTACTS_ENDPOINT = 'https://api.brevo.com/v3/contacts';
 
@@ -34,6 +39,7 @@ type Source =
   | 'exit_intent'
   | 'lead_magnet_cheatsheet'
   | 'mock_exam_result'
+  | 'calculator_result'
   | 'footer'
   | 'other';
 
@@ -46,6 +52,8 @@ interface Payload {
   utm?: Record<string, string | null | undefined>;
   /** Only for source === 'mock_exam_result'. Untrusted — sanitised below. */
   mock_result?: unknown;
+  /** Only for source === 'calculator_result'. Untrusted — sanitised below. */
+  calculator_result?: unknown;
 }
 
 function isValidEmail(email: string): boolean {
@@ -124,6 +132,50 @@ function sanitiseMockResult(raw: unknown): MockResultPayload | null {
   };
 }
 
+/**
+ * Sanitise a calculator result. Same rules as the mock result: this arrives from
+ * an unauthenticated public page, so every string is bounded, every array capped,
+ * and the URL is forced onto our own origin so the email cannot be used to send
+ * someone else's link under our sending domain.
+ */
+function sanitiseCalculatorResult(raw: unknown): CalculatorResultPayload | null {
+  if (!raw || typeof raw !== 'object') return null;
+  const r = raw as Record<string, unknown>;
+
+  const calculatorName = str(r.calculatorName, 80);
+  const headline = str(r.headline, 120);
+  if (!calculatorName || !headline) return null;
+
+  // Take a PATH, not a slug: two calculators live outside /tools/
+  // (/electrical-testing-calculators and /guides/hourly-rate-calculator-electrician),
+  // so assuming the /tools/ prefix produced a dead link for them.
+  // Still force our own origin — this arrives from a public page and the email
+  // must never carry someone else's link under our sending domain.
+  const rawPath = str(r.calculatorPath, 160).replace(/[^a-z0-9/-]/gi, '');
+  const path = rawPath.startsWith('/') ? rawPath.replace(/\/{2,}/g, '/') : '';
+  const calculatorUrl = path
+    ? `https://www.elec-mate.com${path}`
+    : 'https://www.elec-mate.com/electrical-testing-calculators';
+
+  const rows = (v: unknown): CalculatorResultRow[] =>
+    (Array.isArray(v) ? v : [])
+      .slice(0, 12)
+      .map((x) => {
+        const row = x as Record<string, unknown>;
+        return { label: str(row.label, 60), value: str(row.value, 60) };
+      })
+      .filter((x) => x.label && x.value);
+
+  return {
+    calculatorName,
+    calculatorUrl,
+    headline,
+    inputs: rows(r.inputs),
+    outputs: rows(r.outputs),
+    basis: str(r.basis, 160) || undefined,
+  };
+}
+
 async function addToBrevoList(
   apiKey: string,
   email: string,
@@ -185,7 +237,10 @@ serve(async (req) => {
 
     const isLeadMagnet = body.source === 'lead_magnet_cheatsheet';
     const isMockExam = body.source === 'mock_exam_result';
-    const listIdRaw = isMockExam
+    const isCalculator = body.source === 'calculator_result';
+    const listIdRaw = isCalculator
+      ? Deno.env.get('BREVO_CALCULATOR_LIST_ID') || Deno.env.get('BREVO_NEWSLETTER_LIST_ID')
+      : isMockExam
       ? Deno.env.get('BREVO_MOCK_EXAM_LIST_ID') || Deno.env.get('BREVO_NEWSLETTER_LIST_ID')
       : isLeadMagnet
         ? Deno.env.get('BREVO_LEAD_MAGNET_LIST_ID') || Deno.env.get('BREVO_NEWSLETTER_LIST_ID')
@@ -202,6 +257,14 @@ serve(async (req) => {
 
     // Mock exam breakdowns are the whole reason the visitor handed over an
     // email — if we can't build one, don't pretend we sent it.
+    const calcResult = isCalculator ? sanitiseCalculatorResult(body.calculator_result) : null;
+    if (isCalculator && !calcResult) {
+      return new Response(JSON.stringify({ error: 'Calculation missing or malformed' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     const mockResult = isMockExam ? sanitiseMockResult(body.mock_result) : null;
     if (isMockExam && !mockResult) {
       return new Response(JSON.stringify({ error: 'Exam result missing or malformed' }), {
@@ -216,6 +279,7 @@ serve(async (req) => {
       SIGNUP_SOURCE: body.source,
       // Segmentation for the exam nurture — which exam, and how they did.
       LAST_EXAM: mockResult?.examName,
+      LAST_CALCULATOR: calcResult?.calculatorName,
       LAST_EXAM_SCORE: mockResult ? String(mockResult.percentage) : undefined,
       LAST_EXAM_PASSED: mockResult ? String(mockResult.passed) : undefined,
       UTM_SOURCE: body.utm?.utm_source ?? undefined,
@@ -265,6 +329,11 @@ serve(async (req) => {
     // Mock exam breakdown — same fire-and-forget shape.
     if (mockResult) {
       sendMockResultEmail(email, mockResult).catch(() => {});
+    }
+
+    // Calculator result — same fire-and-forget shape.
+    if (calcResult) {
+      sendCalculatorResultEmail(email, calcResult).catch(() => {});
     }
 
     const download_url = isLeadMagnet ? pdfUrl : null;

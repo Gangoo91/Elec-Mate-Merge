@@ -10,6 +10,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Regulation 643.1 specifically covers the requirements for initial verification of electrical installations.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 2,
@@ -20,6 +21,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Regulation 411.3.3 mandates RCD protection for circuits supplying portable outdoor equipment.',
     category: 'Protection & Devices',
+    difficulty: 'intermediate'
   },
   {
     id: 3,
@@ -29,6 +31,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'BS 7671 requires a minimum insulation resistance of 1 MΩ for circuits up to 500V.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 4,
@@ -38,6 +41,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'For TT systems, the maximum disconnection time for RCDs is 300 milliseconds at rated residual current.',
     category: 'Protection & Devices',
+    difficulty: 'advanced'
   },
   {
     id: 5,
@@ -48,6 +52,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Table 41.3 gives a maximum Zs of 1.37Ω for a 32A Type B MCB at 230V (includes the Cmin factor of 0.95). 1.44Ω is the old pre-Cmin figure; 1.10Ω is the cold-measured site limit after applying the 0.80 rule-of-thumb factor.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
 
   // Testing Procedures
@@ -64,6 +69,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Continuity of protective conductors is a dead test carried out before insulation resistance; loop impedance, RCD and PFC tests are all live tests performed later in the sequence.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 7,
@@ -81,11 +87,19 @@ export const mockExamQuestions: QuizQuestion[] = [
   },
   {
     id: 8,
-    question: 'What should happen when a 30mA RCD is tested at 5x IΔn?',
-    options: ['Trip within 40ms', 'Trip within 300ms', 'Trip within 200ms', 'Not trip at all'],
+    question:
+      'How does BS 7671:2018+A4:2026 require the effectiveness of a 30mA RCD to be verified?',
+    options: [
+      'A single AC test at IΔn, whatever the RCD type',
+      'A test at 5x IΔn on both half-cycles',
+      'Tests at ½x, 1x and 5x IΔn in sequence',
+      'The integral test button alone',
+    ],
     correctAnswer: 0,
-    explanation: 'At 5 times rated current, an RCD must trip within 40 milliseconds.',
+    explanation:
+      'Amendment 4 deleted Table 3A (time/current performance criteria for RCDs) from Appendix 3. Regulation 643.7.3.201 now calls for a single alternating current test at the rated residual operating current, IΔn, regardless of RCD type — AC, A, F or B. A general non-delay device must operate within 300ms. The 5x IΔn test still has a place in fault-finding, but it is no longer part of the required verification.',
     category: 'Protection & Devices',
+    difficulty: 'advanced'
   },
   {
     id: 9,
@@ -100,6 +114,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'A loop impedance tester or multifunction tester is specifically designed for Zs measurements.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 10,
@@ -113,6 +128,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'A dedicated proving unit should be used to prove a voltage indicator immediately before and after testing, confirming it works on a known source (GS38).',
+    difficulty: 'intermediate'
   },
 
   // Inspection Sequencing
@@ -123,6 +139,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation: 'General safety assessment should be the first priority during any inspection.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 12,
@@ -137,6 +154,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Dead testing should follow visual inspection but precede any live testing for safety.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 13,
@@ -151,6 +169,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Polarity verification ensures single-pole switches, fuses and protective devices are connected in the line conductor, not the neutral.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 14,
@@ -165,6 +184,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Visual inspection of cables checks for physical damage, correct routing and adequate support; insulation resistance is a separate dead test, not a visual check.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 15,
@@ -179,6 +199,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Visual inspection of the enclosure (IP rating, signs of overheating, general condition) precedes the detailed dead and live testing of individual circuits.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
 
   // Safe Isolation
@@ -209,6 +230,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Safe isolation requires: Isolate, Test dead, Prove tester working, then Lock off if required.',
     category: 'Safe Isolation',
+    difficulty: 'advanced'
   },
   {
     id: 18,
@@ -217,6 +239,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation: 'Voltage indicators must be proven on a known live source before and after use.',
     category: 'Safe Isolation',
+    difficulty: 'intermediate'
   },
   {
     id: 19,
@@ -231,6 +254,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Safety glasses and insulated gloves protect against arc flash and contact during live work; the other items address unrelated hazards.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 20,
@@ -245,6 +269,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Knowing the supply characteristics (Uo, frequency) and earthing arrangement (TN-S, TN-C-S, TT) is fundamental to designing protection and working safely.',
     category: 'Earthing & Bonding',
+    difficulty: 'intermediate'
   },
 
   // Fault Recognition
@@ -261,6 +286,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'A high Zs indicates high resistance in the earth fault loop, often from loose connections or an undersized/poorly connected CPC, which may prevent timely disconnection.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 22,
@@ -275,6 +301,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Low insulation resistance commonly results from moisture, connected equipment giving a parallel path, or genuine insulation breakdown.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 23,
@@ -289,6 +316,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'An RCD that fails to trip when test current is applied indicates a faulty device.',
     category: 'Inspection & Testing',
+    difficulty: 'basic'
   },
   {
     id: 24,
@@ -302,6 +330,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation: 'An infinite resistance reading indicates an open circuit or break in the ring.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 25,
@@ -316,6 +345,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'A discontinuous protective conductor is potentially dangerous; it must be recorded as a defect and the responsible person informed so it can be remedied.',
     category: 'Earthing & Bonding',
+    difficulty: 'intermediate'
   },
 
   // Certificate Completion
@@ -332,6 +362,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Replacing a consumer unit is new work requiring an EIC; a MEIWC covers only minor additions/alterations not involving a new circuit, and an EICR assesses existing installations.',
     category: 'Certification & Reporting',
+    difficulty: 'intermediate'
   },
   {
     id: 27,
@@ -346,6 +377,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'An EIC covers new installations and additions of new circuits; a MEIWC covers minor alterations such as adding a socket to an existing circuit.',
     category: 'Certification & Reporting',
+    difficulty: 'intermediate'
   },
   {
     id: 28,
@@ -360,6 +392,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'The person who actually performed the inspection and testing must sign that section, confirming the results are their own.',
     category: 'Inspection & Testing',
+    difficulty: 'basic'
   },
   {
     id: 29,
@@ -375,6 +408,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'The extent section must specify exactly which areas and circuits were included in the inspection, so the report scope is unambiguous.',
     category: 'Certification & Reporting',
+    difficulty: 'advanced'
   },
   {
     id: 30,
@@ -389,6 +423,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Limitations are recorded when agreed restrictions, such as inaccessible areas or occupied premises, prevent full inspection or testing.',
     category: 'Certification & Reporting',
+    difficulty: 'intermediate'
   },
 
   // Observation Coding
@@ -399,6 +434,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'Missing RCD protection in a kitchen is potentially dangerous, warranting a C2 code.',
+    difficulty: 'advanced'
   },
   {
     id: 32,
@@ -413,6 +449,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'FI indicates that Further Investigation is required without delay to determine the full extent of a potential safety issue.',
     category: 'Certification & Reporting',
+    difficulty: 'basic'
   },
   {
     id: 33,
@@ -421,6 +458,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation: 'A missing circuit protective conductor poses a potentially dangerous situation.',
     category: 'Certification & Reporting',
+    difficulty: 'intermediate'
   },
   {
     id: 34,
@@ -435,6 +473,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'C1 means danger is present and immediate remedial action is required; C2 is potentially dangerous and C3 is improvement recommended.',
     category: 'Certification & Reporting',
+    difficulty: 'intermediate'
   },
   {
     id: 35,
@@ -449,6 +488,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'C3 observations are for improvements recommended to enhance safety or compliance.',
     category: 'Certification & Reporting',
+    difficulty: 'advanced'
   },
 
   // Additional Questions - Testing Procedures
@@ -460,6 +500,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'SELV circuits should be tested at 250V DC to avoid damage to low voltage equipment.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 37,
@@ -470,6 +511,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'A low-resistance instrument should have a no-load voltage between 4V and 24V and a short-circuit current capability of not less than 200mA. That drive current is what makes a low-resistance reading reliable — it is the instrument capability, not a value you set.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 38,
@@ -484,6 +526,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Zs is the total earth fault loop impedance, critical for ensuring protective device operates within required time.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 39,
@@ -498,6 +541,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'PFC is Prospective Fault Current, measured to ensure equipment can safely interrupt fault currents.',
     category: 'Protection & Devices',
+    difficulty: 'intermediate'
   },
   {
     id: 40,
@@ -512,6 +556,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Each conductor leg (r1, rn, r2) is measured end-to-end, then line and CPC are cross-connected so every socket reads about (r1+r2)/4, confirming ring integrity and revealing spurs.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
 
   // Advanced Regulatory Knowledge
@@ -522,6 +567,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'Table 41.3 gives a maximum Zs of 2.19Ω for a 20A Type B MCB at 230V (includes the Cmin factor of 0.95). 2.30Ω is the old pre-Cmin figure.',
+    difficulty: 'advanced'
   },
   {
     id: 42,
@@ -531,6 +577,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Regulation 411.3.3 (BS 7671:2018+A4) requires additional RCD protection (≤30mA) for socket-outlets with a rated current not exceeding 32A; for dwellings there is no risk-assessment exemption.',
     category: 'Protection & Devices',
+    difficulty: 'basic'
   },
   {
     id: 43,
@@ -541,6 +588,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'The minimum size for a main earthing conductor is typically 10mm² for domestic installations.',
     category: 'Earthing & Bonding',
+    difficulty: 'advanced'
   },
   {
     id: 44,
@@ -549,6 +597,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation: 'Equipment in bathroom Zone 1 requires a minimum IP rating of IPX4.',
     category: 'Special Locations',
+    difficulty: 'advanced'
   },
   {
     id: 45,
@@ -563,6 +612,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Supplementary bonding may be omitted if all circuits in the location have RCD protection.',
     category: 'Earthing & Bonding',
+    difficulty: 'advanced'
   },
 
   // Testing Equipment and Calibration
@@ -573,6 +623,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation: 'Test instruments should typically be calibrated annually to maintain accuracy.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 47,
@@ -587,6 +638,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Always prove the meter works on a known live source before relying on a dead reading.',
     category: 'Inspection & Testing',
+    difficulty: 'basic'
   },
   {
     id: 48,
@@ -595,6 +647,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation: 'Earth fault loop impedance testers should be accuracy Class 2 or better.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 49,
@@ -608,6 +661,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation: 'Connected equipment should be disconnected where practicable, as parallel paths through it can give misleadingly low readings or be damaged by the test voltage.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 50,
@@ -617,6 +671,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'RCD testing at normal tripping current uses 100% of the rated residual current (IΔn).',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
 
   // Documentation and Records
@@ -633,6 +688,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Failure to document results can lead to legal liability, regulatory non-compliance and rejection of the work, since the certificate is the formal record of safety.',
     category: 'Inspection & Testing',
+    difficulty: 'basic'
   },
   {
     id: 52,
@@ -641,6 +697,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation: 'Electrical certificates should be retained for the life of the installation.',
     category: 'Certification & Reporting',
+    difficulty: 'intermediate'
   },
   {
     id: 53,
@@ -654,6 +711,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation: 'A copy must be given to the person ordering the work, with notification to building control or the competent person scheme as relevant authorities.',
     category: 'Certification & Reporting',
+    difficulty: 'intermediate'
   },
   {
     id: 54,
@@ -667,6 +725,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation: 'Schedules must include actual measured values, not just pass/fail indications.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 55,
@@ -681,6 +740,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'The EICR front page must state the overall assessment (satisfactory/unsatisfactory) and the recommended date or interval for the next inspection.',
     category: 'Certification & Reporting',
+    difficulty: 'intermediate'
   },
 
   // Specific Testing Scenarios
@@ -697,6 +757,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'A two-way circuit must switch the lamp correctly from either switch position, confirming the strappers and common connections are wired correctly.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 57,
@@ -711,6 +772,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'PV arrays generate DC whenever there is light, so DC isolation procedures and awareness that the array cannot be made fully dead in daylight are essential.',
     category: 'EV & Renewables',
+    difficulty: 'advanced'
   },
   {
     id: 58,
@@ -725,6 +787,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'In an IT system the first fault does not cause disconnection, so the insulation monitoring device that signals that first fault must be verified.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 59,
@@ -739,6 +802,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Functional testing confirms that switchgear, isolators, controls and interlocks operate correctly and as intended in service.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 60,
@@ -753,6 +817,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Emergency lighting must be tested by simulating loss of the normal supply, confirming the luminaires illuminate and run for their rated duration (BS 5266).',
     category: 'Design & Selection',
+    difficulty: 'intermediate'
   },
 
   // Advanced Fault Finding
@@ -783,6 +848,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Intermittent RCD operation often indicates earth leakage or neutral-earth faults developing.',
     category: 'Protection & Devices',
+    difficulty: 'intermediate'
   },
   {
     id: 63,
@@ -797,6 +863,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Low insulation resistance between line and neutral typically results from moisture ingress, physical cable damage or deteriorated insulation.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 64,
@@ -810,6 +877,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation: 'High Zs on a lighting circuit often indicates loose, broken or missing CPC connections increasing the earth fault loop resistance.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 65,
@@ -823,6 +891,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation: 'Sockets on the ring read approximately equal; a spur shows a noticeably higher reading because of the extra non-ring cable length to it.',
     category: 'Cables & Containment',
+    difficulty: 'intermediate'
   },
 
   // Additional Regulatory and Safety
@@ -839,6 +908,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Main protective bonding connects extraneous-conductive-parts (water, gas, structural metalwork) to the main earthing terminal, limiting touch voltages during a fault.',
     category: 'Earthing & Bonding',
+    difficulty: 'advanced'
   },
   {
     id: 67,
@@ -853,6 +923,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'An RCBO combines the functions of an MCB (overload and short-circuit protection) and an RCD (residual/earth leakage protection) in a single device.',
     category: 'Protection & Devices',
+    difficulty: 'intermediate'
   },
   {
     id: 68,
@@ -862,6 +933,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'A 32A ring final in 2.5mm² cable should not exceed approximately 100 metres total cable length.',
     category: 'Cables & Containment',
+    difficulty: 'advanced'
   },
   {
     id: 69,
@@ -870,6 +942,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'Type B MCBs are designed to trip magnetically between 3-5 times their rated current.',
+    difficulty: 'advanced'
   },
   {
     id: 70,
@@ -883,6 +956,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'PSCC is the maximum current that would flow during a short circuit between live conductors, and determines the breaking capacity required of protective devices.',
+    difficulty: 'intermediate'
   },
 
   // Final 30 Questions - Mixed Topics
@@ -895,6 +969,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'The recommended limits are 3% for lighting circuits and 5% for other uses (for an installation supplied directly from a public distribution network).',
     category: 'Cables & Containment',
+    difficulty: 'advanced'
   },
   {
     id: 72,
@@ -903,6 +978,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation: 'TN systems have the supply transformer star point directly earthed.',
     category: 'Earthing & Bonding',
+    difficulty: 'advanced'
   },
   {
     id: 73,
@@ -911,6 +987,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation: 'The minimum approach distance to overhead lines up to 33kV is 6 metres.',
     category: 'Safe Isolation',
+    difficulty: 'advanced'
   },
   {
     id: 74,
@@ -924,6 +1001,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'Cables less than 50mm deep in walls require RCD protection or additional mechanical protection.',
+    difficulty: 'advanced'
   },
   {
     id: 75,
@@ -931,6 +1009,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     options: ['Green/Yellow', 'Black', 'Brown', 'Blue'],
     correctAnswer: 3,
     explanation: 'The neutral conductor in flexible cords should be blue.',
+    difficulty: 'intermediate'
   },
   {
     id: 76,
@@ -939,6 +1018,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     options: ['16A', '13A', '10A', '20A'],
     correctAnswer: 0,
     explanation: 'Portable equipment is typically limited to 16A maximum rating.',
+    difficulty: 'advanced'
   },
   {
     id: 77,
@@ -948,6 +1028,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Fire barriers should be provided at intervals not exceeding 5 metres in cable routes.',
     category: 'Cables & Containment',
+    difficulty: 'advanced'
   },
   {
     id: 78,
@@ -962,6 +1043,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'SELV (Separated Extra-Low Voltage) limits the voltage to a level considered safe for contact (≤50V AC), using electrical separation from earth and from higher voltages.',
     category: 'Protection & Devices',
+    difficulty: 'intermediate'
   },
   {
     id: 79,
@@ -976,6 +1058,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Polarity at a switch is verified by continuity testing, confirming the switch is connected in the line conductor and not the neutral.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 80,
@@ -984,6 +1067,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation: 'Touch voltage should generally not exceed 50V in dry conditions for safety.',
     category: 'Design & Selection',
+    difficulty: 'intermediate'
   },
   {
     id: 81,
@@ -998,6 +1082,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Class II equipment has double or reinforced insulation and no accessible earthed parts.',
     category: 'Earthing & Bonding',
+    difficulty: 'intermediate'
   },
   {
     id: 82,
@@ -1012,6 +1097,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Continuity tests use a low-resistance ohmmeter delivering at least 200mA at no more than 24V open-circuit, with the circuit dead.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 83,
@@ -1032,6 +1118,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     options: ['70°C', '85°C', '90°C', '60°C'],
     correctAnswer: 0,
     explanation: 'Standard PVC insulated cables have a maximum operating temperature of 70°C.',
+    difficulty: 'advanced'
   },
   {
     id: 85,
@@ -1046,6 +1133,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Diversity recognises that not all connected loads operate at full demand simultaneously, allowing economic sizing of the supply and main cables.',
     category: 'Design & Selection',
+    difficulty: 'advanced'
   },
   {
     id: 86,
@@ -1054,6 +1142,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'Outdoor equipment typically requires a minimum IP rating of IP65 for weather protection.',
+    difficulty: 'advanced'
   },
   {
     id: 87,
@@ -1068,6 +1157,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Underground runs need mechanical protection against penetration and ground movement, met by SWA armoured cable or cable drawn into suitable buried conduit/ducting.',
     category: 'Cables & Containment',
+    difficulty: 'intermediate'
   },
   {
     id: 88,
@@ -1082,6 +1172,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Equipotential bonding keeps simultaneously accessible conductive parts at substantially the same potential, preventing a dangerous voltage difference during a fault.',
     category: 'Earthing & Bonding',
+    difficulty: 'intermediate'
   },
   {
     id: 89,
@@ -1096,6 +1187,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Grouped cables cannot dissipate heat as freely, so a grouping rating factor (Cg) is applied to reduce their current-carrying capacity.',
     category: 'Cables & Containment',
+    difficulty: 'advanced'
   },
   {
     id: 90,
@@ -1110,6 +1202,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Discrimination ensures only the protective device immediately upstream of a fault operates, leaving the rest of the installation supplied.',
     category: 'Protection & Devices',
+    difficulty: 'intermediate'
   },
   {
     id: 91,
@@ -1120,6 +1213,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Table 41.3 gives a maximum Zs of 7.28Ω for a 6A Type B MCB at 230V (includes the Cmin factor of 0.95). 7.67Ω is the old pre-Cmin figure.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 92,
@@ -1134,6 +1228,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'With PME the earthing terminal is connected to the supply PEN conductor, giving a low earth fault loop impedance; the trade-off is the open-PEN hazard.',
     category: 'Earthing & Bonding',
+    difficulty: 'intermediate'
   },
   {
     id: 93,
@@ -1148,6 +1243,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Repeated tripping indicates a genuine fault or excessive leakage that must be found and corrected; uprating or bypassing the device is dangerous.',
     category: 'Protection & Devices',
+    difficulty: 'basic'
   },
   {
     id: 94,
@@ -1162,6 +1258,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'For line conductors up to 16mm², the protective conductor should be the same size.',
+    difficulty: 'advanced'
   },
   {
     id: 95,
@@ -1171,6 +1268,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Type A RCDs should be used where electronic loads may produce DC components in earth fault current.',
     category: 'Protection & Devices',
+    difficulty: 'advanced'
   },
   {
     id: 96,
@@ -1185,6 +1283,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'An isolator provides secure disconnection of the supply to allow safe working; it is not designed for routine on-load switching.',
     category: 'Safe Isolation',
+    difficulty: 'intermediate'
   },
   {
     id: 97,
@@ -1194,6 +1293,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'A 1.5mm² lighting circuit with B10 MCB has a maximum length of approximately 37 metres.',
     category: 'Protection & Devices',
+    difficulty: 'advanced'
   },
   {
     id: 98,
@@ -1201,6 +1301,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     options: ['40Hz', '60Hz', '50Hz', '100Hz'],
     correctAnswer: 2,
     explanation: 'The UK mains supply frequency is 50Hz.',
+    difficulty: 'intermediate'
   },
   {
     id: 99,
@@ -1215,6 +1316,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'The first characteristic numeral 2 means protection against solid objects ≥12.5mm, i.e. finger contact with hazardous live parts.',
     category: 'Design & Selection',
+    difficulty: 'intermediate'
   },
   {
     id: 100,
@@ -1223,6 +1325,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation: 'Domestic ring final circuits are typically protected by 32A protective devices.',
     category: 'Cables & Containment',
+    difficulty: 'intermediate'
   },
 
   // Advanced Regulatory Knowledge (Questions 101-115)
@@ -1235,6 +1338,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'For TN systems, final circuits not exceeding 32A must disconnect within 0.4 seconds according to Table 41.1 of BS 7671.',
     category: 'Protection & Devices',
+    difficulty: 'intermediate'
   },
   {
     id: 102,
@@ -1244,6 +1348,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'Part 4 of BS 7671 covers protection for safety, including devices for protection against electric shock.',
+    difficulty: 'intermediate'
   },
   {
     id: 103,
@@ -1253,6 +1358,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'The principal designer has the duty to coordinate design work and ensure designs are properly integrated under CDM 2015.',
+    difficulty: 'advanced'
   },
   {
     id: 104,
@@ -1266,6 +1372,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'Like-for-like replacement of accessories does not require Building Control notification under Part P.',
+    difficulty: 'intermediate'
   },
   {
     id: 105,
@@ -1275,6 +1382,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'BS 7671 does not specify a minimum earth electrode resistance; the requirement is that RCD protection operates correctly.',
     category: 'Earthing & Bonding',
+    difficulty: 'advanced'
   },
   {
     id: 106,
@@ -1284,6 +1392,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'Regulation 134.1.1 requires protective devices to be selected to suit the characteristics of the circuit they protect.',
+    difficulty: 'advanced'
   },
   {
     id: 107,
@@ -1297,6 +1406,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'HSWA 1974 places duties on employers (to provide safe systems of work) and on employees (to take reasonable care and to cooperate).',
+    difficulty: 'intermediate'
   },
   {
     id: 108,
@@ -1305,6 +1415,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'A Type C MCB trips at 10×In, so for a C16: Zs = (Cmin × Uo)/Ia = (0.95 × 230)/160 = 1.37Ω per Table 41.3.',
+    difficulty: 'advanced'
   },
   {
     id: 109,
@@ -1313,6 +1424,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'Part 7 of BS 7671 covers special installations or locations with specific requirements.',
+    difficulty: 'advanced'
   },
   {
     id: 110,
@@ -1327,14 +1439,20 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'ESQCR 2002 primarily regulates the safety and quality of public electricity supply networks operated by DNOs.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 111,
-    question: 'What is the required minimum height for overhead power lines crossing a road?',
-    options: ['5.2m', '6.7m', '6.0m', '5.8m'],
-    correctAnswer: 3,
+    question: 'Under BS 7671:2018+A4:2026, which regulation gives the maximum disconnection times for final circuits?',
+    options: [
+      'Regulation 411.3.2.2',
+      'Regulation 411.3.1.1',
+      'Regulation 411.3.1.2',
+      'Regulation 411.4.204',
+    ],
+    correctAnswer: 0,
     explanation:
-      'ESQCR requires overhead lines crossing roads to be at least 5.8m high to ensure vehicle clearance.',
+      'Regulation 411.3.2.2 holds the numeric maximum disconnection times, which Table 41.1 applies to final circuits up to 63 A with socket-outlets and up to 32 A supplying only fixed equipment. 411.3.1.1 is protective earthing and 411.3.1.2 is protective equipotential bonding.',
   },
   {
     id: 112,
@@ -1344,6 +1462,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'SELV (Safety Extra Low Voltage) systems must not exceed 50V AC or 120V ripple-free DC under normal conditions.',
     category: 'Protection & Devices',
+    difficulty: 'advanced'
   },
   {
     id: 113,
@@ -1357,6 +1476,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'PUWER requires work equipment to be suitable for its purpose, maintained in a safe condition, inspected and used only by trained persons.',
+    difficulty: 'intermediate'
   },
   {
     id: 114,
@@ -1366,6 +1486,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Portable equipment is defined as equipment intended to be moved while energised or connected to the supply.',
     category: 'Certification & Reporting',
+    difficulty: 'intermediate'
   },
   {
     id: 115,
@@ -1380,6 +1501,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Effective isolation requires physically securing the means of isolation by locking off or removing fuses/links so it cannot be inadvertently re-energised.',
     category: 'Safe Isolation',
+    difficulty: 'basic'
   },
 
   // Advanced Testing Procedures (Questions 116-130)
@@ -1397,6 +1519,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Each line conductor must be tested separately to earth to identify any differences in impedance values.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 117,
@@ -1411,6 +1534,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Insulation resistance is measured between all live conductors connected together and earth, and between live conductors, to prove the insulation throughout.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 118,
@@ -1425,6 +1549,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Emergency lighting requires duration testing to verify operation time and battery condition assessment.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 119,
@@ -1439,6 +1564,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Where equipment may be damaged by the standard 500V test, it should be disconnected and the test carried out at a reduced 250V (BS 7671 643.3.2).',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 120,
@@ -1453,6 +1579,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'PFC is determined from the greater of the short-circuit value (between live conductors) and the earth fault value (live conductor to earth) at the relevant point.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 121,
@@ -1466,6 +1593,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'The fall-of-potential method uses a dedicated earth electrode tester with auxiliary current (C) and potential (P) spikes positioned away from the electrode under test.',
+    difficulty: 'advanced'
   },
   {
     id: 122,
@@ -1480,6 +1608,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'PV systems require isolation and instruments rated for the array DC voltage as well as the AC side, since the DC side stays live in daylight.',
+    difficulty: 'intermediate'
   },
   {
     id: 123,
@@ -1494,6 +1623,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Safety services must be proven to operate correctly under normal supply and on changeover to the emergency/standby source.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 124,
@@ -1508,20 +1638,20 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Inverters and UPS units can back-feed and keep circuits live even when the mains is isolated, so all energy sources must be isolated before dead working.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 125,
-    question:
-      'The correct method for testing protective conductor continuity in flexible cables is:',
+    question: 'When verifying continuity of a ring final circuit, which cross-connection gives the R1+R2 recorded on the Schedule of Test Results?',
     options: [
-      'Visual inspection only',
-      'Test while flexing the cable',
-      'Continuity test at each end',
-      'Insulation resistance test',
+      'Line to CPC (L1 to CPC2, L2 to CPC1)',
+      'Line to neutral (L1 to N2, L2 to N1)',
+      'Neutral to CPC (N1 to CPC2, N2 to CPC1)',
+      'No cross-connection; measure each leg end to end',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'Flexible cables should be tested while being flexed to identify intermittent faults in the protective conductor.',
+      'GN3\'s step 3 cross-connects line to CPC and the reading at each socket is the R1+R2 for that outlet — the value recorded and used for Zs. Step 2 (line to neutral) proves the line and neutral legs but is not the certified R1+R2. Note R2 is the circuit protective conductor, never the neutral.',
     category: 'Inspection & Testing',
   },
   {
@@ -1537,6 +1667,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'SPDs must be disconnected before insulation resistance testing as they provide a path to earth.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 127,
@@ -1551,6 +1682,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Phase rotation must be verified for three-phase motor circuits to ensure correct direction of rotation.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 128,
@@ -1565,6 +1697,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Capacitors must be allowed to discharge safely before testing to prevent equipment damage and ensure safety.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 129,
@@ -1579,6 +1712,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'ADS is verified by measuring Zs (to confirm the device will operate within the required time) and, where fitted, the RCD operating time.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 130,
@@ -1593,6 +1727,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Fire alarm systems require functional testing of detection devices and alarm functions beyond standard electrical tests.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
 
   // RCD Advanced Topics (Questions 131-145)
@@ -1609,6 +1744,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'RCDs should trip between 50% and 100% of rated current (15-30mA for a 30mA RCD), so 15mA is acceptable.',
     category: 'Protection & Devices',
+    difficulty: 'advanced'
   },
   {
     id: 132,
@@ -1622,6 +1758,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'Type A RCDs can detect both sinusoidal AC and pulsating DC residual currents, making them suitable for electronic loads.',
+    difficulty: 'advanced'
   },
   {
     id: 133,
@@ -1636,6 +1773,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Discrimination requires the upstream RCD to have a higher rating and/or a time delay (S-type) so the downstream device clears the fault first.',
     category: 'Protection & Devices',
+    difficulty: 'intermediate'
   },
   {
     id: 134,
@@ -1650,6 +1788,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Standing leakage from many connected appliances can accumulate towards the RCD threshold; EMI and filters add to it, causing unexpected tripping.',
     category: 'Protection & Devices',
+    difficulty: 'intermediate'
   },
   {
     id: 135,
@@ -1664,6 +1803,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'A Type B RCD is needed where smooth DC residual currents may occur, such as with variable speed drives, some EV chargers and certain switched-mode supplies.',
     category: 'Protection & Devices',
+    difficulty: 'advanced'
   },
   {
     id: 136,
@@ -1677,6 +1817,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'Splitting loads across several RCDs (or using RCBOs per circuit) reduces the standing leakage seen by each device, limiting unwanted tripping.',
+    difficulty: 'intermediate'
   },
   {
     id: 137,
@@ -1691,20 +1832,22 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Regulation 411.3.3 allows omission only in non-dwellings where a documented risk assessment determines RCD protection is not necessary.',
     category: 'Protection & Devices',
+    difficulty: 'intermediate'
   },
   {
     id: 138,
     question: 'How often does the BS 7671 RCD notice advise the user to operate the test button?',
     options: [
-      'Annually only',
-      'Only during professional testing',
       'Six-monthly by the user',
-      'Only when a fault is suspected',
+      'Annually, at the time of the periodic inspection',
+      'Quarterly, in line with the duty holder\'s fire log',
+      'Whenever the occupant suspects a fault has developed',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Regulation 514.12.2 requires the RCD notice to advise the user to test six-monthly by pressing the test button, then to switch the device back on.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 139,
@@ -1719,6 +1862,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'IT systems have a high-impedance or unearthed source, so fault current paths differ and RCD verification must account for the earthing arrangement.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 140,
@@ -1746,6 +1890,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'At 50% of IΔn (half-rated current) the RCD should not trip; it must then trip within the stated times at 100% and 500%.',
+    difficulty: 'advanced'
   },
   {
     id: 142,
@@ -1755,6 +1900,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'Domestic socket outlets require RCD protection not exceeding 30mA for additional protection against electric shock.',
+    difficulty: 'intermediate'
   },
   {
     id: 143,
@@ -1768,6 +1914,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'High-leakage circuits may need a higher-rated RCD (e.g. 100mA) where additional protection is not required, or splitting the load across more RCDs to maintain stability.',
+    difficulty: 'basic'
   },
   {
     id: 144,
@@ -1777,6 +1924,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Combined earth leakage should not exceed 30% of RCD rating (9mA for 30mA RCD) to prevent nuisance tripping.',
     category: 'Protection & Devices',
+    difficulty: 'advanced'
   },
   {
     id: 145,
@@ -1807,6 +1955,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Cable resistance increases with temperature, so measured values at ambient temperature must be corrected to operating temperature.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 147,
@@ -1816,6 +1965,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'For a ring circuit, R1 + R2 = (r1 + r2) ÷ 4, where r1 and r2 are the resistance values of each leg of the ring.',
     category: 'Cables & Containment',
+    difficulty: 'intermediate'
   },
   {
     id: 148,
@@ -1830,6 +1980,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Excessive Zs should be reduced by improving the CPC/earthing or shortening the run; fitting an RCD that meets the disconnection time is the recognised alternative measure.',
     category: 'Inspection & Testing',
+    difficulty: 'basic'
   },
   {
     id: 149,
@@ -1844,6 +1995,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Conductors are warmer in service than when tested cold, so a measured cold Zs is compared against 0.8 of the tabulated maximum to allow for the increase in resistance with temperature.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 150,
@@ -1858,6 +2010,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'In TT the earth return is through the installation electrode, the general mass of earth and the supply earth electrode, giving a comparatively high Ze that usually demands RCD protection.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 151,
@@ -1872,6 +2025,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'A no-trip loop test injects a low current so it measures Zs without operating the RCD, avoiding supply interruption to other users or critical equipment.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 152,
@@ -1886,6 +2040,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Ze is measured at the origin (main earthing terminal) to establish the baseline earth fault loop impedance.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 153,
@@ -1895,6 +2050,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Zs = Ze + (R1 + R2), the external loop impedance plus the resistance of the line and protective conductors of the circuit up to that point.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 154,
@@ -1909,6 +2065,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'High Zs typically indicates loose connections, damaged conductors or an inadequate/poorly connected earth path.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 155,
@@ -1923,6 +2080,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'A Zs measurement confirms the whole earth fault loop, including CPC continuity, has a low enough impedance for the protective device to operate in time.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
 
   // Insulation Resistance Advanced (Questions 156-165)
@@ -1939,6 +2097,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Neon indicators should be disconnected or shorted out as they can give misleading low insulation readings.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 157,
@@ -1947,19 +2106,20 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation: 'Circuits with nominal voltage between 50V and 500V should be tested at 500V DC.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 158,
-    question: 'Polarisation index testing involves:',
+    question: 'Under BS 7671:2018+A4:2026, how is the effectiveness of an RCD verified?',
     options: [
-      'Ratio of the 1-minute to the 30-second reading',
-      'The difference between the 10-minute and 1-minute readings',
-      'Ratio of 10-minute to 1-minute resistance readings',
-      'The average of three successive 1-minute readings',
+      'A single alternating current test at IΔn, whatever the RCD type',
+      'Tests at ½x, 1x and 5x IΔn on both half-cycles',
+      'A test at 5x IΔn on both half-cycles only',
+      'The integral test button, operated twice',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
-      'Polarisation index is the ratio of insulation resistance at 10 minutes to that at 1 minute, indicating insulation condition.',
+      'Amendment 4 deleted Table 3A of Appendix 3. Verification is now an alternating current test at the rated residual operating current, IΔn, regardless of type — a general non-delay device must operate within 300 ms. The 5x test remains useful for fault-finding but is no longer part of the required sequence.',
     category: 'Inspection & Testing',
   },
   {
@@ -1975,6 +2135,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'High temperature and humidity reduce insulation resistance by increasing conductivity through the insulation.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 160,
@@ -1989,6 +2150,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Switches and control devices should be closed (or links fitted) so the whole circuit insulation is tested; vulnerable electronic items are disconnected separately.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 161,
@@ -1999,6 +2161,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Motor circuits should achieve minimum 1 MΩ insulation resistance, though manufacturer specifications may vary.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 162,
@@ -2018,15 +2181,16 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 163,
     question: 'Insulation resistance testing should be performed:',
     options: [
-      'Only after the installation has been in use for a year',
-      'Only when a fault has already been reported',
-      'Continuously while the installation is energised',
       'Before initial energisation and periodically thereafter',
+      'Once the installation has been in service for twelve months',
+      'On energised circuits, so equipment can be left connected',
+      'At each periodic inspection only, not at initial verification',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'IR testing is carried out (dead) before energisation as part of initial verification and is repeated at periodic inspections.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 164,
@@ -2041,6 +2205,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       "An infinity reading indicates insulation resistance exceeds the instrument's measurement range, showing excellent insulation.",
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 165,
@@ -2055,6 +2220,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Absorption ratio is the 1-minute insulation resistance reading divided by the 30-second reading.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
 
   // Protective Conductor Testing Advanced (Questions 166-175)
@@ -2071,6 +2237,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'For reduced CPC in ring circuits, maximum resistance is 1.67 times the line conductor resistance per BS 7671.',
     category: 'Earthing & Bonding',
+    difficulty: 'intermediate'
   },
   {
     id: 167,
@@ -2086,6 +2253,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Each earth electrode should be tested separately to verify individual electrode effectiveness.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 168,
@@ -2100,6 +2268,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Main protective bonding conductors should be tested with not less than 200mA test current to ensure reliable results.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 169,
@@ -2114,6 +2283,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Supplementary bonding should be verified by measuring resistance between simultaneously accessible exposed and extraneous conductive parts.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 170,
@@ -2129,6 +2299,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'After cross-connecting the ring, the CPC (R2) reading should be substantially the same at every socket, with only small variation; a marked rise indicates a spur.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 171,
@@ -2143,6 +2314,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Main protective bonding conductor size is based on the main earthing conductor size according to Table 54.8 in BS 7671.',
     category: 'Earthing & Bonding',
+    difficulty: 'advanced'
   },
   {
     id: 172,
@@ -2156,6 +2328,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'Class II (double insulated) equipment must not have a protective conductor connection as it relies on insulation for protection.',
+    difficulty: 'advanced'
   },
   {
     id: 173,
@@ -2170,6 +2343,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Armoured cables require separate testing of the armour and any internal CPC to verify parallel path effectiveness.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 174,
@@ -2184,6 +2358,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'CPC resistance relates to line conductor resistance by the ratio of their cross-sectional areas (R1/R2 = Area2/Area1).',
     category: 'Earthing & Bonding',
+    difficulty: 'advanced'
   },
   {
     id: 175,
@@ -2197,6 +2372,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'A functional earth provides correct operation of equipment, not shock protection, so it is checked for continuity and for being kept distinct from the protective earthing system.',
+    difficulty: 'advanced'
   },
 
   // Certification and Documentation Advanced (Questions 176-190)
@@ -2212,6 +2388,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'Next inspection interval should be determined by installation type, usage pattern, environment, and current condition.',
+    difficulty: 'intermediate'
   },
   {
     id: 177,
@@ -2226,6 +2403,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       "Limitations must be clearly stated with explanation of their potential impact on the inspection's effectiveness.",
     category: 'Certification & Reporting',
+    difficulty: 'intermediate'
   },
   {
     id: 178,
@@ -2240,6 +2418,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'This section must detail exactly what was inspected, any limitations, and the percentage of the installation sampled.',
     category: 'Certification & Reporting',
+    difficulty: 'intermediate'
   },
   {
     id: 179,
@@ -2254,6 +2433,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Unsatisfactory classification indicates C1 (danger present) or C2 (potentially dangerous) observations exist.',
     category: 'Certification & Reporting',
+    difficulty: 'advanced'
   },
   {
     id: 180,
@@ -2268,6 +2448,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'C1 (danger present), C2 (potentially dangerous) and FI (further investigation) findings require the person ordering the report to be advised without delay.',
     category: 'Certification & Reporting',
+    difficulty: 'advanced'
   },
   {
     id: 181,
@@ -2290,6 +2471,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'The supply characteristics and earthing summary records the earthing system type, supply parameters and details of the main switch/protective devices.',
+    difficulty: 'advanced'
   },
   {
     id: 183,
@@ -2304,6 +2486,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Each distribution circuit entry records its designation, cable type/size, method of protection and the protective device characteristics.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 184,
@@ -2318,6 +2501,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Actual measured values must be recorded with clear indication that they exceed acceptable limits.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 185,
@@ -2331,6 +2515,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'Under the Electricity at Work Regulations the duty holder is the person in control of the premises (owner, lessee or occupier).',
+    difficulty: 'basic'
   },
   {
     id: 186,
@@ -2345,6 +2530,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Competency combines relevant knowledge, training, practical experience and an understanding of the hazards and how to avoid them.',
     category: 'Inspection & Testing',
+    difficulty: 'basic'
   },
   {
     id: 187,
@@ -2358,6 +2544,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       "Maintenance records should be retained for the installation's life plus a reasonable period afterwards to support safety and liability evidence.",
+    difficulty: 'advanced'
   },
   {
     id: 188,
@@ -2372,6 +2559,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'A C1 (danger present) finding must be communicated to the duty holder without delay so prompt action can remove the danger.',
     category: 'Certification & Reporting',
+    difficulty: 'basic'
   },
   {
     id: 189,
@@ -2381,6 +2569,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Commercial offices typically require EICR every 5 years, though this may vary based on risk assessment.',
     category: 'Certification & Reporting',
+    difficulty: 'advanced'
   },
   {
     id: 190,
@@ -2395,6 +2584,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Where limitations prevent the inspector verifying safety and compliance, a satisfactory certificate cannot be issued and the limitation must be recorded.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
 
   // Fault Finding and Troubleshooting (Questions 191-200)
@@ -2410,6 +2600,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'A connection that works cold but fails under load points to a high-resistance joint that heats and expands, breaking contact as the circuit warms.',
+    difficulty: 'intermediate'
   },
   {
     id: 192,
@@ -2424,6 +2615,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Many small standing leakage currents can sum towards the RCD threshold, so a transient appliance switching on can tip it over and trip the device.',
     category: 'Protection & Devices',
+    difficulty: 'intermediate'
   },
   {
     id: 193,
@@ -2437,6 +2629,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'Effective fault finding starts by gathering information about the symptoms and carrying out a thorough visual inspection before any testing.',
+    difficulty: 'intermediate'
   },
   {
     id: 194,
@@ -2451,6 +2644,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Inconsistent Zs readings point to intermittent connections or parallel earth paths and should be investigated rather than averaged away.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 195,
@@ -2465,6 +2659,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'A small leakage current can be too low to show on an insulation resistance test yet still enough to operate a sensitive 30mA RCD.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 196,
@@ -2478,6 +2673,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'A large voltage drop appearing only under load points to high-resistance joints or conductors too small for the current drawn.',
+    difficulty: 'advanced'
   },
   {
     id: 197,
@@ -2491,6 +2687,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'Safety systems and interlocks must be prioritised to prevent dangerous conditions during troubleshooting.',
+    difficulty: 'intermediate'
   },
   {
     id: 198,
@@ -2504,6 +2701,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'Losing the neutral allows the star-point voltage to float, so single-phase loads see over- or under-voltage depending on phase loading, risking equipment damage.',
+    difficulty: 'intermediate'
   },
   {
     id: 199,
@@ -2517,6 +2715,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'Series arcs do not raise current enough to trip an MCB, so AFDDs detect their characteristic high-frequency current signatures instead.',
+    difficulty: 'advanced'
   },
   {
     id: 200,
@@ -2530,6 +2729,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'Condition-specific faults must be diagnosed by reproducing the same operating conditions (load, temperature, time) under which they occur.',
+    difficulty: 'advanced'
   },
 
   // Advanced Testing Scenarios (Questions 201-225)
@@ -2547,6 +2747,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       '3-phase installations require phase sequence verification and rotation direction checks to prevent equipment damage.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 202,
@@ -2562,6 +2763,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Pool installations require comprehensive equipotential bonding of all metallic parts within specified zones.',
     category: 'Earthing & Bonding',
+    difficulty: 'advanced'
   },
   {
     id: 203,
@@ -2577,6 +2779,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Marine environments cause accelerated corrosion requiring more frequent inspection and specialised protection.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 204,
@@ -2591,6 +2794,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'Systematic isolation from supply to load helps locate faults efficiently while maintaining safety.',
+    difficulty: 'intermediate'
   },
   {
     id: 205,
@@ -2605,6 +2809,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Critical medical equipment may require alternative testing methods or recorded limitations.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 206,
@@ -2619,6 +2824,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Fire alarm systems require both electrical verification and functional testing to BS 5839 standards.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 207,
@@ -2634,6 +2840,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Electronic equipment can be damaged by high DC test voltages and must be disconnected.',
     category: 'Inspection & Testing',
+    difficulty: 'basic'
   },
   {
     id: 208,
@@ -2648,6 +2855,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'The fall of potential method provides accurate earth electrode resistance measurement.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 209,
@@ -2663,6 +2871,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Theatre dimmers contain sensitive electronics and can generate harmonics affecting other equipment.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 210,
@@ -2691,6 +2900,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Agricultural environments present harsh conditions requiring more frequent inspection and specialised protection.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 212,
@@ -2705,6 +2915,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       "IT systems use insulation monitoring as the first fault doesn't cause automatic disconnection.",
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 213,
@@ -2719,6 +2930,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Different load conditions affect voltage drop, temperature and protective device operation.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 214,
@@ -2733,6 +2945,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Lift installations require coordination with mechanical systems and specialist engineers.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 215,
@@ -2747,6 +2960,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'PV systems require DC isolation and consideration of multiple energy sources during testing.',
     category: 'EV & Renewables',
+    difficulty: 'advanced'
   },
   {
     id: 216,
@@ -2762,6 +2976,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Server rooms require maintained environmental conditions to prevent equipment damage.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 217,
@@ -2776,6 +2991,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Emergency lighting testing must maintain life safety while verifying system operation.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 218,
@@ -2790,6 +3006,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Welding equipment generates high currents and electromagnetic interference affecting test equipment.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 219,
@@ -2804,6 +3021,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Heritage buildings may have access restrictions and require conservation-aware testing methods.',
     category: 'Inspection & Testing',
+    difficulty: 'basic'
   },
   {
     id: 220,
@@ -2817,6 +3035,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'Chemical plants require explosion-proof equipment and chemical compatibility considerations.',
+    difficulty: 'intermediate'
   },
   {
     id: 221,
@@ -2831,6 +3050,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Flexible cables in moving machinery require assessment for mechanical stress and fatigue damage.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 222,
@@ -2845,6 +3065,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'UPS testing requires specialist coordination to maintain critical power supplies.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 223,
@@ -2859,6 +3080,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Temporary installations require enhanced protection and more frequent testing due to their nature.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 224,
@@ -2873,6 +3095,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Educational facility testing must be scheduled to minimise disruption to teaching activities.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 225,
@@ -2886,6 +3109,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'Intermittent faults require systematic monitoring and recreation of fault conditions for diagnosis.',
+    difficulty: 'advanced'
   },
 
   // Modern Installation Technologies (Questions 226-250)
@@ -2902,6 +3126,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'EV charging points require DC leakage testing and verification of protective conductor current limits.',
     category: 'EV & Renewables',
+    difficulty: 'intermediate'
   },
   {
     id: 227,
@@ -2916,6 +3141,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Smart home systems require verification of communication protocols and electromagnetic compatibility.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 228,
@@ -2930,6 +3156,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Battery systems present DC hazards, fire risks and require proper ventilation during testing.',
     category: 'EV & Renewables',
+    difficulty: 'basic'
   },
   {
     id: 229,
@@ -2944,6 +3171,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Heat pumps require phase rotation verification and defrost cycle electrical system checks.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 230,
@@ -2958,6 +3186,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'LED drivers contain sensitive electronics requiring reduced test voltages to prevent damage.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 231,
@@ -2972,6 +3201,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'PV systems require comprehensive DC measurements and insulation testing for safety.',
     category: 'EV & Renewables',
+    difficulty: 'intermediate'
   },
   {
     id: 232,
@@ -2986,6 +3216,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Smart meters require verification of communication systems and accurate load monitoring.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 233,
@@ -3000,6 +3231,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'BMS systems require comprehensive testing of communication, sensors and control responses.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 234,
@@ -3013,6 +3245,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation: 'EV charging requires PEN fault detection to prevent dangerous touch voltages.',
     category: 'EV & Renewables',
+    difficulty: 'advanced'
   },
   {
     id: 235,
@@ -3040,6 +3273,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation: 'Wireless charging requires EMF measurement and verification of safety shielding.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 237,
@@ -3054,6 +3288,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Smart thermostats require verification of sensing accuracy and communication functionality.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 238,
@@ -3068,6 +3303,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Micro-generation requires verification of export controls and grid protection systems.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 239,
@@ -3082,6 +3318,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Smart switches contain electronics requiring protection and communication verification.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 240,
@@ -3096,6 +3333,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Automated lighting requires verification of control sequences and emergency override capability.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 241,
@@ -3110,6 +3348,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'EVSE requires verification of pilot signals and protective conductor current limits.',
     category: 'EV & Renewables',
+    difficulty: 'advanced'
   },
   {
     id: 242,
@@ -3124,6 +3363,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'PoE systems require verification of power limits and connected equipment protection.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 243,
@@ -3138,6 +3378,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Battery backup requires load testing to verify actual autonomy time under realistic conditions.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 244,
@@ -3152,6 +3393,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Induction hobs require EMF measurement and verification of safe cooking environment.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 245,
@@ -3166,6 +3408,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Security systems require verification of alarm sequences and backup communication paths.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 246,
@@ -3181,6 +3424,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Smart heating requires verification of sensor accuracy and zone control functionality.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 247,
@@ -3195,6 +3439,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Inverters require verification of grid protection and anti-islanding safety systems.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 248,
@@ -3209,6 +3454,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Smart towel rails require verification of temperature control and programmable functions.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 249,
@@ -3223,6 +3469,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'EV cables require verification of pilot wire signals and in-cable protection devices.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 250,
@@ -3237,6 +3484,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Smart garage doors require comprehensive safety system verification including sensors and emergency functions.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
 
   // Advanced Safety & Risk Assessment (Questions 251-275)
@@ -3253,6 +3501,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'A risk assessment identifies the hazards of the task and sets the control measures needed to work safely.',
     category: 'Inspection & Testing',
+    difficulty: 'basic'
   },
   {
     id: 252,
@@ -3265,6 +3514,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     ],
     correctAnswer: 0,
     explanation: 'High voltage work requires specific competency certification and authorisation.',
+    difficulty: 'basic'
   },
   {
     id: 253,
@@ -3274,6 +3524,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'The minimum safe approach distance for 11kV overhead lines is 3 metres for unqualified persons.',
     category: 'Safe Isolation',
+    difficulty: 'advanced'
   },
   {
     id: 254,
@@ -3287,6 +3538,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'Arc flash energy rises with the available fault current, so the greatest risk is live work on high-energy equipment near the supply.',
+    difficulty: 'intermediate'
   },
   {
     id: 255,
@@ -3300,6 +3552,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'Arc flash protection requires clothing and a face shield with an arc rating selected to exceed the calculated incident energy.',
+    difficulty: 'intermediate'
   },
   {
     id: 256,
@@ -3313,6 +3566,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'A permit-to-work formally controls complex or high-risk tasks, ensuring isolation and coordination before work begins.',
+    difficulty: 'advanced'
   },
   {
     id: 257,
@@ -3322,6 +3576,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'Brain damage from cardiac arrest begins after 4 minutes, making rapid response critical.',
+    difficulty: 'advanced'
   },
   {
     id: 258,
@@ -3335,6 +3590,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'Lone working requires check-in procedures and emergency contact arrangements for safety.',
+    difficulty: 'basic'
   },
   {
     id: 259,
@@ -3343,6 +3599,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'Moisture significantly reduces insulation effectiveness and increases shock risk.',
+    difficulty: 'advanced'
   },
   {
     id: 260,
@@ -3355,6 +3612,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     ],
     correctAnswer: 0,
     explanation: 'A method statement sets out the sequence of work and the risk control measures so the task is carried out safely.',
+    difficulty: 'intermediate'
   },
   {
     id: 261,
@@ -3368,6 +3626,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'The hierarchy prioritises elimination and substitution over PPE as the last line of defence.',
+    difficulty: 'advanced'
   },
   {
     id: 262,
@@ -3381,6 +3640,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'Under the Electricity at Work Regulations live working is only justified where it is unreasonable to work dead and suitable precautions are in place.',
+    difficulty: 'intermediate'
   },
   {
     id: 263,
@@ -3395,15 +3655,16 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Insulated rescue equipment and first aid supplies must be immediately available during electrical work.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 264,
     question: 'Electrical safety training must be updated:',
     options: [
-      'Regularly based on competency assessment',
-      'Only once when first entering the trade',
-      'Never, as the regulations do not change',
-      'Only after a serious accident has occurred',
+      'Regularly, based on competency assessment',
+      'Once on entry to the trade, then on change of employer',
+      'On a fixed three-year cycle regardless of role or scope',
+      'Following any reportable accident on the contractor\'s sites',
     ],
     correctAnswer: 0,
     explanation:
@@ -3421,6 +3682,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'Safety documentation must comprehensively address hazards, risks and control measures.',
+    difficulty: 'advanced'
   },
   {
     id: 266,
@@ -3435,6 +3697,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'Confined spaces present additional risks of oxygen depletion and restricted emergency egress.',
+    difficulty: 'intermediate'
   },
   {
     id: 267,
@@ -3448,6 +3711,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'Regular breaks are essential to maintain concentration and prevent safety-compromising fatigue.',
+    difficulty: 'intermediate'
   },
   {
     id: 268,
@@ -3462,6 +3726,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Emergency procedures must cover making the area safe by isolation, summoning first aid and evacuating people as needed.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 269,
@@ -3475,6 +3740,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'Lightning and heavy rain significantly increase electrical safety risks requiring work suspension.',
+    difficulty: 'intermediate'
   },
   {
     id: 270,
@@ -3489,6 +3755,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Competency assessment must comprehensively evaluate knowledge, practical skills and safety awareness.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 271,
@@ -3503,15 +3770,16 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Complex testing requires clear communication to coordinate activities and maintain safety.',
     category: 'Inspection & Testing',
+    difficulty: 'basic'
   },
   {
     id: 272,
     question: 'Incident reporting in electrical work must include:',
     options: [
       'All incidents, near misses and safety observations',
-      'Only incidents that resulted in a serious injury',
-      'Only events the client specifically asks about',
-      'Nothing, unless an enforcement notice is issued',
+      'Incidents resulting in an injury requiring hospital treatment',
+      'Events that are reportable to the HSE under RIDDOR',
+      'Anything the client has asked to be recorded contractually',
     ],
     correctAnswer: 0,
     explanation:
@@ -3530,6 +3798,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Recommissioning requires complete verification of all safety systems and testing sequences.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 274,
@@ -3544,6 +3813,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Safety barriers must effectively control access and clearly communicate hazards to others.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 275,
@@ -3557,6 +3827,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'Healthcare facilities require consideration of patient safety, critical systems and infection control procedures.',
+    difficulty: 'intermediate'
   },
 
   // Regulatory Updates & Standards (Questions 276-300)
@@ -3572,6 +3843,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'The 18th Edition introduced requirements for AFDDs in specific applications like sleeping accommodation.',
+    difficulty: 'intermediate'
   },
   {
     id: 277,
@@ -3586,6 +3858,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Amendment 2 introduced specific requirements for EV charging and smart appliance considerations.',
     category: 'EV & Renewables',
+    difficulty: 'basic'
   },
   {
     id: 278,
@@ -3599,6 +3872,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'Part P requires notification for new circuits, consumer unit work and installations in special locations.',
+    difficulty: 'intermediate'
   },
   {
     id: 279,
@@ -3614,6 +3888,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'CDM regulations require health and safety planning, coordination and competency throughout construction.',
     category: 'Inspection & Testing',
+    difficulty: 'advanced'
   },
   {
     id: 280,
@@ -3632,27 +3907,29 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 281,
     question: 'The latest surge protection requirements in BS 7671 apply to:',
     options: [
-      'Only installations fed from an overhead supply',
-      'Most installations unless specifically exempted',
-      'Only three-phase commercial installations',
-      'Only installations with a TT earthing system',
+      'Most installations, unless specifically exempted',
+      'Installations supplied by an overhead distribution line',
+      'Three-phase commercial and industrial installations',
+      'Installations on a TT earthing arrangement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Current regulations require surge protection for most installations with specific exemption criteria.',
+    difficulty: 'basic'
   },
   {
     id: 282,
     question: 'Professional indemnity insurance for electrical contractors must cover:',
     options: [
-      'Only theft of tools and equipment from the van',
-      'Only damage to the contractor\'s own premises',
       'Design liability and consequential losses',
-      'Only the cost of replacing failed test instruments',
+      'Theft of tools and equipment from a locked vehicle',
+      'Damage occurring to the contractor\'s own premises',
+      'Replacement of test instruments that fail calibration',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Professional indemnity insurance must cover design liability and potential consequential losses from electrical work.',
+    difficulty: 'intermediate'
   },
   {
     id: 283,
@@ -3666,6 +3943,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'CPD requires ongoing development to maintain current knowledge and competency standards.',
+    difficulty: 'advanced'
   },
   {
     id: 284,
@@ -3680,6 +3958,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'EV charging requires enhanced protection including PEN fault detection and load management.',
     category: 'EV & Renewables',
+    difficulty: 'intermediate'
   },
   {
     id: 285,
@@ -3693,6 +3972,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'Current regulations promote energy efficiency through efficient lighting and intelligent control systems.',
+    difficulty: 'intermediate'
   },
   {
     id: 286,
@@ -3706,6 +3986,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'CPR requires fire performance classification and CE marking for construction cables.',
+    difficulty: 'advanced'
   },
   {
     id: 287,
@@ -3720,6 +4001,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Smart meter regulations require communications verification and consumer protection measures.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 288,
@@ -3734,6 +4016,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Accessibility regulations specify appropriate heights and positions for electrical controls.',
     category: 'Design & Selection',
+    difficulty: 'basic'
   },
   {
     id: 289,
@@ -3748,6 +4031,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Environmental regulations address WEEE disposal and energy efficiency requirements.',
     category: 'Inspection & Testing',
+    difficulty: 'intermediate'
   },
   {
     id: 290,
@@ -3761,6 +4045,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 2,
     explanation:
       'Data protection regulations apply to customer information and smart device data handling.',
+    difficulty: 'intermediate'
   },
   {
     id: 291,
@@ -3774,6 +4059,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'Fire safety regulations require enhanced fire stopping and comprehensive emergency lighting.',
+    difficulty: 'intermediate'
   },
   {
     id: 292,
@@ -3787,20 +4073,22 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       "EMC regulations ensure equipment doesn't cause interference and operates correctly despite interference.",
+    difficulty: 'advanced'
   },
   {
     id: 293,
     question: 'The current requirements for electrical installation certificates include:',
     options: [
-      'Only a pass or fail box with no measured values',
-      'Comprehensive testing schedules and digital submission capability',
-      'No signature from the person carrying out the testing',
-      'Only the client\'s name and the date of issue',
+      'Comprehensive testing schedules and a signed declaration',
+      'A pass or fail statement without the measured values',
+      'Measured values, but no signature from the tester',
+      'The client\'s name and the date the work was completed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Current certificate requirements include detailed testing schedules and digital submission capabilities.',
     category: 'Certification & Reporting',
+    difficulty: 'advanced'
   },
   {
     id: 294,
@@ -3813,6 +4101,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     ],
     correctAnswer: 2,
     explanation: "LVD compliance requires CE marking and manufacturer's declaration of conformity.",
+    difficulty: 'advanced'
   },
   {
     id: 295,
@@ -3826,6 +4115,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'Ventilation regulations require integration with mechanical systems and air quality monitoring.',
+    difficulty: 'intermediate'
   },
   {
     id: 296,
@@ -3839,6 +4129,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation:
       'Security systems require tamper detection and reliable backup power for effectiveness.',
+    difficulty: 'intermediate'
   },
   {
     id: 297,
@@ -3852,6 +4143,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation:
       'Temporary installations require enhanced protection and more frequent inspection due to their nature.',
+    difficulty: 'intermediate'
   },
   {
     id: 298,
@@ -3866,6 +4158,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     explanation:
       'Medical locations require IT earthing systems and comprehensive supplementary bonding for patient safety.',
     category: 'Earthing & Bonding',
+    difficulty: 'advanced'
   },
   {
     id: 299,
@@ -3879,19 +4172,133 @@ export const mockExamQuestions: QuizQuestion[] = [
     correctAnswer: 3,
     explanation:
       'Renewable installations must comply with grid codes and include appropriate export limitation.',
+    difficulty: 'advanced'
   },
   {
     id: 300,
     question: 'Electrical safety management systems must include:',
     options: [
       'Risk assessment, competency management and performance monitoring',
-      'Only a record of the test instruments used',
-      'Just a single annual inspection of the installation',
-      'Only the names of the operatives on site',
+      'A register of the test instruments in use and their calibration',
+      'A single annual inspection of the fixed installation',
+      'A record of the operatives attending each site',
     ],
     correctAnswer: 0,
     explanation:
       'Comprehensive safety management requires risk assessment, competency management and performance monitoring systems.',
+    difficulty: 'intermediate'
+  },
+  {
+    id: 301,
+    question: 'Which amendment to BS 7671:2018 is currently in force?',
+    options: [
+      'Amendment 4 (A4:2026)',
+      'Amendment 3 (A3:2024)',
+      'Amendment 2 (A2:2022)',
+      'Amendment 1 (A1:2020)',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'BS 7671:2018+A4:2026 is the current standard, published 15 April 2026. The 18th Edition has had four amendments in total: A1:2020, A2:2022, A3:2024 and A4:2026. The free PDF supplement issued on 31 July 2024 was Amendment 3, which is a frequent source of confusion.',
+    difficulty: 'basic'
+  },
+  {
+    id: 302,
+    question: 'Which table gives minimum insulation resistance values and DC test voltages?',
+    options: [
+      'Table 41.1',
+      'Table 64',
+      'Table 3A',
+      'Table 54.7',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Table 64 gives 250 V DC and 0.5 MΩ for SELV and PELV, 500 V DC and 1.0 MΩ for circuits up to and including 500 V, and 1000 V DC and 1.0 MΩ above that. Older material refers to this as Table 61 — that numbering is superseded.',
+    difficulty: 'basic'
+  },
+  {
+    id: 303,
+    question: 'What does R2 represent in the expression R1+R2?',
+    options: [
+      'The resistance of the neutral conductor',
+      'The resistance of the second line conductor',
+      'The resistance of the circuit protective conductor',
+      'The external earth fault loop impedance',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'R1 is the line conductor and R2 is the circuit protective conductor. Calling R2 the neutral is the most common error in this topic — the end-to-end neutral resistance is rn. R1+R2 is added to Ze to give Zs.',
+    difficulty: 'basic'
+  },
+  {
+    id: 304,
+    question: 'Under Amendment 4, what happened to Table 3A of Appendix 3?',
+    options: [
+      'It was expanded to cover Type F and Type B devices',
+      'It was moved into Appendix 14',
+      'It was renumbered as Table 3B',
+      'It was deleted',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Table 3A, the time/current performance criteria for RCDs, has been deleted. Verification is now an alternating current test at the rated residual operating current, IΔn, whatever the RCD type — a general non-delay device must operate within 300 ms.',
+    difficulty: 'basic'
+  },
+  {
+    id: 305,
+    question: 'Which earthing arrangement uses a combined neutral and protective conductor in the supply?',
+    options: [
+      'TN-C-S',
+      'TT',
+      'IT',
+      'TN-S',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'TN-C-S, commonly called PME, combines the neutral and protective functions in a PEN conductor within the distributor\'s network, separating them at the origin of the installation. TN-S has separate conductors throughout, TT relies on an installation earth electrode, and IT has no direct earth connection at the source.',
+    difficulty: 'basic'
+  },
+  {
+    id: 306,
+    question: 'Which regulation covers protective equipotential bonding of extraneous-conductive-parts to the main earthing terminal?',
+    options: [
+      'Regulation 411.3.1.1',
+      'Regulation 411.3.1.2',
+      'Regulation 411.3.2.2',
+      'Regulation 543.2.9',
+    ],
+    correctAnswer: 1,
+    explanation:
+      '411.3.1.2 covers protective equipotential bonding. Its companion 411.3.1.1 covers protective earthing of exposed-conductive-parts, and 411.3.2.2 holds the maximum disconnection times. Conductor sizing for main bonding comes from 544.1.1.',
+    difficulty: 'basic'
+  },
+  {
+    id: 307,
+    question: 'What is the maximum operating time for a general non-delay 30 mA RCD tested at IΔn?',
+    options: [
+      '40 ms',
+      '150 ms',
+      '300 ms',
+      '500 ms',
+    ],
+    correctAnswer: 2,
+    explanation:
+      '300 ms is the figure BS 7671 verifies against for a general non-delay device. The 40 ms often quoted is a device characteristic at five times IΔn from BS EN 61008/61009, not a BS 7671 test criterion. A Type S device operates between 130 and 500 ms.',
+    difficulty: 'basic'
+  },
+  {
+    id: 308,
+    question: 'In which part of BS 7671 are the requirements for inspection and testing found?',
+    options: [
+      'Part 4',
+      'Part 5',
+      'Part 7',
+      'Part 6',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'Part 6 covers inspection and testing, including Chapter 64 on initial verification. Part 4 is protection for safety, Part 5 is selection and erection of equipment, and Part 7 covers special installations or locations.',
+    difficulty: 'basic'
   },
 ];
 

@@ -1,41 +1,41 @@
-import { lazy } from 'react';
+import { lazyWithRetry } from '@/utils/lazyWithRetry';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { LazyRoute } from '@/components/LazyRoute';
 
 // Lazy-loaded pages
-const AITooling = lazy(() => import('@/pages/electrician-tools/AITooling'));
-const BusinessManagement = lazy(() => import('@/pages/electrician-tools/BusinessManagement'));
-const ComplianceManager = lazy(() => import('@/pages/electrician-tools/ComplianceManager'));
-const CableSizingCalculator = lazy(() => import('@/pages/electrician-tools/cable-sizing'));
-const StaffManagement = lazy(() => import('@/pages/electrician-tools/StaffManagement'));
-const ScheduleManager = lazy(() => import('@/pages/electrician-tools/ScheduleManager'));
-const BusinessAnalytics = lazy(() => import('@/pages/electrician-tools/BusinessAnalytics'));
-const FinancialTools = lazy(() => import('@/pages/electrician-tools/FinancialTools'));
-const CareerProgression = lazy(() => import('@/pages/electrician/CareerProgression'));
-const AssistantPage = lazy(() => import('@/pages/electrician-tools/ai-tools/AssistantPage'));
-const ComponentIdentifyPage = lazy(
+const AITooling = lazyWithRetry(() => import('@/pages/electrician-tools/AITooling'));
+const BusinessManagement = lazyWithRetry(() => import('@/pages/electrician-tools/BusinessManagement'));
+const ComplianceManager = lazyWithRetry(() => import('@/pages/electrician-tools/ComplianceManager'));
+const CableSizingCalculator = lazyWithRetry(() => import('@/pages/electrician-tools/cable-sizing'));
+const StaffManagement = lazyWithRetry(() => import('@/pages/electrician-tools/StaffManagement'));
+const ScheduleManager = lazyWithRetry(() => import('@/pages/electrician-tools/ScheduleManager'));
+const BusinessAnalytics = lazyWithRetry(() => import('@/pages/electrician-tools/BusinessAnalytics'));
+const FinancialTools = lazyWithRetry(() => import('@/pages/electrician-tools/FinancialTools'));
+const CareerProgression = lazyWithRetry(() => import('@/pages/electrician/CareerProgression'));
+const AssistantPage = lazyWithRetry(() => import('@/pages/electrician-tools/ai-tools/AssistantPage'));
+const ComponentIdentifyPage = lazyWithRetry(
   () => import('@/pages/electrician-tools/ai-tools/ComponentIdentifyPage')
 );
-const WiringInstructionPage = lazy(
+const WiringInstructionPage = lazyWithRetry(
   () => import('@/pages/electrician-tools/ai-tools/WiringInstructionPage')
 );
-const FaultDiagnosisPage = lazy(
+const FaultDiagnosisPage = lazyWithRetry(
   () => import('@/pages/electrician-tools/ai-tools/FaultDiagnosisPage')
 );
-const InstallationVerifyPage = lazy(
+const InstallationVerifyPage = lazyWithRetry(
   () => import('@/pages/electrician-tools/ai-tools/InstallationVerifyPage')
 );
-const ReportWriterPage = lazy(() => import('@/pages/electrician-tools/ai-tools/ReportWriterPage'));
-const RegulationsPage = lazy(() => import('@/pages/electrician-tools/ai-tools/RegulationsPage'));
-const CircuitDesignerPage = lazy(
+const ReportWriterPage = lazyWithRetry(() => import('@/pages/electrician-tools/ai-tools/ReportWriterPage'));
+const RegulationsPage = lazyWithRetry(() => import('@/pages/electrician-tools/ai-tools/RegulationsPage'));
+const CircuitDesignerPage = lazyWithRetry(
   () => import('@/pages/electrician-tools/ai-tools/CircuitDesignerPage')
 );
-const ClientExplainerPage = lazy(
+const ClientExplainerPage = lazyWithRetry(
   () => import('@/pages/electrician-tools/ai-tools/ClientExplainerPage')
 );
-const TestingProjects = lazy(() => import('@/pages/electrician/testing-projects'));
-const SiteSafety = lazy(() => import('@/pages/electrician-tools/SiteSafety'));
-const AIRAMSPage = lazy(() => import('@/pages/electrician-tools/AIRAMSPage'));
+const TestingProjects = lazyWithRetry(() => import('@/pages/electrician/testing-projects'));
+const SiteSafety = lazyWithRetry(() => import('@/pages/electrician-tools/SiteSafety'));
+const AIRAMSPage = lazyWithRetry(() => import('@/pages/electrician-tools/AIRAMSPage'));
 
 const ElectricianRoutes = () => (
   <Routes>

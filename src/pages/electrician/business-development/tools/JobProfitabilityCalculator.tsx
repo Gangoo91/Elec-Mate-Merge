@@ -48,11 +48,35 @@ import {
   getJobPresetOptions,
 } from '@/components/electrician/business-development/job-profitability/JobTypePresets';
 import { Helmet } from 'react-helmet';
+import {
+  calculateJobCosts,
+  priceJob,
+  MAX_MARGIN_PERCENT,
+  VAT_STANDARD_RATE_PERCENT,
+  VAT_REGISTRATION_THRESHOLD,
+  type JobCostInputs,
+} from '@/data/job-costing';
 
+/**
+ * `materialMarkupPercent` and `discountPercent` used to live here. Both were
+ * validated, both were set by "Load example" (10% and 0%), and NEITHER ever
+ * entered a single formula — so the example quietly told the user a 10%
+ * materials markup was being applied when nothing of the sort was happening.
+ * They are gone rather than wired in: this tool prices on a target MARGIN over
+ * total cost, and stacking a separate markup on the materials line on top of
+ * that would double-count the profit on materials.
+ */
 interface JobInputs {
   materialCost: number;
   labourHours: number;
   hourlyRate: number;
+  /**
+   * Employer NI, holiday, pension, sick pay and downtime on top of the pay
+   * rate. Was absent entirely: costing labour at the headline rate alone
+   * understates the cost of every job and overstates the profit by the same
+   * amount.
+   */
+  labourOnCostPercent: number;
   overheadPercentage: number;
   desiredProfitMargin: number;
   quoteAmount: number;
@@ -63,10 +87,8 @@ interface JobInputs {
   subcontractorCost: number;
   parkingTolls: number;
   consumablesPercent: number;
-  materialMarkupPercent: number;
   contingencyPercent: number;
   warrantyReservePercent: number;
-  discountPercent: number;
   workers: Worker[];
   useMultiWorker: boolean;
 }
@@ -79,7 +101,8 @@ interface CalculationHistory {
   results: {
     totalCosts: number;
     actualProfit: number;
-    actualProfitMargin: number;
+    /** null when nothing was quoted — a £0 quote has no margin, not a 0% one. */
+    actualProfitMargin: number | null;
     vatAmount: number;
     totalWithVAT: number;
   };
@@ -98,6 +121,7 @@ const JobProfitabilityCalculator = () => {
     materialCost: 0,
     labourHours: 0,
     hourlyRate: 0,
+    labourOnCostPercent: 0,
     overheadPercentage: 0,
     desiredProfitMargin: 0,
     quoteAmount: 0,
@@ -108,10 +132,8 @@ const JobProfitabilityCalculator = () => {
     subcontractorCost: 0,
     parkingTolls: 0,
     consumablesPercent: 0,
-    materialMarkupPercent: 0,
     contingencyPercent: 0,
     warrantyReservePercent: 0,
-    discountPercent: 0,
     workers: [
       {
         id: '1',
@@ -127,7 +149,9 @@ const JobProfitabilityCalculator = () => {
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [calculated, setCalculated] = useState(false);
   const [customValues, setCustomValues] = useState<{ [key: string]: boolean }>({});
-  const [vatRate, setVATRate] = useState(20);
+  // Was a hardcoded 20. Sourced from the verified rate table so a rate change
+  // lands in one place.
+  const [vatRate, setVATRate] = useState(VAT_STANDARD_RATE_PERCENT);
   const [vatRegistered, setVATRegistered] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedPreset, setSelectedPreset] = useState<string>('');
@@ -190,17 +214,23 @@ const JobProfitabilityCalculator = () => {
 
     const percentFields: (keyof JobInputs)[] = [
       'overheadPercentage',
-      'desiredProfitMargin',
       'consumablesPercent',
-      'materialMarkupPercent',
       'contingencyPercent',
       'warrantyReservePercent',
-      'discountPercent',
+      'labourOnCostPercent',
     ];
     percentFields.forEach((f) => {
       const v = inputs[f] as number;
       if (v < 0 || v > 100) newErrors[f as string] = 'Must be between 0–100%';
     });
+
+    // A margin is a share of the SELLING price, so 100% would need an infinite
+    // price. The old rule allowed exactly 100, which fell through to the
+    // `Math.max(..., 0.01)` floor and quietly returned 100x total costs as the
+    // "minimum quote".
+    if (inputs.desiredProfitMargin < 0 || inputs.desiredProfitMargin > MAX_MARGIN_PERCENT) {
+      newErrors.desiredProfitMargin = `Must be between 0–${MAX_MARGIN_PERCENT}%`;
+    }
 
     const nonNegativeFields: (keyof JobInputs)[] = [
       'travelHours',
@@ -235,39 +265,19 @@ const JobProfitabilityCalculator = () => {
     haptic.light();
     setCalculated(true);
 
-    const vatAmount = vatRegistered ? (inputs.quoteAmount * vatRate) / 100 : 0;
-    const labourCostBaseLocal = inputs.labourHours * inputs.hourlyRate;
-    const nonBillableCostLocal = (inputs.travelHours + inputs.adminHours) * inputs.hourlyRate;
-    const mileageCostLocal = inputs.miles * inputs.mileageRate;
-    const consumablesCostLocal = inputs.materialCost * (inputs.consumablesPercent / 100);
-    const directCostsLocal =
-      inputs.materialCost +
-      labourCostBaseLocal +
-      nonBillableCostLocal +
-      mileageCostLocal +
-      inputs.parkingTolls +
-      inputs.subcontractorCost +
-      consumablesCostLocal;
-    const overheadCostsLocal = directCostsLocal * (inputs.overheadPercentage / 100);
-    const contingencyCostLocal = directCostsLocal * (inputs.contingencyPercent / 100);
-    const warrantyReserveCostLocal = directCostsLocal * (inputs.warrantyReservePercent / 100);
-    const totalCostsLocal =
-      directCostsLocal + overheadCostsLocal + contingencyCostLocal + warrantyReserveCostLocal;
-    const actualProfitLocal = inputs.quoteAmount - totalCostsLocal;
-    const actualProfitMarginLocal =
-      inputs.quoteAmount > 0 ? (actualProfitLocal / inputs.quoteAmount) * 100 : 0;
-
+    // Reads the same `pricing`/`breakdown` the screen renders, so history can
+    // never disagree with the result the user is looking at.
     const newHistoryItem: CalculationHistory = {
       id: Date.now().toString(),
       timestamp: new Date(),
       jobType: selectedJobType || 'Custom Job',
       inputs: { ...inputs },
       results: {
-        totalCosts: totalCostsLocal,
-        actualProfit: actualProfitLocal,
-        actualProfitMargin: actualProfitMarginLocal,
-        vatAmount,
-        totalWithVAT: inputs.quoteAmount + vatAmount,
+        totalCosts: pricing.totalCosts,
+        actualProfit: pricing.profit,
+        actualProfitMargin: pricing.marginPercent,
+        vatAmount: pricing.vat,
+        totalWithVAT: pricing.priceIncVat,
       },
     };
 
@@ -287,6 +297,7 @@ const JobProfitabilityCalculator = () => {
       materialCost: 0,
       labourHours: 0,
       hourlyRate: 0,
+      labourOnCostPercent: 0,
       overheadPercentage: 0,
       desiredProfitMargin: 0,
       quoteAmount: 0,
@@ -297,10 +308,8 @@ const JobProfitabilityCalculator = () => {
       subcontractorCost: 0,
       parkingTolls: 0,
       consumablesPercent: 0,
-      materialMarkupPercent: 0,
       contingencyPercent: 0,
       warrantyReservePercent: 0,
-      discountPercent: 0,
       workers: [
         {
           id: '1',
@@ -378,7 +387,7 @@ const JobProfitabilityCalculator = () => {
       hourlyRate: inputs.hourlyRate,
       totalCosts: totalCosts.toFixed(2),
       quoteAmount: inputs.quoteAmount,
-      profitMargin: actualProfitMargin.toFixed(1),
+      profitMargin: actualProfitMargin === null ? '—' : actualProfitMargin.toFixed(1),
     };
 
     if (navigator.share) {
@@ -407,7 +416,10 @@ const JobProfitabilityCalculator = () => {
     setInputs({
       materialCost: 650,
       labourHours: 8,
-      hourlyRate: 52,
+      // A COST per hour, not a charge-out rate — the example previously used
+      // £52, which is a domestic selling rate, as though it were a cost.
+      hourlyRate: 18.38,
+      labourOnCostPercent: 25,
       overheadPercentage: 20,
       desiredProfitMargin: 25,
       quoteAmount: 1100,
@@ -418,16 +430,14 @@ const JobProfitabilityCalculator = () => {
       subcontractorCost: 0,
       parkingTolls: 15,
       consumablesPercent: 5,
-      materialMarkupPercent: 10,
       contingencyPercent: 5,
-      warrantyReservePercent: 0,
-      discountPercent: 0,
+      warrantyReservePercent: 2,
       workers: [
         {
           id: '1',
           role: 'Qualified Electrician',
           hours: 8,
-          hourlyRate: 52,
+          hourlyRate: 18.38,
           skillLevel: 'qualified',
         },
       ],
@@ -468,39 +478,61 @@ const JobProfitabilityCalculator = () => {
     ? inputs.workers.reduce((sum, worker) => sum + worker.hours * worker.hourlyRate, 0)
     : inputs.labourHours * inputs.hourlyRate;
 
-  const labourCostBase = calculated ? totalLabourCost : 0;
   const blendedHourlyRate =
     totalLabourHours > 0 ? totalLabourCost / totalLabourHours : inputs.hourlyRate;
-  const nonBillableCost = calculated
-    ? (inputs.travelHours + inputs.adminHours) * blendedHourlyRate
-    : 0;
-  const mileageCost = calculated ? inputs.miles * inputs.mileageRate : 0;
-  const consumablesCost = calculated ? inputs.materialCost * (inputs.consumablesPercent / 100) : 0;
-  const directCosts = calculated
-    ? inputs.materialCost +
-      labourCostBase +
-      nonBillableCost +
-      mileageCost +
-      inputs.parkingTolls +
-      inputs.subcontractorCost +
-      consumablesCost
-    : 0;
-  const overheadCosts = calculated ? directCosts * (inputs.overheadPercentage / 100) : 0;
-  const contingencyCost = calculated ? directCosts * (inputs.contingencyPercent / 100) : 0;
-  const warrantyReserveCost = calculated ? directCosts * (inputs.warrantyReservePercent / 100) : 0;
-  const totalCosts = calculated
-    ? directCosts + overheadCosts + contingencyCost + warrantyReserveCost
-    : 0;
 
-  const minimumQuoteExVAT = calculated
-    ? totalCosts / Math.max(1 - inputs.desiredProfitMargin / 100, 0.01)
-    : 0;
-  const actualProfit = calculated ? inputs.quoteAmount - totalCosts : 0;
-  const actualProfitMargin =
-    calculated && inputs.quoteAmount > 0 ? (actualProfit / inputs.quoteAmount) * 100 : 0;
+  /**
+   * ONE cost engine. This file previously carried two: this block for the
+   * screen, and a second, subtly different copy inside `calculateProfitability`
+   * that costed labour as `inputs.labourHours * inputs.hourlyRate` and travel
+   * at `inputs.hourlyRate` rather than the blended team rate. Those two stay in
+   * step only while `handleWorkersChange` has just run — switch multi-worker on
+   * with a stale single-worker rate still in state and the same Calculate press
+   * wrote one profit to the screen and a different one to history.
+   */
+  const costInputs: JobCostInputs = {
+    materialCost: inputs.materialCost,
+    consumablesPercent: inputs.consumablesPercent,
+    labourHours: totalLabourHours,
+    labourCostPerHour: blendedHourlyRate,
+    labourOnCostPercent: inputs.labourOnCostPercent,
+    travelHours: inputs.travelHours,
+    adminHours: inputs.adminHours,
+    miles: inputs.miles,
+    mileageRate: inputs.mileageRate,
+    parkingTolls: inputs.parkingTolls,
+    subcontractorCost: inputs.subcontractorCost,
+    overheadPercentage: inputs.overheadPercentage,
+    contingencyPercent: inputs.contingencyPercent,
+    warrantyReservePercent: inputs.warrantyReservePercent,
+  };
 
-  const vatAmount = calculated && vatRegistered ? (inputs.quoteAmount * vatRate) / 100 : 0;
-  const totalWithVAT = calculated ? inputs.quoteAmount + vatAmount : 0;
+  const breakdown = calculateJobCosts(costInputs);
+  // VAT is charged on the net quote and belongs to HMRC — it is never part of
+  // cost or profit, so it is passed only for the inc-VAT display line.
+  const pricing = priceJob(
+    breakdown,
+    inputs.quoteAmount,
+    inputs.desiredProfitMargin,
+    vatRegistered ? vatRate : 0
+  );
+
+  const labourCostBase = calculated ? breakdown.labour : 0;
+  const nonBillableCost = calculated ? breakdown.nonBillableLabour : 0;
+  const mileageCost = calculated ? breakdown.mileage : 0;
+  const consumablesCost = calculated ? breakdown.consumables : 0;
+  const directCosts = calculated ? breakdown.directCosts : 0;
+  const overheadCosts = calculated ? breakdown.overheadCosts : 0;
+  const contingencyCost = calculated ? breakdown.contingencyCost : 0;
+  const warrantyReserveCost = calculated ? breakdown.warrantyReserveCost : 0;
+  const totalCosts = calculated ? breakdown.totalCosts : 0;
+
+  const minimumQuoteExVAT = calculated ? pricing.minimumPriceExVat : 0;
+  const actualProfit = calculated ? pricing.profit : 0;
+  const actualProfitMargin = calculated ? pricing.marginPercent : null;
+
+  const vatAmount = calculated ? pricing.vat : 0;
+  const totalWithVAT = calculated ? pricing.priceIncVat : 0;
 
   const isValid =
     (inputs.useMultiWorker ? totalLabourHours > 0 : inputs.labourHours > 0) &&
@@ -508,7 +540,7 @@ const JobProfitabilityCalculator = () => {
     inputs.quoteAmount > 0;
 
   const getProfitabilityStatus = () => {
-    if (!calculated) return null;
+    if (!calculated || actualProfitMargin === null) return null;
 
     if (actualProfitMargin >= inputs.desiredProfitMargin) {
       return {
@@ -639,7 +671,7 @@ const JobProfitabilityCalculator = () => {
                     <div className="text-white font-medium">
                       {selectedPresetData.defaults.desiredProfitMargin}%
                     </div>
-                    <div className="text-white">profit</div>
+                    <div className="text-white">margin</div>
                   </div>
                 </div>
               </div>
@@ -662,6 +694,7 @@ const JobProfitabilityCalculator = () => {
                 value={inputs.materialCost || ''}
                 onChange={(val) => updateInput('materialCost', parseFloat(val) || 0)}
                 placeholder="e.g., 500"
+                hint="What you pay, ex VAT"
                 error={errors.materialCost}
               />
 
@@ -826,20 +859,25 @@ const JobProfitabilityCalculator = () => {
                   />
                 )}
 
+                {/* Labelled "Hourly Rate" and fed from a list of charge-out
+                    rates ("Emergency Rate", "Expert/Consultant"), yet the value
+                    lands in the COST total. A selling rate costed as a cost
+                    makes every job look near-break-even. */}
                 {customValues.hourlyRate ? (
                   <CalculatorInput
-                    label="Hourly Rate"
+                    label="Labour Cost/hr"
                     unit="£"
                     type="text"
                     inputMode="decimal"
                     value={inputs.hourlyRate || ''}
                     onChange={(val) => updateInput('hourlyRate', parseFloat(val) || 0)}
-                    placeholder="e.g., 45"
+                    placeholder="e.g., 28"
+                    hint="Pay rate, not charge-out"
                     error={errors.hourlyRate}
                   />
                 ) : (
                   <CalculatorSelect
-                    label="Hourly Rate"
+                    label="Labour Cost/hr"
                     value={inputs.hourlyRate.toString()}
                     onChange={(value) => handleDropdownChange('hourlyRate', value)}
                     options={hourlyRateOptions}
@@ -847,6 +885,23 @@ const JobProfitabilityCalculator = () => {
                 )}
               </div>
             )}
+
+            {/* True labour cost. Without this the pay rate alone was booked as
+                the cost of labour, understating cost and overstating profit on
+                every job by the whole of employer NI, holiday and pension. */}
+            <div className="grid grid-cols-2 gap-3 mt-3">
+              <CalculatorInput
+                label="Labour On-Costs %"
+                unit="%"
+                type="text"
+                inputMode="decimal"
+                value={inputs.labourOnCostPercent || ''}
+                onChange={(val) => updateInput('labourOnCostPercent', parseFloat(val) || 0)}
+                placeholder="e.g., 25"
+                hint="Employer NI, holiday, pension"
+                error={errors.labourOnCostPercent}
+              />
+            </div>
           </div>
 
           {/* Business Parameters */}
@@ -877,20 +932,23 @@ const JobProfitabilityCalculator = () => {
                 />
               )}
 
+              {/* MARGIN, not markup: a share of the selling price. The minimum
+                  quote is cost / (1 − margin), never cost × (1 + margin). */}
               {customValues.desiredProfitMargin ? (
                 <CalculatorInput
-                  label="Target Profit %"
+                  label="Target Margin %"
                   unit="%"
                   type="text"
                   inputMode="decimal"
                   value={inputs.desiredProfitMargin || ''}
                   onChange={(val) => updateInput('desiredProfitMargin', parseFloat(val) || 0)}
                   placeholder="e.g., 25"
+                  hint="Share of the price, not of cost"
                   error={errors.desiredProfitMargin}
                 />
               ) : (
                 <CalculatorSelect
-                  label="Target Profit %"
+                  label="Target Margin %"
                   value={inputs.desiredProfitMargin.toString()}
                   onChange={(value) => handleDropdownChange('desiredProfitMargin', value)}
                   options={profitMarginOptions}
@@ -931,14 +989,25 @@ const JobProfitabilityCalculator = () => {
               <CalculatorSelect
                 label="VAT Rate"
                 value={vatRate.toString()}
-                onChange={(value) => setVATRate(parseInt(value))}
+                onChange={(value) => setVATRate(parseFloat(value))}
                 options={[
-                  { value: '20', label: '20% - Standard Rate' },
+                  {
+                    value: String(VAT_STANDARD_RATE_PERCENT),
+                    label: `${VAT_STANDARD_RATE_PERCENT}% - Standard Rate`,
+                  },
                   { value: '5', label: '5% - Reduced Rate' },
                   { value: '0', label: '0% - Zero Rate' },
                 ]}
               />
             )}
+
+            {/* VAT is collected for HMRC — it is neither revenue nor a cost, so
+                it stays out of every profit figure on this page. */}
+            <p className="text-xs text-white mt-2">
+              Profit and margin are worked out on the net (ex VAT) quote. VAT is added on top
+              and passed to HMRC. Registration is compulsory once taxable turnover passes £
+              {VAT_REGISTRATION_THRESHOLD.toLocaleString('en-GB')} in any rolling 12 months.
+            </p>
           </div>
 
           {/* Advanced Options */}
@@ -1018,14 +1087,18 @@ const JobProfitabilityCalculator = () => {
               </div>
 
               <div className="grid grid-cols-2 gap-3">
+                {/* Relabelled: this is the only place waste/offcuts can be
+                    captured, and "Consumables" alone read as clips and tape. */}
                 <CalculatorInput
-                  label="Consumables %"
+                  label="Consumables & Waste %"
                   unit="%"
                   type="text"
                   inputMode="decimal"
                   value={inputs.consumablesPercent || ''}
                   onChange={(val) => updateInput('consumablesPercent', parseFloat(val) || 0)}
                   placeholder="0"
+                  hint="% of materials"
+                  error={errors.consumablesPercent}
                 />
                 <CalculatorInput
                   label="Contingency %"
@@ -1035,6 +1108,24 @@ const JobProfitabilityCalculator = () => {
                   value={inputs.contingencyPercent || ''}
                   onChange={(val) => updateInput('contingencyPercent', parseFloat(val) || 0)}
                   placeholder="0"
+                  error={errors.contingencyPercent}
+                />
+              </div>
+
+              {/* `warrantyReservePercent` was already in the cost total but had
+                  no input anywhere, so it was permanently 0 and the reserve was
+                  never actually priced in. */}
+              <div className="grid grid-cols-2 gap-3">
+                <CalculatorInput
+                  label="Warranty Reserve %"
+                  unit="%"
+                  type="text"
+                  inputMode="decimal"
+                  value={inputs.warrantyReservePercent || ''}
+                  onChange={(val) => updateInput('warrantyReservePercent', parseFloat(val) || 0)}
+                  placeholder="0"
+                  hint="Call-backs & remedials"
+                  error={errors.warrantyReservePercent}
                 />
               </div>
             </CollapsibleContent>
@@ -1117,12 +1208,12 @@ const JobProfitabilityCalculator = () => {
                 <p
                   className={cn(
                     'text-sm mt-1',
-                    actualProfitMargin >= inputs.desiredProfitMargin
+                    actualProfitMargin !== null && actualProfitMargin >= inputs.desiredProfitMargin
                       ? 'text-green-400'
                       : 'text-red-400'
                   )}
                 >
-                  {actualProfitMargin.toFixed(1)}% Margin
+                  {actualProfitMargin === null ? '—' : `${actualProfitMargin.toFixed(1)}%`} Margin
                 </p>
               </div>
 
@@ -1295,12 +1386,15 @@ const JobProfitabilityCalculator = () => {
                           <span
                             className={cn(
                               'ml-1',
-                              item.results.actualProfitMargin >= item.inputs.desiredProfitMargin
+                              item.results.actualProfitMargin !== null &&
+                                item.results.actualProfitMargin >= item.inputs.desiredProfitMargin
                                 ? 'text-green-400'
                                 : 'text-red-400'
                             )}
                           >
-                            {item.results.actualProfitMargin.toFixed(1)}%
+                            {item.results.actualProfitMargin === null
+                              ? '—'
+                              : `${item.results.actualProfitMargin.toFixed(1)}%`}
                           </span>
                         </div>
                       </div>
@@ -1344,11 +1438,15 @@ const JobProfitabilityCalculator = () => {
                   <p className="text-amber-200/70">Small firm: 15-25%</p>
                   <p className="text-amber-200/70">Larger firm: 20-35%</p>
                 </div>
+                {/* These were charge-out rates sitting under a heading the
+                    calculator treats as cost. Replaced with the JIB 2026
+                    National Standard pay rates (Transport Provided), which is
+                    what the Labour Cost/hr field actually wants. */}
                 <div className="space-y-1">
-                  <p className="text-amber-300 font-medium">Labour Rates (UK)</p>
-                  <p className="text-amber-200/70">Apprentice: £15-25/hr</p>
-                  <p className="text-amber-200/70">Qualified: £35-55/hr</p>
-                  <p className="text-amber-200/70">Specialist: £50-80/hr</p>
+                  <p className="text-amber-300 font-medium">Labour Cost (JIB 2026)</p>
+                  <p className="text-amber-200/70">Electrician: £18.38/hr</p>
+                  <p className="text-amber-200/70">Approved: £20.08/hr</p>
+                  <p className="text-amber-200/70">Add 20-30% on-costs</p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-amber-300 font-medium">Contingency</p>

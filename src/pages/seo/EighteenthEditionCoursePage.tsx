@@ -26,9 +26,9 @@ const faqs = [
       'Most electricians complete the BS 7671 course content in 20 to 40 hours of study, depending on prior experience. Because Elec-Mate is entirely self-paced, you can fit sessions around your working day. Our AI study assistant identifies weak areas early, so you spend less time on topics you already understand and more on the sections that need attention. Many users pass within four to six weeks of starting.',
   },
   {
-    question: 'Does this course cover Amendment 4:2024 (A4:2026)?',
+    question: 'Does this course cover Amendment 4:2026 (A4:2026)?',
     answer:
-      'Yes. Our content is fully updated for BS 7671:2018+A4:2026, which was published on 31 July 2024. Amendment 4 introduces Regulation 530.3.201 covering requirements for bidirectional and unidirectional protective devices, particularly relevant for solar PV and battery storage installations. Every quiz and practice exam in Elec-Mate reflects the latest regulation text.',
+      'Yes. Our content is fully updated for BS 7671:2018+A4:2026. (The 31 July 2024 free PDF supplement was Amendment 3, not Amendment 4.) Regulation 530.3.201 covers requirements for bidirectional and unidirectional protective devices, particularly relevant for solar PV and battery storage installations. Every quiz and practice exam in Elec-Mate reflects the latest regulation text.',
   },
   {
     question: 'Is online 18th Edition training accepted by NICEIC and NAPIT?',
@@ -97,7 +97,7 @@ const courseSchema = {
   '@type': 'Course',
   name: '18th Edition Course Online - BS 7671 Training',
   description:
-    'Comprehensive online training for BS 7671:2018 + Amendment 4:2024. AI-powered study assistant, practice exams, and progress tracking for UK electricians.',
+    'Comprehensive online training for BS 7671:2018 + Amendment 4:2026. AI-powered study assistant, practice exams, and progress tracking for UK electricians.',
   provider: {
     '@type': 'Organization',
     name: 'Elec-Mate',
@@ -140,11 +140,11 @@ export default function EighteenthEditionCoursePage() {
   useSEO({
     title: '18th Edition Course Online | BS 7671 Amendment 4 Training',
     description:
-      'Study BS 7671:2018 + Amendment 4:2024 online. AI-powered study assistant, practice quizzes, and progress tracking. From £6.99/mo with 7-day free trial.',
+      'Study BS 7671:2018 + Amendment 4:2026 online. AI-powered study assistant, practice quizzes, and progress tracking. From £6.99/mo with 7-day free trial.',
     schema: {
       '@type': 'Course',
       name: '18th Edition Course Online',
-      description: 'BS 7671:2018 + Amendment 4:2024 training with AI study assistant',
+      description: 'BS 7671:2018 + Amendment 4:2026 training with AI study assistant',
       provider: {
         '@type': 'Organization',
         name: 'Elec-Mate',
@@ -194,7 +194,7 @@ export default function EighteenthEditionCoursePage() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] mb-6">
             <GraduationCap className="w-4 h-4 text-yellow-400" />
             <span className="text-sm font-medium text-yellow-400">
-              Updated for Amendment 4:2024
+              Updated for Amendment 4:2026
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
@@ -203,7 +203,7 @@ export default function EighteenthEditionCoursePage() {
             <span className="text-yellow-400">BS 7671 Training</span>
           </h1>
           <p className="text-lg sm:text-xl text-white max-w-2xl mx-auto mb-8 leading-relaxed">
-            Master BS 7671:2018 + Amendment 4:2024 with an AI-powered study platform built
+            Master BS 7671:2018 + Amendment 4:2026 with an AI-powered study platform built
             specifically for UK electricians. Practice exams, regulation search, progress tracking,
             and more.
           </p>
@@ -259,18 +259,19 @@ export default function EighteenthEditionCoursePage() {
         </div>
       </section>
 
-      {/* Amendment 4:2024 */}
+      {/* Amendment 4:2026 */}
       <section className="py-12 sm:py-16 px-5 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
-            What Changed in Amendment 4:2024?
+            What Changed in Amendment 4:2026?
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              BS 7671:2018+A4:2026 was issued on 31 July 2024 as a free PDF supplement to the
-              existing standard. Unlike previous amendments that required purchasing a new edition,
-              A4:2026 is a focused update that adds a single but significant new regulation:
-              Regulation 530.3.201.
+              A4:2026 is the current amendment to BS 7671:2018 — note that the free PDF supplement
+              issued on 31 July 2024 was Amendment 3, which is a persistent source of confusion.
+              A4:2026 is substantive: it inserts new regulations (411.6.5 and a new Regulation group
+              419), redrafts others including 411.4.5 and 551.7.1, and deletes material such as
+              Appendix 3 Table 3A.
             </p>
             <p>
               Regulation 530.3.201 introduces requirements for the selection and erection of
@@ -482,7 +483,7 @@ export default function EighteenthEditionCoursePage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Pass Your 18th Edition with Elec-Mate"
-            description="AI-powered 18th Edition study platform built for UK electricians — practice exams updated to Amendment 4:2024, instant regulation search…"
+            description="AI-powered 18th Edition study platform built for UK electricians — practice exams updated to Amendment 4:2026, instant regulation search…"
             ctaText="Start 7-day free trial"
             ctaHref="/auth/signup"
           />

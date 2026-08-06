@@ -341,7 +341,7 @@ export default function CityGuilds2391Page() {
               covered include safe isolation procedures and their regulatory basis (HSE Guidance
               Note GS 38 and the Electricity at Work Regulations 1989), the full GN3 testing
               sequence with rationale for the test order, BS 7671:2018+A4:2026 regulation references
-              relevant to inspection and testing (particularly Chapter 61 for initial verification
+              relevant to inspection and testing (particularly Chapter 64 for initial verification
               and Chapter 62 for periodic inspection), testing instrument selection, operation, and
               calibration requirements, documentation requirements for EICs, EICRs, Minor Electrical
               Installation Works Certificates, and Schedule of Inspections and Test Results, and

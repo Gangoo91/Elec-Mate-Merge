@@ -1,54 +1,11 @@
 import { useState, useRef } from 'react';
 import { motion, PanInfo, useAnimation } from 'framer-motion';
-import {
-  Trash2,
-  Receipt,
-  Calendar,
-  MapPin,
-  ChevronRight,
-  Pencil,
-  CheckCircle2,
-  Coins,
-  CloudUpload,
-  Loader2,
-} from 'lucide-react';
+import { Trash2, Pencil, Loader2 } from 'lucide-react';
 import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
 import { useHaptic } from '@/hooks/useHaptic';
 import { Expense, getCategoryConfig } from '@/types/expense';
-import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
-import {
-  Fuel,
-  Wrench,
-  HardHat,
-  Package,
-  Hotel,
-  Car,
-  GraduationCap,
-  Truck,
-  Shield,
-  CreditCard,
-  UtensilsCrossed,
-  MoreHorizontal,
-} from 'lucide-react';
-
-// Icon mapping for categories
-const CATEGORY_ICONS: Record<string, React.ElementType> = {
-  fuel: Fuel,
-  tools: Wrench,
-  ppe: HardHat,
-  materials: Package,
-  hotels: Hotel,
-  mileage: Car,
-  training: GraduationCap,
-  vehicle: Truck,
-  insurance: Shield,
-  subscriptions: CreditCard,
-  meals: UtensilsCrossed,
-  other: MoreHorizontal,
-};
-
 interface ExpenseCardProps {
   expense: Expense;
   onDelete: () => void;
@@ -57,6 +14,16 @@ interface ExpenseCardProps {
   onSync?: () => void;
   isSyncing?: boolean;
   showSyncButton?: boolean;
+  /**
+   * Whether this expense has actually reached an accounting package. Passed in
+   * because `expense.synced_to_accounting` is not reliable — see
+   * `useExpenseSyncRecords`.
+   */
+  isSynced?: boolean;
+  /** Link to the expense in Xero/QuickBooks, when the sync recorded one. */
+  syncUrl?: string | null;
+  /** Why the last attempt to send it was refused, if it was. */
+  syncError?: string | null;
   delay?: number;
 }
 
@@ -68,8 +35,12 @@ export function ExpenseCard({
   onSync,
   isSyncing = false,
   showSyncButton = false,
+  isSynced,
+  syncUrl = null,
+  syncError = null,
   delay = 0,
 }: ExpenseCardProps) {
+  const synced = isSynced ?? !!expense.synced_to_accounting;
   const { isMobile, touchSupport } = useMobileEnhanced();
   const haptic = useHaptic();
   const controls = useAnimation();
@@ -146,7 +117,6 @@ export function ExpenseCard({
   };
 
   const categoryConfig = getCategoryConfig(expense.category);
-  const CategoryIcon = CATEGORY_ICONS[expense.category] || MoreHorizontal;
 
   // Always show the actual expense date, not relative time
   const expenseDate = new Date(expense.date);
@@ -166,7 +136,7 @@ export function ExpenseCard({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, x: -100 }}
       transition={{ delay, duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-      className="relative"
+      className="relative h-full"
     >
       {/* Edit action background (revealed on swipe right) - Left side */}
       {onEdit && (
@@ -202,9 +172,9 @@ export function ExpenseCard({
       {/* Card Content */}
       <motion.div
         className={cn(
-          'relative rounded-xl overflow-hidden touch-manipulation',
-          'bg-gradient-to-br from-white/[0.04] to-white/[0.02] border border-white/[0.08]',
-          'hover:border-white/[0.15] transition-colors',
+          'relative flex h-full flex-col overflow-hidden rounded-2xl touch-manipulation',
+          'border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04]',
+          'transition-colors hover:from-white/[0.10] hover:to-white/[0.06]',
           onClick && 'cursor-pointer active:scale-[0.98]'
         )}
         animate={controls}
@@ -219,109 +189,101 @@ export function ExpenseCard({
         onDragEnd={handleDragEnd}
         onClick={() => !isDragging && onClick?.()}
       >
-        <div className="flex items-center p-3.5 gap-3.5">
-          {/* Category icon — one muted treatment; the icon varies, the colour doesn't */}
-          <div className="w-11 h-11 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0">
-            <CategoryIcon className="h-5 w-5 text-elec-yellow" />
+        <div className="flex flex-1 flex-col gap-3 p-4">
+          <div className="flex items-baseline justify-between gap-3">
+            <span className="min-w-0 flex-1 truncate text-[15px] font-semibold tracking-tight text-white">
+              {expense.vendor || categoryConfig.label}
+            </span>
+            <span className="whitespace-nowrap text-[20px] font-bold leading-none tracking-tight text-elec-yellow tabular-nums">
+              £{expense.amount.toFixed(2)}
+            </span>
           </div>
 
-          {/* Content */}
-          <div className="flex-1 min-w-0">
-            {/* Row 1: Vendor/Category + Amount */}
-            <div className="flex items-center justify-between gap-2">
-              <span className="font-semibold text-foreground truncate">
-                {expense.vendor || categoryConfig.label}
-              </span>
-              <span className="font-bold text-lg text-elec-yellow whitespace-nowrap">
-                £{expense.amount.toFixed(2)}
-              </span>
-            </div>
+          {/* One meta line. The category lives here now that the icon has gone —
+              as a word, which says "Materials" far more plainly than a box
+              glyph ever did, and costs no room of its own. */}
+          <p className="truncate text-[12px] leading-snug text-white">
+            {[
+              dateDisplay,
+              expense.vendor ? categoryConfig.label : null,
+              expense.category === 'mileage' && expense.mileage_miles
+                ? `${expense.mileage_miles} mi`
+                : null,
+              expense.description || null,
+            ]
+              .filter(Boolean)
+              .join(' \u00B7 ')}
+          </p>
 
-            {/* Row 2: Date - Always visible and prominent */}
-            <div className="flex items-center gap-1.5 mt-1 text-sm text-foreground/70">
-              <Calendar className="h-3.5 w-3.5 text-elec-yellow/70" />
-              <span className="font-medium">{dateDisplay}</span>
-            </div>
+          {/* Badges mark EXCEPTIONS only. "Deductible" sat on nearly every row
+              (127 of 179 expenses are), which is not information — it is
+              wallpaper. What is worth seeing is the one that is not, and the
+              missing receipt that makes a claim hard to defend. */}
+          {syncError && !synced && (
+            <p className="rounded-xl border border-orange-500/30 bg-orange-500/[0.10] px-3 py-2 text-[12px] leading-snug text-orange-300">
+              Your accounts package refused this: {syncError}
+            </p>
+          )}
 
-            {/* Row 3: Badges */}
-            <div className="flex items-center flex-wrap gap-x-2 gap-y-1 mt-2">
-              {expense.receipt_url && (
-                <Badge
-                  variant="outline"
-                  className="text-[10px] px-1.5 py-0 h-4 border-green-500/30 bg-green-500/10 text-green-400"
-                >
-                  <Receipt className="h-2.5 w-2.5 mr-0.5" />
-                  Receipt
-                </Badge>
+          {(!expense.receipt_url || !expense.tax_deductible) && (
+            <div className="flex flex-wrap items-center gap-1.5">
+              {!expense.receipt_url && (
+                <span className="rounded-full border border-orange-500/30 bg-orange-500/[0.12] px-2 py-0.5 text-[10px] font-semibold text-orange-300">
+                  No receipt
+                </span>
               )}
-              {expense.category === 'mileage' && expense.mileage_miles && (
-                <Badge
-                  variant="outline"
-                  className="text-[10px] px-1.5 py-0 h-4 border-white/20 bg-white/5 text-foreground/70"
-                >
-                  <MapPin className="h-2.5 w-2.5 mr-0.5" />
-                  {expense.mileage_miles} mi
-                </Badge>
-              )}
-              {expense.ai_extracted && (
-                <Badge
-                  variant="outline"
-                  className="text-[10px] px-1.5 py-0 h-4 border-blue-500/30 bg-blue-500/10 text-blue-400"
-                >
-                  AI
-                </Badge>
-              )}
-              {expense.tax_deductible && (
-                <Badge
-                  variant="outline"
-                  className="text-[10px] px-1.5 py-0 h-4 border-amber-500/30 bg-amber-500/10 text-amber-400"
-                >
-                  <Coins className="h-2.5 w-2.5 mr-0.5" />
-                  Tax
-                </Badge>
-              )}
-              {expense.synced_to_accounting && (
-                <Badge
-                  variant="outline"
-                  className="text-[10px] px-1.5 py-0 h-4 border-green-500/30 bg-green-500/10 text-green-400"
-                >
-                  <CheckCircle2 className="h-2.5 w-2.5 mr-0.5" />
-                  Synced
-                </Badge>
+              {!expense.tax_deductible && (
+                <span className="rounded-full border border-white/[0.12] bg-white/[0.06] px-2 py-0.5 text-[10px] font-medium text-white">
+                  Not deductible
+                </span>
               )}
             </div>
+          )}
 
-            {/* Row 4: Description (if exists) */}
-            {expense.description && (
-              <p className="text-xs text-white mt-1.5 truncate">
-                {expense.description}
-              </p>
-            )}
-          </div>
-
-          {/* Sync / Chevron */}
-          {showSyncButton && !expense.synced_to_accounting ? (
+          {/* mt-auto so short and long cards end level in the 2-up grid. */}
+          <div className="mt-auto flex items-center gap-2 border-t border-white/[0.10] pt-3">
             <button
+              type="button"
               onClick={(e) => {
                 e.stopPropagation();
-                onSync?.();
+                onEdit?.();
               }}
-              disabled={isSyncing}
-              className="w-11 h-11 flex items-center justify-center rounded-xl bg-amber-500/15 active:scale-[0.95] transition-all touch-manipulation flex-shrink-0"
+              className="h-11 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[13px] font-semibold text-white transition-colors hover:bg-white/[0.08] touch-manipulation active:scale-[0.98]"
             >
-              {isSyncing ? (
-                <Loader2 className="h-5 w-5 text-amber-400 animate-spin" />
-              ) : (
-                <CloudUpload className="h-5 w-5 text-amber-400" />
-              )}
+              Edit
             </button>
-          ) : showSyncButton && expense.synced_to_accounting ? (
-            <div className="w-11 h-11 flex items-center justify-center flex-shrink-0">
-              <CheckCircle2 className="h-5 w-5 text-green-400" />
-            </div>
-          ) : onClick ? (
-            <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
-          ) : null}
+            {showSyncButton &&
+              (synced ? (
+                syncUrl ? (
+                  <a
+                    href={syncUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex h-11 items-center rounded-xl px-3 text-[13px] font-medium text-elec-yellow touch-manipulation"
+                  >
+                    View in accounts
+                  </a>
+                ) : (
+                  <span className="flex h-11 items-center px-3 text-[13px] font-medium text-white">
+                    In your accounts
+                  </span>
+                )
+              ) : (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onSync?.();
+                  }}
+                  disabled={isSyncing}
+                  className="flex h-11 items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.04] px-4 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation active:scale-[0.98] disabled:opacity-60"
+                >
+                  {isSyncing && <Loader2 className="h-4 w-4 animate-spin" />}
+                  {isSyncing ? 'Sending' : syncError ? 'Try again' : 'Send to accounts'}
+                </button>
+              ))}
+          </div>
         </div>
       </motion.div>
     </motion.div>

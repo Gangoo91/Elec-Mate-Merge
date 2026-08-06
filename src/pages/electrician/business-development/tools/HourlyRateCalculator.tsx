@@ -28,6 +28,12 @@ import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
 import { Helmet } from 'react-helmet';
 import { SmartBackButton } from '@/components/ui/smart-back-button';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
+import {
+  UK_EMPLOYER_COSTS,
+  employerNIOn,
+  employerPensionOn,
+  priceFromMargin,
+} from '@/data/ukRates';
 
 interface RateInputs {
   annualSalary: string;
@@ -58,13 +64,19 @@ const HourlyRateCalculator = () => {
 
   const [inputs, setInputs] = useState<RateInputs>({
     annualSalary: '35000',
-    workingDaysPerYear: '230',
-    hoursPerDay: '8',
+    // GROSS weekdays in a year (52 × 5 = 260). It used to default to 230, which
+    // is already a figure NET of holiday, so the leave/bank-holiday/sick/training
+    // days below were being deducted a second time — 41 days of double-counting.
+    workingDaysPerYear: '260',
+    // 7.5, not 8 — the JIB standard week is 37.5 hours (National Working
+    // Rule 3.1). Assuming 8 invents 130 unpaid hours a year and understates cost.
+    hoursPerDay: '7.5',
     paidLeaveDays: '25',
     bankHolidays: '8',
     sickDays: '5',
     trainingDays: '3',
-    employerNI: '13.8',
+    // Employer NI is 15% from 6 April 2025, not 13.8%.
+    employerNI: '15',
     employerPension: '3',
     profFeesAnnual: '1000',
     calibrationAnnual: '300',
@@ -129,13 +141,19 @@ const HourlyRateCalculator = () => {
   const reset = () => {
     setInputs({
       annualSalary: '35000',
-      workingDaysPerYear: '230',
-      hoursPerDay: '8',
+      // GROSS weekdays in a year (52 × 5 = 260). It used to default to 230, which
+    // is already a figure NET of holiday, so the leave/bank-holiday/sick/training
+    // days below were being deducted a second time — 41 days of double-counting.
+    workingDaysPerYear: '260',
+      // 7.5, not 8 — the JIB standard week is 37.5 hours (National Working
+    // Rule 3.1). Assuming 8 invents 130 unpaid hours a year and understates cost.
+    hoursPerDay: '7.5',
       paidLeaveDays: '25',
       bankHolidays: '8',
       sickDays: '5',
       trainingDays: '3',
-      employerNI: '13.8',
+      // Employer NI is 15% from 6 April 2025, not 13.8%.
+    employerNI: '15',
       employerPension: '3',
       profFeesAnnual: '1000',
       calibrationAnnual: '300',
@@ -180,8 +198,18 @@ const HourlyRateCalculator = () => {
   const totalWorkingHours = effectiveWorkingDays * hoursPerDay;
   const billableHours = Math.max((totalWorkingHours * utilizationRate) / 100, 1);
 
+  // Employer NI is charged only on pay ABOVE the £5,000 secondary threshold and
+  // the 3% employer pension minimum only on QUALIFYING EARNINGS (£6,240 to
+  // £50,270). This used to be `salary × (1 + (NI + pension) / 100)`, i.e. both
+  // percentages applied to the whole salary, which overstates the pension bill
+  // on every wage and the NI bill by 15% of the first £5,000.
+  const employerNIAnnual = employerNIOn(annualSalary, employerNI / 100);
+  const employerPensionAnnual = employerPensionOn(annualSalary, employerPension / 100);
+
   const baseCostAnnual =
-    annualSalary * (1 + (employerNI + employerPension) / 100) +
+    annualSalary +
+    employerNIAnnual +
+    employerPensionAnnual +
     profFeesAnnual +
     calibrationAnnual +
     softwareAnnual +
@@ -191,7 +219,11 @@ const HourlyRateCalculator = () => {
   const overheadAnnual = baseCostAnnual * (overheadPercentage / 100);
   const overheadCostPerHour = overheadAnnual / billableHours;
   const totalCostPerHour = baseCostPerHour + overheadCostPerHour;
-  const minimumRate = totalCostPerHour / Math.max(1 - profitMargin / 100, 0.01);
+  // MARGIN, not markup: margin is a share of the SELLING price, so
+  // price = cost / (1 − margin). `priceFromMargin` also clamps the margin at
+  // 95% — the old `Math.max(1 − margin/100, 0.01)` guard turned any entry of
+  // 100% or more into a silent ×100 multiplier rather than refusing it.
+  const minimumRate = priceFromMargin(totalCostPerHour, profitMargin);
   const dayRate = minimumRate * hoursPerDay;
 
   const VAT_RATE = 0.2;
@@ -208,26 +240,28 @@ const HourlyRateCalculator = () => {
     }
   };
 
+  // Round the ex-VAT price, then apply VAT to that rounded figure. The inc-VAT
+  // numbers used to be rounded a SECOND time, so at "nearest £5" a £70 ex-VAT
+  // rate displayed as £85 inc VAT — which is £70.83 ex VAT. The two lines on the
+  // same screen did not reconcile, and the invoice would not have either.
+  const withVat = (exVat: number) => exVat * (1 + VAT_RATE);
+
   const roundedHourlyExVat = applyRounding(minimumRate);
   const roundedDayExVat = applyRounding(dayRate);
-  const hourlyIncVat = vatRegistered ? applyRounding(roundedHourlyExVat * (1 + VAT_RATE)) : null;
-  const dayIncVat = vatRegistered ? applyRounding(roundedDayExVat * (1 + VAT_RATE)) : null;
+  const hourlyIncVat = vatRegistered ? withVat(roundedHourlyExVat) : null;
+  const dayIncVat = vatRegistered ? withVat(roundedDayExVat) : null;
 
   // Premium rates
   const callOutFeeExVat = applyRounding(roundedHourlyExVat * Math.max(callOutMinHours, 0));
-  const callOutFeeIncVat = vatRegistered ? applyRounding(callOutFeeExVat * (1 + VAT_RATE)) : null;
+  const callOutFeeIncVat = vatRegistered ? withVat(callOutFeeExVat) : null;
   const afterHoursHourlyExVat = applyRounding(
     roundedHourlyExVat * Math.max(afterHoursMultiplier, 0)
   );
   const afterHoursDayExVat = applyRounding(roundedDayExVat * Math.max(afterHoursMultiplier, 0));
   const weekendHourlyExVat = applyRounding(roundedHourlyExVat * Math.max(weekendMultiplier, 0));
   const weekendDayExVat = applyRounding(roundedDayExVat * Math.max(weekendMultiplier, 0));
-  const afterHoursHourlyIncVat = vatRegistered
-    ? applyRounding(afterHoursHourlyExVat * (1 + VAT_RATE))
-    : null;
-  const weekendHourlyIncVat = vatRegistered
-    ? applyRounding(weekendHourlyExVat * (1 + VAT_RATE))
-    : null;
+  const afterHoursHourlyIncVat = vatRegistered ? withVat(afterHoursHourlyExVat) : null;
+  const weekendHourlyIncVat = vatRegistered ? withVat(weekendHourlyExVat) : null;
 
   const chartData = useMemo(
     () => [
@@ -289,7 +323,7 @@ const HourlyRateCalculator = () => {
               category="business"
               title="Rate Calculation Inputs"
               description="Enter your business parameters to calculate optimal rates"
-              badge="2025"
+              badge={UK_EMPLOYER_COSTS.taxYear}
             >
               {/* Core Inputs */}
               <div className="flex items-center gap-2 mb-3">
@@ -315,8 +349,8 @@ const HourlyRateCalculator = () => {
                   inputMode="numeric"
                   value={inputs.workingDaysPerYear}
                   onChange={(val) => updateInput('workingDaysPerYear', val)}
-                  placeholder="e.g., 230"
-                  hint="Typically 230-250 days"
+                  placeholder="e.g., 260"
+                  hint="Weekdays in a year (260) — leave is deducted below"
                 />
                 <CalculatorInput
                   label="Hours/Day"
@@ -324,8 +358,8 @@ const HourlyRateCalculator = () => {
                   inputMode="numeric"
                   value={inputs.hoursPerDay}
                   onChange={(val) => updateInput('hoursPerDay', val)}
-                  placeholder="e.g., 8"
-                  hint="Standard working hours"
+                  placeholder="e.g., 7.5"
+                  hint="JIB standard week is 37.5h — 7.5h/day"
                 />
               </div>
 
@@ -394,8 +428,8 @@ const HourlyRateCalculator = () => {
                       inputMode="decimal"
                       value={inputs.employerNI}
                       onChange={(val) => updateInput('employerNI', val)}
-                      placeholder="13.8"
-                      hint="Typical 13.8%"
+                      placeholder="15"
+                      hint={`${UK_EMPLOYER_COSTS.taxYear}: 15% above £${UK_EMPLOYER_COSTS.employerNISecondaryThresholdAnnual.toLocaleString('en-GB')}`}
                     />
                     <CalculatorInput
                       label="Employer Pension"
@@ -405,7 +439,7 @@ const HourlyRateCalculator = () => {
                       value={inputs.employerPension}
                       onChange={(val) => updateInput('employerPension', val)}
                       placeholder="3"
-                      hint="Typical 3%"
+                      hint="3% of qualifying earnings (£6,240–£50,270)"
                     />
                   </div>
 
@@ -846,7 +880,7 @@ const HourlyRateCalculator = () => {
                   <div className="flex items-center gap-3">
                     <BookOpen className="h-4 w-4 text-amber-400" />
                     <span className="text-sm sm:text-base font-medium text-amber-300">
-                      UK Rate Reference 2025
+                      UK Rate Reference
                     </span>
                   </div>
                   <ChevronDown

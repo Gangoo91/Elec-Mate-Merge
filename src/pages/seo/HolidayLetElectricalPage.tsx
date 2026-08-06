@@ -48,7 +48,7 @@ const keyTakeaways = [
   'Smoke alarms and carbon monoxide alarms are not currently mandated by statute for holiday lets in England, but the Regulatory Reform (Fire Safety) Order 2005 may apply to larger properties. Smoke and CO alarms are considered essential duty-of-care measures.',
   'Having a current EICR certificate and PAT testing records is a significant marketing advantage on platforms such as Airbnb, Booking.com, and holiday cottage directories, where guests increasingly ask about safety credentials.',
   'BS 7671:2018+A4:2026 (Regulation 411.3.4) now requires 30 mA RCD protection on lighting circuits in domestic premises. Holiday lets inspected under A4:2026 will receive a C2 observation if lighting circuits lack RCD protection.',
-  'BS 7671:2018+A4:2026 introduced Regulation 421.1.7, recommending arc fault detection devices (AFDDs) on AC final circuits to reduce fire risk from arc faults. AFDDs are mandatory in high-rise residential buildings and recommended for all other domestic premises including holiday lets.',
+  'BS 7671:2018+A4:2026 introduced Regulation 421.1.7, recommending arc fault detection devices (AFDDs) on AC final circuits to reduce fire risk from arc faults. AFDDs are recommended, not mandatory, in high-rise residential buildings and recommended for all other domestic premises including holiday lets.',
 ];
 
 const faqs = [
@@ -441,7 +441,7 @@ const sections = [
                 7671:2018+A4:2026 introduced Regulation 421.1.7, recommending arc fault detection
                 devices (AFDDs) on AC final circuits to mitigate fire risk from arc fault currents.
                 The wording is advisory for most premises (not &apos;shall&apos;), but AFDDs are
-                mandatory in high-rise residential buildings. For holiday lets, fitting AFDDs
+                recommended, not mandatory, in high-rise residential buildings. For holiday lets, fitting AFDDs
                 demonstrates a higher standard of electrical safety and is consistent with the
                 duty-of-care obligations under the Occupiers Liability Act 1957.
               </span>

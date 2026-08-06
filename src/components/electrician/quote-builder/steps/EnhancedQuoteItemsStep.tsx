@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { DecimalInput } from '@/components/ui/decimal-input';
 import { Textarea } from '@/components/ui/textarea';
 import { AutoGrowTextarea } from '@/components/ui/auto-grow-textarea';
-import { materialQueryMatches, expandMaterialQuery } from '@/data/materialSynonyms';
+import { materialQueryMatches, expandMaterialQuery, rankMaterialMatches } from '@/data/materialSynonyms';
 import {
   Select,
   SelectContent,
@@ -81,6 +81,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useDebounce } from '@/hooks/useDebounce';
 import { toast } from '@/hooks/use-toast';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { labourLinesFor, labourAllocations, describeLabour, describeLines, shortGradeLabel } from '@/utils/labourGrades';
 import { useMaterialsLists, MaterialsListItem } from '@/hooks/useMaterialsLists';
 import { useSaveToPriceBook } from '@/hooks/useSaveToPriceBook';
 import { usePriceBookBundles } from '@/hooks/usePriceBookBundles';
@@ -117,7 +118,19 @@ export const EnhancedQuoteItemsStep = ({
 
   // Rate a price-book item's labour allowance is costed at (ELE-1470). Same
   // source as the preview shown in the Price Book, so the two always agree.
+  // Kept for the display chip only. The actual cost now comes from the item's
+  // own grade via rateForGrade (ELE-1445) — a 0.5h apprentice task must not be
+  // costed at the electrician rate just because that is the headline one.
   const priceBookHourlyRate = companyProfile?.hourly_rate ?? 0;
+  // Memoised: a fresh object each render re-ran every memo that depends on it,
+  // which with 1,200+ items meant recomputing the whole book on every keystroke.
+  const rateSources = useMemo(
+    () => ({
+      workerRates: companyProfile?.worker_rates,
+      hourlyRate: companyProfile?.hourly_rate,
+    }),
+    [companyProfile?.worker_rates, companyProfile?.hourly_rate]
+  );
 
   // Price Book data
   const { lists: materialsLists } = useMaterialsLists();
@@ -172,7 +185,7 @@ export const EnhancedQuoteItemsStep = ({
     }
     if (priceBookSearch.trim()) {
       // ELE-1393 — match trade phrases ("2 gang socket" → "double socket").
-      return result.filter((p) => materialQueryMatches(p.item.name, priceBookSearch));
+      return rankMaterialMatches(result, priceBookSearch, (p) => p.item.name);
     }
     return result;
   }, [materialsLists, priceBookSearch]);
@@ -811,24 +824,27 @@ export const EnhancedQuoteItemsStep = ({
                       // A separate line rather than folding it into the material
                       // price so the quote still shows what is material and what is
                       // labour, and the labour category adjustment still applies.
-                      const labourHours = p.item.labour_hours ?? 0;
-                      const addedLabour = labourHours > 0 && priceBookHourlyRate > 0;
-                      if (addedLabour) {
+                      // One line PER GRADE — a two-man task shows the
+                      // electrician and the apprentice separately, which is
+                      // what both the estimator and the customer need to see.
+                      const labour = labourLinesFor(p.item, qty, rateSources);
+                      const addedLabour = labour.lines.length > 0;
+                      for (const line of labour.lines) {
                         onAdd({
-                          description: `Labour — ${p.item.name}`,
-                          quantity: Math.round(labourHours * qty * 100) / 100,
+                          description: `Labour — ${p.item.name} (${shortGradeLabel(line.grade)})`,
+                          quantity: line.hours,
                           unit: 'hour',
-                          unitPrice: Math.round(priceBookHourlyRate * 100) / 100,
+                          unitPrice: line.rate,
                           category: 'labour',
-                          hours: Math.round(labourHours * qty * 100) / 100,
-                          hourlyRate: priceBookHourlyRate,
+                          hours: line.hours,
+                          hourlyRate: line.rate,
                         });
                       }
 
                       toast({
                         title: 'Added to quote',
                         description: addedLabour
-                          ? `${p.item.name} + ${Math.round(labourHours * qty * 100) / 100}h labour`
+                          ? `${p.item.name} + ${describeLines(labour.lines)}`
                           : p.item.name,
                       });
                     }}
@@ -852,9 +868,9 @@ export const EnhancedQuoteItemsStep = ({
                           </span>
                         );
                       })()}
-                      {(p.item.labour_hours ?? 0) > 0 && (
+                      {labourAllocations(p.item).length > 0 && (
                         <span className="px-1.5 py-0.5 rounded text-[10px] font-medium border bg-blue-500/10 text-blue-300 border-blue-500/20">
-                          +{p.item.labour_hours}h labour
+                          +{describeLabour(labourAllocations(p.item))}
                         </span>
                       )}
                       {p.item.supplier && (

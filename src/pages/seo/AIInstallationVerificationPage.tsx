@@ -158,7 +158,7 @@ export default function AIInstallationVerificationPage() {
                   installation. Type and location of SPD verified against Regulation 443.4.
                 </li>
                 <li>
-                  <span className="font-semibold text-white">Amendment 4:2024 requirements</span> —
+                  <span className="font-semibold text-white">Amendment 4:2026 requirements</span> —
                   Regulation 530.3.2 checked for installations with bidirectional power flow (solar
                   PV, battery storage). Correct protective device directionality verified.
                 </li>
@@ -372,9 +372,9 @@ export default function AIInstallationVerificationPage() {
         },
         {
           icon: ClipboardCheck,
-          title: 'Amendment 4:2024 Ready',
+          title: 'Amendment 4:2026 Ready',
           description:
-            'Includes checks for BS 7671 Amendment 4:2024 requirements including Regulation 530.3.2 for bidirectional and unidirectional protective devices.',
+            'Includes checks for BS 7671 Amendment 4:2026 requirements including Regulation 530.3.2 for bidirectional and unidirectional protective devices.',
         },
       ]}
       featuresHeading="Verification Features"
@@ -409,7 +409,7 @@ export default function AIInstallationVerificationPage() {
         {
           question: 'Can it verify installations with solar PV or battery storage?',
           answer:
-            'Yes. The verification engine includes specific checks for installations with distributed energy resources including solar PV, battery energy storage systems (BESS), wind turbines, and EV chargers with vehicle-to-grid (V2G) capability. These checks cover the requirements of BS 7671 Amendment 4:2024, particularly the new Regulation 530.3.2 regarding bidirectional and unidirectional protective devices. The AI verifies that the correct RCD type is installed (Type B for systems with DC fault current), that protective devices are suitable for bidirectional power flow, that the earthing arrangement is correct for the generation source, and that G98/G99 connection requirements are addressed. For solar PV installations, it also checks DC isolator provision and labelling requirements.',
+            'Yes. The verification engine includes specific checks for installations with distributed energy resources including solar PV, battery energy storage systems (BESS), wind turbines, and EV chargers with vehicle-to-grid (V2G) capability. These checks cover the requirements of BS 7671 Amendment 4:2026, particularly the new Regulation 530.3.2 regarding bidirectional and unidirectional protective devices. The AI verifies that the correct RCD type is installed (Type B for systems with DC fault current), that protective devices are suitable for bidirectional power flow, that the earthing arrangement is correct for the generation source, and that G98/G99 connection requirements are addressed. For solar PV installations, it also checks DC isolator provision and labelling requirements.',
         },
         {
           question: 'How does the verification handle special locations under BS 7671 Part 7?',

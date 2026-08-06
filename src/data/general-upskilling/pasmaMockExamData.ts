@@ -23,6 +23,102 @@ export const pasmaCategories = [
   'Inspection',
   'Hazards',
   'Safety',
+  {
+    id: 201,
+    question: 'A mobile tower is to be used outdoors. What is the correct approach to wind?',
+    options: [
+      'Work should cease and the tower be considered for dismantling as wind rises',
+      'Towers may be used in any wind up to the machine\'s stated maximum height',
+      'Sheeting the tower reduces wind loading and permits work to continue',
+      'Wind only matters where the tower exceeds 6 metres platform height',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Rising wind increases both the overturning moment and the risk to the operative. Work should stop and the tower be lowered or dismantled as conditions deteriorate. Sheeting makes matters worse, not better — it turns the tower into a sail and substantially increases wind loading.',
+    difficulty: 'advanced',
+    topic: 'Wind',
+    category: 'Hazards',
+  },
+  {
+    id: 202,
+    question: 'Why must a tower never be moved with a person on the platform?',
+    options: [
+      'Because the castors are not rated for the additional load',
+      'Because the raised centre of gravity and sudden forces can overturn it',
+      'Because it invalidates the 7-day inspection record',
+      'Because the outriggers cannot be deployed while moving',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A person on the platform raises the centre of gravity and any jolt — a kerb, a drain cover, a change in level — can be enough to overturn the tower. The forces involved cannot be controlled from the ground, which is why the platform must be clear before the tower is moved.',
+    difficulty: 'advanced',
+    topic: 'Moving Towers',
+    category: 'Safety',
+  },
+  {
+    id: 203,
+    question: 'What does the 3T (Through the Trap) method achieve?',
+    options: [
+      'It allows a tower to be built without guardrails at any level',
+      'It removes the need for a competent person to inspect the tower',
+      'It keeps the operative protected while fitting guardrails for the next level',
+      'It permits a single person to erect a tower of any height',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Working through the trapdoor, the operative stays within the protection of the level below while positioning the guardrails for the level above, so they are never on an unguarded platform. It is a method of maintaining protection during assembly, not a way of dispensing with it.',
+    difficulty: 'advanced',
+    topic: '3T Method',
+    category: 'Assembly',
+  },
+  {
+    id: 204,
+    question: 'A tower is found with a bent horizontal brace. What is the correct action?',
+    options: [
+      'Straighten it on site and refit it if it appears true',
+      'Use it provided the tower height is reduced by one lift',
+      'Refit it in a lower bay where loads are lower',
+      'Quarantine the component and replace it with an undamaged one',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'A bent component has been overloaded and straightening it on site can leave hidden stress fractures that are not visible. It should be taken out of use and replaced. Relegating it to a lower bay does not help — lower components carry the greatest load.',
+    difficulty: 'advanced',
+    topic: 'Damaged Components',
+    category: 'Inspection',
+  },
+  {
+    id: 205,
+    question: 'Who may inspect a mobile access tower and record the result?',
+    options: [
+      'A competent person with knowledge appropriate to the tower type',
+      'Any operative who has assembled a tower previously',
+      'Only the manufacturer\'s technical representative',
+      'The site\'s appointed first aider, as part of daily checks',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Inspection must be by a competent person — someone with the practical and theoretical knowledge to identify defects and assess their significance for that type of tower. Having built one before is not the same as being competent to judge whether one is safe.',
+    difficulty: 'advanced',
+    topic: 'Competence',
+    category: 'Inspection',
+  },
+  {
+    id: 206,
+    question: 'What is the primary reason stabilisers or outriggers are fitted to a tower?',
+    options: [
+      'To allow the tower to be moved more easily on uneven ground',
+      'To increase the effective base dimensions and resist overturning',
+      'To provide additional anchor points for fall arrest lanyards',
+      'To spread the load so castors can be locked more securely',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Stability is governed by the relationship between height and base dimensions. Stabilisers widen the effective base so the tower resists the overturning moment at its working height. They are a stability measure, not a handling aid or an anchor point.',
+    difficulty: 'advanced',
+    topic: 'Stability',
+    category: 'Assembly',
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -1369,7 +1465,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     options: [
       'Only once the operative reaches the topmost working platform',
       'Only while the operative is descending the internal ladder',
-      'At all times during the assembly process, because guardrails are fitted from the level below before the operative advances',
+      'At all times during the assembly process',
       'Only after the trapdoor has been removed from the platform',
     ],
     correctAnswer: 2,
@@ -1562,12 +1658,12 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'When using the 3T method, what is the correct sequence for advancing to the next platform level?',
     options: [
-      'Climb through the trap to the unguarded level first, then fit the frames, braces and guardrails from above',
-      'From the level below, fit the frame and braces for the next level, fit guardrails for the next level, then climb through the trap to the guarded platform',
-      'Fit the guardrails for the next level first, then the platform, then climb up and fit the frames and braces',
-      'Climb to the next level, fit the platform only, then come back down to fit the frames and braces afterwards',
+      'From the level below, fit the frame and braces for the next level, then the guardrails, before climbing up',
+      'Climb to the new level first, then pass up the frame, braces and guardrails from below',
+      'Fit the platform and guardrails at ground level, then lift the assembled section into place',
+      'Build the full height in frames first, adding all guardrails once the tower is complete',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'In the 3T method, the operative works from the level below to fit the next frame section, braces and guardrails. Only after the next level is fully guarded does the operative climb through the trapdoor to the new platform.',
     section: 'Module 3',
@@ -1633,12 +1729,12 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'When assembling a tower with both outriggers and castors, in what order should the components be set up at the base?',
     options: [
-      "Build the full tower first, then fit the castors and outriggers to the completed structure",
-      "Fit castors to the base frame, lock them, ensure the base is level, then fit outriggers before building the tower higher than the manufacturer's specified freestanding limit",
-      "Fit the outriggers first, then add the castors once the tower has reached working height",
-      "Fit castors and outriggers in any order, since the sequence has no effect on stability",
+      'Fit castors to the base frame, lock them, ensure the base is level, then fit outriggers before building up',
+      'Build the first lift complete, then fit castors and outriggers once it is standing',
+      'Fit outriggers to the base first, then add castors and level the tower on its brakes',
+      'Fit castors unlocked so the tower can be positioned, locking them at working height',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Castors are fitted first and locked. The base is levelled using adjustable legs. Outriggers are then fitted before the tower exceeds the freestanding height limit for that base dimension, in accordance with the manufacturer's instructions.",
     section: 'Module 3',
@@ -1920,12 +2016,12 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 105,
     question: 'Why should a mobile access tower never be moved by towing it with a vehicle?',
     options: [
-      'The exhaust fumes from the vehicle can corrode the aluminium frame',
       'The sudden forces can cause the tower to collapse or overturn, and the speed cannot be safely controlled',
-      'The castor brakes will overheat and seize if towed any distance',
-      'The vehicle\'s weight will crush the tower\'s adjustable legs',
+      'The castors are not rated for towing and will shear off under the lateral load',
+      'It invalidates the manufacturer\'s warranty and the PASMA inspection record',
+      'The tower would need a fresh 7-day inspection before it could be used again',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Towing a tower with a vehicle creates uncontrolled forces, particularly during acceleration, braking and turning. These forces can cause the tower to collapse or overturn, putting anyone nearby at serious risk.',
     section: 'Module 4',
@@ -2025,12 +2121,12 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     id: 111,
     question: 'When moving a tower across uneven ground, what additional precaution must be taken?',
     options: [
-      'Move the tower as quickly as possible to cross the ground in one go',
-      'Increase the tower height so the platform clears the uneven ground',
-      'Leave the castor brakes applied so the tower cannot roll away',
       'Guide the castors carefully, watching for changes in level, and stop if the tower begins to lean',
+      'Move the tower at walking pace with one person at each corner to spread the load',
+      'Push from the top guardrail so the tower is steered rather than dragged along',
+      'Keep the outriggers deployed while moving so stability is maintained throughout',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'On uneven ground, the castors must be guided carefully with lookouts watching for potholes, kerbs and level changes. If the tower begins to lean, movement must stop immediately and the tower stabilised.',
     section: 'Module 4',
@@ -2406,10 +2502,10 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     question:
       'Under what four circumstances does Schedule 5 of the WAHR 2005 require a mobile access tower to be inspected?',
     options: [
-      'Before first use on site, after assembly/alteration, after any event affecting stability, and every 7 days',
-      'Before first use, monthly, after storms, and before dismantling',
-      'After purchase, after delivery, before assembly, and after use',
-      'Before first use, after cleaning, every 14 days, and after complaints',
+      'Before first use on site, after assembly or alteration, after any event affecting stability, and every 7 days',
+      'Before first use on site, then weekly by the user and monthly by a competent person',
+      'After assembly only, since a tower that is not altered cannot become unsafe in use',
+      'Every 14 days in normal use, reducing to every 7 days for towers above 8 metres',
     ],
     correctAnswer: 0,
     explanation:
@@ -3162,7 +3258,7 @@ export const pasmaQuestionBank: StandardMockQuestion[] = [
     options: [
       'Simply provide a fire extinguisher and continue the work as planned',
       'Carry on, as sparks are too small to ignite construction materials',
-      'Eliminate the ignition source if possible; if not, remove or protect flammable materials, use fire-resistant sheeting, provide fire-watching and extinguishing equipment as a last resort',
+      'Eliminate the ignition source if possible',
       'Move the flammable materials onto the tower platform out of the way',
     ],
     correctAnswer: 2,

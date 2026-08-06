@@ -372,7 +372,7 @@ export default function RCDKeepsTrippingPage() {
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
                     <span>
-                      Minimum acceptable value: 1.0 MΩ (BS 7671 Table 61). Values below this
+                      Minimum acceptable value: 1.0 MΩ (BS 7671 Table 64). Values below this
                       indicate insulation breakdown
                     </span>
                   </li>
@@ -396,7 +396,7 @@ export default function RCDKeepsTrippingPage() {
               </p>
               <SEOAppBridge
                 title="Insulation Resistance Validation in Elec-Mate"
-                description="Enter your IR test results into Elec-Mate and the app instantly validates them against BS 7671 Table 61 minimum values."
+                description="Enter your IR test results into Elec-Mate and the app instantly validates them against BS 7671 Table 64 minimum values."
                 icon={Calculator}
               />
             </>

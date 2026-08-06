@@ -43,7 +43,7 @@ const keyTakeaways = [
   'Part P of the Building Regulations (England and Wales) requires that electrical installation work in dwellings is designed, installed, inspected, and tested by competent persons — and that certain types of work are notified to the local authority building control.',
   'Notifiable work includes all new circuits, consumer unit replacements, work in special locations (bathrooms, swimming pools), and any additions or alterations to circuits in special locations — non-notifiable work includes like-for-like replacements and minor additions outside special locations.',
   'Competent Person Schemes (NICEIC, NAPIT, ELECSA, STROMA, BRE) allow registered electricians to self-certify their own work without involving building control, saving time and money for both the electrician and the homeowner.',
-  'Consumer unit replacements became notifiable work in 2016 and must comply with BS 7671:2018+A2:2022, including the use of metal consumer units (or non-combustible enclosures) per Amendment 4 to Part P.',
+  'Consumer unit replacements became notifiable work in 2016 and must comply with BS 7671:2018+A4:2026, including the use of metal consumer units (or non-combustible enclosures) per Amendment 4 to Part P.',
   'Special locations defined in BS 7671 include bathrooms (Section 701), swimming pools (Section 702), and locations containing a sauna heater (Section 703) — each has specific requirements for IP ratings, zones, and supplementary equipotential bonding.',
 ];
 
@@ -332,7 +332,7 @@ const sections = [
     content: (
       <>
         <p>
-          Domestic electrical installations must comply with BS 7671:2018+A2:2022 (the 18th Edition
+          Domestic electrical installations must comply with BS 7671:2018+A4:2026 (the 18th Edition
           of the IET Wiring Regulations). While the fundamental principles are the same as any
           electrical installation, domestic properties have specific design considerations and
           regulatory requirements.
@@ -408,7 +408,7 @@ const sections = [
           <strong>Surge protection:</strong> Regulation 443.4.1 requires protection against
           transient overvoltages to be provided where the consequence caused by the overvoltage
           could result in (a) serious injury to, or loss of, human life, or (c) significant
-          financial or data loss — note that limb (b) was deleted by the BS 7671:2018+A2:2022
+          financial or data loss — note that limb (b) was deleted by the BS 7671:2018+A4:2026
           Corrigendum (May 2023). For all other cases, protection must be provided unless the owner
           of the installation declares it is not required because any loss or damage is tolerable
           and they accept the risk of damage to equipment and any consequential loss. In practice,

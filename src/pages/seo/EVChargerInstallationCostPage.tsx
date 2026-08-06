@@ -43,7 +43,7 @@ const keyTakeaways = [
   'A domestic 7kW EV charger installation in the UK typically costs between £800 and £1,500 total, including the charger unit, installation labour, testing, and certification.',
   'BS 7671:2018+A4:2026 Section 722 governs the electrical requirements for EV charging equipment, including dedicated circuit protection, RCD type selection, and earthing arrangements.',
   'Regulation 722.411.4.1 requires careful attention to earthing arrangements for EV chargepoints, including earth electrode resistance, earth fault loop impedance limits, and PME supply restrictions where a vehicle may be connected outdoors.',
-  'Regulation 722.531.101 mandates appropriate RCD protection for EV chargepoints, requiring Type A RCDs with DC fault detection capability or Type B RCDs where the charger can produce DC residual currents above 6mA.',
+  'Regulation 722.531.3.101 mandates appropriate RCD protection for EV chargepoints, requiring Type A RCDs with DC fault detection capability or Type B RCDs where the charger can produce DC residual currents above 6mA.',
   'DNO notification under G98/G99 is required for all EV charger installations. The OZEV (formerly OLEV) grant scheme has been replaced by local authority schemes in most areas.',
 ];
 
@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'What type of RCD is required for an EV charger?',
     answer:
-      'BS 7671 Regulation 722.531.101 requires that EV chargepoints are protected by an appropriate RCD type. Most modern EV chargers contain internal electronics that can produce DC residual currents during charging. A Type A RCD only detects AC and pulsating DC fault currents — it cannot detect smooth DC fault currents. Therefore, either a Type B RCD (which detects DC residual currents) must be used, or the charger must have an integrated DC fault detection device (6mA DC RDC-DD) that allows it to be used with a Type A RCD. Most quality charger units (Zappi, Andersen, Wallbox, Pod Point) include integrated DC protection, allowing use of the more common and affordable Type A RCBO.',
+      'BS 7671 Regulation 722.531.3.101 requires that EV chargepoints are protected by an appropriate RCD type. Most modern EV chargers contain internal electronics that can produce DC residual currents during charging. A Type A RCD only detects AC and pulsating DC fault currents — it cannot detect smooth DC fault currents. Therefore, either a Type B RCD (which detects DC residual currents) must be used, or the charger must have an integrated DC fault detection device (6mA DC RDC-DD) that allows it to be used with a Type A RCD. Most quality charger units (Zappi, Andersen, Wallbox, Pod Point) include integrated DC protection, allowing use of the more common and affordable Type A RCBO.',
   },
   {
     question: 'Do I need to notify the DNO when installing an EV charger?',
@@ -368,7 +368,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection (Regulation 722.531.101)</strong> — the EV charger circuit
+                <strong>RCD protection (Regulation 722.531.3.101)</strong> — the EV charger circuit
                 must be protected by an appropriate RCD. Where the EVSE can produce DC residual
                 currents, a Type B RCD or a Type A RCD combined with a DC fault detection device
                 (6mA DC RDC-DD) is required. Most quality domestic chargers include integrated DC

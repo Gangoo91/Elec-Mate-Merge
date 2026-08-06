@@ -76,6 +76,10 @@ interface SEOMockExamProps {
   timeLimitMinutes?: number;
   /** Pass threshold (%). Default 70. */
   passThreshold?: number;
+  /** Override the difficulty profile for this exam's draw. Defaults to
+   *  DEFAULT_DIFFICULTY_MIX; only set it where the bank's tags have been
+   *  validated against measured wrong-rates. */
+  difficultyMix?: Record<string, number>;
   /** Sign-up CTA shown in the conversion block AFTER results. */
   signupCta?: { label: string; href: string; subline?: string };
   /**
@@ -116,10 +120,33 @@ function shuffle<T>(arr: T[]): T[] {
  * to retake. It also stops the mock being materially easier than the real
  * assessment, which is what makes a pass here worth anything.
  */
-const DIFFICULTY_MIX: Record<string, number> = {
-  basic: 0.2,
+/**
+ * Difficulty profile for a drawn paper.
+ *
+ * CALIBRATED FROM LIVE DATA (2026-08-06). The 2391 bank's author-assigned
+ * difficulty tags were badly over-rated: re-tagging 280 questions against their
+ * measured wrong-rates moved 44 "intermediate" down to basic and 33 "advanced"
+ * down to intermediate. Honest measured means for that bank are now
+ * basic 11.8% wrong, intermediate 31.3%, advanced 57.8%.
+ *
+ * Why these weights: the exam was passing 82.6% of 1,968 candidates with a mean
+ * score of 77.4%, finished in 13.6 of the 90 minutes allowed. People sat it,
+ * were told they were fine, and left — a mock that flatters nobody into revising.
+ * A 20/50/30 mix on the corrected tags models to a 64.6% mean, which overshoots
+ * into demoralising. 30/50/20 models to ~69% — a paper that sits right on the
+ * 70% pass mark, so roughly half pass and the rest get a reason to prepare.
+ *
+ * It also eases repetition: the genuinely-advanced pool is only 36 questions, so
+ * drawing 9 per paper (30%) recycles them hard across retakes; 6 does not.
+ *
+ * Per-exam override via the `difficultyMix` prop — other banks' tags have not
+ * been validated against measured data yet, so they keep this default until they
+ * have the attempt volume to re-tag. See project_mock_exam_quality memory.
+ */
+const DEFAULT_DIFFICULTY_MIX: Record<string, number> = {
+  basic: 0.3,
   intermediate: 0.5,
-  advanced: 0.3,
+  advanced: 0.2,
 };
 
 /**
@@ -131,12 +158,13 @@ const DIFFICULTY_MIX: Record<string, number> = {
  */
 function drawStratified(
   bank: SEOMockExamQuestion[],
-  count: number
+  count: number,
+  mix: Record<string, number> = DEFAULT_DIFFICULTY_MIX
 ): SEOMockExamQuestion[] {
   const tiers = new Map<string, SEOMockExamQuestion[]>();
   bank.forEach((q) => {
     const tier = typeof q.difficulty === 'string' ? q.difficulty : '';
-    if (!tier || !(tier in DIFFICULTY_MIX)) return;
+    if (!tier || !(tier in mix)) return;
     const list = tiers.get(tier) ?? [];
     list.push(q);
     tiers.set(tier, list);
@@ -147,7 +175,7 @@ function drawStratified(
 
   const picked: SEOMockExamQuestion[] = [];
   const takenIds = new Set<SEOMockExamQuestion['id']>();
-  Object.entries(DIFFICULTY_MIX).forEach(([tier, share]) => {
+  Object.entries(mix).forEach(([tier, share]) => {
     const want = Math.round(count * share);
     shuffle(tiers.get(tier) ?? [])
       .slice(0, want)
@@ -181,6 +209,7 @@ export function SEOMockExam({
   questionsPerExam = 25,
   timeLimitMinutes = 30,
   passThreshold = 70,
+  difficultyMix,
   signupCta,
   onSubmitted,
   onStarted,
@@ -188,6 +217,26 @@ export function SEOMockExam({
   const location = useLocation();
   const [started, setStarted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  /**
+   * ELE-1503 — stand down any fixed bottom bar while a question is on screen.
+   *
+   * The free public exams render inside PublicPageLayout, whose logged-out sticky
+   * mobile CTA is `fixed bottom-0 z-50 sm:hidden` — mobile, logged out, which is
+   * exactly who sits these. It covered the Next button, so the exam looked frozen:
+   * two users reported "can't get to the next question" five days apart.
+   *
+   * Same mechanism ExamMobileLayout uses for the Study Centre exams, so there is
+   * one way of doing this rather than two. Driven off state, not the URL, so no
+   * exam route can be missed. Only while ANSWERING — once results are up the
+   * page wants its CTA back.
+   */
+  useEffect(() => {
+    const answering = started && !submitted;
+    if (!answering) return;
+    document.body.classList.add('exam-active');
+    return () => document.body.classList.remove('exam-active');
+  }, [started, submitted]);
   const [questions, setQuestions] = useState<SEOMockExamQuestion[]>([]);
   const [answers, setAnswers] = useState<(number | null)[]>([]);
   const [current, setCurrent] = useState(0);
@@ -225,7 +274,7 @@ export function SEOMockExam({
 
   const start = useCallback(() => {
     const picked = shuffleAllQuestionOptions(
-      drawStratified(questionBank, questionsPerExam),
+      drawStratified(questionBank, questionsPerExam, difficultyMix),
       createShuffleSalt()
     );
     setQuestions(picked);
@@ -251,7 +300,7 @@ export function SEOMockExam({
       const top = el.getBoundingClientRect().top + window.scrollY - STICKY_OFFSET;
       window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
     });
-  }, [questionBank, questionsPerExam, timeLimitMinutes, onStarted]);
+  }, [questionBank, questionsPerExam, timeLimitMinutes, difficultyMix, onStarted]);
 
   const submit = useCallback(() => {
     if (submitGuardRef.current) return;
@@ -755,9 +804,17 @@ export function SEOMockExam({
             </div>
           </div>
 
-          {/* Mobile sticky nav — thumb-reachable, flat strip per house rules */}
+          {/* Mobile sticky nav — thumb-reachable, flat strip per house rules.
+              ELE-1503: this was z-30 while PublicPageLayout's logged-out sticky
+              CTA is z-50, so the CTA was painted straight over Next and the exam
+              looked frozen. The CTA now stands down during an exam (see the
+              body.exam-active effect above); z-40 is belt and braces so a stray
+              z-30/z-35 element can't do the same thing again. Deliberately NOT
+              z-50 — tying with the CTA would just hand the decision to DOM order,
+              which is what caused this in the first place. */}
           <div
-            className="fixed inset-x-0 bottom-0 z-30 border-t border-white/[0.12] bg-elec-dark/95 backdrop-blur-md lg:hidden"
+            data-exam-nav
+            className="fixed inset-x-0 bottom-0 z-40 border-t border-white/[0.12] bg-elec-dark/95 backdrop-blur-md lg:hidden"
             style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
           >
             <div className="flex items-center gap-3 px-4 py-3">

@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A4:2026 (Section 631). It records the condition of wiring, consumer units, earthing, bonding and protective devices using observation codes (C1, C2, C3, FI).",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A4:2026 (Chapter 65). It records the condition of wiring, consumer units, earthing, bonding and protective devices using observation codes (C1, C2, C3, FI).",
   'Sheffield EICR costs are below the national average. Expect to pay between £150 and £280 for a two-bedroom terraced house and £250 to £400 for a three-bedroom semi-detached property.',
   'Since 1 April 2021, landlords in England must obtain an EICR before a new tenancy begins and at least every five years. Sheffield City Council enforces the regulations and can impose fines of up to £30,000 per breach.',
   'Sheffield has a large stock of Victorian and Edwardian terraced housing, particularly in areas such as Sharrow, Walkley, Crookes and Heeley. These properties frequently present aged wiring, absent earthing and lack of RCD protection.',
@@ -78,7 +78,7 @@ const faqs = [
   {
     question: 'Do I need an EICR for a Sheffield property I own and live in?',
     answer:
-      'There is no legal requirement for owner-occupiers to obtain an EICR. However, it is strongly recommended every 10 years (or every 5 years for properties over 25 years old) as best practice under BS 7671 Regulation 134.2. If you are selling the property, an EICR is not legally required but mortgage lenders and conveyancers increasingly request one.',
+      'There is no legal requirement for owner-occupiers to obtain an EICR. However, it is strongly recommended every 10 years (or every 5 years for properties over 25 years old) as best practice under BS 7671 Regulation 135.1. If you are selling the property, an EICR is not legally required but mortgage lenders and conveyancers increasingly request one.',
   },
 ];
 
@@ -157,7 +157,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (Section 631), which requires that an Electrical Installation Condition Report is used for
+          (Chapter 65), which requires that an Electrical Installation Condition Report is used for
           periodic inspection and testing of existing installations — not an Electrical Installation
           Certificate, which is for new work only.
         </p>
@@ -510,7 +510,7 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Report completion</strong> — the inspector completes the EICR including
-                Schedules of Circuit Details and Test Results (as required by Section 631). The
+                Schedules of Circuit Details and Test Results (as required by Chapter 65). The
                 report includes observations with classification codes, an overall assessment, and a
                 recommended date for the next inspection.
               </span>

@@ -312,7 +312,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection (Regulation 722.531.101)</strong> — the EV charger circuit
+                <strong>RCD protection (Regulation 722.531.3.101)</strong> — the EV charger circuit
                 requires RCD protection. For chargers that produce DC residual currents, a Type B
                 RCD or a Type A RCD with a separate 6mA DC RDC-DD device is required. Most modern
                 smart chargers have integrated DC fault protection.

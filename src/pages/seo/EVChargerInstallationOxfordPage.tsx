@@ -60,7 +60,7 @@ const faqs = [
   {
     question: 'What regulations apply to EV charger installations in Oxford?',
     answer:
-      'All EV charger installations in Oxford must comply with BS 7671:2018+A4:2026 (the IET Wiring Regulations), specifically Section 722 — Electric Vehicle Charging Installations. Key requirements include a dedicated circuit for the EV charger, RCD protection (Regulation 722.531.2), earthing arrangements including a PME earthing risk assessment (Regulation 722.411.4), and appropriate load management where multiple chargers are installed. The installation must also comply with the Building Regulations Part P (England), requiring notification to the local authority or self-certification by a registered competent person.',
+      'All EV charger installations in Oxford must comply with BS 7671:2018+A4:2026 (the IET Wiring Regulations), specifically Section 722 — Electric Vehicle Charging Installations. Key requirements include a dedicated circuit for the EV charger, RCD protection (Regulation 722.531.3.101), earthing arrangements including a PME earthing risk assessment (Regulation 722.411.4), and appropriate load management where multiple chargers are installed. The installation must also comply with the Building Regulations Part P (England), requiring notification to the local authority or self-certification by a registered competent person.',
   },
   {
     question: 'How long does EV charger installation take in Oxford?',
@@ -288,7 +288,7 @@ const sections = [
                 <strong>Dedicated circuit installation</strong> — a new 32A (7kW) or 16A (3.6kW)
                 radial circuit is run from your consumer unit to the charger location. This circuit
                 must be protected by an MCB and RCD (or RCBO) meeting the requirements of Regulation
-                722.531.2. Cable routes through Oxford's older properties may require routing
+                722.531.3.101. Cable routes through Oxford's older properties may require routing
                 through lofts, cavity walls, or externally in trunking.
               </span>
             </li>
@@ -474,7 +474,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 722.531.2 — RCD protection</strong> — EV charger circuits must be
+                <strong>Regulation 722.531.3.101 — RCD protection</strong> — EV charger circuits must be
                 protected by an RCD. Where Mode 3 charging equipment incorporates a DC fault current
                 detection device providing equivalent protection to a Type B RCD, a Type A RCD may
                 be acceptable. Otherwise a Type B RCD is required. Most modern OZEV-approved

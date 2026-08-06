@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   addMonths,
@@ -11,18 +11,20 @@ import {
   endOfMonth,
   startOfWeek,
   endOfWeek,
+  format,
 } from 'date-fns';
+import { motion } from 'framer-motion';
+import { Plus } from 'lucide-react';
 import CalendarHeader from './CalendarHeader';
-import CalendarViewSwitcher from './CalendarViewSwitcher';
 import CalendarMonthView from './CalendarMonthView';
 import CalendarWeekView from './CalendarWeekView';
 import CalendarDayView from './CalendarDayView';
 import CalendarEventSheet from './CalendarEventSheet';
 import CalendarEventDetail from './CalendarEventDetail';
 import CalendarSettingsSheet from './CalendarSettingsSheet';
-import CalendarEmptyState from './CalendarEmptyState';
 import CalendarAgendaStrip from './CalendarAgendaStrip';
-import { Plus } from 'lucide-react';
+import CalendarSummaryStrip from './CalendarSummaryStrip';
+import { containerVariants, itemVariants } from './calendarStyles';
 import {
   useCalendarEvents,
   useCalendarRealtimeInvalidation,
@@ -30,8 +32,10 @@ import {
   useUpdateCalendarEvent,
   useDeleteCalendarEvent,
 } from '@/hooks/useCalendarEvents';
+import { useCalendarPulse } from '@/hooks/useCalendarPulse';
 import { useGoogleCalendarSync } from '@/hooks/useGoogleCalendarSync';
 import { toast } from '@/hooks/use-toast';
+import { useHaptic } from '@/hooks/useHaptic';
 import { useCalendarSettings } from '@/hooks/useCalendarSettings';
 import { useTasksForCalendar } from '@/hooks/useTasksForCalendar';
 import { useProjectsForCalendar } from '@/hooks/useProjectsForCalendar';
@@ -50,6 +54,11 @@ const CalendarPageContent = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [view, setView] = useState<CalendarView>(settings.defaultView);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const haptic = useHaptic();
+
+  /** Which way the last move went, so the incoming period slides in from the
+   *  side it came from rather than appearing out of nowhere. */
+  const [direction, setDirection] = useState(1);
 
   // Sheet states
   const [eventSheetOpen, setEventSheetOpen] = useState(false);
@@ -65,6 +74,8 @@ const CalendarPageContent = () => {
 
   // Google sync
   const googleSync = useGoogleCalendarSync();
+  const googleSyncRef = useRef(googleSync);
+  googleSyncRef.current = googleSync;
 
   // Handle OAuth callback redirect
   useEffect(() => {
@@ -80,7 +91,10 @@ const CalendarPageContent = () => {
       searchParams.delete('google_connected');
       searchParams.delete('email');
       setSearchParams(searchParams, { replace: true });
-      googleSync.refetch?.();
+      // `refreshStatus`, not `refetch` — the hook has never exposed a `refetch`,
+      // so the optional call after a successful OAuth return did nothing and the
+      // header kept showing "not connected" until the page was reloaded.
+      googleSyncRef.current.refreshStatus();
     } else if (error) {
       toast({ title: `Calendar connection failed: ${error}`, variant: 'destructive' });
       searchParams.delete('google_error');
@@ -93,10 +107,8 @@ const CalendarPageContent = () => {
   const { dateFrom, dateTo } = useMemo(() => {
     switch (view) {
       case 'month': {
-        const monthStart = startOfMonth(currentDate);
-        const monthEnd = endOfMonth(currentDate);
-        const gridStart = startOfWeek(monthStart, { weekStartsOn: 1 });
-        const gridEnd = endOfWeek(monthEnd, { weekStartsOn: 1 });
+        const gridStart = startOfWeek(startOfMonth(currentDate), { weekStartsOn: 1 });
+        const gridEnd = endOfWeek(endOfMonth(currentDate), { weekStartsOn: 1 });
         return { dateFrom: gridStart.toISOString(), dateTo: gridEnd.toISOString() };
       }
       case 'week': {
@@ -105,11 +117,7 @@ const CalendarPageContent = () => {
         return { dateFrom: ws.toISOString(), dateTo: we.toISOString() };
       }
       case 'day': {
-        const ds = new Date(
-          currentDate.getFullYear(),
-          currentDate.getMonth(),
-          currentDate.getDate()
-        );
+        const ds = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
         const de = new Date(
           currentDate.getFullYear(),
           currentDate.getMonth(),
@@ -123,7 +131,7 @@ const CalendarPageContent = () => {
     }
   }, [view, currentDate]);
 
-  const { data: events = [], isLoading } = useCalendarEvents(dateFrom, dateTo);
+  const { data: events = [] } = useCalendarEvents(dateFrom, dateTo);
   const { data: taskEvents = [] } = useTasksForCalendar(dateFrom, dateTo);
   const { data: projectEvents = [] } = useProjectsForCalendar(dateFrom, dateTo);
   const { data: siteVisitEvents = [] } = useSiteVisitsForCalendar(dateFrom, dateTo);
@@ -131,12 +139,17 @@ const CalendarPageContent = () => {
     () => [...events, ...taskEvents, ...projectEvents, ...siteVisitEvents],
     [events, taskEvents, projectEvents, siteVisitEvents]
   );
+
+  const pulse = useCalendarPulse();
+
   const createMutation = useCreateCalendarEvent();
   const updateMutation = useUpdateCalendarEvent();
   const deleteMutation = useDeleteCalendarEvent();
 
   // Navigation
   const goNext = useCallback(() => {
+    haptic.selection();
+    setDirection(1);
     setCurrentDate((d) => {
       switch (view) {
         case 'month':
@@ -147,9 +160,11 @@ const CalendarPageContent = () => {
           return addDays(d, 1);
       }
     });
-  }, [view]);
+  }, [view, haptic]);
 
   const goPrevious = useCallback(() => {
+    haptic.selection();
+    setDirection(-1);
     setCurrentDate((d) => {
       switch (view) {
         case 'month':
@@ -160,24 +175,60 @@ const CalendarPageContent = () => {
           return subDays(d, 1);
       }
     });
-  }, [view]);
+  }, [view, haptic]);
 
-  const goToday = useCallback(() => setCurrentDate(new Date()), []);
+  const goToday = useCallback(() => {
+    haptic.light();
+    const now = new Date();
+    setDirection(now >= currentDate ? 1 : -1);
+    setCurrentDate(now);
+    setSelectedDate(now);
+  }, [currentDate, haptic]);
 
-  // Date selection — tap a day in month view. We DON'T auto-switch to day
-  // view; instead we just set selectedDate, and the agenda strip below the
-  // grid updates to show that day's events. User can tap the strip heading
-  // to open Day view if they want detail.
-  const handleDateSelect = useCallback((date: Date) => {
-    setSelectedDate(date);
-  }, []);
+  // Date selection — tapping a day in month view does NOT jump to Day view.
+  // The agenda underneath the grid retargets instead, so a glance at another
+  // day costs one tap and no loss of place.
+  const handleDateSelect = useCallback(
+    (date: Date) => {
+      haptic.selection();
+      setSelectedDate(date);
+    },
+    [haptic]
+  );
+
+  const handleViewChange = useCallback(
+    (v: CalendarView) => {
+      haptic.selection();
+      setView(v);
+      setDefaultView(v);
+    },
+    [setDefaultView, haptic]
+  );
+
+  /** Jump the whole calendar to a date in Day view — used by the summary strip. */
+  const handleGoToDay = useCallback(
+    (date: Date) => {
+      haptic.light();
+      setDirection(date >= currentDate ? 1 : -1);
+      setCurrentDate(date);
+      setSelectedDate(date);
+      setView('day');
+    },
+    [currentDate, haptic]
+  );
+
+  const handleGoToWeek = useCallback(() => {
+    haptic.light();
+    setCurrentDate(new Date());
+    setView('week');
+  }, [haptic]);
 
   const handleOpenSelectedAsDay = useCallback(() => {
     setCurrentDate(selectedDate ?? new Date());
     setView('day');
   }, [selectedDate]);
 
-  // Event tap — task events go to tasks, project events open the project.
+  // Event tap — synthetic events navigate to the record they stand for.
   const handleEventTap = useCallback(
     (event: CalendarEvent) => {
       if (event.id.startsWith('task-')) {
@@ -186,16 +237,12 @@ const CalendarPageContent = () => {
       }
       if (event.id.startsWith('project-')) {
         // event.job_id holds the project id (see useProjectsForCalendar).
-        if (event.job_id) {
-          navigate(`/electrician/projects/${event.job_id}`);
-        }
+        if (event.job_id) navigate(`/electrician/projects/${event.job_id}`);
         return;
       }
       if (event.id.startsWith('visit-')) {
         // event.job_id holds the visit id (see useSiteVisitsForCalendar).
-        if (event.job_id) {
-          navigate(`/electrician/site-visit/${event.job_id}`);
-        }
+        if (event.job_id) navigate(`/electrician/site-visit/${event.job_id}`);
         return;
       }
       setViewingEvent(event);
@@ -212,22 +259,23 @@ const CalendarPageContent = () => {
     setEventSheetOpen(true);
   }, []);
 
-  // Create new event — inline button
-  const handleCreateNew = useCallback(() => {
-    setNewEventDate(selectedDate ?? currentDate);
-    setNewEventHour(undefined);
-    setEditingEvent(null);
-    setEventSheetOpen(true);
-  }, [selectedDate, currentDate]);
+  const openNewEvent = useCallback(
+    (date?: Date) => {
+      haptic.light();
+      setNewEventDate(date ?? selectedDate ?? currentDate);
+      setNewEventHour(undefined);
+      setEditingEvent(null);
+      setEventSheetOpen(true);
+    },
+    [selectedDate, currentDate, haptic]
+  );
 
-  // Edit from detail
   const handleEdit = useCallback((event: CalendarEvent) => {
     setDetailSheetOpen(false);
     setEditingEvent(event);
     setEventSheetOpen(true);
   }, []);
 
-  // Delete
   const handleDelete = useCallback(
     (eventId: string) => {
       deleteMutation.mutate(eventId);
@@ -236,7 +284,6 @@ const CalendarPageContent = () => {
     [deleteMutation]
   );
 
-  // Save (create or update)
   const handleSave = useCallback(
     (data: CreateCalendarEventInput | UpdateCalendarEventInput) => {
       if (editingEvent) {
@@ -253,21 +300,18 @@ const CalendarPageContent = () => {
     [editingEvent, createMutation, updateMutation]
   );
 
-  const handleViewChange = useCallback(
-    (v: CalendarView) => {
-      setView(v);
-      setDefaultView(v);
-    },
-    [setDefaultView]
-  );
-
-  // Agenda strip date — selected day in month view, today otherwise.
+  // Agenda target — the selected day in month view, the shown day otherwise.
   const agendaDate = view === 'month' ? selectedDate ?? new Date() : currentDate;
 
+  /** Remounts the view on every period change, which replays the slide-in. */
+  const periodKey = `${view}-${format(currentDate, 'yyyy-MM-dd')}`;
+
   return (
-    <div className="space-y-3 pb-24">
-      {/* Navigation & View Switcher */}
-      <div className="space-y-2">
+    <div className="-mt-3 min-h-screen bg-background pb-24 sm:-mt-4 md:-mt-6">
+      {/* A calendar earns its width: the month grid, the week columns and the
+          agenda all get more readable the more of the screen they have, and
+          `max-w-6xl` left a third of a desktop window empty beside the grid. */}
+      <div className="mx-auto max-w-[1600px] lg:px-8">
         <CalendarHeader
           currentDate={currentDate}
           view={view}
@@ -275,74 +319,59 @@ const CalendarPageContent = () => {
           onNext={goNext}
           onToday={goToday}
           onOpenSettings={() => setSettingsSheetOpen(true)}
-          onCreateEvent={handleCreateNew}
+          onViewChange={handleViewChange}
         />
-        <CalendarViewSwitcher view={view} onViewChange={handleViewChange} />
-      </div>
 
-      {/* View content */}
-      <div className="min-h-[300px]">
-        {!isLoading && allEvents.length === 0 ? (
-          <CalendarEmptyState onCreateEvent={handleCreateNew} />
-        ) : (
-          <>
+        <motion.main
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-4 px-4 py-4"
+        >
+          <motion.div variants={itemVariants}>
+            <CalendarSummaryStrip
+              pulse={pulse}
+              onGoToDay={handleGoToDay}
+              onGoToWeek={handleGoToWeek}
+            />
+          </motion.div>
+
+          {/* The grid is ALWAYS rendered. It used to be swapped out for an
+              empty state whenever the range held no events, so an empty month
+              lost its dates, its today marker and its navigation — the calendar
+              disappeared exactly when there was nothing to distract from it.
+              An empty day is now said in the agenda, where it belongs. */}
+          <motion.div
+            key={periodKey}
+            initial={{ opacity: 0, x: direction * 14 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ type: 'spring', stiffness: 320, damping: 30 }}
+            className="space-y-4"
+          >
             {view === 'month' && (
-              <>
-                <CalendarMonthView
-                  currentDate={currentDate}
-                  events={allEvents}
-                  onDateSelect={handleDateSelect}
-                  onSwipeLeft={goNext}
-                  onSwipeRight={goPrevious}
-                  selectedDate={selectedDate}
-                />
-                {/* Agenda strip — events for selected day (or today) */}
-                <div className="mt-4">
-                  <CalendarAgendaStrip
-                    date={agendaDate}
-                    events={allEvents}
-                    onEventTap={handleEventTap}
-                    onAdd={() => {
-                      setNewEventDate(agendaDate);
-                      setNewEventHour(undefined);
-                      setEditingEvent(null);
-                      setEventSheetOpen(true);
-                    }}
-                    onOpenDayView={handleOpenSelectedAsDay}
-                  />
-                </div>
-              </>
+              <CalendarMonthView
+                currentDate={currentDate}
+                events={allEvents}
+                onDateSelect={handleDateSelect}
+                onSwipeLeft={goNext}
+                onSwipeRight={goPrevious}
+                selectedDate={selectedDate}
+              />
             )}
+
             {view === 'week' && (
-              <>
-                <CalendarWeekView
-                  currentDate={currentDate}
-                  events={allEvents}
-                  workingHoursStart={settings.workingHoursStart}
-                  workingHoursEnd={settings.workingHoursEnd}
-                  onEventTap={handleEventTap}
-                  onTimeSlotTap={handleTimeSlotTap}
-                  onSwipeLeft={goNext}
-                  onSwipeRight={goPrevious}
-                />
-                {/* Planner-first Today strip — keeps "what's on today" in view
-                    even when scanning the week grid. */}
-                <div className="mt-4">
-                  <CalendarAgendaStrip
-                    date={agendaDate}
-                    events={allEvents}
-                    onEventTap={handleEventTap}
-                    onAdd={() => {
-                      setNewEventDate(agendaDate);
-                      setNewEventHour(undefined);
-                      setEditingEvent(null);
-                      setEventSheetOpen(true);
-                    }}
-                    onOpenDayView={handleOpenSelectedAsDay}
-                  />
-                </div>
-              </>
+              <CalendarWeekView
+                currentDate={currentDate}
+                events={allEvents}
+                workingHoursStart={settings.workingHoursStart}
+                workingHoursEnd={settings.workingHoursEnd}
+                onEventTap={handleEventTap}
+                onTimeSlotTap={handleTimeSlotTap}
+                onSwipeLeft={goNext}
+                onSwipeRight={goPrevious}
+              />
             )}
+
             {view === 'day' && (
               <CalendarDayView
                 currentDate={currentDate}
@@ -355,8 +384,20 @@ const CalendarPageContent = () => {
                 onSwipeRight={goPrevious}
               />
             )}
-          </>
-        )}
+
+            {/* Day view is already a list of the day — a second one below it
+                would only repeat itself. */}
+            {view !== 'day' && (
+              <CalendarAgendaStrip
+                date={agendaDate}
+                events={allEvents}
+                onEventTap={handleEventTap}
+                onAdd={() => openNewEvent(agendaDate)}
+                onOpenDayView={handleOpenSelectedAsDay}
+              />
+            )}
+          </motion.div>
+        </motion.main>
       </div>
 
       {/* Sheets */}
@@ -397,13 +438,11 @@ const CalendarPageContent = () => {
         onDefaultReminderChange={setDefaultReminder}
       />
 
-      {/* Floating add-event button — replaces the toolbar + that was eating
-          the month label space on mobile. */}
       <button
         type="button"
-        onClick={handleCreateNew}
+        onClick={() => openNewEvent()}
         aria-label="New event"
-        className="fixed right-4 bottom-[max(env(safe-area-inset-bottom),16px)] sm:bottom-6 z-40 h-14 w-14 rounded-full bg-elec-yellow text-black shadow-xl shadow-elec-yellow/30 flex items-center justify-center active:scale-[0.96] touch-manipulation"
+        className="fixed bottom-[max(env(safe-area-inset-bottom),16px)] right-4 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-elec-yellow text-black shadow-xl shadow-elec-yellow/30 touch-manipulation active:scale-[0.96] sm:bottom-6"
       >
         <Plus className="h-6 w-6" strokeWidth={2.5} />
       </button>

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Download, Check, FileSpreadsheet, Calendar } from 'lucide-react';
+import { Check, Download } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { AccountingProvider, ExpenseStats } from '@/types/expense';
 import { cn } from '@/lib/utils';
+import { chipBase, chipOff, chipOn, eyebrowCn } from '@/components/shared/surfaceStyles';
+import { inputCn, labelCn } from '@/components/forms/fieldStyles';
 
 const EXPORT_OPTIONS: { id: AccountingProvider; name: string; description: string }[] = [
   { id: 'xero', name: 'Xero', description: 'Standard Xero CSV format' },
@@ -77,10 +77,7 @@ export function ExpenseExportSheet({
             </motion.div>
 
             <div className="space-y-3">
-              <Label className="flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-white" />
-                Date Range
-              </Label>
+              <span className={eyebrowCn}>Date range</span>
               <div className="grid grid-cols-2 gap-2">
                 {(
                   [
@@ -90,18 +87,14 @@ export function ExpenseExportSheet({
                     { id: 'custom', label: 'Custom' },
                   ] as const
                 ).map((option) => (
-                  <Button
+                  <button
                     key={option.id}
-                    variant="outline"
+                    type="button"
                     onClick={() => setDateRange(option.id)}
-                    className={cn(
-                      'h-11 touch-manipulation active:scale-[0.98]',
-                      dateRange === option.id && 'border-elec-yellow bg-elec-yellow/10'
-                    )}
+                    className={cn(chipBase, dateRange === option.id ? chipOn : chipOff)}
                   >
                     {option.label}
-                    {dateRange === option.id && <Check className="h-4 w-4 ml-2 text-elec-yellow" />}
-                  </Button>
+                  </button>
                 ))}
               </div>
               {dateRange === 'custom' && (
@@ -111,27 +104,23 @@ export function ExpenseExportSheet({
                   className="grid grid-cols-2 gap-3 pt-2"
                 >
                   <div className="space-y-1">
-                    <Label htmlFor="start-date" className="text-xs">
-                      From
-                    </Label>
-                    <Input
+                    <label className={labelCn} htmlFor="start-date">From</label>
+                    <input
                       id="start-date"
                       type="date"
                       value={customStart}
                       onChange={(e) => setCustomStart(e.target.value)}
-                      className="h-11 touch-manipulation"
+                      className={inputCn}
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor="end-date" className="text-xs">
-                      To
-                    </Label>
-                    <Input
+                    <label className={labelCn} htmlFor="end-date">To</label>
+                    <input
                       id="end-date"
                       type="date"
                       value={customEnd}
                       onChange={(e) => setCustomEnd(e.target.value)}
-                      className="h-11 touch-manipulation"
+                      className={inputCn}
                     />
                   </div>
                 </motion.div>
@@ -139,10 +128,7 @@ export function ExpenseExportSheet({
             </div>
 
             <div className="space-y-3">
-              <Label className="flex items-center gap-2">
-                <FileSpreadsheet className="h-4 w-4 text-white" />
-                CSV Format
-              </Label>
+              <span className={eyebrowCn}>Format</span>
               <div className="space-y-2">
                 {EXPORT_OPTIONS.map((option) => (
                   <button

@@ -37,7 +37,7 @@ const tocItems = [
 const keyTakeaways = [
   'Most home EV charger faults fall into five categories: error codes and EVSE communication failures, supply voltage problems, RCD nuisance tripping, earthing faults, and vehicle-side issues — understanding which category applies narrows diagnosis significantly.',
   'EVSE (Electric Vehicle Supply Equipment) communicates with the vehicle via the IEC 61851-1 pilot signal. A fault in this signal — often caused by a damaged cable, corroded connector, or faulty control board — will prevent charging from starting.',
-  "Nuisance RCD tripping on EV charger circuits is common and is frequently caused by DC leakage from the vehicle's on-board charger. An RCD Type B (or Type A with DC leakage protection) is required under BS 7671:2018+A2:2022 Regulation 722.531.2.",
+  "Nuisance RCD tripping on EV charger circuits is common and is frequently caused by DC leakage from the vehicle's on-board charger. An RCD Type B (or Type A with DC leakage protection) is required under BS 7671:2018+A2:2022 Regulation 722.531.3.101.",
   'Earthing faults on EV charger installations — particularly missing or high-resistance earth paths — are a safety hazard and will prevent the EVSE from authorising a charge session. The installation must comply with BS 7671 Section 722.',
   'Only OZEV-approved (formerly OLEV-approved) installers should carry out rectification work on a home EV charger installation. Using an unapproved installer may invalidate the manufacturer warranty and any OZEV grant conditions.',
 ];
@@ -51,7 +51,7 @@ const faqs = [
   {
     question: 'Why does my RCD keep tripping when I plug in my EV charger?',
     answer:
-      'EV on-board chargers produce a small DC leakage current that can trip standard Type AC or Type A RCDs. BS 7671:2018+A2:2022 Regulation 722.531.2 requires RCD Type B, or a Type A RCD with additional DC leakage protection, on EV charger circuits. If your installation has an older Type AC RCD, upgrading to Type B or fitting an EV-specific Type A+DC device will usually resolve nuisance tripping. This work must be carried out by a qualified electrician.',
+      'EV on-board chargers produce a small DC leakage current that can trip standard Type AC or Type A RCDs. BS 7671:2018+A2:2022 Regulation 722.531.3.101 requires RCD Type B, or a Type A RCD with additional DC leakage protection, on EV charger circuits. If your installation has an older Type AC RCD, upgrading to Type B or fitting an EV-specific Type A+DC device will usually resolve nuisance tripping. This work must be carried out by a qualified electrician.',
   },
   {
     question: 'My EV charger worked fine and then suddenly stopped — what happened?',
@@ -320,7 +320,7 @@ const sections = [
                 nuisance tripping. Vehicle on-board chargers can produce a small DC component in
                 their leakage current. Type AC and Type A RCDs are not designed to respond to DC
                 leakage and can become desensitised or permanently biased open — which means they
-                may fail to trip on a genuine AC fault. BS 7671:2018+A2:2022 Regulation 722.531.2
+                may fail to trip on a genuine AC fault. BS 7671:2018+A2:2022 Regulation 722.531.3.101
                 requires either an RCD Type B, or a Type A RCD with an additional device providing
                 DC leakage protection up to 6 mA. Compliant installation is essential.
               </span>

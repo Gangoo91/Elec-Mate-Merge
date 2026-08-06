@@ -16,6 +16,7 @@ import { TestResult } from '@/types/testResult';
 import { getAutoFillSuggestions } from '@/types/autoFillTypes';
 import { checkRegulationCompliance } from '@/utils/autoRegChecker';
 import RegulationWarningDialog from './RegulationWarningDialog';
+import { presetsByCategory } from '@/constants/circuitPresets';
 
 interface CircuitAutoFillButtonProps {
   result: TestResult;
@@ -29,308 +30,48 @@ interface CircuitAutoFillButtonProps {
 }
 
 // Enhanced circuit types with more specific options
-const enhancedCircuitTypes = [
-  // Lighting circuits
-  {
-    category: 'Lighting',
-    options: [
-      {
-        type: 'Downstairs Lights',
-        icon: Lightbulb,
-        label: 'Downstairs',
-        color: 'bg-yellow-100 hover:bg-yellow-200 text-yellow-800',
-        suggestions: {
-          liveSize: '1.5mm',
-          cpcSize: '1.5mm',
-          protectiveDeviceRating: '6',
-          referenceMethod: 'A',
-        },
-      },
-      {
-        type: 'Upstairs Lights',
-        icon: Lightbulb,
-        label: 'Upstairs',
-        color: 'bg-yellow-100 hover:bg-yellow-200 text-yellow-800',
-        suggestions: {
-          liveSize: '1.5mm',
-          cpcSize: '1.5mm',
-          protectiveDeviceRating: '6',
-          referenceMethod: 'A',
-        },
-      },
-      {
-        type: 'Kitchen Lights',
-        icon: Lightbulb,
-        label: 'Kitchen',
-        color: 'bg-yellow-100 hover:bg-yellow-200 text-yellow-800',
-        suggestions: {
-          liveSize: '1.5mm',
-          cpcSize: '1.5mm',
-          protectiveDeviceRating: '10',
-          referenceMethod: 'A',
-        },
-      },
-      {
-        type: 'Outdoor Lights',
-        icon: Lightbulb,
-        label: 'Outdoor',
-        color: 'bg-yellow-100 hover:bg-yellow-200 text-yellow-800',
-        suggestions: {
-          liveSize: '1.5mm',
-          cpcSize: '1.5mm',
-          protectiveDeviceRating: '6',
-          referenceMethod: 'A',
-        },
-      },
-    ],
-  },
-  // Socket circuits
-  {
-    category: 'Sockets',
-    options: [
-      {
-        type: 'Downstairs Ring',
-        icon: Plug,
-        label: 'Down Ring',
-        color: 'bg-blue-100 hover:bg-blue-200 text-blue-800',
-        suggestions: {
-          liveSize: '2.5mm',
-          cpcSize: '2.5mm',
-          protectiveDeviceRating: '32',
-          referenceMethod: 'A',
-        },
-      },
-      {
-        type: 'Upstairs Ring',
-        icon: Plug,
-        label: 'Up Ring',
-        color: 'bg-blue-100 hover:bg-blue-200 text-blue-800',
-        suggestions: {
-          liveSize: '2.5mm',
-          cpcSize: '2.5mm',
-          protectiveDeviceRating: '32',
-          referenceMethod: 'A',
-        },
-      },
-      {
-        type: 'Kitchen Ring',
-        icon: Plug,
-        label: 'Kitchen',
-        color: 'bg-blue-100 hover:bg-blue-200 text-blue-800',
-        suggestions: {
-          liveSize: '2.5mm',
-          cpcSize: '2.5mm',
-          protectiveDeviceRating: '32',
-          referenceMethod: 'A',
-        },
-      },
-      {
-        type: 'Utility Radial',
-        icon: Zap,
-        label: 'Utility',
-        color: 'bg-green-100 hover:bg-green-200 text-green-800',
-        suggestions: {
-          liveSize: '2.5mm',
-          cpcSize: '2.5mm',
-          protectiveDeviceRating: '20',
-          referenceMethod: 'A',
-        },
-      },
-    ],
-  },
-  // Fixed appliances
-  {
-    category: 'Fixed Appliances',
-    options: [
-      {
-        type: 'Electric Cooker',
-        icon: ChefHat,
-        label: 'Cooker',
-        color: 'bg-orange-100 hover:bg-orange-200 text-orange-800',
-        suggestions: {
-          liveSize: '6.0mm',
-          cpcSize: '6.0mm',
-          protectiveDeviceRating: '32',
-          referenceMethod: 'A',
-        },
-      },
-      {
-        type: 'Electric Shower',
-        icon: Droplets,
-        label: 'Shower',
-        color: 'bg-purple-100 hover:bg-purple-200 text-purple-800',
-        suggestions: {
-          liveSize: '10mm',
-          cpcSize: '10mm',
-          protectiveDeviceRating: '40',
-          referenceMethod: 'A',
-        },
-      },
-      {
-        type: 'Instantaneous Water Heater',
-        icon: Droplets,
-        label: 'Water Heater',
-        color: 'bg-purple-100 hover:bg-purple-200 text-purple-800',
-        suggestions: {
-          liveSize: '6.0mm',
-          cpcSize: '6.0mm',
-          protectiveDeviceRating: '32',
-          referenceMethod: 'A',
-        },
-      },
-      {
-        type: 'Immersion Heater',
-        icon: Droplets,
-        label: 'Immersion',
-        color: 'bg-purple-100 hover:bg-purple-200 text-purple-800',
-        suggestions: {
-          liveSize: '2.5mm',
-          cpcSize: '2.5mm',
-          protectiveDeviceRating: '16',
-          referenceMethod: 'A',
-        },
-      },
-    ],
-  },
-  // Distribution boards
-  {
-    category: 'Distribution Boards',
-    options: [
-      {
-        type: 'Garage DB',
-        icon: Building2,
-        label: 'Garage DB',
-        color: 'bg-slate-100 hover:bg-slate-200 text-slate-800',
-        suggestions: {
-          liveSize: '4.0mm',
-          cpcSize: '4.0mm',
-          protectiveDeviceRating: '25',
-          referenceMethod: 'A',
-        },
-      },
-      {
-        type: 'Outside Shed DB',
-        icon: Building2,
-        label: 'Shed DB',
-        color: 'bg-slate-100 hover:bg-slate-200 text-slate-800',
-        suggestions: {
-          liveSize: '2.5mm',
-          cpcSize: '2.5mm',
-          protectiveDeviceRating: '20',
-          referenceMethod: 'A',
-        },
-      },
-    ],
-  },
-  // Modern circuits
-  {
-    category: 'Modern Systems',
-    options: [
-      {
-        type: 'EV Charging Point',
-        icon: Car,
-        label: 'EV Charge',
-        color: 'bg-emerald-100 hover:bg-emerald-200 text-emerald-800',
-        suggestions: {
-          liveSize: '6.0mm',
-          cpcSize: '6.0mm',
-          protectiveDeviceRating: '32',
-          referenceMethod: 'A',
-        },
-      },
-      {
-        type: 'Heat Pump',
-        icon: Home,
-        label: 'Heat Pump',
-        color: 'bg-teal-100 hover:bg-teal-200 text-teal-800',
-        suggestions: {
-          liveSize: '4.0mm',
-          cpcSize: '4.0mm',
-          protectiveDeviceRating: '25',
-          referenceMethod: 'A',
-        },
-      },
-      {
-        type: 'Solar PV',
-        icon: Building2,
-        label: 'Solar PV',
-        color: 'bg-sky-100 hover:bg-sky-200 text-sky-800',
-        suggestions: {
-          liveSize: '4.0mm',
-          cpcSize: '4.0mm',
-          protectiveDeviceRating: '16',
-          referenceMethod: 'A',
-        },
-      },
-      {
-        type: 'Central Heating',
-        icon: Flame,
-        label: 'Heating',
-        color: 'bg-red-100 hover:bg-red-200 text-red-800',
-        suggestions: {
-          liveSize: '1.5mm',
-          cpcSize: '1.5mm',
-          protectiveDeviceRating: '6',
-          referenceMethod: 'A',
-        },
-      },
-    ],
-  },
-  // Communication & security
-  {
-    category: 'Low Current',
-    options: [
-      {
-        type: 'Fire Alarm',
-        icon: Flame,
-        label: 'Fire Alarm',
-        color: 'bg-red-100 hover:bg-red-200 text-red-800',
-        suggestions: {
-          liveSize: '1.5mm',
-          cpcSize: '1.5mm',
-          protectiveDeviceRating: '6',
-          referenceMethod: 'A',
-        },
-      },
-      {
-        type: 'Security System',
-        icon: Building2,
-        label: 'Security',
-        color: 'bg-gray-100 hover:bg-gray-200 text-gray-800',
-        suggestions: {
-          liveSize: '1.5mm',
-          cpcSize: '1.5mm',
-          protectiveDeviceRating: '6',
-          referenceMethod: 'A',
-        },
-      },
-      {
-        type: 'Door Entry',
-        icon: Home,
-        label: 'Door Entry',
-        color: 'bg-gray-100 hover:bg-gray-200 text-gray-800',
-        suggestions: {
-          liveSize: '1.5mm',
-          cpcSize: '1.5mm',
-          protectiveDeviceRating: '6',
-          referenceMethod: 'A',
-        },
-      },
-      {
-        type: 'TV/Data',
-        icon: Tv,
-        label: 'TV/Data',
-        color: 'bg-indigo-100 hover:bg-indigo-200 text-indigo-800',
-        suggestions: {
-          liveSize: '1.5mm',
-          cpcSize: '1.5mm',
-          protectiveDeviceRating: '6',
-          referenceMethod: 'A',
-        },
-      },
-    ],
-  },
-];
+// Presets come from `@/constants/circuitPresets` — one list, shared with the
+// add-circuit sheet, the compact autofill and the description type-ahead. The
+// copy that lived here was the sparsest of the three: four fields per circuit,
+// no device standard and no curve, so a circuit created from it could not be
+// checked against a maximum Zs at all.
+//
+// Icons, labels and colours stay local; only the electrical data is shared.
+const OPTION_STYLE: Record<string, { icon: typeof Lightbulb; label: string; color: string }> = {
+  'Downstairs Lights': { icon: Lightbulb, label: 'Downstairs', color: 'bg-yellow-100 hover:bg-yellow-200 text-yellow-800' },
+  'Upstairs Lights': { icon: Lightbulb, label: 'Upstairs', color: 'bg-yellow-100 hover:bg-yellow-200 text-yellow-800' },
+  'Kitchen Lights': { icon: Lightbulb, label: 'Kitchen', color: 'bg-yellow-100 hover:bg-yellow-200 text-yellow-800' },
+  'Outdoor Lights': { icon: Lightbulb, label: 'Outdoor', color: 'bg-yellow-100 hover:bg-yellow-200 text-yellow-800' },
+  'Downstairs Ring': { icon: Plug, label: 'Down Ring', color: 'bg-blue-100 hover:bg-blue-200 text-blue-800' },
+  'Upstairs Ring': { icon: Plug, label: 'Up Ring', color: 'bg-blue-100 hover:bg-blue-200 text-blue-800' },
+  'Kitchen Ring': { icon: Plug, label: 'Kitchen', color: 'bg-blue-100 hover:bg-blue-200 text-blue-800' },
+  'Utility Radial': { icon: Zap, label: 'Utility', color: 'bg-green-100 hover:bg-green-200 text-green-800' },
+  'Electric Cooker': { icon: ChefHat, label: 'Cooker', color: 'bg-orange-100 hover:bg-orange-200 text-orange-800' },
+  'Electric Shower': { icon: Droplets, label: 'Shower', color: 'bg-purple-100 hover:bg-purple-200 text-purple-800' },
+  'Instantaneous Water Heater': { icon: Droplets, label: 'Water Heater', color: 'bg-purple-100 hover:bg-purple-200 text-purple-800' },
+  'Immersion Heater': { icon: Droplets, label: 'Immersion', color: 'bg-purple-100 hover:bg-purple-200 text-purple-800' },
+  'Garage DB': { icon: Building2, label: 'Garage DB', color: 'bg-slate-100 hover:bg-slate-200 text-slate-800' },
+  'Outside Shed DB': { icon: Building2, label: 'Shed DB', color: 'bg-slate-100 hover:bg-slate-200 text-slate-800' },
+  'EV Charging Point': { icon: Car, label: 'EV Charge', color: 'bg-emerald-100 hover:bg-emerald-200 text-emerald-800' },
+  'Heat Pump': { icon: Home, label: 'Heat Pump', color: 'bg-teal-100 hover:bg-teal-200 text-teal-800' },
+  'Solar PV': { icon: Building2, label: 'Solar PV', color: 'bg-sky-100 hover:bg-sky-200 text-sky-800' },
+  'Central Heating': { icon: Flame, label: 'Heating', color: 'bg-red-100 hover:bg-red-200 text-red-800' },
+  'Fire Alarm': { icon: Flame, label: 'Fire Alarm', color: 'bg-red-100 hover:bg-red-200 text-red-800' },
+  'Security System': { icon: Building2, label: 'Security', color: 'bg-gray-100 hover:bg-gray-200 text-gray-800' },
+  'Door Entry': { icon: Home, label: 'Door Entry', color: 'bg-gray-100 hover:bg-gray-200 text-gray-800' },
+  'TV/Data': { icon: Tv, label: 'TV/Data', color: 'bg-indigo-100 hover:bg-indigo-200 text-indigo-800' }
+};
+
+const enhancedCircuitTypes = presetsByCategory().map(({ category, options }) => ({
+  category,
+  options: options.map((preset) => ({
+    type: preset.type,
+    icon: OPTION_STYLE[preset.type]?.icon ?? Lightbulb,
+    label: OPTION_STYLE[preset.type]?.label || preset.type,
+    color: OPTION_STYLE[preset.type]?.color ?? 'bg-elec-gray hover:bg-elec-gray-light text-foreground',
+    suggestions: preset.suggestions,
+  })),
+}));
 
 const CircuitAutoFillButton: React.FC<CircuitAutoFillButtonProps> = ({
   result,

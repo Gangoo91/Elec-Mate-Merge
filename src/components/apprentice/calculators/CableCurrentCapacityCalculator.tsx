@@ -566,7 +566,7 @@ const CableCurrentCapacityCalculator = () => {
         />
       </CalculatorInputGrid>
       {parseInt(numberOfCircuits, 10) > 1 && (
-        <p className="text-xs text-white/70 px-1">
+        <p className="text-xs text-white px-1">
           Grouping factor Cg = {groupingFactor.toFixed(2)} (Table 4C1). Circuits loaded at 30% or
           less of their grouped rating may be ignored when counting.
         </p>

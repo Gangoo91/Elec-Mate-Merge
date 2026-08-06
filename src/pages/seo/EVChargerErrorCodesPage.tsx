@@ -46,14 +46,14 @@ const keyTakeaways = [
   'Zappi, Pod Point, and Andersen chargers each display errors differently — Zappi uses LED colour sequences, Pod Point uses app notifications and LED patterns, and Andersen uses display screen codes.',
   'Earth fault errors are safety-critical. If your charger reports an earth fault, do not attempt to override or reset repeatedly. The charger is detecting a genuine protective conductor issue that needs professional investigation.',
   'Many EV charger faults are caused by installation issues rather than charger defects — incorrect earthing arrangements, inadequate cable sizing, or incompatible RCD types are common root causes.',
-  'Type A RCDs may not detect smooth DC fault currents that can occur with EV charger rectification. BS 7671 Regulation 722.531.2 requires Type A RCD protection as a minimum for EV charging circuits, and Type B or Type B+ may be required depending on the charger manufacturer.',
+  'Type A RCDs may not detect smooth DC fault currents that can occur with EV charger rectification. BS 7671 Regulation 722.531.3.101 requires Type A RCD protection as a minimum for EV charging circuits, and Type B or Type B+ may be required depending on the charger manufacturer.',
 ];
 
 const faqs = [
   {
     question: 'Why does my EV charger keep tripping the RCD?',
     answer:
-      'EV chargers can trip RCDs for several reasons. The most common is an incompatible RCD type — many chargers produce small DC leakage currents during charging that can cause Type AC RCDs to malfunction. BS 7671 Regulation 722.531.2 requires at minimum a Type A RCD for EV charging circuits, and some manufacturers specify Type B or Type B+. Other causes include genuine earth faults in the charger or vehicle, moisture ingress (particularly in outdoor installations), or a faulty charger. If the RCD trips every time charging begins, the RCD type is the most likely issue. If it trips intermittently, moisture or a developing fault in the charger or vehicle is more likely.',
+      'EV chargers can trip RCDs for several reasons. The most common is an incompatible RCD type — many chargers produce small DC leakage currents during charging that can cause Type AC RCDs to malfunction. BS 7671 Regulation 722.531.3.101 requires at minimum a Type A RCD for EV charging circuits, and some manufacturers specify Type B or Type B+. Other causes include genuine earth faults in the charger or vehicle, moisture ingress (particularly in outdoor installations), or a faulty charger. If the RCD trips every time charging begins, the RCD type is the most likely issue. If it trips intermittently, moisture or a developing fault in the charger or vehicle is more likely.',
   },
   {
     question: 'What does an earth fault error mean on my EV charger?',
@@ -78,7 +78,7 @@ const faqs = [
   {
     question: 'What RCD type do I need for an EV charger?',
     answer:
-      "BS 7671 Regulation 722.531.2 requires at minimum a Type A RCD for EV charging circuits. However, many charger manufacturers — including myenergi (Zappi) and Andersen — require or recommend Type A RCD protection with the charger's built-in DC fault detection, or an external Type B RCD. A Type AC RCD is not suitable for EV charging circuits because it cannot detect the DC fault components that EV chargers can produce. If your existing consumer unit has Type AC RCDs, the EV charger circuit will need its own Type A or Type B RCBO, or the charger must have integrated DC fault protection.",
+      "BS 7671 Regulation 722.531.3.101 requires at minimum a Type A RCD for EV charging circuits. However, many charger manufacturers — including myenergi (Zappi) and Andersen — require or recommend Type A RCD protection with the charger's built-in DC fault detection, or an external Type B RCD. A Type AC RCD is not suitable for EV charging circuits because it cannot detect the DC fault components that EV chargers can produce. If your existing consumer unit has Type AC RCDs, the EV charger circuit will need its own Type A or Type B RCBO, or the charger must have integrated DC fault protection.",
   },
   {
     question: 'My Pod Point charger is offline — how do I fix it?',
@@ -340,7 +340,7 @@ const sections = [
           charger circuits must have this protection.
         </p>
         <p>
-          However, the type of RCD matters significantly for EV charging. Regulation 722.531.2
+          However, the type of RCD matters significantly for EV charging. Regulation 722.531.3.101
           specifically addresses EV charging circuits and requires at minimum a Type A RCD. The
           reason is technical but important:
         </p>
@@ -357,7 +357,7 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Type A RCD</strong> — detects sinusoidal AC and pulsating DC fault currents.
-                The minimum requirement under Regulation 722.531.2 for EV circuits.
+                The minimum requirement under Regulation 722.531.3.101 for EV circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -581,7 +581,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">1. Verify RCD Type</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Check the RCD type protecting the EV circuit. Regulation 722.531.2 requires Type A
+                  Check the RCD type protecting the EV circuit. Regulation 722.531.3.101 requires Type A
                   as a minimum. If a Type AC is fitted, this is likely the root cause of tripping
                   faults. Recommend upgrade to Type A RCBO or Type B if specified by the charger
                   manufacturer.

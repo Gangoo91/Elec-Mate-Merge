@@ -61,8 +61,8 @@ export function PriceAlertsBanner({ alerts, onDismiss }: PriceAlertsBannerProps)
                 </p>
 
                 <div className="flex items-center gap-1.5 mb-1">
-                  <TrendingDown className="h-3 w-3 text-green-500 flex-shrink-0" />
-                  <span className="text-xs font-bold text-green-500">
+                  <TrendingDown className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+                  <span className="text-xs font-bold text-elec-yellow">
                     {alert.price_drop_pct}% drop
                   </span>
                   <span className={cn('text-xs text-white')}>Save £{alert.savings.toFixed(2)}</span>

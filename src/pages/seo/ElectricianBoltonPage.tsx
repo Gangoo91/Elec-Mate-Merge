@@ -341,7 +341,7 @@ const sections = [
         <p>
           All electrical work in Bolton dwellings must comply with{' '}
           <strong>Part P of the Building Regulations</strong> and the current edition of{' '}
-          <strong>BS 7671:2018 (18th Edition) including Amendment 4:2024</strong>. The key
+          <strong>BS 7671:2018 (18th Edition) including Amendment 4:2026</strong>. The key
           requirements are:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
@@ -367,7 +367,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Periodic inspection</strong> — BS 7671 Section 631 sets out the requirements
+                <strong>Periodic inspection</strong> — BS 7671 Chapter 65 sets out the requirements
                 for periodic inspection and testing. The recommended interval for domestic
                 properties is every 10 years (or on change of occupancy). Rental properties require
                 an EICR every 5 years by law.

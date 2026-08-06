@@ -40,7 +40,7 @@ const keyTakeaways = [
   "A 7kW home EV charger installation in Norwich typically costs £800 to £1,100 all-in — slightly below the South East average, reflecting Norfolk's lower labour rate — with OZEV grants of up to £350 available for eligible properties.",
   "Norfolk is one of the UK's least densely charged public charging areas, making home EV charging particularly important for Norwich and Norfolk residents who rely on their vehicle for longer journeys.",
   'Rural Norfolk properties on TT (Terra Terra) earthing systems require a different earthing approach for EV charger installation under BS 7671 Regulation 722.411.4 than urban Norwich properties on PME supplies.',
-  'All EV charger installations must comply with BS 7671:2018+A4:2026 Section 722, including dedicated circuit, RCD protection (Regulation 722.531.2), and a PME or TT earthing assessment.',
+  'All EV charger installations must comply with BS 7671:2018+A4:2026 Section 722, including dedicated circuit, RCD protection (Regulation 722.531.3.101), and a PME or TT earthing assessment.',
   'NICEIC and NAPIT registered OZEV-approved installers can self-certify the installation under Building Regulations Part P, avoiding the need to notify Norfolk County Council or Norwich City Council building control.',
 ];
 
@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Full guide to the IET Wiring Regulations including Amendment 4:2024.',
+    description: 'Full guide to the IET Wiring Regulations including Amendment 4:2026.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -280,7 +280,7 @@ const sections = [
               <span>
                 <strong>Dedicated circuit installation</strong> — a new 32A radial circuit from the
                 consumer unit to the charger, protected by an appropriate RCBO or MCB with RCD
-                protection per Regulation 722.531.2.
+                protection per Regulation 722.531.3.101.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -445,7 +445,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 722.531.2 — RCD protection</strong> — the EV charger circuit must
+                <strong>Regulation 722.531.3.101 — RCD protection</strong> — the EV charger circuit must
                 be protected by an RCD. Where the charger incorporates Type B equivalent DC fault
                 protection (most modern OZEV-approved smart chargers), a Type A RCBO at the consumer
                 unit is acceptable.

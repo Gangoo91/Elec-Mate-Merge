@@ -1,2441 +1,2441 @@
-import { lazy } from 'react';
+import { lazyWithRetry } from '@/utils/lazyWithRetry';
 import { Route } from 'react-router-dom';
 import { LazyRoute } from '@/components/LazyRoute';
 
 // Auto-generated SEO routes — do not edit manually
 // 340 routes
 
-const ConnectAIPage = lazy(() => import('@/pages/seo/ConnectAIPage'));
-const EighteenthEditionExamTipsPage = lazy(
+const ConnectAIPage = lazyWithRetry(() => import('@/pages/seo/ConnectAIPage'));
+const EighteenthEditionExamTipsPage = lazyWithRetry(
   () => import('@/pages/seo/EighteenthEditionExamTipsPage')
 );
-const CityGuilds2391ExamTipsPage = lazy(() => import('@/pages/seo/CityGuilds2391ExamTipsPage'));
-const AgriculturalInstallationsPage = lazy(
+const CityGuilds2391ExamTipsPage = lazyWithRetry(() => import('@/pages/seo/CityGuilds2391ExamTipsPage'));
+const AgriculturalInstallationsPage = lazyWithRetry(
   () => import('@/pages/seo/AgriculturalInstallationsPage')
 );
-const AIElectricalFaultFindingPage = lazy(() => import('@/pages/seo/AIElectricalFaultFindingPage'));
-const AIForElectricalApprenticesPage = lazy(
+const AIElectricalFaultFindingPage = lazyWithRetry(() => import('@/pages/seo/AIElectricalFaultFindingPage'));
+const AIForElectricalApprenticesPage = lazyWithRetry(
   () => import('@/pages/seo/AIForElectricalApprenticesPage')
 );
-const AIvsManualDesignPage = lazy(() => import('@/pages/seo/AIvsManualDesignPage'));
-const AM2ExamTipsPage = lazy(() => import('@/pages/seo/AM2ExamTipsPage'));
-const AM2SimulatorGuidePage = lazy(() => import('@/pages/seo/AM2SimulatorGuidePage'));
-const AppendixFourTablesPage = lazy(() => import('@/pages/seo/AppendixFourTablesPage'));
-const ApprenticeAssessmentGuidePage = lazy(
+const AIvsManualDesignPage = lazyWithRetry(() => import('@/pages/seo/AIvsManualDesignPage'));
+const AM2ExamTipsPage = lazyWithRetry(() => import('@/pages/seo/AM2ExamTipsPage'));
+const AM2SimulatorGuidePage = lazyWithRetry(() => import('@/pages/seo/AM2SimulatorGuidePage'));
+const AppendixFourTablesPage = lazyWithRetry(() => import('@/pages/seo/AppendixFourTablesPage'));
+const ApprenticeAssessmentGuidePage = lazyWithRetry(
   () => import('@/pages/seo/ApprenticeAssessmentGuidePage')
 );
-const ApprenticeSalaryPage = lazy(() => import('@/pages/seo/ApprenticeSalaryPage'));
-const ApprenticeFlashcardsPage = lazy(() => import('@/pages/seo/ApprenticeFlashcardsPage'));
-const ApprenticeMentalHealthPage = lazy(() => import('@/pages/seo/ApprenticeMentalHealthPage'));
-const ApprenticeRightsPayPage = lazy(() => import('@/pages/seo/ApprenticeRightsPayPage'));
-const ApprenticeSafetyCasesPage = lazy(() => import('@/pages/seo/ApprenticeSafetyCasesPage'));
-const ApprenticeToolboxGuidePage = lazy(() => import('@/pages/seo/ApprenticeToolboxGuidePage'));
-const ApprenticeWorkplaceCulturePage = lazy(
+const ApprenticeSalaryPage = lazyWithRetry(() => import('@/pages/seo/ApprenticeSalaryPage'));
+const ApprenticeFlashcardsPage = lazyWithRetry(() => import('@/pages/seo/ApprenticeFlashcardsPage'));
+const ApprenticeMentalHealthPage = lazyWithRetry(() => import('@/pages/seo/ApprenticeMentalHealthPage'));
+const ApprenticeRightsPayPage = lazyWithRetry(() => import('@/pages/seo/ApprenticeRightsPayPage'));
+const ApprenticeSafetyCasesPage = lazyWithRetry(() => import('@/pages/seo/ApprenticeSafetyCasesPage'));
+const ApprenticeToolboxGuidePage = lazyWithRetry(() => import('@/pages/seo/ApprenticeToolboxGuidePage'));
+const ApprenticeWorkplaceCulturePage = lazyWithRetry(
   () => import('@/pages/seo/ApprenticeWorkplaceCulturePage')
 );
-const ArcFlashProtectionPage = lazy(() => import('@/pages/seo/ArcFlashProtectionPage'));
-const BatteryStorageGuidePage = lazy(() => import('@/pages/seo/BatteryStorageGuidePage'));
-const BecomeElectricianNoExperiencePage = lazy(
+const ArcFlashProtectionPage = lazyWithRetry(() => import('@/pages/seo/ArcFlashProtectionPage'));
+const BatteryStorageGuidePage = lazyWithRetry(() => import('@/pages/seo/BatteryStorageGuidePage'));
+const BecomeElectricianNoExperiencePage = lazyWithRetry(
   () => import('@/pages/seo/BecomeElectricianNoExperiencePage')
 );
-const BestElectricalBooksPage = lazy(() => import('@/pages/seo/BestElectricalBooksPage'));
-const BondingInBathroomPage = lazy(() => import('@/pages/seo/BondingInBathroomPage'));
-const BorrowedNeutralPage = lazy(() => import('@/pages/seo/BorrowedNeutralPage'));
-const BS5266EmergencyLightingStandardPage = lazy(
+const BestElectricalBooksPage = lazyWithRetry(() => import('@/pages/seo/BestElectricalBooksPage'));
+const BondingInBathroomPage = lazyWithRetry(() => import('@/pages/seo/BondingInBathroomPage'));
+const BorrowedNeutralPage = lazyWithRetry(() => import('@/pages/seo/BorrowedNeutralPage'));
+const BS5266EmergencyLightingStandardPage = lazyWithRetry(
   () => import('@/pages/seo/BS5266EmergencyLightingStandardPage')
 );
-const BS5839FireAlarmStandardPage = lazy(() => import('@/pages/seo/BS5839FireAlarmStandardPage'));
-const FireAlarmLogBookPage = lazy(() => import('@/pages/seo/FireAlarmLogBookPage'));
-const BS7671EighteenthEditionGuidePage = lazy(
+const BS5839FireAlarmStandardPage = lazyWithRetry(() => import('@/pages/seo/BS5839FireAlarmStandardPage'));
+const FireAlarmLogBookPage = lazyWithRetry(() => import('@/pages/seo/FireAlarmLogBookPage'));
+const BS7671EighteenthEditionGuidePage = lazyWithRetry(
   () => import('@/pages/seo/BS7671EighteenthEditionGuidePage')
 );
-const BS7671Amendment3Page = lazy(() => import('@/pages/seo/BS7671Amendment3Page'));
-const BS7671Amendment4Page = lazy(() => import('@/pages/seo/BS7671Amendment4Page'));
-const BurningSmellFromSocketPage = lazy(() => import('@/pages/seo/BurningSmellFromSocketPage'));
-const CableColourCodesPage = lazy(() => import('@/pages/seo/CableColourCodesPage'));
-const CalculationsForApprenticesPage = lazy(
+const BS7671Amendment3Page = lazyWithRetry(() => import('@/pages/seo/BS7671Amendment3Page'));
+const BS7671Amendment4Page = lazyWithRetry(() => import('@/pages/seo/BS7671Amendment4Page'));
+const BurningSmellFromSocketPage = lazyWithRetry(() => import('@/pages/seo/BurningSmellFromSocketPage'));
+const CableColourCodesPage = lazyWithRetry(() => import('@/pages/seo/CableColourCodesPage'));
+const CalculationsForApprenticesPage = lazyWithRetry(
   () => import('@/pages/seo/CalculationsForApprenticesPage')
 );
-const CaravanParkElectricalPage = lazy(() => import('@/pages/seo/CaravanParkElectricalPage'));
-const CDM2015ElectriciansPage = lazy(() => import('@/pages/seo/CDM2015ElectriciansPage'));
-const Chapter42ThermalProtectionPage = lazy(
+const CaravanParkElectricalPage = lazyWithRetry(() => import('@/pages/seo/CaravanParkElectricalPage'));
+const CDM2015ElectriciansPage = lazyWithRetry(() => import('@/pages/seo/CDM2015ElectriciansPage'));
+const Chapter42ThermalProtectionPage = lazyWithRetry(
   () => import('@/pages/seo/Chapter42ThermalProtectionPage')
 );
-const Chapter44OvervoltageProtectionPage = lazy(
+const Chapter44OvervoltageProtectionPage = lazyWithRetry(
   () => import('@/pages/seo/Chapter44OvervoltageProtectionPage')
 );
-const CircuitBreakerTrippingPage = lazy(() => import('@/pages/seo/CircuitBreakerTrippingPage'));
-const CISForElectriciansPage = lazy(() => import('@/pages/seo/CISForElectriciansPage'));
-const CommercialEICRGuidePage = lazy(() => import('@/pages/seo/CommercialEICRGuidePage'));
-const CommercialElectricianGuidePage = lazy(
+const CircuitBreakerTrippingPage = lazyWithRetry(() => import('@/pages/seo/CircuitBreakerTrippingPage'));
+const CISForElectriciansPage = lazyWithRetry(() => import('@/pages/seo/CISForElectriciansPage'));
+const CommercialEICRGuidePage = lazyWithRetry(() => import('@/pages/seo/CommercialEICRGuidePage'));
+const CommercialElectricianGuidePage = lazyWithRetry(
   () => import('@/pages/seo/CommercialElectricianGuidePage')
 );
-const CommercialLightingGuidePage = lazy(() => import('@/pages/seo/CommercialLightingGuidePage'));
-const CommissioningGuidePage = lazy(() => import('@/pages/seo/CommissioningGuidePage'));
-const CompetentPersonSchemePage = lazy(() => import('@/pages/seo/CompetentPersonSchemePage'));
-const ConstructionSiteSafetyElectricalPage = lazy(
+const CommercialLightingGuidePage = lazyWithRetry(() => import('@/pages/seo/CommercialLightingGuidePage'));
+const CommissioningGuidePage = lazyWithRetry(() => import('@/pages/seo/CommissioningGuidePage'));
+const CompetentPersonSchemePage = lazyWithRetry(() => import('@/pages/seo/CompetentPersonSchemePage'));
+const ConstructionSiteSafetyElectricalPage = lazyWithRetry(
   () => import('@/pages/seo/ConstructionSiteSafetyElectricalPage')
 );
-const ConstructionSiteSafetyPage = lazy(() => import('@/pages/seo/ConstructionSiteSafetyPage'));
-const ConstructionSiteTemporarySupplyPage = lazy(
+const ConstructionSiteSafetyPage = lazyWithRetry(() => import('@/pages/seo/ConstructionSiteSafetyPage'));
+const ConstructionSiteTemporarySupplyPage = lazyWithRetry(
   () => import('@/pages/seo/ConstructionSiteTemporarySupplyPage')
 );
-const ConsumerUnitUpgradePage = lazy(() => import('@/pages/seo/ConsumerUnitUpgradePage'));
-const ConsumerUnitUpgradeCostGuidePage = lazy(
+const ConsumerUnitUpgradePage = lazyWithRetry(() => import('@/pages/seo/ConsumerUnitUpgradePage'));
+const ConsumerUnitUpgradeCostGuidePage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitUpgradeCostGuidePage')
 );
-const ConsumerUnitUpgradeLabourAndMaterialsPage = lazy(
+const ConsumerUnitUpgradeLabourAndMaterialsPage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitUpgradeLabourAndMaterialsPage')
 );
-const ConsumerUnitUpgradePriceBreakdownPage = lazy(
+const ConsumerUnitUpgradePriceBreakdownPage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitUpgradePriceBreakdownPage')
 );
-const ContinuityTestingR1R2Page = lazy(() => import('@/pages/seo/ContinuityTestingR1R2Page'));
-const ContractorVsEmployeePage = lazy(() => import('@/pages/seo/ContractorVsEmployeePage'));
-const CookerCircuitGuidePage = lazy(() => import('@/pages/seo/CookerCircuitGuidePage'));
-const CorrectionFactorsGuidePage = lazy(() => import('@/pages/seo/CorrectionFactorsGuidePage'));
-const CPDForElectriciansPage = lazy(() => import('@/pages/seo/CPDForElectriciansPage'));
-const DataCablingInstallationPage = lazy(() => import('@/pages/seo/DataCablingInstallationPage'));
-const DeadVsLiveTestingPage = lazy(() => import('@/pages/seo/DeadVsLiveTestingPage'));
-const DebtRecoveryElectricianPage = lazy(() => import('@/pages/seo/DebtRecoveryElectricianPage'));
-const DigitalVsPaperCertificatesPage = lazy(
+const ContinuityTestingR1R2Page = lazyWithRetry(() => import('@/pages/seo/ContinuityTestingR1R2Page'));
+const ContractorVsEmployeePage = lazyWithRetry(() => import('@/pages/seo/ContractorVsEmployeePage'));
+const CookerCircuitGuidePage = lazyWithRetry(() => import('@/pages/seo/CookerCircuitGuidePage'));
+const CorrectionFactorsGuidePage = lazyWithRetry(() => import('@/pages/seo/CorrectionFactorsGuidePage'));
+const CPDForElectriciansPage = lazyWithRetry(() => import('@/pages/seo/CPDForElectriciansPage'));
+const DataCablingInstallationPage = lazyWithRetry(() => import('@/pages/seo/DataCablingInstallationPage'));
+const DeadVsLiveTestingPage = lazyWithRetry(() => import('@/pages/seo/DeadVsLiveTestingPage'));
+const DebtRecoveryElectricianPage = lazyWithRetry(() => import('@/pages/seo/DebtRecoveryElectricianPage'));
+const DigitalVsPaperCertificatesPage = lazyWithRetry(
   () => import('@/pages/seo/DigitalVsPaperCertificatesPage')
 );
-const DistributionBoardWiringPage = lazy(() => import('@/pages/seo/DistributionBoardWiringPage'));
-const DomesticElectricianGuidePage = lazy(() => import('@/pages/seo/DomesticElectricianGuidePage'));
-const DomesticVsCommercialElectricianPage = lazy(
+const DistributionBoardWiringPage = lazyWithRetry(() => import('@/pages/seo/DistributionBoardWiringPage'));
+const DomesticElectricianGuidePage = lazyWithRetry(() => import('@/pages/seo/DomesticElectricianGuidePage'));
+const DomesticVsCommercialElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/DomesticVsCommercialElectricianPage')
 );
-const EarthElectrodeTestPage = lazy(() => import('@/pages/seo/EarthElectrodeTestPage'));
-const EarthFaultLoopImpedancePage = lazy(() => import('@/pages/seo/EarthFaultLoopImpedancePage'));
-const EarthFaultLoopExplainedPage = lazy(() => import('@/pages/seo/EarthFaultLoopExplainedPage'));
-const EarthFaultLoopTooHighPage = lazy(() => import('@/pages/seo/EarthFaultLoopTooHighPage'));
-const EarthLoopTooHighPage = lazy(() => import('@/pages/seo/EarthLoopTooHighPage'));
-const EarthingFaultDiagnosisPage = lazy(() => import('@/pages/seo/EarthingFaultDiagnosisPage'));
-const ECSCardTypesPage = lazy(() => import('@/pages/seo/ECSCardTypesPage'));
-const EICRCostUKPage = lazy(() => import('@/pages/seo/EICRCostUKPage'));
-const EICRFailRentedPropertyPage = lazy(() => import('@/pages/seo/EICRFailRentedPropertyPage'));
-const EICRForLandlordsPage = lazy(() => import('@/pages/seo/EICRForLandlordsPage'));
-const EICRLimitationsPage = lazy(() => import('@/pages/seo/EICRLimitationsPage'));
-const EICRObservationCodesPage = lazy(() => import('@/pages/seo/EICRObservationCodesPage'));
-const FireRiskAssessmentPage = lazy(() => import('@/pages/seo/FireRiskAssessmentPage'));
-const EICRScheduleOfInspectionsPage = lazy(
+const EarthElectrodeTestPage = lazyWithRetry(() => import('@/pages/seo/EarthElectrodeTestPage'));
+const EarthFaultLoopImpedancePage = lazyWithRetry(() => import('@/pages/seo/EarthFaultLoopImpedancePage'));
+const EarthFaultLoopExplainedPage = lazyWithRetry(() => import('@/pages/seo/EarthFaultLoopExplainedPage'));
+const EarthFaultLoopTooHighPage = lazyWithRetry(() => import('@/pages/seo/EarthFaultLoopTooHighPage'));
+const EarthLoopTooHighPage = lazyWithRetry(() => import('@/pages/seo/EarthLoopTooHighPage'));
+const EarthingFaultDiagnosisPage = lazyWithRetry(() => import('@/pages/seo/EarthingFaultDiagnosisPage'));
+const ECSCardTypesPage = lazyWithRetry(() => import('@/pages/seo/ECSCardTypesPage'));
+const EICRCostUKPage = lazyWithRetry(() => import('@/pages/seo/EICRCostUKPage'));
+const EICRFailRentedPropertyPage = lazyWithRetry(() => import('@/pages/seo/EICRFailRentedPropertyPage'));
+const EICRForLandlordsPage = lazyWithRetry(() => import('@/pages/seo/EICRForLandlordsPage'));
+const EICRLimitationsPage = lazyWithRetry(() => import('@/pages/seo/EICRLimitationsPage'));
+const EICRObservationCodesPage = lazyWithRetry(() => import('@/pages/seo/EICRObservationCodesPage'));
+const FireRiskAssessmentPage = lazyWithRetry(() => import('@/pages/seo/FireRiskAssessmentPage'));
+const EICRScheduleOfInspectionsPage = lazyWithRetry(
   () => import('@/pages/seo/EICRScheduleOfInspectionsPage')
 );
-const EICRvsEICPage = lazy(() => import('@/pages/seo/EICRvsEICPage'));
-const ELECSARegistrationPage = lazy(() => import('@/pages/seo/ELECSARegistrationPage'));
-const ElectricCarChargingAtHomePage = lazy(
+const EICRvsEICPage = lazyWithRetry(() => import('@/pages/seo/EICRvsEICPage'));
+const ELECSARegistrationPage = lazyWithRetry(() => import('@/pages/seo/ELECSARegistrationPage'));
+const ElectricCarChargingAtHomePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricCarChargingAtHomePage')
 );
-const ElectricShockFromTapPage = lazy(() => import('@/pages/seo/ElectricShockFromTapPage'));
-const ElectricShowerInstallationPage = lazy(
+const ElectricShockFromTapPage = lazyWithRetry(() => import('@/pages/seo/ElectricShockFromTapPage'));
+const ElectricShowerInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricShowerInstallationPage')
 );
-const ElectricalAcronymsGlossaryPage = lazy(
+const ElectricalAcronymsGlossaryPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalAcronymsGlossaryPage')
 );
-const ElectricalApprenticeshipCostPage = lazy(
+const ElectricalApprenticeshipCostPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalApprenticeshipCostPage')
 );
-const ElectricalApprenticeshipEmployerPage = lazy(
+const ElectricalApprenticeshipEmployerPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalApprenticeshipEmployerPage')
 );
-const ElectricalApprenticeshipGuidePage = lazy(
+const ElectricalApprenticeshipGuidePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalApprenticeshipGuidePage')
 );
-const ElectricalCareersForSchoolLeaversPage = lazy(
+const ElectricalCareersForSchoolLeaversPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalCareersForSchoolLeaversPage')
 );
-const ElectricalCertificateRetentionPage = lazy(
+const ElectricalCertificateRetentionPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalCertificateRetentionPage')
 );
-const ElectricalCertificateTypesPage = lazy(
+const ElectricalCertificateTypesPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalCertificateTypesPage')
 );
-const ElectricalComplianceCertificatePage = lazy(
+const ElectricalComplianceCertificatePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalComplianceCertificatePage')
 );
-const ElectricianContractorGuidePage = lazy(
+const ElectricianContractorGuidePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricianContractorGuidePage')
 );
-const ElectricalDesignGuidePage = lazy(() => import('@/pages/seo/ElectricalDesignGuidePage'));
-const ElectricalEmergencyPage = lazy(() => import('@/pages/seo/ElectricalEmergencyPage'));
-const ElectricalFaultFindingGuidePage = lazy(
+const ElectricalDesignGuidePage = lazyWithRetry(() => import('@/pages/seo/ElectricalDesignGuidePage'));
+const ElectricalEmergencyPage = lazyWithRetry(() => import('@/pages/seo/ElectricalEmergencyPage'));
+const ElectricalFaultFindingGuidePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalFaultFindingGuidePage')
 );
-const ElectricalHandoverDocumentationPage = lazy(
+const ElectricalHandoverDocumentationPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalHandoverDocumentationPage')
 );
-const ElectricalInspectionChecklistPage = lazy(
+const ElectricalInspectionChecklistPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalInspectionChecklistPage')
 );
-const ElectricalMaintenanceContractPage = lazy(
+const ElectricalMaintenanceContractPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalMaintenanceContractPage')
 );
-const ElectricalMaintenanceGuidePage = lazy(
+const ElectricalMaintenanceGuidePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalMaintenanceGuidePage')
 );
-const ElectricalProjectPlanningPage = lazy(
+const ElectricalProjectPlanningPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalProjectPlanningPage')
 );
-const ElectricalQualificationsPathwayPage = lazy(
+const ElectricalQualificationsPathwayPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalQualificationsPathwayPage')
 );
-const ElectricalQualityAssurancePage = lazy(
+const ElectricalQualityAssurancePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalQualityAssurancePage')
 );
-const ElectricalRegulationsTimelinePage = lazy(
+const ElectricalRegulationsTimelinePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalRegulationsTimelinePage')
 );
-const ElectricalSafetyAtHomePage = lazy(() => import('@/pages/seo/ElectricalSafetyAtHomePage'));
-const ElectricalSafetyLandlordPage = lazy(() => import('@/pages/seo/ElectricalSafetyLandlordPage'));
-const ElectricalSafetyOnSitePage = lazy(() => import('@/pages/seo/ElectricalSafetyOnSitePage'));
-const ElectricalSafetyTipsPage = lazy(() => import('@/pages/seo/ElectricalSafetyTipsPage'));
-const ElectricalSiteManagerGuidePage = lazy(
+const ElectricalSafetyAtHomePage = lazyWithRetry(() => import('@/pages/seo/ElectricalSafetyAtHomePage'));
+const ElectricalSafetyLandlordPage = lazyWithRetry(() => import('@/pages/seo/ElectricalSafetyLandlordPage'));
+const ElectricalSafetyOnSitePage = lazyWithRetry(() => import('@/pages/seo/ElectricalSafetyOnSitePage'));
+const ElectricalSafetyTipsPage = lazyWithRetry(() => import('@/pages/seo/ElectricalSafetyTipsPage'));
+const ElectricalSiteManagerGuidePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalSiteManagerGuidePage')
 );
-const ElectricalSpecialisationsPage = lazy(
+const ElectricalSpecialisationsPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalSpecialisationsPage')
 );
-const ElectricalSurveyCostPage = lazy(() => import('@/pages/seo/ElectricalSurveyCostPage'));
-const ElectricalSymbolsChartPage = lazy(() => import('@/pages/seo/ElectricalSymbolsChartPage'));
-const ElectricalSwitchSymbolsPage = lazy(() => import('@/pages/seo/ElectricalSwitchSymbolsPage'));
-const ElectricalSocketSymbolsPage = lazy(() => import('@/pages/seo/ElectricalSocketSymbolsPage'));
-const ElectricalLightingSymbolsPage = lazy(
+const ElectricalSurveyCostPage = lazyWithRetry(() => import('@/pages/seo/ElectricalSurveyCostPage'));
+const ElectricalSymbolsChartPage = lazyWithRetry(() => import('@/pages/seo/ElectricalSymbolsChartPage'));
+const ElectricalSwitchSymbolsPage = lazyWithRetry(() => import('@/pages/seo/ElectricalSwitchSymbolsPage'));
+const ElectricalSocketSymbolsPage = lazyWithRetry(() => import('@/pages/seo/ElectricalSocketSymbolsPage'));
+const ElectricalLightingSymbolsPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalLightingSymbolsPage')
 );
-const ElectricalDistributionSymbolsPage = lazy(
+const ElectricalDistributionSymbolsPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalDistributionSymbolsPage')
 );
-const ElectricalSafetySymbolsPage = lazy(() => import('@/pages/seo/ElectricalSafetySymbolsPage'));
-const ElectricalContainmentSymbolsPage = lazy(
+const ElectricalSafetySymbolsPage = lazyWithRetry(() => import('@/pages/seo/ElectricalSafetySymbolsPage'));
+const ElectricalContainmentSymbolsPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalContainmentSymbolsPage')
 );
-const ElectricalEquipmentSymbolsPage = lazy(
+const ElectricalEquipmentSymbolsPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalEquipmentSymbolsPage')
 );
-const ElectricalMechanicalSymbolsPage = lazy(
+const ElectricalMechanicalSymbolsPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalMechanicalSymbolsPage')
 );
-const ElectricalRenewablesSymbolsPage = lazy(
+const ElectricalRenewablesSymbolsPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalRenewablesSymbolsPage')
 );
-const ElectricalControlsSymbolsPage = lazy(
+const ElectricalControlsSymbolsPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalControlsSymbolsPage')
 );
-const ElectricalArchitecturalSymbolsPage = lazy(
+const ElectricalArchitecturalSymbolsPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalArchitecturalSymbolsPage')
 );
-const RcdSymbolPage = lazy(() => import('@/pages/seo/RcdSymbolPage'));
-const RcboSymbolPage = lazy(() => import('@/pages/seo/RcboSymbolPage'));
-const McbSymbolPage = lazy(() => import('@/pages/seo/McbSymbolPage'));
-const SpdSymbolPage = lazy(() => import('@/pages/seo/SpdSymbolPage'));
-const TwowaySwitchSymbolPage = lazy(() => import('@/pages/seo/TwowaySwitchSymbolPage'));
-const OnewaySwitchSymbolPage = lazy(() => import('@/pages/seo/OnewaySwitchSymbolPage'));
-const IntermediateSwitchSymbolPage = lazy(() => import('@/pages/seo/IntermediateSwitchSymbolPage'));
-const DimmerSwitchSymbolPage = lazy(() => import('@/pages/seo/DimmerSwitchSymbolPage'));
-const Double13aSocketSymbolPage = lazy(() => import('@/pages/seo/Double13aSocketSymbolPage'));
-const Single13aSocketSymbolPage = lazy(() => import('@/pages/seo/Single13aSocketSymbolPage'));
-const FusedSpurSymbolPage = lazy(() => import('@/pages/seo/FusedSpurSymbolPage'));
-const SwitchedFusedSpurSymbolPage = lazy(() => import('@/pages/seo/SwitchedFusedSpurSymbolPage'));
-const IsolatorSwitchSymbolPage = lazy(() => import('@/pages/seo/IsolatorSwitchSymbolPage'));
-const EmergencyStopSymbolPage = lazy(() => import('@/pages/seo/EmergencyStopSymbolPage'));
-const SmokeDetectorSymbolPage = lazy(() => import('@/pages/seo/SmokeDetectorSymbolPage'));
-const FireAlarmSymbolPage = lazy(() => import('@/pages/seo/FireAlarmSymbolPage'));
-const BreakGlassSymbolPage = lazy(() => import('@/pages/seo/BreakGlassSymbolPage'));
-const ExitSignSymbolPage = lazy(() => import('@/pages/seo/ExitSignSymbolPage'));
-const EmergencyLightSymbolPage = lazy(() => import('@/pages/seo/EmergencyLightSymbolPage'));
-const ConsumerUnitSymbolPage = lazy(() => import('@/pages/seo/ConsumerUnitSymbolPage'));
-const ElectricalTestingCostUKPage = lazy(() => import('@/pages/seo/ElectricalTestingCostUKPage'));
-const ElectricalToolCalibrationPage = lazy(
+const RcdSymbolPage = lazyWithRetry(() => import('@/pages/seo/RcdSymbolPage'));
+const RcboSymbolPage = lazyWithRetry(() => import('@/pages/seo/RcboSymbolPage'));
+const McbSymbolPage = lazyWithRetry(() => import('@/pages/seo/McbSymbolPage'));
+const SpdSymbolPage = lazyWithRetry(() => import('@/pages/seo/SpdSymbolPage'));
+const TwowaySwitchSymbolPage = lazyWithRetry(() => import('@/pages/seo/TwowaySwitchSymbolPage'));
+const OnewaySwitchSymbolPage = lazyWithRetry(() => import('@/pages/seo/OnewaySwitchSymbolPage'));
+const IntermediateSwitchSymbolPage = lazyWithRetry(() => import('@/pages/seo/IntermediateSwitchSymbolPage'));
+const DimmerSwitchSymbolPage = lazyWithRetry(() => import('@/pages/seo/DimmerSwitchSymbolPage'));
+const Double13aSocketSymbolPage = lazyWithRetry(() => import('@/pages/seo/Double13aSocketSymbolPage'));
+const Single13aSocketSymbolPage = lazyWithRetry(() => import('@/pages/seo/Single13aSocketSymbolPage'));
+const FusedSpurSymbolPage = lazyWithRetry(() => import('@/pages/seo/FusedSpurSymbolPage'));
+const SwitchedFusedSpurSymbolPage = lazyWithRetry(() => import('@/pages/seo/SwitchedFusedSpurSymbolPage'));
+const IsolatorSwitchSymbolPage = lazyWithRetry(() => import('@/pages/seo/IsolatorSwitchSymbolPage'));
+const EmergencyStopSymbolPage = lazyWithRetry(() => import('@/pages/seo/EmergencyStopSymbolPage'));
+const SmokeDetectorSymbolPage = lazyWithRetry(() => import('@/pages/seo/SmokeDetectorSymbolPage'));
+const FireAlarmSymbolPage = lazyWithRetry(() => import('@/pages/seo/FireAlarmSymbolPage'));
+const BreakGlassSymbolPage = lazyWithRetry(() => import('@/pages/seo/BreakGlassSymbolPage'));
+const ExitSignSymbolPage = lazyWithRetry(() => import('@/pages/seo/ExitSignSymbolPage'));
+const EmergencyLightSymbolPage = lazyWithRetry(() => import('@/pages/seo/EmergencyLightSymbolPage'));
+const ConsumerUnitSymbolPage = lazyWithRetry(() => import('@/pages/seo/ConsumerUnitSymbolPage'));
+const ElectricalTestingCostUKPage = lazyWithRetry(() => import('@/pages/seo/ElectricalTestingCostUKPage'));
+const ElectricalToolCalibrationPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalToolCalibrationPage')
 );
-const ElectricalUnionMembershipPage = lazy(
+const ElectricalUnionMembershipPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalUnionMembershipPage')
 );
-const ElectricalWiringRegulationsHistoryPage = lazy(
+const ElectricalWiringRegulationsHistoryPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalWiringRegulationsHistoryPage')
 );
-const ElectricalWorkInBathroomPage = lazy(() => import('@/pages/seo/ElectricalWorkInBathroomPage'));
-const ElectricalWorkPricingPage = lazy(() => import('@/pages/seo/ElectricalWorkPricingPage'));
-const ElectricianCareerProgressionPage = lazy(
+const ElectricalWorkInBathroomPage = lazyWithRetry(() => import('@/pages/seo/ElectricalWorkInBathroomPage'));
+const ElectricalWorkPricingPage = lazyWithRetry(() => import('@/pages/seo/ElectricalWorkPricingPage'));
+const ElectricianCareerProgressionPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricianCareerProgressionPage')
 );
-const ElectricianCVGuidePage = lazy(() => import('@/pages/seo/ElectricianCVGuidePage'));
-const ElectricianDayRatesPage = lazy(() => import('@/pages/seo/ElectricianDayRatesPage'));
-const ElectricianInsurancePage = lazy(() => import('@/pages/seo/ElectricianInsurancePage'));
-const ElectricianInterviewQuestionsPage = lazy(
+const ElectricianCVGuidePage = lazyWithRetry(() => import('@/pages/seo/ElectricianCVGuidePage'));
+const ElectricianDayRatesPage = lazyWithRetry(() => import('@/pages/seo/ElectricianDayRatesPage'));
+const ElectricianInsurancePage = lazyWithRetry(() => import('@/pages/seo/ElectricianInsurancePage'));
+const ElectricianInterviewQuestionsPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricianInterviewQuestionsPage')
 );
-const ElectricianJobVacanciesPage = lazy(() => import('@/pages/seo/ElectricianJobVacanciesPage'));
-const ElectricianRatesPerHourPage = lazy(() => import('@/pages/seo/ElectricianRatesPerHourPage'));
-const ElectricianSalaryUKPage = lazy(() => import('@/pages/seo/ElectricianSalaryUKPage'));
-const ElectricianStudyTipsPage = lazy(() => import('@/pages/seo/ElectricianStudyTipsPage'));
-const ElectricianTaxGuidePage = lazy(() => import('@/pages/seo/ElectricianTaxGuidePage'));
-const ElectricianToolListPage = lazy(() => import('@/pages/seo/ElectricianToolListPage'));
-const ElectricianVanSetupPage = lazy(() => import('@/pages/seo/ElectricianVanSetupPage'));
-const ElectricalWorkingAbroadPage = lazy(() => import('@/pages/seo/ElectricalWorkingAbroadPage'));
-const ElectricityAtWorkRegsPage = lazy(() => import('@/pages/seo/ElectricityAtWorkRegsPage'));
-const EmergencyLightingCertificateGuidePage = lazy(
+const ElectricianJobVacanciesPage = lazyWithRetry(() => import('@/pages/seo/ElectricianJobVacanciesPage'));
+const ElectricianRatesPerHourPage = lazyWithRetry(() => import('@/pages/seo/ElectricianRatesPerHourPage'));
+const ElectricianSalaryUKPage = lazyWithRetry(() => import('@/pages/seo/ElectricianSalaryUKPage'));
+const ElectricianStudyTipsPage = lazyWithRetry(() => import('@/pages/seo/ElectricianStudyTipsPage'));
+const ElectricianTaxGuidePage = lazyWithRetry(() => import('@/pages/seo/ElectricianTaxGuidePage'));
+const ElectricianToolListPage = lazyWithRetry(() => import('@/pages/seo/ElectricianToolListPage'));
+const ElectricianVanSetupPage = lazyWithRetry(() => import('@/pages/seo/ElectricianVanSetupPage'));
+const ElectricalWorkingAbroadPage = lazyWithRetry(() => import('@/pages/seo/ElectricalWorkingAbroadPage'));
+const ElectricityAtWorkRegsPage = lazyWithRetry(() => import('@/pages/seo/ElectricityAtWorkRegsPage'));
+const EmergencyLightingCertificateGuidePage = lazyWithRetry(
   () => import('@/pages/seo/EmergencyLightingCertificateGuidePage')
 );
-const EPASimulatorGuidePage = lazy(() => import('@/pages/seo/EPASimulatorGuidePage'));
-const EPAWhatToExpectPage = lazy(() => import('@/pages/seo/EPAWhatToExpectPage'));
-const EVChargerCertificateRequirementsPage = lazy(
+const EPASimulatorGuidePage = lazyWithRetry(() => import('@/pages/seo/EPASimulatorGuidePage'));
+const EPAWhatToExpectPage = lazyWithRetry(() => import('@/pages/seo/EPAWhatToExpectPage'));
+const EVChargerCertificateRequirementsPage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerCertificateRequirementsPage')
 );
-const FireAlarmCertificateRequirementsPage = lazy(
+const FireAlarmCertificateRequirementsPage = lazyWithRetry(
   () => import('@/pages/seo/FireAlarmCertificateRequirementsPage')
 );
-const FirstAidElectricalShockPage = lazy(() => import('@/pages/seo/FirstAidElectricalShockPage'));
-const FirstFixElectricalPage = lazy(() => import('@/pages/seo/FirstFixElectricalPage'));
-const FlashcardsElectricalPage = lazy(() => import('@/pages/seo/FlashcardsElectricalPage'));
-const FlukeVsMeggerPage = lazy(() => import('@/pages/seo/FlukeVsMeggerPage'));
-const FunctionalTestingGuidePage = lazy(() => import('@/pages/seo/FunctionalTestingGuidePage'));
-const GarageElectricsGuidePage = lazy(() => import('@/pages/seo/GarageElectricsGuidePage'));
-const GardenLightingRegsPage = lazy(() => import('@/pages/seo/GardenLightingRegsPage'));
-const GardenOfficeElectricsPage = lazy(() => import('@/pages/seo/GardenOfficeElectricsPage'));
-const GS38ProvingDeadPage = lazy(() => import('@/pages/seo/GS38ProvingDeadPage'));
-const HighEarthResistancePage = lazy(() => import('@/pages/seo/HighEarthResistancePage'));
-const HighElectricityBillPage = lazy(() => import('@/pages/seo/HighElectricityBillPage'));
-const HMOElectricalRequirementsPage = lazy(
+const FirstAidElectricalShockPage = lazyWithRetry(() => import('@/pages/seo/FirstAidElectricalShockPage'));
+const FirstFixElectricalPage = lazyWithRetry(() => import('@/pages/seo/FirstFixElectricalPage'));
+const FlashcardsElectricalPage = lazyWithRetry(() => import('@/pages/seo/FlashcardsElectricalPage'));
+const FlukeVsMeggerPage = lazyWithRetry(() => import('@/pages/seo/FlukeVsMeggerPage'));
+const FunctionalTestingGuidePage = lazyWithRetry(() => import('@/pages/seo/FunctionalTestingGuidePage'));
+const GarageElectricsGuidePage = lazyWithRetry(() => import('@/pages/seo/GarageElectricsGuidePage'));
+const GardenLightingRegsPage = lazyWithRetry(() => import('@/pages/seo/GardenLightingRegsPage'));
+const GardenOfficeElectricsPage = lazyWithRetry(() => import('@/pages/seo/GardenOfficeElectricsPage'));
+const GS38ProvingDeadPage = lazyWithRetry(() => import('@/pages/seo/GS38ProvingDeadPage'));
+const HighEarthResistancePage = lazyWithRetry(() => import('@/pages/seo/HighEarthResistancePage'));
+const HighElectricityBillPage = lazyWithRetry(() => import('@/pages/seo/HighElectricityBillPage'));
+const HMOElectricalRequirementsPage = lazyWithRetry(
   () => import('@/pages/seo/HMOElectricalRequirementsPage')
 );
-const HospitalElectricalSystemsPage = lazy(
+const HospitalElectricalSystemsPage = lazyWithRetry(
   () => import('@/pages/seo/HospitalElectricalSystemsPage')
 );
-const HourlyRateCalculatorGuidePage = lazy(
+const HourlyRateCalculatorGuidePage = lazyWithRetry(
   () => import('@/pages/seo/HourlyRateCalculatorGuidePage')
 );
-const HowAIHelpsElectriciansPage = lazy(() => import('@/pages/seo/HowAIHelpsElectriciansPage'));
-const HowElectricityWorksPage = lazy(() => import('@/pages/seo/HowElectricityWorksPage'));
-const HowToBecomeElectricianPage = lazy(() => import('@/pages/seo/HowToBecomeElectricianPage'));
-const HowToFindAnElectricianPage = lazy(() => import('@/pages/seo/HowToFindAnElectricianPage'));
-const HowToReadElectricalDrawingsPage = lazy(
+const HowAIHelpsElectriciansPage = lazyWithRetry(() => import('@/pages/seo/HowAIHelpsElectriciansPage'));
+const HowElectricityWorksPage = lazyWithRetry(() => import('@/pages/seo/HowElectricityWorksPage'));
+const HowToBecomeElectricianPage = lazyWithRetry(() => import('@/pages/seo/HowToBecomeElectricianPage'));
+const HowToFindAnElectricianPage = lazyWithRetry(() => import('@/pages/seo/HowToFindAnElectricianPage'));
+const HowToReadElectricalDrawingsPage = lazyWithRetry(
   () => import('@/pages/seo/HowToReadElectricalDrawingsPage')
 );
-const HowToWireAPlugPage = lazy(() => import('@/pages/seo/HowToWireAPlugPage'));
-const HSEInspectionsElectricalPage = lazy(() => import('@/pages/seo/HSEInspectionsElectricalPage'));
-const IETCodeOfPracticeEVPage = lazy(() => import('@/pages/seo/IETCodeOfPracticeEVPage'));
-const IndustrialElectricianGuidePage = lazy(
+const HowToWireAPlugPage = lazyWithRetry(() => import('@/pages/seo/HowToWireAPlugPage'));
+const HSEInspectionsElectricalPage = lazyWithRetry(() => import('@/pages/seo/HSEInspectionsElectricalPage'));
+const IETCodeOfPracticeEVPage = lazyWithRetry(() => import('@/pages/seo/IETCodeOfPracticeEVPage'));
+const IndustrialElectricianGuidePage = lazyWithRetry(
   () => import('@/pages/seo/IndustrialElectricianGuidePage')
 );
-const InitialVerificationGuidePage = lazy(() => import('@/pages/seo/InitialVerificationGuidePage'));
-const InsulationResistanceTestPage = lazy(() => import('@/pages/seo/InsulationResistanceTestPage'));
-const IntermittentElectricalFaultsPage = lazy(
+const InitialVerificationGuidePage = lazyWithRetry(() => import('@/pages/seo/InitialVerificationGuidePage'));
+const InsulationResistanceTestPage = lazyWithRetry(() => import('@/pages/seo/InsulationResistanceTestPage'));
+const IntermittentElectricalFaultsPage = lazyWithRetry(
   () => import('@/pages/seo/IntermittentElectricalFaultsPage')
 );
-const KitchenWiringGuidePage = lazy(() => import('@/pages/seo/KitchenWiringGuidePage'));
-const LEDDownlightGuidePage = lazy(() => import('@/pages/seo/LEDDownlightGuidePage'));
-const LightsFlickeringPage = lazy(() => import('@/pages/seo/LightsFlickeringPage'));
-const LimitedCompanyElectricianPage = lazy(
+const KitchenWiringGuidePage = lazyWithRetry(() => import('@/pages/seo/KitchenWiringGuidePage'));
+const LEDDownlightGuidePage = lazyWithRetry(() => import('@/pages/seo/LEDDownlightGuidePage'));
+const LightsFlickeringPage = lazyWithRetry(() => import('@/pages/seo/LightsFlickeringPage'));
+const LimitedCompanyElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/LimitedCompanyElectricianPage')
 );
-const LockOffLOTOPage = lazy(() => import('@/pages/seo/LockOffLOTOPage'));
-const LoftConversionElectricsPage = lazy(() => import('@/pages/seo/LoftConversionElectricsPage'));
-const LooseNeutralSymptomsPage = lazy(() => import('@/pages/seo/LooseNeutralSymptomsPage'));
-const LowInsulationResistancePage = lazy(() => import('@/pages/seo/LowInsulationResistancePage'));
-const MarinaElectricalInstallationsPage = lazy(
+const LockOffLOTOPage = lazyWithRetry(() => import('@/pages/seo/LockOffLOTOPage'));
+const LoftConversionElectricsPage = lazyWithRetry(() => import('@/pages/seo/LoftConversionElectricsPage'));
+const LooseNeutralSymptomsPage = lazyWithRetry(() => import('@/pages/seo/LooseNeutralSymptomsPage'));
+const LowInsulationResistancePage = lazyWithRetry(() => import('@/pages/seo/LowInsulationResistancePage'));
+const MarinaElectricalInstallationsPage = lazyWithRetry(
   () => import('@/pages/seo/MarinaElectricalInstallationsPage')
 );
-const MaxDemandGuidePage = lazy(() => import('@/pages/seo/MaxDemandGuidePage'));
-const MaximumZsValuesPage = lazy(() => import('@/pages/seo/MaximumZsValuesPage'));
-const MCBTypesBCDPage = lazy(() => import('@/pages/seo/MCBTypesBCDPage'));
-const MethodStatementElectricalPage = lazy(
+const MaxDemandGuidePage = lazyWithRetry(() => import('@/pages/seo/MaxDemandGuidePage'));
+const MaximumZsValuesPage = lazyWithRetry(() => import('@/pages/seo/MaximumZsValuesPage'));
+const MCBTypesBCDPage = lazyWithRetry(() => import('@/pages/seo/MCBTypesBCDPage'));
+const MethodStatementElectricalPage = lazyWithRetry(
   () => import('@/pages/seo/MethodStatementElectricalPage')
 );
-const MethodStatementGuidePage = lazy(() => import('@/pages/seo/MethodStatementGuidePage'));
-const MinorWorksVsEICPage = lazy(() => import('@/pages/seo/MinorWorksVsEICPage'));
-const MockExamsElectricalPage = lazy(() => import('@/pages/seo/MockExamsElectricalPage'));
-const MultifunctionTesterGuidePage = lazy(() => import('@/pages/seo/MultifunctionTesterGuidePage'));
-const NAPITRegistrationPage = lazy(() => import('@/pages/seo/NAPITRegistrationPage'));
-const NearMissReportingPage = lazy(() => import('@/pages/seo/NearMissReportingPage'));
-const NewBuildElectricalPage = lazy(() => import('@/pages/seo/NewBuildElectricalPage'));
-const NewBuildStandardsPage = lazy(() => import('@/pages/seo/NewBuildStandardsPage'));
-const NICEICCertificateRequirementsPage = lazy(
+const MethodStatementGuidePage = lazyWithRetry(() => import('@/pages/seo/MethodStatementGuidePage'));
+const MinorWorksVsEICPage = lazyWithRetry(() => import('@/pages/seo/MinorWorksVsEICPage'));
+const MockExamsElectricalPage = lazyWithRetry(() => import('@/pages/seo/MockExamsElectricalPage'));
+const MultifunctionTesterGuidePage = lazyWithRetry(() => import('@/pages/seo/MultifunctionTesterGuidePage'));
+const NAPITRegistrationPage = lazyWithRetry(() => import('@/pages/seo/NAPITRegistrationPage'));
+const NearMissReportingPage = lazyWithRetry(() => import('@/pages/seo/NearMissReportingPage'));
+const NewBuildElectricalPage = lazyWithRetry(() => import('@/pages/seo/NewBuildElectricalPage'));
+const NewBuildStandardsPage = lazyWithRetry(() => import('@/pages/seo/NewBuildStandardsPage'));
+const NICEICCertificateRequirementsPage = lazyWithRetry(
   () => import('@/pages/seo/NICEICCertificateRequirementsPage')
 );
-const NICEICRegistrationPage = lazy(() => import('@/pages/seo/NICEICRegistrationPage'));
-const NICEICvsNAPICPage = lazy(() => import('@/pages/seo/NICEICvsNAPICPage'));
-const NoPowerToSocketsPage = lazy(() => import('@/pages/seo/NoPowerToSocketsPage'));
-const NonNotifiableWorkPage = lazy(() => import('@/pages/seo/NonNotifiableWorkPage'));
-const NotifiableWorkGuidePage = lazy(() => import('@/pages/seo/NotifiableWorkGuidePage'));
-const NuisanceTrippingPage = lazy(() => import('@/pages/seo/NuisanceTrippingPage'));
-const NVQLevel3ElectricalPage = lazy(() => import('@/pages/seo/NVQLevel3ElectricalPage'));
-const OffJobTrainingGuidePage = lazy(() => import('@/pages/seo/OffJobTrainingGuidePage'));
-const OffJobTrainingHoursPage = lazy(() => import('@/pages/seo/OffJobTrainingHoursPage'));
-const OJTEvidenceGuidePage = lazy(() => import('@/pages/seo/OJTEvidenceGuidePage'));
-const OJTHubGuidePage = lazy(() => import('@/pages/seo/OJTHubGuidePage'));
-const OutdoorSocketsGuidePage = lazy(() => import('@/pages/seo/OutdoorSocketsGuidePage'));
-const OverloadedCircuitPage = lazy(() => import('@/pages/seo/OverloadedCircuitPage'));
-const PartialRewireGuidePage = lazy(() => import('@/pages/seo/PartialRewireGuidePage'));
-const PATTestingFrequencyPage = lazy(() => import('@/pages/seo/PATTestingFrequencyPage'));
-const PeriodicInspectionGuidePage = lazy(() => import('@/pages/seo/PeriodicInspectionGuidePage'));
-const PermitToWorkPage = lazy(() => import('@/pages/seo/PermitToWorkPage'));
-const PolarityTestingGuidePage = lazy(() => import('@/pages/seo/PolarityTestingGuidePage'));
-const PowerCutWhatToDoPage = lazy(() => import('@/pages/seo/PowerCutWhatToDoPage'));
-const PowerGoingOffPage = lazy(() => import('@/pages/seo/PowerGoingOffPage'));
-const PPEForElectriciansPage = lazy(() => import('@/pages/seo/PPEForElectriciansPage'));
-const ProfessionalDevelopmentElectricianPage = lazy(
+const NICEICRegistrationPage = lazyWithRetry(() => import('@/pages/seo/NICEICRegistrationPage'));
+const NICEICvsNAPICPage = lazyWithRetry(() => import('@/pages/seo/NICEICvsNAPICPage'));
+const NoPowerToSocketsPage = lazyWithRetry(() => import('@/pages/seo/NoPowerToSocketsPage'));
+const NonNotifiableWorkPage = lazyWithRetry(() => import('@/pages/seo/NonNotifiableWorkPage'));
+const NotifiableWorkGuidePage = lazyWithRetry(() => import('@/pages/seo/NotifiableWorkGuidePage'));
+const NuisanceTrippingPage = lazyWithRetry(() => import('@/pages/seo/NuisanceTrippingPage'));
+const NVQLevel3ElectricalPage = lazyWithRetry(() => import('@/pages/seo/NVQLevel3ElectricalPage'));
+const OffJobTrainingGuidePage = lazyWithRetry(() => import('@/pages/seo/OffJobTrainingGuidePage'));
+const OffJobTrainingHoursPage = lazyWithRetry(() => import('@/pages/seo/OffJobTrainingHoursPage'));
+const OJTEvidenceGuidePage = lazyWithRetry(() => import('@/pages/seo/OJTEvidenceGuidePage'));
+const OJTHubGuidePage = lazyWithRetry(() => import('@/pages/seo/OJTHubGuidePage'));
+const OutdoorSocketsGuidePage = lazyWithRetry(() => import('@/pages/seo/OutdoorSocketsGuidePage'));
+const OverloadedCircuitPage = lazyWithRetry(() => import('@/pages/seo/OverloadedCircuitPage'));
+const PartialRewireGuidePage = lazyWithRetry(() => import('@/pages/seo/PartialRewireGuidePage'));
+const PATTestingFrequencyPage = lazyWithRetry(() => import('@/pages/seo/PATTestingFrequencyPage'));
+const PeriodicInspectionGuidePage = lazyWithRetry(() => import('@/pages/seo/PeriodicInspectionGuidePage'));
+const PermitToWorkPage = lazyWithRetry(() => import('@/pages/seo/PermitToWorkPage'));
+const PolarityTestingGuidePage = lazyWithRetry(() => import('@/pages/seo/PolarityTestingGuidePage'));
+const PowerCutWhatToDoPage = lazyWithRetry(() => import('@/pages/seo/PowerCutWhatToDoPage'));
+const PowerGoingOffPage = lazyWithRetry(() => import('@/pages/seo/PowerGoingOffPage'));
+const PPEForElectriciansPage = lazyWithRetry(() => import('@/pages/seo/PPEForElectriciansPage'));
+const ProfessionalDevelopmentElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/ProfessionalDevelopmentElectricianPage')
 );
-const ProspectiveFaultCurrentGuidePage = lazy(
+const ProspectiveFaultCurrentGuidePage = lazyWithRetry(
   () => import('@/pages/seo/ProspectiveFaultCurrentGuidePage')
 );
-const ProtectiveEarthingBondingPage = lazy(
+const ProtectiveEarthingBondingPage = lazyWithRetry(
   () => import('@/pages/seo/ProtectiveEarthingBondingPage')
 );
-const RadialCircuitGuidePage = lazy(() => import('@/pages/seo/RadialCircuitGuidePage'));
-const RAMSTemplateGuidePage = lazy(() => import('@/pages/seo/RAMSTemplateGuidePage'));
-const RCBOvsRCDMCBPage = lazy(() => import('@/pages/seo/RCBOvsRCDMCBPage'));
-const RCDTestingProcedurePage = lazy(() => import('@/pages/seo/RCDTestingProcedurePage'));
-const ReferenceMethodsGuidePage = lazy(() => import('@/pages/seo/ReferenceMethodsGuidePage'));
-const Regulation530Page = lazy(() => import('@/pages/seo/Regulation530Page'));
-const ResidualCurrentMonitoringPage = lazy(
+const RadialCircuitGuidePage = lazyWithRetry(() => import('@/pages/seo/RadialCircuitGuidePage'));
+const RAMSTemplateGuidePage = lazyWithRetry(() => import('@/pages/seo/RAMSTemplateGuidePage'));
+const RCBOvsRCDMCBPage = lazyWithRetry(() => import('@/pages/seo/RCBOvsRCDMCBPage'));
+const RCDTestingProcedurePage = lazyWithRetry(() => import('@/pages/seo/RCDTestingProcedurePage'));
+const ReferenceMethodsGuidePage = lazyWithRetry(() => import('@/pages/seo/ReferenceMethodsGuidePage'));
+const Regulation530Page = lazyWithRetry(() => import('@/pages/seo/Regulation530Page'));
+const ResidualCurrentMonitoringPage = lazyWithRetry(
   () => import('@/pages/seo/ResidualCurrentMonitoringPage')
 );
-const RestaurantElectricalRequirementsPage = lazy(
+const RestaurantElectricalRequirementsPage = lazyWithRetry(
   () => import('@/pages/seo/RestaurantElectricalRequirementsPage')
 );
-const RetailInstallationGuidePage = lazy(() => import('@/pages/seo/RetailInstallationGuidePage'));
-const RewireCostUKPage = lazy(() => import('@/pages/seo/RewireCostUKPage'));
-const RingCircuitFaultFindingPage = lazy(() => import('@/pages/seo/RingCircuitFaultFindingPage'));
-const RingMainExplainedPage = lazy(() => import('@/pages/seo/RingMainExplainedPage'));
-const RiskAssessmentElectricalPage = lazy(() => import('@/pages/seo/RiskAssessmentElectricalPage'));
-const RiskAssessmentElectriciansPage = lazy(
+const RetailInstallationGuidePage = lazyWithRetry(() => import('@/pages/seo/RetailInstallationGuidePage'));
+const RewireCostUKPage = lazyWithRetry(() => import('@/pages/seo/RewireCostUKPage'));
+const RingCircuitFaultFindingPage = lazyWithRetry(() => import('@/pages/seo/RingCircuitFaultFindingPage'));
+const RingMainExplainedPage = lazyWithRetry(() => import('@/pages/seo/RingMainExplainedPage'));
+const RiskAssessmentElectricalPage = lazyWithRetry(() => import('@/pages/seo/RiskAssessmentElectricalPage'));
+const RiskAssessmentElectriciansPage = lazyWithRetry(
   () => import('@/pages/seo/RiskAssessmentElectriciansPage')
 );
-const ScheduleOfTestResultsPage = lazy(() => import('@/pages/seo/ScheduleOfTestResultsPage'));
-const SafeIsolationProcedurePage = lazy(() => import('@/pages/seo/SafeIsolationProcedurePage'));
-const SchoolElectricalInspectionPage = lazy(
+const ScheduleOfTestResultsPage = lazyWithRetry(() => import('@/pages/seo/ScheduleOfTestResultsPage'));
+const SafeIsolationProcedurePage = lazyWithRetry(() => import('@/pages/seo/SafeIsolationProcedurePage'));
+const SchoolElectricalInspectionPage = lazyWithRetry(
   () => import('@/pages/seo/SchoolElectricalInspectionPage')
 );
-const SecondFixElectricalPage = lazy(() => import('@/pages/seo/SecondFixElectricalPage'));
-const SiteDiaryGuidePage = lazy(() => import('@/pages/seo/SiteDiaryGuidePage'));
-const SiteDiaryApprenticeGuidePage = lazy(() => import('@/pages/seo/SiteDiaryApprenticeGuidePage'));
-const SmartHomeWiringPage = lazy(() => import('@/pages/seo/SmartHomeWiringPage'));
-const SmartMeterInstallationPage = lazy(() => import('@/pages/seo/SmartMeterInstallationPage'));
-const SmokeAlarmRegs2022Page = lazy(() => import('@/pages/seo/SmokeAlarmRegs2022Page'));
-const SmokeDetectorWiringPage = lazy(() => import('@/pages/seo/SmokeDetectorWiringPage'));
-const SolarPVCertificateRequirementsPage = lazy(
+const SecondFixElectricalPage = lazyWithRetry(() => import('@/pages/seo/SecondFixElectricalPage'));
+const SiteDiaryGuidePage = lazyWithRetry(() => import('@/pages/seo/SiteDiaryGuidePage'));
+const SiteDiaryApprenticeGuidePage = lazyWithRetry(() => import('@/pages/seo/SiteDiaryApprenticeGuidePage'));
+const SmartHomeWiringPage = lazyWithRetry(() => import('@/pages/seo/SmartHomeWiringPage'));
+const SmartMeterInstallationPage = lazyWithRetry(() => import('@/pages/seo/SmartMeterInstallationPage'));
+const SmokeAlarmRegs2022Page = lazyWithRetry(() => import('@/pages/seo/SmokeAlarmRegs2022Page'));
+const SmokeDetectorWiringPage = lazyWithRetry(() => import('@/pages/seo/SmokeDetectorWiringPage'));
+const SolarPVCertificateRequirementsPage = lazyWithRetry(
   () => import('@/pages/seo/SolarPVCertificateRequirementsPage')
 );
-const SPDGuidePage = lazy(() => import('@/pages/seo/SPDGuidePage'));
-const SpecialLocationsPart7Page = lazy(() => import('@/pages/seo/SpecialLocationsPart7Page'));
-const SpurSocketRegsPage = lazy(() => import('@/pages/seo/SpurSocketRegsPage'));
-const SupplementaryBondingGuidePage = lazy(
+const SPDGuidePage = lazyWithRetry(() => import('@/pages/seo/SPDGuidePage'));
+const SpecialLocationsPart7Page = lazyWithRetry(() => import('@/pages/seo/SpecialLocationsPart7Page'));
+const SpurSocketRegsPage = lazyWithRetry(() => import('@/pages/seo/SpurSocketRegsPage'));
+const SupplementaryBondingGuidePage = lazyWithRetry(
   () => import('@/pages/seo/SupplementaryBondingGuidePage')
 );
-const SwimmingPoolElectricalPage = lazy(() => import('@/pages/seo/SwimmingPoolElectricalPage'));
-const TemporaryInstallationsBS7909Page = lazy(
+const SwimmingPoolElectricalPage = lazyWithRetry(() => import('@/pages/seo/SwimmingPoolElectricalPage'));
+const TemporaryInstallationsBS7909Page = lazyWithRetry(
   () => import('@/pages/seo/TemporaryInstallationsBS7909Page')
 );
-const TestInstrumentsGuidePage = lazy(() => import('@/pages/seo/TestInstrumentsGuidePage'));
-const Year2ElectricalApprenticePage = lazy(
+const TestInstrumentsGuidePage = lazyWithRetry(() => import('@/pages/seo/TestInstrumentsGuidePage'));
+const Year2ElectricalApprenticePage = lazyWithRetry(
   () => import('@/pages/seo/Year2ElectricalApprenticePage')
 );
-const TestingProceduresForApprenticesPage = lazy(
+const TestingProceduresForApprenticesPage = lazyWithRetry(
   () => import('@/pages/seo/TestingProceduresForApprenticesPage')
 );
-const TestingThreePhasePage = lazy(() => import('@/pages/seo/TestingThreePhasePage'));
-const ThreePhaseCalculationsPage = lazy(() => import('@/pages/seo/ThreePhaseCalculationsPage'));
-const ThreePhaseInstallationPage = lazy(() => import('@/pages/seo/ThreePhaseInstallationPage'));
-const ToolboxTalksElectricalPage = lazy(() => import('@/pages/seo/ToolboxTalksElectricalPage'));
-const TroubleshootingElectricalProblemsPage = lazy(
+const TestingThreePhasePage = lazyWithRetry(() => import('@/pages/seo/TestingThreePhasePage'));
+const ThreePhaseCalculationsPage = lazyWithRetry(() => import('@/pages/seo/ThreePhaseCalculationsPage'));
+const ThreePhaseInstallationPage = lazyWithRetry(() => import('@/pages/seo/ThreePhaseInstallationPage'));
+const ToolboxTalksElectricalPage = lazyWithRetry(() => import('@/pages/seo/ToolboxTalksElectricalPage'));
+const TroubleshootingElectricalProblemsPage = lazyWithRetry(
   () => import('@/pages/seo/TroubleshootingElectricalProblemsPage')
 );
-const UnderfloorHeatingElectricalPage = lazy(
+const UnderfloorHeatingElectricalPage = lazyWithRetry(
   () => import('@/pages/seo/UnderfloorHeatingElectricalPage')
 );
-const UnsatisfactoryEICRPage = lazy(() => import('@/pages/seo/UnsatisfactoryEICRPage'));
-const VoltageTooHighLowPage = lazy(() => import('@/pages/seo/VoltageTooHighLowPage'));
-const WhatIsACircuitBreakerPage = lazy(() => import('@/pages/seo/WhatIsACircuitBreakerPage'));
-const WhatIsAnRCDPage = lazy(() => import('@/pages/seo/WhatIsAnRCDPage'));
-const WhatIsEarthingPage = lazy(() => import('@/pages/seo/WhatIsEarthingPage'));
-const WhatToExpectAsApprenticePage = lazy(() => import('@/pages/seo/WhatToExpectAsApprenticePage'));
-const WhyChooseNICEICPage = lazy(() => import('@/pages/seo/WhyChooseNICEICPage'));
-const WomenInElectricalTradePage = lazy(() => import('@/pages/seo/WomenInElectricalTradePage'));
-const Year1ApprenticeGuidePage = lazy(() => import('@/pages/seo/Year1ApprenticeGuidePage'));
-const Year2ApprenticeGuidePage = lazy(() => import('@/pages/seo/Year2ApprenticeGuidePage'));
-const ZeValuesUKPage = lazy(() => import('@/pages/seo/ZeValuesUKPage'));
-const AIClientExplainerPage = lazy(() => import('@/pages/seo/AIClientExplainerPage'));
-const AICommissioningSpecialistPage = lazy(
+const UnsatisfactoryEICRPage = lazyWithRetry(() => import('@/pages/seo/UnsatisfactoryEICRPage'));
+const VoltageTooHighLowPage = lazyWithRetry(() => import('@/pages/seo/VoltageTooHighLowPage'));
+const WhatIsACircuitBreakerPage = lazyWithRetry(() => import('@/pages/seo/WhatIsACircuitBreakerPage'));
+const WhatIsAnRCDPage = lazyWithRetry(() => import('@/pages/seo/WhatIsAnRCDPage'));
+const WhatIsEarthingPage = lazyWithRetry(() => import('@/pages/seo/WhatIsEarthingPage'));
+const WhatToExpectAsApprenticePage = lazyWithRetry(() => import('@/pages/seo/WhatToExpectAsApprenticePage'));
+const WhyChooseNICEICPage = lazyWithRetry(() => import('@/pages/seo/WhyChooseNICEICPage'));
+const WomenInElectricalTradePage = lazyWithRetry(() => import('@/pages/seo/WomenInElectricalTradePage'));
+const Year1ApprenticeGuidePage = lazyWithRetry(() => import('@/pages/seo/Year1ApprenticeGuidePage'));
+const Year2ApprenticeGuidePage = lazyWithRetry(() => import('@/pages/seo/Year2ApprenticeGuidePage'));
+const ZeValuesUKPage = lazyWithRetry(() => import('@/pages/seo/ZeValuesUKPage'));
+const AIClientExplainerPage = lazyWithRetry(() => import('@/pages/seo/AIClientExplainerPage'));
+const AICommissioningSpecialistPage = lazyWithRetry(
   () => import('@/pages/seo/AICommissioningSpecialistPage')
 );
-const AIComponentIdentificationPage = lazy(
+const AIComponentIdentificationPage = lazyWithRetry(
   () => import('@/pages/seo/AIComponentIdentificationPage')
 );
-const AIDiagramBuilderPage = lazy(() => import('@/pages/seo/AIDiagramBuilderPage'));
-const AIFaultDiagnosisPage = lazy(() => import('@/pages/seo/AIFaultDiagnosisPage'));
-const AIInstallationSpecialistPage = lazy(() => import('@/pages/seo/AIInstallationSpecialistPage'));
-const AIInstallationVerificationPage = lazy(
+const AIDiagramBuilderPage = lazyWithRetry(() => import('@/pages/seo/AIDiagramBuilderPage'));
+const AIFaultDiagnosisPage = lazyWithRetry(() => import('@/pages/seo/AIFaultDiagnosisPage'));
+const AIInstallationSpecialistPage = lazyWithRetry(() => import('@/pages/seo/AIInstallationSpecialistPage'));
+const AIInstallationVerificationPage = lazyWithRetry(
   () => import('@/pages/seo/AIInstallationVerificationPage')
 );
-const AIMaintenanceSpecialistPage = lazy(() => import('@/pages/seo/AIMaintenanceSpecialistPage'));
-const AIMethodStatementPage = lazy(() => import('@/pages/seo/AIMethodStatementPage'));
-const AIProjectManagerPage = lazy(() => import('@/pages/seo/AIProjectManagerPage'));
-const AIRegulationsLookupPage = lazy(() => import('@/pages/seo/AIRegulationsLookupPage'));
-const AIReportWriterPage = lazy(() => import('@/pages/seo/AIReportWriterPage'));
-const AITutorPage = lazy(() => import('@/pages/seo/AITutorPage'));
-const AIWiringInstructionsPage = lazy(() => import('@/pages/seo/AIWiringInstructionsPage'));
-const ApprenticeTrainingAppPage = lazy(() => import('@/pages/seo/ApprenticeTrainingAppPage'));
-const BatteryBackupCalculatorPage = lazy(() => import('@/pages/seo/BatteryBackupCalculatorPage'));
-const BoardScannerToolPage = lazy(() => import('@/pages/seo/BoardScannerToolPage'));
-const BreakEvenCalculatorPage = lazy(() => import('@/pages/seo/BreakEvenCalculatorPage'));
-const MinimumChargeCalculatorPage = lazy(() => import('@/pages/seo/MinimumChargeCalculatorPage'));
-const BusbarSizingCalculatorPage = lazy(() => import('@/pages/seo/BusbarSizingCalculatorPage'));
-const BusinessAnalyticsElectricianPage = lazy(
+const AIMaintenanceSpecialistPage = lazyWithRetry(() => import('@/pages/seo/AIMaintenanceSpecialistPage'));
+const AIMethodStatementPage = lazyWithRetry(() => import('@/pages/seo/AIMethodStatementPage'));
+const AIProjectManagerPage = lazyWithRetry(() => import('@/pages/seo/AIProjectManagerPage'));
+const AIRegulationsLookupPage = lazyWithRetry(() => import('@/pages/seo/AIRegulationsLookupPage'));
+const AIReportWriterPage = lazyWithRetry(() => import('@/pages/seo/AIReportWriterPage'));
+const AITutorPage = lazyWithRetry(() => import('@/pages/seo/AITutorPage'));
+const AIWiringInstructionsPage = lazyWithRetry(() => import('@/pages/seo/AIWiringInstructionsPage'));
+const ApprenticeTrainingAppPage = lazyWithRetry(() => import('@/pages/seo/ApprenticeTrainingAppPage'));
+const BatteryBackupCalculatorPage = lazyWithRetry(() => import('@/pages/seo/BatteryBackupCalculatorPage'));
+const BoardScannerToolPage = lazyWithRetry(() => import('@/pages/seo/BoardScannerToolPage'));
+const BreakEvenCalculatorPage = lazyWithRetry(() => import('@/pages/seo/BreakEvenCalculatorPage'));
+const MinimumChargeCalculatorPage = lazyWithRetry(() => import('@/pages/seo/MinimumChargeCalculatorPage'));
+const BusbarSizingCalculatorPage = lazyWithRetry(() => import('@/pages/seo/BusbarSizingCalculatorPage'));
+const BusinessAnalyticsElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/BusinessAnalyticsElectricianPage')
 );
-const BusinessCostCalculatorPage = lazy(() => import('@/pages/seo/BusinessCostCalculatorPage'));
-const CableDeratingCalculatorPage = lazy(() => import('@/pages/seo/CableDeratingCalculatorPage'));
-const CableTrayCalculatorPage = lazy(() => import('@/pages/seo/CableTrayCalculatorPage'));
-const CableVoltDropThreePhasePage = lazy(() => import('@/pages/seo/CableVoltDropThreePhasePage'));
-const CapacityPlanningCalculatorPage = lazy(
+const BusinessCostCalculatorPage = lazyWithRetry(() => import('@/pages/seo/BusinessCostCalculatorPage'));
+const CableDeratingCalculatorPage = lazyWithRetry(() => import('@/pages/seo/CableDeratingCalculatorPage'));
+const CableTrayCalculatorPage = lazyWithRetry(() => import('@/pages/seo/CableTrayCalculatorPage'));
+const CableVoltDropThreePhasePage = lazyWithRetry(() => import('@/pages/seo/CableVoltDropThreePhasePage'));
+const CapacityPlanningCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/CapacityPlanningCalculatorPage')
 );
-const CircuitBreakerSizingCalculatorPage = lazy(
+const CircuitBreakerSizingCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/CircuitBreakerSizingCalculatorPage')
 );
-const CollegeTutorDashboardPage = lazy(() => import('@/pages/seo/CollegeTutorDashboardPage'));
-const CustomerManagementElectricianPage = lazy(
+const CollegeTutorDashboardPage = lazyWithRetry(() => import('@/pages/seo/CollegeTutorDashboardPage'));
+const CustomerManagementElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/CustomerManagementElectricianPage')
 );
-const CVBuilderElectricianPage = lazy(() => import('@/pages/seo/CVBuilderElectricianPage'));
-const DigitalCertificatesAppPage = lazy(() => import('@/pages/seo/DigitalCertificatesAppPage'));
-const ElectricalCertificateSoftwarePage = lazy(
+const CVBuilderElectricianPage = lazyWithRetry(() => import('@/pages/seo/CVBuilderElectricianPage'));
+const DigitalCertificatesAppPage = lazyWithRetry(() => import('@/pages/seo/DigitalCertificatesAppPage'));
+const ElectricalCertificateSoftwarePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalCertificateSoftwarePage')
 );
-const DisconnectionTimeCalculatorPage = lazy(
+const DisconnectionTimeCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/DisconnectionTimeCalculatorPage')
 );
-const EarthRodResistanceCalculatorPage = lazy(
+const EarthRodResistanceCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/EarthRodResistanceCalculatorPage')
 );
-const ElecIDProfessionalCardPage = lazy(() => import('@/pages/seo/ElecIDProfessionalCardPage'));
-const ElectricalAppWithAIPage = lazy(() => import('@/pages/seo/ElectricalAppWithAIPage'));
-const ElectricalLoadSchedulePage = lazy(() => import('@/pages/seo/ElectricalLoadSchedulePage'));
-const ElectricalProjectCostEstimatorPage = lazy(
+const ElecIDProfessionalCardPage = lazyWithRetry(() => import('@/pages/seo/ElecIDProfessionalCardPage'));
+const ElectricalAppWithAIPage = lazyWithRetry(() => import('@/pages/seo/ElectricalAppWithAIPage'));
+const ElectricalLoadSchedulePage = lazyWithRetry(() => import('@/pages/seo/ElectricalLoadSchedulePage'));
+const ElectricalProjectCostEstimatorPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalProjectCostEstimatorPage')
 );
-const ElectricianAppForIPhonePage = lazy(() => import('@/pages/seo/ElectricianAppForIPhonePage'));
-const EmployerElectricalPlatformPage = lazy(
+const ElectricianAppForIPhonePage = lazyWithRetry(() => import('@/pages/seo/ElectricianAppForIPhonePage'));
+const EmployerElectricalPlatformPage = lazyWithRetry(
   () => import('@/pages/seo/EmployerElectricalPlatformPage')
 );
-const EquipmentROICalculatorPage = lazy(() => import('@/pages/seo/EquipmentROICalculatorPage'));
-const EVChargerLoadCalculatorPage = lazy(() => import('@/pages/seo/EVChargerLoadCalculatorPage'));
-const EVChargerCableSizeCalculatorPage = lazy(
+const EquipmentROICalculatorPage = lazyWithRetry(() => import('@/pages/seo/EquipmentROICalculatorPage'));
+const EVChargerLoadCalculatorPage = lazyWithRetry(() => import('@/pages/seo/EVChargerLoadCalculatorPage'));
+const EVChargerCableSizeCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerCableSizeCalculatorPage')
 );
-const ShowerCableSizeCalculatorPage = lazy(
+const ShowerCableSizeCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/ShowerCableSizeCalculatorPage')
 );
-const SWACableSizeCalculatorPage = lazy(() => import('@/pages/seo/SWACableSizeCalculatorPage'));
-const CookerCircuitCalculatorPage = lazy(() => import('@/pages/seo/CookerCircuitCalculatorPage'));
-const HotTubElectricalCalculatorPage = lazy(
+const SWACableSizeCalculatorPage = lazyWithRetry(() => import('@/pages/seo/SWACableSizeCalculatorPage'));
+const CookerCircuitCalculatorPage = lazyWithRetry(() => import('@/pages/seo/CookerCircuitCalculatorPage'));
+const HotTubElectricalCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/HotTubElectricalCalculatorPage')
 );
-const GarageSupplyCalculatorPage = lazy(() => import('@/pages/seo/GarageSupplyCalculatorPage'));
-const EicrCodeCheckerPage = lazy(() => import('@/pages/seo/EicrCodeCheckerPage'));
-const ExpensesManagerPage = lazy(() => import('@/pages/seo/ExpensesManagerPage'));
-const IPRatingGuidePage = lazy(() => import('@/pages/seo/IPRatingGuidePage'));
-const LearningVideosElectricianPage = lazy(
+const GarageSupplyCalculatorPage = lazyWithRetry(() => import('@/pages/seo/GarageSupplyCalculatorPage'));
+const EicrCodeCheckerPage = lazyWithRetry(() => import('@/pages/seo/EicrCodeCheckerPage'));
+const ExpensesManagerPage = lazyWithRetry(() => import('@/pages/seo/ExpensesManagerPage'));
+const IPRatingGuidePage = lazyWithRetry(() => import('@/pages/seo/IPRatingGuidePage'));
+const LearningVideosElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/LearningVideosElectricianPage')
 );
-const LightingLuxCalculatorPage = lazy(() => import('@/pages/seo/LightingLuxCalculatorPage'));
-const MentalHealthHubPage = lazy(() => import('@/pages/seo/MentalHealthHubPage'));
-const MotorStartingCurrentCalculatorPage = lazy(
+const LightingLuxCalculatorPage = lazyWithRetry(() => import('@/pages/seo/LightingLuxCalculatorPage'));
+const MentalHealthHubPage = lazyWithRetry(() => import('@/pages/seo/MentalHealthHubPage'));
+const MotorStartingCurrentCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/MotorStartingCurrentCalculatorPage')
 );
-const OfflineElectricalAppPage = lazy(() => import('@/pages/seo/OfflineElectricalAppPage'));
-const PowerConsumptionCalculatorPage = lazy(
+const OfflineElectricalAppPage = lazyWithRetry(() => import('@/pages/seo/OfflineElectricalAppPage'));
+const PowerConsumptionCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/PowerConsumptionCalculatorPage')
 );
-const PricingStrategyElectricianPage = lazy(
+const PricingStrategyElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/PricingStrategyElectricianPage')
 );
-const ProjectManagementElectricianPage = lazy(
+const ProjectManagementElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/ProjectManagementElectricianPage')
 );
-const ScheduleManagerPage = lazy(() => import('@/pages/seo/ScheduleManagerPage'));
-const SolarPanelSizingCalculatorPage = lazy(
+const ScheduleManagerPage = lazyWithRetry(() => import('@/pages/seo/ScheduleManagerPage'));
+const SolarPanelSizingCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/SolarPanelSizingCalculatorPage')
 );
-const StaffCostCalculatorPage = lazy(() => import('@/pages/seo/StaffCostCalculatorPage'));
-const StaffManagementToolPage = lazy(() => import('@/pages/seo/StaffManagementToolPage'));
-const StudyCentreOnlineCoursesPage = lazy(() => import('@/pages/seo/StudyCentreOnlineCoursesPage'));
-const TaxNIEstimatorPage = lazy(() => import('@/pages/seo/TaxNIEstimatorPage'));
-const TransformerSizingCalculatorPage = lazy(
+const StaffCostCalculatorPage = lazyWithRetry(() => import('@/pages/seo/StaffCostCalculatorPage'));
+const StaffManagementToolPage = lazyWithRetry(() => import('@/pages/seo/StaffManagementToolPage'));
+const StudyCentreOnlineCoursesPage = lazyWithRetry(() => import('@/pages/seo/StudyCentreOnlineCoursesPage'));
+const TaxNIEstimatorPage = lazyWithRetry(() => import('@/pages/seo/TaxNIEstimatorPage'));
+const TransformerSizingCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/TransformerSizingCalculatorPage')
 );
-const VATSchemeComparisonPage = lazy(() => import('@/pages/seo/VATSchemeComparisonPage'));
-const AsbestosAwarenessCoursePage = lazy(() => import('@/pages/seo/AsbestosAwarenessCoursePage'));
-const BS7671Amendment3CoursePage = lazy(() => import('@/pages/seo/BS7671Amendment3CoursePage'));
-const ConfinedSpacesCoursePage = lazy(() => import('@/pages/seo/ConfinedSpacesCoursePage'));
-const COSHHCoursePage = lazy(() => import('@/pages/seo/COSHHCoursePage'));
-const CSCSCardCoursePage = lazy(() => import('@/pages/seo/CSCSCardCoursePage'));
-const DataCablingCoursePage = lazy(() => import('@/pages/seo/DataCablingCoursePage'));
-const DomesticInstallerCoursePage = lazy(() => import('@/pages/seo/DomesticInstallerCoursePage'));
-const ElectricalScienceFundamentalsCoursePage = lazy(
+const VATSchemeComparisonPage = lazyWithRetry(() => import('@/pages/seo/VATSchemeComparisonPage'));
+const AsbestosAwarenessCoursePage = lazyWithRetry(() => import('@/pages/seo/AsbestosAwarenessCoursePage'));
+const BS7671Amendment3CoursePage = lazyWithRetry(() => import('@/pages/seo/BS7671Amendment3CoursePage'));
+const ConfinedSpacesCoursePage = lazyWithRetry(() => import('@/pages/seo/ConfinedSpacesCoursePage'));
+const COSHHCoursePage = lazyWithRetry(() => import('@/pages/seo/COSHHCoursePage'));
+const CSCSCardCoursePage = lazyWithRetry(() => import('@/pages/seo/CSCSCardCoursePage'));
+const DataCablingCoursePage = lazyWithRetry(() => import('@/pages/seo/DataCablingCoursePage'));
+const DomesticInstallerCoursePage = lazyWithRetry(() => import('@/pages/seo/DomesticInstallerCoursePage'));
+const ElectricalScienceFundamentalsCoursePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalScienceFundamentalsCoursePage')
 );
-const EnergyEfficiencyCoursePage = lazy(() => import('@/pages/seo/EnergyEfficiencyCoursePage'));
-const EnvironmentalSustainabilityCoursePage = lazy(
+const EnergyEfficiencyCoursePage = lazyWithRetry(() => import('@/pages/seo/EnergyEfficiencyCoursePage'));
+const EnvironmentalSustainabilityCoursePage = lazyWithRetry(
   () => import('@/pages/seo/EnvironmentalSustainabilityCoursePage')
 );
-const EVChargingCoursePage = lazy(() => import('@/pages/seo/EVChargingCoursePage'));
-const FireAlarmSystemsCoursePage = lazy(() => import('@/pages/seo/FireAlarmSystemsCoursePage'));
-const FireSafetyCoursePage = lazy(() => import('@/pages/seo/FireSafetyCoursePage'));
-const FirstAidCoursePage = lazy(() => import('@/pages/seo/FirstAidCoursePage'));
-const HNCElectricalCoursePage = lazy(() => import('@/pages/seo/HNCElectricalCoursePage'));
-const InstrumentationCoursePage = lazy(() => import('@/pages/seo/InstrumentationCoursePage'));
-const LeadershipOnSiteCoursePage = lazy(() => import('@/pages/seo/LeadershipOnSiteCoursePage'));
-const MentalHealthAwarenessCoursePage = lazy(
+const EVChargingCoursePage = lazyWithRetry(() => import('@/pages/seo/EVChargingCoursePage'));
+const FireAlarmSystemsCoursePage = lazyWithRetry(() => import('@/pages/seo/FireAlarmSystemsCoursePage'));
+const FireSafetyCoursePage = lazyWithRetry(() => import('@/pages/seo/FireSafetyCoursePage'));
+const FirstAidCoursePage = lazyWithRetry(() => import('@/pages/seo/FirstAidCoursePage'));
+const HNCElectricalCoursePage = lazyWithRetry(() => import('@/pages/seo/HNCElectricalCoursePage'));
+const InstrumentationCoursePage = lazyWithRetry(() => import('@/pages/seo/InstrumentationCoursePage'));
+const LeadershipOnSiteCoursePage = lazyWithRetry(() => import('@/pages/seo/LeadershipOnSiteCoursePage'));
+const MentalHealthAwarenessCoursePage = lazyWithRetry(
   () => import('@/pages/seo/MentalHealthAwarenessCoursePage')
 );
-const RenewableEnergyCoursePage = lazy(() => import('@/pages/seo/RenewableEnergyCoursePage'));
-const ScaffoldingAwarenessCoursePage = lazy(
+const RenewableEnergyCoursePage = lazyWithRetry(() => import('@/pages/seo/RenewableEnergyCoursePage'));
+const ScaffoldingAwarenessCoursePage = lazyWithRetry(
   () => import('@/pages/seo/ScaffoldingAwarenessCoursePage')
 );
-const SmartHomeAutomationCoursePage = lazy(
+const SmartHomeAutomationCoursePage = lazyWithRetry(
   () => import('@/pages/seo/SmartHomeAutomationCoursePage')
 );
-const WorkingAtHeightCoursePage = lazy(() => import('@/pages/seo/WorkingAtHeightCoursePage'));
+const WorkingAtHeightCoursePage = lazyWithRetry(() => import('@/pages/seo/WorkingAtHeightCoursePage'));
 
 // Batch 2 — previously missing routes
-const AFDDGuidePage = lazy(() => import('@/pages/seo/AFDDGuidePage'));
-const AIToolsForElectriciansPage = lazy(() => import('@/pages/seo/AIToolsForElectriciansPage'));
-const BathroomElectricalRegsPage = lazy(() => import('@/pages/seo/BathroomElectricalRegsPage'));
-const BS7671RunThroughPage = lazy(() => import('@/pages/seo/BS7671RunThroughPage'));
-const CableSizingGuideBS7671Page = lazy(() => import('@/pages/seo/CableSizingGuideBS7671Page'));
-const CDMRegulationsCoursePage = lazy(() => import('@/pages/seo/CDMRegulationsCoursePage'));
-const ConsumerUnitChangePage = lazy(() => import('@/pages/seo/ConsumerUnitChangePage'));
-const ElectricalBIMGuidePage = lazy(() => import('@/pages/seo/ElectricalBIMGuidePage'));
-const ElectricalBoardTypesPage = lazy(() => import('@/pages/seo/ElectricalBoardTypesPage'));
-const ElectricalConduitsGuidePage = lazy(() => import('@/pages/seo/ElectricalConduitsGuidePage'));
-const ElectricalCustomerServicePage = lazy(
+const AFDDGuidePage = lazyWithRetry(() => import('@/pages/seo/AFDDGuidePage'));
+const AIToolsForElectriciansPage = lazyWithRetry(() => import('@/pages/seo/AIToolsForElectriciansPage'));
+const BathroomElectricalRegsPage = lazyWithRetry(() => import('@/pages/seo/BathroomElectricalRegsPage'));
+const BS7671RunThroughPage = lazyWithRetry(() => import('@/pages/seo/BS7671RunThroughPage'));
+const CableSizingGuideBS7671Page = lazyWithRetry(() => import('@/pages/seo/CableSizingGuideBS7671Page'));
+const CDMRegulationsCoursePage = lazyWithRetry(() => import('@/pages/seo/CDMRegulationsCoursePage'));
+const ConsumerUnitChangePage = lazyWithRetry(() => import('@/pages/seo/ConsumerUnitChangePage'));
+const ElectricalBIMGuidePage = lazyWithRetry(() => import('@/pages/seo/ElectricalBIMGuidePage'));
+const ElectricalBoardTypesPage = lazyWithRetry(() => import('@/pages/seo/ElectricalBoardTypesPage'));
+const ElectricalConduitsGuidePage = lazyWithRetry(() => import('@/pages/seo/ElectricalConduitsGuidePage'));
+const ElectricalCustomerServicePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalCustomerServicePage')
 );
-const ElectricalExtensionGuidePage = lazy(() => import('@/pages/seo/ElectricalExtensionGuidePage'));
-const ElectricalLoadAssessmentPage = lazy(() => import('@/pages/seo/ElectricalLoadAssessmentPage'));
-const ElectricalMarketingTipsPage = lazy(() => import('@/pages/seo/ElectricalMarketingTipsPage'));
-const ElectricalNoiseAndInterferencePage = lazy(
+const ElectricalExtensionGuidePage = lazyWithRetry(() => import('@/pages/seo/ElectricalExtensionGuidePage'));
+const ElectricalLoadAssessmentPage = lazyWithRetry(() => import('@/pages/seo/ElectricalLoadAssessmentPage'));
+const ElectricalMarketingTipsPage = lazyWithRetry(() => import('@/pages/seo/ElectricalMarketingTipsPage'));
+const ElectricalNoiseAndInterferencePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalNoiseAndInterferencePage')
 );
-const ElectricalRetrofitGuidePage = lazy(() => import('@/pages/seo/ElectricalRetrofitGuidePage'));
-const ElectricalSafetyAuditPage = lazy(() => import('@/pages/seo/ElectricalSafetyAuditPage'));
-const ElectricalSiteInductionPage = lazy(() => import('@/pages/seo/ElectricalSiteInductionPage'));
-const ElectricalSubcontractingGuidePage = lazy(
+const ElectricalRetrofitGuidePage = lazyWithRetry(() => import('@/pages/seo/ElectricalRetrofitGuidePage'));
+const ElectricalSafetyAuditPage = lazyWithRetry(() => import('@/pages/seo/ElectricalSafetyAuditPage'));
+const ElectricalSiteInductionPage = lazyWithRetry(() => import('@/pages/seo/ElectricalSiteInductionPage'));
+const ElectricalSubcontractingGuidePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalSubcontractingGuidePage')
 );
-const ElectricalTestCertificatePage = lazy(
+const ElectricalTestCertificatePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalTestCertificatePage')
 );
-const ElectricianAccountingSoftwarePage = lazy(
+const ElectricianAccountingSoftwarePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricianAccountingSoftwarePage')
 );
-const EmergencyElectricalRepairsPage = lazy(
+const EmergencyElectricalRepairsPage = lazyWithRetry(
   () => import('@/pages/seo/EmergencyElectricalRepairsPage')
 );
-const EmergencyLightingTestingPage = lazy(() => import('@/pages/seo/EmergencyLightingTestingPage'));
-const EVChargerInstallationPage = lazy(() => import('@/pages/seo/EVChargerInstallationPage'));
-const FP200CableGuidePage = lazy(() => import('@/pages/seo/FP200CableGuidePage'));
-const FutureOfElectricalTradePage = lazy(() => import('@/pages/seo/FutureOfElectricalTradePage'));
-const GoingSelfEmployedElectricianPage = lazy(
+const EmergencyLightingTestingPage = lazyWithRetry(() => import('@/pages/seo/EmergencyLightingTestingPage'));
+const EVChargerInstallationPage = lazyWithRetry(() => import('@/pages/seo/EVChargerInstallationPage'));
+const FP200CableGuidePage = lazyWithRetry(() => import('@/pages/seo/FP200CableGuidePage'));
+const FutureOfElectricalTradePage = lazyWithRetry(() => import('@/pages/seo/FutureOfElectricalTradePage'));
+const GoingSelfEmployedElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/GoingSelfEmployedElectricianPage')
 );
-const HouseRewireGuidePage = lazy(() => import('@/pages/seo/HouseRewireGuidePage'));
-const HowToFillInMinorWorksPage = lazy(() => import('@/pages/seo/HowToFillInMinorWorksPage'));
-const HowToPriceElectricalJobsPage = lazy(() => import('@/pages/seo/HowToPriceElectricalJobsPage'));
-const InsulationResistanceMinimumValuesPage = lazy(
+const HouseRewireGuidePage = lazyWithRetry(() => import('@/pages/seo/HouseRewireGuidePage'));
+const HowToFillInMinorWorksPage = lazyWithRetry(() => import('@/pages/seo/HowToFillInMinorWorksPage'));
+const HowToPriceElectricalJobsPage = lazyWithRetry(() => import('@/pages/seo/HowToPriceElectricalJobsPage'));
+const InsulationResistanceMinimumValuesPage = lazyWithRetry(
   () => import('@/pages/seo/InsulationResistanceMinimumValuesPage')
 );
-const LandlordElectricalSafetyPage = lazy(() => import('@/pages/seo/LandlordElectricalSafetyPage'));
-const LEDLightingGuidePage = lazy(() => import('@/pages/seo/LEDLightingGuidePage'));
-const MEWPCoursePage = lazy(() => import('@/pages/seo/MEWPCoursePage'));
-const MICCCableGuidePage = lazy(() => import('@/pages/seo/MICCCableGuidePage'));
-const MockExamsElectricianPage = lazy(() => import('@/pages/seo/MockExamsElectricianPage'));
-const NAPICertificateGuidePage = lazy(() => import('@/pages/seo/NAPICertificateGuidePage'));
-const NetworkedFireAlarmPage = lazy(() => import('@/pages/seo/NetworkedFireAlarmPage'));
-const OutdoorElectricsPage = lazy(() => import('@/pages/seo/OutdoorElectricsPage'));
-const PATTestingGuideUKPage = lazy(() => import('@/pages/seo/PATTestingGuideUKPage'));
-const RCDKeepsTrippingPage = lazy(() => import('@/pages/seo/RCDKeepsTrippingPage'));
-const RCDKeepsTrippingCausesAndFixesPage = lazy(
+const LandlordElectricalSafetyPage = lazyWithRetry(() => import('@/pages/seo/LandlordElectricalSafetyPage'));
+const LEDLightingGuidePage = lazyWithRetry(() => import('@/pages/seo/LEDLightingGuidePage'));
+const MEWPCoursePage = lazyWithRetry(() => import('@/pages/seo/MEWPCoursePage'));
+const MICCCableGuidePage = lazyWithRetry(() => import('@/pages/seo/MICCCableGuidePage'));
+const MockExamsElectricianPage = lazyWithRetry(() => import('@/pages/seo/MockExamsElectricianPage'));
+const NAPICertificateGuidePage = lazyWithRetry(() => import('@/pages/seo/NAPICertificateGuidePage'));
+const NetworkedFireAlarmPage = lazyWithRetry(() => import('@/pages/seo/NetworkedFireAlarmPage'));
+const OutdoorElectricsPage = lazyWithRetry(() => import('@/pages/seo/OutdoorElectricsPage'));
+const PATTestingGuideUKPage = lazyWithRetry(() => import('@/pages/seo/PATTestingGuideUKPage'));
+const RCDKeepsTrippingPage = lazyWithRetry(() => import('@/pages/seo/RCDKeepsTrippingPage'));
+const RCDKeepsTrippingCausesAndFixesPage = lazyWithRetry(
   () => import('@/pages/seo/RCDKeepsTrippingCausesAndFixesPage')
 );
-const RCDKeepsTrippingTestSequencePage = lazy(
+const RCDKeepsTrippingTestSequencePage = lazyWithRetry(
   () => import('@/pages/seo/RCDKeepsTrippingTestSequencePage')
 );
-const RCBOKeepsTrippingCausesAndFixesPage = lazy(
+const RCBOKeepsTrippingCausesAndFixesPage = lazyWithRetry(
   () => import('@/pages/seo/RCBOKeepsTrippingCausesAndFixesPage')
 );
-const RCBOKeepsTrippingGuidePage = lazy(() => import('@/pages/seo/RCBOKeepsTrippingGuidePage'));
-const RCDTypesExplainedPage = lazy(() => import('@/pages/seo/RCDTypesExplainedPage'));
-const SmokeAlarmRegsPage = lazy(() => import('@/pages/seo/SmokeAlarmRegsPage'));
-const SolarPanelInstallationPage = lazy(() => import('@/pages/seo/SolarPanelInstallationPage'));
-const SPDSurgeProtectionPage = lazy(() => import('@/pages/seo/SPDSurgeProtectionPage'));
-const StartingElectricalBusinessPage = lazy(
+const RCBOKeepsTrippingGuidePage = lazyWithRetry(() => import('@/pages/seo/RCBOKeepsTrippingGuidePage'));
+const RCDTypesExplainedPage = lazyWithRetry(() => import('@/pages/seo/RCDTypesExplainedPage'));
+const SmokeAlarmRegsPage = lazyWithRetry(() => import('@/pages/seo/SmokeAlarmRegsPage'));
+const SolarPanelInstallationPage = lazyWithRetry(() => import('@/pages/seo/SolarPanelInstallationPage'));
+const SPDSurgeProtectionPage = lazyWithRetry(() => import('@/pages/seo/SPDSurgeProtectionPage'));
+const StartingElectricalBusinessPage = lazyWithRetry(
   () => import('@/pages/seo/StartingElectricalBusinessPage')
 );
-const SWACableInstallationPage = lazy(() => import('@/pages/seo/SWACableInstallationPage'));
-const TrunkingInstallationGuidePage = lazy(
+const SWACableInstallationPage = lazyWithRetry(() => import('@/pages/seo/SWACableInstallationPage'));
+const TrunkingInstallationGuidePage = lazyWithRetry(
   () => import('@/pages/seo/TrunkingInstallationGuidePage')
 );
-const UPSInstallationGuidePage = lazy(() => import('@/pages/seo/UPSInstallationGuidePage'));
-const VoltageDropGuideBS7671Page = lazy(() => import('@/pages/seo/VoltageDropGuideBS7671Page'));
-const WhenIsEICRequiredPage = lazy(() => import('@/pages/seo/WhenIsEICRequiredPage'));
-const WiringColoursUKPage = lazy(() => import('@/pages/seo/WiringColoursUKPage'));
-const WorkplaceSafetyCoursePage = lazy(() => import('@/pages/seo/WorkplaceSafetyCoursePage'));
-const AccessControlInstallationPage = lazy(
+const UPSInstallationGuidePage = lazyWithRetry(() => import('@/pages/seo/UPSInstallationGuidePage'));
+const VoltageDropGuideBS7671Page = lazyWithRetry(() => import('@/pages/seo/VoltageDropGuideBS7671Page'));
+const WhenIsEICRequiredPage = lazyWithRetry(() => import('@/pages/seo/WhenIsEICRequiredPage'));
+const WiringColoursUKPage = lazyWithRetry(() => import('@/pages/seo/WiringColoursUKPage'));
+const WorkplaceSafetyCoursePage = lazyWithRetry(() => import('@/pages/seo/WorkplaceSafetyCoursePage'));
+const AccessControlInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/AccessControlInstallationPage')
 );
-const ACVsDCEarthingPage = lazy(() => import('@/pages/seo/ACVsDCEarthingPage'));
-const AirSourceHeatPumpElectricalPage = lazy(
+const ACVsDCEarthingPage = lazyWithRetry(() => import('@/pages/seo/ACVsDCEarthingPage'));
+const AirSourceHeatPumpElectricalPage = lazyWithRetry(
   () => import('@/pages/seo/AirSourceHeatPumpElectricalPage')
 );
-const AM2AssessmentPrepPage = lazy(() => import('@/pages/seo/AM2AssessmentPrepPage'));
-const AnnexElectricalInstallationPage = lazy(
+const AM2AssessmentPrepPage = lazyWithRetry(() => import('@/pages/seo/AM2AssessmentPrepPage'));
+const AnnexElectricalInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/AnnexElectricalInstallationPage')
 );
-const ApprenticeFirstYearRevisionPage = lazy(
+const ApprenticeFirstYearRevisionPage = lazyWithRetry(
   () => import('@/pages/seo/ApprenticeFirstYearRevisionPage')
 );
-const ApprenticeMathsElectricianPage = lazy(
+const ApprenticeMathsElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/ApprenticeMathsElectricianPage')
 );
-const ApprenticePortfolioBuildingPage = lazy(
+const ApprenticePortfolioBuildingPage = lazyWithRetry(
   () => import('@/pages/seo/ApprenticePortfolioBuildingPage')
 );
-const ArmaCableInstallationPage = lazy(() => import('@/pages/seo/ArmaCableInstallationPage'));
-const ATEXHazardousAreaElectricalPage = lazy(
+const ArmaCableInstallationPage = lazyWithRetry(() => import('@/pages/seo/ArmaCableInstallationPage'));
+const ATEXHazardousAreaElectricalPage = lazyWithRetry(
   () => import('@/pages/seo/ATEXHazardousAreaElectricalPage')
 );
-const BarnConversionElectricsPage = lazy(() => import('@/pages/seo/BarnConversionElectricsPage'));
-const BasementConversionElectricalPage = lazy(
+const BarnConversionElectricsPage = lazyWithRetry(() => import('@/pages/seo/BarnConversionElectricsPage'));
+const BasementConversionElectricalPage = lazyWithRetry(
   () => import('@/pages/seo/BasementConversionElectricalPage')
 );
-const BathroomElectricalCostPage = lazy(() => import('@/pages/seo/BathroomElectricalCostPage'));
-const BathroomZoneElectricalPage = lazy(() => import('@/pages/seo/BathroomZoneElectricalPage'));
-const BatteryStorageInstallationPage = lazy(
+const BathroomElectricalCostPage = lazyWithRetry(() => import('@/pages/seo/BathroomElectricalCostPage'));
+const BathroomZoneElectricalPage = lazyWithRetry(() => import('@/pages/seo/BathroomZoneElectricalPage'));
+const BatteryStorageInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/BatteryStorageInstallationPage')
 );
-const BestCableDetector2026Page = lazy(() => import('@/pages/seo/BestCableDetector2026Page'));
-const BestLabelPrinterElectriciansPage = lazy(
+const BestCableDetector2026Page = lazyWithRetry(() => import('@/pages/seo/BestCableDetector2026Page'));
+const BestLabelPrinterElectriciansPage = lazyWithRetry(
   () => import('@/pages/seo/BestLabelPrinterElectriciansPage')
 );
-const BestMultifunctionTester2026Page = lazy(
+const BestMultifunctionTester2026Page = lazyWithRetry(
   () => import('@/pages/seo/BestMultifunctionTester2026Page')
 );
-const BestThermalImagingCameraElectricianPage = lazy(
+const BestThermalImagingCameraElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/BestThermalImagingCameraElectricianPage')
 );
-const BestVanRackingElectriciansPage = lazy(
+const BestVanRackingElectriciansPage = lazyWithRetry(
   () => import('@/pages/seo/BestVanRackingElectriciansPage')
 );
-const BuildingManagementSystemsElectricalPage = lazy(
+const BuildingManagementSystemsElectricalPage = lazyWithRetry(
   () => import('@/pages/seo/BuildingManagementSystemsElectricalPage')
 );
-const BuildingRegulationsElectricalPage = lazy(
+const BuildingRegulationsElectricalPage = lazyWithRetry(
   () => import('@/pages/seo/BuildingRegulationsElectricalPage')
 );
-const BungalowRewireCostPage = lazy(() => import('@/pages/seo/BungalowRewireCostPage'));
-const CableDetectorBuyingGuidePage = lazy(() => import('@/pages/seo/CableDetectorBuyingGuidePage'));
-const CarParkLightingCostPage = lazy(() => import('@/pages/seo/CarParkLightingCostPage'));
-const CashFlowManagementElectricianPage = lazy(
+const BungalowRewireCostPage = lazyWithRetry(() => import('@/pages/seo/BungalowRewireCostPage'));
+const CableDetectorBuyingGuidePage = lazyWithRetry(() => import('@/pages/seo/CableDetectorBuyingGuidePage'));
+const CarParkLightingCostPage = lazyWithRetry(() => import('@/pages/seo/CarParkLightingCostPage'));
+const CashFlowManagementElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/CashFlowManagementElectricianPage')
 );
-const CCTVInstallationCostPage = lazy(() => import('@/pages/seo/CCTVInstallationCostPage'));
-const CheckatradeVsMyBuilderPage = lazy(() => import('@/pages/seo/CheckatradeVsMyBuilderPage'));
-const ChristmasLightingSafetyPage = lazy(() => import('@/pages/seo/ChristmasLightingSafetyPage'));
-const CircuitBreakerTypesPage = lazy(() => import('@/pages/seo/CircuitBreakerTypesPage'));
-const CityGuilds2365GuidePage = lazy(() => import('@/pages/seo/CityGuilds2365GuidePage'));
-const CityGuilds2365Unit201Page = lazy(() => import('@/pages/seo/CityGuilds2365Unit201Page'));
-const CityGuilds2365Unit202Page = lazy(() => import('@/pages/seo/CityGuilds2365Unit202Page'));
-const CityGuilds2382ExamGuidePage = lazy(() => import('@/pages/seo/CityGuilds2382ExamGuidePage'));
-const CityGuilds2396DesignCoursePage = lazy(
+const CCTVInstallationCostPage = lazyWithRetry(() => import('@/pages/seo/CCTVInstallationCostPage'));
+const CheckatradeVsMyBuilderPage = lazyWithRetry(() => import('@/pages/seo/CheckatradeVsMyBuilderPage'));
+const ChristmasLightingSafetyPage = lazyWithRetry(() => import('@/pages/seo/ChristmasLightingSafetyPage'));
+const CircuitBreakerTypesPage = lazyWithRetry(() => import('@/pages/seo/CircuitBreakerTypesPage'));
+const CityGuilds2365GuidePage = lazyWithRetry(() => import('@/pages/seo/CityGuilds2365GuidePage'));
+const CityGuilds2365Unit201Page = lazyWithRetry(() => import('@/pages/seo/CityGuilds2365Unit201Page'));
+const CityGuilds2365Unit202Page = lazyWithRetry(() => import('@/pages/seo/CityGuilds2365Unit202Page'));
+const CityGuilds2382ExamGuidePage = lazyWithRetry(() => import('@/pages/seo/CityGuilds2382ExamGuidePage'));
+const CityGuilds2396DesignCoursePage = lazyWithRetry(
   () => import('@/pages/seo/CityGuilds2396DesignCoursePage')
 );
-const ClampMeterGuideElectriciansPage = lazy(
+const ClampMeterGuideElectriciansPage = lazyWithRetry(
   () => import('@/pages/seo/ClampMeterGuideElectriciansPage')
 );
-const CleanRoomElectricalInstallationPage = lazy(
+const CleanRoomElectricalInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/CleanRoomElectricalInstallationPage')
 );
-const CommercialRewireCostPage = lazy(() => import('@/pages/seo/CommercialRewireCostPage'));
-const CompetentPersonSchemeGuidePage = lazy(
+const CommercialRewireCostPage = lazyWithRetry(() => import('@/pages/seo/CommercialRewireCostPage'));
+const CompetentPersonSchemeGuidePage = lazyWithRetry(
   () => import('@/pages/seo/CompetentPersonSchemeGuidePage')
 );
-const CompExQualificationGuidePage = lazy(() => import('@/pages/seo/CompExQualificationGuidePage'));
-const ConsumerUnitReplacementBirminghamPage = lazy(
+const CompExQualificationGuidePage = lazyWithRetry(() => import('@/pages/seo/CompExQualificationGuidePage'));
+const ConsumerUnitReplacementBirminghamPage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitReplacementBirminghamPage')
 );
-const ConsumerUnitReplacementBristolPage = lazy(
+const ConsumerUnitReplacementBristolPage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitReplacementBristolPage')
 );
-const ConsumerUnitReplacementCostPage = lazy(
+const ConsumerUnitReplacementCostPage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitReplacementCostPage')
 );
-const ConsumerUnitReplacementCoventryPage = lazy(
+const ConsumerUnitReplacementCoventryPage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitReplacementCoventryPage')
 );
-const ConsumerUnitReplacementEdinburghPage = lazy(
+const ConsumerUnitReplacementEdinburghPage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitReplacementEdinburghPage')
 );
-const ConsumerUnitReplacementExeterPage = lazy(
+const ConsumerUnitReplacementExeterPage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitReplacementExeterPage')
 );
-const ConsumerUnitReplacementGlasgowPage = lazy(
+const ConsumerUnitReplacementGlasgowPage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitReplacementGlasgowPage')
 );
-const ConsumerUnitReplacementHullPage = lazy(
+const ConsumerUnitReplacementHullPage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitReplacementHullPage')
 );
-const ConsumerUnitReplacementLeedsPage = lazy(
+const ConsumerUnitReplacementLeedsPage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitReplacementLeedsPage')
 );
-const ConsumerUnitReplacementLiverpoolPage = lazy(
+const ConsumerUnitReplacementLiverpoolPage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitReplacementLiverpoolPage')
 );
-const ConsumerUnitReplacementLondonPage = lazy(
+const ConsumerUnitReplacementLondonPage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitReplacementLondonPage')
 );
-const ConsumerUnitReplacementManchesterPage = lazy(
+const ConsumerUnitReplacementManchesterPage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitReplacementManchesterPage')
 );
-const ConsumerUnitReplacementNewcastlePage = lazy(
+const ConsumerUnitReplacementNewcastlePage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitReplacementNewcastlePage')
 );
-const ConsumerUnitReplacementPlymouthPage = lazy(
+const ConsumerUnitReplacementPlymouthPage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitReplacementPlymouthPage')
 );
-const ConsumerUnitReplacementSheffieldPage = lazy(
+const ConsumerUnitReplacementSheffieldPage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitReplacementSheffieldPage')
 );
-const ConsumerUnitReplacementSouthamptonPage = lazy(
+const ConsumerUnitReplacementSouthamptonPage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitReplacementSouthamptonPage')
 );
-const ConsumerUnitReplacementWolverhamptonPage = lazy(
+const ConsumerUnitReplacementWolverhamptonPage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitReplacementWolverhamptonPage')
 );
-const ContinuityTestingGuidePage = lazy(() => import('@/pages/seo/ContinuityTestingGuidePage'));
-const ContinuityTestingPage = lazy(() => import('@/pages/seo/ContinuityTestingPage'));
-const CookerConnectionCostPage = lazy(() => import('@/pages/seo/CookerConnectionCostPage'));
-const CopperVsAluminiumCablePage = lazy(() => import('@/pages/seo/CopperVsAluminiumCablePage'));
-const CSCSvsECSCardPage = lazy(() => import('@/pages/seo/CSCSvsECSCardPage'));
-const DataCablingInstallationCostPage = lazy(
+const ContinuityTestingGuidePage = lazyWithRetry(() => import('@/pages/seo/ContinuityTestingGuidePage'));
+const ContinuityTestingPage = lazyWithRetry(() => import('@/pages/seo/ContinuityTestingPage'));
+const CookerConnectionCostPage = lazyWithRetry(() => import('@/pages/seo/CookerConnectionCostPage'));
+const CopperVsAluminiumCablePage = lazyWithRetry(() => import('@/pages/seo/CopperVsAluminiumCablePage'));
+const CSCSvsECSCardPage = lazyWithRetry(() => import('@/pages/seo/CSCSvsECSCardPage'));
+const DataCablingInstallationCostPage = lazyWithRetry(
   () => import('@/pages/seo/DataCablingInstallationCostPage')
 );
-const DataCentreElectricalInstallationPage = lazy(
+const DataCentreElectricalInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/DataCentreElectricalInstallationPage')
 );
-const DataCentreElectricalPage = lazy(() => import('@/pages/seo/DataCentreElectricalPage'));
-const DentalSurgeryElectricalCostPage = lazy(
+const DataCentreElectricalPage = lazyWithRetry(() => import('@/pages/seo/DataCentreElectricalPage'));
+const DentalSurgeryElectricalCostPage = lazyWithRetry(
   () => import('@/pages/seo/DentalSurgeryElectricalCostPage')
 );
-const DividendVsSalaryElectricianPage = lazy(
+const DividendVsSalaryElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/DividendVsSalaryElectricianPage')
 );
-const DoorbellNotWorkingPage = lazy(() => import('@/pages/seo/DoorbellNotWorkingPage'));
-const DrillGuideElectriciansPage = lazy(() => import('@/pages/seo/DrillGuideElectriciansPage'));
-const EarthFaultLoopImpedanceTestingPage = lazy(
+const DoorbellNotWorkingPage = lazyWithRetry(() => import('@/pages/seo/DoorbellNotWorkingPage'));
+const DrillGuideElectriciansPage = lazyWithRetry(() => import('@/pages/seo/DrillGuideElectriciansPage'));
+const EarthFaultLoopImpedanceTestingPage = lazyWithRetry(
   () => import('@/pages/seo/EarthFaultLoopImpedanceTestingPage')
 );
-const EarthingSystemFaultFindingPage = lazy(
+const EarthingSystemFaultFindingPage = lazyWithRetry(
   () => import('@/pages/seo/EarthingSystemFaultFindingPage')
 );
-const EarthingSystemsGuidePage = lazy(() => import('@/pages/seo/EarthingSystemsGuidePage'));
-const ECAMembershipGuidePage = lazy(() => import('@/pages/seo/ECAMembershipGuidePage'));
-const ECSCardTypesExplainedPage = lazy(() => import('@/pages/seo/ECSCardTypesExplainedPage'));
-const EdwardianHouseElectricalPage = lazy(() => import('@/pages/seo/EdwardianHouseElectricalPage'));
-const EICRAberdeenPage = lazy(() => import('@/pages/seo/EICRAberdeenPage'));
-const EICRBathPage = lazy(() => import('@/pages/seo/EICRBathPage'));
-const EICRBelfastPage = lazy(() => import('@/pages/seo/EICRBelfastPage'));
-const EICRBirminghamPage = lazy(() => import('@/pages/seo/EICRBirminghamPage'));
-const EICRBradfordPage = lazy(() => import('@/pages/seo/EICRBradfordPage'));
-const EICRBrightonPage = lazy(() => import('@/pages/seo/EICRBrightonPage'));
-const EICRBristolPage = lazy(() => import('@/pages/seo/EICRBristolPage'));
-const EICRCambridgePage = lazy(() => import('@/pages/seo/EICRCambridgePage'));
-const EICRCardiffPage = lazy(() => import('@/pages/seo/EICRCardiffPage'));
-const EICRCertificatePage = lazy(() => import('@/pages/seo/EICRCertificatePage'));
-const EICRCommercialPage = lazy(() => import('@/pages/seo/EICRCommercialPage'));
-const EICRCoventryPage = lazy(() => import('@/pages/seo/EICRCoventryPage'));
-const EICRDerbyPage = lazy(() => import('@/pages/seo/EICRDerbyPage'));
-const EICRDundeePage = lazy(() => import('@/pages/seo/EICRDundeePage'));
-const EICREdinburghPage = lazy(() => import('@/pages/seo/EICREdinburghPage'));
-const EICRExeterPage = lazy(() => import('@/pages/seo/EICRExeterPage'));
-const EICRForCommercialPremisesPage = lazy(
+const EarthingSystemsGuidePage = lazyWithRetry(() => import('@/pages/seo/EarthingSystemsGuidePage'));
+const ECAMembershipGuidePage = lazyWithRetry(() => import('@/pages/seo/ECAMembershipGuidePage'));
+const ECSCardTypesExplainedPage = lazyWithRetry(() => import('@/pages/seo/ECSCardTypesExplainedPage'));
+const EdwardianHouseElectricalPage = lazyWithRetry(() => import('@/pages/seo/EdwardianHouseElectricalPage'));
+const EICRAberdeenPage = lazyWithRetry(() => import('@/pages/seo/EICRAberdeenPage'));
+const EICRBathPage = lazyWithRetry(() => import('@/pages/seo/EICRBathPage'));
+const EICRBelfastPage = lazyWithRetry(() => import('@/pages/seo/EICRBelfastPage'));
+const EICRBirminghamPage = lazyWithRetry(() => import('@/pages/seo/EICRBirminghamPage'));
+const EICRBradfordPage = lazyWithRetry(() => import('@/pages/seo/EICRBradfordPage'));
+const EICRBrightonPage = lazyWithRetry(() => import('@/pages/seo/EICRBrightonPage'));
+const EICRBristolPage = lazyWithRetry(() => import('@/pages/seo/EICRBristolPage'));
+const EICRCambridgePage = lazyWithRetry(() => import('@/pages/seo/EICRCambridgePage'));
+const EICRCardiffPage = lazyWithRetry(() => import('@/pages/seo/EICRCardiffPage'));
+const EICRCertificatePage = lazyWithRetry(() => import('@/pages/seo/EICRCertificatePage'));
+const EICRCommercialPage = lazyWithRetry(() => import('@/pages/seo/EICRCommercialPage'));
+const EICRCoventryPage = lazyWithRetry(() => import('@/pages/seo/EICRCoventryPage'));
+const EICRDerbyPage = lazyWithRetry(() => import('@/pages/seo/EICRDerbyPage'));
+const EICRDundeePage = lazyWithRetry(() => import('@/pages/seo/EICRDundeePage'));
+const EICREdinburghPage = lazyWithRetry(() => import('@/pages/seo/EICREdinburghPage'));
+const EICRExeterPage = lazyWithRetry(() => import('@/pages/seo/EICRExeterPage'));
+const EICRForCommercialPremisesPage = lazyWithRetry(
   () => import('@/pages/seo/EICRForCommercialPremisesPage')
 );
-const EICRForHMOPage = lazy(() => import('@/pages/seo/EICRForHMOPage'));
-const EICRGlasgowPage = lazy(() => import('@/pages/seo/EICRGlasgowPage'));
-const EICRHullPage = lazy(() => import('@/pages/seo/EICRHullPage'));
-const EICRLeedsPage = lazy(() => import('@/pages/seo/EICRLeedsPage'));
-const EICRLeicesterPage = lazy(() => import('@/pages/seo/EICRLeicesterPage'));
-const EICRLiverpoolPage = lazy(() => import('@/pages/seo/EICRLiverpoolPage'));
-const EICRLondonPage = lazy(() => import('@/pages/seo/EICRLondonPage'));
-const EICRManchesterPage = lazy(() => import('@/pages/seo/EICRManchesterPage'));
-const EICRNewcastlePage = lazy(() => import('@/pages/seo/EICRNewcastlePage'));
-const EICRNottinghamPage = lazy(() => import('@/pages/seo/EICRNottinghamPage'));
-const EICROxfordPage = lazy(() => import('@/pages/seo/EICROxfordPage'));
-const EICRPlymouthPage = lazy(() => import('@/pages/seo/EICRPlymouthPage'));
-const EICRSheffieldPage = lazy(() => import('@/pages/seo/EICRSheffieldPage'));
-const EICRSouthamptonPage = lazy(() => import('@/pages/seo/EICRSouthamptonPage'));
-const EICRStokeOnTrentPage = lazy(() => import('@/pages/seo/EICRStokeOnTrentPage'));
-const EICRSunderlandPage = lazy(() => import('@/pages/seo/EICRSunderlandPage'));
-const EICRWolverhamptonPage = lazy(() => import('@/pages/seo/EICRWolverhamptonPage'));
-const EICRYorkPage = lazy(() => import('@/pages/seo/EICRYorkPage'));
-const ElectricalBusinessPlanPage = lazy(() => import('@/pages/seo/ElectricalBusinessPlanPage'));
-const ElectricalBusinessWebsitePage = lazy(
+const EICRForHMOPage = lazyWithRetry(() => import('@/pages/seo/EICRForHMOPage'));
+const EICRGlasgowPage = lazyWithRetry(() => import('@/pages/seo/EICRGlasgowPage'));
+const EICRHullPage = lazyWithRetry(() => import('@/pages/seo/EICRHullPage'));
+const EICRLeedsPage = lazyWithRetry(() => import('@/pages/seo/EICRLeedsPage'));
+const EICRLeicesterPage = lazyWithRetry(() => import('@/pages/seo/EICRLeicesterPage'));
+const EICRLiverpoolPage = lazyWithRetry(() => import('@/pages/seo/EICRLiverpoolPage'));
+const EICRLondonPage = lazyWithRetry(() => import('@/pages/seo/EICRLondonPage'));
+const EICRManchesterPage = lazyWithRetry(() => import('@/pages/seo/EICRManchesterPage'));
+const EICRNewcastlePage = lazyWithRetry(() => import('@/pages/seo/EICRNewcastlePage'));
+const EICRNottinghamPage = lazyWithRetry(() => import('@/pages/seo/EICRNottinghamPage'));
+const EICROxfordPage = lazyWithRetry(() => import('@/pages/seo/EICROxfordPage'));
+const EICRPlymouthPage = lazyWithRetry(() => import('@/pages/seo/EICRPlymouthPage'));
+const EICRSheffieldPage = lazyWithRetry(() => import('@/pages/seo/EICRSheffieldPage'));
+const EICRSouthamptonPage = lazyWithRetry(() => import('@/pages/seo/EICRSouthamptonPage'));
+const EICRStokeOnTrentPage = lazyWithRetry(() => import('@/pages/seo/EICRStokeOnTrentPage'));
+const EICRSunderlandPage = lazyWithRetry(() => import('@/pages/seo/EICRSunderlandPage'));
+const EICRWolverhamptonPage = lazyWithRetry(() => import('@/pages/seo/EICRWolverhamptonPage'));
+const EICRYorkPage = lazyWithRetry(() => import('@/pages/seo/EICRYorkPage'));
+const ElectricalBusinessPlanPage = lazyWithRetry(() => import('@/pages/seo/ElectricalBusinessPlanPage'));
+const ElectricalBusinessWebsitePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalBusinessWebsitePage')
 );
-const ElectricalEstimatingGuidePage = lazy(
+const ElectricalEstimatingGuidePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalEstimatingGuidePage')
 );
-const ElectricalFaultFindingMethodologyPage = lazy(
+const ElectricalFaultFindingMethodologyPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalFaultFindingMethodologyPage')
 );
-const ElectricalFirePreventionPage = lazy(() => import('@/pages/seo/ElectricalFirePreventionPage'));
-const ElectricalHandoverDocumentationGuidePage = lazy(
+const ElectricalFirePreventionPage = lazyWithRetry(() => import('@/pages/seo/ElectricalFirePreventionPage'));
+const ElectricalHandoverDocumentationGuidePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalHandoverDocumentationGuidePage')
 );
-const ElectricalProjectHandoverPage = lazy(
+const ElectricalProjectHandoverPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalProjectHandoverPage')
 );
-const ElectricalSafetyChecksNewHomePage = lazy(
+const ElectricalSafetyChecksNewHomePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalSafetyChecksNewHomePage')
 );
-const ElectricalScienceRevisionPage = lazy(
+const ElectricalScienceRevisionPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalScienceRevisionPage')
 );
-const ElectricalWorkNotificationGuidePage = lazy(
+const ElectricalWorkNotificationGuidePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalWorkNotificationGuidePage')
 );
-const ElectricianAberdeenPage = lazy(() => import('@/pages/seo/ElectricianAberdeenPage'));
-const ElectricianBarrowPage = lazy(() => import('@/pages/seo/ElectricianBarrowPage'));
-const ElectricianBasingstokePage = lazy(() => import('@/pages/seo/ElectricianBasingstokePage'));
-const ElectricianBathPage = lazy(() => import('@/pages/seo/ElectricianBathPage'));
-const ElectricianBelfastPage = lazy(() => import('@/pages/seo/ElectricianBelfastPage'));
-const ElectricianBirminghamPage = lazy(() => import('@/pages/seo/ElectricianBirminghamPage'));
-const ElectricianBlackpoolPage = lazy(() => import('@/pages/seo/ElectricianBlackpoolPage'));
-const ElectricianBoltonPage = lazy(() => import('@/pages/seo/ElectricianBoltonPage'));
-const ElectricianBournemouthPage = lazy(() => import('@/pages/seo/ElectricianBournemouthPage'));
-const ElectricianBradfordPage = lazy(() => import('@/pages/seo/ElectricianBradfordPage'));
-const ElectricianBrightonPage = lazy(() => import('@/pages/seo/ElectricianBrightonPage'));
-const ElectricianBristolPage = lazy(() => import('@/pages/seo/ElectricianBristolPage'));
-const ElectricianBusinessInsurancePage = lazy(
+const ElectricianAberdeenPage = lazyWithRetry(() => import('@/pages/seo/ElectricianAberdeenPage'));
+const ElectricianBarrowPage = lazyWithRetry(() => import('@/pages/seo/ElectricianBarrowPage'));
+const ElectricianBasingstokePage = lazyWithRetry(() => import('@/pages/seo/ElectricianBasingstokePage'));
+const ElectricianBathPage = lazyWithRetry(() => import('@/pages/seo/ElectricianBathPage'));
+const ElectricianBelfastPage = lazyWithRetry(() => import('@/pages/seo/ElectricianBelfastPage'));
+const ElectricianBirminghamPage = lazyWithRetry(() => import('@/pages/seo/ElectricianBirminghamPage'));
+const ElectricianBlackpoolPage = lazyWithRetry(() => import('@/pages/seo/ElectricianBlackpoolPage'));
+const ElectricianBoltonPage = lazyWithRetry(() => import('@/pages/seo/ElectricianBoltonPage'));
+const ElectricianBournemouthPage = lazyWithRetry(() => import('@/pages/seo/ElectricianBournemouthPage'));
+const ElectricianBradfordPage = lazyWithRetry(() => import('@/pages/seo/ElectricianBradfordPage'));
+const ElectricianBrightonPage = lazyWithRetry(() => import('@/pages/seo/ElectricianBrightonPage'));
+const ElectricianBristolPage = lazyWithRetry(() => import('@/pages/seo/ElectricianBristolPage'));
+const ElectricianBusinessInsurancePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricianBusinessInsurancePage')
 );
-const ElectricianCambridgePage = lazy(() => import('@/pages/seo/ElectricianCambridgePage'));
-const ElectricianCanterburyPage = lazy(() => import('@/pages/seo/ElectricianCanterburyPage'));
-const ElectricianCardiffPage = lazy(() => import('@/pages/seo/ElectricianCardiffPage'));
-const ElectricianCareerLadderPage = lazy(() => import('@/pages/seo/ElectricianCareerLadderPage'));
-const ElectricianCarlislePage = lazy(() => import('@/pages/seo/ElectricianCarlislePage'));
-const ElectricianChelmsfordPage = lazy(() => import('@/pages/seo/ElectricianChelmsfordPage'));
-const ElectricianCheltenhamPage = lazy(() => import('@/pages/seo/ElectricianCheltenhamPage'));
-const ElectricianChesterPage = lazy(() => import('@/pages/seo/ElectricianChesterPage'));
-const ElectricianColchesterPage = lazy(() => import('@/pages/seo/ElectricianColchesterPage'));
-const ElectricianCoventryPage = lazy(() => import('@/pages/seo/ElectricianCoventryPage'));
-const ElectricianCrawleyPage = lazy(() => import('@/pages/seo/ElectricianCrawleyPage'));
-const ElectricianCumbriaPage = lazy(() => import('@/pages/seo/ElectricianCumbriaPage'));
-const ElectricianDerbyPage = lazy(() => import('@/pages/seo/ElectricianDerbyPage'));
-const ElectricianDoncasterPage = lazy(() => import('@/pages/seo/ElectricianDoncasterPage'));
-const ElectricianDundeePage = lazy(() => import('@/pages/seo/ElectricianDundeePage'));
-const ElectricianEdinburghPage = lazy(() => import('@/pages/seo/ElectricianEdinburghPage'));
-const ElectricianExeterPage = lazy(() => import('@/pages/seo/ElectricianExeterPage'));
-const ElectricianGlasgowPage = lazy(() => import('@/pages/seo/ElectricianGlasgowPage'));
-const ElectricianGloucesterPage = lazy(() => import('@/pages/seo/ElectricianGloucesterPage'));
-const ElectricianGuildfordPage = lazy(() => import('@/pages/seo/ElectricianGuildfordPage'));
-const ElectricianHarrogatePage = lazy(() => import('@/pages/seo/ElectricianHarrogatePage'));
-const ElectricianHullPage = lazy(() => import('@/pages/seo/ElectricianHullPage'));
-const ElectricianInvernessPage = lazy(() => import('@/pages/seo/ElectricianInvernessPage'));
-const ElectricianIpswichPage = lazy(() => import('@/pages/seo/ElectricianIpswichPage'));
-const ElectricianLancasterPage = lazy(() => import('@/pages/seo/ElectricianLancasterPage'));
-const ElectricianLeedsPage = lazy(() => import('@/pages/seo/ElectricianLeedsPage'));
-const ElectricianLeicesterPage = lazy(() => import('@/pages/seo/ElectricianLeicesterPage'));
-const ElectricianLincolnPage = lazy(() => import('@/pages/seo/ElectricianLincolnPage'));
-const ElectricianLiverpoolPage = lazy(() => import('@/pages/seo/ElectricianLiverpoolPage'));
-const ElectricianLondonPage = lazy(() => import('@/pages/seo/ElectricianLondonPage'));
-const ElectricianLutonPage = lazy(() => import('@/pages/seo/ElectricianLutonPage'));
-const ElectricianMaidstonePage = lazy(() => import('@/pages/seo/ElectricianMaidstonePage'));
-const ElectricianManchesterPage = lazy(() => import('@/pages/seo/ElectricianManchesterPage'));
-const ElectricianMentalHealthSupportPage = lazy(
+const ElectricianCambridgePage = lazyWithRetry(() => import('@/pages/seo/ElectricianCambridgePage'));
+const ElectricianCanterburyPage = lazyWithRetry(() => import('@/pages/seo/ElectricianCanterburyPage'));
+const ElectricianCardiffPage = lazyWithRetry(() => import('@/pages/seo/ElectricianCardiffPage'));
+const ElectricianCareerLadderPage = lazyWithRetry(() => import('@/pages/seo/ElectricianCareerLadderPage'));
+const ElectricianCarlislePage = lazyWithRetry(() => import('@/pages/seo/ElectricianCarlislePage'));
+const ElectricianChelmsfordPage = lazyWithRetry(() => import('@/pages/seo/ElectricianChelmsfordPage'));
+const ElectricianCheltenhamPage = lazyWithRetry(() => import('@/pages/seo/ElectricianCheltenhamPage'));
+const ElectricianChesterPage = lazyWithRetry(() => import('@/pages/seo/ElectricianChesterPage'));
+const ElectricianColchesterPage = lazyWithRetry(() => import('@/pages/seo/ElectricianColchesterPage'));
+const ElectricianCoventryPage = lazyWithRetry(() => import('@/pages/seo/ElectricianCoventryPage'));
+const ElectricianCrawleyPage = lazyWithRetry(() => import('@/pages/seo/ElectricianCrawleyPage'));
+const ElectricianCumbriaPage = lazyWithRetry(() => import('@/pages/seo/ElectricianCumbriaPage'));
+const ElectricianDerbyPage = lazyWithRetry(() => import('@/pages/seo/ElectricianDerbyPage'));
+const ElectricianDoncasterPage = lazyWithRetry(() => import('@/pages/seo/ElectricianDoncasterPage'));
+const ElectricianDundeePage = lazyWithRetry(() => import('@/pages/seo/ElectricianDundeePage'));
+const ElectricianEdinburghPage = lazyWithRetry(() => import('@/pages/seo/ElectricianEdinburghPage'));
+const ElectricianExeterPage = lazyWithRetry(() => import('@/pages/seo/ElectricianExeterPage'));
+const ElectricianGlasgowPage = lazyWithRetry(() => import('@/pages/seo/ElectricianGlasgowPage'));
+const ElectricianGloucesterPage = lazyWithRetry(() => import('@/pages/seo/ElectricianGloucesterPage'));
+const ElectricianGuildfordPage = lazyWithRetry(() => import('@/pages/seo/ElectricianGuildfordPage'));
+const ElectricianHarrogatePage = lazyWithRetry(() => import('@/pages/seo/ElectricianHarrogatePage'));
+const ElectricianHullPage = lazyWithRetry(() => import('@/pages/seo/ElectricianHullPage'));
+const ElectricianInvernessPage = lazyWithRetry(() => import('@/pages/seo/ElectricianInvernessPage'));
+const ElectricianIpswichPage = lazyWithRetry(() => import('@/pages/seo/ElectricianIpswichPage'));
+const ElectricianLancasterPage = lazyWithRetry(() => import('@/pages/seo/ElectricianLancasterPage'));
+const ElectricianLeedsPage = lazyWithRetry(() => import('@/pages/seo/ElectricianLeedsPage'));
+const ElectricianLeicesterPage = lazyWithRetry(() => import('@/pages/seo/ElectricianLeicesterPage'));
+const ElectricianLincolnPage = lazyWithRetry(() => import('@/pages/seo/ElectricianLincolnPage'));
+const ElectricianLiverpoolPage = lazyWithRetry(() => import('@/pages/seo/ElectricianLiverpoolPage'));
+const ElectricianLondonPage = lazyWithRetry(() => import('@/pages/seo/ElectricianLondonPage'));
+const ElectricianLutonPage = lazyWithRetry(() => import('@/pages/seo/ElectricianLutonPage'));
+const ElectricianMaidstonePage = lazyWithRetry(() => import('@/pages/seo/ElectricianMaidstonePage'));
+const ElectricianManchesterPage = lazyWithRetry(() => import('@/pages/seo/ElectricianManchesterPage'));
+const ElectricianMentalHealthSupportPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricianMentalHealthSupportPage')
 );
-const ElectricianMiddlesbroughPage = lazy(() => import('@/pages/seo/ElectricianMiddlesbroughPage'));
-const ElectricianMiltonKeynesPage = lazy(() => import('@/pages/seo/ElectricianMiltonKeynesPage'));
-const ElectricianNewcastlePage = lazy(() => import('@/pages/seo/ElectricianNewcastlePage'));
-const ElectricianNorthamptonPage = lazy(() => import('@/pages/seo/ElectricianNorthamptonPage'));
-const ElectricianNorwichPage = lazy(() => import('@/pages/seo/ElectricianNorwichPage'));
-const ElectricianNottinghamPage = lazy(() => import('@/pages/seo/ElectricianNottinghamPage'));
-const ElectricianOxfordPage = lazy(() => import('@/pages/seo/ElectricianOxfordPage'));
-const ElectricianPensionGuidePage = lazy(() => import('@/pages/seo/ElectricianPensionGuidePage'));
-const ElectricianPeterboroughPage = lazy(() => import('@/pages/seo/ElectricianPeterboroughPage'));
-const ElectricianPlymouthPage = lazy(() => import('@/pages/seo/ElectricianPlymouthPage'));
-const ElectricianPrestonPage = lazy(() => import('@/pages/seo/ElectricianPrestonPage'));
-const ElectricianReadingPage = lazy(() => import('@/pages/seo/ElectricianReadingPage'));
-const ElectricianRetirementPlanningPage = lazy(
+const ElectricianMiddlesbroughPage = lazyWithRetry(() => import('@/pages/seo/ElectricianMiddlesbroughPage'));
+const ElectricianMiltonKeynesPage = lazyWithRetry(() => import('@/pages/seo/ElectricianMiltonKeynesPage'));
+const ElectricianNewcastlePage = lazyWithRetry(() => import('@/pages/seo/ElectricianNewcastlePage'));
+const ElectricianNorthamptonPage = lazyWithRetry(() => import('@/pages/seo/ElectricianNorthamptonPage'));
+const ElectricianNorwichPage = lazyWithRetry(() => import('@/pages/seo/ElectricianNorwichPage'));
+const ElectricianNottinghamPage = lazyWithRetry(() => import('@/pages/seo/ElectricianNottinghamPage'));
+const ElectricianOxfordPage = lazyWithRetry(() => import('@/pages/seo/ElectricianOxfordPage'));
+const ElectricianPensionGuidePage = lazyWithRetry(() => import('@/pages/seo/ElectricianPensionGuidePage'));
+const ElectricianPeterboroughPage = lazyWithRetry(() => import('@/pages/seo/ElectricianPeterboroughPage'));
+const ElectricianPlymouthPage = lazyWithRetry(() => import('@/pages/seo/ElectricianPlymouthPage'));
+const ElectricianPrestonPage = lazyWithRetry(() => import('@/pages/seo/ElectricianPrestonPage'));
+const ElectricianReadingPage = lazyWithRetry(() => import('@/pages/seo/ElectricianReadingPage'));
+const ElectricianRetirementPlanningPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricianRetirementPlanningPage')
 );
-const ElectricianRotherhamPage = lazy(() => import('@/pages/seo/ElectricianRotherhamPage'));
-const ElectricianSalaryBirminghamPage = lazy(
+const ElectricianRotherhamPage = lazyWithRetry(() => import('@/pages/seo/ElectricianRotherhamPage'));
+const ElectricianSalaryBirminghamPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricianSalaryBirminghamPage')
 );
-const ElectricianSalaryBristolPage = lazy(() => import('@/pages/seo/ElectricianSalaryBristolPage'));
-const ElectricianSalaryLondonPage = lazy(() => import('@/pages/seo/ElectricianSalaryLondonPage'));
-const ElectricianSalaryManchesterPage = lazy(
+const ElectricianSalaryBristolPage = lazyWithRetry(() => import('@/pages/seo/ElectricianSalaryBristolPage'));
+const ElectricianSalaryLondonPage = lazyWithRetry(() => import('@/pages/seo/ElectricianSalaryLondonPage'));
+const ElectricianSalaryManchesterPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricianSalaryManchesterPage')
 );
-const ElectricianSheffieldPage = lazy(() => import('@/pages/seo/ElectricianSheffieldPage'));
-const ElectricianSloughPage = lazy(() => import('@/pages/seo/ElectricianSloughPage'));
-const ElectricianSouthamptonPage = lazy(() => import('@/pages/seo/ElectricianSouthamptonPage'));
-const ElectricianStokeOnTrentPage = lazy(() => import('@/pages/seo/ElectricianStokeOnTrentPage'));
-const ElectricianSunderlandPage = lazy(() => import('@/pages/seo/ElectricianSunderlandPage'));
-const ElectricianSwanseaPage = lazy(() => import('@/pages/seo/ElectricianSwanseaPage'));
-const ElectricianSwindonPage = lazy(() => import('@/pages/seo/ElectricianSwindonPage'));
-const ElectricianToContractorPage = lazy(() => import('@/pages/seo/ElectricianToContractorPage'));
-const ElectricianToolInsurancePage = lazy(() => import('@/pages/seo/ElectricianToolInsurancePage'));
-const ElectricianVanSetupGuidePage = lazy(() => import('@/pages/seo/ElectricianVanSetupGuidePage'));
-const ElectricianWarringtonPage = lazy(() => import('@/pages/seo/ElectricianWarringtonPage'));
-const ElectricianWhitehavenPage = lazy(() => import('@/pages/seo/ElectricianWhitehavenPage'));
-const ElectricianWiganPage = lazy(() => import('@/pages/seo/ElectricianWiganPage'));
-const ElectricianWolverhamptonPage = lazy(() => import('@/pages/seo/ElectricianWolverhamptonPage'));
-const ElectricianWorcesterPage = lazy(() => import('@/pages/seo/ElectricianWorcesterPage'));
-const ElectricianWorkingAbroadPage = lazy(() => import('@/pages/seo/ElectricianWorkingAbroadPage'));
-const ElectricianWorkingtonPage = lazy(() => import('@/pages/seo/ElectricianWorkingtonPage'));
-const ElectricianYorkPage = lazy(() => import('@/pages/seo/ElectricianYorkPage'));
-const ElectricShowerFaultFindingPage = lazy(
+const ElectricianSheffieldPage = lazyWithRetry(() => import('@/pages/seo/ElectricianSheffieldPage'));
+const ElectricianSloughPage = lazyWithRetry(() => import('@/pages/seo/ElectricianSloughPage'));
+const ElectricianSouthamptonPage = lazyWithRetry(() => import('@/pages/seo/ElectricianSouthamptonPage'));
+const ElectricianStokeOnTrentPage = lazyWithRetry(() => import('@/pages/seo/ElectricianStokeOnTrentPage'));
+const ElectricianSunderlandPage = lazyWithRetry(() => import('@/pages/seo/ElectricianSunderlandPage'));
+const ElectricianSwanseaPage = lazyWithRetry(() => import('@/pages/seo/ElectricianSwanseaPage'));
+const ElectricianSwindonPage = lazyWithRetry(() => import('@/pages/seo/ElectricianSwindonPage'));
+const ElectricianToContractorPage = lazyWithRetry(() => import('@/pages/seo/ElectricianToContractorPage'));
+const ElectricianToolInsurancePage = lazyWithRetry(() => import('@/pages/seo/ElectricianToolInsurancePage'));
+const ElectricianVanSetupGuidePage = lazyWithRetry(() => import('@/pages/seo/ElectricianVanSetupGuidePage'));
+const ElectricianWarringtonPage = lazyWithRetry(() => import('@/pages/seo/ElectricianWarringtonPage'));
+const ElectricianWhitehavenPage = lazyWithRetry(() => import('@/pages/seo/ElectricianWhitehavenPage'));
+const ElectricianWiganPage = lazyWithRetry(() => import('@/pages/seo/ElectricianWiganPage'));
+const ElectricianWolverhamptonPage = lazyWithRetry(() => import('@/pages/seo/ElectricianWolverhamptonPage'));
+const ElectricianWorcesterPage = lazyWithRetry(() => import('@/pages/seo/ElectricianWorcesterPage'));
+const ElectricianWorkingAbroadPage = lazyWithRetry(() => import('@/pages/seo/ElectricianWorkingAbroadPage'));
+const ElectricianWorkingtonPage = lazyWithRetry(() => import('@/pages/seo/ElectricianWorkingtonPage'));
+const ElectricianYorkPage = lazyWithRetry(() => import('@/pages/seo/ElectricianYorkPage'));
+const ElectricShowerFaultFindingPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricShowerFaultFindingPage')
 );
-const ElectricShowerTrippingRCDPage = lazy(
+const ElectricShowerTrippingRCDPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricShowerTrippingRCDPage')
 );
-const ElectricUnderfloorHeatingCostPage = lazy(
+const ElectricUnderfloorHeatingCostPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricUnderfloorHeatingCostPage')
 );
-const EmergencyLightingCostPage = lazy(() => import('@/pages/seo/EmergencyLightingCostPage'));
-const EmergencyLightingInstallationPage = lazy(
+const EmergencyLightingCostPage = lazyWithRetry(() => import('@/pages/seo/EmergencyLightingCostPage'));
+const EmergencyLightingInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/EmergencyLightingInstallationPage')
 );
-const EVChargerErrorCodesPage = lazy(() => import('@/pages/seo/EVChargerErrorCodesPage'));
-const EVChargerInstallationBirminghamPage = lazy(
+const EVChargerErrorCodesPage = lazyWithRetry(() => import('@/pages/seo/EVChargerErrorCodesPage'));
+const EVChargerInstallationBirminghamPage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerInstallationBirminghamPage')
 );
-const EVChargerInstallationBrightonPage = lazy(
+const EVChargerInstallationBrightonPage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerInstallationBrightonPage')
 );
-const EVChargerInstallationBristolPage = lazy(
+const EVChargerInstallationBristolPage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerInstallationBristolPage')
 );
-const EVChargerInstallationCardiffPage = lazy(
+const EVChargerInstallationCardiffPage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerInstallationCardiffPage')
 );
-const EVChargerInstallationCostPage = lazy(
+const EVChargerInstallationCostPage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerInstallationCostPage')
 );
-const EVChargerInstallationEdinburghPage = lazy(
+const EVChargerInstallationEdinburghPage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerInstallationEdinburghPage')
 );
-const EVChargerInstallationGlasgowPage = lazy(
+const EVChargerInstallationGlasgowPage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerInstallationGlasgowPage')
 );
-const EVChargerInstallationLeedsPage = lazy(
+const EVChargerInstallationLeedsPage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerInstallationLeedsPage')
 );
-const EVChargerInstallationLiverpoolPage = lazy(
+const EVChargerInstallationLiverpoolPage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerInstallationLiverpoolPage')
 );
-const EVChargerInstallationLondonPage = lazy(
+const EVChargerInstallationLondonPage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerInstallationLondonPage')
 );
-const EVChargerInstallationManchesterPage = lazy(
+const EVChargerInstallationManchesterPage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerInstallationManchesterPage')
 );
-const EVChargerInstallationNewcastlePage = lazy(
+const EVChargerInstallationNewcastlePage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerInstallationNewcastlePage')
 );
-const EVChargerInstallationNorwichPage = lazy(
+const EVChargerInstallationNorwichPage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerInstallationNorwichPage')
 );
-const EVChargerInstallationNottinghamPage = lazy(
+const EVChargerInstallationNottinghamPage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerInstallationNottinghamPage')
 );
-const EVChargerInstallationOxfordPage = lazy(
+const EVChargerInstallationOxfordPage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerInstallationOxfordPage')
 );
-const EVChargerInstallationReadingPage = lazy(
+const EVChargerInstallationReadingPage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerInstallationReadingPage')
 );
-const EVChargerInstallationSheffieldPage = lazy(
+const EVChargerInstallationSheffieldPage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerInstallationSheffieldPage')
 );
-const EVChargerInstallationSouthamptonPage = lazy(
+const EVChargerInstallationSouthamptonPage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerInstallationSouthamptonPage')
 );
-const EVChargerNotWorkingPage = lazy(() => import('@/pages/seo/EVChargerNotWorkingPage'));
-const EVChargingLegislationUKPage = lazy(() => import('@/pages/seo/EVChargingLegislationUKPage'));
-const ExtensionElectricalCostPage = lazy(() => import('@/pages/seo/ExtensionElectricalCostPage'));
-const ExtractorFanNotWorkingPage = lazy(() => import('@/pages/seo/ExtractorFanNotWorkingPage'));
-const FactoryElectricalInstallationPage = lazy(
+const EVChargerNotWorkingPage = lazyWithRetry(() => import('@/pages/seo/EVChargerNotWorkingPage'));
+const EVChargingLegislationUKPage = lazyWithRetry(() => import('@/pages/seo/EVChargingLegislationUKPage'));
+const ExtensionElectricalCostPage = lazyWithRetry(() => import('@/pages/seo/ExtensionElectricalCostPage'));
+const ExtractorFanNotWorkingPage = lazyWithRetry(() => import('@/pages/seo/ExtractorFanNotWorkingPage'));
+const FactoryElectricalInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/FactoryElectricalInstallationPage')
 );
-const FindingCommercialWorkPage = lazy(() => import('@/pages/seo/FindingCommercialWorkPage'));
-const FireAlarmInstallationCostPage = lazy(
+const FindingCommercialWorkPage = lazyWithRetry(() => import('@/pages/seo/FindingCommercialWorkPage'));
+const FireAlarmInstallationCostPage = lazyWithRetry(
   () => import('@/pages/seo/FireAlarmInstallationCostPage')
 );
-const FirstElectricalCustomerPage = lazy(() => import('@/pages/seo/FirstElectricalCustomerPage'));
-const FixedVsFlexibleWiringPage = lazy(() => import('@/pages/seo/FixedVsFlexibleWiringPage'));
-const FlatRewireCostPage = lazy(() => import('@/pages/seo/FlatRewireCostPage'));
-const FloodDamagedElectricsPage = lazy(() => import('@/pages/seo/FloodDamagedElectricsPage'));
-const FuseKeepsBlowingPage = lazy(() => import('@/pages/seo/FuseKeepsBlowingPage'));
-const GarageConversionElectricalCostPage = lazy(
+const FirstElectricalCustomerPage = lazyWithRetry(() => import('@/pages/seo/FirstElectricalCustomerPage'));
+const FixedVsFlexibleWiringPage = lazyWithRetry(() => import('@/pages/seo/FixedVsFlexibleWiringPage'));
+const FlatRewireCostPage = lazyWithRetry(() => import('@/pages/seo/FlatRewireCostPage'));
+const FloodDamagedElectricsPage = lazyWithRetry(() => import('@/pages/seo/FloodDamagedElectricsPage'));
+const FuseKeepsBlowingPage = lazyWithRetry(() => import('@/pages/seo/FuseKeepsBlowingPage'));
+const GarageConversionElectricalCostPage = lazyWithRetry(
   () => import('@/pages/seo/GarageConversionElectricalCostPage')
 );
-const GarageConversionElectricalPage = lazy(
+const GarageConversionElectricalPage = lazyWithRetry(
   () => import('@/pages/seo/GarageConversionElectricalPage')
 );
-const GarageConversionElectricsPage = lazy(
+const GarageConversionElectricsPage = lazyWithRetry(
   () => import('@/pages/seo/GarageConversionElectricsPage')
 );
-const GarageElectricalCostPage = lazy(() => import('@/pages/seo/GarageElectricalCostPage'));
-const GardenElectricalWiringPage = lazy(() => import('@/pages/seo/GardenElectricalWiringPage'));
-const GardenLightingCostPage = lazy(() => import('@/pages/seo/GardenLightingCostPage'));
-const GDPRForElectriciansPage = lazy(() => import('@/pages/seo/GDPRForElectriciansPage'));
-const GoldCardRequirementsPage = lazy(() => import('@/pages/seo/GoldCardRequirementsPage'));
-const GoogleMyBusinessElectricianPage = lazy(
+const GarageElectricalCostPage = lazyWithRetry(() => import('@/pages/seo/GarageElectricalCostPage'));
+const GardenElectricalWiringPage = lazyWithRetry(() => import('@/pages/seo/GardenElectricalWiringPage'));
+const GardenLightingCostPage = lazyWithRetry(() => import('@/pages/seo/GardenLightingCostPage'));
+const GDPRForElectriciansPage = lazyWithRetry(() => import('@/pages/seo/GDPRForElectriciansPage'));
+const GoldCardRequirementsPage = lazyWithRetry(() => import('@/pages/seo/GoldCardRequirementsPage'));
+const GoogleMyBusinessElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/GoogleMyBusinessElectricianPage')
 );
-const GroundSourceHeatPumpElectricalPage = lazy(
+const GroundSourceHeatPumpElectricalPage = lazyWithRetry(
   () => import('@/pages/seo/GroundSourceHeatPumpElectricalPage')
 );
-const GymElectricalCostPage = lazy(() => import('@/pages/seo/GymElectricalCostPage'));
-const HairSalonElectricalCostPage = lazy(() => import('@/pages/seo/HairSalonElectricalCostPage'));
-const HealthSafetyPolicyElectricianPage = lazy(
+const GymElectricalCostPage = lazyWithRetry(() => import('@/pages/seo/GymElectricalCostPage'));
+const HairSalonElectricalCostPage = lazyWithRetry(() => import('@/pages/seo/HairSalonElectricalCostPage'));
+const HealthSafetyPolicyElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/HealthSafetyPolicyElectricianPage')
 );
-const HeatPumpElectricalFaultPage = lazy(() => import('@/pages/seo/HeatPumpElectricalFaultPage'));
-const HeatPumpElectricalRequirementsPage = lazy(
+const HeatPumpElectricalFaultPage = lazyWithRetry(() => import('@/pages/seo/HeatPumpElectricalFaultPage'));
+const HeatPumpElectricalRequirementsPage = lazyWithRetry(
   () => import('@/pages/seo/HeatPumpElectricalRequirementsPage')
 );
-const HighVoltageElectricalWorkPage = lazy(
+const HighVoltageElectricalWorkPage = lazyWithRetry(
   () => import('@/pages/seo/HighVoltageElectricalWorkPage')
 );
-const HiringFirstEmployeePage = lazy(() => import('@/pages/seo/HiringFirstEmployeePage'));
-const HolidayLetElectricalPage = lazy(() => import('@/pages/seo/HolidayLetElectricalPage'));
-const HomeOfficeElectricalPage = lazy(() => import('@/pages/seo/HomeOfficeElectricalPage'));
-const HospitalElectricalInstallationPage = lazy(
+const HiringFirstEmployeePage = lazyWithRetry(() => import('@/pages/seo/HiringFirstEmployeePage'));
+const HolidayLetElectricalPage = lazyWithRetry(() => import('@/pages/seo/HolidayLetElectricalPage'));
+const HomeOfficeElectricalPage = lazyWithRetry(() => import('@/pages/seo/HomeOfficeElectricalPage'));
+const HospitalElectricalInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/HospitalElectricalInstallationPage')
 );
-const HotTubElectricalConnectionPage = lazy(
+const HotTubElectricalConnectionPage = lazyWithRetry(
   () => import('@/pages/seo/HotTubElectricalConnectionPage')
 );
-const HouseExtensionElectricalCostPage = lazy(
+const HouseExtensionElectricalCostPage = lazyWithRetry(
   () => import('@/pages/seo/HouseExtensionElectricalCostPage')
 );
-const HouseExtensionElectricalGuidePage = lazy(
+const HouseExtensionElectricalGuidePage = lazyWithRetry(
   () => import('@/pages/seo/HouseExtensionElectricalGuidePage')
 );
-const HummingNoiseFromConsumerUnitPage = lazy(
+const HummingNoiseFromConsumerUnitPage = lazyWithRetry(
   () => import('@/pages/seo/HummingNoiseFromConsumerUnitPage')
 );
-const ImmersionHeaterFaultFindingPage = lazy(
+const ImmersionHeaterFaultFindingPage = lazyWithRetry(
   () => import('@/pages/seo/ImmersionHeaterFaultFindingPage')
 );
-const ImmersionHeaterNotWorkingPage = lazy(
+const ImmersionHeaterNotWorkingPage = lazyWithRetry(
   () => import('@/pages/seo/ImmersionHeaterNotWorkingPage')
 );
-const InsulationResistanceTestingGuidePage = lazy(
+const InsulationResistanceTestingGuidePage = lazyWithRetry(
   () => import('@/pages/seo/InsulationResistanceTestingGuidePage')
 );
-const InsulationResistanceTestingPage = lazy(
+const InsulationResistanceTestingPage = lazyWithRetry(
   () => import('@/pages/seo/InsulationResistanceTestingPage')
 );
-const InterwarPropertyElectricalPage = lazy(
+const InterwarPropertyElectricalPage = lazyWithRetry(
   () => import('@/pages/seo/InterwarPropertyElectricalPage')
 );
-const IntruderAlarmInstallationPage = lazy(
+const IntruderAlarmInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/IntruderAlarmInstallationPage')
 );
-const JIBGradingExplainedPage = lazy(() => import('@/pages/seo/JIBGradingExplainedPage'));
-const KitchenElectricalRegulationsPage = lazy(
+const JIBGradingExplainedPage = lazyWithRetry(() => import('@/pages/seo/JIBGradingExplainedPage'));
+const KitchenElectricalRegulationsPage = lazyWithRetry(
   () => import('@/pages/seo/KitchenElectricalRegulationsPage')
 );
-const KitchenIslandPowerPage = lazy(() => import('@/pages/seo/KitchenIslandPowerPage'));
-const KitchenRewireCostPage = lazy(() => import('@/pages/seo/KitchenRewireCostPage'));
-const LandlordElectricalChecklistPage = lazy(
+const KitchenIslandPowerPage = lazyWithRetry(() => import('@/pages/seo/KitchenIslandPowerPage'));
+const KitchenRewireCostPage = lazyWithRetry(() => import('@/pages/seo/KitchenRewireCostPage'));
+const LandlordElectricalChecklistPage = lazyWithRetry(
   () => import('@/pages/seo/LandlordElectricalChecklistPage')
 );
-const LandlordElectricalSafetyBirminghamPage = lazy(
+const LandlordElectricalSafetyBirminghamPage = lazyWithRetry(
   () => import('@/pages/seo/LandlordElectricalSafetyBirminghamPage')
 );
-const LandlordElectricalSafetyBrightonPage = lazy(
+const LandlordElectricalSafetyBrightonPage = lazyWithRetry(
   () => import('@/pages/seo/LandlordElectricalSafetyBrightonPage')
 );
-const LandlordElectricalSafetyBristolPage = lazy(
+const LandlordElectricalSafetyBristolPage = lazyWithRetry(
   () => import('@/pages/seo/LandlordElectricalSafetyBristolPage')
 );
-const LandlordElectricalSafetyCambridgePage = lazy(
+const LandlordElectricalSafetyCambridgePage = lazyWithRetry(
   () => import('@/pages/seo/LandlordElectricalSafetyCambridgePage')
 );
-const LandlordElectricalSafetyCardiffPage = lazy(
+const LandlordElectricalSafetyCardiffPage = lazyWithRetry(
   () => import('@/pages/seo/LandlordElectricalSafetyCardiffPage')
 );
-const LandlordElectricalSafetyEdinburghPage = lazy(
+const LandlordElectricalSafetyEdinburghPage = lazyWithRetry(
   () => import('@/pages/seo/LandlordElectricalSafetyEdinburghPage')
 );
-const LandlordElectricalSafetyGlasgowPage = lazy(
+const LandlordElectricalSafetyGlasgowPage = lazyWithRetry(
   () => import('@/pages/seo/LandlordElectricalSafetyGlasgowPage')
 );
-const LandlordElectricalSafetyLeedsPage = lazy(
+const LandlordElectricalSafetyLeedsPage = lazyWithRetry(
   () => import('@/pages/seo/LandlordElectricalSafetyLeedsPage')
 );
-const LandlordElectricalSafetyLiverpoolPage = lazy(
+const LandlordElectricalSafetyLiverpoolPage = lazyWithRetry(
   () => import('@/pages/seo/LandlordElectricalSafetyLiverpoolPage')
 );
-const LandlordElectricalSafetyLondonPage = lazy(
+const LandlordElectricalSafetyLondonPage = lazyWithRetry(
   () => import('@/pages/seo/LandlordElectricalSafetyLondonPage')
 );
-const LandlordElectricalSafetyManchesterPage = lazy(
+const LandlordElectricalSafetyManchesterPage = lazyWithRetry(
   () => import('@/pages/seo/LandlordElectricalSafetyManchesterPage')
 );
-const LandlordElectricalSafetyNewcastlePage = lazy(
+const LandlordElectricalSafetyNewcastlePage = lazyWithRetry(
   () => import('@/pages/seo/LandlordElectricalSafetyNewcastlePage')
 );
-const LandlordElectricalSafetyNottinghamPage = lazy(
+const LandlordElectricalSafetyNottinghamPage = lazyWithRetry(
   () => import('@/pages/seo/LandlordElectricalSafetyNottinghamPage')
 );
-const LandlordElectricalSafetyOxfordPage = lazy(
+const LandlordElectricalSafetyOxfordPage = lazyWithRetry(
   () => import('@/pages/seo/LandlordElectricalSafetyOxfordPage')
 );
-const LandlordElectricalSafetyReadingPage = lazy(
+const LandlordElectricalSafetyReadingPage = lazyWithRetry(
   () => import('@/pages/seo/LandlordElectricalSafetyReadingPage')
 );
-const LandlordElectricalSafetySheffieldPage = lazy(
+const LandlordElectricalSafetySheffieldPage = lazyWithRetry(
   () => import('@/pages/seo/LandlordElectricalSafetySheffieldPage')
 );
-const LandlordElectricalSafetySouthamptonPage = lazy(
+const LandlordElectricalSafetySouthamptonPage = lazyWithRetry(
   () => import('@/pages/seo/LandlordElectricalSafetySouthamptonPage')
 );
-const LandlordElectricalSafetyWolverhamptonPage = lazy(
+const LandlordElectricalSafetyWolverhamptonPage = lazyWithRetry(
   () => import('@/pages/seo/LandlordElectricalSafetyWolverhamptonPage')
 );
-const LEDVsFluorescentCommercialPage = lazy(
+const LEDVsFluorescentCommercialPage = lazyWithRetry(
   () => import('@/pages/seo/LEDVsFluorescentCommercialPage')
 );
-const Level4ElectricalQualificationPage = lazy(
+const Level4ElectricalQualificationPage = lazyWithRetry(
   () => import('@/pages/seo/Level4ElectricalQualificationPage')
 );
-const LightningProtectionGuidePage = lazy(() => import('@/pages/seo/LightningProtectionGuidePage'));
-const LightsDimmingWhenApplianceTurnsOnPage = lazy(
+const LightningProtectionGuidePage = lazyWithRetry(() => import('@/pages/seo/LightningProtectionGuidePage'));
+const LightsDimmingWhenApplianceTurnsOnPage = lazyWithRetry(
   () => import('@/pages/seo/LightsDimmingWhenApplianceTurnsOnPage')
 );
-const ListedBuildingRewireCostPage = lazy(() => import('@/pages/seo/ListedBuildingRewireCostPage'));
-const LockoutTagoutGuidePage = lazy(() => import('@/pages/seo/LockoutTagoutGuidePage'));
-const LoftConversionElectricalCostPage = lazy(
+const ListedBuildingRewireCostPage = lazyWithRetry(() => import('@/pages/seo/ListedBuildingRewireCostPage'));
+const LockoutTagoutGuidePage = lazyWithRetry(() => import('@/pages/seo/LockoutTagoutGuidePage'));
+const LoftConversionElectricalCostPage = lazyWithRetry(
   () => import('@/pages/seo/LoftConversionElectricalCostPage')
 );
-const LoftConversionElectricalGuidePage = lazy(
+const LoftConversionElectricalGuidePage = lazyWithRetry(
   () => import('@/pages/seo/LoftConversionElectricalGuidePage')
 );
-const MarinaMooringElectricalPage = lazy(() => import('@/pages/seo/MarinaMooringElectricalPage'));
-const MasterElectricianUKPage = lazy(() => import('@/pages/seo/MasterElectricianUKPage'));
-const MCBVsRCBOComparisonPage = lazy(() => import('@/pages/seo/MCBVsRCBOComparisonPage'));
-const MFTBuyingGuidePage = lazy(() => import('@/pages/seo/MFTBuyingGuidePage'));
-const MileageClaimsElectricianPage = lazy(() => import('@/pages/seo/MileageClaimsElectricianPage'));
-const MODDefenceSiteElectricalPage = lazy(() => import('@/pages/seo/MODDefenceSiteElectricalPage'));
-const MotorStartersInstallationPage = lazy(
+const MarinaMooringElectricalPage = lazyWithRetry(() => import('@/pages/seo/MarinaMooringElectricalPage'));
+const MasterElectricianUKPage = lazyWithRetry(() => import('@/pages/seo/MasterElectricianUKPage'));
+const MCBVsRCBOComparisonPage = lazyWithRetry(() => import('@/pages/seo/MCBVsRCBOComparisonPage'));
+const MFTBuyingGuidePage = lazyWithRetry(() => import('@/pages/seo/MFTBuyingGuidePage'));
+const MileageClaimsElectricianPage = lazyWithRetry(() => import('@/pages/seo/MileageClaimsElectricianPage'));
+const MODDefenceSiteElectricalPage = lazyWithRetry(() => import('@/pages/seo/MODDefenceSiteElectricalPage'));
+const MotorStartersInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/MotorStartersInstallationPage')
 );
-const MultimeterGuideElectriciansPage = lazy(
+const MultimeterGuideElectriciansPage = lazyWithRetry(
   () => import('@/pages/seo/MultimeterGuideElectriciansPage')
 );
-const MVHRElectricalInstallationPage = lazy(
+const MVHRElectricalInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/MVHRElectricalInstallationPage')
 );
-const NewBuildElectricalCostPage = lazy(() => import('@/pages/seo/NewBuildElectricalCostPage'));
-const NICEICvsNAPITComparisonPage = lazy(() => import('@/pages/seo/NICEICvsNAPITComparisonPage'));
-const NICEICvsNAPITvsELECSAPage = lazy(() => import('@/pages/seo/NICEICvsNAPITvsELECSAPage'));
-const NoElectricityInPartOfHousePage = lazy(
+const NewBuildElectricalCostPage = lazyWithRetry(() => import('@/pages/seo/NewBuildElectricalCostPage'));
+const NICEICvsNAPITComparisonPage = lazyWithRetry(() => import('@/pages/seo/NICEICvsNAPITComparisonPage'));
+const NICEICvsNAPITvsELECSAPage = lazyWithRetry(() => import('@/pages/seo/NICEICvsNAPITvsELECSAPage'));
+const NoElectricityInPartOfHousePage = lazyWithRetry(
   () => import('@/pages/seo/NoElectricityInPartOfHousePage')
 );
-const NuclearSiteElectricalPage = lazy(() => import('@/pages/seo/NuclearSiteElectricalPage'));
-const NuclearSiteElectricalWorkPage = lazy(
+const NuclearSiteElectricalPage = lazyWithRetry(() => import('@/pages/seo/NuclearSiteElectricalPage'));
+const NuclearSiteElectricalWorkPage = lazyWithRetry(
   () => import('@/pages/seo/NuclearSiteElectricalWorkPage')
 );
-const NurseryElectricalCostPage = lazy(() => import('@/pages/seo/NurseryElectricalCostPage'));
-const NVQLevel2PortfolioGuidePage = lazy(() => import('@/pages/seo/NVQLevel2PortfolioGuidePage'));
-const OffGridElectricalSystemPage = lazy(() => import('@/pages/seo/OffGridElectricalSystemPage'));
-const OffshoreElectricalWorkPage = lazy(() => import('@/pages/seo/OffshoreElectricalWorkPage'));
-const OutbuildingElectricalCostPage = lazy(
+const NurseryElectricalCostPage = lazyWithRetry(() => import('@/pages/seo/NurseryElectricalCostPage'));
+const NVQLevel2PortfolioGuidePage = lazyWithRetry(() => import('@/pages/seo/NVQLevel2PortfolioGuidePage'));
+const OffGridElectricalSystemPage = lazyWithRetry(() => import('@/pages/seo/OffGridElectricalSystemPage'));
+const OffshoreElectricalWorkPage = lazyWithRetry(() => import('@/pages/seo/OffshoreElectricalWorkPage'));
+const OutbuildingElectricalCostPage = lazyWithRetry(
   () => import('@/pages/seo/OutbuildingElectricalCostPage')
 );
-const OutbuildingElectricalSupplyPage = lazy(
+const OutbuildingElectricalSupplyPage = lazyWithRetry(
   () => import('@/pages/seo/OutbuildingElectricalSupplyPage')
 );
-const OutdoorEntertainingAreaElectricalPage = lazy(
+const OutdoorEntertainingAreaElectricalPage = lazyWithRetry(
   () => import('@/pages/seo/OutdoorEntertainingAreaElectricalPage')
 );
-const OutdoorLightNotWorkingPage = lazy(() => import('@/pages/seo/OutdoorLightNotWorkingPage'));
-const OutdoorSocketInstallationCostPage = lazy(
+const OutdoorLightNotWorkingPage = lazyWithRetry(() => import('@/pages/seo/OutdoorLightNotWorkingPage'));
+const OutdoorSocketInstallationCostPage = lazyWithRetry(
   () => import('@/pages/seo/OutdoorSocketInstallationCostPage')
 );
-const PartialPowerLossPage = lazy(() => import('@/pages/seo/PartialPowerLossPage'));
-const PartnershipVsSoleTraderPage = lazy(() => import('@/pages/seo/PartnershipVsSoleTraderPage'));
-const PartPBuildingRegulationsGuidePage = lazy(
+const PartialPowerLossPage = lazyWithRetry(() => import('@/pages/seo/PartialPowerLossPage'));
+const PartnershipVsSoleTraderPage = lazyWithRetry(() => import('@/pages/seo/PartnershipVsSoleTraderPage'));
+const PartPBuildingRegulationsGuidePage = lazyWithRetry(
   () => import('@/pages/seo/PartPBuildingRegulationsGuidePage')
 );
-const PATTestingCostPage = lazy(() => import('@/pages/seo/PATTestingCostPage'));
-const PoELightingGuidePage = lazy(() => import('@/pages/seo/PoELightingGuidePage'));
-const PolarityTestingPage = lazy(() => import('@/pages/seo/PolarityTestingPage'));
-const PricingPerPointGuidePage = lazy(() => import('@/pages/seo/PricingPerPointGuidePage'));
-const PubElectricalCostPage = lazy(() => import('@/pages/seo/PubElectricalCostPage'));
-const PVCvsXLPECablePage = lazy(() => import('@/pages/seo/PVCvsXLPECablePage'));
-const QuoteWritingGuidePage = lazy(() => import('@/pages/seo/QuoteWritingGuidePage'));
-const RailElectricalWorkPage = lazy(() => import('@/pages/seo/RailElectricalWorkPage'));
-const RCDTestingGuidePage = lazy(() => import('@/pages/seo/RCDTestingGuidePage'));
-const RCDTypesComparisonPage = lazy(() => import('@/pages/seo/RCDTypesComparisonPage'));
-const RCDTypesGuidePage = lazy(() => import('@/pages/seo/RCDTypesGuidePage'));
-const Regulation314CircuitDivisionPage = lazy(
+const PATTestingCostPage = lazyWithRetry(() => import('@/pages/seo/PATTestingCostPage'));
+const PoELightingGuidePage = lazyWithRetry(() => import('@/pages/seo/PoELightingGuidePage'));
+const PolarityTestingPage = lazyWithRetry(() => import('@/pages/seo/PolarityTestingPage'));
+const PricingPerPointGuidePage = lazyWithRetry(() => import('@/pages/seo/PricingPerPointGuidePage'));
+const PubElectricalCostPage = lazyWithRetry(() => import('@/pages/seo/PubElectricalCostPage'));
+const PVCvsXLPECablePage = lazyWithRetry(() => import('@/pages/seo/PVCvsXLPECablePage'));
+const QuoteWritingGuidePage = lazyWithRetry(() => import('@/pages/seo/QuoteWritingGuidePage'));
+const RailElectricalWorkPage = lazyWithRetry(() => import('@/pages/seo/RailElectricalWorkPage'));
+const RCDTestingGuidePage = lazyWithRetry(() => import('@/pages/seo/RCDTestingGuidePage'));
+const RCDTypesComparisonPage = lazyWithRetry(() => import('@/pages/seo/RCDTypesComparisonPage'));
+const RCDTypesGuidePage = lazyWithRetry(() => import('@/pages/seo/RCDTypesGuidePage'));
+const Regulation314CircuitDivisionPage = lazyWithRetry(
   () => import('@/pages/seo/Regulation314CircuitDivisionPage')
 );
-const Regulation411AutoDisconnectionPage = lazy(
+const Regulation411AutoDisconnectionPage = lazyWithRetry(
   () => import('@/pages/seo/Regulation411AutoDisconnectionPage')
 );
-const Regulation418SupplementaryProtectionPage = lazy(
+const Regulation418SupplementaryProtectionPage = lazyWithRetry(
   () => import('@/pages/seo/Regulation418SupplementaryProtectionPage')
 );
-const RestaurantElectricalCostPage = lazy(() => import('@/pages/seo/RestaurantElectricalCostPage'));
-const RestaurantKitchenElectricalCostPage = lazy(
+const RestaurantElectricalCostPage = lazyWithRetry(() => import('@/pages/seo/RestaurantElectricalCostPage'));
+const RestaurantKitchenElectricalCostPage = lazyWithRetry(
   () => import('@/pages/seo/RestaurantKitchenElectricalCostPage')
 );
-const RewireCostBirminghamPage = lazy(() => import('@/pages/seo/RewireCostBirminghamPage'));
-const RewireCostBristolPage = lazy(() => import('@/pages/seo/RewireCostBristolPage'));
-const RewireCostCardiffPage = lazy(() => import('@/pages/seo/RewireCostCardiffPage'));
-const RewireCostEdinburghPage = lazy(() => import('@/pages/seo/RewireCostEdinburghPage'));
-const RewireCostGlasgowPage = lazy(() => import('@/pages/seo/RewireCostGlasgowPage'));
-const RewireCostLeedsPage = lazy(() => import('@/pages/seo/RewireCostLeedsPage'));
-const RewireCostLiverpoolPage = lazy(() => import('@/pages/seo/RewireCostLiverpoolPage'));
-const RewireCostLondonPage = lazy(() => import('@/pages/seo/RewireCostLondonPage'));
-const RewireCostManchesterPage = lazy(() => import('@/pages/seo/RewireCostManchesterPage'));
-const RewireCostNottinghamPage = lazy(() => import('@/pages/seo/RewireCostNottinghamPage'));
-const RewireCostPlymouthPage = lazy(() => import('@/pages/seo/RewireCostPlymouthPage'));
-const RewireCostSouthamptonPage = lazy(() => import('@/pages/seo/RewireCostSouthamptonPage'));
-const RingVsRadialCircuitsPage = lazy(() => import('@/pages/seo/RingVsRadialCircuitsPage'));
-const SafeIsolationProcedureGuidePage = lazy(
+const RewireCostBirminghamPage = lazyWithRetry(() => import('@/pages/seo/RewireCostBirminghamPage'));
+const RewireCostBristolPage = lazyWithRetry(() => import('@/pages/seo/RewireCostBristolPage'));
+const RewireCostCardiffPage = lazyWithRetry(() => import('@/pages/seo/RewireCostCardiffPage'));
+const RewireCostEdinburghPage = lazyWithRetry(() => import('@/pages/seo/RewireCostEdinburghPage'));
+const RewireCostGlasgowPage = lazyWithRetry(() => import('@/pages/seo/RewireCostGlasgowPage'));
+const RewireCostLeedsPage = lazyWithRetry(() => import('@/pages/seo/RewireCostLeedsPage'));
+const RewireCostLiverpoolPage = lazyWithRetry(() => import('@/pages/seo/RewireCostLiverpoolPage'));
+const RewireCostLondonPage = lazyWithRetry(() => import('@/pages/seo/RewireCostLondonPage'));
+const RewireCostManchesterPage = lazyWithRetry(() => import('@/pages/seo/RewireCostManchesterPage'));
+const RewireCostNottinghamPage = lazyWithRetry(() => import('@/pages/seo/RewireCostNottinghamPage'));
+const RewireCostPlymouthPage = lazyWithRetry(() => import('@/pages/seo/RewireCostPlymouthPage'));
+const RewireCostSouthamptonPage = lazyWithRetry(() => import('@/pages/seo/RewireCostSouthamptonPage'));
+const RingVsRadialCircuitsPage = lazyWithRetry(() => import('@/pages/seo/RingVsRadialCircuitsPage'));
+const SafeIsolationProcedureGuidePage = lazyWithRetry(
   () => import('@/pages/seo/SafeIsolationProcedureGuidePage')
 );
-const SaunaElectricalInstallationPage = lazy(
+const SaunaElectricalInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/SaunaElectricalInstallationPage')
 );
-const SchoolElectricalCostPage = lazy(() => import('@/pages/seo/SchoolElectricalCostPage'));
-const Section701BathroomsGuidePage = lazy(() => import('@/pages/seo/Section701BathroomsGuidePage'));
-const BS7671Section710MedicalLocationsPage = lazy(
+const SchoolElectricalCostPage = lazyWithRetry(() => import('@/pages/seo/SchoolElectricalCostPage'));
+const Section701BathroomsGuidePage = lazyWithRetry(() => import('@/pages/seo/Section701BathroomsGuidePage'));
+const BS7671Section710MedicalLocationsPage = lazyWithRetry(
   () => import('@/pages/seo/BS7671Section710MedicalLocationsPage')
 );
-const BS7671Section714OutdoorLightingPage = lazy(
+const BS7671Section714OutdoorLightingPage = lazyWithRetry(
   () => import('@/pages/seo/BS7671Section714OutdoorLightingPage')
 );
-const EICRCodeC1Page = lazy(() => import('@/pages/seo/EICRCodeC1Page'));
-const EICRCodeC2Page = lazy(() => import('@/pages/seo/EICRCodeC2Page'));
-const EICRCodeC3Page = lazy(() => import('@/pages/seo/EICRCodeC3Page'));
-const EICRCodeFIPage = lazy(() => import('@/pages/seo/EICRCodeFIPage'));
-const A4LuminaireRCDProtectionPage = lazy(() => import('@/pages/seo/A4LuminaireRCDProtectionPage'));
-const A4AFDDChangesPage = lazy(() => import('@/pages/seo/A4AFDDChangesPage'));
-const A4ScheduleOfTestsPage = lazy(() => import('@/pages/seo/A4ScheduleOfTestsPage'));
-const A4TnCsPnbEarthingPage = lazy(() => import('@/pages/seo/A4TnCsPnbEarthingPage'));
-const A4OverviewHubPage = lazy(() => import('@/pages/seo/A4OverviewHubPage'));
-const A4EICModelFormPage = lazy(() => import('@/pages/seo/A4EICModelFormPage'));
-const A4MEIWCModelFormPage = lazy(() => import('@/pages/seo/A4MEIWCModelFormPage'));
-const CableSizeForEVChargerPage = lazy(() => import('@/pages/seo/CableSizeForEVChargerPage'));
-const EICRNoMainBondingPage = lazy(() => import('@/pages/seo/EICRNoMainBondingPage'));
-const EICRPlasticConsumerUnitHMOPage = lazy(
+const EICRCodeC1Page = lazyWithRetry(() => import('@/pages/seo/EICRCodeC1Page'));
+const EICRCodeC2Page = lazyWithRetry(() => import('@/pages/seo/EICRCodeC2Page'));
+const EICRCodeC3Page = lazyWithRetry(() => import('@/pages/seo/EICRCodeC3Page'));
+const EICRCodeFIPage = lazyWithRetry(() => import('@/pages/seo/EICRCodeFIPage'));
+const A4LuminaireRCDProtectionPage = lazyWithRetry(() => import('@/pages/seo/A4LuminaireRCDProtectionPage'));
+const A4AFDDChangesPage = lazyWithRetry(() => import('@/pages/seo/A4AFDDChangesPage'));
+const A4ScheduleOfTestsPage = lazyWithRetry(() => import('@/pages/seo/A4ScheduleOfTestsPage'));
+const A4TnCsPnbEarthingPage = lazyWithRetry(() => import('@/pages/seo/A4TnCsPnbEarthingPage'));
+const A4OverviewHubPage = lazyWithRetry(() => import('@/pages/seo/A4OverviewHubPage'));
+const A4EICModelFormPage = lazyWithRetry(() => import('@/pages/seo/A4EICModelFormPage'));
+const A4MEIWCModelFormPage = lazyWithRetry(() => import('@/pages/seo/A4MEIWCModelFormPage'));
+const CableSizeForEVChargerPage = lazyWithRetry(() => import('@/pages/seo/CableSizeForEVChargerPage'));
+const EICRNoMainBondingPage = lazyWithRetry(() => import('@/pages/seo/EICRNoMainBondingPage'));
+const EICRPlasticConsumerUnitHMOPage = lazyWithRetry(
   () => import('@/pages/seo/EICRPlasticConsumerUnitHMOPage')
 );
-const CableSizeForElectricShowerPage = lazy(
+const CableSizeForElectricShowerPage = lazyWithRetry(
   () => import('@/pages/seo/CableSizeForElectricShowerPage')
 );
-const CableSizeForCookerCircuitPage = lazy(
+const CableSizeForCookerCircuitPage = lazyWithRetry(
   () => import('@/pages/seo/CableSizeForCookerCircuitPage')
 );
-const ProsumerLVInstallationPage = lazy(() => import('@/pages/seo/ProsumerLVInstallationPage'));
-const ElectricalRamsTemplatePage = lazy(() => import('@/pages/seo/ElectricalRamsTemplatePage'));
-const RAMSForEICRInspectionPage = lazy(() => import('@/pages/seo/RAMSForEICRInspectionPage'));
-const RAMSForConsumerUnitReplacementPage = lazy(
+const ProsumerLVInstallationPage = lazyWithRetry(() => import('@/pages/seo/ProsumerLVInstallationPage'));
+const ElectricalRamsTemplatePage = lazyWithRetry(() => import('@/pages/seo/ElectricalRamsTemplatePage'));
+const RAMSForEICRInspectionPage = lazyWithRetry(() => import('@/pages/seo/RAMSForEICRInspectionPage'));
+const RAMSForConsumerUnitReplacementPage = lazyWithRetry(
   () => import('@/pages/seo/RAMSForConsumerUnitReplacementPage')
 );
-const RAMSForEVChargerInstallationPage = lazy(
+const RAMSForEVChargerInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/RAMSForEVChargerInstallationPage')
 );
-const RAMSForFullRewirePage = lazy(() => import('@/pages/seo/RAMSForFullRewirePage'));
-const RAMSForSolarPVInstallationPage = lazy(
+const RAMSForFullRewirePage = lazyWithRetry(() => import('@/pages/seo/RAMSForFullRewirePage'));
+const RAMSForSolarPVInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/RAMSForSolarPVInstallationPage')
 );
-const HowToWriteElectricalMethodStatementPage = lazy(
+const HowToWriteElectricalMethodStatementPage = lazyWithRetry(
   () => import('@/pages/seo/HowToWriteElectricalMethodStatementPage')
 );
-const ElectricalMethodStatementTemplatePage = lazy(
+const ElectricalMethodStatementTemplatePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalMethodStatementTemplatePage')
 );
-const MethodStatementSafeIsolationPage = lazy(
+const MethodStatementSafeIsolationPage = lazyWithRetry(
   () => import('@/pages/seo/MethodStatementSafeIsolationPage')
 );
-const MethodStatementLiveWorkingPage = lazy(
+const MethodStatementLiveWorkingPage = lazyWithRetry(
   () => import('@/pages/seo/MethodStatementLiveWorkingPage')
 );
-const MethodStatementFaultFindingPage = lazy(
+const MethodStatementFaultFindingPage = lazyWithRetry(
   () => import('@/pages/seo/MethodStatementFaultFindingPage')
 );
-const CDM2015ForElectriciansPage = lazy(() => import('@/pages/seo/CDM2015ForElectriciansPage'));
-const PermitToWorkElectricalIsolationPage = lazy(
+const CDM2015ForElectriciansPage = lazyWithRetry(() => import('@/pages/seo/CDM2015ForElectriciansPage'));
+const PermitToWorkElectricalIsolationPage = lazyWithRetry(
   () => import('@/pages/seo/PermitToWorkElectricalIsolationPage')
 );
-const LockoutTagoutForElectriciansPage = lazy(
+const LockoutTagoutForElectriciansPage = lazyWithRetry(
   () => import('@/pages/seo/LockoutTagoutForElectriciansPage')
 );
-const SiteInductionElectricalContractorsPage = lazy(
+const SiteInductionElectricalContractorsPage = lazyWithRetry(
   () => import('@/pages/seo/SiteInductionElectricalContractorsPage')
 );
-const NearMissReportingElectriciansPage = lazy(
+const NearMissReportingElectriciansPage = lazyWithRetry(
   () => import('@/pages/seo/NearMissReportingElectriciansPage')
 );
-const WorkingNearLiveMainsPage = lazy(() => import('@/pages/seo/WorkingNearLiveMainsPage'));
-const LoneWorkingElectriciansPage = lazy(() => import('@/pages/seo/LoneWorkingElectriciansPage'));
-const ConfinedSpaceElectricalWorkPage = lazy(
+const WorkingNearLiveMainsPage = lazyWithRetry(() => import('@/pages/seo/WorkingNearLiveMainsPage'));
+const LoneWorkingElectriciansPage = lazyWithRetry(() => import('@/pages/seo/LoneWorkingElectriciansPage'));
+const ConfinedSpaceElectricalWorkPage = lazyWithRetry(
   () => import('@/pages/seo/ConfinedSpaceElectricalWorkPage')
 );
-const WorkingAtHeightElectriciansPage = lazy(
+const WorkingAtHeightElectriciansPage = lazyWithRetry(
   () => import('@/pages/seo/WorkingAtHeightElectriciansPage')
 );
-const AFDDMandatoryHMOCareHomeA4Page = lazy(
-  () => import('@/pages/seo/AFDDMandatoryHMOCareHomeA4Page')
+const AFDDHmoCareHomeA4Page = lazyWithRetry(
+  () => import('@/pages/seo/AFDDHmoCareHomeA4Page')
 );
-const Section722EVChargingA4Page = lazy(() => import('@/pages/seo/Section722EVChargingA4Page'));
-const SPDChapter443A4Page = lazy(() => import('@/pages/seo/SPDChapter443A4Page'));
-const TNCBannedNewInstallsA4Page = lazy(() => import('@/pages/seo/TNCBannedNewInstallsA4Page'));
-const CableReactionToFireCcaA4Page = lazy(() => import('@/pages/seo/CableReactionToFireCcaA4Page'));
-const Section712ProsumerA4Page = lazy(() => import('@/pages/seo/Section712ProsumerA4Page'));
-const Section715ELVLightingA4Page = lazy(() => import('@/pages/seo/Section715ELVLightingA4Page'));
-const ReducedLowVoltage110vCTEPage = lazy(() => import('@/pages/seo/ReducedLowVoltage110vCTEPage'));
-const PoEPlusPlusType4Page = lazy(() => import('@/pages/seo/PoEPlusPlusType4Page'));
-const Cat6Cat6aCurrentRatingPoEPage = lazy(
+const Section722EVChargingA4Page = lazyWithRetry(() => import('@/pages/seo/Section722EVChargingA4Page'));
+const SPDChapter443A4Page = lazyWithRetry(() => import('@/pages/seo/SPDChapter443A4Page'));
+const TNCBannedNewInstallsA4Page = lazyWithRetry(() => import('@/pages/seo/TNCBannedNewInstallsA4Page'));
+const CableReactionToFireCcaA4Page = lazyWithRetry(() => import('@/pages/seo/CableReactionToFireCcaA4Page'));
+const Section712ProsumerA4Page = lazyWithRetry(() => import('@/pages/seo/Section712ProsumerA4Page'));
+const Section715ELVLightingA4Page = lazyWithRetry(() => import('@/pages/seo/Section715ELVLightingA4Page'));
+const ReducedLowVoltage110vCTEPage = lazyWithRetry(() => import('@/pages/seo/ReducedLowVoltage110vCTEPage'));
+const PoEPlusPlusType4Page = lazyWithRetry(() => import('@/pages/seo/PoEPlusPlusType4Page'));
+const Cat6Cat6aCurrentRatingPoEPage = lazyWithRetry(
   () => import('@/pages/seo/Cat6Cat6aCurrentRatingPoEPage')
 );
-const IPCameraPoEInstallationPage = lazy(() => import('@/pages/seo/IPCameraPoEInstallationPage'));
-const StructuredCablingBSEN50173Page = lazy(
+const IPCameraPoEInstallationPage = lazyWithRetry(() => import('@/pages/seo/IPCameraPoEInstallationPage'));
+const StructuredCablingBSEN50173Page = lazyWithRetry(
   () => import('@/pages/seo/StructuredCablingBSEN50173Page')
 );
-const BSEN50174DataCableInstallPage = lazy(
+const BSEN50174DataCableInstallPage = lazyWithRetry(
   () => import('@/pages/seo/BSEN50174DataCableInstallPage')
 );
-const PoELightingVsTraditionalLEDPage = lazy(
+const PoELightingVsTraditionalLEDPage = lazyWithRetry(
   () => import('@/pages/seo/PoELightingVsTraditionalLEDPage')
 );
-const DALILightingControlWiringPage = lazy(
+const DALILightingControlWiringPage = lazyWithRetry(
   () => import('@/pages/seo/DALILightingControlWiringPage')
 );
-const KNXWiringInstallationPage = lazy(() => import('@/pages/seo/KNXWiringInstallationPage'));
-const V2HBidirectionalEVChargingPage = lazy(
+const KNXWiringInstallationPage = lazyWithRetry(() => import('@/pages/seo/KNXWiringInstallationPage'));
+const V2HBidirectionalEVChargingPage = lazyWithRetry(
   () => import('@/pages/seo/V2HBidirectionalEVChargingPage')
 );
-const LVDCMicrogridDistributionPage = lazy(
+const LVDCMicrogridDistributionPage = lazyWithRetry(
   () => import('@/pages/seo/LVDCMicrogridDistributionPage')
 );
-const SmartDistributionBoardIoTPage = lazy(
+const SmartDistributionBoardIoTPage = lazyWithRetry(
   () => import('@/pages/seo/SmartDistributionBoardIoTPage')
 );
-const Section537IsolationSwitchingA4Page = lazy(
+const Section537IsolationSwitchingA4Page = lazyWithRetry(
   () => import('@/pages/seo/Section537IsolationSwitchingA4Page')
 );
 // Programmatic EICR-cost-by-city pages
-const EICRCostManchesterPage = lazy(() => import('@/pages/seo/EICRCostManchesterPage'));
-const EICRCostBirminghamPage = lazy(() => import('@/pages/seo/EICRCostBirminghamPage'));
-const EICRCostLeedsPage = lazy(() => import('@/pages/seo/EICRCostLeedsPage'));
-const EICRCostLiverpoolPage = lazy(() => import('@/pages/seo/EICRCostLiverpoolPage'));
-const EICRCostSheffieldPage = lazy(() => import('@/pages/seo/EICRCostSheffieldPage'));
-const EICRCostBristolPage = lazy(() => import('@/pages/seo/EICRCostBristolPage'));
-const EICRCostNewcastlePage = lazy(() => import('@/pages/seo/EICRCostNewcastlePage'));
-const EICRCostNottinghamPage = lazy(() => import('@/pages/seo/EICRCostNottinghamPage'));
-const EICRCostSouthamptonPage = lazy(() => import('@/pages/seo/EICRCostSouthamptonPage'));
-const EICRCostPortsmouthPage = lazy(() => import('@/pages/seo/EICRCostPortsmouthPage'));
-const EICRCostBrightonPage = lazy(() => import('@/pages/seo/EICRCostBrightonPage'));
-const EICRCostCambridgePage = lazy(() => import('@/pages/seo/EICRCostCambridgePage'));
-const EICRCostOxfordPage = lazy(() => import('@/pages/seo/EICRCostOxfordPage'));
-const EICRCostYorkPage = lazy(() => import('@/pages/seo/EICRCostYorkPage'));
-const EICRCostHullPage = lazy(() => import('@/pages/seo/EICRCostHullPage'));
-const EICRCostStokePage = lazy(() => import('@/pages/seo/EICRCostStokePage'));
-const EICRCostPlymouthPage = lazy(() => import('@/pages/seo/EICRCostPlymouthPage'));
-const EICRCostExeterPage = lazy(() => import('@/pages/seo/EICRCostExeterPage'));
-const EICRCostNorwichPage = lazy(() => import('@/pages/seo/EICRCostNorwichPage'));
-const EICRCostEdinburghPage = lazy(() => import('@/pages/seo/EICRCostEdinburghPage'));
-const EICRCostGlasgowPage = lazy(() => import('@/pages/seo/EICRCostGlasgowPage'));
-const EICRCostAberdeenPage = lazy(() => import('@/pages/seo/EICRCostAberdeenPage'));
-const EICRCostDundeePage = lazy(() => import('@/pages/seo/EICRCostDundeePage'));
-const EICRCostCardiffPage = lazy(() => import('@/pages/seo/EICRCostCardiffPage'));
-const EICRCostSwanseaPage = lazy(() => import('@/pages/seo/EICRCostSwanseaPage'));
-const EICRCostBelfastPage = lazy(() => import('@/pages/seo/EICRCostBelfastPage'));
-const EICRCostMiltonKeynesPage = lazy(() => import('@/pages/seo/EICRCostMiltonKeynesPage'));
-const EICRCostReadingPage = lazy(() => import('@/pages/seo/EICRCostReadingPage'));
-const EICRCostLutonPage = lazy(() => import('@/pages/seo/EICRCostLutonPage'));
-const EICRCostSwindonPage = lazy(() => import('@/pages/seo/EICRCostSwindonPage'));
+const EICRCostManchesterPage = lazyWithRetry(() => import('@/pages/seo/EICRCostManchesterPage'));
+const EICRCostBirminghamPage = lazyWithRetry(() => import('@/pages/seo/EICRCostBirminghamPage'));
+const EICRCostLeedsPage = lazyWithRetry(() => import('@/pages/seo/EICRCostLeedsPage'));
+const EICRCostLiverpoolPage = lazyWithRetry(() => import('@/pages/seo/EICRCostLiverpoolPage'));
+const EICRCostSheffieldPage = lazyWithRetry(() => import('@/pages/seo/EICRCostSheffieldPage'));
+const EICRCostBristolPage = lazyWithRetry(() => import('@/pages/seo/EICRCostBristolPage'));
+const EICRCostNewcastlePage = lazyWithRetry(() => import('@/pages/seo/EICRCostNewcastlePage'));
+const EICRCostNottinghamPage = lazyWithRetry(() => import('@/pages/seo/EICRCostNottinghamPage'));
+const EICRCostSouthamptonPage = lazyWithRetry(() => import('@/pages/seo/EICRCostSouthamptonPage'));
+const EICRCostPortsmouthPage = lazyWithRetry(() => import('@/pages/seo/EICRCostPortsmouthPage'));
+const EICRCostBrightonPage = lazyWithRetry(() => import('@/pages/seo/EICRCostBrightonPage'));
+const EICRCostCambridgePage = lazyWithRetry(() => import('@/pages/seo/EICRCostCambridgePage'));
+const EICRCostOxfordPage = lazyWithRetry(() => import('@/pages/seo/EICRCostOxfordPage'));
+const EICRCostYorkPage = lazyWithRetry(() => import('@/pages/seo/EICRCostYorkPage'));
+const EICRCostHullPage = lazyWithRetry(() => import('@/pages/seo/EICRCostHullPage'));
+const EICRCostStokePage = lazyWithRetry(() => import('@/pages/seo/EICRCostStokePage'));
+const EICRCostPlymouthPage = lazyWithRetry(() => import('@/pages/seo/EICRCostPlymouthPage'));
+const EICRCostExeterPage = lazyWithRetry(() => import('@/pages/seo/EICRCostExeterPage'));
+const EICRCostNorwichPage = lazyWithRetry(() => import('@/pages/seo/EICRCostNorwichPage'));
+const EICRCostEdinburghPage = lazyWithRetry(() => import('@/pages/seo/EICRCostEdinburghPage'));
+const EICRCostGlasgowPage = lazyWithRetry(() => import('@/pages/seo/EICRCostGlasgowPage'));
+const EICRCostAberdeenPage = lazyWithRetry(() => import('@/pages/seo/EICRCostAberdeenPage'));
+const EICRCostDundeePage = lazyWithRetry(() => import('@/pages/seo/EICRCostDundeePage'));
+const EICRCostCardiffPage = lazyWithRetry(() => import('@/pages/seo/EICRCostCardiffPage'));
+const EICRCostSwanseaPage = lazyWithRetry(() => import('@/pages/seo/EICRCostSwanseaPage'));
+const EICRCostBelfastPage = lazyWithRetry(() => import('@/pages/seo/EICRCostBelfastPage'));
+const EICRCostMiltonKeynesPage = lazyWithRetry(() => import('@/pages/seo/EICRCostMiltonKeynesPage'));
+const EICRCostReadingPage = lazyWithRetry(() => import('@/pages/seo/EICRCostReadingPage'));
+const EICRCostLutonPage = lazyWithRetry(() => import('@/pages/seo/EICRCostLutonPage'));
+const EICRCostSwindonPage = lazyWithRetry(() => import('@/pages/seo/EICRCostSwindonPage'));
 // Programmatic CU-replacement-cost-by-city pages
-const CUReplacementCostManchesterPage = lazy(
+const CUReplacementCostManchesterPage = lazyWithRetry(
   () => import('@/pages/seo/CUReplacementCostManchesterPage')
 );
-const CUReplacementCostBirminghamPage = lazy(
+const CUReplacementCostBirminghamPage = lazyWithRetry(
   () => import('@/pages/seo/CUReplacementCostBirminghamPage')
 );
-const CUReplacementCostLeedsPage = lazy(() => import('@/pages/seo/CUReplacementCostLeedsPage'));
-const CUReplacementCostLiverpoolPage = lazy(
+const CUReplacementCostLeedsPage = lazyWithRetry(() => import('@/pages/seo/CUReplacementCostLeedsPage'));
+const CUReplacementCostLiverpoolPage = lazyWithRetry(
   () => import('@/pages/seo/CUReplacementCostLiverpoolPage')
 );
-const CUReplacementCostSheffieldPage = lazy(
+const CUReplacementCostSheffieldPage = lazyWithRetry(
   () => import('@/pages/seo/CUReplacementCostSheffieldPage')
 );
-const CUReplacementCostBristolPage = lazy(() => import('@/pages/seo/CUReplacementCostBristolPage'));
-const CUReplacementCostNewcastlePage = lazy(
+const CUReplacementCostBristolPage = lazyWithRetry(() => import('@/pages/seo/CUReplacementCostBristolPage'));
+const CUReplacementCostNewcastlePage = lazyWithRetry(
   () => import('@/pages/seo/CUReplacementCostNewcastlePage')
 );
-const CUReplacementCostNottinghamPage = lazy(
+const CUReplacementCostNottinghamPage = lazyWithRetry(
   () => import('@/pages/seo/CUReplacementCostNottinghamPage')
 );
-const CUReplacementCostSouthamptonPage = lazy(
+const CUReplacementCostSouthamptonPage = lazyWithRetry(
   () => import('@/pages/seo/CUReplacementCostSouthamptonPage')
 );
-const CUReplacementCostPortsmouthPage = lazy(
+const CUReplacementCostPortsmouthPage = lazyWithRetry(
   () => import('@/pages/seo/CUReplacementCostPortsmouthPage')
 );
-const CUReplacementCostBrightonPage = lazy(
+const CUReplacementCostBrightonPage = lazyWithRetry(
   () => import('@/pages/seo/CUReplacementCostBrightonPage')
 );
-const CUReplacementCostCambridgePage = lazy(
+const CUReplacementCostCambridgePage = lazyWithRetry(
   () => import('@/pages/seo/CUReplacementCostCambridgePage')
 );
-const CUReplacementCostOxfordPage = lazy(() => import('@/pages/seo/CUReplacementCostOxfordPage'));
-const CUReplacementCostYorkPage = lazy(() => import('@/pages/seo/CUReplacementCostYorkPage'));
-const CUReplacementCostHullPage = lazy(() => import('@/pages/seo/CUReplacementCostHullPage'));
-const CUReplacementCostStokePage = lazy(() => import('@/pages/seo/CUReplacementCostStokePage'));
-const CUReplacementCostPlymouthPage = lazy(
+const CUReplacementCostOxfordPage = lazyWithRetry(() => import('@/pages/seo/CUReplacementCostOxfordPage'));
+const CUReplacementCostYorkPage = lazyWithRetry(() => import('@/pages/seo/CUReplacementCostYorkPage'));
+const CUReplacementCostHullPage = lazyWithRetry(() => import('@/pages/seo/CUReplacementCostHullPage'));
+const CUReplacementCostStokePage = lazyWithRetry(() => import('@/pages/seo/CUReplacementCostStokePage'));
+const CUReplacementCostPlymouthPage = lazyWithRetry(
   () => import('@/pages/seo/CUReplacementCostPlymouthPage')
 );
-const CUReplacementCostExeterPage = lazy(() => import('@/pages/seo/CUReplacementCostExeterPage'));
-const CUReplacementCostNorwichPage = lazy(() => import('@/pages/seo/CUReplacementCostNorwichPage'));
-const CUReplacementCostEdinburghPage = lazy(
+const CUReplacementCostExeterPage = lazyWithRetry(() => import('@/pages/seo/CUReplacementCostExeterPage'));
+const CUReplacementCostNorwichPage = lazyWithRetry(() => import('@/pages/seo/CUReplacementCostNorwichPage'));
+const CUReplacementCostEdinburghPage = lazyWithRetry(
   () => import('@/pages/seo/CUReplacementCostEdinburghPage')
 );
-const CUReplacementCostGlasgowPage = lazy(() => import('@/pages/seo/CUReplacementCostGlasgowPage'));
-const CUReplacementCostAberdeenPage = lazy(
+const CUReplacementCostGlasgowPage = lazyWithRetry(() => import('@/pages/seo/CUReplacementCostGlasgowPage'));
+const CUReplacementCostAberdeenPage = lazyWithRetry(
   () => import('@/pages/seo/CUReplacementCostAberdeenPage')
 );
-const CUReplacementCostDundeePage = lazy(() => import('@/pages/seo/CUReplacementCostDundeePage'));
-const CUReplacementCostCardiffPage = lazy(() => import('@/pages/seo/CUReplacementCostCardiffPage'));
-const CUReplacementCostSwanseaPage = lazy(() => import('@/pages/seo/CUReplacementCostSwanseaPage'));
-const CUReplacementCostBelfastPage = lazy(() => import('@/pages/seo/CUReplacementCostBelfastPage'));
-const CUReplacementCostMiltonKeynesPage = lazy(
+const CUReplacementCostDundeePage = lazyWithRetry(() => import('@/pages/seo/CUReplacementCostDundeePage'));
+const CUReplacementCostCardiffPage = lazyWithRetry(() => import('@/pages/seo/CUReplacementCostCardiffPage'));
+const CUReplacementCostSwanseaPage = lazyWithRetry(() => import('@/pages/seo/CUReplacementCostSwanseaPage'));
+const CUReplacementCostBelfastPage = lazyWithRetry(() => import('@/pages/seo/CUReplacementCostBelfastPage'));
+const CUReplacementCostMiltonKeynesPage = lazyWithRetry(
   () => import('@/pages/seo/CUReplacementCostMiltonKeynesPage')
 );
-const CUReplacementCostReadingPage = lazy(() => import('@/pages/seo/CUReplacementCostReadingPage'));
-const CUReplacementCostLutonPage = lazy(() => import('@/pages/seo/CUReplacementCostLutonPage'));
-const CUReplacementCostSwindonPage = lazy(() => import('@/pages/seo/CUReplacementCostSwindonPage'));
+const CUReplacementCostReadingPage = lazyWithRetry(() => import('@/pages/seo/CUReplacementCostReadingPage'));
+const CUReplacementCostLutonPage = lazyWithRetry(() => import('@/pages/seo/CUReplacementCostLutonPage'));
+const CUReplacementCostSwindonPage = lazyWithRetry(() => import('@/pages/seo/CUReplacementCostSwindonPage'));
 // Trade-side pricing guides — "How to Price X as an Electrician"
-const HowToPriceEicrPage = lazy(() => import('@/pages/seo/HowToPriceEicrPage'));
-const HowToPriceConsumerUnitReplacementPage = lazy(
+const HowToPriceEicrPage = lazyWithRetry(() => import('@/pages/seo/HowToPriceEicrPage'));
+const HowToPriceConsumerUnitReplacementPage = lazyWithRetry(
   () => import('@/pages/seo/HowToPriceConsumerUnitReplacementPage')
 );
-const HowToPriceEvChargerInstallPage = lazy(
+const HowToPriceEvChargerInstallPage = lazyWithRetry(
   () => import('@/pages/seo/HowToPriceEvChargerInstallPage')
 );
-const HowToPriceFullRewirePage = lazy(() => import('@/pages/seo/HowToPriceFullRewirePage'));
-const HowToPriceSolarPvInstallationPage = lazy(
+const HowToPriceFullRewirePage = lazyWithRetry(() => import('@/pages/seo/HowToPriceFullRewirePage'));
+const HowToPriceSolarPvInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/HowToPriceSolarPvInstallationPage')
 );
-const HowToPriceEmergencyCalloutPage = lazy(
+const HowToPriceEmergencyCalloutPage = lazyWithRetry(
   () => import('@/pages/seo/HowToPriceEmergencyCalloutPage')
 );
-const HowToPriceCommercialInstallPage = lazy(
+const HowToPriceCommercialInstallPage = lazyWithRetry(
   () => import('@/pages/seo/HowToPriceCommercialInstallPage')
 );
-const HowToPricePatTestingPage = lazy(() => import('@/pages/seo/HowToPricePatTestingPage'));
-const HowToPriceMinorWorksPage = lazy(() => import('@/pages/seo/HowToPriceMinorWorksPage'));
-const HowToPriceCommercialEicrPage = lazy(() => import('@/pages/seo/HowToPriceCommercialEicrPage'));
-const HowToPriceKitchenRewirePage = lazy(() => import('@/pages/seo/HowToPriceKitchenRewirePage'));
-const HowToPriceDayRateSubcontractPage = lazy(
+const HowToPricePatTestingPage = lazyWithRetry(() => import('@/pages/seo/HowToPricePatTestingPage'));
+const HowToPriceMinorWorksPage = lazyWithRetry(() => import('@/pages/seo/HowToPriceMinorWorksPage'));
+const HowToPriceCommercialEicrPage = lazyWithRetry(() => import('@/pages/seo/HowToPriceCommercialEicrPage'));
+const HowToPriceKitchenRewirePage = lazyWithRetry(() => import('@/pages/seo/HowToPriceKitchenRewirePage'));
+const HowToPriceDayRateSubcontractPage = lazyWithRetry(
   () => import('@/pages/seo/HowToPriceDayRateSubcontractPage')
 );
-const HowToPriceOutOfHoursPage = lazy(() => import('@/pages/seo/HowToPriceOutOfHoursPage'));
-const HowToPriceMaintenanceContractPage = lazy(
+const HowToPriceOutOfHoursPage = lazyWithRetry(() => import('@/pages/seo/HowToPriceOutOfHoursPage'));
+const HowToPriceMaintenanceContractPage = lazyWithRetry(
   () => import('@/pages/seo/HowToPriceMaintenanceContractPage')
 );
-const HowToPriceSmartHomeInstallationPage = lazy(
+const HowToPriceSmartHomeInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/HowToPriceSmartHomeInstallationPage')
 );
 // Apprentice unit revision pages
-const UnitRevision236502Unit201Page = lazy(
+const UnitRevision236502Unit201Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision236502Unit201Page')
 );
-const UnitRevision236502Unit202Page = lazy(
+const UnitRevision236502Unit202Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision236502Unit202Page')
 );
-const UnitRevision236502Unit203Page = lazy(
+const UnitRevision236502Unit203Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision236502Unit203Page')
 );
-const UnitRevision236502Unit204Page = lazy(
+const UnitRevision236502Unit204Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision236502Unit204Page')
 );
-const UnitRevision236502Unit210Page = lazy(
+const UnitRevision236502Unit210Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision236502Unit210Page')
 );
-const UnitRevision236503Unit201Page = lazy(
+const UnitRevision236503Unit201Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision236503Unit201Page')
 );
-const UnitRevision236503Unit302Page = lazy(
+const UnitRevision236503Unit302Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision236503Unit302Page')
 );
-const UnitRevision236503Unit303Page = lazy(
+const UnitRevision236503Unit303Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision236503Unit303Page')
 );
-const UnitRevision236503Unit304Page = lazy(
+const UnitRevision236503Unit304Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision236503Unit304Page')
 );
-const UnitRevision236503Unit305Page = lazy(
+const UnitRevision236503Unit305Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision236503Unit305Page')
 );
-const UnitRevision236503Unit308Page = lazy(
+const UnitRevision236503Unit308Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision236503Unit308Page')
 );
-const UnitRevision236603Unit301Page = lazy(
+const UnitRevision236603Unit301Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision236603Unit301Page')
 );
-const UnitRevision236603Unit302Page = lazy(
+const UnitRevision236603Unit302Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision236603Unit302Page')
 );
-const UnitRevision236603Unit303Page = lazy(
+const UnitRevision236603Unit303Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision236603Unit303Page')
 );
-const UnitRevision236603Unit304Page = lazy(
+const UnitRevision236603Unit304Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision236603Unit304Page')
 );
-const UnitRevision236603Unit305Page = lazy(
+const UnitRevision236603Unit305Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision236603Unit305Page')
 );
-const UnitRevision236603Unit306Page = lazy(
+const UnitRevision236603Unit306Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision236603Unit306Page')
 );
-const UnitRevision5357Unit022Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit022Page'));
-const UnitRevision5357Unit101001Page = lazy(
+const UnitRevision5357Unit022Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision5357Unit022Page'));
+const UnitRevision5357Unit101001Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision5357Unit101001Page')
 );
-const UnitRevision5357Unit102Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit102Page'));
-const UnitRevision5357Unit103003Page = lazy(
+const UnitRevision5357Unit102Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision5357Unit102Page'));
+const UnitRevision5357Unit103003Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision5357Unit103003Page')
 );
-const UnitRevision5357Unit104004Page = lazy(
+const UnitRevision5357Unit104004Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision5357Unit104004Page')
 );
-const UnitRevision5357Unit105505Page = lazy(
+const UnitRevision5357Unit105505Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision5357Unit105505Page')
 );
-const UnitRevision5357Unit106Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit106Page'));
-const UnitRevision5357Unit107Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit107Page'));
-const UnitRevision5357Unit109Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit109Page'));
-const UnitRevision5357Unit110Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit110Page'));
-const UnitRevision5357Unit113Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit113Page'));
-const UnitRevision5357Unit114014Page = lazy(
+const UnitRevision5357Unit106Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision5357Unit106Page'));
+const UnitRevision5357Unit107Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision5357Unit107Page'));
+const UnitRevision5357Unit109Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision5357Unit109Page'));
+const UnitRevision5357Unit110Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision5357Unit110Page'));
+const UnitRevision5357Unit113Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision5357Unit113Page'));
+const UnitRevision5357Unit114014Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision5357Unit114014Page')
 );
-const UnitRevision5357Unit115Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit115Page'));
-const UnitRevision5357Unit118Page = lazy(() => import('@/pages/seo/UnitRevision5357Unit118Page'));
-const UnitRevision5357Unit312212Page = lazy(
+const UnitRevision5357Unit115Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision5357Unit115Page'));
+const UnitRevision5357Unit118Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision5357Unit118Page'));
+const UnitRevision5357Unit312212Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision5357Unit312212Page')
 );
-const UnitRevision539303Unit022Page = lazy(
+const UnitRevision539303Unit022Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision539303Unit022Page')
 );
-const UnitRevision539303Unit101Page = lazy(
+const UnitRevision539303Unit101Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision539303Unit101Page')
 );
-const UnitRevision539303Unit102Page = lazy(
+const UnitRevision539303Unit102Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision539303Unit102Page')
 );
-const UnitRevision539303Unit103Page = lazy(
+const UnitRevision539303Unit103Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision539303Unit103Page')
 );
-const UnitRevision539303Unit104Page = lazy(
+const UnitRevision539303Unit104Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision539303Unit104Page')
 );
-const UnitRevision539303Unit105Page = lazy(
+const UnitRevision539303Unit105Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision539303Unit105Page')
 );
-const UnitRevision539303Unit106Page = lazy(
+const UnitRevision539303Unit106Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision539303Unit106Page')
 );
-const UnitRevision539303Unit109Page = lazy(
+const UnitRevision539303Unit109Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision539303Unit109Page')
 );
-const UnitRevision539303Unit112Page = lazy(
+const UnitRevision539303Unit112Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision539303Unit112Page')
 );
-const UnitRevision539303Unit113Page = lazy(
+const UnitRevision539303Unit113Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision539303Unit113Page')
 );
-const UnitRevision539303Unit114Page = lazy(
+const UnitRevision539303Unit114Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision539303Unit114Page')
 );
-const UnitRevision539303Unit115Page = lazy(
+const UnitRevision539303Unit115Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision539303Unit115Page')
 );
 // AM2 deep-dives
 // Year-by-year revision plans
-const ElectricalApprenticeYear1RevisionPlanPage = lazy(
+const ElectricalApprenticeYear1RevisionPlanPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalApprenticeYear1RevisionPlanPage')
 );
-const ElectricalApprenticeYear2RevisionPlanPage = lazy(
+const ElectricalApprenticeYear2RevisionPlanPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalApprenticeYear2RevisionPlanPage')
 );
-const ElectricalApprenticeYear3RevisionPlanPage = lazy(
+const ElectricalApprenticeYear3RevisionPlanPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalApprenticeYear3RevisionPlanPage')
 );
-const ElectricalApprenticeYear4RevisionPlanPage = lazy(
+const ElectricalApprenticeYear4RevisionPlanPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalApprenticeYear4RevisionPlanPage')
 );
 // 18th Edition exam prep + career path + OTJ
-const EighteenthEditionAmendment42026ExamPrepPage = lazy(
+const EighteenthEditionAmendment42026ExamPrepPage = lazyWithRetry(
   () => import('@/pages/seo/EighteenthEditionAmendment42026ExamPrepPage')
 );
-const EighteenthEditionChapter41ProtectionAgainstElectricShockExamPage = lazy(
+const EighteenthEditionChapter41ProtectionAgainstElectricShockExamPage = lazyWithRetry(
   () => import('@/pages/seo/EighteenthEditionChapter41ProtectionAgainstElectricShockExamPage')
 );
-const EighteenthEditionChapter43OvercurrentProtectionExamPage = lazy(
+const EighteenthEditionChapter43OvercurrentProtectionExamPage = lazyWithRetry(
   () => import('@/pages/seo/EighteenthEditionChapter43OvercurrentProtectionExamPage')
 );
-const EighteenthEditionAppendix4CableCurrentRatingExamPage = lazy(
+const EighteenthEditionAppendix4CableCurrentRatingExamPage = lazyWithRetry(
   () => import('@/pages/seo/EighteenthEditionAppendix4CableCurrentRatingExamPage')
 );
-const EcsGoldCardRequirements2026Page = lazy(
+const EcsGoldCardRequirements2026Page = lazyWithRetry(
   () => import('@/pages/seo/EcsGoldCardRequirements2026Page')
 );
-const JibPayScales2026Page = lazy(() => import('@/pages/seo/JibPayScales2026Page'));
-const AfterAm2WhatHappensNextPage = lazy(() => import('@/pages/seo/AfterAm2WhatHappensNextPage'));
-const ElectricianCareerProgressionUkPage = lazy(
+const JibPayScales2026Page = lazyWithRetry(() => import('@/pages/seo/JibPayScales2026Page'));
+const AfterAm2WhatHappensNextPage = lazyWithRetry(() => import('@/pages/seo/AfterAm2WhatHappensNextPage'));
+const ElectricianCareerProgressionUkPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricianCareerProgressionUkPage')
 );
-const FindingAnElectricalApprenticeshipUkPage = lazy(
+const FindingAnElectricalApprenticeshipUkPage = lazyWithRetry(
   () => import('@/pages/seo/FindingAnElectricalApprenticeshipUkPage')
 );
-const OffTheJobTrainingHoursTrackingPage = lazy(
+const OffTheJobTrainingHoursTrackingPage = lazyWithRetry(
   () => import('@/pages/seo/OffTheJobTrainingHoursTrackingPage')
 );
-const OffTheJobTrainingEmployerGuidePage = lazy(
+const OffTheJobTrainingEmployerGuidePage = lazyWithRetry(
   () => import('@/pages/seo/OffTheJobTrainingEmployerGuidePage')
 );
 // Qualification hub pillar pages
-const QualHub236502Page = lazy(() => import('@/pages/seo/QualHub236502Page'));
-const QualHub236503Page = lazy(() => import('@/pages/seo/QualHub236503Page'));
-const QualHub236603Page = lazy(() => import('@/pages/seo/QualHub236603Page'));
-const QualHub5357Page = lazy(() => import('@/pages/seo/QualHub5357Page'));
-const QualHub539303Page = lazy(() => import('@/pages/seo/QualHub539303Page'));
-const QualHub234603Page = lazy(() => import('@/pages/seo/QualHub234603Page'));
-const QualHub2357Page = lazy(() => import('@/pages/seo/QualHub2357Page'));
-const QualHub6103907XPage = lazy(() => import('@/pages/seo/QualHub6103907XPage'));
-const QualHub8202Page = lazy(() => import('@/pages/seo/QualHub8202Page'));
-const QualHubEalNetp3Page = lazy(() => import('@/pages/seo/QualHubEalNetp3Page'));
+const QualHub236502Page = lazyWithRetry(() => import('@/pages/seo/QualHub236502Page'));
+const QualHub236503Page = lazyWithRetry(() => import('@/pages/seo/QualHub236503Page'));
+const QualHub236603Page = lazyWithRetry(() => import('@/pages/seo/QualHub236603Page'));
+const QualHub5357Page = lazyWithRetry(() => import('@/pages/seo/QualHub5357Page'));
+const QualHub539303Page = lazyWithRetry(() => import('@/pages/seo/QualHub539303Page'));
+const QualHub234603Page = lazyWithRetry(() => import('@/pages/seo/QualHub234603Page'));
+const QualHub2357Page = lazyWithRetry(() => import('@/pages/seo/QualHub2357Page'));
+const QualHub6103907XPage = lazyWithRetry(() => import('@/pages/seo/QualHub6103907XPage'));
+const QualHub8202Page = lazyWithRetry(() => import('@/pages/seo/QualHub8202Page'));
+const QualHubEalNetp3Page = lazyWithRetry(() => import('@/pages/seo/QualHubEalNetp3Page'));
 // Business owner / employer guides
-const StartingAnElectricalBusinessUkPage = lazy(
+const StartingAnElectricalBusinessUkPage = lazyWithRetry(
   () => import('@/pages/seo/StartingAnElectricalBusinessUkPage')
 );
-const HowToHireAnElectricalApprenticePage = lazy(
+const HowToHireAnElectricalApprenticePage = lazyWithRetry(
   () => import('@/pages/seo/HowToHireAnElectricalApprenticePage')
 );
-const NiceicVsNapitRegistrationPage = lazy(
+const NiceicVsNapitRegistrationPage = lazyWithRetry(
   () => import('@/pages/seo/NiceicVsNapitRegistrationPage')
 );
-const ElectricianInsuranceBusinessUkPage = lazy(
+const ElectricianInsuranceBusinessUkPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricianInsuranceBusinessUkPage')
 );
-const ElectricalContractorMarketingGuidePage = lazy(
+const ElectricalContractorMarketingGuidePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalContractorMarketingGuidePage')
 );
-const CisConstructionIndustrySchemeElectriciansPage = lazy(
+const CisConstructionIndustrySchemeElectriciansPage = lazyWithRetry(
   () => import('@/pages/seo/CisConstructionIndustrySchemeElectriciansPage')
 );
-const ElectricalContractorVatGuidePage = lazy(
+const ElectricalContractorVatGuidePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalContractorVatGuidePage')
 );
-const ElectricianEmployeeVsSelfEmployedDecisionPage = lazy(
+const ElectricianEmployeeVsSelfEmployedDecisionPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricianEmployeeVsSelfEmployedDecisionPage')
 );
-const ElectricalQuoteTemplateUkPage = lazy(
+const ElectricalQuoteTemplateUkPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalQuoteTemplateUkPage')
 );
-const ElectricalBusinessPricingStrategyPage = lazy(
+const ElectricalBusinessPricingStrategyPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalBusinessPricingStrategyPage')
 );
 // Apprentice pathway comparisons
-const Cg2365Vs5357Vs2366Page = lazy(() => import('@/pages/seo/Cg2365Vs5357Vs2366Page'));
-const Nvq2357VsApprenticeshipStandard5357Page = lazy(
+const Cg2365Vs5357Vs2366Page = lazyWithRetry(() => import('@/pages/seo/Cg2365Vs5357Vs2366Page'));
+const Nvq2357VsApprenticeshipStandard5357Page = lazyWithRetry(
   () => import('@/pages/seo/Nvq2357VsApprenticeshipStandard5357Page')
 );
-const CityAndGuildsVsEalPage = lazy(() => import('@/pages/seo/CityAndGuildsVsEalPage'));
-const TLevelVsApprenticeshipElectricalPage = lazy(
+const CityAndGuildsVsEalPage = lazyWithRetry(() => import('@/pages/seo/CityAndGuildsVsEalPage'));
+const TLevelVsApprenticeshipElectricalPage = lazyWithRetry(
   () => import('@/pages/seo/TLevelVsApprenticeshipElectricalPage')
 );
-const DomesticInstallerVsFullElectricianPage = lazy(
+const DomesticInstallerVsFullElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/DomesticInstallerVsFullElectricianPage')
 );
-const UnitRevision234603Unit102Page = lazy(
+const UnitRevision234603Unit102Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision234603Unit102Page')
 );
-const UnitRevision234603Unit106Page = lazy(
+const UnitRevision234603Unit106Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision234603Unit106Page')
 );
-const UnitRevision234603Unit109Page = lazy(
+const UnitRevision234603Unit109Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision234603Unit109Page')
 );
-const UnitRevision234603Unit110Page = lazy(
+const UnitRevision234603Unit110Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision234603Unit110Page')
 );
-const UnitRevision234603Unit113Page = lazy(
+const UnitRevision234603Unit113Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision234603Unit113Page')
 );
-const UnitRevision234603Unit115Page = lazy(
+const UnitRevision234603Unit115Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision234603Unit115Page')
 );
-const UnitRevision234603Unit118Page = lazy(
+const UnitRevision234603Unit118Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision234603Unit118Page')
 );
-const UnitRevision2357Unit311Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit311Page'));
-const UnitRevision2357Unit313Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit313Page'));
-const UnitRevision2357Unit315Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit315Page'));
-const UnitRevision2357Unit316Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit316Page'));
-const UnitRevision2357Unit317Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit317Page'));
-const UnitRevision2357Unit318Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit318Page'));
-const UnitRevision2357Unit321Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit321Page'));
-const UnitRevision2357Unit322Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit322Page'));
-const UnitRevision2357Unit323Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit323Page'));
-const UnitRevision2357Unit332Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit332Page'));
-const UnitRevision2357Unit333Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit333Page'));
-const UnitRevision2357Unit399Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit399Page'));
-const UnitRevision2357Unit601Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit601Page'));
-const UnitRevision2357Unit602Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit602Page'));
-const UnitRevision2357Unit603Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit603Page'));
-const UnitRevision2357Unit604Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit604Page'));
-const UnitRevision2357Unit605Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit605Page'));
-const UnitRevision2357Unit606Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit606Page'));
-const UnitRevision2357Unit607Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit607Page'));
-const UnitRevision2357Unit608Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit608Page'));
-const UnitRevision2357Unit609Page = lazy(() => import('@/pages/seo/UnitRevision2357Unit609Page'));
-const UnitRevision6103907XUnit18ED302Page = lazy(
+const UnitRevision2357Unit311Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision2357Unit311Page'));
+const UnitRevision2357Unit313Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision2357Unit313Page'));
+const UnitRevision2357Unit315Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision2357Unit315Page'));
+const UnitRevision2357Unit316Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision2357Unit316Page'));
+const UnitRevision2357Unit317Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision2357Unit317Page'));
+const UnitRevision2357Unit318Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision2357Unit318Page'));
+const UnitRevision2357Unit321Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision2357Unit321Page'));
+const UnitRevision2357Unit322Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision2357Unit322Page'));
+const UnitRevision2357Unit323Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision2357Unit323Page'));
+const UnitRevision2357Unit332Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision2357Unit332Page'));
+const UnitRevision2357Unit333Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision2357Unit333Page'));
+const UnitRevision2357Unit399Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision2357Unit399Page'));
+const UnitRevision2357Unit601Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision2357Unit601Page'));
+const UnitRevision2357Unit602Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision2357Unit602Page'));
+const UnitRevision2357Unit603Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision2357Unit603Page'));
+const UnitRevision2357Unit604Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision2357Unit604Page'));
+const UnitRevision2357Unit605Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision2357Unit605Page'));
+const UnitRevision2357Unit606Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision2357Unit606Page'));
+const UnitRevision2357Unit607Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision2357Unit607Page'));
+const UnitRevision2357Unit608Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision2357Unit608Page'));
+const UnitRevision2357Unit609Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision2357Unit609Page'));
+const UnitRevision6103907XUnit18ED302Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision6103907XUnit18ED302Page')
 );
-const UnitRevision6103907XUnitTE301Page = lazy(
+const UnitRevision6103907XUnitTE301Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision6103907XUnitTE301Page')
 );
-const UnitRevision6103907XUnitTE303Page = lazy(
+const UnitRevision6103907XUnitTE303Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision6103907XUnitTE303Page')
 );
-const UnitRevision6103907XUnitTE304Page = lazy(
+const UnitRevision6103907XUnitTE304Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision6103907XUnitTE304Page')
 );
-const UnitRevision6103907XUnitTE306Page = lazy(
+const UnitRevision6103907XUnitTE306Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision6103907XUnitTE306Page')
 );
-const UnitRevision6103907XUnitTE307Page = lazy(
+const UnitRevision6103907XUnitTE307Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision6103907XUnitTE307Page')
 );
-const UnitRevision6103907XUnitTE308Page = lazy(
+const UnitRevision6103907XUnitTE308Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevision6103907XUnitTE308Page')
 );
-const UnitRevision8202Unit301Page = lazy(() => import('@/pages/seo/UnitRevision8202Unit301Page'));
-const UnitRevision8202Unit302Page = lazy(() => import('@/pages/seo/UnitRevision8202Unit302Page'));
-const UnitRevision8202Unit303Page = lazy(() => import('@/pages/seo/UnitRevision8202Unit303Page'));
-const UnitRevision8202Unit304Page = lazy(() => import('@/pages/seo/UnitRevision8202Unit304Page'));
-const UnitRevision8202Unit305Page = lazy(() => import('@/pages/seo/UnitRevision8202Unit305Page'));
-const UnitRevision8202Unit306Page = lazy(() => import('@/pages/seo/UnitRevision8202Unit306Page'));
-const UnitRevision8202Unit307Page = lazy(() => import('@/pages/seo/UnitRevision8202Unit307Page'));
-const UnitRevisionEALNETP3UnitETKP301Page = lazy(
+const UnitRevision8202Unit301Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision8202Unit301Page'));
+const UnitRevision8202Unit302Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision8202Unit302Page'));
+const UnitRevision8202Unit303Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision8202Unit303Page'));
+const UnitRevision8202Unit304Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision8202Unit304Page'));
+const UnitRevision8202Unit305Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision8202Unit305Page'));
+const UnitRevision8202Unit306Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision8202Unit306Page'));
+const UnitRevision8202Unit307Page = lazyWithRetry(() => import('@/pages/seo/UnitRevision8202Unit307Page'));
+const UnitRevisionEALNETP3UnitETKP301Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevisionEALNETP3UnitETKP301Page')
 );
-const UnitRevisionEALNETP3UnitETKP303Page = lazy(
+const UnitRevisionEALNETP3UnitETKP303Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevisionEALNETP3UnitETKP303Page')
 );
-const UnitRevisionEALNETP3UnitETKP305Page = lazy(
+const UnitRevisionEALNETP3UnitETKP305Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevisionEALNETP3UnitETKP305Page')
 );
-const UnitRevisionEALNETP3UnitETKP306Page = lazy(
+const UnitRevisionEALNETP3UnitETKP306Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevisionEALNETP3UnitETKP306Page')
 );
-const UnitRevisionEALNETP3UnitETP304Page = lazy(
+const UnitRevisionEALNETP3UnitETP304Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevisionEALNETP3UnitETP304Page')
 );
-const UnitRevisionEALNETP3UnitETP307Page = lazy(
+const UnitRevisionEALNETP3UnitETP307Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevisionEALNETP3UnitETP307Page')
 );
-const UnitRevisionEALNETP3UnitN18ED31Page = lazy(
+const UnitRevisionEALNETP3UnitN18ED31Page = lazyWithRetry(
   () => import('@/pages/seo/UnitRevisionEALNETP3UnitN18ED31Page')
 );
 // PoE & Structured Cabling Hub (new pillar)
-const PoEStructuredCablingHubPage = lazy(() => import('@/pages/seo/PoEStructuredCablingHubPage'));
-const Section722EVChargingGuidePage = lazy(
+const PoEStructuredCablingHubPage = lazyWithRetry(() => import('@/pages/seo/PoEStructuredCablingHubPage'));
+const Section722EVChargingGuidePage = lazyWithRetry(
   () => import('@/pages/seo/Section722EVChargingGuidePage')
 );
-const SecurityAlarmElectricalFaultPage = lazy(
+const SecurityAlarmElectricalFaultPage = lazyWithRetry(
   () => import('@/pages/seo/SecurityAlarmElectricalFaultPage')
 );
-const SecurityLightingCostPage = lazy(() => import('@/pages/seo/SecurityLightingCostPage'));
-const ShedElectricalInstallationPage = lazy(
+const SecurityLightingCostPage = lazyWithRetry(() => import('@/pages/seo/SecurityLightingCostPage'));
+const ShedElectricalInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/ShedElectricalInstallationPage')
 );
-const ShopFitOutElectricalCostPage = lazy(() => import('@/pages/seo/ShopFitOutElectricalCostPage'));
-const SinglePhaseVsThreePhasePage = lazy(() => import('@/pages/seo/SinglePhaseVsThreePhasePage'));
-const SmartEVChargingPage = lazy(() => import('@/pages/seo/SmartEVChargingPage'));
-const SmartHomeLightingInstallationPage = lazy(
+const ShopFitOutElectricalCostPage = lazyWithRetry(() => import('@/pages/seo/ShopFitOutElectricalCostPage'));
+const SinglePhaseVsThreePhasePage = lazyWithRetry(() => import('@/pages/seo/SinglePhaseVsThreePhasePage'));
+const SmartEVChargingPage = lazyWithRetry(() => import('@/pages/seo/SmartEVChargingPage'));
+const SmartHomeLightingInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/SmartHomeLightingInstallationPage')
 );
-const SmartHomeWiringCostPage = lazy(() => import('@/pages/seo/SmartHomeWiringCostPage'));
-const SmartSwitchVsSmartBulbPage = lazy(() => import('@/pages/seo/SmartSwitchVsSmartBulbPage'));
-const SmokeDetectorBeepingPage = lazy(() => import('@/pages/seo/SmokeDetectorBeepingPage'));
-const SocketSparkingWhenPluggingInPage = lazy(
+const SmartHomeWiringCostPage = lazyWithRetry(() => import('@/pages/seo/SmartHomeWiringCostPage'));
+const SmartSwitchVsSmartBulbPage = lazyWithRetry(() => import('@/pages/seo/SmartSwitchVsSmartBulbPage'));
+const SmokeDetectorBeepingPage = lazyWithRetry(() => import('@/pages/seo/SmokeDetectorBeepingPage'));
+const SocketSparkingWhenPluggingInPage = lazyWithRetry(
   () => import('@/pages/seo/SocketSparkingWhenPluggingInPage')
 );
-const SolarBatteryStorageInstallationPage = lazy(
+const SolarBatteryStorageInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/SolarBatteryStorageInstallationPage')
 );
-const SolarPanelFaultFindingPage = lazy(() => import('@/pages/seo/SolarPanelFaultFindingPage'));
-const SolarPanelInstallationBirminghamPage = lazy(
+const SolarPanelFaultFindingPage = lazyWithRetry(() => import('@/pages/seo/SolarPanelFaultFindingPage'));
+const SolarPanelInstallationBirminghamPage = lazyWithRetry(
   () => import('@/pages/seo/SolarPanelInstallationBirminghamPage')
 );
-const SolarPanelInstallationBristolPage = lazy(
+const SolarPanelInstallationBristolPage = lazyWithRetry(
   () => import('@/pages/seo/SolarPanelInstallationBristolPage')
 );
-const SolarPanelInstallationCardiffPage = lazy(
+const SolarPanelInstallationCardiffPage = lazyWithRetry(
   () => import('@/pages/seo/SolarPanelInstallationCardiffPage')
 );
-const SolarPanelInstallationCostPage = lazy(
+const SolarPanelInstallationCostPage = lazyWithRetry(
   () => import('@/pages/seo/SolarPanelInstallationCostPage')
 );
-const SolarPanelInstallationLeedsPage = lazy(
+const SolarPanelInstallationLeedsPage = lazyWithRetry(
   () => import('@/pages/seo/SolarPanelInstallationLeedsPage')
 );
-const SolarPanelInstallationLondonPage = lazy(
+const SolarPanelInstallationLondonPage = lazyWithRetry(
   () => import('@/pages/seo/SolarPanelInstallationLondonPage')
 );
-const SolarPanelInstallationManchesterPage = lazy(
+const SolarPanelInstallationManchesterPage = lazyWithRetry(
   () => import('@/pages/seo/SolarPanelInstallationManchesterPage')
 );
-const SolarPanelInstallationSheffieldPage = lazy(
+const SolarPanelInstallationSheffieldPage = lazyWithRetry(
   () => import('@/pages/seo/SolarPanelInstallationSheffieldPage')
 );
-const SolarPVMaintenancePage = lazy(() => import('@/pages/seo/SolarPVMaintenancePage'));
-const SolarPVSystemDesignPage = lazy(() => import('@/pages/seo/SolarPVSystemDesignPage'));
-const SpecialistElectricianRoutesPage = lazy(
+const SolarPVMaintenancePage = lazyWithRetry(() => import('@/pages/seo/SolarPVMaintenancePage'));
+const SolarPVSystemDesignPage = lazyWithRetry(() => import('@/pages/seo/SolarPVSystemDesignPage'));
+const SpecialistElectricianRoutesPage = lazyWithRetry(
   () => import('@/pages/seo/SpecialistElectricianRoutesPage')
 );
-const SplitLoadVsRCBOBoardPage = lazy(() => import('@/pages/seo/SplitLoadVsRCBOBoardPage'));
-const SSSMTSGuidePage = lazy(() => import('@/pages/seo/SSSMTSGuidePage'));
-const StorageHeaterNotWorkingPage = lazy(() => import('@/pages/seo/StorageHeaterNotWorkingPage'));
-const StormDamageElectricalPage = lazy(() => import('@/pages/seo/StormDamageElectricalPage'));
-const SupervisingApprenticesPage = lazy(() => import('@/pages/seo/SupervisingApprenticesPage'));
-const SwimmingPoolElectricalCostPage = lazy(
+const SplitLoadVsRCBOBoardPage = lazyWithRetry(() => import('@/pages/seo/SplitLoadVsRCBOBoardPage'));
+const SSSMTSGuidePage = lazyWithRetry(() => import('@/pages/seo/SSSMTSGuidePage'));
+const StorageHeaterNotWorkingPage = lazyWithRetry(() => import('@/pages/seo/StorageHeaterNotWorkingPage'));
+const StormDamageElectricalPage = lazyWithRetry(() => import('@/pages/seo/StormDamageElectricalPage'));
+const SupervisingApprenticesPage = lazyWithRetry(() => import('@/pages/seo/SupervisingApprenticesPage'));
+const SwimmingPoolElectricalCostPage = lazyWithRetry(
   () => import('@/pages/seo/SwimmingPoolElectricalCostPage')
 );
-const TenderWritingElectricianPage = lazy(() => import('@/pages/seo/TenderWritingElectricianPage'));
-const TestingSequenceGuidePage_v2 = lazy(() => import('@/pages/seo/TestingSequenceGuidePage_v2'));
-const ThermalImagingElectricalPage = lazy(() => import('@/pages/seo/ThermalImagingElectricalPage'));
-const ThreePhaseInstallationCostPage = lazy(
+const TenderWritingElectricianPage = lazyWithRetry(() => import('@/pages/seo/TenderWritingElectricianPage'));
+const TestingSequenceGuidePage_v2 = lazyWithRetry(() => import('@/pages/seo/TestingSequenceGuidePage_v2'));
+const ThermalImagingElectricalPage = lazyWithRetry(() => import('@/pages/seo/ThermalImagingElectricalPage'));
+const ThreePhaseInstallationCostPage = lazyWithRetry(
   () => import('@/pages/seo/ThreePhaseInstallationCostPage')
 );
-const TNSvsTNCSvsTTPage = lazy(() => import('@/pages/seo/TNSvsTNCSvsTTPage'));
-const TripSwitchKeepsGoingOffPage = lazy(() => import('@/pages/seo/TripSwitchKeepsGoingOffPage'));
-const TroubleshootingHighEarthLeakagePage = lazy(
+const TNSvsTNCSvsTTPage = lazyWithRetry(() => import('@/pages/seo/TNSvsTNCSvsTTPage'));
+const TripSwitchKeepsGoingOffPage = lazyWithRetry(() => import('@/pages/seo/TripSwitchKeepsGoingOffPage'));
+const TroubleshootingHighEarthLeakagePage = lazyWithRetry(
   () => import('@/pages/seo/TroubleshootingHighEarthLeakagePage')
 );
-const UnderfloorHeatingElectricalCostPage = lazy(
+const UnderfloorHeatingElectricalCostPage = lazyWithRetry(
   () => import('@/pages/seo/UnderfloorHeatingElectricalCostPage')
 );
-const UnderfloorHeatingFaultFindingPage = lazy(
+const UnderfloorHeatingFaultFindingPage = lazyWithRetry(
   () => import('@/pages/seo/UnderfloorHeatingFaultFindingPage')
 );
-const USBSocketNotChargingPage = lazy(() => import('@/pages/seo/USBSocketNotChargingPage'));
-const UTRNumberElectricianPage = lazy(() => import('@/pages/seo/UTRNumberElectricianPage'));
-const V2GInstallationGuidePage = lazy(() => import('@/pages/seo/V2GInstallationGuidePage'));
-const VictorianTerraceConsumerUnitUpgradePage = lazy(
+const USBSocketNotChargingPage = lazyWithRetry(() => import('@/pages/seo/USBSocketNotChargingPage'));
+const UTRNumberElectricianPage = lazyWithRetry(() => import('@/pages/seo/UTRNumberElectricianPage'));
+const V2GInstallationGuidePage = lazyWithRetry(() => import('@/pages/seo/V2GInstallationGuidePage'));
+const VictorianTerraceConsumerUnitUpgradePage = lazyWithRetry(
   () => import('@/pages/seo/VictorianTerraceConsumerUnitUpgradePage')
 );
-const VictorianTerraceElectricalRequirementsPage = lazy(
+const VictorianTerraceElectricalRequirementsPage = lazyWithRetry(
   () => import('@/pages/seo/VictorianTerraceElectricalRequirementsPage')
 );
-const VictorianHouseRewirePage = lazy(() => import('@/pages/seo/VictorianHouseRewirePage'));
-const WarehouseLightingCostPage = lazy(() => import('@/pages/seo/WarehouseLightingCostPage'));
-const WarmPlugOrSocketPage = lazy(() => import('@/pages/seo/WarmPlugOrSocketPage'));
-const WorkingWithOtherTradesPage = lazy(() => import('@/pages/seo/WorkingWithOtherTradesPage'));
-const WorkplaceEVChargingPage = lazy(() => import('@/pages/seo/WorkplaceEVChargingPage'));
-const Year3ElectricalApprenticePage = lazy(
+const VictorianHouseRewirePage = lazyWithRetry(() => import('@/pages/seo/VictorianHouseRewirePage'));
+const WarehouseLightingCostPage = lazyWithRetry(() => import('@/pages/seo/WarehouseLightingCostPage'));
+const WarmPlugOrSocketPage = lazyWithRetry(() => import('@/pages/seo/WarmPlugOrSocketPage'));
+const WorkingWithOtherTradesPage = lazyWithRetry(() => import('@/pages/seo/WorkingWithOtherTradesPage'));
+const WorkplaceEVChargingPage = lazyWithRetry(() => import('@/pages/seo/WorkplaceEVChargingPage'));
+const Year3ElectricalApprenticePage = lazyWithRetry(
   () => import('@/pages/seo/Year3ElectricalApprenticePage')
 );
-const Year4ElectricalApprenticePage = lazy(
+const Year4ElectricalApprenticePage = lazyWithRetry(
   () => import('@/pages/seo/Year4ElectricalApprenticePage')
 );
-const AgriculturalElectricalInstallationPage = lazy(
+const AgriculturalElectricalInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/AgriculturalElectricalInstallationPage')
 );
-const AirBnBElectricalSafetyPage = lazy(() => import('@/pages/seo/AirBnBElectricalSafetyPage'));
-const ApprenticeEndpointAssessmentPage = lazy(
+const AirBnBElectricalSafetyPage = lazyWithRetry(() => import('@/pages/seo/AirBnBElectricalSafetyPage'));
+const ApprenticeEndpointAssessmentPage = lazyWithRetry(
   () => import('@/pages/seo/ApprenticeEndpointAssessmentPage')
 );
-const ApprenticeProgressionGuidePage = lazy(
+const ApprenticeProgressionGuidePage = lazyWithRetry(
   () => import('@/pages/seo/ApprenticeProgressionGuidePage')
 );
-const BondingConductorsGuidePage = lazy(() => import('@/pages/seo/BondingConductorsGuidePage'));
-const BuildingManagementSystemPage = lazy(() => import('@/pages/seo/BuildingManagementSystemPage'));
-const BuyingHouseElectricalGuidePage = lazy(
+const BondingConductorsGuidePage = lazyWithRetry(() => import('@/pages/seo/BondingConductorsGuidePage'));
+const BuildingManagementSystemPage = lazyWithRetry(() => import('@/pages/seo/BuildingManagementSystemPage'));
+const BuyingHouseElectricalGuidePage = lazyWithRetry(
   () => import('@/pages/seo/BuyingHouseElectricalGuidePage')
 );
-const CCTVInstallationElectricalPage = lazy(
+const CCTVInstallationElectricalPage = lazyWithRetry(
   () => import('@/pages/seo/CCTVInstallationElectricalPage')
 );
-const CISGuideElectricianPage = lazy(() => import('@/pages/seo/CISGuideElectricianPage'));
-const CableBasketInstallationPage = lazy(() => import('@/pages/seo/CableBasketInstallationPage'));
-const CableSelectionGuidePage = lazy(() => import('@/pages/seo/CableSelectionGuidePage'));
-const CableTrayInstallationPage = lazy(() => import('@/pages/seo/CableTrayInstallationPage'));
-const CaravanMotorHomeElectricalPage = lazy(
+const CISGuideElectricianPage = lazyWithRetry(() => import('@/pages/seo/CISGuideElectricianPage'));
+const CableBasketInstallationPage = lazyWithRetry(() => import('@/pages/seo/CableBasketInstallationPage'));
+const CableSelectionGuidePage = lazyWithRetry(() => import('@/pages/seo/CableSelectionGuidePage'));
+const CableTrayInstallationPage = lazyWithRetry(() => import('@/pages/seo/CableTrayInstallationPage'));
+const CaravanMotorHomeElectricalPage = lazyWithRetry(
   () => import('@/pages/seo/CaravanMotorHomeElectricalPage')
 );
-const CareHomeElectricalCostPage = lazy(() => import('@/pages/seo/CareHomeElectricalCostPage'));
-const CityGuildsLevel3GuidePage = lazy(() => import('@/pages/seo/CityGuildsLevel3GuidePage'));
-const CleanroomElectricalPage = lazy(() => import('@/pages/seo/CleanroomElectricalPage'));
-const ConduitInstallationGuidePage = lazy(() => import('@/pages/seo/ConduitInstallationGuidePage'));
-const ConfinedSpaceElectricalPage = lazy(() => import('@/pages/seo/ConfinedSpaceElectricalPage'));
-const ConsumerUnitReplacementBrightonPage = lazy(
+const CareHomeElectricalCostPage = lazyWithRetry(() => import('@/pages/seo/CareHomeElectricalCostPage'));
+const CityGuildsLevel3GuidePage = lazyWithRetry(() => import('@/pages/seo/CityGuildsLevel3GuidePage'));
+const CleanroomElectricalPage = lazyWithRetry(() => import('@/pages/seo/CleanroomElectricalPage'));
+const ConduitInstallationGuidePage = lazyWithRetry(() => import('@/pages/seo/ConduitInstallationGuidePage'));
+const ConfinedSpaceElectricalPage = lazyWithRetry(() => import('@/pages/seo/ConfinedSpaceElectricalPage'));
+const ConsumerUnitReplacementBrightonPage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitReplacementBrightonPage')
 );
-const ConsumerUnitReplacementCardiffPage = lazy(
+const ConsumerUnitReplacementCardiffPage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitReplacementCardiffPage')
 );
-const ConsumerUnitReplacementNottinghamPage = lazy(
+const ConsumerUnitReplacementNottinghamPage = lazyWithRetry(
   () => import('@/pages/seo/ConsumerUnitReplacementNottinghamPage')
 );
-const ContractTemplatesElectricianPage = lazy(
+const ContractTemplatesElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/ContractTemplatesElectricianPage')
 );
-const CustomerReviewsElectricianPage = lazy(
+const CustomerReviewsElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/CustomerReviewsElectricianPage')
 );
-const EALLevel3GuidePage = lazy(() => import('@/pages/seo/EALLevel3GuidePage'));
-const ECSCardGuidePage = lazy(() => import('@/pages/seo/ECSCardGuidePage'));
-const EICRCheltenhamPage = lazy(() => import('@/pages/seo/EICRCheltenhamPage'));
-const EICRContractorGuidePage = lazy(() => import('@/pages/seo/EICRContractorGuidePage'));
-const EICRForNewBuildPage = lazy(() => import('@/pages/seo/EICRForNewBuildPage'));
-const EICRFrequencyGuidePage = lazy(() => import('@/pages/seo/EICRFrequencyGuidePage'));
-const EICRHarogatePage = lazy(() => import('@/pages/seo/EICRHarogatePage'));
-const EICRLutonPage = lazy(() => import('@/pages/seo/EICRLutonPage'));
-const EICRMiddlesbroughPage = lazy(() => import('@/pages/seo/EICRMiddlesbroughPage'));
-const EICRNorthamptonPage = lazy(() => import('@/pages/seo/EICRNorthamptonPage'));
-const EICRReadingPage = lazy(() => import('@/pages/seo/EICRReadingPage'));
-const EICRRemediationPage = lazy(() => import('@/pages/seo/EICRRemediationPage'));
-const EICRSwanseaPage = lazy(() => import('@/pages/seo/EICRSwanseaPage'));
-const EICRTenantRightsPage = lazy(() => import('@/pages/seo/EICRTenantRightsPage'));
-const EVChargerBrandComparisonPage = lazy(() => import('@/pages/seo/EVChargerBrandComparisonPage'));
-const EVChargerGrantsUKPage = lazy(() => import('@/pages/seo/EVChargerGrantsUKPage'));
-const EVChargerInstallationCambridgePage = lazy(
+const EALLevel3GuidePage = lazyWithRetry(() => import('@/pages/seo/EALLevel3GuidePage'));
+const ECSCardGuidePage = lazyWithRetry(() => import('@/pages/seo/ECSCardGuidePage'));
+const EICRCheltenhamPage = lazyWithRetry(() => import('@/pages/seo/EICRCheltenhamPage'));
+const EICRContractorGuidePage = lazyWithRetry(() => import('@/pages/seo/EICRContractorGuidePage'));
+const EICRForNewBuildPage = lazyWithRetry(() => import('@/pages/seo/EICRForNewBuildPage'));
+const EICRFrequencyGuidePage = lazyWithRetry(() => import('@/pages/seo/EICRFrequencyGuidePage'));
+const EICRHarogatePage = lazyWithRetry(() => import('@/pages/seo/EICRHarogatePage'));
+const EICRLutonPage = lazyWithRetry(() => import('@/pages/seo/EICRLutonPage'));
+const EICRMiddlesbroughPage = lazyWithRetry(() => import('@/pages/seo/EICRMiddlesbroughPage'));
+const EICRNorthamptonPage = lazyWithRetry(() => import('@/pages/seo/EICRNorthamptonPage'));
+const EICRReadingPage = lazyWithRetry(() => import('@/pages/seo/EICRReadingPage'));
+const EICRRemediationPage = lazyWithRetry(() => import('@/pages/seo/EICRRemediationPage'));
+const EICRSwanseaPage = lazyWithRetry(() => import('@/pages/seo/EICRSwanseaPage'));
+const EICRTenantRightsPage = lazyWithRetry(() => import('@/pages/seo/EICRTenantRightsPage'));
+const EVChargerBrandComparisonPage = lazyWithRetry(() => import('@/pages/seo/EVChargerBrandComparisonPage'));
+const EVChargerGrantsUKPage = lazyWithRetry(() => import('@/pages/seo/EVChargerGrantsUKPage'));
+const EVChargerInstallationCambridgePage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerInstallationCambridgePage')
 );
-const EVChargerInstallationWolverhamptonPage = lazy(
+const EVChargerInstallationWolverhamptonPage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerInstallationWolverhamptonPage')
 );
-const EVChargerInstallationYorkPage = lazy(
+const EVChargerInstallationYorkPage = lazyWithRetry(
   () => import('@/pages/seo/EVChargerInstallationYorkPage')
 );
-const EarthElectrodeTestingPage = lazy(() => import('@/pages/seo/EarthElectrodeTestingPage'));
-const ElectricShockFirstAidPage = lazy(() => import('@/pages/seo/ElectricShockFirstAidPage'));
-const ElectricStorageHeaterInstallationPage = lazy(
+const EarthElectrodeTestingPage = lazyWithRetry(() => import('@/pages/seo/EarthElectrodeTestingPage'));
+const ElectricShockFirstAidPage = lazyWithRetry(() => import('@/pages/seo/ElectricShockFirstAidPage'));
+const ElectricStorageHeaterInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricStorageHeaterInstallationPage')
 );
-const ElectricalAccidentReportingPage = lazy(
+const ElectricalAccidentReportingPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalAccidentReportingPage')
 );
-const ElectricalBusinessPartnershipPage = lazy(
+const ElectricalBusinessPartnershipPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalBusinessPartnershipPage')
 );
-const ElectricalBusinessValuationPage = lazy(
+const ElectricalBusinessValuationPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalBusinessValuationPage')
 );
-const ElectricalFireSafetyPage = lazy(() => import('@/pages/seo/ElectricalFireSafetyPage'));
-const ElectricalFrameworkContractsPage = lazy(
+const ElectricalFireSafetyPage = lazyWithRetry(() => import('@/pages/seo/ElectricalFireSafetyPage'));
+const ElectricalFrameworkContractsPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalFrameworkContractsPage')
 );
-const ElectricalIssuesHouseValuePage = lazy(
+const ElectricalIssuesHouseValuePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalIssuesHouseValuePage')
 );
-const ElectricalRescueProcedurePage = lazy(
+const ElectricalRescueProcedurePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalRescueProcedurePage')
 );
-const ElectricalSalaryBenchmarkingPage = lazy(
+const ElectricalSalaryBenchmarkingPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalSalaryBenchmarkingPage')
 );
-const ElectricalSurveyBeforeBuyingPage = lazy(
+const ElectricalSurveyBeforeBuyingPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalSurveyBeforeBuyingPage')
 );
-const ElectricalToolInsurancePage2025Page = lazy(
+const ElectricalToolInsurancePage2025Page = lazyWithRetry(
   () => import('@/pages/seo/ElectricalToolInsurancePage2025Page')
 );
-const ElectricalVanLeasingPage = lazy(() => import('@/pages/seo/ElectricalVanLeasingPage'));
-const ElectricianGrimsbyPage = lazy(() => import('@/pages/seo/ElectricianGrimsbyPage'));
-const ElectricianHuddersfieldPage = lazy(() => import('@/pages/seo/ElectricianHuddersfieldPage'));
-const ElectricianMortgagePage = lazy(() => import('@/pages/seo/ElectricianMortgagePage'));
-const ElectricianReferralProgramPage = lazy(
+const ElectricalVanLeasingPage = lazyWithRetry(() => import('@/pages/seo/ElectricalVanLeasingPage'));
+const ElectricianGrimsbyPage = lazyWithRetry(() => import('@/pages/seo/ElectricianGrimsbyPage'));
+const ElectricianHuddersfieldPage = lazyWithRetry(() => import('@/pages/seo/ElectricianHuddersfieldPage'));
+const ElectricianMortgagePage = lazyWithRetry(() => import('@/pages/seo/ElectricianMortgagePage'));
+const ElectricianReferralProgramPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricianReferralProgramPage')
 );
-const ElectricianSalaryEdinburghPage = lazy(
+const ElectricianSalaryEdinburghPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricianSalaryEdinburghPage')
 );
-const ElectricianSalaryGlasgowPage = lazy(() => import('@/pages/seo/ElectricianSalaryGlasgowPage'));
-const ElectricityMeterGuidePage = lazy(() => import('@/pages/seo/ElectricityMeterGuidePage'));
-const EmergencyLightingFaultFindingPage = lazy(
+const ElectricianSalaryGlasgowPage = lazyWithRetry(() => import('@/pages/seo/ElectricianSalaryGlasgowPage'));
+const ElectricityMeterGuidePage = lazyWithRetry(() => import('@/pages/seo/ElectricityMeterGuidePage'));
+const EmergencyLightingFaultFindingPage = lazyWithRetry(
   () => import('@/pages/seo/EmergencyLightingFaultFindingPage')
 );
-const ExhibitionElectricalPage = lazy(() => import('@/pages/seo/ExhibitionElectricalPage'));
-const ExtensionLeadSafetyPage = lazy(() => import('@/pages/seo/ExtensionLeadSafetyPage'));
-const ExternalLightingInstallationPage = lazy(
+const ExhibitionElectricalPage = lazyWithRetry(() => import('@/pages/seo/ExhibitionElectricalPage'));
+const ExtensionLeadSafetyPage = lazyWithRetry(() => import('@/pages/seo/ExtensionLeadSafetyPage'));
+const ExternalLightingInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/ExternalLightingInstallationPage')
 );
-const FP200GoldCableGuidePage = lazy(() => import('@/pages/seo/FP200GoldCableGuidePage'));
-const FindingEmergencyElectricianPage = lazy(
+const FP200GoldCableGuidePage = lazyWithRetry(() => import('@/pages/seo/FP200GoldCableGuidePage'));
+const FindingEmergencyElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/FindingEmergencyElectricianPage')
 );
-const FireAlarmFaultFindingPage = lazy(() => import('@/pages/seo/FireAlarmFaultFindingPage'));
-const FoodProcessingElectricalPage = lazy(() => import('@/pages/seo/FoodProcessingElectricalPage'));
-const FountainPoolElectricalPage = lazy(() => import('@/pages/seo/FountainPoolElectricalPage'));
-const GarageDoorElectricalFaultPage = lazy(
+const FireAlarmFaultFindingPage = lazyWithRetry(() => import('@/pages/seo/FireAlarmFaultFindingPage'));
+const FoodProcessingElectricalPage = lazyWithRetry(() => import('@/pages/seo/FoodProcessingElectricalPage'));
+const FountainPoolElectricalPage = lazyWithRetry(() => import('@/pages/seo/FountainPoolElectricalPage'));
+const GarageDoorElectricalFaultPage = lazyWithRetry(
   () => import('@/pages/seo/GarageDoorElectricalFaultPage')
 );
-const GardenLightingFaultFindingPage = lazy(
+const GardenLightingFaultFindingPage = lazyWithRetry(
   () => import('@/pages/seo/GardenLightingFaultFindingPage')
 );
-const GardenRoomElectricalPage = lazy(() => import('@/pages/seo/GardenRoomElectricalPage'));
-const GeneratorInstallationGuidePage = lazy(
+const GardenRoomElectricalPage = lazyWithRetry(() => import('@/pages/seo/GardenRoomElectricalPage'));
+const GeneratorInstallationGuidePage = lazyWithRetry(
   () => import('@/pages/seo/GeneratorInstallationGuidePage')
 );
-const GoogleAdsElectriciansPage = lazy(() => import('@/pages/seo/GoogleAdsElectriciansPage'));
-const GrowingElectricalBusinessPage = lazy(
+const GoogleAdsElectriciansPage = lazyWithRetry(() => import('@/pages/seo/GoogleAdsElectriciansPage'));
+const GrowingElectricalBusinessPage = lazyWithRetry(
   () => import('@/pages/seo/GrowingElectricalBusinessPage')
 );
-const HealthSafetyAuditElectricianPage = lazy(
+const HealthSafetyAuditElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/HealthSafetyAuditElectricianPage')
 );
-const HiringElectricianApprenticesPage = lazy(
+const HiringElectricianApprenticesPage = lazyWithRetry(
   () => import('@/pages/seo/HiringElectricianApprenticesPage')
 );
-const HomeOfficeElectricalGuidePage = lazy(
+const HomeOfficeElectricalGuidePage = lazyWithRetry(
   () => import('@/pages/seo/HomeOfficeElectricalGuidePage')
 );
-const HospitalElectricalCostPage = lazy(() => import('@/pages/seo/HospitalElectricalCostPage'));
-const HotelEICRPage = lazy(() => import('@/pages/seo/HotelEICRPage'));
-const HybridSolarBatterySystemPage = lazy(() => import('@/pages/seo/HybridSolarBatterySystemPage'));
-const ImmersionHeaterInstallationPage = lazy(
+const HospitalElectricalCostPage = lazyWithRetry(() => import('@/pages/seo/HospitalElectricalCostPage'));
+const HotelEICRPage = lazyWithRetry(() => import('@/pages/seo/HotelEICRPage'));
+const HybridSolarBatterySystemPage = lazyWithRetry(() => import('@/pages/seo/HybridSolarBatterySystemPage'));
+const ImmersionHeaterInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/ImmersionHeaterInstallationPage')
 );
-const IndustrialEarthingSystemsPage = lazy(
+const IndustrialEarthingSystemsPage = lazyWithRetry(
   () => import('@/pages/seo/IndustrialEarthingSystemsPage')
 );
-const IndustrialElectricalCostPage = lazy(() => import('@/pages/seo/IndustrialElectricalCostPage'));
-const InfraredHeatingInstallationPage = lazy(
+const IndustrialElectricalCostPage = lazyWithRetry(() => import('@/pages/seo/IndustrialElectricalCostPage'));
+const InfraredHeatingInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/InfraredHeatingInstallationPage')
 );
-const InstallationMethodsGuidePage = lazy(() => import('@/pages/seo/InstallationMethodsGuidePage'));
-const InsulatedToolsGuidePage = lazy(() => import('@/pages/seo/InsulatedToolsGuidePage'));
-const JIBGoldCardPage = lazy(() => import('@/pages/seo/JIBGoldCardPage'));
-const KitchenElectricalRequirementsPage = lazy(
+const InstallationMethodsGuidePage = lazyWithRetry(() => import('@/pages/seo/InstallationMethodsGuidePage'));
+const InsulatedToolsGuidePage = lazyWithRetry(() => import('@/pages/seo/InsulatedToolsGuidePage'));
+const JIBGoldCardPage = lazyWithRetry(() => import('@/pages/seo/JIBGoldCardPage'));
+const KitchenElectricalRequirementsPage = lazyWithRetry(
   () => import('@/pages/seo/KitchenElectricalRequirementsPage')
 );
-const LandlordElectricalSafetyExeterPage = lazy(
+const LandlordElectricalSafetyExeterPage = lazyWithRetry(
   () => import('@/pages/seo/LandlordElectricalSafetyExeterPage')
 );
-const LandlordElectricalSafetyYorkPage = lazy(
+const LandlordElectricalSafetyYorkPage = lazyWithRetry(
   () => import('@/pages/seo/LandlordElectricalSafetyYorkPage')
 );
-const LedLightingUpgradePage = lazy(() => import('@/pages/seo/LedLightingUpgradePage'));
-const ListedBuildingElectricalPage = lazy(() => import('@/pages/seo/ListedBuildingElectricalPage'));
-const LoopImpedanceTestingGuidePage = lazy(
+const LedLightingUpgradePage = lazyWithRetry(() => import('@/pages/seo/LedLightingUpgradePage'));
+const ListedBuildingElectricalPage = lazyWithRetry(() => import('@/pages/seo/ListedBuildingElectricalPage'));
+const LoopImpedanceTestingGuidePage = lazyWithRetry(
   () => import('@/pages/seo/LoopImpedanceTestingGuidePage')
 );
-const MCSCertificationGuidePage = lazy(() => import('@/pages/seo/MCSCertificationGuidePage'));
-const ManagingSubcontractorsElectricianPage = lazy(
+const MCSCertificationGuidePage = lazyWithRetry(() => import('@/pages/seo/MCSCertificationGuidePage'));
+const ManagingSubcontractorsElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/ManagingSubcontractorsElectricianPage')
 );
-const ManufacturingPlantElectricalPage = lazy(
+const ManufacturingPlantElectricalPage = lazyWithRetry(
   () => import('@/pages/seo/ManufacturingPlantElectricalPage')
 );
-const MineralInsulatedCableGuidePage = lazy(
+const MineralInsulatedCableGuidePage = lazyWithRetry(
   () => import('@/pages/seo/MineralInsulatedCableGuidePage')
 );
-const NewHomeElectricalChecklistPage = lazy(
+const NewHomeElectricalChecklistPage = lazyWithRetry(
   () => import('@/pages/seo/NewHomeElectricalChecklistPage')
 );
-const OfficeElectricalCostPage = lazy(() => import('@/pages/seo/OfficeElectricalCostPage'));
-const OfficeElectricalFitOutPage = lazy(() => import('@/pages/seo/OfficeElectricalFitOutPage'));
-const OffshoreElectricalPage = lazy(() => import('@/pages/seo/OffshoreElectricalPage'));
-const OutbuildingElectricalInstallationPage = lazy(
+const OfficeElectricalCostPage = lazyWithRetry(() => import('@/pages/seo/OfficeElectricalCostPage'));
+const OfficeElectricalFitOutPage = lazyWithRetry(() => import('@/pages/seo/OfficeElectricalFitOutPage'));
+const OffshoreElectricalPage = lazyWithRetry(() => import('@/pages/seo/OffshoreElectricalPage'));
+const OutbuildingElectricalInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/OutbuildingElectricalInstallationPage')
 );
-const OutdoorSocketFaultFindingPage = lazy(
+const OutdoorSocketFaultFindingPage = lazyWithRetry(
   () => import('@/pages/seo/OutdoorSocketFaultFindingPage')
 );
-const PLCElectricalInstallationPage = lazy(
+const PLCElectricalInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/PLCElectricalInstallationPage')
 );
-const PartPSelfCertificationPage = lazy(() => import('@/pages/seo/PartPSelfCertificationPage'));
-const PeriodPropertyElectricalPage = lazy(() => import('@/pages/seo/PeriodPropertyElectricalPage'));
-const PetrochemicalElectricalPage = lazy(() => import('@/pages/seo/PetrochemicalElectricalPage'));
-const PharmaceuticalElectricalPage = lazy(() => import('@/pages/seo/PharmaceuticalElectricalPage'));
-const PolarityTestGuidePage = lazy(() => import('@/pages/seo/PolarityTestGuidePage'));
-const PostWarPropertyElectricalPage = lazy(
+const PartPSelfCertificationPage = lazyWithRetry(() => import('@/pages/seo/PartPSelfCertificationPage'));
+const PeriodPropertyElectricalPage = lazyWithRetry(() => import('@/pages/seo/PeriodPropertyElectricalPage'));
+const PetrochemicalElectricalPage = lazyWithRetry(() => import('@/pages/seo/PetrochemicalElectricalPage'));
+const PharmaceuticalElectricalPage = lazyWithRetry(() => import('@/pages/seo/PharmaceuticalElectricalPage'));
+const PolarityTestGuidePage = lazyWithRetry(() => import('@/pages/seo/PolarityTestGuidePage'));
+const PostWarPropertyElectricalPage = lazyWithRetry(
   () => import('@/pages/seo/PostWarPropertyElectricalPage')
 );
-const PowerFactorCorrectionPage = lazy(() => import('@/pages/seo/PowerFactorCorrectionPage'));
-const PowerSurgeProtectionPage = lazy(() => import('@/pages/seo/PowerSurgeProtectionPage'));
-const PubLicensedPremisesEICRPage = lazy(() => import('@/pages/seo/PubLicensedPremisesEICRPage'));
-const RetailElectricalCostPage = lazy(() => import('@/pages/seo/RetailElectricalCostPage'));
-const RewireCostBrightonPage = lazy(() => import('@/pages/seo/RewireCostBrightonPage'));
-const RewireCostExeterPage = lazy(() => import('@/pages/seo/RewireCostExeterPage'));
-const RewireCostNewcastlePage = lazy(() => import('@/pages/seo/RewireCostNewcastlePage'));
-const RewireCostSheffieldPage = lazy(() => import('@/pages/seo/RewireCostSheffieldPage'));
-const SEOForElectriciansPage = lazy(() => import('@/pages/seo/SEOForElectriciansPage'));
-const SelectElectricalRegistrationPage = lazy(
+const PowerFactorCorrectionPage = lazyWithRetry(() => import('@/pages/seo/PowerFactorCorrectionPage'));
+const PowerSurgeProtectionPage = lazyWithRetry(() => import('@/pages/seo/PowerSurgeProtectionPage'));
+const PubLicensedPremisesEICRPage = lazyWithRetry(() => import('@/pages/seo/PubLicensedPremisesEICRPage'));
+const RetailElectricalCostPage = lazyWithRetry(() => import('@/pages/seo/RetailElectricalCostPage'));
+const RewireCostBrightonPage = lazyWithRetry(() => import('@/pages/seo/RewireCostBrightonPage'));
+const RewireCostExeterPage = lazyWithRetry(() => import('@/pages/seo/RewireCostExeterPage'));
+const RewireCostNewcastlePage = lazyWithRetry(() => import('@/pages/seo/RewireCostNewcastlePage'));
+const RewireCostSheffieldPage = lazyWithRetry(() => import('@/pages/seo/RewireCostSheffieldPage'));
+const SEOForElectriciansPage = lazyWithRetry(() => import('@/pages/seo/SEOForElectriciansPage'));
+const SelectElectricalRegistrationPage = lazyWithRetry(
   () => import('@/pages/seo/SelectElectricalRegistrationPage')
 );
-const SelfAssessmentElectricianPage = lazy(
+const SelfAssessmentElectricianPage = lazyWithRetry(
   () => import('@/pages/seo/SelfAssessmentElectricianPage')
 );
-const SmartLightingControlPage = lazy(() => import('@/pages/seo/SmartLightingControlPage'));
-const SolarDiverterInstallationPage = lazy(
+const SmartLightingControlPage = lazyWithRetry(() => import('@/pages/seo/SmartLightingControlPage'));
+const SolarDiverterInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/SolarDiverterInstallationPage')
 );
-const SolarPVGrantsUKPage = lazy(() => import('@/pages/seo/SolarPVGrantsUKPage'));
-const SolarPanelInstallationEdinburghPage = lazy(
+const SolarPVGrantsUKPage = lazyWithRetry(() => import('@/pages/seo/SolarPVGrantsUKPage'));
+const SolarPanelInstallationEdinburghPage = lazyWithRetry(
   () => import('@/pages/seo/SolarPanelInstallationEdinburghPage')
 );
-const SolarPanelInstallationGlasgowPage = lazy(
+const SolarPanelInstallationGlasgowPage = lazyWithRetry(
   () => import('@/pages/seo/SolarPanelInstallationGlasgowPage')
 );
-const SolarPanelInstallationNewcastlePage = lazy(
+const SolarPanelInstallationNewcastlePage = lazyWithRetry(
   () => import('@/pages/seo/SolarPanelInstallationNewcastlePage')
 );
-const SolarPanelInstallationNottinghamPage = lazy(
+const SolarPanelInstallationNottinghamPage = lazyWithRetry(
   () => import('@/pages/seo/SolarPanelInstallationNottinghamPage')
 );
-const StudentHouseElectricalPage = lazy(() => import('@/pages/seo/StudentHouseElectricalPage'));
-const SubcontractingGuidePage = lazy(() => import('@/pages/seo/SubcontractingGuidePage'));
-const TetheredUntetheredEVChargePage = lazy(
+const StudentHouseElectricalPage = lazyWithRetry(() => import('@/pages/seo/StudentHouseElectricalPage'));
+const SubcontractingGuidePage = lazyWithRetry(() => import('@/pages/seo/SubcontractingGuidePage'));
+const TetheredUntetheredEVChargePage = lazyWithRetry(
   () => import('@/pages/seo/TetheredUntetheredEVChargePage')
 );
-const ThermostatWiringGuidePage = lazy(() => import('@/pages/seo/ThermostatWiringGuidePage'));
-const TransformerInstallationGuidePage = lazy(
+const ThermostatWiringGuidePage = lazyWithRetry(() => import('@/pages/seo/ThermostatWiringGuidePage'));
+const TransformerInstallationGuidePage = lazyWithRetry(
   () => import('@/pages/seo/TransformerInstallationGuidePage')
 );
-const VATForElectriciansPage = lazy(() => import('@/pages/seo/VATForElectriciansPage'));
-const WarehouseElectricalInstallationPage = lazy(
+const VATForElectriciansPage = lazyWithRetry(() => import('@/pages/seo/VATForElectriciansPage'));
+const WarehouseElectricalInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/WarehouseElectricalInstallationPage')
 );
-const WindTurbineElectricalPage = lazy(() => import('@/pages/seo/WindTurbineElectricalPage'));
-const AICircuitDesignerPage = lazy(() => import('@/pages/seo/AICircuitDesignerPage'));
-const AICostEngineerPage = lazy(() => import('@/pages/seo/AICostEngineerPage'));
-const AIElectricianToolsPage = lazy(() => import('@/pages/seo/AIElectricianToolsPage'));
-const AIHealthSafetyAgentPage = lazy(() => import('@/pages/seo/AIHealthSafetyAgentPage'));
-const AM2ExamPreparationPage = lazy(() => import('@/pages/seo/AM2ExamPreparationPage'));
-const AM2OverviewSEOPage = lazy(() => import('@/pages/seo/AM2OverviewSEOPage'));
-const AM2SectionASEOPage = lazy(() => import('@/pages/seo/AM2SectionASEOPage'));
-const AM2SectionBSEOPage = lazy(() => import('@/pages/seo/AM2SectionBSEOPage'));
-const AM2SectionCSEOPage = lazy(() => import('@/pages/seo/AM2SectionCSEOPage'));
-const AM2SectionDSEOPage = lazy(() => import('@/pages/seo/AM2SectionDSEOPage'));
-const AM2SectionESEOPage = lazy(() => import('@/pages/seo/AM2SectionESEOPage'));
-const AdiabaticEquationCalculatorPage = lazy(
+const WindTurbineElectricalPage = lazyWithRetry(() => import('@/pages/seo/WindTurbineElectricalPage'));
+const AICircuitDesignerPage = lazyWithRetry(() => import('@/pages/seo/AICircuitDesignerPage'));
+const AICostEngineerPage = lazyWithRetry(() => import('@/pages/seo/AICostEngineerPage'));
+const AIElectricianToolsPage = lazyWithRetry(() => import('@/pages/seo/AIElectricianToolsPage'));
+const AIHealthSafetyAgentPage = lazyWithRetry(() => import('@/pages/seo/AIHealthSafetyAgentPage'));
+const AM2ExamPreparationPage = lazyWithRetry(() => import('@/pages/seo/AM2ExamPreparationPage'));
+const AM2OverviewSEOPage = lazyWithRetry(() => import('@/pages/seo/AM2OverviewSEOPage'));
+const AM2SectionASEOPage = lazyWithRetry(() => import('@/pages/seo/AM2SectionASEOPage'));
+const AM2SectionBSEOPage = lazyWithRetry(() => import('@/pages/seo/AM2SectionBSEOPage'));
+const AM2SectionCSEOPage = lazyWithRetry(() => import('@/pages/seo/AM2SectionCSEOPage'));
+const AM2SectionDSEOPage = lazyWithRetry(() => import('@/pages/seo/AM2SectionDSEOPage'));
+const AM2SectionESEOPage = lazyWithRetry(() => import('@/pages/seo/AM2SectionESEOPage'));
+const AdiabaticEquationCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/AdiabaticEquationCalculatorPage')
 );
-const ApprenticePortfolioGuidePage = lazy(() => import('@/pages/seo/ApprenticePortfolioGuidePage'));
-const ApprenticeTrainingPage = lazy(() => import('@/pages/seo/ApprenticeTrainingPage'));
-const BMSCoursePage = lazy(() => import('@/pages/seo/BMSCoursePage'));
-const BS7671ObservationCodesPage = lazy(() => import('@/pages/seo/BS7671ObservationCodesPage'));
-const CableSizingCalculatorPage = lazy(() => import('@/pages/seo/CableSizingCalculatorPage'));
-const CashFlowPlannerPage = lazy(() => import('@/pages/seo/CashFlowPlannerPage'));
-const CityGuilds2391Page = lazy(() => import('@/pages/seo/CityGuilds2391Page'));
-const ConduitFillCalculatorPage = lazy(() => import('@/pages/seo/ConduitFillCalculatorPage'));
-const DiversityFactorCalculatorPage = lazy(
+const ApprenticePortfolioGuidePage = lazyWithRetry(() => import('@/pages/seo/ApprenticePortfolioGuidePage'));
+const ApprenticeTrainingPage = lazyWithRetry(() => import('@/pages/seo/ApprenticeTrainingPage'));
+const BMSCoursePage = lazyWithRetry(() => import('@/pages/seo/BMSCoursePage'));
+const BS7671ObservationCodesPage = lazyWithRetry(() => import('@/pages/seo/BS7671ObservationCodesPage'));
+const CableSizingCalculatorPage = lazyWithRetry(() => import('@/pages/seo/CableSizingCalculatorPage'));
+const CashFlowPlannerPage = lazyWithRetry(() => import('@/pages/seo/CashFlowPlannerPage'));
+const CityGuilds2391Page = lazyWithRetry(() => import('@/pages/seo/CityGuilds2391Page'));
+const ConduitFillCalculatorPage = lazyWithRetry(() => import('@/pages/seo/ConduitFillCalculatorPage'));
+const DiversityFactorCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/DiversityFactorCalculatorPage')
 );
-const EarthLoopImpedanceCalculatorPage = lazy(
+const EarthLoopImpedanceCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/EarthLoopImpedanceCalculatorPage')
 );
-const EighteenthEditionCoursePage = lazy(() => import('@/pages/seo/EighteenthEditionCoursePage'));
-const ElectricalQuotingAppPage = lazy(() => import('@/pages/seo/ElectricalQuotingAppPage'));
-const ElectricalTestingCalculatorsPage = lazy(
+const EighteenthEditionCoursePage = lazyWithRetry(() => import('@/pages/seo/EighteenthEditionCoursePage'));
+const ElectricalQuotingAppPage = lazyWithRetry(() => import('@/pages/seo/ElectricalQuotingAppPage'));
+const ElectricalTestingCalculatorsPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalTestingCalculatorsPage')
 );
-const ElectricianInvoiceAppPage = lazy(() => import('@/pages/seo/ElectricianInvoiceAppPage'));
-const GuidesHubPage = lazy(() => import('@/pages/seo/GuidesHubPage'));
-const LocationsIndexPage = lazy(() => import('@/pages/seo/LocationsIndexPage'));
-const StartingElectricalApprenticeshipPage = lazy(
+const ElectricianInvoiceAppPage = lazyWithRetry(() => import('@/pages/seo/ElectricianInvoiceAppPage'));
+const GuidesHubPage = lazyWithRetry(() => import('@/pages/seo/GuidesHubPage'));
+const LocationsIndexPage = lazyWithRetry(() => import('@/pages/seo/LocationsIndexPage'));
+const StartingElectricalApprenticeshipPage = lazyWithRetry(
   () => import('@/pages/seo/StartingElectricalApprenticeshipPage')
 );
-const ApprenticeToolListPage = lazy(() => import('@/pages/seo/ApprenticeToolListPage'));
-const ApprenticeshipInterviewQuestionsPage = lazy(
+const ApprenticeToolListPage = lazyWithRetry(() => import('@/pages/seo/ApprenticeToolListPage'));
+const ApprenticeshipInterviewQuestionsPage = lazyWithRetry(
   () => import('@/pages/seo/ApprenticeshipInterviewQuestionsPage')
 );
-const FindElectricalApprenticeshipPage = lazy(
+const FindElectricalApprenticeshipPage = lazyWithRetry(
   () => import('@/pages/seo/FindElectricalApprenticeshipPage')
 );
-const AdultElectricalApprenticeshipPage = lazy(
+const AdultElectricalApprenticeshipPage = lazyWithRetry(
   () => import('@/pages/seo/AdultElectricalApprenticeshipPage')
 );
-const Hardest2391QuestionsPage = lazy(() => import('@/pages/seo/Hardest2391QuestionsPage'));
-const IPAFTrainingPage = lazy(() => import('@/pages/seo/IPAFTrainingPage'));
-const InspectionTestingCoursePage = lazy(() => import('@/pages/seo/InspectionTestingCoursePage'));
-const JobProfitabilityCalculatorPage = lazy(
+const Hardest2391QuestionsPage = lazyWithRetry(() => import('@/pages/seo/Hardest2391QuestionsPage'));
+const IPAFTrainingPage = lazyWithRetry(() => import('@/pages/seo/IPAFTrainingPage'));
+const InspectionTestingCoursePage = lazyWithRetry(() => import('@/pages/seo/InspectionTestingCoursePage'));
+const JobProfitabilityCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/JobProfitabilityCalculatorPage')
 );
-const Level2ElectricalPage = lazy(() => import('@/pages/seo/Level2ElectricalPage'));
-const Level3ElectricalPage = lazy(() => import('@/pages/seo/Level3ElectricalPage'));
-const ManualHandlingCoursePage = lazy(() => import('@/pages/seo/ManualHandlingCoursePage'));
-const MaxDemandCalculatorPage = lazy(() => import('@/pages/seo/MaxDemandCalculatorPage'));
-const MinorWorksCertificatePage = lazy(() => import('@/pages/seo/MinorWorksCertificatePage'));
-const PASMATrainingPage = lazy(() => import('@/pages/seo/PASMATrainingPage'));
-const PATTestingPage = lazy(() => import('@/pages/seo/PATTestingPage'));
-const PowerFactorCalculatorPage = lazy(() => import('@/pages/seo/PowerFactorCalculatorPage'));
-const ProspectiveFaultCurrentCalculatorPage = lazy(
+const Level2ElectricalPage = lazyWithRetry(() => import('@/pages/seo/Level2ElectricalPage'));
+const Level3ElectricalPage = lazyWithRetry(() => import('@/pages/seo/Level3ElectricalPage'));
+const ManualHandlingCoursePage = lazyWithRetry(() => import('@/pages/seo/ManualHandlingCoursePage'));
+const MaxDemandCalculatorPage = lazyWithRetry(() => import('@/pages/seo/MaxDemandCalculatorPage'));
+const MinorWorksCertificatePage = lazyWithRetry(() => import('@/pages/seo/MinorWorksCertificatePage'));
+const PASMATrainingPage = lazyWithRetry(() => import('@/pages/seo/PASMATrainingPage'));
+const PATTestingPage = lazyWithRetry(() => import('@/pages/seo/PATTestingPage'));
+const PowerFactorCalculatorPage = lazyWithRetry(() => import('@/pages/seo/PowerFactorCalculatorPage'));
+const ProspectiveFaultCurrentCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/ProspectiveFaultCurrentCalculatorPage')
 );
-const RAMSGeneratorPage = lazy(() => import('@/pages/seo/RAMSGeneratorPage'));
-const RingCircuitCalculatorPage = lazy(() => import('@/pages/seo/RingCircuitCalculatorPage'));
-const TestingSequenceGuidePage = lazy(() => import('@/pages/seo/TestingSequenceGuidePage'));
-const ThreePhasePowerCalculatorPage = lazy(
+const RAMSGeneratorPage = lazyWithRetry(() => import('@/pages/seo/RAMSGeneratorPage'));
+const RingCircuitCalculatorPage = lazyWithRetry(() => import('@/pages/seo/RingCircuitCalculatorPage'));
+const TestingSequenceGuidePage = lazyWithRetry(() => import('@/pages/seo/TestingSequenceGuidePage'));
+const ThreePhasePowerCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/ThreePhasePowerCalculatorPage')
 );
-const ToolsHubPage = lazy(() => import('@/pages/seo/ToolsHubPage'));
-const TrunkingFillCalculatorPage = lazy(() => import('@/pages/seo/TrunkingFillCalculatorPage'));
-const TrainingHubPage = lazy(() => import('@/pages/seo/TrainingHubPage'));
-const VoltageDropCalculatorPage = lazy(() => import('@/pages/seo/VoltageDropCalculatorPage'));
-const EPAPreparationPage = lazy(() => import('@/pages/seo/EPAPreparationPage'));
-const CableJointingGuidePage = lazy(() => import('@/pages/seo/CableJointingGuidePage'));
-const CableManagementSystemsPage = lazy(() => import('@/pages/seo/CableManagementSystemsPage'));
-const ElectricUnderfloorHeatingGuidePage = lazy(
+const ToolsHubPage = lazyWithRetry(() => import('@/pages/seo/ToolsHubPage'));
+const TrunkingFillCalculatorPage = lazyWithRetry(() => import('@/pages/seo/TrunkingFillCalculatorPage'));
+const TrainingHubPage = lazyWithRetry(() => import('@/pages/seo/TrainingHubPage'));
+const VoltageDropCalculatorPage = lazyWithRetry(() => import('@/pages/seo/VoltageDropCalculatorPage'));
+const EPAPreparationPage = lazyWithRetry(() => import('@/pages/seo/EPAPreparationPage'));
+const CableJointingGuidePage = lazyWithRetry(() => import('@/pages/seo/CableJointingGuidePage'));
+const CableManagementSystemsPage = lazyWithRetry(() => import('@/pages/seo/CableManagementSystemsPage'));
+const ElectricUnderfloorHeatingGuidePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricUnderfloorHeatingGuidePage')
 );
-const ElectricalApprenticeshipApplyPage = lazy(
+const ElectricalApprenticeshipApplyPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalApprenticeshipApplyPage')
 );
-const ElectricalDampProofingPage = lazy(() => import('@/pages/seo/ElectricalDampProofingPage'));
-const ElectricalInstallationConduitPage = lazy(
+const ElectricalDampProofingPage = lazyWithRetry(() => import('@/pages/seo/ElectricalDampProofingPage'));
+const ElectricalInstallationConduitPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalInstallationConduitPage')
 );
-const ElectricalLoadCalculationPage = lazy(
+const ElectricalLoadCalculationPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalLoadCalculationPage')
 );
-const ElectricalTestEquipmentGuidePage = lazy(
+const ElectricalTestEquipmentGuidePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalTestEquipmentGuidePage')
 );
-const ElectricianBerkshirePage = lazy(() => import('@/pages/seo/ElectricianBerkshirePage'));
-const ElectricianCambridgeshirePage = lazy(
+const ElectricianBerkshirePage = lazyWithRetry(() => import('@/pages/seo/ElectricianBerkshirePage'));
+const ElectricianCambridgeshirePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricianCambridgeshirePage')
 );
-const ElectricianEssexPage = lazy(() => import('@/pages/seo/ElectricianEssexPage'));
-const ElectricianHertfordshirePage = lazy(() => import('@/pages/seo/ElectricianHertfordshirePage'));
-const ElectricianKentPage = lazy(() => import('@/pages/seo/ElectricianKentPage'));
-const ElectricianLincolnshirePage = lazy(() => import('@/pages/seo/ElectricianLincolnshirePage'));
-const ElectricianNorfolkPage = lazy(() => import('@/pages/seo/ElectricianNorfolkPage'));
-const ElectricianOxfordshirePage = lazy(() => import('@/pages/seo/ElectricianOxfordshirePage'));
-const ElectricianSuffolkPage = lazy(() => import('@/pages/seo/ElectricianSuffolkPage'));
-const OfficeElectricalRequirementsPage = lazy(
+const ElectricianEssexPage = lazyWithRetry(() => import('@/pages/seo/ElectricianEssexPage'));
+const ElectricianHertfordshirePage = lazyWithRetry(() => import('@/pages/seo/ElectricianHertfordshirePage'));
+const ElectricianKentPage = lazyWithRetry(() => import('@/pages/seo/ElectricianKentPage'));
+const ElectricianLincolnshirePage = lazyWithRetry(() => import('@/pages/seo/ElectricianLincolnshirePage'));
+const ElectricianNorfolkPage = lazyWithRetry(() => import('@/pages/seo/ElectricianNorfolkPage'));
+const ElectricianOxfordshirePage = lazyWithRetry(() => import('@/pages/seo/ElectricianOxfordshirePage'));
+const ElectricianSuffolkPage = lazyWithRetry(() => import('@/pages/seo/ElectricianSuffolkPage'));
+const OfficeElectricalRequirementsPage = lazyWithRetry(
   () => import('@/pages/seo/OfficeElectricalRequirementsPage')
 );
-const SmartMeterElectricalWorkPage = lazy(() => import('@/pages/seo/SmartMeterElectricalWorkPage'));
-const SolarPVSystemSizingPage = lazy(() => import('@/pages/seo/SolarPVSystemSizingPage'));
-const SumpPumpElectricalInstallationPage = lazy(
+const SmartMeterElectricalWorkPage = lazyWithRetry(() => import('@/pages/seo/SmartMeterElectricalWorkPage'));
+const SolarPVSystemSizingPage = lazyWithRetry(() => import('@/pages/seo/SolarPVSystemSizingPage'));
+const SumpPumpElectricalInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/SumpPumpElectricalInstallationPage')
 );
-const WiringRegulationsBuildingRegulationsPage = lazy(
+const WiringRegulationsBuildingRegulationsPage = lazyWithRetry(
   () => import('@/pages/seo/WiringRegulationsBuildingRegulationsPage')
 );
-const ConsumerUnitRegulationsPage = lazy(() => import('@/pages/seo/ConsumerUnitRegulationsPage'));
-const ConsumerUnitTypesGuidePage = lazy(() => import('@/pages/seo/ConsumerUnitTypesGuidePage'));
-const EICCertificatePage = lazy(() => import('@/pages/seo/EICCertificatePage'));
-const EVChargerCertificatePage = lazy(() => import('@/pages/seo/EVChargerCertificatePage'));
-const EarthingArrangementsPage = lazy(() => import('@/pages/seo/EarthingArrangementsPage'));
-const ElectricalContractorInsurancePage = lazy(
+const ConsumerUnitRegulationsPage = lazyWithRetry(() => import('@/pages/seo/ConsumerUnitRegulationsPage'));
+const ConsumerUnitTypesGuidePage = lazyWithRetry(() => import('@/pages/seo/ConsumerUnitTypesGuidePage'));
+const EICCertificatePage = lazyWithRetry(() => import('@/pages/seo/EICCertificatePage'));
+const EVChargerCertificatePage = lazyWithRetry(() => import('@/pages/seo/EVChargerCertificatePage'));
+const EarthingArrangementsPage = lazyWithRetry(() => import('@/pages/seo/EarthingArrangementsPage'));
+const ElectricalContractorInsurancePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalContractorInsurancePage')
 );
-const ElectricalEngineeringDegreePage = lazy(
+const ElectricalEngineeringDegreePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalEngineeringDegreePage')
 );
-const ElectricianDerbyshirePage = lazy(() => import('@/pages/seo/ElectricianDerbyshirePage'));
-const ElectricianHourlyRatePage = lazy(() => import('@/pages/seo/ElectricianHourlyRatePage'));
-const EmergencyLightingCertificatePage = lazy(
+const ElectricianDerbyshirePage = lazyWithRetry(() => import('@/pages/seo/ElectricianDerbyshirePage'));
+const ElectricianHourlyRatePage = lazyWithRetry(() => import('@/pages/seo/ElectricianHourlyRatePage'));
+const EmergencyLightingCertificatePage = lazyWithRetry(
   () => import('@/pages/seo/EmergencyLightingCertificatePage')
 );
-const FireAlarmCertificatePage = lazy(() => import('@/pages/seo/FireAlarmCertificatePage'));
-const EICRClientHandoverGuidePage = lazy(() => import('@/pages/seo/EICRClientHandoverGuidePage'));
-const EICRCommonMistakesPage = lazy(() => import('@/pages/seo/EICRCommonMistakesPage'));
-const EICRWhatToIncludePage = lazy(() => import('@/pages/seo/EICRWhatToIncludePage'));
-const HowToDoSafeIsolationPage = lazy(() => import('@/pages/seo/HowToDoSafeIsolationPage'));
-const HowToFillInEICRPage = lazy(() => import('@/pages/seo/HowToFillInEICRPage'));
-const HowToReadWiringDiagramPage = lazy(() => import('@/pages/seo/HowToReadWiringDiagramPage'));
-const HowToSizeCablesPage = lazy(() => import('@/pages/seo/HowToSizeCablesPage'));
-const HowToTestInsulationResistancePage = lazy(
+const FireAlarmCertificatePage = lazyWithRetry(() => import('@/pages/seo/FireAlarmCertificatePage'));
+const EICRClientHandoverGuidePage = lazyWithRetry(() => import('@/pages/seo/EICRClientHandoverGuidePage'));
+const EICRCommonMistakesPage = lazyWithRetry(() => import('@/pages/seo/EICRCommonMistakesPage'));
+const EICRWhatToIncludePage = lazyWithRetry(() => import('@/pages/seo/EICRWhatToIncludePage'));
+const HowToDoSafeIsolationPage = lazyWithRetry(() => import('@/pages/seo/HowToDoSafeIsolationPage'));
+const HowToFillInEICRPage = lazyWithRetry(() => import('@/pages/seo/HowToFillInEICRPage'));
+const HowToReadWiringDiagramPage = lazyWithRetry(() => import('@/pages/seo/HowToReadWiringDiagramPage'));
+const HowToSizeCablesPage = lazyWithRetry(() => import('@/pages/seo/HowToSizeCablesPage'));
+const HowToTestInsulationResistancePage = lazyWithRetry(
   () => import('@/pages/seo/HowToTestInsulationResistancePage')
 );
-const LightingCircuitInstallationPage = lazy(
+const LightingCircuitInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/LightingCircuitInstallationPage')
 );
-const PartPBuildingRegulationsPage = lazy(() => import('@/pages/seo/PartPBuildingRegulationsPage'));
-const RCBOInstallationGuidePage = lazy(() => import('@/pages/seo/RCBOInstallationGuidePage'));
-const SocketOutletInstallationPage = lazy(() => import('@/pages/seo/SocketOutletInstallationPage'));
-const SolarPVCertificatePage = lazy(() => import('@/pages/seo/SolarPVCertificatePage'));
-const NightStorageHeaterReplacementPage = lazy(
+const PartPBuildingRegulationsPage = lazyWithRetry(() => import('@/pages/seo/PartPBuildingRegulationsPage'));
+const RCBOInstallationGuidePage = lazyWithRetry(() => import('@/pages/seo/RCBOInstallationGuidePage'));
+const SocketOutletInstallationPage = lazyWithRetry(() => import('@/pages/seo/SocketOutletInstallationPage'));
+const SolarPVCertificatePage = lazyWithRetry(() => import('@/pages/seo/SolarPVCertificatePage'));
+const NightStorageHeaterReplacementPage = lazyWithRetry(
   () => import('@/pages/seo/NightStorageHeaterReplacementPage')
 );
-const ElectricBoilerInstallationPage = lazy(
+const ElectricBoilerInstallationPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricBoilerInstallationPage')
 );
-const FusedSpurInstallationGuidePage = lazy(
+const FusedSpurInstallationGuidePage = lazyWithRetry(
   () => import('@/pages/seo/FusedSpurInstallationGuidePage')
 );
-const TwoWaySwitchWiringPage = lazy(() => import('@/pages/seo/TwoWaySwitchWiringPage'));
-const ElectricianStaffordshirePage = lazy(() => import('@/pages/seo/ElectricianStaffordshirePage'));
-const EICRForStudentHousesPage = lazy(() => import('@/pages/seo/EICRForStudentHousesPage'));
-const EICClientHandoverGuidePage = lazy(() => import('@/pages/seo/EICClientHandoverGuidePage'));
-const EICCommonMistakesPage = lazy(() => import('@/pages/seo/EICCommonMistakesPage'));
-const EICDigitalVsPaperPage = lazy(() => import('@/pages/seo/EICDigitalVsPaperPage'));
-const EICRExampleAndTemplatePage = lazy(() => import('@/pages/seo/EICRExampleAndTemplatePage'));
-const EICRWhenYouNeedOnePage = lazy(() => import('@/pages/seo/EICRWhenYouNeedOnePage'));
-const EICWhatToIncludePage = lazy(() => import('@/pages/seo/EICWhatToIncludePage'));
-const FullRewireCostGuidePage = lazy(() => import('@/pages/seo/FullRewireCostGuidePage'));
-const FullRewireLabourAndMaterialsPage = lazy(
+const TwoWaySwitchWiringPage = lazyWithRetry(() => import('@/pages/seo/TwoWaySwitchWiringPage'));
+const ElectricianStaffordshirePage = lazyWithRetry(() => import('@/pages/seo/ElectricianStaffordshirePage'));
+const EICRForStudentHousesPage = lazyWithRetry(() => import('@/pages/seo/EICRForStudentHousesPage'));
+const EICClientHandoverGuidePage = lazyWithRetry(() => import('@/pages/seo/EICClientHandoverGuidePage'));
+const EICCommonMistakesPage = lazyWithRetry(() => import('@/pages/seo/EICCommonMistakesPage'));
+const EICDigitalVsPaperPage = lazyWithRetry(() => import('@/pages/seo/EICDigitalVsPaperPage'));
+const EICRExampleAndTemplatePage = lazyWithRetry(() => import('@/pages/seo/EICRExampleAndTemplatePage'));
+const EICRWhenYouNeedOnePage = lazyWithRetry(() => import('@/pages/seo/EICRWhenYouNeedOnePage'));
+const EICWhatToIncludePage = lazyWithRetry(() => import('@/pages/seo/EICWhatToIncludePage'));
+const FullRewireCostGuidePage = lazyWithRetry(() => import('@/pages/seo/FullRewireCostGuidePage'));
+const FullRewireLabourAndMaterialsPage = lazyWithRetry(
   () => import('@/pages/seo/FullRewireLabourAndMaterialsPage')
 );
-const FullRewirePriceBreakdownPage = lazy(() => import('@/pages/seo/FullRewirePriceBreakdownPage'));
-const MinorWorksCertificateCommonMistakesPage = lazy(
+const FullRewirePriceBreakdownPage = lazyWithRetry(() => import('@/pages/seo/FullRewirePriceBreakdownPage'));
+const MinorWorksCertificateCommonMistakesPage = lazyWithRetry(
   () => import('@/pages/seo/MinorWorksCertificateCommonMistakesPage')
 );
-const MinorWorksCertificateHowToFillInPage = lazy(
+const MinorWorksCertificateHowToFillInPage = lazyWithRetry(
   () => import('@/pages/seo/MinorWorksCertificateHowToFillInPage')
 );
-const MinorWorksCertificateWhatToIncludePage = lazy(
+const MinorWorksCertificateWhatToIncludePage = lazyWithRetry(
   () => import('@/pages/seo/MinorWorksCertificateWhatToIncludePage')
 );
-const PartialRewireCostGuidePage = lazy(() => import('@/pages/seo/PartialRewireCostGuidePage'));
-const PartialRewireLabourAndMaterialsPage = lazy(
+const PartialRewireCostGuidePage = lazyWithRetry(() => import('@/pages/seo/PartialRewireCostGuidePage'));
+const PartialRewireLabourAndMaterialsPage = lazyWithRetry(
   () => import('@/pages/seo/PartialRewireLabourAndMaterialsPage')
 );
-const PartialRewirePriceBreakdownPage = lazy(
+const PartialRewirePriceBreakdownPage = lazyWithRetry(
   () => import('@/pages/seo/PartialRewirePriceBreakdownPage')
 );
-const RCBOKeepsTrippingCommonCausesPage = lazy(
+const RCBOKeepsTrippingCommonCausesPage = lazyWithRetry(
   () => import('@/pages/seo/RCBOKeepsTrippingCommonCausesPage')
 );
-const RCBOKeepsTrippingTestSequencePage = lazy(
+const RCBOKeepsTrippingTestSequencePage = lazyWithRetry(
   () => import('@/pages/seo/RCBOKeepsTrippingTestSequencePage')
 );
-const Semi1930sConsumerUnitUpgradePage = lazy(
+const Semi1930sConsumerUnitUpgradePage = lazyWithRetry(
   () => import('@/pages/seo/Semi1930sConsumerUnitUpgradePage')
 );
-const Semi1930sEICRGuidePage = lazy(() => import('@/pages/seo/Semi1930sEICRGuidePage'));
-const Semi1930sElectricalRequirementsPage = lazy(
+const Semi1930sEICRGuidePage = lazyWithRetry(() => import('@/pages/seo/Semi1930sEICRGuidePage'));
+const Semi1930sElectricalRequirementsPage = lazyWithRetry(
   () => import('@/pages/seo/Semi1930sElectricalRequirementsPage')
 );
 
@@ -11665,10 +11665,10 @@ export function getSEORoutes() {
         }
       />
       <Route
-        path="/guides/afdd-mandatory-hmo-care-home-a4-2026"
+        path="/guides/afdd-hmo-care-home-a4-2026"
         element={
           <LazyRoute>
-            <AFDDMandatoryHMOCareHomeA4Page />
+            <AFDDHmoCareHomeA4Page />
           </LazyRoute>
         }
       />

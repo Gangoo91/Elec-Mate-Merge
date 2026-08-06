@@ -134,9 +134,10 @@ const WageInformationTab = () => {
       description: `JIB national standard rates from 5 January 2026 (£${JIB_RATES_2026.apprentice.stage1.london.toFixed(2)} - £${JIB_RATES_2026.apprentice.stage4.london.toFixed(2)} in the JIB London area). Stage rises are linked to passing qualifications.`,
     },
     {
-      grade: 'Electrical Improver',
-      jibRate: `£${JIB_RATES_2026.graded.electricalImprover.toFixed(2)}`,
-      description: 'Recently qualified, gaining experience. Typically 6-12 months after completing apprenticeship.',
+      grade: 'ECS Experienced Worker',
+      jibRate: `£${JIB_RATES_2026.graded.ecsExperiencedWorker.toFixed(2)}`,
+      description:
+        'Recently qualified and gaining experience — the JIB grade between apprentice and Electrician. Paid the same as a Trainee Electrician Stage 3.',
     },
     {
       grade: 'Electrician',

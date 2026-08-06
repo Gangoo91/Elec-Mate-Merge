@@ -88,7 +88,7 @@ Every indexable SEO page on elec-mate.com, grouped by page type. 1149 pages.
 - [Bs 7671 A4 2026 Tn Cs Pnb Earthing](https://www.elec-mate.com/guides/bs-7671-a4-2026-tn-cs-pnb-earthing)
 - [Ac Vs Dc Earthing Solar Ev](https://www.elec-mate.com/guides/ac-vs-dc-earthing-solar-ev) — AC vs DC Earthing for Solar PV and EV Charging
 - [Afdd Arc Fault Detection](https://www.elec-mate.com/guides/afdd-arc-fault-detection) — AFDD Guide
-- [Afdd Mandatory Hmo Care Home A4 2026](https://www.elec-mate.com/guides/afdd-mandatory-hmo-care-home-a4-2026)
+- [AFDD in HMOs and Care Homes A4 2026](https://www.elec-mate.com/guides/afdd-hmo-care-home-a4-2026)
 - [Ai Electrical Fault Finding](https://www.elec-mate.com/guides/ai-electrical-fault-finding) — AI Electrical Fault Finding
 - [Ai For Electrical Apprentices](https://www.elec-mate.com/guides/ai-for-electrical-apprentices) — AI for Electrical Apprentices
 - [Ai Tools For Electricians](https://www.elec-mate.com/guides/ai-tools-for-electricians) — AI for Electricians: 7 Tools 2026

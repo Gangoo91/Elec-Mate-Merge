@@ -8,8 +8,9 @@ export const maximumDemandContent: CalculatorContent = {
   governingStandards: ['BS 7671', 'IET On-Site Guide'],
 
   whyItMatters: [
-    'Maximum demand is the realistic peak load after diversity — it sizes the supply, main switch, tails and any DNO connection.',
-    'BS 7671 requires maximum demand (taking diversity into account) to be assessed for every installation.',
+    'Maximum demand is the realistic peak load after diversity — it sizes the supply, tails and any DNO connection.',
+    'BS 7671 Reg 311.1 requires the maximum demand to be determined; diversity may be taken into account in determining it.',
+    'Reg 536.4.202 (A4:2026): diversity shall not be used as a means of load curtailment, load control or overload protection — the rated current of a consumer unit or distribution board is a separate check.',
     'A single-phase domestic supply is typically limited around 80–100 A; exceeding it means a three-phase or upgraded supply.',
     'Getting it wrong either overloads the intake or pays for an unnecessary upgrade.',
   ],
@@ -47,15 +48,15 @@ export const maximumDemandContent: CalculatorContent = {
       standard: 'BS 7671',
       citation: 'Regulation 311.1 — Maximum demand and diversity',
       clauseText:
-        'The maximum demand of an installation, taking diversity into account, shall be assessed. The IET On-Site Guide provides diversity allowances to support this assessment.',
-      tableRefs: ['On-Site Guide Appendix A'],
+        'For economic and reliable design of an installation within thermal limits and admissible voltage drop, the maximum demand shall be determined. In determining the maximum demand of an installation or part thereof, diversity may be taken into account. The IET On-Site Guide, Appendix A, Table A2 provides the diversity allowances; BS 7671 itself publishes none.',
+      tableRefs: ['On-Site Guide Appendix A, Table A2', 'Reg 536.4.202'],
     },
   ],
 
   _grounding: {
     status: 'thin',
-    generatedAt: '2026-06-01',
+    generatedAt: '2026-08-06',
     notes:
-      'Reg 311.1 (assess maximum demand with diversity) is foundational; current conversion matches the engine. Supply-limit figures are typical UK values.',
+      'Reg 311.1 quoted verbatim from the printed BS 7671:2018+A4:2026 text — "shall be determined" applies to maximum demand, "may be taken into account" to diversity. Reg 536.4.202 verified verbatim. Supply-limit figures are typical UK values, derived from 100 A at the selected voltage, not from BS 7671 (supply capacity is a DNO/ESQCR matter).',
   },
 };

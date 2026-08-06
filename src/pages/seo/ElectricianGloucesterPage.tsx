@@ -191,7 +191,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EICR for rental properties</strong> — five-yearly EICRs required for all
-                private rented properties under the 2020 Regulations. Section 631 of BS 7671 governs
+                private rented properties under the 2020 Regulations. Chapter 65 of BS 7671 governs
                 periodic inspection methodology.
               </span>
             </li>

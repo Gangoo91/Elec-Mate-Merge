@@ -48,7 +48,7 @@ const keyTakeaways = [
   'City of Wolverhampton Council is the local housing authority responsible for enforcement. Civil penalties of up to £30,000 per breach can be imposed on non-compliant landlords.',
   'Wolverhampton has a substantial private rented sector and a high concentration of older terraced housing stock that commonly presents C2 observations on inspection, including absent RCD protection and deteriorated wiring.',
   'HMOs in Wolverhampton require a valid EICR as a mandatory condition of licensing under both mandatory and additional HMO licensing schemes operated by the council.',
-  'If the EICR identifies C1 or C2 observations (classified under BS 7671 Section 631), landlords must complete all remedial work within 28 days or sooner if the inspector specifies.',
+  'If the EICR identifies C1 or C2 observations (classified under BS 7671 Chapter 65), landlords must complete all remedial work within 28 days or sooner if the inspector specifies.',
 ];
 
 const faqs = [
@@ -163,7 +163,7 @@ const sections = [
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
-                (Section 631 covers periodic inspection and testing).
+                (Chapter 65 covers periodic inspection and testing).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -442,7 +442,7 @@ const sections = [
     content: (
       <>
         <p>
-          When an EICR identifies C1 or C2 observations (classified under BS 7671 Section 631), the
+          When an EICR identifies C1 or C2 observations (classified under BS 7671 Chapter 65), the
           landlord is legally required to complete remedial work within strict timescales under the
           2020 Regulations.
         </p>

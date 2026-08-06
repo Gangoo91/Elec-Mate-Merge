@@ -43,6 +43,8 @@ import {
   countDuplicateCircuits,
   renumberDuplicateCircuits,
   applyCircuitNumber,
+  meansNotACircuit,
+  DEVICE_ROW_NUMBER,
 } from '@/utils/circuitNumbering';
 import { moveCircuitUp, moveCircuitDown } from '@/utils/circuitReorder';
 import BoardSection, { BoardToolCallbacks } from './testing/BoardSection';
@@ -79,6 +81,9 @@ import {
 } from '@/utils/zsCalculations';
 import { isNotApplicableValue } from '@/utils/testValidation';
 import { getDefaultBsStandard } from '@/types/protectiveDeviceTypes';
+import { checkRegulationCompliance } from '@/utils/autoRegChecker';
+import { isRealCircuit } from '@/utils/validation/applicability';
+import ScheduleValidateSheet from './testing/ScheduleValidateSheet';
 
 interface EICRScheduleOfTestsProps {
   formData: any;
@@ -335,6 +340,8 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   const [showSmartAutoFillDialog, setShowSmartAutoFillDialog] = useState(false);
   const [showScribbleDialog, setShowScribbleDialog] = useState(false);
   const [showBulkInfillDialog, setShowBulkInfillDialog] = useState(false);
+  // Whole-schedule validate — the board whose circuits are being checked.
+  const [validateBoardId, setValidateBoardId] = useState<string | null>(null);
   const [showClearAllConfirm, setShowClearAllConfirm] = useState(false);
   const [lastDeleted, setLastDeleted] = useState<{ circuit: TestResult; index: number } | null>(
     null
@@ -1085,6 +1092,69 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   stopVoiceRef.current = stopVoice;
 
   // Create board-specific tool callbacks
+  /**
+   * Create an EICR observation from a validation finding.
+   *
+   * Appends to `formData.defectObservations` — the same array the inspection
+   * checklist and the observations section already read. Written here rather
+   * than in either of those components so this touches nothing another stream
+   * is working in.
+   *
+   * Never given an `inspectionItemId`: that field links an observation to a
+   * checklist item, and clearing that item prunes the observation with it (the
+   * C1/C2 bulk-chip work). A finding raised from the schedule belongs to a
+   * circuit, not a checklist row, and must survive independently.
+   */
+  const handleCreateObservation = useCallback(
+    (obs: {
+      item: string;
+      defectCode: 'C1' | 'C2' | 'C3' | 'FI';
+      description: string;
+      recommendation: string;
+    }) => {
+      const existing = Array.isArray(formData.defectObservations)
+        ? formData.defectObservations
+        : [];
+      onUpdate('defectObservations', [
+        ...existing,
+        {
+          id: `val-${Date.now()}-${Math.round(performance.now())}`,
+          item: obs.item,
+          defectCode: obs.defectCode,
+          description: obs.description,
+          recommendation: obs.recommendation,
+          rectified: false,
+        },
+      ]);
+      toast.success(`${obs.defectCode} observation added`, {
+        description: obs.item,
+      });
+    },
+    [formData.defectObservations, onUpdate]
+  );
+
+  // ELE-1487 — issue count per board, so the Validate button carries the answer
+  // before it is opened. Same checks the sheet runs; spares and device rows are
+  // excluded, so a board of mostly spares does not look like a board of faults.
+  const boardIssueCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const circuit of testResults) {
+      if (!isRealCircuit(circuit)) continue;
+      const boardId = circuit.boardId || MAIN_BOARD_ID;
+      const { warnings } = checkRegulationCompliance(
+        circuit,
+        formData.earthingArrangement as string | undefined
+      );
+      if (warnings.length > 0) counts.set(boardId, (counts.get(boardId) ?? 0) + warnings.length);
+    }
+    return counts;
+  }, [testResults, formData.earthingArrangement]);
+
+  const countBoardIssues = useCallback(
+    (boardId: string) => boardIssueCounts.get(boardId) ?? 0,
+    [boardIssueCounts]
+  );
+
   const createBoardTools = useCallback(
     (boardId: string): BoardToolCallbacks => ({
       onScanBoard: () => {
@@ -1107,11 +1177,13 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         setActiveBoardId(boardId);
         setShowBulkInfillDialog(true);
       },
+      onValidate: () => setValidateBoardId(boardId),
+      validateIssueCount: countBoardIssues(boardId),
       onVoiceToggle: toggleVoice,
       voiceActive,
       voiceConnecting,
     }),
-    [toggleVoice, voiceActive, voiceConnecting]
+    [toggleVoice, voiceActive, voiceConnecting, countBoardIssues]
   );
 
   // Calculate completion stats for progress indicator
@@ -1252,6 +1324,16 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     }
   }, []);
 
+  // Helper to check if a row is blank (used by handleCreateCircuit and AI scanner)
+  const isBlankRow = (result: TestResult): boolean => {
+    return (
+      !result.circuitDescription &&
+      !result.protectiveDeviceType &&
+      !result.protectiveDeviceRating &&
+      !result.liveSize
+    );
+  };
+
   // Add-circuit entry point: opens the preset sheet (SmartAutoFillPromptDialog)
   // scoped to the board the tap came from. Picking a preset creates the circuit
   // on THAT board with the preset's defaults; "Add blank" falls back to
@@ -1259,9 +1341,25 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   const addTestResult = (boardId?: string) => {
     const targetBoard =
       boardId || activeBoardId || getMainBoard(distributionBoards)?.id || MAIN_BOARD_ID;
+
+    // The way number the preset sheet promises must be the one it actually
+    // fills. `handleCreateCircuit` deliberately reuses the first blank row on
+    // the board rather than appending — sensible, because a fresh EICR opens
+    // with an empty Way 1 and nobody wants a stray blank left above their first
+    // circuit. But the heading was computed as "next free way", so on a new
+    // certificate the sheet said "Add circuit — Way 2" and then filled Way 1.
+    // Tapping a preset appeared to do nothing: no new row, and the row that
+    // changed was not the one named.
+    const blankRow = testResults.find(
+      (result) =>
+        isBlankRow(result) &&
+        (result.boardId === targetBoard || (!result.boardId && targetBoard === MAIN_BOARD_ID))
+    );
+
     // ELE-1475 — highest way in use + 1, never count + 1: deleting way 3 of 6
     // made the next add reuse 6.
-    const nextCircuitNumber = getNextCircuitNumber(testResults, targetBoard).toString();
+    const nextCircuitNumber =
+      blankRow?.circuitNumber || getNextCircuitNumber(testResults, targetBoard).toString();
     setPendingAddBoardId(targetBoard);
     setNewCircuitNumber(nextCircuitNumber);
     setShowAutoFillPrompt(true);
@@ -1475,16 +1573,6 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       }
       return next;
     });
-  };
-
-  // Helper to check if a row is blank (used by handleCreateCircuit and AI scanner)
-  const isBlankRow = (result: TestResult): boolean => {
-    return (
-      !result.circuitDescription &&
-      !result.protectiveDeviceType &&
-      !result.protectiveDeviceRating &&
-      !result.liveSize
-    );
   };
 
   const handleCreateCircuit = (
@@ -1787,7 +1875,23 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
           // but the PDF prints circuitNumber. With the sync running one way
           // only, the printed value could never be corrected from the table —
           // which is how five circuits went out numbered "5".
-          if (field === 'circuitNumber' && value) {
+          // ELE-1484 — a dash (or "n/a", or the "0" people improvised) in the
+          // way column marks the row as a device, not a circuit: an incoming
+          // RCD, an SPD, a main switch. It then prints a dash and is skipped
+          // by numbering, so it can never clash with a real way again.
+          if (
+            (field === 'circuitNumber' || field === 'circuitDesignation') &&
+            // Clearing the box on a row that is already a device row restores
+            // the dash rather than leaving it blank on screen while the PDF
+            // still prints "—". To make it a circuit again, type a number.
+            (meansNotACircuit(value) || (result.isDeviceRow === true && !String(value ?? '').trim()))
+          ) {
+            updatedResult.isDeviceRow = true;
+            updatedResult.circuitNumber = DEVICE_ROW_NUMBER;
+            updatedResult.circuitDesignation = DEVICE_ROW_NUMBER;
+            updatedResult.wayNumber = null;
+          } else if (field === 'circuitNumber' && value) {
+            updatedResult.isDeviceRow = false;
             if (isAutoDesignation(result.circuitDesignation)) {
               updatedResult.circuitDesignation = `C${value}`;
             }
@@ -1798,6 +1902,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
             // No digits in the label (e.g. "Cooker") — leave the number alone
             // rather than replacing it with something worse.
             if (derived) {
+              updatedResult.isDeviceRow = false;
               updatedResult.circuitNumber = derived;
               updatedResult.wayNumber = parseCircuitNumberBase(derived) ?? updatedResult.wayNumber ?? null;
             }
@@ -2620,6 +2725,13 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
           <p className="mt-1 text-[13px] leading-relaxed text-orange-200">
             Circuit numbers must be unique on each board — this prints on the certificate.
           </p>
+          {/* ELE-1484 — the moment they hit this is the moment they need to
+              know a device row exists, so say it here rather than in a help
+              page nobody opens. */}
+          <p className="mt-1 text-[13px] leading-relaxed text-orange-200">
+            If one of them is an RCD, SPD or main switch rather than a circuit, put a dash (—) in
+            its way box — it then holds no number.
+          </p>
           <button
             type="button"
             onClick={handleRenumberDuplicates}
@@ -3003,6 +3115,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                         </div>
                       ) : (
                         <MobileHorizontalScrollTable
+                            earthingArrangement={formData.earthingArrangement as string | undefined}
                           testResults={boardCircuits}
                           onUpdate={updateTestResult}
                           onRemove={removeTestResult}
@@ -3349,7 +3462,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
               </Button>
             </div>
             <div className="tool-sheet-content">
-              <MobileSmartAutoFill testResults={testResults} onUpdate={handleBulkUpdate} />
+              <MobileSmartAutoFill testResults={testResults} onUpdate={handleBulkUpdate} earthingArrangement={formData.earthingArrangement as string | undefined} />
             </div>
           </div>
         </>
@@ -3373,6 +3486,22 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       )}
 
       {/* Bulk Infill Dialog */}
+      {/* ELE-1487 — whole-schedule validate, reachable from the board toolbar on
+          desktop AND mobile. The checks already existed; they were buried in a
+          panel below the desktop table that a phone never renders. */}
+      <ScheduleValidateSheet
+        open={validateBoardId !== null}
+        onOpenChange={(o) => !o && setValidateBoardId(null)}
+        testResults={testResults.filter(
+          (c) => (c.boardId || MAIN_BOARD_ID) === validateBoardId
+        )}
+        earthingArrangement={formData.earthingArrangement as string | undefined}
+        boardName={
+          distributionBoards.find((b) => b.id === validateBoardId)?.name || undefined
+        }
+        onCreateObservation={handleCreateObservation}
+      />
+
       <BulkInfillDialog
         open={showBulkInfillDialog}
         onOpenChange={setShowBulkInfillDialog}

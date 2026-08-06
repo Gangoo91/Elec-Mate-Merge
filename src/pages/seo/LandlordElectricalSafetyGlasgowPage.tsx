@@ -184,7 +184,7 @@ const sections = [
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
-                (Section 631) every five years is the standard way to demonstrate compliance.
+                (Chapter 65) every five years is the standard way to demonstrate compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">

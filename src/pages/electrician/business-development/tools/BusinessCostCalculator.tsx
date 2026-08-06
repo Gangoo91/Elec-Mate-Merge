@@ -8,6 +8,7 @@ import { Calculator, Building, Download, Lightbulb, TrendingUp } from 'lucide-re
 import { Helmet } from 'react-helmet';
 import WhyThisMatters from '@/components/common/WhyThisMatters';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
+import { businessCostTotals, VAT_REGISTRATION_THRESHOLD } from '@/data/job-costing';
 
 // Enhanced components
 import BusinessTypeSelector from '@/components/business-calculator/BusinessTypeSelector';
@@ -113,10 +114,12 @@ const BusinessCostCalculator = () => {
       variant: 'success',
     });
   };
-  // Calculate totals
-  const totalStartup = Object.values(startupInputs).reduce((sum, value) => sum + value, 0);
-  const totalMonthly = Object.values(monthlyInputs).reduce((sum, value) => sum + value, 0);
-  const yearOneTotal = totalStartup + totalMonthly * 12;
+  // Same engine BusinessAnalytics uses, so the page and its charts can never
+  // report different totals for the same inputs.
+  const { totalStartup, totalMonthly, yearOneTotal } = businessCostTotals(
+    startupInputs,
+    monthlyInputs
+  );
 
   const currentScenario = {
     businessType,
@@ -216,6 +219,10 @@ const BusinessCostCalculator = () => {
             'Clarifies true start-up and monthly running costs to set realistic budgets.',
             "Reveals Year‑1 cash needs and working capital so you don't run short.",
             'Highlights structure impacts (sole trader vs ltd) on costs and planning.',
+            // Nothing on the page said which basis to enter costs on. A
+            // VAT-registered business reclaims the VAT on tools, a van and
+            // fuel, so entering gross overstated Year 1 by up to 20%.
+            `Enter every figure ex VAT. Once registered you reclaim the VAT on these purchases — and registration is compulsory above £${VAT_REGISTRATION_THRESHOLD.toLocaleString('en-GB')} of taxable turnover in any rolling 12 months.`,
           ]}
         />
 

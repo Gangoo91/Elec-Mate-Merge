@@ -49,7 +49,7 @@ const faqs = [
   {
     question: 'Why must a replacement consumer unit in Nottingham have a metal casing?',
     answer:
-      'Amendment 2 to BS 7671:2008, which came into force on 1 July 2016, introduced Regulation 421.1.201. This requires that consumer units in domestic premises be enclosed in a cabinet or enclosure made of non-combustible material. Steel (metal) enclosures meet this requirement; plastic ones do not. The change was made because electrical fire investigations found that plastic consumer unit enclosures could melt and ignite during arcing faults, spreading fire into the building structure. Any consumer unit replacement in Nottingham carried out since July 2016 must use a compliant metal enclosure. This is also carried forward in the current BS 7671:2018+A4:2026.',
+      'Amendment 3 to BS 7671:2008, with this requirement in force from 1 January 2016, introduced Regulation 421.1.201. This requires that consumer units in domestic premises be enclosed in a cabinet or enclosure made of non-combustible material. Steel (metal) enclosures meet this requirement; plastic ones do not. The change was made because electrical fire investigations found that plastic consumer unit enclosures could melt and ignite during arcing faults, spreading fire into the building structure. Any consumer unit replacement in Nottingham carried out since July 2016 must use a compliant metal enclosure. This is also carried forward in the current BS 7671:2018+A4:2026.',
   },
   {
     question: 'Is a consumer unit replacement in Nottingham notifiable under Part P?',
@@ -201,7 +201,7 @@ const sections = [
         <p>
           Regulation 421.1.201 of BS 7671 requires that consumer units in domestic premises be
           installed in enclosures made of non-combustible material. This requirement was introduced
-          by Amendment 2 to BS 7671:2008, effective 1 July 2016, and is retained in the current
+          by Amendment 3 to BS 7671:2008, with this requirement effective 1 January 2016, and is retained in the current
           standard BS 7671:2018+A4:2026.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">

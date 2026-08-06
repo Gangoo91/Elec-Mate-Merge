@@ -7,5 +7,6 @@ export { default as CalendarEventSheet } from './CalendarEventSheet';
 export { default as CalendarEventDetail } from './CalendarEventDetail';
 export { default as CalendarSettingsSheet } from './CalendarSettingsSheet';
 export { default as CalendarHeader } from './CalendarHeader';
+export { default as CalendarAgendaStrip } from './CalendarAgendaStrip';
+export { default as CalendarSummaryStrip } from './CalendarSummaryStrip';
 export { default as CalendarEventDot } from './CalendarEventDot';
-export { default as CalendarEmptyState } from './CalendarEmptyState';

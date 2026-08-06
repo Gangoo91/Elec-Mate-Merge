@@ -20,17 +20,27 @@ export const labourHoursOptions = [
   { value: 'custom', label: 'Custom amount' },
 ];
 
+/**
+ * Labour COST per hour — the pay rate, before employer NI, holiday and pension,
+ * which the calculator adds separately as an on-cost percentage.
+ *
+ * This list used to read "£45/hour - Domestic Standard", "£70/hour - Emergency
+ * Rate", "£80/hour - Expert/Consultant". Those are CHARGE-OUT rates: what you
+ * bill the customer. JobProfitabilityCalculator feeds this value straight into
+ * its cost total, so picking a selling rate here booked your own margin as a
+ * cost and made every profitable job look like it was barely breaking even.
+ *
+ * Figures are the JIB National Standard rates effective 5 January 2026,
+ * Transport Provided column (JIB Handbook 2026, Section 2 — National Working
+ * Rules). London Zone rates are higher; enter those as a custom rate.
+ */
 export const hourlyRateOptions = [
-  { value: '35', label: '£35/hour - Apprentice/Helper' },
-  { value: '40', label: '£40/hour - Standard Rate' },
-  { value: '45', label: '£45/hour - Domestic Standard' },
-  { value: '50', label: '£50/hour - Experienced' },
-  { value: '55', label: '£55/hour - Commercial Rate' },
-  { value: '60', label: '£60/hour - Specialist Work' },
-  { value: '65', label: '£65/hour - Industrial Rate' },
-  { value: '70', label: '£70/hour - Emergency Rate' },
-  { value: '75', label: '£75/hour - Premium Rate' },
-  { value: '80', label: '£80/hour - Expert/Consultant' },
+  { value: '14.60', label: '£14.60/hour - Trainee Stage 1 / Labourer' },
+  { value: '16.54', label: '£16.54/hour - Trainee Stage 2' },
+  { value: '17.51', label: '£17.51/hour - Trainee Stage 3' },
+  { value: '18.38', label: '£18.38/hour - Electrician (inc Domestic)' },
+  { value: '20.08', label: '£20.08/hour - Approved Electrician' },
+  { value: '22.70', label: '£22.70/hour - Site/Installation Technician' },
   { value: 'custom', label: 'Custom rate' },
 ];
 
@@ -47,6 +57,11 @@ export const overheadPercentageOptions = [
   { value: 'custom', label: 'Custom percentage' },
 ];
 
+/**
+ * MARGIN, not markup — a share of the selling price. 25% here means
+ * price = cost / 0.75, i.e. cost × 1.333. Reading these as markups
+ * (cost × 1.25) would under-price every job by a third of the intended profit.
+ */
 export const profitMarginOptions = [
   { value: '10', label: '10% - Competitive pricing' },
   { value: '15', label: '15% - Standard margin' },

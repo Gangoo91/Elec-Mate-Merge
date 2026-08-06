@@ -40,7 +40,7 @@ export const eicrQuizQuestions: QuizQuestion[] = [
     ],
     correctAnswer: 2,
     explanation:
-      'BS 7671 Table 61 requires a minimum insulation resistance of 1.0MΩ for circuits up to 500V, tested at 500V DC (SELV/PELV at 250V DC require 0.5MΩ).',
+      'BS 7671 Table 64 requires a minimum insulation resistance of 1.0MΩ for circuits up to 500V, tested at 500V DC (SELV/PELV at 250V DC require 0.5MΩ).',
   },
   {
     id: 4,

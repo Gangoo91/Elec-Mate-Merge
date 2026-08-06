@@ -21,6 +21,16 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 const CAT = 'utilities' as const;
 const config = CALCULATOR_CONFIG[CAT];
 
+/**
+ * BS EN 60529 first characteristic numeral (solids / access).
+ *
+ * FIX (audit finding: no 'X' option): BS 7671 states most of its own IP
+ * requirements with the first numeral omitted — IPX2 (Reg 702.512.2 zone 2
+ * indoor), IPX4 (Regs 701.512.2 zones 1/2, 702.512.2 zone 1, 703.512.2 sauna),
+ * IPX5 (water jets), IPX7 (Reg 701.512.2 zone 0), IPX8 (Reg 702.512.2 zone 0).
+ * Without an 'X' entry the decoder could not represent, let alone decode, any
+ * of the codes the regulations actually use.
+ */
 const SOLID_PROTECTION: Record<string, { short: string; description: string }> = {
   '0': {
     short: 'No protection',
@@ -50,8 +60,14 @@ const SOLID_PROTECTION: Record<string, { short: string; description: string }> =
     short: 'Dust-tight',
     description: 'Completely protected against dust — no ingress permitted',
   },
+  X: {
+    short: 'Not specified (X)',
+    description:
+      'No solid-object requirement is stated. Written as the letter X — e.g. IPX4, the form BS 7671 uses in Regs 701.512.2 and 702.512.2',
+  },
 };
 
+/** BS EN 60529 second characteristic numeral (water). 'X' = not specified. */
 const LIQUID_PROTECTION: Record<string, { short: string; description: string }> = {
   '0': { short: 'No protection', description: 'No protection against water' },
   '1': {
@@ -91,8 +107,30 @@ const LIQUID_PROTECTION: Record<string, { short: string; description: string }> 
     short: 'High-pressure jets',
     description: 'Protected against close-range high-pressure, high-temperature water jets',
   },
+  X: {
+    short: 'Not specified (X)',
+    description:
+      'No water requirement is stated. Written as the letter X — e.g. IP2X, IP4X, the form BS 7671 uses in Regs 416.2.1, 416.2.2, 521.10.1 and 740.526',
+  },
 };
 
+/**
+ * BS EN 60529 ADDITIONAL letters — access to hazardous parts.
+ *
+ * FIX (audit finding: only H/M/S/W were offered): BS EN 60529 defines two
+ * distinct letter positions and BS 7671 leans on the *additional* letters
+ * constantly — IPXXB (Regs 412.2.2, 417.3.2, 422.3.11), IPXXD (Regs 416.2.2,
+ * 521.10.1, 740.526). The additional letter sits before the supplementary
+ * letter: IP + solids + water + additional + supplementary.
+ */
+const ADDITIONAL_LETTERS: Record<string, string> = {
+  A: 'Protected against access with the back of the hand (50 mm sphere probe)',
+  B: 'Protected against access with a finger (12.5 mm dia, 80 mm long jointed test finger)',
+  C: 'Protected against access with a tool (2.5 mm dia, 100 mm long probe)',
+  D: 'Protected against access with a wire (1.0 mm dia, 100 mm long probe)',
+};
+
+/** BS EN 60529 SUPPLEMENTARY letters — equipment-specific information. */
 const SUPPLEMENTARY_LETTERS: Record<string, string> = {
   H: 'High voltage equipment',
   M: 'Device moving during water test',
@@ -100,9 +138,24 @@ const SUPPLEMENTARY_LETTERS: Record<string, string> = {
   W: 'Suitable for specified weather conditions',
 };
 
+/**
+ * FIX (audit finding: "IP20 — indoor consumer units, distribution boards"):
+ * IP20 has first numeral 2 (12.5 mm). Reg 416.2.2 requires a readily
+ * accessible horizontal top surface of a barrier or enclosure to provide at
+ * least IPXXD or IP4X, which IP20 does not meet. The general basic-protection
+ * minimum for live parts inside enclosures/behind barriers is IPXXB or IP2X
+ * (Reg 416.2.1, echoed in Regs 412.2.2 and 422.3.11).
+ */
 const COMMON_RATINGS: { rating: string; use: string }[] = [
-  { rating: 'IP20', use: 'Indoor consumer units, distribution boards' },
-  { rating: 'IP44', use: 'Outdoor socket outlets, weatherproof accessories' },
+  { rating: 'IP2X', use: 'Basic protection minimum for enclosures/barriers — Reg 416.2.1 (or IPXXB)' },
+  {
+    rating: 'IP4X',
+    use: 'Readily accessible horizontal top surface of an enclosure — Reg 416.2.2 (or IPXXD)',
+  },
+  {
+    rating: 'IP44',
+    use: 'Outdoor and moisture-exposed accessories and socket-outlets — Regs 721.55.2.3, 705.512.2, 709.553.1.8, 740.512.2',
+  },
   { rating: 'IP55', use: 'Industrial enclosures, outdoor junction boxes' },
   { rating: 'IP65', use: 'External luminaires, outdoor equipment' },
   { rating: 'IP66', use: 'Exposed outdoor installations, car washes' },
@@ -119,6 +172,108 @@ const liquidOptions = Object.entries(LIQUID_PROTECTION).map(([val, data]) => ({
   value: val,
   label: `${val} — ${data.short}`,
 }));
+
+const NONE = 'none';
+
+const additionalLetterOptions = [
+  { value: NONE, label: 'None' },
+  ...Object.entries(ADDITIONAL_LETTERS).map(([letter, desc]) => ({
+    value: letter,
+    label: `${letter} — ${desc}`,
+  })),
+];
+
+/** Numeric level of a characteristic numeral, or null where it is 'X' (not specified). */
+const digitLevel = (digit: string): number | null => {
+  if (digit === '' || digit === 'X') return null;
+  const n = parseInt(digit, 10);
+  return Number.isNaN(n) ? null : n;
+};
+
+/**
+ * Plain-English gloss of the first numeral.
+ * FIX: the old gloss called first numeral 5 "dust-tight". BS EN 60529 5 is
+ * dust-PROTECTED (limited ingress permitted); only 6 is dust-tight. It also
+ * collapsed 0-2 into "basic contact", losing the 1 mm / 2.5 mm / 12.5 mm steps
+ * that BS 7671 keys its IP2X / IP4X requirements off.
+ */
+const solidsGloss = (n: number | null): string =>
+  n === null
+    ? 'given no solid-object rating (X — not specified)'
+    : n >= 6
+      ? 'dust-tight'
+      : n >= 5
+        ? 'dust-protected (limited ingress permitted)'
+        : n >= 4
+          ? 'protected against wires and objects larger than 1.0 mm'
+          : n >= 3
+            ? 'protected against tools and objects larger than 2.5 mm'
+            : n >= 2
+              ? 'protected against fingers and objects larger than 12.5 mm'
+              : n >= 1
+                ? 'protected against objects larger than 50 mm'
+                : 'unprotected against solid objects';
+
+/**
+ * Plain-English gloss of the second numeral.
+ * FIX (audit finding): numerals 1-3 were all described as "light moisture".
+ * BS EN 60529 second numeral 3 is protection against water SPRAY up to 60°
+ * from vertical, which is materially more than "light moisture".
+ */
+const waterGloss = (n: number | null): string =>
+  n === null
+    ? 'given no water rating (X — not specified)'
+    : n >= 9
+      ? 'can withstand close-range high-pressure, high-temperature water jets'
+      : n >= 8
+        ? 'can withstand continuous immersion in water'
+        : n >= 7
+          ? 'can withstand temporary immersion in water (1 m for 30 minutes)'
+          : n >= 6
+            ? 'can withstand powerful water jets from any direction'
+            : n >= 5
+              ? 'can withstand water jets from any direction'
+              : n >= 4
+                ? 'can withstand splashing water from any direction'
+                : n >= 3
+                  ? 'can withstand water spray up to 60° from vertical'
+                  : n >= 2
+                    ? 'can withstand dripping water when tilted up to 15° from vertical'
+                    : n >= 1
+                      ? 'can withstand vertically falling drops of water'
+                      : 'can withstand no water exposure';
+
+/** Typical applications, null-safe for X-form codes. */
+const typicalApplications = (solid: number | null, water: number | null): string[] => {
+  if (solid === null || water === null) {
+    return [
+      'One axis of this code is unspecified — check the other axis against the requirement',
+      'BS 7671 states most of its own minima in this form (IPX4, IP4X, IPXXD)',
+    ];
+  }
+  if (water >= 7) {
+    return [
+      'Underground cable joints and submersible pumps',
+      'Pool and fountain lighting — Reg 702.512.2 zone 0 requires IPX8',
+      'Bath and shower zone 0 — Reg 701.512.2 requires IPX7',
+    ];
+  }
+  if (solid >= 5 && water >= 5) {
+    return ['External luminaires', 'Industrial wash-down areas', 'Exposed outdoor installations'];
+  }
+  if (solid >= 4 && water >= 4) {
+    return [
+      'Outdoor socket-outlets and weatherproof accessories (IP44 minimum)',
+      'Accessories exposed to moisture — Reg 721.55.2.3',
+      'Garden lighting',
+    ];
+  }
+  return [
+    'Indoor equipment in dry, sheltered positions',
+    'Not sufficient for an outdoor or moisture-exposed position — those need IP44',
+    'A readily accessible horizontal top surface still needs IPXXD or IP4X (Reg 416.2.2)',
+  ];
+};
 
 /** Visual ring indicator for solid protection level (0-6) */
 const SolidShield = ({ level }: { level: number }) => {
@@ -195,6 +350,7 @@ const IPRatingCalculator = () => {
 
   const [solidDigit, setSolidDigit] = useState('');
   const [liquidDigit, setLiquidDigit] = useState('');
+  const [additionalLetter, setAdditionalLetter] = useState(NONE);
   const [suppH, setSuppH] = useState(false);
   const [suppM, setSuppM] = useState(false);
   const [suppS, setSuppS] = useState(false);
@@ -216,21 +372,41 @@ const IPRatingCalculator = () => {
     if (suppS) suppLetters.push('S');
     if (suppW) suppLetters.push('W');
 
-    const code = `IP${solidDigit}${liquidDigit}${suppLetters.join('')}`;
+    // BS EN 60529 code order: IP + solids + water + additional letter + supplementary letter
+    const addLetter = additionalLetter !== NONE ? additionalLetter : '';
+    const code = `IP${solidDigit}${liquidDigit}${addLetter}${suppLetters.join('')}`;
 
     // Determine suitability
-    const solidNum = parseInt(solidDigit);
-    const liquidNum = parseInt(liquidDigit);
-    let suitability: 'pass' | 'warning' | 'fail';
+    const solidNum = digitLevel(solidDigit);
+    const liquidNum = digitLevel(liquidDigit);
+    let suitability: 'pass' | 'warning' | 'fail' | 'info';
     let suitabilityLabel: string;
 
-    if (solidNum >= 5 && liquidNum >= 5) {
+    if (solidNum === null || liquidNum === null) {
+      // FIX: an X-form code (IPX4, IP4X) specifies only one axis — it cannot be
+      // graded as suitable or unsuitable for a location on its own.
+      suitability = 'info';
+      suitabilityLabel = 'Partially specified';
+    } else if (liquidNum >= 7) {
+      // FIX (audit finding: IP07/IP17 fell through to "Indoor Only"): second
+      // numeral 7/8 is the immersion band BS 7671 calls up for the most severe
+      // water locations — Reg 701.512.2 zone 0 (IPX7) and Reg 702.512.2 zone 0
+      // (IPX8). It is never an "indoor only" rating.
+      suitability = solidNum >= 5 ? 'pass' : 'info';
+      suitabilityLabel = liquidNum >= 8 ? 'Continuous immersion' : 'Temporary immersion';
+    } else if (solidNum >= 5 && liquidNum >= 5) {
       suitability = 'pass';
       suitabilityLabel = 'Outdoor / Industrial';
-    } else if (solidNum >= 2 && liquidNum >= 4) {
+    } else if (solidNum >= 4 && liquidNum >= 4) {
+      // FIX (audit finding: outdoor pass was granted from first numeral >= 2,
+      // so IP24 and IP34 earned a green badge). Every BS 7671 clause that sets
+      // an outdoor / moisture-exposed minimum sets IP44, i.e. first numeral 4
+      // (>= 1.0 mm): Reg 721.55.2.3 (accessories exposed to moisture),
+      // Reg 705.512.2 (agricultural), Reg 709.553.1.8 (marinas socket-outlets),
+      // Reg 740.512.2 (fairgrounds). IP24/IP34 do not meet any of them.
       suitability = 'pass';
-      suitabilityLabel = 'Outdoor Suitable';
-    } else if (liquidNum >= 1 && liquidNum <= 3) {
+      suitabilityLabel = 'Outdoor Suitable (IP44 minimum met)';
+    } else if (liquidNum >= 1) {
       suitability = 'warning';
       suitabilityLabel = 'Indoor / Sheltered';
     } else {
@@ -242,17 +418,19 @@ const IPRatingCalculator = () => {
       code,
       solid,
       liquid,
+      addLetter,
       suppLetters,
       suitability,
       suitabilityLabel,
       solidNum,
       liquidNum,
     };
-  }, [solidDigit, liquidDigit, suppH, suppM, suppS, suppW]);
+  }, [solidDigit, liquidDigit, additionalLetter, suppH, suppM, suppS, suppW]);
 
   const handleReset = useCallback(() => {
     setSolidDigit('');
     setLiquidDigit('');
+    setAdditionalLetter(NONE);
     setSuppH(false);
     setSuppM(false);
     setSuppS(false);
@@ -265,6 +443,9 @@ const IPRatingCalculator = () => {
       `IP Rating: ${result.code}`,
       `Solid Protection (${solidDigit}): ${result.solid.description}`,
       `Liquid Protection (${liquidDigit}): ${result.liquid.description}`,
+      ...(result.addLetter
+        ? [`Additional letter ${result.addLetter} — ${ADDITIONAL_LETTERS[result.addLetter]}`]
+        : []),
       ...(result.suppLetters.length > 0
         ? [
             `Supplementary: ${result.suppLetters.map((l) => `${l} — ${SUPPLEMENTARY_LETTERS[l]}`).join(', ')}`,
@@ -281,10 +462,13 @@ const IPRatingCalculator = () => {
     });
   };
 
-  // Build the live IP code display string
-  const liveCode = `IP${solidDigit || 'X'}${liquidDigit || 'Y'}`;
-  const solidNum = solidDigit !== '' ? parseInt(solidDigit) : -1;
-  const liquidNum = liquidDigit !== '' ? parseInt(liquidDigit) : -1;
+  // Build the live IP code display string.
+  // FIX (audit finding: placeholder was 'Y', giving "IP2Y"): BS EN 60529 uses
+  // the letter X for BOTH omitted characteristic numerals — IP2X, IP4X, IPX4,
+  // IPXXD. 'Y' is not an IP code character.
+  const liveCode = `IP${solidDigit || 'X'}${liquidDigit || 'X'}`;
+  const solidNum = digitLevel(solidDigit);
+  const liquidNum = digitLevel(liquidDigit);
 
   // Current rating string for highlighting in common ratings
   const currentRating =
@@ -299,22 +483,36 @@ const IPRatingCalculator = () => {
       {/* First Digit — Solid Protection */}
       <CalculatorSection title="Solid Object Protection">
         <CalculatorSelect
-          label="First Digit (0-6)"
+          label="First digit (0-6, or X if not specified)"
           value={solidDigit}
           onChange={setSolidDigit}
           options={solidOptions}
           placeholder="Select solid protection level"
+          hint="Choose X to decode an IPX-form code such as IPX4 or IPX7"
         />
       </CalculatorSection>
 
       {/* Second Digit — Liquid Protection */}
       <CalculatorSection title="Liquid Protection">
         <CalculatorSelect
-          label="Second Digit (0-9)"
+          label="Second digit (0-9, or X if not specified)"
           value={liquidDigit}
           onChange={setLiquidDigit}
           options={liquidOptions}
           placeholder="Select liquid protection level"
+          hint="Choose X to decode an IP_X-form code such as IP2X or IP4X"
+        />
+      </CalculatorSection>
+
+      {/* Additional letter — access to hazardous parts (BS EN 60529) */}
+      <CalculatorSection title="Additional Letter (Optional)">
+        <CalculatorSelect
+          label="Access to hazardous parts"
+          value={additionalLetter}
+          onChange={setAdditionalLetter}
+          options={additionalLetterOptions}
+          placeholder="None"
+          hint="BS 7671 uses these constantly — IPXXB (Reg 417.3.2), IPXXD (Regs 416.2.2, 740.526)"
         />
       </CalculatorSection>
 
@@ -375,9 +573,9 @@ const IPRatingCalculator = () => {
           <div className="flex items-center justify-between gap-4">
             {/* Left — solid rings */}
             <div className="flex flex-col items-center gap-1.5">
-              <SolidShield level={solidNum >= 0 ? solidNum : 0} />
+              <SolidShield level={solidNum ?? 0} />
               <span className="text-xs text-white font-medium">Solids</span>
-              {solidNum >= 0 && (
+              {solidDigit !== '' && (
                 <span className="text-xs text-white">{SOLID_PROTECTION[solidDigit]?.short}</span>
               )}
             </div>
@@ -397,9 +595,9 @@ const IPRatingCalculator = () => {
 
             {/* Right — liquid droplet */}
             <div className="flex flex-col items-center gap-1.5">
-              <LiquidShield level={liquidNum >= 0 ? liquidNum : 0} />
+              <LiquidShield level={liquidNum ?? 0} />
               <span className="text-xs text-white font-medium">Liquids</span>
-              {liquidNum >= 0 && (
+              {liquidDigit !== '' && (
                 <span className="text-xs text-white">{LIQUID_PROTECTION[liquidDigit]?.short}</span>
               )}
             </div>
@@ -478,6 +676,19 @@ const IPRatingCalculator = () => {
             </div>
           </div>
 
+          {/* Additional letter — access to hazardous parts */}
+          {result.addLetter && (
+            <div className="p-3 rounded-lg bg-white/5 border border-white/10 space-y-1">
+              <p className="text-xs text-white font-medium">
+                Additional Letter — Access to Hazardous Parts
+              </p>
+              <p className="text-sm text-white">
+                <span className="font-medium">{result.addLetter}:</span>{' '}
+                {ADDITIONAL_LETTERS[result.addLetter]}
+              </p>
+            </div>
+          )}
+
           {/* Supplementary letters */}
           {result.suppLetters.length > 0 && (
             <div className="p-3 rounded-lg bg-white/5 border border-white/10 space-y-1">
@@ -513,50 +724,12 @@ const IPRatingCalculator = () => {
               >
                 <p className="text-sm text-white">
                   An <span className="font-medium">{result.code}</span> rated enclosure is{' '}
-                  {result.solidNum >= 5
-                    ? 'dust-tight'
-                    : result.solidNum >= 3
-                      ? 'protected against small objects'
-                      : 'protected against basic contact'}{' '}
-                  and can withstand{' '}
-                  {result.liquidNum >= 7
-                    ? 'immersion in water'
-                    : result.liquidNum >= 5
-                      ? 'water jets from any direction'
-                      : result.liquidNum >= 4
-                        ? 'splashing water'
-                        : result.liquidNum >= 1
-                          ? 'light moisture'
-                          : 'no water exposure'}
-                  .
+                  {solidsGloss(result.solidNum)} and {waterGloss(result.liquidNum)}.
                 </p>
                 <div className="space-y-1">
                   <p className="text-sm text-white font-medium">Typical Applications</p>
                   <ul className="space-y-1">
-                    {(result.solidNum >= 6 && result.liquidNum >= 7
-                      ? [
-                          'Underground cable joints',
-                          'Submersible pumps',
-                          'Pool and fountain lighting',
-                        ]
-                      : result.solidNum >= 5 && result.liquidNum >= 5
-                        ? [
-                            'External luminaires',
-                            'Industrial wash-down areas',
-                            'Exposed outdoor installations',
-                          ]
-                        : result.liquidNum >= 4
-                          ? [
-                              'Outdoor socket outlets',
-                              'Weatherproof accessories',
-                              'Garden lighting',
-                            ]
-                          : [
-                              'Indoor distribution boards',
-                              'Consumer units',
-                              'Office equipment enclosures',
-                            ]
-                    ).map((item, i) => (
+                    {typicalApplications(result.solidNum, result.liquidNum).map((item, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm text-white">
                         <span
                           className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
@@ -642,12 +815,31 @@ const IPRatingCalculator = () => {
       <FormulaReference
         category={CAT}
         name="IP Code Format"
-        formula="IP [Solids 0-6] [Liquids 0-9] [Optional letter]"
+        formula="IP [Solids 0-6 or X] [Water 0-9 or X] [Additional A-D] [Supplementary H/M/S/W]"
         variables={[
           { symbol: 'IP', description: 'Ingress Protection prefix' },
-          { symbol: '1st', description: 'Solid object protection (0-6)' },
-          { symbol: '2nd', description: 'Liquid ingress protection (0-9)' },
-          { symbol: 'Letter', description: 'Optional: H, M, S, or W' },
+          {
+            symbol: '1st',
+            description: 'First characteristic numeral — solid objects / access (0-6, or X)',
+          },
+          {
+            symbol: '2nd',
+            description: 'Second characteristic numeral — water ingress (0-9, or X)',
+          },
+          {
+            symbol: 'Add.',
+            description:
+              'Additional letter A-D — access to hazardous parts (BS 7671 uses IPXXB and IPXXD)',
+          },
+          {
+            symbol: 'Supp.',
+            description: 'Supplementary letter H, M, S or W — equipment-specific information',
+          },
+          {
+            symbol: 'X',
+            description:
+              'Stands in for a numeral that is not specified — used for BOTH positions (IP2X, IPX4, IPXXD)',
+          },
         ]}
       />
       <CalculatorEditorial content={ipRatingContent} category={CAT} />

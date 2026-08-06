@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'Are new videos added regularly?',
     answer:
-      'Yes. New videos are added to the library regularly, with a focus on emerging topics and areas where users request additional content. Recent additions have included videos on EV charger installation procedures, solar PV system installation and testing, battery energy storage systems, and the changes introduced by BS 7671 Amendment 4:2024 (A4:2026), including the new Section 530 requirements on bidirectional protective devices. The video team also responds to user feedback — if multiple users request a video on a specific topic or procedure, it is prioritised for production. All new videos are available immediately to existing subscribers at no additional cost.',
+      'Yes. New videos are added to the library regularly, with a focus on emerging topics and areas where users request additional content. Recent additions have included videos on EV charger installation procedures, solar PV system installation and testing, battery energy storage systems, and the changes introduced by BS 7671 Amendment 4:2026 (A4:2026), including the new Section 530 requirements on bidirectional protective devices. The video team also responds to user feedback — if multiple users request a video on a specific topic or procedure, it is prioritised for production. All new videos are available immediately to existing subscribers at no additional cost.',
   },
 ];
 
@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'Complete guide to the 18th Edition including Amendment 4:2024. Read alongside the regulation explanation videos.',
+      'Complete guide to the 18th Edition including Amendment 4:2026. Read alongside the regulation explanation videos.',
     icon: BookOpen,
     category: 'Guide',
   },

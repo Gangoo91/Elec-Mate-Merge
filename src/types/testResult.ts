@@ -100,6 +100,13 @@ export interface TestResult {
    * it. Set by the board scanner; bulk fill skips these (see utils/spareWays).
    */
   isSpare?: boolean;
+  /**
+   * True when the row records a protective device rather than a circuit — an
+   * incoming RCD, an SPD, a main switch. Such a device protects several ways
+   * and occupies none of its own, so it must not consume a circuit number
+   * (ELE-1484: an RCD row was numbered 7 alongside the cooker on way 7).
+   */
+  isDeviceRow?: boolean;
   /** Per-board way number — independent of the global circuitNumber. */
   wayNumber?: number | null;
   phaseRotation?: string; // Phase sequence test (L1-L2-L3 clockwise)

@@ -1,3 +1,7 @@
+import {
+  getGroupingFactor,
+  getTemperatureFactor,
+} from '@/lib/calculators/bs7671-data/temperatureFactors';
 // Simplified validation service for cable sizing calculations
 // This provides basic safety validation without complex dependencies
 
@@ -14,9 +18,11 @@ export interface SimpleValidationResult {
   };
   complianceChecks: {
     bs7671: boolean;
-    iet: boolean;
-    buildingRegs: boolean;
-    cdm: boolean;
+    // NOTE: `iet`, `buildingRegs` and `cdm` flags used to live here, each set to
+    // the BS 7671 result. None of those regimes is evaluated anywhere in this
+    // file, so they asserted compliance that had never been assessed. Nothing
+    // rendered them, which is the only reason this was not shipping a false
+    // claim — removed rather than left for a future UI to pick up.
   };
 }
 
@@ -103,31 +109,32 @@ export class SimpleValidator {
       },
       complianceChecks: {
         bs7671: bs7671Compliant,
-        iet: bs7671Compliant,
-        buildingRegs: bs7671Compliant,
-        cdm: bs7671Compliant && criticalAlerts.length === 0,
       },
     };
   }
 
+  /**
+   * Ca and Cg now come from the verified shared tables in
+   * `@/lib/calculators/bs7671-data/temperatureFactors`, not from private copies.
+   *
+   * 🔴 WHAT THE PRIVATE COPIES GOT WRONG
+   * Cg was bucketed `<=3 -> 0.80, <=6 -> 0.70, <=9 -> 0.65, <=12 -> 0.60, else 0.50`.
+   * Table 4C1 bunched gives 3 -> 0.70, 6 -> 0.57, 9 -> 0.50, 12 -> 0.45, 20 -> 0.38.
+   * Every bucket resolved to its most generous member, over-stating capacity by
+   * 14% at three circuits and 33% at twelve — the unsafe direction, because Cg
+   * multiplies the tabulated rating.
+   *
+   * Ca's buckets happened to match Table 4B1 for 70 C thermoplastic, but the
+   * `return 0.35` above 60 C was invented: 4B1 prints a dash there, and
+   * temperatureFactors.ts had already removed that same 0.35 earlier today. This
+   * copy never got the fix — which is precisely the argument for not keeping copies.
+   */
   private static calculateTemperatureDerating(ambientTemp: number): number {
-    if (ambientTemp <= 30) return 1.0;
-    if (ambientTemp <= 35) return 0.94;
-    if (ambientTemp <= 40) return 0.87;
-    if (ambientTemp <= 45) return 0.79;
-    if (ambientTemp <= 50) return 0.71;
-    if (ambientTemp <= 55) return 0.61;
-    if (ambientTemp <= 60) return 0.5;
-    return 0.35; // Above 60°C
+    return getTemperatureFactor(ambientTemp, '70C');
   }
 
   private static calculateGroupingFactor(grouping: number): number {
-    if (grouping <= 1) return 1.0;
-    if (grouping <= 3) return 0.8;
-    if (grouping <= 6) return 0.7;
-    if (grouping <= 9) return 0.65;
-    if (grouping <= 12) return 0.6;
-    return 0.5; // More than 12 cables
+    return getGroupingFactor(grouping, 'bunched');
   }
 }
 

@@ -7,19 +7,19 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 const published = '2026-05-17';
 const modified = '2026-05-18';
 
-export const afddMandatoryHmoCareHomeA4Config: GeneratedGuideConfig = {
-  pagePath: '/guides/afdd-mandatory-hmo-care-home-a4-2026',
+export const afddHmoCareHomeA4Config: GeneratedGuideConfig = {
+  pagePath: '/guides/afdd-hmo-care-home-a4-2026',
   title:
-    'AFDD Mandatory in HMOs, Care Homes & Student Accommodation',
+    'AFDD Recommended in HMOs, Care Homes & Student Accommodation',
   description:
-    'AFDDs mandatory in HMOs, care homes and student accommodation under BS 7671:2018+A4:2026. Expanded scope of Regulation 421.1.7 and 421.1.7.101…',
+    'AFDDs recommended in HMOs, care homes and student accommodation under BS 7671:2018+A4:2026. Expanded scope of Regulation 421.1.7 and 421.1.7.101…',
   datePublished: published,
   dateModified: modified,
   readingTime: 14,
   badge: 'A4:2026 Mandatory Scope',
   badgeIcon: 'ShieldCheck',
   breadcrumbLabel: 'AFDD Mandatory — HMO & Care Home',
-  heroPrefix: 'AFDD Mandatory in HMOs, Care Homes &',
+  heroPrefix: 'AFDD Recommended in HMOs, Care Homes &',
   heroHighlight: 'Student Accommodation',
   heroSuffix: '— BS 7671:2018+A4:2026',
   heroSubtitle:
@@ -344,7 +344,7 @@ export const afddMandatoryHmoCareHomeA4Config: GeneratedGuideConfig = {
   ],
   faqs: [
     {
-      question: 'When did AFDDs become mandatory in HMOs and care homes?',
+      question: 'When did AFDDs become recommended in HMOs and care homes?',
       answer:
         'AFDDs first became mandatory in a defined list of higher-risk premises (including care homes, HMOs and student accommodation) under BS 7671 Amendment 2 in 2022. Amendment 4, published 15 April 2026, sharpened the controlling regulation numbers (Regulation 421.1.7 and Regulation 421.1.7.101), widened the list to remove ambiguity for sleeping accommodation in higher-risk residential occupancies, and integrated AFDD inspection into the standard EICR model forms (item 4.23 and schedule-of-test-results column 30). The result is that the mandatory scope is now unambiguous for HMOs, CQC-registered care homes, purpose-built student accommodation, sheltered housing, supported living and similar premises.',
     },

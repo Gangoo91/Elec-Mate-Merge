@@ -306,48 +306,24 @@ serve(async (req: Request) => {
       .limit(1)
       .single();
 
-    // Fetch active coupon codes (only on page 1 to avoid repeated queries)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase joined query
-    let coupons: any[] = [];
-    if (page === 1) {
-      const { data: couponData } = await supabase
-        .from('marketplace_coupon_codes')
-        .select(
-          `
-          id,
-          code,
-          description,
-          discount_type,
-          discount_value,
-          minimum_spend,
-          valid_until,
-          is_verified,
-          supplier_id,
-          marketplace_suppliers (
-            name,
-            slug
-          )
-        `
-        )
-        .gte('valid_until', nowISO)
-        .order('is_verified', { ascending: false })
-        .order('discount_value', { ascending: false, nullsFirst: false })
-        .limit(20);
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase joined query
-      coupons = (couponData || []).map((c: any) => ({
-        id: c.id,
-        code: c.code,
-        description: c.description,
-        discount_type: c.discount_type,
-        discount_value: c.discount_value,
-        minimum_spend: c.minimum_spend,
-        valid_until: c.valid_until,
-        is_verified: c.is_verified,
-        supplier_name: c.marketplace_suppliers?.name || 'Unknown',
-        supplier_slug: c.marketplace_suppliers?.slug || 'unknown',
-      }));
-    }
+    /*
+     * Discount codes were removed from the marketplace (2026-08-06).
+     *
+     * All 1,083 scraped codes came from four pages on myvouchercodes.co.uk,
+     * and that scrape attributed everything on a page to one supplier — so the
+     * app was claiming TLC Electrical issues CHANEL and LEGO codes, and RS
+     * Components issues DYSON5 and VOXI. 89% were masked (`****D20`) and
+     * unusable even where the attribution was right.
+     *
+     * Trade wholesalers discount through account pricing, not public voucher
+     * codes, so there is no honest source to scrape: Screwfix and RS Components
+     * return 403 to a scraper, and neither Toolstation nor TLC publishes a
+     * public codes page. Curated-by-hand is the only version of this worth
+     * building; until then the section is gone rather than wrong.
+     *
+     * `coupons` stays in the response shape (always empty) so no client breaks.
+     */
+    const coupons: unknown[] = [];
 
     // Pick deal of the day — prefer a product scraped in the last 24h with high
     // discount, an image, a real name, and respecting the current productType.

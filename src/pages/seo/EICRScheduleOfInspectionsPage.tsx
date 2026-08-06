@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'What are the most common C2 observations found during visual inspection?',
     answer:
-      'The most common C2 (Potentially Dangerous) observations found during the visual inspection phase of an EICR include: absence of a circuit protective conductor (CPC) on one or more circuits, particularly in older installations wired before earthing was mandatory; absence of RCD protection for socket outlet circuits in domestic premises; damaged consumer unit or distribution board enclosure exposing live parts; absence of main protective bonding to gas, water, or oil services (Regulation 411.3.1.1 requires exposed-conductive-parts to be connected to a protective conductor; Regulation 544.1.1 governs bonding conductor sizing); absence of 30 mA RCD protection on domestic lighting circuits as now required by Regulation 411.3.4 (A4:2026); incorrect polarity at accessories (live and neutral reversed); damaged or deteriorated cable insulation exposing conductors; and absence of fire barriers where cables pass through walls or floors. Each of these observations represents a condition that could lead to electric shock or fire and requires urgent remedial action.',
+      'The most common C2 (Potentially Dangerous) observations found during the visual inspection phase of an EICR include: absence of a circuit protective conductor (CPC) on one or more circuits, particularly in older installations wired before earthing was mandatory; absence of RCD protection for socket outlet circuits in domestic premises; damaged consumer unit or distribution board enclosure exposing live parts; absence of main protective bonding to gas, water, or oil services (Regulation 411.3.1.2 requires extraneous-conductive-parts liable to introduce a dangerous potential difference to be connected to the main earthing terminal; Regulation 544.1.1 governs bonding conductor sizing); absence of 30 mA RCD protection on domestic lighting circuits as now required by Regulation 411.3.4 (A4:2026); incorrect polarity at accessories (live and neutral reversed); damaged or deteriorated cable insulation exposing conductors; and absence of fire barriers where cables pass through walls or floors. Each of these observations represents a condition that could lead to electric shock or fire and requires urgent remedial action.',
   },
   {
     question: 'How do I record an unsatisfactory item on the schedule of inspections?',
@@ -552,7 +552,7 @@ const sections = [
             <ul className="space-y-2 text-white text-sm leading-relaxed">
               <li>Missing CPC on one or more circuits (older installations)</li>
               <li>
-                Absent main protective bonding to water, gas, or oil services (Reg 411.3.1.1 /
+                Absent main protective bonding to water, gas, or oil services (Reg 411.3.1.2 /
                 544.1.1)
               </li>
               <li>No RCD protection on socket outlet circuits up to 32A</li>

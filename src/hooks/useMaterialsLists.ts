@@ -29,6 +29,20 @@ export interface MaterialsListItem {
    * line. Absent means the item carries no labour and quotes materials only.
    */
   labour_hours?: number;
+  /**
+   * Which labour grade those hours are costed at — an id from `workerTypes`
+   * (electrician, apprentice, labourer, designer, owner). Sean Mulcahy's ask,
+   * 6 Aug 2026: a 0.5h apprentice task should cost at the apprentice rate, not
+   * the electrician one. Absent means electrician, which is what every existing
+   * item was already implicitly costed at.
+   */
+  labour_grade?: string;
+  /**
+   * Labour split across grades — "0.5h electrician + 0.5h apprentice" for a
+   * two-man task. When present this supersedes the labour_hours/labour_grade
+   * pair above, which stays for the 1,256 single-grade rows already imported.
+   */
+  labour?: { grade: string; hours: number }[];
   /** ISO timestamp of when the price was last set/updated */
   price_updated_at?: string;
   supplier?: string;
@@ -169,6 +183,8 @@ export function useMaterialsLists() {
         markup_percent?: number;
         /** Labour allowance in hours per unit (ELE-1470) */
         labour_hours?: number;
+        /** Grade those hours are costed at (ELE-1445) */
+        labour_grade?: string;
       }
     ) => {
       try {
@@ -194,6 +210,7 @@ export function useMaterialsLists() {
           cost_price: product.cost_price,
           markup_percent: product.markup_percent,
           labour_hours: product.labour_hours,
+          labour_grade: product.labour_grade,
           supplier: product.supplier_name,
           product_url: product.product_url,
           image_url: product.image_url || undefined,
@@ -252,6 +269,8 @@ export function useMaterialsLists() {
         markup_percent?: number;
         supplier_name?: string;
         labour_hours?: number;
+        /** Grade the hours are costed at (ELE-1445) */
+        labour_grade?: string;
         /** Unit of sale. A price is meaningless without it — £45.99 per roll
          *  is not £45.99 each, and defaulting to 'each' mis-prices the item
          *  every time it is quoted afterwards. */
@@ -287,7 +306,14 @@ export function useMaterialsLists() {
               // Only overwrite a labour time when the import carries one, so a
               // price-only refresh cannot silently wipe times already set.
               labour_hours: row.labour_hours ?? prev.labour_hours,
-              price_updated_at: now,
+              labour_grade: row.labour_grade ?? prev.labour_grade,
+              // Only stamp the price date when a price actually arrived. A
+              // labour-times import (Sean's book carries times and no prices)
+              // must not make every item look freshly re-priced.
+              price_updated_at:
+                row.current_price != null || row.cost_price != null
+                  ? now
+                  : prev.price_updated_at,
             };
             updated++;
           } else {
@@ -300,6 +326,7 @@ export function useMaterialsLists() {
               cost_price: row.cost_price,
               markup_percent: row.markup_percent,
               labour_hours: row.labour_hours,
+              labour_grade: row.labour_grade,
               supplier: row.supplier_name,
               price_updated_at: now,
               matched: false,
@@ -468,6 +495,94 @@ export function useMaterialsLists() {
     [toast]
   );
 
+  /**
+   * Set the labour grade on many items at once (ELE-1445).
+   *
+   * Sean's imported book came in as 1,256 electrician-graded rows, because the
+   * source book does not say who does the work. Re-grading a section one item
+   * at a time is 33 sheets and 33 writes; this is one read and one write.
+   *
+   * Only touches items that actually carry hours — a grade on an item with no
+   * time is a stale value waiting to be picked up if time is added later.
+   */
+  const bulkSetLabourGrade = useCallback(
+    async (
+      listId: string,
+      itemIds: string[],
+      grade: string,
+      mode: 'only' | 'add' = 'only'
+    ): Promise<number> => {
+      if (itemIds.length === 0) return 0;
+      try {
+        const { data: currentList, error: fetchError } = await (supabase as any)
+          .from('materials_lists')
+          .select('*')
+          .eq('id', listId)
+          .single();
+        if (fetchError || !currentList) return 0;
+
+        const target = new Set(itemIds);
+        let changed = 0;
+        const items = ((currentList.items || []) as MaterialsListItem[]).map((item) => {
+          if (!target.has(item.id)) return item;
+
+          // Existing allocations, tolerating the legacy single-grade pair.
+          const current =
+            item.labour && item.labour.length > 0
+              ? item.labour
+              : (item.labour_hours ?? 0) > 0
+                ? [{ grade: item.labour_grade || 'electrician', hours: item.labour_hours! }]
+                : [];
+          if (current.length === 0) return item;
+
+          let next: { grade: string; hours: number }[];
+          if (mode === 'only') {
+            // Everything moves to one grade; hours are preserved, not summed
+            // per grade, because it is the same work done by someone else.
+            const hours = Math.round(current.reduce((n, a) => n + a.hours, 0) * 100) / 100;
+            next = [{ grade, hours }];
+          } else {
+            // Second person alongside: match the largest existing allocation,
+            // which is the primary trade on the task.
+            if (current.some((a) => a.grade === grade)) return item;
+            const lead = current.reduce((a, b) => (b.hours > a.hours ? b : a));
+            next = [...current, { grade, hours: lead.hours }];
+          }
+
+          const same =
+            next.length === current.length &&
+            next.every((a, i) => current[i].grade === a.grade && current[i].hours === a.hours);
+          if (same) return item;
+
+          changed++;
+          return {
+            ...item,
+            labour: next,
+            // Keep the legacy pair mirroring the first allocation.
+            labour_hours: next[0].hours,
+            labour_grade: next[0].grade,
+          };
+        });
+        if (changed === 0) return 0;
+
+        const { error } = await (supabase as any)
+          .from('materials_lists')
+          .update({ items, updated_at: new Date().toISOString() })
+          .eq('id', listId);
+        if (error) throw error;
+
+        setLists((prev) =>
+          prev.map((l) => (l.id === listId ? { ...l, items } : l))
+        );
+        return changed;
+      } catch (error) {
+        console.error('[useMaterialsLists] bulkSetLabourGrade failed', error);
+        return 0;
+      }
+    },
+    []
+  );
+
   // Update multiple fields on a single item (name, cost_price, markup_percent, supplier, unit, etc.)
   const updateItemDetails = useCallback(
     async (listId: string, itemId: string, updates: Partial<MaterialsListItem>) => {
@@ -526,6 +641,7 @@ export function useMaterialsLists() {
   );
 
   return {
+    bulkSetLabourGrade,
     lists,
     isLoading,
     createList,

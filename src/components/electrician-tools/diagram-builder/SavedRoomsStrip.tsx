@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Plus, X } from 'lucide-react';
 import type { SavedRoom } from '@/hooks/useFloorPlanRooms';
 import { cn } from '@/lib/utils';
+import { useHaptic } from '@/hooks/useHaptic';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,6 +30,7 @@ export const SavedRoomsStrip = ({
   onDeleteRoom,
 }: SavedRoomsStripProps) => {
   const [pendingDelete, setPendingDelete] = useState<SavedRoom | null>(null);
+  const haptic = useHaptic();
 
   return (
     <>
@@ -37,11 +39,27 @@ export const SavedRoomsStrip = ({
           {rooms.map((room) => {
             const isActive = activeRoomId === room.id;
             return (
+              // role/tabIndex rather than a <button>: the delete control is
+              // nested inside, and a button inside a button is invalid HTML
+              // that browsers silently restructure. This keeps the tile
+              // focusable and operable from the keyboard either way.
               <div
                 key={room.id}
-                onClick={() => onRoomSelect(room.id)}
+                role="button"
+                tabIndex={0}
+                aria-pressed={isActive}
+                aria-label={`Open room ${room.name}`}
+                onClick={() => { haptic.selection(); onRoomSelect(room.id); }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    haptic.selection();
+                    onRoomSelect(room.id);
+                  }
+                }}
                 className={cn(
                   'relative flex-shrink-0 flex flex-col items-center touch-manipulation rounded-lg transition-all cursor-pointer',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow',
                   isActive
                     ? 'ring-2 ring-elec-yellow bg-elec-yellow/10'
                     : 'ring-1 ring-white/15 hover:ring-white/30'
@@ -79,6 +97,7 @@ export const SavedRoomsStrip = ({
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
+                    haptic.warning();
                     setPendingDelete(room);
                   }}
                   aria-label={`Delete room ${room.name}`}
@@ -92,7 +111,7 @@ export const SavedRoomsStrip = ({
 
           {/* New room button */}
           <button
-            onClick={onNewRoom}
+            onClick={() => { haptic.light(); onNewRoom(); }}
             aria-label="Create new room"
             className="flex-shrink-0 w-[80px] h-[83px] rounded-lg border border-dashed border-white/30 flex items-center justify-center touch-manipulation hover:border-elec-yellow/50 active:scale-95 transition-all"
           >

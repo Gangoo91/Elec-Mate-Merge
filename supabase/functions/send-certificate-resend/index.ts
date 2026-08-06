@@ -203,7 +203,8 @@ const handler = async (req: Request): Promise<Response> => {
       const recipient = String(body.recipientEmail || '').trim();
       const buildingName = String(body.buildingName || 'your building');
       const periodLabel = String(body.periodLabel || '');
-      const pdfBase64 = String(body.pdfBase64 || '');
+      let pdfBase64 = String(body.pdfBase64 || '');
+      const pdfUrl = String(body.pdfUrl || '');
 
       if (!isValidEmail(recipient)) {
         return new Response(JSON.stringify({ error: 'Valid recipient email required' }), {
@@ -211,6 +212,34 @@ const handler = async (req: Request): Promise<Response> => {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
       }
+
+      // ELE-1483 — the log book now renders through PDFMonkey, so the caller
+      // can hand over a URL instead of a base64 blob. Fetching it here rather
+      // than in the browser keeps a multi-megabyte PDF off the client's
+      // connection entirely: the phone doing the emailing is usually the one
+      // stood in the plant room on one bar of signal.
+      // pdfBase64 is still accepted so any caller still on the client-side
+      // export keeps working.
+      if (!pdfBase64 && pdfUrl) {
+        try {
+          const r = await fetch(pdfUrl);
+          if (!r.ok) throw new Error(`PDF fetch failed: ${r.status}`);
+          const buf = new Uint8Array(await r.arrayBuffer());
+          let binary = '';
+          // Chunked to avoid blowing the argument limit on a large PDF.
+          for (let i = 0; i < buf.length; i += 8192) {
+            binary += String.fromCharCode(...buf.subarray(i, i + 8192));
+          }
+          pdfBase64 = btoa(binary);
+        } catch (e) {
+          console.error('[send-certificate-resend] fireLogMode PDF fetch failed:', e);
+          return new Response(JSON.stringify({ error: 'Could not retrieve the generated PDF' }), {
+            status: 502,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          });
+        }
+      }
+
       // Brevo rejects oversized payloads — keep the attachment under ~9MB.
       if (!pdfBase64 || pdfBase64.length > 12_000_000) {
         return new Response(JSON.stringify({ error: 'PDF missing or too large to email' }), {
@@ -521,6 +550,7 @@ const handler = async (req: Request): Promise<Response> => {
       'g99-commissioning': 'generate-g99-commissioning-pdf',
       'smoke-co-alarm': 'generate-smoke-co-alarm-pdf',
       'testing-only': 'generate-testing-only-pdf',
+      'fire-alarm-log-book': 'generate-fire-alarm-log-book-pdf',
     };
 
     const edgeFunctionName = PDF_FUNCTION_BY_TYPE[reportType];

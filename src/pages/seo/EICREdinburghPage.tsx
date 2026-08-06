@@ -83,7 +83,7 @@ const faqs = [
   {
     question: 'Do I need an EICR for an Edinburgh flat I own and live in?',
     answer:
-      "There is no legal requirement for owner-occupiers to obtain an EICR. However, it is strongly recommended every 10 years (or every 5 years for properties over 25 years old) as best practice under BS 7671 Regulation 134.2. Given the age of much of Edinburgh's housing stock, periodic inspection is particularly important. If you are selling the property, you will need a Home Report (which is mandatory in Scotland) but this does not include an EICR — a separate EICR is recommended.",
+      "There is no legal requirement for owner-occupiers to obtain an EICR. However, it is strongly recommended every 10 years (or every 5 years for properties over 25 years old) as best practice under BS 7671 Regulation 135.1. Given the age of much of Edinburgh's housing stock, periodic inspection is particularly important. If you are selling the property, you will need a Home Report (which is mandatory in Scotland) but this does not include an EICR — a separate EICR is recommended.",
   },
 ];
 

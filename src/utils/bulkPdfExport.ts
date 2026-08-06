@@ -52,6 +52,7 @@ const getEdgeFunctionForReportType = (reportType: string): string => {
   if (t === 'lightning-protection') return 'generate-lightning-protection-pdf';
   if (t === 'smoke-co-alarm') return 'generate-smoke-co-alarm-pdf';
   if (t === 'testing-only') return 'generate-testing-only-pdf';
+  if (t === 'fire-alarm-log-book') return 'generate-fire-alarm-log-book-pdf';
 
   // Notices & documents
   if (t === 'danger-notice') return 'generate-danger-notice-pdf';

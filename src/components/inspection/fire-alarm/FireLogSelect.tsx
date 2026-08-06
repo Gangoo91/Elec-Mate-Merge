@@ -45,7 +45,7 @@ export default function FireLogSelect({
         options={options.map((o) => ({ value: o, label: o }))}
         placeholder={placeholder}
         allowCustom={allowCustom}
-        className="h-12 text-base touch-manipulation bg-white/[0.08] border-white/[0.16] text-white"
+        className="h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none touch-manipulation"
       />
     );
   }
@@ -57,7 +57,7 @@ export default function FireLogSelect({
       <div className="flex gap-2">
         <Input
           autoFocus={customMode}
-          className="h-12 text-base touch-manipulation bg-white/[0.08] border-white/[0.16] text-white placeholder:text-white/45 focus:border-yellow-500 focus:ring-yellow-500"
+          className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none [color-scheme:dark] touch-manipulation"
           placeholder="Type it…"
           value={value}
           onChange={(e) => onChange(e.target.value)}

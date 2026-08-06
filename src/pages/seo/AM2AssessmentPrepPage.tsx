@@ -74,7 +74,7 @@ const faqs = [
   {
     question: 'What should I do if I fail the AM2?',
     answer:
-      'First, request the detailed assessor feedback report from EMTA. The report identifies which tasks or elements of tasks were not completed correctly or within time. Review the feedback with your employer and training provider to identify the specific areas that need improvement. Most candidates who fail on time management need to practise each task repeatedly under strictly timed conditions until the task completion time is comfortably within the limit. Candidates who fail on testing sequence typically need to revisit the BS 7671 Chapter 61 inspection and testing sequence and practise the correct order of tests. Allow at least 4–6 weeks of focused preparation before reattempting. There is no statutory limit on the number of AM2 attempts, but your apprenticeship funding provider may have rules about the number of funded attempts.',
+      'First, request the detailed assessor feedback report from EMTA. The report identifies which tasks or elements of tasks were not completed correctly or within time. Review the feedback with your employer and training provider to identify the specific areas that need improvement. Most candidates who fail on time management need to practise each task repeatedly under strictly timed conditions until the task completion time is comfortably within the limit. Candidates who fail on testing sequence typically need to revisit the BS 7671 Chapter 64 inspection and testing sequence and practise the correct order of tests. Allow at least 4–6 weeks of focused preparation before reattempting. There is no statutory limit on the number of AM2 attempts, but your apprenticeship funding provider may have rules about the number of funded attempts.',
   },
   {
     question: 'What NVQ evidence do I need before booking the AM2?',
@@ -210,7 +210,7 @@ const sections = [
             </h3>
             <p className="text-white text-sm leading-relaxed">
               Carry out the full inspection and testing sequence on the installed board per
-              BS 7671 Chapter 61. This includes visual inspection, continuity of protective conductors
+              BS 7671 Chapter 64. This includes visual inspection, continuity of protective conductors
               (R2), continuity of ring circuit conductors (R1, Rn, R2), insulation resistance (L-E,
               N-E, L-N), polarity, earth fault loop impedance (Ze and Zs), and RCD operation
               (trip time at IΔn and 5×IΔn). Record all results correctly on the schedule of test
@@ -318,7 +318,7 @@ const sections = [
                 <strong>Incorrect testing sequence:</strong> Carrying out insulation resistance tests
                 on energised circuits, or performing polarity after insulation resistance without
                 restoring connections, results in test failures. Memorise and practise the correct
-                BS 7671 Chapter 61 testing sequence until it is automatic.
+                BS 7671 Chapter 64 testing sequence until it is automatic.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -360,7 +360,7 @@ const sections = [
               Week 1 — Knowledge Review
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              Revise BS 7671 Chapter 61 inspection and testing sequence. Review the wiring diagrams
+              Revise BS 7671 Chapter 64 inspection and testing sequence. Review the wiring diagrams
               for a standard domestic consumer unit — ring final, lighting, cooker. Practise
               completing a schedule of test results from memory. Review fault-finding methodology:
               logical elimination, half-split technique, voltage measurement approach.

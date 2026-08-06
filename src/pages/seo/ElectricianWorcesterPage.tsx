@@ -195,7 +195,7 @@ const sections = [
                 <strong>EICR for rental properties</strong> — five-yearly EICRs required for all
                 private rented properties under the Electrical Safety Standards in the Private
                 Rented Sector (England) Regulations 2020. Periodic inspection methodology follows
-                Section 631 of BS 7671.
+                Chapter 65 of BS 7671.
               </span>
             </li>
           </ul>

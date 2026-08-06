@@ -50,23 +50,24 @@ export const rcdTestingQuestions: QuizQuestion[] = [
   },
   {
     id: 'rcd-4',
-    question: 'Is the 5×IΔn test mandatory per BS 7671:2018+A2:2022?',
+    question: 'Is the 5×IΔn test part of the required RCD verification in BS 7671:2018+A4:2026?',
     options: [
       'Yes, on every RCD at every test',
       'Yes, but only on Type AC RCDs',
       'Yes, but only on three-phase RCDs',
-      'No, it is optional (for fault-finding)',
+      'No — verification is a single AC test at IΔn',
     ],
     correctAnswer: 3,
     explanation:
-      'The 5×IΔn test is OPTIONAL per BS 7671:2018+A2:2022 and is intended for fault-finding purposes only.',
+      'Amendment 4 settled this. Table 3A of Appendix 3 (time/current performance criteria for RCDs) has been deleted, and Regulation 643.7.3.201 now requires a single alternating current test at the rated residual operating current (IΔn) to verify effectiveness, whatever the RCD type. The 5×IΔn test is not part of the required verification — it remains useful for fault-finding, and 40ms at 5×IΔn is still a device characteristic under BS EN 61008/61009, but it is not what BS 7671 asks you to test.',
     category: 'RCD Testing',
     difficulty: 'Advanced',
-    regulation: 'GN3 Table 2.17 Note 7',
+    regulation: 'BS 7671:2018+A4:2026 Reg 643.7.3.201',
   },
   {
     id: 'rcd-5',
-    question: 'What is the maximum trip time for the 5×IΔn test on a non-delay RCD?',
+    question:
+      'Under BS EN 61008/61009, what is the maximum operating time for a general (non-delay) RCD at 5×IΔn?',
     options: [
       '40ms',
       '150ms',
@@ -74,10 +75,11 @@ export const rcdTestingQuestions: QuizQuestion[] = [
       '500ms',
     ],
     correctAnswer: 0,
-    explanation: 'At 5×IΔn (150mA for 30mA RCD), a non-delay RCD must trip within 40ms.',
+    explanation:
+      '40ms at 5×IΔn (150mA for a 30mA device) is the product-standard figure in BS EN 61008/61009. It describes the device, not the test BS 7671 requires — Amendment 4 deleted Table 3A and Regulation 643.7.3.201 now verifies effectiveness with a single AC test at IΔn.',
     category: 'RCD Testing',
     difficulty: 'Intermediate',
-    regulation: 'GN3 Table 2.17',
+    regulation: 'BS EN 61008/61009',
   },
   {
     id: 'rcd-6',

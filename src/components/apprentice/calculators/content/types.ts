@@ -35,6 +35,12 @@ export type GoverningStandard =
   | 'IEEE 1584'
   | 'ISO 13297'
   | 'ABYC E-11'
+  // Added for battery storage: Chapter 57 is new in A4:2026 and is the governing
+  // chapter for stationary secondary batteries; 62485 and PAS 63100 are brought in
+  // normatively by it (PAS 63100 via Reg 570.6.7.203 for dwellings).
+  | 'BS 7671 Chapter 57'
+  | 'BS EN IEC 62485 series'
+  | 'PAS 63100'
   | 'none';
 
 /** A single regulation / clause reference shown in the Standards section. */

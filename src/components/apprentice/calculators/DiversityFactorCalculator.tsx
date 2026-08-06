@@ -81,10 +81,13 @@ const DiversityFactorCalculator = () => {
     { value: 'industrial', label: 'Industrial Installation' },
   ];
 
-  const voltageOptions = [
-    { value: '230', label: '230V' },
-    { value: '400', label: '400V' },
-  ];
+  // A UK LV supply is 230 V line-to-neutral single-phase or 400 V
+  // line-to-line three-phase. The two dropdowns used to be independent, so
+  // "400 V single-phase" was selectable and the engine honoured it.
+  const voltageOptions =
+    supplyType === 'three-phase'
+      ? [{ value: '400', label: '400V (line-to-line)' }]
+      : [{ value: '230', label: '230V (line-to-neutral)' }];
 
   const supplyTypeOptions = [
     { value: 'single-phase', label: 'Single Phase' },
@@ -345,6 +348,23 @@ const DiversityFactorCalculator = () => {
               </div>
             </div>
 
+            {/*
+              Reg 536.4.202 (new in A4:2026) — the assembly rating cannot be
+              justified from the diversified figure alone. The suggestion above
+              is sized on diversified demand only, so the assembly check is
+              stated explicitly rather than left implied.
+            */}
+            <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30">
+              <p className="text-sm text-white">
+                <strong>Reg 536.4.202 — check the assembly rating separately.</strong> Diversity
+                shall not be used as a means of load curtailment, load control or overload
+                protection. The device protecting a consumer unit or distribution board must satisfy
+                one of: (a) In ≤ Ina and Inc, (b) documented load curtailment, or (c) the total
+                connected load <em>without</em> diversity ({result.totalDesignCurrent.toFixed(1)} A
+                here) not exceeding Ina and Inc.
+              </p>
+            </div>
+
             {/* Load Reduction Summary */}
             <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
               <p className="text-sm text-white">
@@ -427,32 +447,23 @@ const DiversityFactorCalculator = () => {
                   </p>
                 </div>
 
-                {/* Step 4: Convert to current */}
+                {/* Step 4: Overall current.
+                    The engine now sums the per-type diversified line currents
+                    rather than re-deriving the current from kW, so this step
+                    describes what actually happens. Re-deriving applied √3 in
+                    one direction only and lost the power factor. */}
                 <div className="pt-2 border-t border-purple-500/20">
                   <p className="text-xs text-purple-400 mb-1">
-                    Step 4: Overall current (
-                    {supplyType === 'three-phase' ? '3-phase' : 'single-phase'})
+                    Step 4: Overall line current (
+                    {supplyType === 'three-phase' ? '3-phase' : 'single-phase'} at {supplyVoltage}V)
                   </p>
-                  {supplyType === 'three-phase' ? (
-                    <>
-                      <p>I = (P × 1000) / (sqrt(3) × V)</p>
-                      <p>
-                        I = ({result.diversifiedLoad.toFixed(2)} × 1000) / (1.732 × {supplyVoltage})
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <p>I = (P × 1000) / V</p>
-                      <p>
-                        I = ({result.diversifiedLoad.toFixed(2)} × 1000) / {supplyVoltage}
-                      </p>
-                    </>
-                  )}
+                  <p>I = sum of the diversified line currents above</p>
                   <p>
                     I ={' '}
                     <span className="text-white font-bold">
                       {result.diversifiedCurrent.toFixed(1)}A
-                    </span>
+                    </span>{' '}
+                    ({result.diversifiedLoad.toFixed(2)} kW)
                   </p>
                 </div>
 
@@ -522,14 +533,15 @@ const DiversityFactorCalculator = () => {
                     </div>
                     <div className="border-l-2 border-blue-400/40 pl-3">
                       <p className="text-white">
-                        <strong>IET On-Site Guide:</strong> Based on Table A2 diversity allowances
-                        (domestic) and Table H2 (commercial/industrial)
+                        <strong>IET On-Site Guide:</strong> Based on Appendix A, Table A2 —
+                        allowances for diversity (Table A1 gives typical current demands)
                       </p>
                     </div>
                     <div className="border-l-2 border-blue-400/40 pl-3">
                       <p className="text-white">
                         <strong>Note:</strong> Diversity allowances are published in the IET On-Site
-                        Guide, not BS 7671 directly
+                        Guide, not BS 7671 directly. Reg 311.1 says maximum demand shall be
+                        determined and that diversity <em>may</em> be taken into account
                       </p>
                     </div>
                   </div>
@@ -651,22 +663,44 @@ const DiversityFactorCalculator = () => {
 
         <CollapsibleContent className="pt-2">
           <div className="space-y-3 pl-1">
+            {/*
+              FIX: this panel used to cite "IET On-Site Guide Table H2" as the
+              source of commercial/industrial diversity allowances. There is no
+              diversity Table H2 — Appendix H is standard circuit arrangements
+              for household and similar premises. The diversity tables are
+              Appendix A: Table A1 (typical current demands) and Table A2
+              (allowances for diversity). The On-Site Guide also expressly
+              excludes industrial and large commercial premises from that
+              guidance.
+            */}
             <div className="border-l-2 border-amber-400/40 pl-3">
               <p className="text-sm text-white">
-                <strong className="text-white">IET On-Site Guide Table A2:</strong> Diversity
-                allowances for domestic installations
+                <strong className="text-white">IET On-Site Guide Appendix A, Table A2:</strong>{' '}
+                Allowances for diversity. Table A1 gives typical current demands for points of
+                utilisation.
               </p>
             </div>
             <div className="border-l-2 border-amber-400/40 pl-3">
               <p className="text-sm text-white">
-                <strong className="text-white">IET On-Site Guide Table H2:</strong> Diversity
-                allowances for commercial and industrial installations
+                <strong className="text-white">Scope:</strong> Appendix A covers household and
+                similar premises. Blocks of dwellings, large hotels, industrial and large commercial
+                premises are excluded and must be assessed case by case by the designer — the
+                non-domestic figures here are designer allowances, not published values.
+              </p>
+            </div>
+            <div className="border-l-2 border-amber-400/40 pl-3">
+              <p className="text-sm text-white">
+                <strong className="text-white">Appendix H:</strong> For a standard circuit
+                arrangement complying with Appendix H, the current demand of that final circuit is
+                the rated current of its own overcurrent protective device.
               </p>
             </div>
             <div className="border-l-2 border-amber-400/40 pl-3">
               <p className="text-sm text-white">
                 <strong className="text-white">Note:</strong> Diversity allowances are not published
                 in BS 7671 directly. They appear in the IET On-Site Guide (a companion publication).
+                Reg 536.4.202 forbids using diversity as a means of load curtailment, load control
+                or overload protection.
               </p>
             </div>
             <div className="border-l-2 border-amber-400/40 pl-3">

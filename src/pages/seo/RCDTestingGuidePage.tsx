@@ -580,7 +580,7 @@ const sections = [
                 requires protection against transient overvoltages where the consequence caused by
                 the overvoltage could result in: (a) serious injury to, or loss of, human life; or
                 (c) significant financial or data loss. Limb (b) was deleted by the BS
-                7671:2018+A2:2022 Corrigendum (May 2023). For all other cases, protection shall be
+                7671:2018+A2:2022 Corrigendum (May 2023), and is still absent in A4:2026. For all other cases, protection shall be
                 provided unless the owner of the installation declares it is not required because
                 any loss or damage is tolerable and they accept the risk of damage to equipment and
                 any consequential loss.

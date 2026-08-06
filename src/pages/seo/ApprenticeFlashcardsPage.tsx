@@ -203,7 +203,7 @@ const sections = [
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Back of card: the correct answer.</strong> For example: "1 M-ohm minimum (BS
-                7671 Table 61)" or "RCD protection with a rated residual operating current not
+                7671 Table 64)" or "RCD protection with a rated residual operating current not
                 exceeding 30 mA."
               </span>
             </li>

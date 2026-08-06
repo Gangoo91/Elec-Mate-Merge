@@ -32,8 +32,50 @@ cleanupOutdatedCaches();
 // users get the SPA shell + AuthGuard redirect instead of the static page,
 // which silently breaks email CTAs. Match: any path ending in `.html` that
 // isn't `/index.html`.
+//
+// ELE-1503-adjacent — "This site can't be reached / ERR_FAILED, works on refresh"
+// -----------------------------------------------------------------------------
+// createHandlerBoundToURL reads ONLY from the precache. If that entry is not
+// there, Workbox resolves with no response and the browser shows ERR_FAILED —
+// a hard "site can't be reached", not a soft failure. That window is real:
+// install calls skipWaiting() and activate calls clients.claim(), so a freshly
+// deployed SW takes control of navigations before its own precache is
+// necessarily populated, and cleanupOutdatedCaches() has already dropped the
+// previous revision. A tap from an email lands in that window, fails, and then
+// works on refresh because by then the SW has settled. Reported from Gmail on
+// iOS against both / and /auth/signup.
+//
+// The fix is simply to never return "no response": fall back to the network,
+// then to any cached index.html. The host rewrites SPA routes to index.html
+// (verified: / and /auth/signup both return 200 text/html), so the network leg
+// is a genuine answer rather than a 404.
+const precachedIndex = createHandlerBoundToURL('/index.html');
+
+const navigationHandler = async (options: Parameters<typeof precachedIndex>[0]) => {
+  try {
+    const precached = await precachedIndex(options);
+    if (precached) return precached;
+  } catch {
+    // precache miss or cache API failure — fall through to the network
+  }
+
+  try {
+    const fresh = await fetch(options.request);
+    if (fresh && fresh.ok) return fresh;
+  } catch {
+    // offline — fall through to whatever copy we still hold
+  }
+
+  const cached = await caches.match('/index.html', { ignoreSearch: true });
+  if (cached) return cached;
+
+  // Genuinely nothing to serve (first visit, offline). Fail explicitly rather
+  // than returning undefined, so it reads as offline instead of "can't reach".
+  return Response.error();
+};
+
 registerRoute(
-  new NavigationRoute(createHandlerBoundToURL('/index.html'), {
+  new NavigationRoute(navigationHandler, {
     denylist: [/\.html(?:\?.*)?$/i],
   })
 );

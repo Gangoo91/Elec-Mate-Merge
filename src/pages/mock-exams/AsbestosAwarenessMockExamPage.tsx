@@ -9,8 +9,8 @@ import { asbestosQuestionBank } from '@/data/general-upskilling/asbestosMockExam
 export default function AsbestosAwarenessMockExamPage() {
   return (
     <PublicMockExamPage
-      title={`Asbestos Awareness Mock Test 2026: Free UK Exam`}
-      description={`Free Asbestos Awareness mock test (UKATA/IATP): 25 questions from a 200-Q bank. ACMs, CAR 2012, duty to manage, what to do if found. 30-min timer.`}
+      title={`Asbestos Awareness Mock Test 2026 with Answers — Free`}
+      description={`Free Asbestos Awareness mock test with answers explained — matched to the Category A awareness syllabus used on UKATA and IATP accredited courses. 25 questions from a 200-question bank, 30-min timer. ACMs, CAR 2012, duty to manage, what to do if you find asbestos. Instant results, no sign-up.`}
       slug="asbestos-awareness"
       heading={`Asbestos Awareness Mock Test — Category A`}
       intro={`Free Asbestos Awareness Category A mock test aligned to UKATA and IATP syllabuses. 25 questions from a 200-question bank covering asbestos-containing materials (ACMs), the Control of Asbestos Regulations 2012, duty to manage, recognising asbestos in buildings, exposure limits and emergency procedures if ACMs are disturbed.`}

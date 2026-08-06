@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'Is a metal consumer unit required in Plymouth?',
     answer:
-      'Yes. Since 1 January 2016, Regulation 421.1.201 of BS 7671 (introduced by Amendment 4 to BS 7671:2008) requires all domestic consumer unit replacements to use a non-combustible (metal) enclosure. This requirement is unchanged in BS 7671:2018+A4:2026. Any qualified Plymouth electrician will supply and install a compliant metal consumer unit. If a quote proposes a plastic unit, do not proceed.',
+      'Yes. Since 1 January 2016, Regulation 421.1.201 of BS 7671 (introduced by Amendment 3 to BS 7671:2008) requires all domestic consumer unit replacements to use a non-combustible (metal) enclosure. This requirement is unchanged in BS 7671:2018+A4:2026. Any qualified Plymouth electrician will supply and install a compliant metal consumer unit. If a quote proposes a plastic unit, do not proceed.',
   },
   {
     question: 'My Plymouth property was rebuilt after WW2 — is the wiring likely to be original?',
@@ -276,7 +276,7 @@ const sections = [
     content: (
       <>
         <p>
-          Regulation 421.1.201, introduced by Amendment 4 to BS 7671:2008 and effective from 1
+          Regulation 421.1.201, introduced by Amendment 3 to BS 7671:2008 and effective from 1
           January 2016, requires that consumer units and similar switchgear in domestic premises
           have a non-combustible (metal) enclosure. The requirement is unchanged in the current
           edition of the wiring regulations, BS 7671:2018+A4:2026.
@@ -313,7 +313,7 @@ const sections = [
         <p>
           Plymouth labour rates are competitive for the South West, broadly in line with the wider
           Devon market. The following 2026 price ranges cover a complete domestic consumer unit
-          replacement including the metal consumer unit, all labour, BS 7671 Chapter 61 testing,
+          replacement including the metal consumer unit, all labour, BS 7671 Chapter 64 testing,
           Electrical Installation Certificate, and Part P self-certification.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -389,7 +389,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Testing</strong> — full suite of BS 7671 Chapter 61 tests: continuity of
+                <strong>Testing</strong> — full suite of BS 7671 Chapter 64 tests: continuity of
                 protective conductors, ring final circuit continuity, insulation resistance,
                 polarity, earth fault loop impedance, and RCD operating times. All results recorded
                 on the schedule of test results.

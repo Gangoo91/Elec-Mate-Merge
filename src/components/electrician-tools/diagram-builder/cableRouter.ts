@@ -12,10 +12,22 @@ export interface WallSeg {
 
 const HOST_WALL_THRESHOLD = 35;
 const WALL_OFFSET = 10;
-const SNAP = 10;
-
-const snap = (n: number) => Math.round(n / SNAP) * SNAP;
-const snapPoint = (p: Point): Point => ({ x: snap(p.x), y: snap(p.y) });
+/**
+ * Waypoints are TIDIED, not snapped to the grid.
+ *
+ * The route is orthogonal by construction: for an axis-aligned wall the exit
+ * point shares one coordinate with the symbol it leaves, and each corner
+ * shares a coordinate with its neighbours. Rounding every waypoint to the
+ * drawing lattice independently DESTROYED that — it nudged the shared
+ * coordinate by a fraction and left a tiny diagonal stub at each end, so a
+ * cable run was never actually orthogonal. Sub-pixel at 1:1, a visible kink
+ * zoomed in, and simply wrong on a drawing.
+ *
+ * Rounding to 3dp keeps coordinates that were equal still exactly equal, while
+ * keeping float noise out of the serialised geometry.
+ */
+const tidy = (n: number): number => Math.round(n * 1000) / 1000;
+const snapPoint = (p: Point): Point => ({ x: tidy(p.x), y: tidy(p.y) });
 const ptEq = (a: Point, b: Point) =>
   Math.abs(a.x - b.x) < 0.5 && Math.abs(a.y - b.y) < 0.5;
 
@@ -115,9 +127,44 @@ function dedupePath(path: Point[]): Point[] {
 }
 
 /**
+ * Force every segment onto an axis by inserting an elbow wherever a segment
+ * is diagonal.
+ *
+ * The route is built orthogonal, but two things could reintroduce diagonals:
+ * `dedupePath` collapsing a waypoint that sat within tolerance of its
+ * neighbour (leaving that neighbour's slightly different coordinate joined to
+ * a corner), and the no-clean-route fallback returning a bare `[start, end]`
+ * straight line. Both produced a diagonal cable on a drawing that is supposed
+ * to be orthogonal, so orthogonality is now enforced as a post-process and
+ * holds for every path this module can return.
+ *
+ * ORDER MATTERS: always dedupe FIRST, then force. Deduping afterwards can
+ * collapse a pair of points that differ slightly on both axes and put a
+ * diagonal straight back in.
+ */
+const EPS = 0.001;
+function forceOrthogonal(path: Point[]): Point[] {
+  if (path.length < 2) return path;
+  const out: Point[] = [path[0]];
+  for (let i = 1; i < path.length; i++) {
+    const prev = out[out.length - 1];
+    const cur = path[i];
+    const dx = Math.abs(cur.x - prev.x);
+    const dy = Math.abs(cur.y - prev.y);
+    if (dx > EPS && dy > EPS) {
+      // Turn along the dominant axis first — the shorter leg becomes the
+      // drop, which reads naturally on a floor plan.
+      out.push(dx >= dy ? { x: cur.x, y: prev.y } : { x: prev.x, y: cur.y });
+    }
+    out.push(cur);
+  }
+  return out;
+}
+
+/**
  * Orthogonal cable route from `start` to `end` that avoids walls and hugs
  * walls when the endpoints sit on one. Returns at minimum [start, end] —
- * never null. Falls back to a straight line if no clean route is found.
+ * never null, and never with a diagonal segment.
  */
 export function orthogonalRoute(
   start: Point,
@@ -144,17 +191,22 @@ export function orthogonalRoute(
 
   candidates.sort((a, b) => pathLength(a) - pathLength(b));
   for (const c of candidates) {
-    if (!pathCrossesWalls(c, walls, ignore)) return c;
+    if (!pathCrossesWalls(c, walls, ignore)) return forceOrthogonal(dedupePath(c));
   }
 
-  return [start, end];
+  // No candidate avoided every wall. Prefer the shortest orthogonal route
+  // anyway — a cable crossing a wall is normal, a diagonal one is not.
+  return forceOrthogonal(dedupePath(candidates[0] ?? [start, end]));
 }
 
 /** No-walls case: still produce a tidy L-shape rather than a diagonal. */
 function manhattanFallback(start: Point, end: Point): Point[] {
+  // Near-aligned endpoints took a shortcut straight out of the function,
+  // skipping the orthogonality guarantee — "within 1px" is not the same as
+  // aligned, and the leftover fraction was a real (if tiny) diagonal.
   if (Math.abs(start.x - end.x) < 1 || Math.abs(start.y - end.y) < 1) {
-    return [start, end];
+    return forceOrthogonal([start, end]);
   }
   const corner: Point = { x: end.x, y: start.y };
-  return dedupePath([start, snapPoint(corner), end]);
+  return forceOrthogonal(dedupePath([start, snapPoint(corner), end]));
 }

@@ -15,12 +15,31 @@ interface Annotation {
   text: string;
 }
 
-function parseAnnotations(annotations: Record<string, unknown>[] | null): Annotation[] {
+/**
+ * Annotations arrive as loose JSON from the database, so every field has to be
+ * checked rather than asserted.
+ *
+ * Typed `unknown[]` rather than `Record<string, unknown>[]`: a type predicate's
+ * type must be assignable to its parameter's, and `Annotation` is an interface —
+ * TypeScript gives interfaces no implicit index signature, so it can never
+ * satisfy `Record<string, unknown>`. That mismatch was two long-standing type
+ * errors in this file.
+ *
+ * The guard now also checks the VALUE types. The old one tested only that the
+ * keys existed, so `{x: "left", y: null, text: 42}` passed and reached the
+ * canvas as coordinates.
+ */
+function parseAnnotations(annotations: unknown): Annotation[] {
   if (!Array.isArray(annotations)) return [];
-  return annotations.filter(
-    (a): a is Annotation =>
-      typeof a === 'object' && a !== null && 'x' in a && 'y' in a && 'text' in a
-  ) as Annotation[];
+  return annotations.filter((a): a is Annotation => {
+    if (typeof a !== 'object' || a === null) return false;
+    const candidate = a as Record<string, unknown>;
+    return (
+      typeof candidate.x === 'number' &&
+      typeof candidate.y === 'number' &&
+      typeof candidate.text === 'string'
+    );
+  });
 }
 
 /** Draw numbered annotation pins on a base64 image and return annotated base64 + legend */
@@ -449,9 +468,9 @@ export default function ProjectExportSheet({
             <div className="flex gap-2 overflow-x-auto scrollbar-hide">
               <button
                 onClick={() => setSelectedCategory('all')}
-                className={`flex-shrink-0 h-8 px-3 rounded-full text-xs font-medium transition-colors touch-manipulation ${
+                className={`flex h-11 flex-shrink-0 items-center rounded-xl border px-3.5 text-[12.5px] transition-colors touch-manipulation ${
                   selectedCategory === 'all'
-                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-white'
+                    ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
                     : 'bg-white/5 border border-white/10 text-white active:bg-white/10'
                 }`}
               >
@@ -466,9 +485,9 @@ export default function ProjectExportSheet({
                   <button
                     key={type}
                     onClick={() => setSelectedCategory(type)}
-                    className={`flex-shrink-0 flex items-center gap-1.5 h-8 px-3 rounded-full text-xs font-medium transition-colors touch-manipulation ${
+                    className={`flex h-11 flex-shrink-0 items-center gap-1.5 rounded-xl border px-3.5 text-[12.5px] transition-colors touch-manipulation ${
                       selectedCategory === type
-                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-white'
+                        ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
                         : 'bg-white/5 border border-white/10 text-white active:bg-white/10'
                     }`}
                   >

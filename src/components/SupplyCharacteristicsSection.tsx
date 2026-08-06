@@ -313,7 +313,7 @@ const SupplyCharacteristicsSectionInner = ({
         {/* Phases + Voltage */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <FormField label="Phases" required>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-2" data-field="phases">
               {[
                 { value: '1', label: 'Single' },
                 { value: '2', label: 'Two' },
@@ -331,7 +331,7 @@ const SupplyCharacteristicsSectionInner = ({
             </div>
           </FormField>
           <FormField label="Voltage" required>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-2" data-field="supplyVoltage">
               {[
                 { value: '230', label: '230V' },
                 { value: '400', label: '400V' },
@@ -651,6 +651,7 @@ const SupplyCharacteristicsSectionInner = ({
           </div>
         </div>
         <FormField label="Device" required>
+          <div data-field="mainProtectiveDevice">
           <FormSelectSheet
             value={showCustomProtectiveDevice ? 'other' : formData.mainProtectiveDevice || ''}
             onValueChange={handleMainProtectiveDeviceChange}
@@ -662,6 +663,7 @@ const SupplyCharacteristicsSectionInner = ({
             options={mainProtectiveDeviceOptions}
             className={cn(sheetTriggerCn, mpdLimit === 'LIM' && 'opacity-40')}
           />
+        </div>
         </FormField>
 
         {/* BS 88 Fuse sub-type (gG, gM, aM, Type 2/3/4) */}

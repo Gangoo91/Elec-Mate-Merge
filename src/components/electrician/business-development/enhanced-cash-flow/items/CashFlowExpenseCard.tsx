@@ -96,11 +96,22 @@ export const CashFlowExpenseCard = ({ category, onUpdate, onRemove }: CashFlowEx
                 type="text"
                 inputMode="numeric"
                 value={(category.timing || 1).toString()}
-                onChange={(val) => onUpdate(category.id, { timing: parseInt(val) || 1 })}
+                // Clamped to a real calendar month. Quarterly costs then recur
+                // every third month from here.
+                onChange={(val) =>
+                  onUpdate(category.id, {
+                    timing: Math.min(12, Math.max(1, parseInt(val) || 1)),
+                  })
+                }
+                hint={
+                  category.frequency === 'quarterly'
+                    ? 'First month (1-12), then every 3 months'
+                    : 'Calendar month (1-12)'
+                }
               />
             )}
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-4">
             <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
@@ -109,6 +120,17 @@ export const CashFlowExpenseCard = ({ category, onUpdate, onRemove }: CashFlowEx
                 className="w-4 h-4 rounded border-white/20 bg-white/5 text-blue-500 focus:ring-blue-500 focus:ring-offset-0"
               />
               <span className="text-sm text-white">Variable cost</span>
+            </label>
+            {/* Input VAT is only recoverable on VATable costs. Wages, insurance
+                and most memberships carry none. */}
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={category.vatable !== false}
+                onChange={(e) => onUpdate(category.id, { vatable: e.target.checked })}
+                className="w-4 h-4 rounded border-white/20 bg-white/5 text-blue-500 focus:ring-blue-500 focus:ring-offset-0"
+              />
+              <span className="text-sm text-white">VAT on this cost</span>
             </label>
           </div>
           <button

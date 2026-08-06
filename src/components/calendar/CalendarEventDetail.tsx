@@ -1,4 +1,4 @@
-import { format, parseISO } from 'date-fns';
+import { format, isSameDay, parseISO } from 'date-fns';
 import {
   Sheet,
   SheetContent,
@@ -6,18 +6,10 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import {
-  Clock,
-  MapPin,
-  Pencil,
-  Trash2,
-  Calendar as CalendarIcon,
-  User,
-  Briefcase,
-  FileText,
-} from 'lucide-react';
-import CalendarEventDot from './CalendarEventDot';
+import { Navigation, Pencil, Trash2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { eyebrowCn, ghostButtonCn } from './calendarStyles';
+import { effectiveEnd } from './eventUtils';
 import type { CalendarEvent } from '@/types/calendar';
 import { EVENT_TYPE_LABELS } from '@/types/calendar';
 
@@ -29,6 +21,29 @@ interface CalendarEventDetailProps {
   onDelete: (eventId: string) => void;
 }
 
+/** Row of a detail list — label above, value below, separated by a rule. */
+const DetailRow = ({ label, children }: { label: string; children: React.ReactNode }) => (
+  <div className="border-t border-white/[0.10] px-4 py-3 sm:px-5">
+    <p className={eyebrowCn}>{label}</p>
+    <div className="mt-1 text-[14px] leading-snug text-white">{children}</div>
+  </div>
+);
+
+function whenLabel(event: CalendarEvent): string {
+  const start = parseISO(event.start_at);
+  const end = effectiveEnd(event);
+
+  if (event.all_day) {
+    return isSameDay(start, end)
+      ? format(start, 'EEEE d MMMM yyyy')
+      : `${format(start, 'EEE d MMM')} – ${format(end, 'EEE d MMM yyyy')}`;
+  }
+  if (isSameDay(start, end)) {
+    return `${format(start, 'EEEE d MMMM')} · ${format(start, 'HH:mm')}–${format(end, 'HH:mm')}`;
+  }
+  return `${format(start, 'EEE d MMM, HH:mm')} – ${format(end, 'EEE d MMM, HH:mm')}`;
+}
+
 const CalendarEventDetail = ({
   open,
   onOpenChange,
@@ -38,120 +53,111 @@ const CalendarEventDetail = ({
 }: CalendarEventDetailProps) => {
   if (!event) return null;
 
-  const startDate = parseISO(event.start_at);
-  const endDate = parseISO(event.end_at);
+  /**
+   * Open the address in whatever maps app the device has.
+   *
+   * The address used to be plain text, so getting to a job meant reading it off
+   * the screen and typing it into another app while sat in the van.
+   */
+  const openInMaps = () => {
+    if (!event.location) return;
+    const query = encodeURIComponent(event.location);
+    const isApple = /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent);
+    window.open(
+      isApple ? `maps://?q=${query}` : `https://www.google.com/maps/search/?api=1&query=${query}`,
+      '_blank',
+      'noopener,noreferrer'
+    );
+  };
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
-          {/* Header with colour bar */}
-          <div className="h-2 flex-shrink-0" style={{ backgroundColor: event.colour }} />
-          <SheetHeader className="px-4 py-3 border-b border-white/10 flex-shrink-0">
-            <SheetTitle className="text-white text-lg font-bold text-left flex items-center gap-2">
-              <CalendarEventDot colour={event.colour} className="w-2.5 h-2.5" />
-              {event.title}
+      <SheetContent side="bottom" className="h-[85vh] overflow-hidden rounded-t-2xl p-0">
+        <div className="flex h-full flex-col bg-background">
+          <div className="h-1 shrink-0" style={{ backgroundColor: event.colour }} />
+
+          <SheetHeader className="shrink-0 px-4 py-3 sm:px-5">
+            <p className={eyebrowCn}>{EVENT_TYPE_LABELS[event.event_type]}</p>
+            <SheetTitle className="text-left text-[19px] font-semibold leading-tight tracking-tight text-white">
+              {event.title || 'Untitled event'}
             </SheetTitle>
             <SheetDescription className="sr-only">Event details</SheetDescription>
           </SheetHeader>
 
-          {/* Scrollable content */}
-          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
-            {/* Type badge */}
-            <div className="flex items-center gap-2">
-              <span
-                className="px-3 py-1 text-xs font-bold rounded-full text-white"
-                style={{ backgroundColor: event.colour + '44' }}
-              >
-                {EVENT_TYPE_LABELS[event.event_type]}
-              </span>
-              {event.sync_status === 'synced' && (
-                <span className="px-2 py-0.5 text-[10px] font-bold text-white bg-green-500/20 rounded-full">
-                  Synced
-                </span>
-              )}
-            </div>
+          <div className="flex-1 overflow-y-auto pb-4">
+            <DetailRow label="When">{whenLabel(event)}</DetailRow>
 
-            {/* Date & Time */}
-            <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-              <CalendarIcon className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="text-sm font-semibold text-white">
-                  {event.all_day
-                    ? format(startDate, 'EEEE d MMMM yyyy')
-                    : format(startDate, 'EEEE d MMMM yyyy')}
-                </p>
-                {!event.all_day && (
-                  <p className="text-sm text-white mt-0.5">
-                    <Clock className="h-3.5 w-3.5 inline mr-1" />
-                    {format(startDate, 'HH:mm')} – {format(endDate, 'HH:mm')}
-                  </p>
-                )}
-                {event.all_day && <p className="text-sm text-white mt-0.5">All day</p>}
-              </div>
-            </div>
-
-            {/* Location */}
             {event.location && (
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                <MapPin className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-white">{event.location}</p>
-              </div>
+              <DetailRow label="Where">
+                <button
+                  type="button"
+                  onClick={openInMaps}
+                  className="flex w-full items-center gap-2 text-left touch-manipulation"
+                >
+                  <span className="min-w-0 flex-1">{event.location}</span>
+                  <Navigation className="h-4 w-4 shrink-0 text-elec-yellow" />
+                </button>
+              </DetailRow>
             )}
 
-            {/* Customer */}
-            {event.customer && (
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                <User className="h-5 w-5 text-purple-400 mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-white">{event.customer.name}</p>
-              </div>
+            {event.customer?.name && <DetailRow label="Customer">{event.customer.name}</DetailRow>}
+
+            {event.project?.title && <DetailRow label="Job">{event.project.title}</DetailRow>}
+
+            {event.job?.title && !event.project?.title && (
+              <DetailRow label="Job">{event.job.title}</DetailRow>
             )}
 
-            {/* Job */}
-            {event.job && (
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                <Briefcase className="h-5 w-5 text-amber-400 mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-white">{event.job.title}</p>
-              </div>
+            {event.reminder_minutes > 0 && (
+              <DetailRow label="Reminder">
+                {event.reminder_minutes >= 1440
+                  ? `${event.reminder_minutes / 1440} day before`
+                  : event.reminder_minutes >= 60
+                    ? `${event.reminder_minutes / 60} hr before`
+                    : `${event.reminder_minutes} min before`}
+              </DetailRow>
             )}
 
-            {/* Description */}
             {event.description && (
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                <FileText className="h-5 w-5 text-cyan-400 mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-white whitespace-pre-wrap">{event.description}</p>
-              </div>
+              <DetailRow label="Description">
+                <span className="whitespace-pre-wrap">{event.description}</span>
+              </DetailRow>
             )}
 
-            {/* Notes */}
             {event.notes && (
-              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                <p className="text-xs font-semibold text-white mb-1">Notes</p>
-                <p className="text-sm text-white whitespace-pre-wrap">{event.notes}</p>
-              </div>
+              <DetailRow label="Private notes">
+                <span className="whitespace-pre-wrap">{event.notes}</span>
+              </DetailRow>
+            )}
+
+            {event.sync_status === 'synced' && (
+              <DetailRow label="Sync">Synced with Google Calendar</DetailRow>
             )}
           </div>
 
-          {/* Action buttons */}
           <div
-            className="flex-shrink-0 px-4 pt-3 border-t border-white/10 flex gap-3"
+            className="flex shrink-0 gap-2 border-t border-white/[0.10] px-4 pt-3 sm:px-5"
             style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
           >
-            <Button
-              variant="outline"
+            <button
+              type="button"
               onClick={() => onDelete(event.id)}
-              className="h-12 flex-1 rounded-xl border-red-500/30 text-red-400 hover:bg-red-500/10 touch-manipulation active:scale-[0.98]"
+              className={cn(
+                ghostButtonCn,
+                'h-12 flex-1 border-red-500/25 bg-red-500/10 text-[14px] text-red-300 hover:bg-red-500/15'
+              )}
             >
-              <Trash2 className="h-5 w-5 mr-2" />
+              <Trash2 className="mr-2 inline h-4 w-4" />
               Delete
-            </Button>
-            <Button
+            </button>
+            <button
+              type="button"
               onClick={() => onEdit(event)}
-              className="h-12 flex-1 bg-elec-yellow text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+              className="h-12 flex-1 rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-colors touch-manipulation active:scale-[0.98]"
             >
-              <Pencil className="h-5 w-5 mr-2" />
+              <Pencil className="mr-2 inline h-4 w-4" />
               Edit
-            </Button>
+            </button>
           </div>
         </div>
       </SheetContent>

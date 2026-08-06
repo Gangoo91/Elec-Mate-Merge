@@ -99,8 +99,10 @@ export function LoadEntry({
 
   // For ring types, the "number of units" becomes "number of ring circuits"
   const unitsLabel = isRingType ? 'Number of Rings' : 'Number of Units';
+  // FIX: the entered "Rating per Ring" used to be discarded and every ring
+  // hard-coded to 32 A. It is now used, with 32 A only as a fallback.
   const unitsHint = isRingType
-    ? 'Number of ring circuits (engine assumes 32A per ring)'
+    ? 'Number of ring circuits (rating below is per ring; 32A assumed if left blank)'
     : 'Quantity of identical loads';
 
   // For ring types, the connected load is per-ring so the label changes
@@ -183,7 +185,7 @@ export function LoadEntry({
                 Cooker unit has socket outlet?
               </span>
               <p className="text-[12px] text-white/55 mt-0.5">
-                Adds 5A to diversified demand (Table A2 item 3)
+                Adds 5A to diversified demand (Table A2, household cooking appliances)
               </p>
             </div>
           </label>
@@ -205,8 +207,8 @@ export function LoadEntry({
               </span>
               <p className="text-[12px] text-white/55 mt-0.5">
                 {load.thermostaticallyControlled
-                  ? '100% — no diversity for thermostatic heating (Table A2 item 4)'
-                  : 'Largest 100% + 75% of remainder (Table A2 item 4)'}
+                  ? '100% — no diversity for thermostatic heating (Table A2, space heating)'
+                  : 'Largest 100% + 75% of remainder (Table A2, space heating)'}
               </p>
             </div>
           </label>

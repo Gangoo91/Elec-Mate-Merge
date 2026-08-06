@@ -549,8 +549,11 @@ const sections = [
             <li>
               <strong>Live tests:</strong> Earth fault loop impedance at the furthest point of each
               circuit (to verify disconnection times); prospective fault current at the origin;{' '}
-              <SEOInternalLink href="/rcd-testing-guide">RCD testing</SEOInternalLink> (trip time at
-              rated current, 5x rated current, and ramp test); voltage and frequency at the origin.
+              <SEOInternalLink href="/rcd-testing-guide">RCD testing</SEOInternalLink> (under
+              Regulation 643.7.3.201, a single alternating current test at the rated residual operating
+              current, IΔn, whatever the device type — Amendment 4 deleted Table 3A of Appendix 3,
+              so the 5x test is no longer part of the required sequence); voltage and frequency at
+              the origin.
             </li>
             <li>
               <strong>Functional tests (Reg 643.10):</strong> Verify all switching and isolation

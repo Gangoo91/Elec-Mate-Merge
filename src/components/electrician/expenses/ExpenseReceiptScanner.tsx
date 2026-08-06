@@ -239,12 +239,12 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
               />
             </div>
           )}
-          <div className="w-16 h-16 rounded-full bg-elec-yellow/10 flex items-center justify-center">
-            <Loader2 className="h-8 w-8 text-elec-yellow animate-spin" />
-          </div>
+          <Loader2 className="h-7 w-7 animate-spin text-elec-yellow" />
           <div className="text-center">
-            <p className="font-medium text-foreground mb-1">{progress || 'Processing...'}</p>
-            <p className="text-sm text-white">This may take a few seconds</p>
+            <p className="text-[15px] font-semibold tracking-tight text-white">
+              {progress || 'Reading the receipt'}
+            </p>
+            <p className="mt-1 text-[13px] text-white">This takes a few seconds</p>
           </div>
         </motion.div>
       </div>
@@ -259,27 +259,32 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
           animate={{ scale: 1, opacity: 1 }}
           className="flex flex-col items-center gap-6 max-w-sm text-center"
         >
-          <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center">
-            <AlertCircle className="h-8 w-8 text-red-400" />
-          </div>
           <div>
-            <p className="font-medium text-foreground mb-1">Failed to process receipt</p>
-            <p className="text-sm text-white">Please try again with a clearer photo</p>
+            <p className="text-[15px] font-semibold tracking-tight text-white">
+              That receipt could not be read
+            </p>
+            <p className="mt-1 text-[13px] text-white">
+              Try again with a clearer, flatter photo — or enter it yourself.
+            </p>
           </div>
-          <div className="flex gap-3 w-full">
-            <Button
-              variant="outline"
+          <div className="flex w-full gap-2">
+            <button
+              type="button"
               onClick={() => {
                 cleanupPreview();
                 setState('idle');
               }}
-              className="flex-1 h-11 touch-manipulation"
+              className="h-11 flex-1 rounded-xl bg-elec-yellow text-[14px] font-semibold text-black touch-manipulation active:scale-[0.98]"
             >
-              Try Again
-            </Button>
-            <Button variant="outline" onClick={onCancel} className="flex-1 h-11 touch-manipulation">
+              Try again
+            </button>
+            <button
+              type="button"
+              onClick={onCancel}
+              className="h-11 flex-1 rounded-xl border border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation"
+            >
               Cancel
-            </Button>
+            </button>
           </div>
         </motion.div>
       </div>
@@ -291,20 +296,23 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
       <div className="p-4 sm:p-6 space-y-6">
         {/* Header with confidence */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-elec-yellow" />
-            <span className="text-sm font-medium text-foreground">AI Extracted</span>
-          </div>
-          <div
+          <span className="text-[15px] font-semibold tracking-tight text-white">
+            Check these details
+          </span>
+          {/* Low confidence is the case worth flagging; a green "83%" badge on a
+              good read is decoration. */}
+          <span
             className={cn(
-              'px-2.5 py-1 rounded-full text-xs font-medium',
+              'rounded-full px-2.5 py-1 text-[11px] font-semibold',
               (extractedData.confidence || 0) > 0.7
-                ? 'bg-green-500/15 text-green-400'
-                : 'bg-amber-500/15 text-amber-400'
+                ? 'bg-white/[0.08] text-white'
+                : 'bg-orange-500/[0.15] text-orange-300'
             )}
           >
-            {Math.round((extractedData.confidence || 0) * 100)}% confidence
-          </div>
+            {(extractedData.confidence || 0) > 0.7
+              ? 'Read clearly'
+              : 'Read may be wrong — check it'}
+          </span>
         </div>
 
         {/* Preview and data side by side on desktop */}
@@ -441,61 +449,48 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
         className="hidden"
       />
 
-      {/* Hero section */}
-      <div className="text-center py-4">
-        <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-elec-yellow/20 to-amber-500/10 flex items-center justify-center mx-auto mb-4 border border-elec-yellow/20">
-          <FileImage className="h-10 w-10 text-elec-yellow" />
-        </div>
-        <h3 className="text-lg font-semibold text-foreground">Scan Your Receipt</h3>
-        <p className="text-sm text-white mt-2 max-w-xs mx-auto">
-          Our AI will automatically extract the vendor, amount, and date from your receipt
+      {/* No hero tile, no gradients, no icon plates — type carries it, and the
+          two ways in are told apart by which one is yellow. */}
+      <div>
+        <h3 className="text-[17px] font-semibold tracking-tight text-white">Scan a receipt</h3>
+        <p className="mt-1 text-[13px] leading-snug text-white">
+          The vendor, amount, VAT and date are read off the photo and filled in for you. Check them
+          before saving.
         </p>
       </div>
 
-      {/* Action buttons */}
       <div className="space-y-3">
-        {/* Camera capture button - primary */}
         <button
           onClick={() => cameraInputRef.current?.click()}
-          className="w-full p-4 rounded-2xl bg-gradient-to-br from-elec-yellow/15 to-amber-500/10 border border-elec-yellow/30 hover:border-elec-yellow/50 hover:from-elec-yellow/20 hover:to-amber-500/15 transition-all touch-manipulation active:scale-[0.98]"
+          className="w-full rounded-2xl border border-elec-yellow/40 bg-elec-yellow/[0.10] p-4 text-left transition-colors hover:bg-elec-yellow/[0.14] touch-manipulation active:scale-[0.99]"
         >
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
-              <Camera className="h-7 w-7 text-elec-yellow" />
-            </div>
-            <div className="flex-1 text-left">
-              <p className="font-semibold text-foreground">Take Photo</p>
-              <p className="text-sm text-white">Use your camera to capture a receipt</p>
-            </div>
-          </div>
+          <p className="text-[15px] font-semibold tracking-tight text-white">Take a photo</p>
+          <p className="mt-0.5 text-[12.5px] leading-snug text-white">
+            Point the camera at the receipt
+          </p>
         </button>
 
-        {/* File upload button */}
         <button
           onClick={() => fileInputRef.current?.click()}
-          className="w-full p-4 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-white/20 hover:bg-white/[0.05] transition-all touch-manipulation active:scale-[0.98]"
+          className="w-full rounded-2xl border border-white/[0.12] bg-white/[0.05] p-4 text-left transition-colors hover:bg-white/[0.08] touch-manipulation active:scale-[0.99]"
         >
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-xl bg-white/[0.08] flex items-center justify-center">
-              <Upload className="h-7 w-7 text-white" />
-            </div>
-            <div className="flex-1 text-left">
-              <p className="font-semibold text-foreground">Upload from Gallery</p>
-              <p className="text-sm text-white">Select an existing photo or PDF</p>
-            </div>
-          </div>
+          <p className="text-[15px] font-semibold tracking-tight text-white">Choose a file</p>
+          <p className="mt-0.5 text-[12.5px] leading-snug text-white">
+            A photo you already have, or a PDF
+          </p>
         </button>
       </div>
 
-      {/* Supported formats */}
-      <p className="text-xs text-center text-white">
-        Supports JPG, PNG, HEIC, WebP, and PDF
-      </p>
+      <p className="text-[12px] text-white">JPG, PNG, HEIC, WebP and PDF all work.</p>
 
       {/* Cancel button */}
-      <Button variant="ghost" onClick={onCancel} className="w-full h-11 touch-manipulation">
+      <button
+        type="button"
+        onClick={onCancel}
+        className="h-11 w-full rounded-xl border border-white/[0.12] bg-white/[0.04] text-[14px] font-medium text-white transition-colors hover:bg-white/[0.08] touch-manipulation"
+      >
         Cancel
-      </Button>
+      </button>
     </div>
   );
 }

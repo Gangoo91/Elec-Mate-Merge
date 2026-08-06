@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet';
 import { RecentReviews } from '@/components/seo/RecentReviews';
+import { CalculatorSurface } from '@/components/calculators/shared';
 import CableSizingCalculator from '@/components/apprentice/calculators/CableSizingCalculator';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
@@ -246,7 +247,7 @@ export default function CableSizingCalculatorPage() {
       {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
       <section id="calculator" className="px-5 pb-12 scroll-mt-24">
         <div className="max-w-4xl mx-auto">
-          <CableSizingCalculator />
+          <CalculatorSurface><CableSizingCalculator /></CalculatorSurface>
         </div>
       </section>
 

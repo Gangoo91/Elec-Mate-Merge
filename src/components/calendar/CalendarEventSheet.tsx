@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { format } from 'date-fns';
 import {
   Sheet,
@@ -7,23 +7,18 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Calendar } from '@/components/ui/calendar';
 import { PlacesAutocomplete } from '@/components/ui/PlacesAutocomplete';
 import { GoogleMapsProvider } from '@/contexts/GoogleMapsContext';
-import {
-  Loader2,
-  MapPin,
-  Bell,
-  FileText,
-  StickyNote,
-  Clock,
-  CalendarDays,
-  ChevronDown,
-} from 'lucide-react';
+import { ChevronDown, Loader2, Search, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useCustomers } from '@/hooks/useCustomers';
+import { useLinkableProjects } from '@/hooks/useLinkableProjects';
+import { useDayClashes } from '@/hooks/useDayClashes';
+import { useCalendarSettings } from '@/hooks/useCalendarSettings';
+import { textareaCn } from '@/components/forms/fieldStyles';
+import { chipBase, chipOff, chipOn, eyebrowCn, fieldCn, labelCn } from './calendarStyles';
 import type {
   CalendarEvent,
   CalendarEventType,
@@ -44,18 +39,27 @@ interface CalendarEventSheetProps {
 
 const REMINDER_OPTIONS = [
   { value: '0', label: 'None' },
-  { value: '5', label: '5 min' },
   { value: '15', label: '15 min' },
   { value: '30', label: '30 min' },
   { value: '60', label: '1 hr' },
+  { value: '120', label: '2 hr' },
   { value: '1440', label: '1 day' },
 ];
 
 const EVENT_TYPES = Object.keys(EVENT_TYPE_LABELS) as CalendarEventType[];
-
-// Generate hour options (00–23) and minute options (00, 15, 30, 45)
 const HOURS = Array.from({ length: 24 }, (_, i) => i);
-const MINUTES = [0, 15, 30, 45];
+const MINUTES = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+
+const pad = (n: number) => String(n).padStart(2, '0');
+
+type PickerKey =
+  | 'startDate'
+  | 'endDate'
+  | 'startTime'
+  | 'endTime'
+  | 'customer'
+  | 'project'
+  | null;
 
 const CalendarEventSheet = ({
   open,
@@ -68,7 +72,6 @@ const CalendarEventSheet = ({
 }: CalendarEventSheetProps) => {
   const isEditing = !!event;
 
-  // Form state
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [startDate, setStartDate] = useState<Date>(new Date());
@@ -83,17 +86,22 @@ const CalendarEventSheet = ({
   const [notes, setNotes] = useState('');
   const [reminderMinutes, setReminderMinutes] = useState('30');
   const [colour, setColour] = useState(EVENT_COLOURS.general);
+  const [clientId, setClientId] = useState<string | undefined>(undefined);
+  const [projectId, setProjectId] = useState<string | undefined>(undefined);
+  const [customerSearch, setCustomerSearch] = useState('');
 
-  // Which picker is open
-  const [openPicker, setOpenPicker] = useState<
-    'startDate' | 'endDate' | 'startTime' | 'endTime' | null
-  >(null);
-
-  const togglePicker = useCallback((picker: typeof openPicker) => {
+  const [openPicker, setOpenPicker] = useState<PickerKey>(null);
+  const togglePicker = useCallback((picker: PickerKey) => {
     setOpenPicker((prev) => (prev === picker ? null : picker));
   }, []);
 
-  // Populate form
+  // Only fetched once the sheet is open — a picker nobody has opened should not
+  // cost a round trip on every calendar render.
+  const { customers } = useCustomers();
+  const { settings } = useCalendarSettings();
+  const { data: projects = [] } = useLinkableProjects(open);
+  const { data: dayEvents = [] } = useDayClashes(open ? startDate : null, open && !allDay);
+
   useEffect(() => {
     if (event) {
       const s = new Date(event.start_at);
@@ -112,6 +120,8 @@ const CalendarEventSheet = ({
       setNotes(event.notes ?? '');
       setReminderMinutes(String(event.reminder_minutes));
       setColour(event.colour);
+      setClientId(event.client_id);
+      setProjectId(event.project_id);
     } else {
       const d = defaultDate ?? new Date();
       const hour = defaultHour ?? 9;
@@ -127,39 +137,100 @@ const CalendarEventSheet = ({
       setEventType('general');
       setLocation('');
       setNotes('');
-      setReminderMinutes('30');
+      // The default reminder is a setting the user can change in the settings
+      // sheet — which, until now, nothing consulted: this was hardcoded to 30
+      // whatever they chose.
+      setReminderMinutes(String(settings.defaultReminderMinutes));
       setColour(EVENT_COLOURS.general);
+      setClientId(undefined);
+      setProjectId(undefined);
     }
+    setCustomerSearch('');
     setOpenPicker(null);
+    // settings is read only to seed a NEW event; adding it to the deps would
+    // reset a form the user is halfway through the moment settings reload.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [event, defaultDate, defaultHour, open]);
 
-  // Sync colour with event type
+  // Colour follows the type on a new event; an edited one keeps what it has.
   useEffect(() => {
     if (!event) setColour(EVENT_COLOURS[eventType]);
   }, [eventType, event]);
 
+  const selectedCustomer = customers.find((c) => c.id === clientId);
+  const selectedProject = projects.find((p) => p.id === projectId);
+
+  const filteredCustomers = useMemo(() => {
+    const q = customerSearch.trim().toLowerCase();
+    if (!q) return customers.slice(0, 50);
+    return customers.filter((c) => c.name.toLowerCase().includes(q)).slice(0, 50);
+  }, [customers, customerSearch]);
+
+  /** Projects for the chosen customer first — usually the one being booked. */
+  const orderedProjects = useMemo(() => {
+    if (!clientId) return projects;
+    return [...projects].sort((a, b) => {
+      const aMatch = a.customerId === clientId ? 0 : 1;
+      const bMatch = b.customerId === clientId ? 0 : 1;
+      return aMatch - bMatch;
+    });
+  }, [projects, clientId]);
+
+  const startAt = useMemo(
+    () =>
+      allDay
+        ? new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), 0, 0, 0)
+        : new Date(
+            startDate.getFullYear(),
+            startDate.getMonth(),
+            startDate.getDate(),
+            startHour,
+            startMinute,
+            0
+          ),
+    [allDay, startDate, startHour, startMinute]
+  );
+
+  const endAt = useMemo(
+    () =>
+      allDay
+        ? new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), 23, 59, 59)
+        : new Date(
+            endDate.getFullYear(),
+            endDate.getMonth(),
+            endDate.getDate(),
+            endHour,
+            endMinute,
+            0
+          ),
+    [allDay, endDate, endHour, endMinute]
+  );
+
+  const endsBeforeItStarts = endAt <= startAt;
+
+  /**
+   * Anything already booked over the same stretch of time.
+   *
+   * A warning rather than a block — an electrician may well want a site visit
+   * inside a day booked to a job, and the app has no business refusing that.
+   * It only has a duty to say so.
+   */
+  const clashes = useMemo(() => {
+    if (allDay || endsBeforeItStarts) return [];
+    return dayEvents.filter((e) => {
+      if (event && e.id === event.id) return false;
+      if (e.all_day) return false;
+      return new Date(e.start_at) < endAt && new Date(e.end_at) > startAt;
+    });
+  }, [dayEvents, startAt, endAt, allDay, endsBeforeItStarts, event]);
+
   const handleSubmit = () => {
-    if (!title.trim()) return;
-
-    const sYear = startDate.getFullYear();
-    const sMonth = startDate.getMonth();
-    const sDay = startDate.getDate();
-    const eYear = endDate.getFullYear();
-    const eMonth = endDate.getMonth();
-    const eDay = endDate.getDate();
-
-    const startAt = allDay
-      ? new Date(sYear, sMonth, sDay, 0, 0, 0).toISOString()
-      : new Date(sYear, sMonth, sDay, startHour, startMinute, 0).toISOString();
-    const endAt = allDay
-      ? new Date(eYear, eMonth, eDay, 23, 59, 59).toISOString()
-      : new Date(eYear, eMonth, eDay, endHour, endMinute, 0).toISOString();
-
-    const data: CreateCalendarEventInput = {
+    if (!title.trim() || endsBeforeItStarts) return;
+    onSave({
       title: title.trim(),
       description: description.trim() || undefined,
-      start_at: startAt,
-      end_at: endAt,
+      start_at: startAt.toISOString(),
+      end_at: endAt.toISOString(),
       all_day: allDay,
       event_type: eventType,
       location: location.trim() || undefined,
@@ -167,93 +238,85 @@ const CalendarEventSheet = ({
       reminder_minutes: parseInt(reminderMinutes, 10),
       colour,
       recurring: false,
-    };
-
-    onSave(data);
+      client_id: clientId,
+      project_id: projectId,
+    });
   };
 
-  const pad = (n: number) => String(n).padStart(2, '0');
+  const rowButtonCn =
+    'flex h-12 w-full items-center gap-3 px-4 text-left touch-manipulation active:bg-white/[0.04]';
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
-          {/* Colour bar */}
-          <div
-            className="h-1 flex-shrink-0 transition-colors"
-            style={{ backgroundColor: colour }}
-          />
+      <SheetContent side="bottom" className="h-[85vh] overflow-hidden rounded-t-2xl p-0">
+        <div className="flex h-full flex-col bg-background">
+          <div className="h-1 shrink-0 transition-colors" style={{ backgroundColor: colour }} />
 
-          {/* Header */}
-          <SheetHeader className="px-5 py-3 flex-shrink-0">
-            <SheetTitle className="text-white text-lg font-bold">
-              {isEditing ? 'Edit Event' : 'New Event'}
+          <SheetHeader className="shrink-0 px-4 py-3">
+            <SheetTitle className="text-left text-[17px] font-semibold tracking-tight text-white">
+              {isEditing ? 'Edit event' : 'New event'}
             </SheetTitle>
             <SheetDescription className="sr-only">
               {isEditing ? 'Edit event details' : 'Create a new calendar event'}
             </SheetDescription>
           </SheetHeader>
 
-          {/* Scrollable form */}
-          <div className="flex-1 overflow-y-auto px-5 pb-6 space-y-5">
+          <div className="flex-1 space-y-5 overflow-y-auto px-4 pb-6">
             {/* Title */}
-            <input
-              placeholder="Event title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              autoFocus
-              className="w-full h-14 text-lg font-semibold text-white touch-manipulation border-0 border-b border-white/10 bg-transparent px-0 focus:border-white/30 focus:ring-0 focus:outline-none placeholder:text-white/50"
-            />
-
-            {/* Type — horizontal pills */}
-            <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
-              {EVENT_TYPES.map((type) => (
-                <button
-                  key={type}
-                  type="button"
-                  onClick={() => setEventType(type)}
-                  className={cn(
-                    'flex items-center gap-1.5 h-11 px-3 rounded-full text-xs font-bold whitespace-nowrap touch-manipulation transition-all flex-shrink-0',
-                    eventType === type
-                      ? 'text-white ring-1'
-                      : 'text-white bg-white/[0.04] active:bg-white/[0.08]'
-                  )}
-                  style={
-                    eventType === type
-                      ? {
-                          backgroundColor: EVENT_COLOURS[type] + '30',
-                          ringColor: EVENT_COLOURS[type],
-                        }
-                      : undefined
-                  }
-                >
-                  <div
-                    className="w-2 h-2 rounded-full flex-shrink-0"
-                    style={{ backgroundColor: EVENT_COLOURS[type] }}
-                  />
-                  {EVENT_TYPE_LABELS[type]}
-                </button>
-              ))}
+            <div>
+              <label className={labelCn} htmlFor="event-title">
+                Event title
+              </label>
+              <input
+                id="event-title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="What is it?"
+                autoFocus
+                className={fieldCn}
+              />
             </div>
 
-            {/* Schedule section */}
-            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
-              {/* All day */}
-              <div className="flex items-center justify-between h-12 px-4 touch-manipulation">
-                <span className="text-sm font-semibold text-white">All day</span>
+            {/* Type */}
+            <div>
+              <span className={labelCn}>Type</span>
+              <div className="scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
+                {EVENT_TYPES.map((type) => (
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => setEventType(type)}
+                    className={cn(
+                      chipBase,
+                      'flex items-center gap-1.5',
+                      eventType === type ? chipOn : chipOff
+                    )}
+                  >
+                    <span
+                      className="h-2 w-2 shrink-0 rounded-full"
+                      style={{ backgroundColor: EVENT_COLOURS[type] }}
+                    />
+                    {EVENT_TYPE_LABELS[type]}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Schedule */}
+            <div className="divide-y divide-white/[0.10] overflow-hidden rounded-2xl border border-white/[0.12] bg-white/[0.04]">
+              <div className="flex h-12 items-center justify-between px-4">
+                <span className="text-[14px] font-medium text-white">All day</span>
                 <Switch checked={allDay} onCheckedChange={setAllDay} />
               </div>
 
-              {/* Start date */}
               <div>
                 <button
                   type="button"
                   onClick={() => togglePicker('startDate')}
-                  className="flex items-center w-full h-12 px-4 gap-3 touch-manipulation active:bg-white/[0.04]"
+                  className={rowButtonCn}
                 >
-                  <CalendarDays className="h-4 w-4 text-blue-400 flex-shrink-0" />
-                  <span className="text-sm text-white w-12 flex-shrink-0">Starts</span>
-                  <span className="flex-1 text-sm font-semibold text-white">
+                  <span className="w-12 shrink-0 text-[13px] text-white">Starts</span>
+                  <span className="flex-1 text-[14px] font-semibold text-white">
                     {format(startDate, 'EEE d MMM yyyy')}
                   </span>
                   <ChevronDown
@@ -264,7 +327,7 @@ const CalendarEventSheet = ({
                   />
                 </button>
                 {openPicker === 'startDate' && (
-                  <div className="px-2 pb-3 flex justify-center">
+                  <div className="flex justify-center px-2 pb-3">
                     <Calendar
                       mode="single"
                       selected={startDate}
@@ -281,17 +344,15 @@ const CalendarEventSheet = ({
                 )}
               </div>
 
-              {/* Start time */}
               {!allDay && (
                 <div>
                   <button
                     type="button"
                     onClick={() => togglePicker('startTime')}
-                    className="flex items-center w-full h-12 px-4 gap-3 touch-manipulation active:bg-white/[0.04]"
+                    className={rowButtonCn}
                   >
-                    <Clock className="h-4 w-4 text-blue-400 flex-shrink-0" />
-                    <span className="text-sm text-white w-12 flex-shrink-0">Time</span>
-                    <span className="flex-1 text-sm font-semibold text-elec-yellow tabular-nums">
+                    <span className="w-12 shrink-0 text-[13px] text-white">Time</span>
+                    <span className="flex-1 text-[14px] font-semibold tabular-nums text-elec-yellow">
                       {pad(startHour)}:{pad(startMinute)}
                     </span>
                     <ChevronDown
@@ -305,23 +366,27 @@ const CalendarEventSheet = ({
                     <TimePicker
                       hour={startHour}
                       minute={startMinute}
-                      onHourChange={setStartHour}
+                      onHourChange={(h) => {
+                        setStartHour(h);
+                        // Keep the gap the user already had rather than
+                        // silently inverting the event.
+                        if (
+                          endDate.toDateString() === startDate.toDateString() &&
+                          h >= endHour
+                        ) {
+                          setEndHour(Math.min(h + 1, 23));
+                        }
+                      }}
                       onMinuteChange={setStartMinute}
                     />
                   )}
                 </div>
               )}
 
-              {/* End date */}
               <div>
-                <button
-                  type="button"
-                  onClick={() => togglePicker('endDate')}
-                  className="flex items-center w-full h-12 px-4 gap-3 touch-manipulation active:bg-white/[0.04]"
-                >
-                  <CalendarDays className="h-4 w-4 text-blue-400/50 flex-shrink-0" />
-                  <span className="text-sm text-white w-12 flex-shrink-0">Ends</span>
-                  <span className="flex-1 text-sm font-semibold text-white">
+                <button type="button" onClick={() => togglePicker('endDate')} className={rowButtonCn}>
+                  <span className="w-12 shrink-0 text-[13px] text-white">Ends</span>
+                  <span className="flex-1 text-[14px] font-semibold text-white">
                     {format(endDate, 'EEE d MMM yyyy')}
                   </span>
                   <ChevronDown
@@ -332,7 +397,7 @@ const CalendarEventSheet = ({
                   />
                 </button>
                 {openPicker === 'endDate' && (
-                  <div className="px-2 pb-3 flex justify-center">
+                  <div className="flex justify-center px-2 pb-3">
                     <Calendar
                       mode="single"
                       selected={endDate}
@@ -347,17 +412,15 @@ const CalendarEventSheet = ({
                 )}
               </div>
 
-              {/* End time */}
               {!allDay && (
                 <div>
                   <button
                     type="button"
                     onClick={() => togglePicker('endTime')}
-                    className="flex items-center w-full h-12 px-4 gap-3 touch-manipulation active:bg-white/[0.04]"
+                    className={rowButtonCn}
                   >
-                    <Clock className="h-4 w-4 text-blue-400/50 flex-shrink-0" />
-                    <span className="text-sm text-white w-12 flex-shrink-0">Time</span>
-                    <span className="flex-1 text-sm font-semibold text-elec-yellow tabular-nums">
+                    <span className="w-12 shrink-0 text-[13px] text-white">Time</span>
+                    <span className="flex-1 text-[14px] font-semibold tabular-nums text-elec-yellow">
                       {pad(endHour)}:{pad(endMinute)}
                     </span>
                     <ChevronDown
@@ -379,42 +442,188 @@ const CalendarEventSheet = ({
               )}
             </div>
 
-            {/* Location — address autocomplete so the synced event carries a
-                full, mappable address (tappable in Google/Apple Calendar). */}
-            <GoogleMapsProvider>
-              <div className="flex items-center gap-3 min-h-12 px-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
-                <MapPin className="h-4 w-4 text-emerald-400 flex-shrink-0" />
-                <div className="flex-1">
-                  <PlacesAutocomplete
-                    value={location}
-                    onChange={setLocation}
-                    placeholder="Add location"
-                    className="h-11 bg-transparent border-0 shadow-none px-0 text-sm text-white touch-manipulation focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-white/50"
-                  />
-                </div>
+            {endsBeforeItStarts && (
+              <p className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-3 py-2.5 text-[13px] text-orange-300">
+                The end is before the start. Adjust the times to save.
+              </p>
+            )}
+
+            {clashes.length > 0 && (
+              <div className="rounded-xl border border-orange-500/30 bg-orange-500/10 px-3 py-2.5">
+                <p className="text-[13px] font-semibold text-orange-300">
+                  {clashes.length === 1 ? 'Clashes with' : `Clashes with ${clashes.length} events`}
+                </p>
+                <ul className="mt-1 space-y-0.5">
+                  {clashes.slice(0, 3).map((c) => (
+                    <li key={c.id} className="text-[12px] tabular-nums text-orange-300">
+                      {format(new Date(c.start_at), 'HH:mm')}–
+                      {format(new Date(c.end_at), 'HH:mm')} · {c.title}
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </GoogleMapsProvider>
+            )}
+
+            {/* Location */}
+            <div>
+              <label className={labelCn}>Location</label>
+              <GoogleMapsProvider>
+                <PlacesAutocomplete
+                  value={location}
+                  onChange={setLocation}
+                  placeholder="Add an address"
+                  className={fieldCn}
+                />
+              </GoogleMapsProvider>
+            </div>
+
+            {/* Customer — client_id has existed on the table all along and no
+                screen ever set it. Without this, an event could never be tied
+                to the person it was for. */}
+            <div>
+              <span className={labelCn}>Customer</span>
+              <div className="overflow-hidden rounded-2xl border border-white/[0.12] bg-white/[0.04]">
+                {/* Clear sits BESIDE the disclosure, not inside it — a button
+                    within a button is invalid and swallows its own taps. */}
+                <div className="flex items-center">
+                  <button
+                    type="button"
+                    onClick={() => togglePicker('customer')}
+                    className={cn(rowButtonCn, 'flex-1')}
+                  >
+                    <span className="flex-1 truncate text-[14px] font-medium text-white">
+                      {selectedCustomer?.name ?? 'None'}
+                    </span>
+                    {!clientId && (
+                      <ChevronDown
+                        className={cn(
+                          'h-4 w-4 text-white transition-transform',
+                          openPicker === 'customer' && 'rotate-180'
+                        )}
+                      />
+                    )}
+                  </button>
+                  {clientId && (
+                    <button
+                      type="button"
+                      aria-label="Clear customer"
+                      onClick={() => setClientId(undefined)}
+                      className="flex h-12 w-11 shrink-0 items-center justify-center text-white touch-manipulation active:bg-white/[0.06]"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  )}
+                </div>
+
+                {openPicker === 'customer' && (
+                  <div className="border-t border-white/[0.10]">
+                    <div className="relative px-4 py-2">
+                      <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
+                      <input
+                        value={customerSearch}
+                        onChange={(e) => setCustomerSearch(e.target.value)}
+                        placeholder="Search customers"
+                        className={cn(fieldCn, 'pl-6')}
+                      />
+                    </div>
+                    <div className="max-h-56 overflow-y-auto">
+                      {filteredCustomers.length === 0 ? (
+                        <p className="px-4 py-3 text-[13px] text-white">No customers found.</p>
+                      ) : (
+                        filteredCustomers.map((c) => (
+                          <button
+                            key={c.id}
+                            type="button"
+                            onClick={() => {
+                              setClientId(c.id);
+                              // A customer with an address fills a location the
+                              // user would otherwise retype from memory.
+                              if (!location.trim() && c.address) setLocation(c.address);
+                              setOpenPicker(null);
+                            }}
+                            className="flex h-12 w-full items-center px-4 text-left text-[14px] text-white touch-manipulation active:bg-white/[0.06]"
+                          >
+                            <span className="truncate">{c.name}</span>
+                          </button>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Project — the bridge that lets this block be logged as billable
+                time against a job (ELE-1472). Nothing in the UI could set it. */}
+            <div>
+              <span className={labelCn}>Job</span>
+              <div className="overflow-hidden rounded-2xl border border-white/[0.12] bg-white/[0.04]">
+                <div className="flex items-center">
+                  <button
+                    type="button"
+                    onClick={() => togglePicker('project')}
+                    className={cn(rowButtonCn, 'flex-1')}
+                  >
+                    <span className="flex-1 truncate text-[14px] font-medium text-white">
+                      {selectedProject?.title ?? 'None'}
+                    </span>
+                    {!projectId && (
+                      <ChevronDown
+                        className={cn(
+                          'h-4 w-4 text-white transition-transform',
+                          openPicker === 'project' && 'rotate-180'
+                        )}
+                      />
+                    )}
+                  </button>
+                  {projectId && (
+                    <button
+                      type="button"
+                      aria-label="Clear job"
+                      onClick={() => setProjectId(undefined)}
+                      className="flex h-12 w-11 shrink-0 items-center justify-center text-white touch-manipulation active:bg-white/[0.06]"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  )}
+                </div>
+
+                {openPicker === 'project' && (
+                  <div className="max-h-56 overflow-y-auto border-t border-white/[0.10]">
+                    {orderedProjects.length === 0 ? (
+                      <p className="px-4 py-3 text-[13px] text-white">No open jobs.</p>
+                    ) : (
+                      orderedProjects.map((p) => (
+                        <button
+                          key={p.id}
+                          type="button"
+                          onClick={() => {
+                            setProjectId(p.id);
+                            if (p.customerId && !clientId) setClientId(p.customerId);
+                            if (!location.trim() && p.location) setLocation(p.location);
+                            setOpenPicker(null);
+                          }}
+                          className="flex h-12 w-full items-center px-4 text-left text-[14px] text-white touch-manipulation active:bg-white/[0.06]"
+                        >
+                          <span className="truncate">{p.title}</span>
+                        </button>
+                      ))
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
 
             {/* Reminder */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 px-1">
-                <Bell className="h-3.5 w-3.5 text-amber-400" />
-                <span className="text-xs font-bold text-white uppercase tracking-wider">
-                  Reminder
-                </span>
-              </div>
-              <div className="flex gap-1.5">
+            <div>
+              <span className={cn(eyebrowCn, 'mb-2 block')}>Reminder</span>
+              <div className="scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
                 {REMINDER_OPTIONS.map((opt) => (
                   <button
                     key={opt.value}
                     type="button"
                     onClick={() => setReminderMinutes(opt.value)}
-                    className={cn(
-                      'flex-1 h-11 text-xs font-bold rounded-lg touch-manipulation transition-all',
-                      reminderMinutes === opt.value
-                        ? 'bg-elec-yellow text-black'
-                        : 'bg-white/[0.04] text-white active:bg-white/[0.08]'
-                    )}
+                    className={cn(chipBase, reminderMinutes === opt.value ? chipOn : chipOff)}
                   >
                     {opt.label}
                   </button>
@@ -423,51 +632,50 @@ const CalendarEventSheet = ({
             </div>
 
             {/* Description */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 px-1">
-                <FileText className="h-3.5 w-3.5 text-cyan-400" />
-                <span className="text-xs font-bold text-white uppercase tracking-wider">
-                  Description
-                </span>
-              </div>
-              <Textarea
-                placeholder="Add details..."
+            <div>
+              <label className={labelCn} htmlFor="event-description">
+                Description
+              </label>
+              <textarea
+                id="event-description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="touch-manipulation text-sm min-h-[72px] bg-white/[0.03] border-white/[0.06] focus:ring-1 focus:ring-elec-yellow/30 focus:border-elec-yellow/30 rounded-xl placeholder:text-white/50"
+                placeholder="What needs doing"
+                rows={2}
+                className={cn(textareaCn, 'min-h-[72px]')}
               />
             </div>
 
             {/* Notes */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 px-1">
-                <StickyNote className="h-3.5 w-3.5 text-purple-400" />
-                <span className="text-xs font-bold text-white uppercase tracking-wider">
-                  Private notes
-                </span>
-              </div>
-              <Textarea
-                placeholder="Notes for yourself..."
+            <div>
+              <label className={labelCn} htmlFor="event-notes">
+                Private notes
+              </label>
+              <textarea
+                id="event-notes"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="touch-manipulation text-sm min-h-[72px] bg-white/[0.03] border-white/[0.06] focus:ring-1 focus:ring-elec-yellow/30 focus:border-elec-yellow/30 rounded-xl placeholder:text-white/50"
+                placeholder="Only you see these"
+                rows={2}
+                className={cn(textareaCn, 'min-h-[72px]')}
               />
             </div>
           </div>
 
-          {/* Sticky footer */}
+          {/* Footer */}
           <div
-            className="flex-shrink-0 px-5 pt-3 border-t border-white/[0.06]"
+            className="shrink-0 border-t border-white/[0.10] px-4 pt-3"
             style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
           >
-            <Button
+            <button
+              type="button"
               onClick={handleSubmit}
-              disabled={!title.trim() || saving}
-              className="w-full h-12 bg-elec-yellow text-black text-base font-bold rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-50"
+              disabled={!title.trim() || endsBeforeItStarts || saving}
+              className="flex h-12 w-full items-center justify-center rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors touch-manipulation active:scale-[0.98] disabled:opacity-50"
             >
-              {saving && <Loader2 className="h-5 w-5 animate-spin mr-2" />}
-              {isEditing ? 'Save Changes' : 'Create Event'}
-            </Button>
+              {saving && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
+              {isEditing ? 'Save changes' : 'Create event'}
+            </button>
           </div>
         </div>
       </SheetContent>
@@ -475,7 +683,7 @@ const CalendarEventSheet = ({
   );
 };
 
-/** Inline time picker with hour and minute scroll columns */
+/** Inline time picker — hour grid and minute column, both 44px targets. */
 function TimePicker({
   hour,
   minute,
@@ -487,21 +695,18 @@ function TimePicker({
   onHourChange: (h: number) => void;
   onMinuteChange: (m: number) => void;
 }) {
-  const pad = (n: number) => String(n).padStart(2, '0');
-
   return (
     <div className="flex justify-center gap-4 px-4 py-3">
-      {/* Hours */}
       <div className="flex flex-col items-center gap-1">
-        <span className="text-[10px] font-bold text-white uppercase">Hour</span>
-        <div className="flex flex-wrap gap-1 max-w-[180px] justify-center">
+        <span className={eyebrowCn}>Hour</span>
+        <div className="flex max-w-[184px] flex-wrap justify-center gap-1">
           {HOURS.map((h) => (
             <button
               key={h}
               type="button"
               onClick={() => onHourChange(h)}
               className={cn(
-                'w-11 h-11 rounded-lg text-sm font-bold touch-manipulation transition-all',
+                'h-11 w-11 rounded-lg text-sm font-semibold tabular-nums transition-colors touch-manipulation',
                 hour === h ? 'bg-elec-yellow text-black' : 'text-white active:bg-white/[0.08]'
               )}
             >
@@ -511,17 +716,16 @@ function TimePicker({
         </div>
       </div>
 
-      {/* Minutes */}
       <div className="flex flex-col items-center gap-1">
-        <span className="text-[10px] font-bold text-white uppercase">Min</span>
+        <span className={eyebrowCn}>Min</span>
         <div className="flex flex-col gap-1">
-          {[0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55].map((m) => (
+          {MINUTES.map((m) => (
             <button
               key={m}
               type="button"
               onClick={() => onMinuteChange(m)}
               className={cn(
-                'w-12 h-11 rounded-lg text-sm font-bold touch-manipulation transition-all',
+                'h-11 w-12 rounded-lg text-sm font-semibold tabular-nums transition-colors touch-manipulation',
                 minute === m ? 'bg-elec-yellow text-black' : 'text-white active:bg-white/[0.08]'
               )}
             >

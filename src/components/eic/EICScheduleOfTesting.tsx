@@ -39,6 +39,8 @@ import {
   isAutoDesignation,
   countDuplicateCircuits,
   renumberDuplicateCircuits,
+  meansNotACircuit,
+  DEVICE_ROW_NUMBER,
 } from '@/utils/circuitNumbering';
 import { moveCircuitUp, moveCircuitDown } from '@/utils/circuitReorder';
 import BoardSection, { BoardToolCallbacks } from '../testing/BoardSection';
@@ -2193,7 +2195,22 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
             // circuit-number column writes circuitDesignation while the PDF
             // prints circuitNumber; a one-way sync left the printed value
             // uncorrectable from the table.
-            if (field === 'circuitNumber' && value) {
+            // ELE-1484 — a dash (or "n/a", or the "0" people improvised) marks
+            // the row as a device rather than a circuit: an incoming RCD, an
+            // SPD, a main switch. It prints a dash and holds no way number.
+            if (
+              (field === 'circuitNumber' || field === 'circuitDesignation') &&
+              // Clearing the box on an existing device row restores the dash,
+              // so the table never shows blank while the PDF prints "—".
+              (meansNotACircuit(value) ||
+                (result.isDeviceRow === true && !String(value ?? '').trim()))
+            ) {
+              updatedResult.isDeviceRow = true;
+              updatedResult.circuitNumber = DEVICE_ROW_NUMBER;
+              updatedResult.circuitDesignation = DEVICE_ROW_NUMBER;
+              updatedResult.wayNumber = null;
+            } else if (field === 'circuitNumber' && value) {
+              updatedResult.isDeviceRow = false;
               if (isAutoDesignation(result.circuitDesignation)) {
                 updatedResult.circuitDesignation = `C${value}`;
               }
@@ -2201,6 +2218,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
             } else if (field === 'circuitDesignation') {
               const derived = deriveCircuitNumber(value);
               if (derived) {
+                updatedResult.isDeviceRow = false;
                 updatedResult.circuitNumber = derived;
                 updatedResult.wayNumber = parseCircuitNumberBase(derived) ?? updatedResult.wayNumber ?? null;
               }
@@ -2364,6 +2382,11 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           </p>
           <p className="mt-1 text-[13px] leading-relaxed text-orange-200">
             Circuit numbers must be unique on each board — this prints on the certificate.
+          </p>
+          {/* ELE-1484 — surfaced here because this is the moment they need it. */}
+          <p className="mt-1 text-[13px] leading-relaxed text-orange-200">
+            If one of them is an RCD, SPD or main switch rather than a circuit, put a dash (—) in
+            its way box — it then holds no number.
           </p>
           <button
             type="button"
@@ -2770,6 +2793,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                           </div>
                         ) : (
                           <MobileHorizontalScrollTable
+                            earthingArrangement={formData.earthingArrangement as string | undefined}
                             testResults={boardCircuits}
                             onUpdate={updateTestResult}
                             onRemove={removeTestResult}
@@ -3180,7 +3204,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
               </Button>
             </div>
             <div className="tool-sheet-content">
-              <MobileSmartAutoFill testResults={testResults} onUpdate={handleBulkUpdate} />
+              <MobileSmartAutoFill testResults={testResults} onUpdate={handleBulkUpdate} earthingArrangement={formData.earthingArrangement as string | undefined} />
             </div>
           </div>
         </>

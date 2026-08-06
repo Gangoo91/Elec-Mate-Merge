@@ -20,7 +20,7 @@ export const checkCircuitTypeConsistency = (result: TestResult): RegulationWarni
       severity: 'warning',
       title: 'Unusual Lighting Circuit Rating',
       description: `${deviceRating}A protection is unusually high for lighting circuits.`,
-      regulation: 'BS 7671 Section 311',
+      regulation: 'Elec-Mate check — not a BS 7671 requirement',
       suggestion: 'Typical lighting circuits use 6A or 10A protection. Verify load requirements.',
     });
   }
@@ -32,7 +32,7 @@ export const checkCircuitTypeConsistency = (result: TestResult): RegulationWarni
         severity: 'warning',
         title: 'Non-Standard Ring Final Rating',
         description: `Ring final circuits typically use 32A protection, but ${deviceRating}A is specified.`,
-        regulation: 'BS 7671 Regulation 433.1',
+        regulation: 'Elec-Mate check — BS 7671 Reg 433.1.204 permits 30A or 32A',
         suggestion: 'Verify if this is intended as a ring final or radial circuit.',
       });
     }
@@ -43,7 +43,7 @@ export const checkCircuitTypeConsistency = (result: TestResult): RegulationWarni
         severity: 'warning',
         title: 'Non-Standard Ring Final Cable Size',
         description: `Ring final circuits typically use 2.5mm² or 4mm² cable, but ${result.liveSize} is specified.`,
-        regulation: 'BS 7671 Appendix 15',
+        regulation: 'BS 7671 Appendix 15 (informative) — ring and radial final circuits',
         suggestion: 'Verify cable size is appropriate for the intended ring final application.',
       });
     }
@@ -54,7 +54,7 @@ export const checkCircuitTypeConsistency = (result: TestResult): RegulationWarni
       severity: 'warning',
       title: 'Low Rating for Shower Circuit',
       description: `${deviceRating}A may be insufficient for typical shower loads.`,
-      regulation: 'BS 7671 Section 701',
+      regulation: 'Elec-Mate check — not a BS 7671 requirement',
       suggestion:
         'Electric showers typically require 40A or 45A protection. Verify shower power rating.',
     });

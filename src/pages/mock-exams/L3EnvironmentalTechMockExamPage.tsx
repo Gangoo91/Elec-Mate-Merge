@@ -9,8 +9,8 @@ import { module2Questions } from '@/data/apprentice-courses/level3/module2/quest
 export default function L3EnvironmentalTechMockExamPage() {
   return (
     <PublicMockExamPage
-      title={`Free Level 3 Mock Exam: Environmental Tech (Unit 2)`}
-      description={`Free Level 3 Environmental Technologies mock — 25 Qs from 251-Q bank. Solar PV, wind, heat pumps, energy efficiency, MCS, BS 7671 Section 712 + 722.`}
+      title={`C&G 2365-03 Level 3 Mock Exam with Answers — Environmental Tech`}
+      description={`Free City & Guilds 2365-03 Level 3 mock exam with answers explained — Environmental Technologies. 25 Qs from 251-Q bank. Solar PV, wind, heat pumps, energy efficiency, MCS, BS 7671 Section 712 + 722.`}
       slug="level-3-environmental-technologies"
       heading={`Free Level 3 Mock Exam: Environmental Tech (Unit 2)`}
       intro={`Free mock exam for Level 3 Electrical apprentices on Environmental Technologies. 25 questions from a 251-question bank covering solar photovoltaic systems (BS 7671 Section 712), heat pumps, wind generation, EV charging (Section 722), energy efficiency principles, the MCS scheme and grid connection requirements.`}

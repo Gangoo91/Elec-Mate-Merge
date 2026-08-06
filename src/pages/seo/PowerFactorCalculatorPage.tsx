@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet';
 import { RecentReviews } from '@/components/seo/RecentReviews';
+import { CalculatorSurface } from '@/components/calculators/shared';
 import PowerFactorCalculator from '@/components/apprentice/calculators/PowerFactorCalculator';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
@@ -215,7 +216,7 @@ export default function PowerFactorCalculatorPage() {
       {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
       <section id="calculator" className="px-5 pb-12 scroll-mt-24">
         <div className="max-w-4xl mx-auto">
-          <PowerFactorCalculator />
+          <CalculatorSurface><PowerFactorCalculator /></CalculatorSurface>
         </div>
       </section>
 
@@ -652,8 +653,8 @@ export default function PowerFactorCalculatorPage() {
       {/* E-E-A-T byline */}
       <section className="px-5 pb-2">
         <div className="max-w-4xl mx-auto">
-          <p className="text-xs text-white/50 text-center">
-            Reviewed by <strong className="text-white/70">Chris Dawson</strong>, qualified
+          <p className="text-xs text-white text-center">
+            Reviewed by <strong className="text-white">Chris Dawson</strong>, qualified
             electrician (City &amp; Guilds 2382, 18th Edition) · Last reviewed May 2026 · All
             calculations verified against BS 7671:2018+A4:2026
           </p>

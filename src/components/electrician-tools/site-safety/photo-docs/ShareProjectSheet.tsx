@@ -193,7 +193,7 @@ export default function ShareProjectSheet({
         variant: 'destructive',
       });
     }
-  }, [phoneNumber, projectReference, filteredPhotos, title, createShare, getShareUrl]);
+  }, [phoneNumber, projectReference, projectId, filteredPhotos, title, createShare, getShareUrl]);
 
   // Link create handler
   const handleCreateLink = useCallback(async () => {
@@ -219,6 +219,7 @@ export default function ShareProjectSheet({
     }
   }, [
     projectReference,
+    projectId,
     filteredPhotos,
     title,
     linkMessage,

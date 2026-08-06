@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'Do I need a metal consumer unit in Brighton?',
     answer:
-      'Yes. Since 1 January 2016, Amendment 4 to BS 7671:2008 introduced Regulation 421.1.201 requiring all domestic consumer unit replacements to use a non-combustible (metal) enclosure. The requirement is carried forward in BS 7671:2018+A4:2026 (the current wiring regulations). A qualified Brighton electrician will only supply and install a compliant metal consumer unit. Plastic consumer units are not permitted for new or replacement domestic installations.',
+      'Yes. Since 1 January 2016, Amendment 3 to BS 7671:2008 introduced Regulation 421.1.201 requiring all domestic consumer unit replacements to use a non-combustible (metal) enclosure. The requirement is carried forward in BS 7671:2018+A4:2026 (the current wiring regulations). A qualified Brighton electrician will only supply and install a compliant metal consumer unit. Plastic consumer units are not permitted for new or replacement domestic installations.',
   },
   {
     question: 'My Brighton flat is in a converted Victorian house — what are the typical issues?',
@@ -296,7 +296,7 @@ const sections = [
     content: (
       <>
         <p>
-          Regulation 421.1.201, introduced by Amendment 4 to BS 7671:2008 and effective from 1
+          Regulation 421.1.201, introduced by Amendment 3 to BS 7671:2008 and effective from 1
           January 2016, requires all consumer units and similar switchgear in domestic premises to
           have a non-combustible (metal) enclosure. This requirement is unchanged in BS 7671:2018+A4:2026 — the current edition of the wiring regulations. Every consumer unit
           replacement in Brighton must comply.
@@ -348,7 +348,7 @@ const sections = [
         <p>
           Brighton labour rates are among the higher in the South East, reflecting the cost of
           living in Brighton &amp; Hove. The following 2026 price ranges cover a complete domestic
-          consumer unit replacement: metal consumer unit, all labour, BS 7671 Chapter 61 testing,
+          consumer unit replacement: metal consumer unit, all labour, BS 7671 Chapter 64 testing,
           Electrical Installation Certificate, and Part P self-certification via the competent
           person scheme.
         </p>
@@ -381,7 +381,7 @@ const sections = [
               <span>
                 <strong>What is included</strong> — metal consumer unit (specified make and model),
                 all labour, circuit reconnection, bonding checks to Regulation 544.1.1, full testing
-                per BS 7671 Chapter 61, EIC with schedule of test results, and Part P notification
+                per BS 7671 Chapter 64, EIC with schedule of test results, and Part P notification
                 via competent person scheme.
               </span>
             </li>
@@ -426,7 +426,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Testing to BS 7671 Chapter 61</strong> — continuity of protective
+                <strong>Testing to BS 7671 Chapter 64</strong> — continuity of protective
                 conductors, ring final circuit continuity (where applicable), insulation resistance,
                 polarity, earth fault loop impedance, and RCD operating time. All results recorded
                 on the schedule of test results.

@@ -1,5 +1,24 @@
-// BS 7671 Appendix 4 Voltage Drop Tables
-// Tables 4D1B, 4D2B, 4D3B, 4D4B, 4D5B
+// BS 7671:2018+A4:2026 Appendix 4 — voltage drop tables (mV/A/m)
+// Tables held here: 4D1B, 4E1B, 4D2B, 4D3B, 4D4B and Table 4D5.
+//
+// FIXED (citations): the header previously read "Tables 4D1B, 4D2B, 4D3B, 4D4B, 4D5B".
+// There is no Table 4D5B. Appendix 4 lists Table 4D5 as a single combined table for
+// "70 °C thermoplastic insulated and sheathed flat cable with protective conductor";
+// unlike 4D1–4D4 it has no separate B voltage-drop table. The 90 °C thermosetting
+// single-core table below was also mislabelled 4D2B — it is Table 4E1B.
+//
+// ⚠️ App 4 §6 — COLUMN STRUCTURE. "For cables having conductors of 16 mm² or less
+// cross-sectional area, their inductances can be ignored and (mV/A/m)z values only are
+// tabulated. For cables having conductors greater than 16 mm² cross-sectional area the
+// impedance values are given as (mV/A/m)z, together with the resistive component
+// (mV/A/m)r and the reactive component (mV/A/m)x."
+// BS 7671 therefore prints NO reactance for 1.0–16 mm². The `x` sub-values carried at
+// those sizes below are NOT from the standard (they run in an exact −0.005 arithmetic
+// step per size row, which no printed column does) and MUST NOT be used in the §6.2
+// vector-sum formula. Only `.z` is consumed by the lookup in this module. The `r`/`x`
+// figures at 25 mm² and above are likewise unverified against the printed table — the
+// landscape Appendix 4 pages do not extract legibly — so they are left untouched here
+// rather than "corrected" on a guess.
 
 import { CableType } from './cableCapacities';
 
@@ -7,7 +26,10 @@ export interface VoltageDropEntry {
   size: number; // mm²
   twoCoreDc?: number; // mV/A/m for DC
   twoCoreAC: {
-    methodsAB: { r: number; x: number; z: number }; // mV/A/m resistance, reactance, impedance
+    // mV/A/m resistive / reactive / impedance components.
+    // ⚠️ App 4 §6: r and x are only tabulated above 16 mm². At 16 mm² and below the
+    // standard prints a single mV/A/m value — read `.z` and ignore `.r`/`.x`.
+    methodsAB: { r: number; x: number; z: number };
     methodsCF: { r: number; x: number; z: number };
   };
   threeOrFourCoreAC: {
@@ -16,8 +38,10 @@ export interface VoltageDropEntry {
   };
 }
 
-// Table 4D1B - PVC insulated single-core cables (70°C conductor temperature)
-// Reference: BS 7671:2018+A3:2024 Appendix 4
+// Table 4D1B — Single-core 70 °C thermoplastic insulated cables, non-armoured,
+// with or without sheath (copper conductors). Voltage drop per ampere per metre.
+// Reference: BS 7671:2018+A4:2026 Appendix 4
+// FIXED: edition label was "A3:2024" — the current edition is A4:2026.
 export const voltageDropPvcSingleCore: VoltageDropEntry[] = [
   {
     size: 1.0,
@@ -225,7 +249,13 @@ export const voltageDropPvcSingleCore: VoltageDropEntry[] = [
   },
 ];
 
-// Table 4D2B - XLPE insulated single-core cables (90°C conductor temperature)
+// Table 4E1B — Single-core 90 °C thermosetting insulated cables, non-armoured, with or
+// without sheath (copper conductors). Voltage drop per ampere per metre.
+// Reference: BS 7671:2018+A4:2026 Appendix 4
+// FIXED (citation): this block was labelled "Table 4D2B - XLPE insulated single-core
+// cables". Table 4D2B is Multicore 70 °C THERMOPLASTIC, non-armoured (it appears further
+// down this file); the 90 °C thermosetting single-core voltage-drop table is 4E1B. Two
+// different exports were both cited as 4D2B.
 export const voltageDropXlpeSingleCore: VoltageDropEntry[] = [
   {
     size: 1.0,
@@ -433,8 +463,9 @@ export const voltageDropXlpeSingleCore: VoltageDropEntry[] = [
   },
 ];
 
-// Table 4D2B - Multicore PVC cables (70°C) - voltage drop mV/A/m
-// From BS 7671:2018+A3:2024 Table 4D2B
+// Table 4D2B — Multicore 70 °C thermoplastic insulated and thermoplastic sheathed cables,
+// non-armoured (copper conductors). Voltage drop per ampere per metre.
+// From BS 7671:2018+A4:2026 Table 4D2B (edition label was "A3:2024").
 export interface MulticoreVoltageDropEntry {
   size: number; // mm²
   twoCoreAc: number; // mV/A/m single-phase
@@ -461,8 +492,18 @@ export const voltageDropPvcMulticore: MulticoreVoltageDropEntry[] = [
   { size: 300, twoCoreAc: 0.145, threeFourCoreAc: 0.125 },
 ];
 
-// Table 4D3B - Single-core armoured 90°C XLPE cables - voltage drop
-// From BS 7671:2018+A3:2024 Table 4D3B
+// Table 4D3B — Single-core armoured 70 °C thermoplastic insulated cables (non-magnetic
+// armour), copper conductors. Voltage drop per ampere per metre.
+// From BS 7671:2018+A4:2026 Table 4D3B (edition label was "A3:2024").
+// FIXED (citation): this block described itself as "Single-core armoured 90°C XLPE".
+// Appendix 4 titles Table 4D3A/4D3B as single-core armoured 70 °C THERMOPLASTIC
+// (non-magnetic armour); the 90 °C thermosetting equivalent is Table 4E3A/4E3B. The data
+// held here tracks the 70 °C set (50 mm² d.c. = 0.93, matching Tables 4D1B/4D2B, not the
+// 1.0 of the 90 °C thermosetting table), so the table number was right and the insulation
+// class in the description was wrong. App 4 §6: the tabulated values for single-core
+// armoured cables apply where the armour is bonded to earth at both ends.
+// ⚠️ If a 90 °C thermosetting single-core armoured table is ever needed, add Table 4E3B
+// as its own export — do not relabel this one.
 export interface SingleCoreArmouredVoltageDropEntry {
   size: number; // mm²
   twoCableDc: number; // mV/A/m DC
@@ -575,8 +616,9 @@ export const voltageDropSingleCoreArmoured: SingleCoreArmouredVoltageDropEntry[]
   },
 ];
 
-// Table 4D4B - Multicore armoured cables voltage drop
-// From BS 7671:2018+A3:2024 Table 4D4B
+// Table 4D4B — Multicore armoured 70 °C thermoplastic insulated cables (copper
+// conductors). Voltage drop per ampere per metre.
+// From BS 7671:2018+A4:2026 Table 4D4B (edition label was "A3:2024").
 export interface MulticoreArmouredVoltageDropEntry {
   size: number;
   twoCoreAc: number; // mV/A/m single-phase
@@ -603,20 +645,130 @@ export const voltageDropMulticoreArmoured: MulticoreArmouredVoltageDropEntry[] =
   { size: 400, twoCoreAc: 0.14, threeFourCoreAc: 0.12 },
 ];
 
-// Table 4D5B - Flat twin and earth voltage drop (domestic cables)
-export const voltageDropFlatTwinEarth: MulticoreVoltageDropEntry[] = [
-  { size: 1.0, twoCoreAc: 44, threeFourCoreAc: 38 },
-  { size: 1.5, twoCoreAc: 29, threeFourCoreAc: 25 },
-  { size: 2.5, twoCoreAc: 18, threeFourCoreAc: 15 },
-  { size: 4, twoCoreAc: 11, threeFourCoreAc: 9.5 },
-  { size: 6, twoCoreAc: 7.3, threeFourCoreAc: 6.4 },
-  { size: 10, twoCoreAc: 4.4, threeFourCoreAc: 3.8 },
-  { size: 16, twoCoreAc: 2.8, threeFourCoreAc: 2.4 },
+// Table 4D5 — 70 °C thermoplastic insulated and sheathed flat cable with protective
+// conductor (copper conductors), i.e. flat twin and earth. Voltage drop per ampere
+// per metre. From BS 7671:2018+A4:2026 Table 4D5.
+//
+// FIXED (citation + fabricated column): this was labelled "Table 4D5B" and carried a
+// `threeFourCoreAc` column (1.0:38, 1.5:25, 2.5:15, 4:9.5, 6:6.4, 10:3.8, 16:2.4).
+//  - There is no Table 4D5B. Appendix 4's schedule of tables lists 4D5 once, as a single
+//    combined table; the B-suffixed voltage-drop tables run 4D1B–4D4B then 4E1B.
+//  - Table 4D5 covers a flat cable with protective conductor — a single-phase cable. It
+//    publishes no three-or-four-core three-phase voltage-drop column. Those seven values
+//    were the three/four-core column of Table 4D2B copied across, so the column is a
+//    duplicate rather than a source. It has been removed and three-phase lookups now go
+//    to voltageDropPvcMulticore (Table 4D2B) explicitly, which returns the same numbers
+//    from the table that actually prints them.
+export interface FlatTwinEarthVoltageDropEntry {
+  size: number; // mm²
+  twoCoreAc: number; // mV/A/m, single-phase — the only column Table 4D5 publishes
+}
+
+export const voltageDropFlatTwinEarth: FlatTwinEarthVoltageDropEntry[] = [
+  { size: 1.0, twoCoreAc: 44 },
+  { size: 1.5, twoCoreAc: 29 },
+  { size: 2.5, twoCoreAc: 18 },
+  { size: 4, twoCoreAc: 11 },
+  { size: 6, twoCoreAc: 7.3 },
+  { size: 10, twoCoreAc: 4.4 },
+  { size: 16, twoCoreAc: 2.8 },
 ];
 
+const multicoreValue = (
+  table: MulticoreVoltageDropEntry[],
+  size: number,
+  isThreePhase: boolean
+): number | null => {
+  const entry = table.find((e) => e.size === size);
+  if (!entry) return null;
+  return isThreePhase ? entry.threeFourCoreAc : entry.twoCoreAc;
+};
+
 /**
- * Get the voltage drop value (mV/A/m) for a given cable type, size, and phase
- * This is the main function to use for voltage drop calculations
+ * Look up the tabulated voltage drop (mV/A/m) for a cable type, size and phase.
+ * Returns null when Appendix 4 holds no tabulated value for that combination, so the
+ * caller can say so rather than quote a number the standard does not give.
+ *
+ * The value returned is the tabulated (mV/A/m)z. Corrections for operating temperature
+ * (App 4 §6.1) and load power factor (App 4 §6.2) are NOT applied here.
+ */
+export const lookupVoltageDropMvAm = (
+  cableType: CableType,
+  size: number,
+  isThreePhase: boolean = false,
+  referenceMethod: string = 'C'
+): number | null => {
+  // Reference Methods A/B (enclosed in conduit or trunking) vs C/F (clipped direct,
+  // on tray, or in free air) — for single-core cables Appendix 4 tabulates these
+  // separately because the conductor spacing changes the reactive component.
+  const isEnclosed = ['A', 'A1', 'A2', 'B', 'B1', 'B2'].includes(referenceMethod);
+
+  switch (cableType) {
+    // Table 4D1B
+    case 'pvc-single': {
+      const entry = voltageDropPvcSingleCore.find((e) => e.size === size);
+      if (!entry) return null;
+      const core = isThreePhase ? entry.threeOrFourCoreAC : entry.twoCoreAC;
+      return isEnclosed ? core.methodsAB.z : core.methodsCF.z;
+    }
+    // Table 4E1B
+    case 'xlpe-single': {
+      const entry = voltageDropXlpeSingleCore.find((e) => e.size === size);
+      if (!entry) return null;
+      const core = isThreePhase ? entry.threeOrFourCoreAC : entry.twoCoreAC;
+      return isEnclosed ? core.methodsAB.z : core.methodsCF.z;
+    }
+    case 'pvc-twin-earth':
+    case 'xlpe-twin-earth': {
+      // Table 4D5 is single-phase only (flat cable with protective conductor) and stops
+      // at 16 mm². Three-phase and larger sizes fall to Table 4D2B (multicore 70 °C
+      // thermoplastic, non-armoured), which is where the three/four-core column is
+      // actually printed — see the note on voltageDropFlatTwinEarth above.
+      if (!isThreePhase) {
+        const entry = voltageDropFlatTwinEarth.find((e) => e.size === size);
+        if (entry) return entry.twoCoreAc;
+      }
+      return multicoreValue(voltageDropPvcMulticore, size, isThreePhase);
+    }
+    // Table 4D4B
+    case 'swa':
+      return multicoreValue(voltageDropMulticoreArmoured, size, isThreePhase);
+    // Table 4D3B
+    case 'swa-single-core': {
+      const entry = voltageDropSingleCoreArmoured.find((e) => e.size === size);
+      if (!entry) return null;
+      return isThreePhase ? entry.threeCableTrefoil.z : entry.twoCableAc.z;
+    }
+    case 'micc':
+    case 'aluminium-xlpe': {
+      // ⚠️ NOT the right table. Appendix 4 gives mineral insulated cables their own
+      // voltage-drop tables (4G1B, 4G2B) and aluminium conductors theirs (4H1B–4H4B for
+      // 70 °C thermoplastic, 4J1B–4J4B for 90 °C thermosetting). This branch returns the
+      // COPPER 70 °C thermoplastic multicore column of Table 4D2B as a stand-in.
+      // For aluminium that UNDER-STATES the drop by roughly the ratio of the conductor
+      // resistivities (~1.6×), so it errs towards an undersized cable. The correct
+      // tables have not been added because their mV/A/m values cannot be verified from
+      // any source held here (the landscape Appendix 4 pages do not extract legibly),
+      // and inventing them would be worse. Do not rely on this branch for aluminium
+      // design until Tables 4H/4J are transcribed from the printed standard.
+      return multicoreValue(voltageDropPvcMulticore, size, isThreePhase);
+    }
+    default:
+      // Table 4D2B
+      return multicoreValue(voltageDropPvcMulticore, size, isThreePhase);
+  }
+};
+
+/**
+ * Get the voltage drop value (mV/A/m) for a given cable type, size, and phase.
+ *
+ * FIXED: this used to initialise `voltageDropMvAm = 18` — the 2.5 mm² value — and return
+ * it whenever the size lookup missed. A miss then produced a plausible-looking number
+ * from the wrong row: for a size below the bottom of a table (e.g. 1.0 mm² on the
+ * armoured table, true value 29) it under-states the drop by ~38% and can report a
+ * non-compliant circuit as compliant. It now returns NaN, which propagates and fails
+ * every `<= limit` comparison, so a missing row can never read as a pass.
+ * Prefer lookupVoltageDropMvAm(), which returns null, and handle the miss explicitly.
  */
 export const getVoltageDropValue = (
   cableType: CableType,
@@ -624,91 +776,40 @@ export const getVoltageDropValue = (
   isThreePhase: boolean = false,
   referenceMethod: string = 'C'
 ): number => {
-  // Determine which table to use based on cable type
-  let voltageDropMvAm = 18; // Default fallback for 2.5mm²
-
-  // Check if method is enclosed (A, B) or surface/clipped (C, F)
-  const isEnclosed = ['A', 'A1', 'A2', 'B', 'B1', 'B2'].includes(referenceMethod);
-
-  switch (cableType) {
-    case 'pvc-single': {
-      const entry = voltageDropPvcSingleCore.find((e) => e.size === size);
-      if (entry) {
-        const methodData = isEnclosed ? entry.twoCoreAC.methodsAB : entry.twoCoreAC.methodsCF;
-        voltageDropMvAm = isThreePhase
-          ? isEnclosed
-            ? entry.threeOrFourCoreAC.methodsAB.z
-            : entry.threeOrFourCoreAC.methodsCF.z
-          : methodData.z;
-      }
-      break;
-    }
-    case 'xlpe-single': {
-      const entry = voltageDropXlpeSingleCore.find((e) => e.size === size);
-      if (entry) {
-        const methodData = isEnclosed ? entry.twoCoreAC.methodsAB : entry.twoCoreAC.methodsCF;
-        voltageDropMvAm = isThreePhase
-          ? isEnclosed
-            ? entry.threeOrFourCoreAC.methodsAB.z
-            : entry.threeOrFourCoreAC.methodsCF.z
-          : methodData.z;
-      }
-      break;
-    }
-    case 'pvc-twin-earth':
-    case 'xlpe-twin-earth': {
-      const entry = voltageDropFlatTwinEarth.find((e) => e.size === size);
-      if (entry) {
-        voltageDropMvAm = isThreePhase ? entry.threeFourCoreAc : entry.twoCoreAc;
-      } else {
-        // Fallback to multicore PVC table for larger sizes
-        const multicoreEntry = voltageDropPvcMulticore.find((e) => e.size === size);
-        if (multicoreEntry) {
-          voltageDropMvAm = isThreePhase
-            ? multicoreEntry.threeFourCoreAc
-            : multicoreEntry.twoCoreAc;
-        }
-      }
-      break;
-    }
-    case 'swa': {
-      const entry = voltageDropMulticoreArmoured.find((e) => e.size === size);
-      if (entry) {
-        voltageDropMvAm = isThreePhase ? entry.threeFourCoreAc : entry.twoCoreAc;
-      }
-      break;
-    }
-    case 'swa-single-core': {
-      const entry = voltageDropSingleCoreArmoured.find((e) => e.size === size);
-      if (entry) {
-        voltageDropMvAm = isThreePhase ? entry.threeCableTrefoil.z : entry.twoCableAc.z;
-      }
-      break;
-    }
-    case 'micc':
-    case 'aluminium-xlpe': {
-      // Use PVC multicore as approximation
-      const entry = voltageDropPvcMulticore.find((e) => e.size === size);
-      if (entry) {
-        voltageDropMvAm = isThreePhase ? entry.threeFourCoreAc : entry.twoCoreAc;
-      }
-      break;
-    }
-    default: {
-      // Default to PVC multicore
-      const entry = voltageDropPvcMulticore.find((e) => e.size === size);
-      if (entry) {
-        voltageDropMvAm = isThreePhase ? entry.threeFourCoreAc : entry.twoCoreAc;
-      }
-    }
+  const value = lookupVoltageDropMvAm(cableType, size, isThreePhase, referenceMethod);
+  if (value === null) {
+    console.warn(
+      `[voltageDropTables] BS 7671 Appendix 4 holds no tabulated mV/A/m for ${size} mm² ` +
+        `${cableType} (${isThreePhase ? 'three-phase' : 'single-phase'}).`
+    );
+    return Number.NaN;
   }
-
-  return voltageDropMvAm;
+  return value;
 };
 
 /**
  * Calculate voltage drop in volts
  * ΔV = mV/A/m × Ib × L / 1000
+ *
+ * Power factor — App 4 §6.2. "For cables having conductors of cross-sectional area
+ * 16 mm² or less, the design value of mV/A/m is obtained approximately by multiplying the
+ * tabulated value by the power factor of the load, cos φ. For cables having conductors of
+ * cross-sectional area greater than 16 mm², the design value of mV/A/m is given
+ * approximately by: cos φ (tabulated (mV/A/m)r) + sin φ (tabulated (mV/A/m)x)."
+ *
+ * FIXED: cos φ used to be applied to the tabulated impedance at every size. Above 16 mm²
+ * that is not the same quantity — cos φ·Z is smaller than cos φ·R + sin φ·X (e.g. at
+ * 240 mm², R 0.18 / X 0.10 / Z 0.21 and cos φ 0.8: 0.168 against 0.204,
+ * an 18% under-statement of the drop). The vector sum is not reproduced here because the R and X
+ * sub-columns in this module are unverified against the printed table, so above 16 mm²
+ * the tabulated impedance is used unmodified. App 4 §6 states that the direct use of the
+ * tabulated value is the pessimistically high baseline, so this errs on the safe side.
+ *
+ * Operating temperature — the Ct factor of App 4 §6.1/§6.3 is deliberately NOT applied.
+ * It is an optional refinement ("where a more accurate assessment of the voltage drop is
+ * desirable"), it is ≤ 1, and it applies only where the protective device is other than a
+ * BS 3036 fuse and the ambient temperature is at least 30 °C. Omitting it leaves the
+ * result on the conservative side of the standard.
  */
 export const calculateVoltageDrop = (
   cableType: CableType,
@@ -720,7 +821,8 @@ export const calculateVoltageDrop = (
   powerFactor: number = 1.0
 ): { voltageDropVolts: number; voltageDropMvAm: number } => {
   const voltageDropMvAm = getVoltageDropValue(cableType, size, isThreePhase, referenceMethod);
-  const voltageDropVolts = (voltageDropMvAm * current * length * powerFactor) / 1000;
+  const powerFactorCorrection = size <= 16 ? powerFactor : 1;
+  const voltageDropVolts = (voltageDropMvAm * current * length * powerFactorCorrection) / 1000;
 
   return {
     voltageDropVolts: Math.round(voltageDropVolts * 100) / 100,
@@ -729,16 +831,46 @@ export const calculateVoltageDrop = (
 };
 
 /**
- * Check if voltage drop is within BS 7671 limits
- * Lighting: 3%, Other: 5% (from origin of installation)
+ * Check the voltage drop against BS 7671:2018+A4:2026 Appendix 4 Table 4Ab.
+ *
+ * Table 4Ab:
+ *   (a) LV installations supplied directly from a public LV distribution system
+ *       — lighting 3%, other uses 5%
+ *   (b) LV installation supplied from a private LV supply
+ *       — lighting 6%, other uses 8%
+ *   (*) The voltage drop within each final circuit should not exceed the values in (a).
+ *   "Where the wiring systems of the installation are longer than 100 m, the voltage
+ *   drops indicated above may be increased by 0.005% per metre of the wiring system
+ *   beyond 100 m, without this increase being greater than 0.5%."
+ *
+ * FIXED: the limit was hard-coded to 3% / 5% with no supply type and no >100 m
+ * relaxation, so a private-supply distribution circuit was failed against the public-
+ * supply figure and a long run was failed against an unrelaxed limit. Both defaults are
+ * unchanged (public LV, no relaxation), so existing callers keep the same answer.
+ *
+ * Note that the >100 m relaxation is a property of the whole wiring system, and that a
+ * final circuit on a private supply is still held to the (a) figures — pass
+ * supplyType 'public-lv' when checking a final circuit.
  */
 export const isVoltageDropCompliant = (
   voltageDropVolts: number,
   supplyVoltage: number,
-  isLighting: boolean = false
+  isLighting: boolean = false,
+  supplyType: 'public-lv' | 'private-lv' = 'public-lv',
+  wiringSystemLengthMetres?: number
 ): { compliant: boolean; percentage: number; limit: number } => {
   const percentage = (voltageDropVolts / supplyVoltage) * 100;
-  const limit = isLighting ? 3 : 5;
+
+  const baseLimit =
+    supplyType === 'private-lv' ? (isLighting ? 6 : 8) : isLighting ? 3 : 5;
+
+  // 0.005% per metre beyond 100 m, capped at a 0.5% increase.
+  const longRunAllowance =
+    wiringSystemLengthMetres && wiringSystemLengthMetres > 100
+      ? Math.min((wiringSystemLengthMetres - 100) * 0.005, 0.5)
+      : 0;
+
+  const limit = Math.round((baseLimit + longRunAllowance) * 1000) / 1000;
 
   return {
     compliant: percentage <= limit,

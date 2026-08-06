@@ -36,7 +36,7 @@ export const eicrPlasticConsumerUnitHmoConfig: GeneratedGuideConfig = {
     'HMO classification under the Housing Act 2004 + Management of HMOs (England) Regs 2006 makes the property subject to additional fire-safety duties on the landlord — a plastic CU in a designated escape route or near a fire-resisting partition is materially different from a domestic dwelling.',
     "Remedial options: full consumer unit replacement to a metal-enclosed all-RCBO unit (most common); retrofit a metal enclosure around the existing CU (rare, manufacturer-specific); upgrade to RCBOs in a metal-clad replacement (best practice combining 421.1.201 + 411.3.4 A4 compliance). Any replacement CU must comply with BS EN 61439-3 — verify the manufacturer's declaration before supply.",
     'For HMOs under PRS Regs 2020 (England), a C2 on the EICR triggers a 28-day remedial deadline with mandatory written confirmation to tenants + local authority on request.',
-    'Under Regulation 421.1.7 of BS 7671:2018+A4:2026, arc fault detection devices (AFDDs) conforming to BS EN 62606 are now MANDATORY for single-phase AC final circuits supplying socket-outlets not exceeding 32 A in houses in multiple occupation (HMOs) — alongside high rise residential buildings, purpose-built student accommodation and care homes. A consumer unit replacement in an HMO is the moment this requirement is engaged.',
+    'Under Regulation 421.1.7 of BS 7671:2018+A4:2026, arc fault detection devices (AFDDs) conforming to BS EN 62606 are RECOMMENDED to mitigate the risk of fire in AC final circuits of a fixed installation. Despite what is widely repeated, the regulation is advisory and names no premises types — there is no HMO-specific mandate. Fitting them on an HMO consumer unit replacement is still sound practice and worth quoting for.',
   ],
   sections: [
     {
@@ -146,29 +146,29 @@ export const eicrPlasticConsumerUnitHmoConfig: GeneratedGuideConfig = {
           type: 'callout',
           tone: 'pricing',
           title: 'Indicative cost — not a quote',
-          text: 'As a rough market guide only, full replacement to a metal-enclosed all-RCBO unit in a typical 4–6 bed HMO sits around £900–£1,800 at trade prices, with the EIC usually included. Adding combined AFDD/RCBO devices on the socket circuits (now mandatory in HMOs) increases the per-way device cost over plain RCBOs. Larger HMOs or boards needing associated remedial work — main bonding, supplementary bonding, recabling — can run to £2,500+. Always price the specific installation.',
+          text: 'As a rough market guide only, full replacement to a metal-enclosed all-RCBO unit in a typical 4–6 bed HMO sits around £900–£1,800 at trade prices, with the EIC usually included. Adding combined AFDD/RCBO devices on the socket circuits (now recommended in HMOs) increases the per-way device cost over plain RCBOs. Larger HMOs or boards needing associated remedial work — main bonding, supplementary bonding, recabling — can run to £2,500+. Always price the specific installation.',
         },
       ],
     },
     {
       id: 'afdd-hmo',
-      heading: 'AFDDs Are Now Mandatory in HMOs (A4:2026)',
+      heading: 'AFDDs in HMOs — Recommended, Not Mandatory (A4:2026)',
       tocLabel: 'AFDDs in HMOs',
       blocks: [
         {
           type: 'paragraph',
-          text: 'This is the change most often missed on HMO consumer unit replacements. Under Regulation 421.1.7 of BS 7671:2018+A4:2026, arc fault detection devices are no longer merely "recommended" in HMOs — they are required. When you replace the plastic CU, the new arrangement has to satisfy this.',
+          text: 'This is the change most often missed on HMO consumer unit replacements. Under Regulation 421.1.7 of BS 7671:2018+A4:2026, arc fault detection devices are "recommended" in HMOs — they are required. When you replace the plastic CU, the new arrangement has to satisfy this.',
         },
         {
           type: 'callout',
           tone: 'warning',
           title: 'Regulation 421.1.7 — the HMO requirement',
-          text: 'Arc fault detection devices (AFDDs) conforming to BS EN 62606 SHALL be provided for single-phase AC final circuits supplying socket-outlets with a rated current not exceeding 32 A in houses in multiple occupation (HMOs). The same mandatory requirement applies to high rise residential buildings, purpose-built student accommodation and care homes. For all other premises the use of AFDDs is recommended, not required.',
+          text: 'Regulation 421.1.7 RECOMMENDS arc fault detection devices (AFDDs) conforming to BS EN 62606 in AC final circuits of a fixed installation. The wording is advisory — it is not a "shall", and it names no premises types, so there is no HMO-specific mandate. It remains a strong recommendation you should be able to justify departing from, and on an HMO consumer unit replacement it is worth quoting for. Original claim retained for context: single-phase AC final circuits supplying socket-outlets with a rated current not exceeding 32 A in houses in multiple occupation (HMOs). The same mandatory requirement applies to high rise residential buildings, purpose-built student accommodation and care homes. For all other premises the use of AFDDs is recommended, not required.',
         },
         {
           type: 'list',
           items: [
-            '**Scope is the socket-outlet final circuits** — the mandatory requirement targets single-phase AC final circuits supplying socket-outlets rated not more than 32 A. It is the socket circuits, not every circuit in the board, that trigger the obligation.',
+            '**Scope** — the recommendation covers AC final circuits of a fixed installation, commonly applied to single-phase final circuits supplying socket-outlets rated not more than 32 A. It is the socket circuits, not every circuit in the board, that trigger the obligation.',
             '**Placement** — where AFDDs are used they shall be placed at the origin of the circuit to be protected. In a consumer unit replacement that means an AFDD (or combined AFDD/RCBO device) at the board for each affected socket circuit.',
             '**High rise definition** — for the HRRB category, BS 7671 treats a high rise residential building as one over 18 m in height or in excess of six storeys, whichever is met first. HMOs qualify on the building-type basis regardless of height.',
             '**It does not replace other measures** — fitting an AFDD does not remove the need for the other protective measures in BS 7671, including RCD additional protection. An AFDD/RCBO device covers both where specified.',
@@ -245,7 +245,7 @@ export const eicrPlasticConsumerUnitHmoConfig: GeneratedGuideConfig = {
     {
       question: 'Do I have to fit AFDDs when I replace a consumer unit in an HMO?',
       answer:
-        'Yes, for the socket circuits. Under Regulation 421.1.7 of BS 7671:2018+A4:2026, arc fault detection devices conforming to BS EN 62606 shall be provided for single-phase AC final circuits supplying socket-outlets not exceeding 32 A in houses in multiple occupation — the requirement is mandatory for HMOs (as well as high rise residential buildings, purpose-built student accommodation and care homes). Where AFDDs are used they must sit at the origin of the circuit, so they are fitted at the board, commonly as combined AFDD/RCBO devices. For all other premises types AFDDs are recommended rather than required.',
+        'It is recommended rather than required. Under Regulation 421.1.7 of BS 7671:2018+A4:2026, arc fault detection devices conforming to BS EN 62606 are recommended for single-phase AC final circuits supplying socket-outlets not exceeding 32 A in houses in multiple occupation — the requirement is mandatory for HMOs (as well as high rise residential buildings, purpose-built student accommodation and care homes). Where AFDDs are used they must sit at the origin of the circuit, so they are fitted at the board, commonly as combined AFDD/RCBO devices. For all other premises types AFDDs are recommended rather than required.',
     },
     {
       question: "Is my plastic CU automatically dangerous if it's in any HMO?",

@@ -60,7 +60,7 @@ const faqs = [
   {
     question: 'Why does my Southampton property need a metal consumer unit now?',
     answer:
-      'Amendment 2 to BS 7671:2008, which came into force on 1 July 2016, introduced Regulation 421.1.201. This requires that consumer units in domestic premises be enclosed in a cabinet or enclosure made of non-combustible material — in practice, steel. The requirement was introduced following electrical fire investigations demonstrating that plastic consumer unit enclosures could ignite during arcing faults, spreading fire to the surrounding structure. Any consumer unit replacement carried out in a Southampton property since July 2016 must use a compliant metal enclosure. Existing plastic units do not have to be proactively replaced, but any replacement — for any reason — must be with a metal unit.',
+      'Amendment 3 to BS 7671:2008, with this requirement in force from 1 January 2016, introduced Regulation 421.1.201. This requires that consumer units in domestic premises be enclosed in a cabinet or enclosure made of non-combustible material — in practice, steel. The requirement was introduced following electrical fire investigations demonstrating that plastic consumer unit enclosures could ignite during arcing faults, spreading fire to the surrounding structure. Any consumer unit replacement carried out in a Southampton property since July 2016 must use a compliant metal enclosure. Existing plastic units do not have to be proactively replaced, but any replacement — for any reason — must be with a metal unit.',
   },
   {
     question: 'How much does consumer unit replacement cost in Southampton?',
@@ -205,7 +205,7 @@ const sections = [
       <>
         <p>
           The requirement for non-combustible consumer unit enclosures in domestic premises was
-          introduced by Amendment 2 to BS 7671:2008, effective 1 July 2016. It is now incorporated
+          introduced by Amendment 3 to BS 7671:2008, with this requirement effective 1 January 2016. It is now incorporated
           into BS 7671:2018+A4:2026 and applies to all consumer unit replacements across England,
           including Southampton.
         </p>

@@ -70,7 +70,7 @@ const faqs = [
   {
     question: 'What is the minimum acceptable insulation resistance?',
     answer:
-      'BS 7671 Table 61 specifies the minimum insulation resistance values. For installations operating at voltages up to and including 500 V AC (which covers all standard domestic and commercial installations at 230 V and 400 V), the test voltage is 500 V DC and the minimum acceptable insulation resistance is 1.0 megohm (1 MR). For SELV and PELV circuits (separated extra-low voltage and protective extra-low voltage, typically 12 V or 24 V circuits), the test voltage is 250 V DC and the minimum acceptable insulation resistance is 0.5 megohm (500 kR). In practice, the insulation resistance of a healthy circuit in good condition is typically much higher than the minimum — readings of 50 MR to 200 MR or more are common for new installations. Low but passing readings (for example, 2 to 5 MR) may indicate deteriorating insulation that should be monitored. Readings below 1 MR are failures that must be investigated and rectified before the circuit is energised.',
+      'BS 7671 Table 64 specifies the minimum insulation resistance values. For installations operating at voltages up to and including 500 V AC (which covers all standard domestic and commercial installations at 230 V and 400 V), the test voltage is 500 V DC and the minimum acceptable insulation resistance is 1.0 megohm (1 MR). For SELV and PELV circuits (separated extra-low voltage and protective extra-low voltage, typically 12 V or 24 V circuits), the test voltage is 250 V DC and the minimum acceptable insulation resistance is 0.5 megohm (500 kR). In practice, the insulation resistance of a healthy circuit in good condition is typically much higher than the minimum — readings of 50 MR to 200 MR or more are common for new installations. Low but passing readings (for example, 2 to 5 MR) may indicate deteriorating insulation that should be monitored. Readings below 1 MR are failures that must be investigated and rectified before the circuit is energised.',
   },
   {
     question: 'Can I use a multifunction tester for all the tests in the sequence?',
@@ -90,7 +90,7 @@ const faqs = [
   {
     question: 'What are the RCD trip time limits?',
     answer:
-      'RCD trip time limits are specified in BS EN 61008 (RCCBs) and BS EN 61009 (RCBOs). For a standard 30 mA general-type RCD: at half-rated current (0.5x IΔn = 15 mA) the device must NOT trip; at rated current (1x IΔn = 30 mA) the device must trip within 300 milliseconds; at five-times rated current (5x IΔn = 150 mA) the device must trip within 40 milliseconds. For a Type S (time-delayed) RCD: at rated current the device must trip between 130 and 500 milliseconds; at five-times rated current the device must trip between 50 and 200 milliseconds. Tests must be carried out on both positive (0 degrees) and negative (180 degrees) half-cycles of the supply waveform, and the worst-case (longest) trip time from either half-cycle is the value recorded on the certificate.',
+      'Two different things get muddled here, so it is worth separating them. What BS 7671 requires you to verify: Amendment 4 deleted Table 3A of Appendix 3, and Regulation 643.7.3.201 now calls for a single alternating current test at the rated residual operating current (IΔn), regardless of RCD type — AC, A, F or B. A general (non-delay) 30 mA device must operate within 300 milliseconds; a Type S between 130 and 500 milliseconds. That is the test, and that is the figure recorded on the certificate. What the product standards say about the device: BS EN 61008 (RCCBs) and BS EN 61009 (RCBOs) give 40 milliseconds at five-times rated current for a general device, and 50 to 200 milliseconds for a Type S. Those are device characteristics, not the BS 7671 verification — the ½x and 5x tests are no longer part of the required sequence, though 5x is still useful when fault-finding a nuisance-tripping device.',
   },
 ];
 
@@ -129,7 +129,7 @@ const howToSteps = [
   },
   {
     name: 'Test 8: Functional testing (including RCD operation)',
-    text: 'Test all RCDs: push-button test first, then instrument tests — 0.5x IΔn on both half-cycles (must NOT trip), 1x IΔn on both half-cycles (must trip within 300 ms), 5x IΔn on both half-cycles (must trip within 40 ms). Type S RCDs have different limits (130-500 ms at 1x, 50-200 ms at 5x). Then test all switching devices, interlocks, isolators, fireman switches, time clocks, PIR sensors, dimmer switches, and other controls for correct operation. This test is often overlooked but is required by BS 7671.',
+    text: 'Test all RCDs: push-button test first, then the instrument test. Under BS 7671:2018+A4:2026 that is a single alternating current test at IΔn, whatever the RCD type — a general (non-delay) device must operate within 300 ms, a Type S within 130 to 500 ms. Amendment 4 deleted Table 3A of Appendix 3, so the ½x and 5x IΔn tests are no longer part of the required sequence. Then test all switching devices, interlocks, isolators, fireman switches, time clocks, PIR sensors, dimmer switches, and other controls for correct operation. This test is often overlooked but is required by BS 7671.',
   },
 ];
 
@@ -330,7 +330,7 @@ const sections = [
           </p>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-bold text-white text-lg mb-3">
-              BS 7671 Table 61 — Minimum Insulation Resistance
+              BS 7671 Table 64 — Minimum Insulation Resistance
             </h3>
             <ul className="space-y-2 text-white text-sm leading-relaxed">
               <li className="flex items-start gap-3">
@@ -622,21 +622,21 @@ const sections = [
               <li className="flex items-start gap-3">
                 <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
                 <span>
-                  <strong>0.5x IΔn (half-rated):</strong> Test on both half-cycles — must NOT trip
+                  <strong>IΔn (rated residual operating current):</strong> A single alternating
+                  current test at IΔn, whatever the RCD type — AC, A, F or B. A general
+                  (non-delay) device must operate within 300 ms; a Type S within 130 to 500 ms per BS EN
+                  61008/61009.
+                  This is the verification Regulation 643.3 asks for.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
                 <span>
-                  <strong>1x IΔn (rated current):</strong> Test on both half-cycles — must trip
-                  within 300 ms (general type) or 130 to 500 ms (Type S)
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-                <span>
-                  <strong>5x IΔn (five times rated):</strong> Test on both half-cycles — must trip
-                  within 40 ms (general type) or 50 to 200 ms (Type S)
+                  <strong>What changed in Amendment 4:</strong> Table 3A of Appendix 3 (time/current
+                  performance criteria for RCDs) has been deleted, and the ½x and 5x IΔn tests are
+                  no longer part of the required sequence. The 5x test remains a useful fault-finding
+                  tool, and 40 ms at 5x IΔn is still a device characteristic under BS EN
+                  61008/61009 — but it is not what BS 7671 now asks you to verify.
                 </span>
               </li>
             </ul>
@@ -710,12 +710,16 @@ const sections = [
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h3 className="font-bold text-white mb-1">Skipping the half-rated RCD test</h3>
+                <h3 className="font-bold text-white mb-1">
+                  Still testing RCDs to the old Table 3A sequence
+                </h3>
                 <p className="text-white text-sm leading-relaxed">
-                  Some electricians skip the 0.5x IΔn test and go straight to the 1x test. This
-                  means an overly sensitive RCD (one that trips below its rated current) would not
-                  be detected. An overly sensitive RCD is a nuisance tripping risk — the occupant
-                  may disable it, leaving the circuit unprotected.
+                  The ½x, 1x and 5x routine is deeply ingrained, and plenty of instruments still
+                  default to it. Amendment 4 deleted Table 3A of Appendix 3, and Regulation 643.3
+                  now verifies an RCD with a single alternating current test at IΔn, whatever the
+                  device type. Running the old sequence is not dangerous — but recording a 5x
+                  result as the certified figure, or failing a device on a criterion BS 7671 no
+                  longer applies, is a real error. Record the trip time at IΔn.
                 </p>
               </div>
             </div>

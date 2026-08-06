@@ -565,7 +565,7 @@ export default function SWACableInstallationPage() {
         {
           question: 'Does SWA cable need RCD protection?',
           answer:
-            'Not in all cases. BS 7671 Regulation 411.3.4 requires RCD protection for cables installed in walls at less than 50 mm depth unless the cable has an earthed metallic covering. SWA cable has an earthed metallic covering (the steel wire armour), so it is exempt from this specific RCD requirement. However, the circuit may still require RCD protection for other reasons — for example, if it supplies socket outlets up to 32A, or if it supplies mobile equipment intended for outdoor use. The exemption only applies to the cable-in-wall requirement, not to the general RCD requirements for socket outlets and outdoor circuits.',
+            'Not in all cases. The cables-in-walls provisions of BS 7671 Section 522.6 require RCD protection for cables installed in walls at less than 50 mm depth unless the cable has an earthed metallic covering. SWA cable has an earthed metallic covering (the steel wire armour), so it is exempt from this specific RCD requirement. However, the circuit may still require RCD protection for other reasons — for example, if it supplies socket outlets up to 32A, or if it supplies mobile equipment intended for outdoor use. The exemption only applies to the cable-in-wall requirement, not to the general RCD requirements for socket outlets and outdoor circuits.',
         },
         {
           question: 'Can SWA cable be installed on the surface rather than underground?',

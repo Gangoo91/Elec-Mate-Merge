@@ -311,7 +311,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection (Regulation 722.531.101)</strong> — appropriate RCD
+                <strong>RCD protection (Regulation 722.531.3.101)</strong> — appropriate RCD
                 protection including Type B or Type A with 6mA DC RDC-DD where the charger may
                 produce DC residual currents. Most quality charger units include compliant
                 integrated DC protection.

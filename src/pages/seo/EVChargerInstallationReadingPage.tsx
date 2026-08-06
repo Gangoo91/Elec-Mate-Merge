@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Full guide to the IET Wiring Regulations including Amendment 4:2024.',
+    description: 'Full guide to the IET Wiring Regulations including Amendment 4:2026.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -277,7 +277,7 @@ const sections = [
               <span>
                 <strong>Dedicated 32A circuit installation</strong> — a new radial circuit is
                 installed from the consumer unit to the charger location, protected by an
-                appropriate RCBO or MCB with RCD protection per Regulation 722.531.2.
+                appropriate RCBO or MCB with RCD protection per Regulation 722.531.3.101.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -297,7 +297,7 @@ const sections = [
               </span>
               <span>
                 <strong>Testing, certification, and notification</strong> — installation is tested
-                per BS 7671 Chapter 61. An EIC is issued and the work is self-certified under Part P
+                per BS 7671 Chapter 64. An EIC is issued and the work is self-certified under Part P
                 by your NICEIC or NAPIT registered installer. OZEV grant paperwork is submitted on
                 your behalf.
               </span>
@@ -433,7 +433,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 722.531.2 — RCD protection</strong> — the EV charger circuit must
+                <strong>Regulation 722.531.3.101 — RCD protection</strong> — the EV charger circuit must
                 be protected by an RCD. OZEV-eligible smart chargers with integrated Type B
                 equivalent DC fault detection allow the use of a Type A RCBO at the consumer unit —
                 your installer will specify the correct device based on the chosen charger model.

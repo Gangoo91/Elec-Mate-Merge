@@ -623,8 +623,8 @@ const sections = [
           earthing/bonding, and C3 for missing earth sleeving or recommendations for improvement.
         </p>
         <SEOAppBridge
-          title="BS 7671 Table 54.7 | Ze & Zs Limits 2026"
-          description="BS 7671 Table 54.7 sets maximum earth fault loop impedance values for circuit protection. Measure Ze and Zs correctly to pass EICR compliance under…"
+          title="BS 7671 Table 54.7 | CPC Sizing 2026"
+          description="BS 7671 Table 54.7 gives the simplified method for sizing circuit protective conductors. Max Zs values are in Table 41.3 (circuit-breakers) and Tables 41.2/41.4 (fuses). Measure Ze and Zs correctly to pass EICR compliance under…"
           icon={Brain}
         />
       </>

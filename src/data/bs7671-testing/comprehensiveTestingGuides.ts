@@ -682,7 +682,9 @@ export const comprehensiveTestingGuides: EnhancedTestGuide[] = [
     testLimits: [
       { parameter: 'Trip current', limit: '50-100% of rated', unit: 'mA' },
       { parameter: 'Trip time @ 1x In', limit: '< 300', unit: 'ms' },
-      { parameter: 'Trip time @ 5x In', limit: '< 40', unit: 'ms' },
+      // BS EN 61008/61009 device characteristic — NOT a BS 7671 verification limit.
+      // A4:2026 deleted Appendix 3 Table 3A; verification is the AC test at IΔn above.
+      { parameter: 'Trip time @ 5x In (diagnostic)', limit: '< 40', unit: 'ms' },
     ],
     commonIssues: [
       'RCD not tripping within time limits',
@@ -813,11 +815,12 @@ export const comprehensiveTestingGuides: EnhancedTestGuide[] = [
       },
       {
         id: 'trip-time-5x',
-        title: 'Trip Time Test at 5× Rated Current',
-        description: 'Measure RCD trip time at 5× rated current (e.g., 150mA for 30mA RCD)',
+        title: 'Optional: Trip Time at 5× Rated Current (diagnostic)',
+        description:
+          'Not part of the required verification — BS 7671:2018+A4:2026 deleted Table 3A of Appendix 3 and verifies effectiveness with the single AC test at IΔn. Run at 5× rated current (e.g. 150mA for a 30mA RCD) only as a diagnostic.',
         safetyWarnings: [
-          'This is the fastest trip time test',
-          'Ensure RCD can handle the higher test current',
+          'Do not record this as the certified trip time — the certified value is the one at IΔn',
+          'Ensure the RCD can handle the higher test current',
         ],
         equipment: ['RCD tester', 'Test certificate'],
         wagoInstructions: {

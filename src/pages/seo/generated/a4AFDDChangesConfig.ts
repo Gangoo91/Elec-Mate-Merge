@@ -12,7 +12,7 @@ export const a4AFDDChangesConfig: GeneratedGuideConfig = {
   title:
     'BS 7671 A4:2026 — AFDD Changes Explained (Reg 421.1.7 + Item 4.23)',
   description:
-    'Amendment 4 redrafted Regulation 421.1.7 to make AFDDs mandatory in four premises types and added EICR inspection item 4.23. What\'s mandatory, what\'s prohibited (medical, medical IT, EV charging exemption), what evidence inspectors need and the operational test.',
+    'Amendment 4 introduced Regulation 421.1.7 recommending AFDDs, and added EICR inspection item 4.23. What it actually says, and where AFDDs are prohibited (medical, medical IT, EV charging exemption), what evidence inspectors need and the operational test.',
   datePublished: published,
   dateModified: modified,
   readingTime: 11,
@@ -23,15 +23,15 @@ export const a4AFDDChangesConfig: GeneratedGuideConfig = {
   heroHighlight: 'AFDD',
   heroSuffix: 'Changes (Reg 421.1.7 + Item 4.23)',
   heroSubtitle:
-    'Amendment 4 redrafted Regulation 421.1.7 so that AFDDs (Arc Fault Detection Devices) conforming to BS EN 62606 are now mandatory — not just recommended — in four premises types, and added a dedicated AFDD line to the redrafted Condition Report inspection schedule (item 4.23). This guide maps every A4 AFDD touch-point: where required, where recommended, where prohibited, and how to record it.',
+    'Amendment 4 introduced Regulation 421.1.7, which recommends AFDDs (Arc Fault Detection Devices) conforming to BS EN 62606. The wording is advisory rather than mandatory, and it is not scoped to particular premises types, and added a dedicated AFDD line to the redrafted Condition Report inspection schedule (item 4.23). This guide maps every A4 AFDD touch-point: where required, where recommended, where prohibited, and how to record it.',
   answerBox: {
     question: 'What did BS 7671 Amendment 4 (A4:2026) change for AFDDs?',
     answer:
-      'A4:2026 redrafted Regulation 421.1.7 so AFDDs (to BS EN 62606) are now mandatory on single-phase AC final circuits supplying socket-outlets up to 32 A in high-rise residential buildings, HMOs, purpose-built student accommodation and care homes. For all other premises they are recommended. A4 also added EICR inspection item 4.23 to confirm AFDD operation.',
+      'A4:2026 introduced Regulation 421.1.7 recommending AFDDs (to BS EN 62606) to mitigate the risk of fire in AC final circuits of a fixed installation. It is a recommendation, not a requirement, and it is not limited to high-rise residential buildings, HMOs, purpose-built student accommodation and care homes. For all other premises they are recommended. A4 also added EICR inspection item 4.23 to confirm AFDD operation.',
   },
   keyTakeaways: [
-    'A4:2026 redrafted Regulation 421.1.7: AFDDs conforming to BS EN 62606 are now MANDATORY (the wording is "shall") on single-phase AC final circuits supplying socket-outlets rated up to 32 A in four named premises types — previously this was only a recommendation.',
-    'The four mandatory premises are: high-rise residential buildings (HRRBs), houses in multiple occupation (HMOs), purpose-built student accommodation, and care homes. For all other premises AFDDs are recommended, not required.',
+    'A4:2026 introduced Regulation 421.1.7: AFDDs conforming to BS EN 62606 are RECOMMENDED (the wording is "recommending", not "shall") in AC final circuits of a fixed installation. Beware the widespread claim that they became mandatory on socket-outlets rated up to 32 A in four named premises types — previously this was only a recommendation.',
+    'There is no list of premises types in Regulation 421.1.7 — the widely repeated claim that AFDDs became mandatory in HRRBs, HMOs, student accommodation and care homes is not what the regulation says. For all other premises AFDDs are recommended, not required.',
     'AFDDs detect series and parallel arcing faults that conventional MCBs (overload/short-circuit) and RCDs (residual current) cannot — they protect against fire from arcing in installation wiring.',
     'Where used, AFDDs shall be placed at the origin of the circuit they protect (Regulation 421.1.7), and shall conform to BS EN 62606.',
     'AFDDs are prohibited in medical locations of group 0, 1 and 2 (Regulation 710.421.1.7) and in any circuit supplied by a medical IT system (Regulation 710.421.1.7.101). EV charging equipment conforming to the BS EN 61851 series is exempt under Regulation 722.421.1.7.201.',
@@ -79,7 +79,7 @@ export const a4AFDDChangesConfig: GeneratedGuideConfig = {
         {
           type: 'paragraph',
           text:
-            'Regulation 421.1.7 of BS 7671:2018+A4:2026 is the controlling rule. The redrafted wording reads that AFDDs conforming to BS EN 62606 "shall be provided" for single-phase AC final circuits supplying socket-outlets with a rated current not exceeding 32 A in four specific premises types. "Shall" makes this a requirement, not a recommendation, in those premises.',
+            'Regulation 421.1.7 of BS 7671:2018+A4:2026 is the controlling rule. The wording recommends that AFDDs conforming to BS EN 62606 be provided for single-phase AC final circuits supplying socket-outlets with a rated current not exceeding 32 A in four specific premises types. "Shall" makes this a requirement, not a recommendation, in those premises.',
         },
         {
           type: 'list',
@@ -254,12 +254,12 @@ export const a4AFDDChangesConfig: GeneratedGuideConfig = {
     {
       question: 'Do I need an AFDD on every domestic circuit under A4:2026?',
       answer:
-        'No. A4:2026 does not introduce a blanket "AFDD on every circuit" rule. Regulation 421.1.7 makes AFDDs mandatory only on single-phase AC final circuits supplying socket-outlets up to 32 A in four premises types: high-rise residential buildings, HMOs, purpose-built student accommodation and care homes. For a standard owner-occupied house they are recommended, not required. Many electricians fit AFDD-RCBOs as a future-proof default, but it is not mandated for every domestic circuit.',
+        'No. A4:2026 does not introduce a blanket "AFDD on every circuit" rule. Regulation 421.1.7 recommends AFDDs for AC final circuits of a fixed installation, including those supplying socket-outlets up to 32 A in four premises types: high-rise residential buildings, HMOs, purpose-built student accommodation and care homes. For a standard owner-occupied house they are recommended, not required. Many electricians fit AFDD-RCBOs as a future-proof default, but it is not mandated for every domestic circuit.',
     },
     {
       question: 'Which premises must have AFDDs under A4:2026?',
       answer:
-        'Regulation 421.1.7 names four: high-rise residential buildings (taken as over 18 m or more than six storeys), houses in multiple occupation (HMOs), purpose-built student accommodation, and care homes. In those premises, AFDDs conforming to BS EN 62606 shall be provided on single-phase AC final circuits supplying socket-outlets rated up to 32 A, placed at the origin of the circuit. For all other premises the same protection is recommended.',
+        'Regulation 421.1.7 names no premises types at all. The often-quoted list — high-rise residential buildings, houses in multiple occupation, purpose-built student accommodation and care homes — does not appear in the regulation, which simply recommends AFDDs to mitigate the risk of fire in AC final circuits of a fixed installation. Those building types are of course higher-risk in practice, and fitting AFDDs there is sound engineering, but do not present it as a BS 7671 requirement.',
     },
     {
       question: 'Can I retrofit AFDDs to an existing consumer unit?',

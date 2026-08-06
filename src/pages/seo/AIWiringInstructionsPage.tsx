@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 4:2024.',
+      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 4:2026.',
     icon: FileText,
     category: 'Guide',
   },
@@ -388,7 +388,7 @@ const sections = [
           protection), and 434.1 (fault current protection).
         </p>
         <p>
-          Amendment 4:2024 is particularly relevant for modern circuit types. Regulation 530.3.2
+          Amendment 4:2026 is particularly relevant for modern circuit types. Regulation 530.3.2
           (bidirectional and unidirectional protective devices) affects the wiring of circuits with
           solar PV, battery storage, and other sources of reverse power flow. The AI includes these
           requirements in the wiring instructions for the relevant circuit types, ensuring your

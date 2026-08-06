@@ -34,15 +34,14 @@ import {
   type FireAlarmLogEntry,
   type LogEntryType,
 } from '@/hooks/useFireAlarmLogBook';
-import { exportFireAlarmLogBookPdf } from '@/utils/fireAlarmLogBookPdf';
 import { TestStrip } from './FireAlarmLogBooks';
 
 const WEEKDAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
 const inputCn =
-  'h-12 text-base touch-manipulation bg-white/[0.08] border-white/[0.16] text-white placeholder:text-white/45 focus:border-yellow-500 focus:ring-yellow-500';
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
 const textareaCn =
-  'touch-manipulation text-base min-h-[90px] bg-white/[0.08] border-white/[0.16] text-white placeholder:text-white/45 focus:border-yellow-500 focus:ring-2 focus:ring-elec-yellow/20';
+  'input-underline w-full min-h-[90px] rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 py-2 text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none [color-scheme:dark] touch-manipulation';
 
 const FILTERS: { key: string; label: string; types: LogEntryType[] | null }[] = [
   { key: 'all', label: 'All', types: null },
@@ -141,11 +140,27 @@ const ENTRY_FIELDS: Record<
     { key: 'contractor', label: 'Contractor / engineer' },
     { key: 'scope', label: 'Scope of work', long: true },
     { key: 'outcome', label: 'Outcome' },
+    // 2025: the log entry must cross-reference the certificate issued after
+    // the visit, so the certification history is traceable from the log.
+    { key: 'certificate_ref', label: 'Maintenance certificate reference' },
+    // 2025: zone charts verified at EVERY maintenance visit, discrepancies
+    // recorded.
+    {
+      key: 'zone_chart_verified',
+      label: 'Zone chart checked against the installation',
+      choices: ['Verified — correct', 'Discrepancy found', 'Not checked'],
+    },
+    { key: 'zone_chart_notes', label: 'Zone chart discrepancy detail' },
     { key: 'next_due', label: 'Next service due', date: true },
   ],
   battery: [
     { key: 'battery_type', label: 'Battery type', options: BATTERY_TYPES },
     { key: 'location', label: 'Location (panel, device…)' },
+  ],
+  deviation: [
+    { key: 'description', label: 'Deviation from the standard', long: true },
+    { key: 'reason', label: 'Reason (building constraint, client instruction…)', long: true },
+    { key: 'agreed_with', label: 'Agreed with (enforcing authority, RP…)' },
   ],
   panel_event: [
     { key: 'description', label: 'Event description', long: true },
@@ -305,32 +320,90 @@ const FireAlarmLogBookDetail = () => {
     }
   };
 
+  /**
+   * Generate the Annex H PDF through PDFMonkey and save it as a report row.
+   *
+   * ELE-1483 — this replaced a client-side jsPDF export. Going through the same
+   * pipeline as every certificate is what puts the log book behind
+   * `check-cert-mapping`, gives it the branding the rest of the fire series
+   * has, and makes each export a saved, re-downloadable document rather than a
+   * file that only ever existed in the browser that made it.
+   *
+   * Each export is its own report row on purpose. A 6-month log and a 12-month
+   * log are two different compliance documents, and overwriting one with the
+   * other would lose the evidence that you produced it on the day it was asked
+   * for.
+   *
+   * Returns the PDF URL, or throws.
+   */
+  const generateLogBookPdf = async (
+    from: string | undefined,
+    periodLabel: string
+  ): Promise<string> => {
+    if (!book) throw new Error('Log book not loaded');
+
+    const [{ fetchCertBranding }, { formatFireAlarmLogBookJson }] = await Promise.all([
+      import('@/utils/certBranding'),
+      import('@/utils/fireAlarmLogBookJsonFormatter'),
+    ]);
+
+    const branding = await fetchCertBranding('#dc2626');
+    const payload = formatFireAlarmLogBookJson({ book, entries, from, branding });
+
+    const { data: pdfResult, error: pdfError } = await supabase.functions.invoke(
+      'generate-fire-alarm-log-book-pdf',
+      { body: { formData: payload } }
+    );
+    if (pdfError) throw new Error(pdfError.message || 'PDF generation failed');
+    if (!pdfResult?.download_url) throw new Error(pdfResult?.error || 'No PDF returned');
+
+    // Saved as a report so it appears in My Certificates and can be
+    // re-downloaded or re-emailed later. The `fa-logbook` prefix is what
+    // reportCloud's type detection reads — without it the row is misfiled as
+    // an EICR by the fallthrough.
+    if (user?.id) {
+      const reportId = `fa-logbook-${Date.now()}`;
+      const { error: saveError } = await supabase.from('reports').insert({
+        report_id: reportId,
+        user_id: user.id,
+        report_type: 'fire-alarm-log-book',
+        status: 'completed',
+        data: { ...payload, log_book_id: book.id, period_label: periodLabel },
+        pdf_payload: payload,
+        pdf_url: pdfResult.download_url,
+      });
+      // A failed save must not lose the electrician the PDF they are stood
+      // waiting for — the URL is returned either way.
+      if (saveError) console.warn('[FireAlarmLogBook] could not save export', saveError);
+    }
+
+    return pdfResult.download_url as string;
+  };
+
   const runExport = async (months: number | null, periodLabel: string) => {
     if (!book) return;
     const from = months
       ? localIsoDate(new Date(new Date().setMonth(new Date().getMonth() - months)))
       : undefined;
     try {
+      setSendingExport(true);
+
       if (delivery === 'email') {
         const to = recipientEmail.trim();
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) {
           toast.error('Enter a valid email address first');
           return;
         }
-        setSendingExport(true);
-        const pdfBase64 = (await exportFireAlarmLogBookPdf({
-          book,
-          entries,
-          from,
-          output: 'base64',
-        })) as string;
+        const pdfUrl = await generateLogBookPdf(from, periodLabel);
+        // The edge function fetches the PDF itself — a multi-megabyte
+        // attachment never touches the phone's connection.
         const { data: fn, error } = await supabase.functions.invoke('send-certificate-resend', {
           body: {
             fireLogMode: true,
             recipientEmail: to,
             buildingName: book.building_name,
             periodLabel,
-            pdfBase64,
+            pdfUrl,
           },
         });
         if (error) throw new Error(error.message);
@@ -340,8 +413,9 @@ const FireAlarmLogBookDetail = () => {
         }
         toast.success(`Log book emailed to ${to}`);
       } else {
-        await exportFireAlarmLogBookPdf({ book, entries, from });
-        toast.success('Annex H log exported');
+        const pdfUrl = await generateLogBookPdf(from, periodLabel);
+        window.open(pdfUrl, '_blank');
+        toast.success('Annex H log exported and saved');
       }
       setExportOpen(false);
     } catch (e) {
@@ -353,19 +427,19 @@ const FireAlarmLogBookDetail = () => {
 
   if (!loading && !book) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
-        <p className="text-white/80 text-sm">Log book not found.</p>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <p className="text-white text-sm">Log book not found.</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-background">
       <Helmet>
         <title>{book ? `${book.building_name} — Fire Alarm Log` : 'Fire Alarm Log'} | Elec-Mate</title>
       </Helmet>
 
-      <header className="sticky top-0 z-40 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/[0.06]">
+      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/[0.14]">
         <div className="px-4 sm:px-6">
           <div className="flex items-center h-14 sm:h-16 gap-2">
             <button
@@ -382,7 +456,7 @@ const FireAlarmLogBookDetail = () => {
             <button
               type="button"
               onClick={() => setManageOpen(true)}
-              className="h-11 px-3 rounded-xl text-[13px] font-medium text-white/80 hover:bg-white/10 touch-manipulation"
+              className="h-11 px-3 rounded-xl text-[13px] font-medium text-white hover:bg-white/10 touch-manipulation"
             >
               Manage
             </button>
@@ -393,7 +467,7 @@ const FireAlarmLogBookDetail = () => {
               className={cn(
                 'h-11 px-3.5 rounded-xl text-[13px] font-semibold touch-manipulation',
                 entries.length === 0
-                  ? 'text-white/30'
+                  ? 'text-white opacity-40'
                   : 'text-elec-yellow hover:bg-elec-yellow/10'
               )}
             >
@@ -414,11 +488,11 @@ const FireAlarmLogBookDetail = () => {
               {book.building_name}
             </h2>
             {book.building_address && (
-              <p className="mt-1 text-[13px] text-white/75">{book.building_address}</p>
+              <p className="mt-1 text-[13px] text-white">{book.building_address}</p>
             )}
             <div className="mt-3 flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
               {book.system_category && (
-                <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white border border-white/[0.15] rounded px-2 py-1">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white border border-white/[0.14] rounded px-2 py-1">
                   Category {book.system_category}
                 </span>
               )}
@@ -431,7 +505,7 @@ const FireAlarmLogBookDetail = () => {
                     `tests ${book.weekly_test_day[0].toUpperCase() + book.weekly_test_day.slice(1)}s`,
                 ].filter(Boolean);
                 return facts.length ? (
-                  <span className="text-[11.5px] text-white/70 tabular-nums">
+                  <span className="text-[11.5px] text-white tabular-nums">
                     {facts.join(' · ')}
                   </span>
                 ) : null;
@@ -440,11 +514,13 @@ const FireAlarmLogBookDetail = () => {
           </div>
         )}
 
-        <div className="lg:grid lg:grid-cols-[380px_1fr] lg:gap-6 lg:items-start">
-          {/* Left column: this week + status */}
-          <div className="lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto lg:overscroll-contain lg:pb-4">
+        <div>
+          {/* Status row — three equal cards. `items-stretch` plus h-full on
+              each child is what keeps them the same height regardless of how
+              much each has to say, which a plain grid does not do on its own. */}
+          <div className="mt-5 grid gap-4 items-stretch [grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))]">
             {/* This week's test */}
-            <div className="mt-5 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.08] overflow-hidden">
+            <div className="h-full flex flex-col rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.14] overflow-hidden">
               <div className="px-5 pt-5 pb-4">
                 <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-elec-yellow/80">
                   This week
@@ -454,7 +530,7 @@ const FireAlarmLogBookDetail = () => {
                     <h2 className="mt-1.5 text-[19px] font-semibold text-white tracking-tight">
                       Tested — all done
                     </h2>
-                    <p className="mt-1 text-[12.5px] text-white/75">
+                    <p className="mt-1 text-[12.5px] text-white">
                       Next rotation: CP {nextCp?.number ?? '—'}
                       {nextCp?.location ? ` — ${nextCp.location}` : ''}
                     </p>
@@ -464,7 +540,7 @@ const FireAlarmLogBookDetail = () => {
                     <h2 className="mt-1.5 text-[19px] font-semibold text-white tracking-tight">
                       Test call point {nextCp.number}
                     </h2>
-                    <p className="mt-1 text-[13px] text-white/80">
+                    <p className="mt-1 text-[13px] text-white">
                       {[nextCp.zone && `Zone ${nextCp.zone}`, nextCp.location]
                         .filter(Boolean)
                         .join(' · ') || 'No zone details recorded'}
@@ -475,7 +551,7 @@ const FireAlarmLogBookDetail = () => {
                     <h2 className="mt-1.5 text-[19px] font-semibold text-white tracking-tight">
                       No call points yet
                     </h2>
-                    <p className="mt-1 text-[12.5px] text-white/75">
+                    <p className="mt-1 text-[12.5px] text-white">
                       Add the building's call points to start the weekly rotation.
                     </p>
                   </>
@@ -498,7 +574,7 @@ const FireAlarmLogBookDetail = () => {
                       })
                     }
                     variant="outline"
-                    className="h-12 px-4 rounded-xl border-white/[0.15] bg-white/[0.05] text-white hover:bg-white/[0.1] touch-manipulation"
+                    className="h-12 px-4 rounded-xl border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-white hover:bg-white/[0.1] touch-manipulation"
                   >
                     Record issue…
                   </Button>
@@ -518,13 +594,13 @@ const FireAlarmLogBookDetail = () => {
 
             {/* Status — one card, hairline rows */}
             {status && (
-              <div className="mt-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.08] divide-y divide-white/[0.06] overflow-hidden">
+              <div className="h-full flex flex-col rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.14] divide-y divide-white/[0.06] overflow-hidden">
                 <div className="px-5 py-3.5 flex items-center justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/70">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
                       Test record
                     </p>
-                    <p className="mt-0.5 text-[12px] text-white/80 tabular-nums truncate">
+                    <p className="mt-0.5 text-[12px] text-white tabular-nums truncate">
                       {status.lastWeeklyTest
                         ? `Last test ${format(new Date(status.lastWeeklyTest + 'T00:00:00'), 'EEE d MMM')}`
                         : 'First test starts the record'}
@@ -534,7 +610,7 @@ const FireAlarmLogBookDetail = () => {
                 </div>
                 {status.serviceDue && (
                   <div className="px-5 py-3.5 flex items-baseline justify-between gap-3">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/70">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
                       Service
                     </p>
                     <p
@@ -551,7 +627,7 @@ const FireAlarmLogBookDetail = () => {
                 {status.falseAlarmRate !== null && (
                   <div className="px-5 py-3.5">
                     <div className="flex items-baseline justify-between gap-3">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/70">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
                         False alarm rate
                       </p>
                       <p
@@ -561,7 +637,7 @@ const FireAlarmLogBookDetail = () => {
                         )}
                       >
                         {status.falseAlarmRate}
-                        <span className="text-[10.5px] font-medium text-white/70">
+                        <span className="text-[10.5px] font-medium text-white">
                           {' '}
                           / 100 detectors / yr
                         </span>
@@ -576,12 +652,12 @@ const FireAlarmLogBookDetail = () => {
                 )}
                 {(book?.call_points?.length ?? 0) > 0 && (
                   <div className="px-5 py-3.5 flex items-baseline justify-between gap-3">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/70">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
                       Rotation coverage
                     </p>
                     <p className="text-[14px] font-bold tabular-nums text-white">
                       {status.callPointsCovered12mo}
-                      <span className="text-[10.5px] font-medium text-white/70">
+                      <span className="text-[10.5px] font-medium text-white">
                         {' '}
                         of {book!.call_points.length} in 12 mo
                       </span>
@@ -593,7 +669,7 @@ const FireAlarmLogBookDetail = () => {
 
             {/* Open faults */}
             {openFaults.length > 0 && (
-              <div className="mt-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-orange-500/30 overflow-hidden">
+              <div className="h-full flex flex-col rounded-2xl bg-[hsl(0_0%_12%)] border border-orange-500/30 overflow-hidden">
                 <div className="px-5 pt-4 pb-2">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-orange-300">
                     Open faults ({openFaults.length})
@@ -606,7 +682,7 @@ const FireAlarmLogBookDetail = () => {
                         <p className="text-[13.5px] text-white truncate">
                           {f.data.description || 'Fault'}
                         </p>
-                        <p className="text-[11.5px] text-white/70 tabular-nums">
+                        <p className="text-[11.5px] text-white tabular-nums">
                           {format(new Date(f.entry_date + 'T00:00:00'), 'd MMM yyyy')}
                           {f.data.zone ? ` · ${f.data.zone}` : ''}
                         </p>
@@ -622,7 +698,7 @@ const FireAlarmLogBookDetail = () => {
                         className={cn(
                           'shrink-0 h-10 px-3 rounded-lg text-[12px] font-semibold touch-manipulation',
                           f.pending
-                            ? 'text-white/30'
+                            ? 'text-white opacity-40'
                             : 'text-elec-yellow hover:bg-elec-yellow/10'
                         )}
                       >
@@ -635,14 +711,15 @@ const FireAlarmLogBookDetail = () => {
             )}
           </div>
 
-          {/* Right column: the ledger — one card, level with the left column */}
-          <div className="mt-5">
-            <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.08] overflow-hidden">
-              <div className="px-5 sm:px-6 py-3 border-b border-white/[0.06] flex items-center justify-between gap-3">
+          {/* The ledger, full width beneath the status row — it is the part
+              that grows, so it gets the whole page rather than 60% of it. */}
+          <div className="mt-4">
+            <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.14] overflow-hidden">
+              <div className="px-5 sm:px-6 py-3 border-b border-white/[0.14] flex items-center justify-between gap-3">
                 <div className="flex items-baseline gap-2.5 min-w-0">
                   <h3 className="text-[15px] font-semibold text-white tracking-tight">Log</h3>
                   {entries.length > 0 && (
-                    <span className="text-[11.5px] text-white/70 tabular-nums">
+                    <span className="text-[11.5px] text-white tabular-nums">
                       {entries.length} entr{entries.length === 1 ? 'y' : 'ies'}
                       {entries.some((e) => e.pending) &&
                         ` · ${entries.filter((e) => e.pending).length} syncing when back online`}
@@ -654,7 +731,7 @@ const FireAlarmLogBookDetail = () => {
                     setAddType(null);
                     setAddOpen(true);
                   }}
-                  className="h-10 px-3.5 rounded-xl bg-white/[0.06] border border-white/[0.12] text-white text-[13px] font-medium hover:bg-white/[0.1] touch-manipulation shrink-0"
+                  className="h-10 px-3.5 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] text-white text-[13px] font-medium hover:bg-white/[0.1] touch-manipulation shrink-0"
                 >
                   <Plus className="h-4 w-4 mr-1" />
                   Log entry
@@ -664,7 +741,7 @@ const FireAlarmLogBookDetail = () => {
               {/* Filter chips — only once there's something to filter */}
               {entries.length > 0 && (
                 <div
-                  className="flex gap-1.5 overflow-x-auto overscroll-x-contain px-4 sm:px-5 py-2.5 border-b border-white/[0.06]"
+                  className="flex gap-1.5 overflow-x-auto overscroll-x-contain px-4 sm:px-5 py-2.5 border-b border-white/[0.14]"
                   style={{ scrollbarWidth: 'none' }}
                 >
                   {FILTERS.map((f) => (
@@ -677,7 +754,7 @@ const FireAlarmLogBookDetail = () => {
                         'focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50',
                         filter === f.key
                           ? 'bg-white/[0.1] text-white border border-white/[0.2]'
-                          : 'text-white/75 border border-transparent hover:text-white'
+                          : 'text-white border border-transparent hover:text-white'
                       )}
                     >
                       {f.label}
@@ -720,7 +797,7 @@ const FireAlarmLogBookDetail = () => {
                           <p className="text-[13.5px] font-semibold text-white tracking-tight">
                             {f.title}
                           </p>
-                          <p className="mt-0.5 text-[12px] text-white/75 leading-relaxed">
+                          <p className="mt-0.5 text-[12px] text-white leading-relaxed">
                             {f.body}
                           </p>
                         </div>
@@ -730,7 +807,7 @@ const FireAlarmLogBookDetail = () => {
                 </div>
               ) : visibleEntries.length === 0 ? (
                 <div className="px-5 py-10 text-center">
-                  <p className="text-[13.5px] text-white/80">
+                  <p className="text-[13.5px] text-white">
                     No {FILTERS.find((f) => f.key === filter)?.label.toLowerCase()} logged.
                   </p>
                 </div>
@@ -745,12 +822,12 @@ const FireAlarmLogBookDetail = () => {
                         setConfirmDelete(false);
                       }}
                       className="w-full text-left px-5 py-3.5 flex items-baseline gap-4 hover:bg-white/[0.03] transition-colors touch-manipulation focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-elec-yellow/50">
-                      <span className="shrink-0 w-[74px] text-[11.5px] text-white/70 tabular-nums">
+                      <span className="shrink-0 w-[74px] text-[11.5px] text-white tabular-nums">
                         {format(new Date(e.entry_date + 'T00:00:00'), 'd MMM yy')}
                       </span>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/70 border border-white/[0.12] rounded px-1.5 py-0.5">
+                          <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white border border-white/[0.14] rounded px-1.5 py-0.5">
                             {ENTRY_TYPE_LABELS[e.entry_type]}
                           </span>
                           {e.entry_type === 'fault' && e.resolved !== true && (
@@ -768,7 +845,7 @@ const FireAlarmLogBookDetail = () => {
                           {entrySummary(e) || '—'}
                         </p>
                         {e.tester_name && (
-                          <p className="mt-0.5 text-[11.5px] text-white/70">{e.tester_name}</p>
+                          <p className="mt-0.5 text-[11.5px] text-white">{e.tester_name}</p>
                         )}
                       </div>
                     </button>
@@ -787,8 +864,8 @@ const FireAlarmLogBookDetail = () => {
           side="bottom"
           className="max-h-[85vh] p-0 rounded-t-2xl overflow-hidden flex flex-col"
         >
-          <div className="flex flex-col min-h-0 bg-[#0a0a0a]">
-            <div className="shrink-0 px-5 pt-5 pb-4 border-b border-white/[0.06]">
+          <div className="flex flex-col min-h-0 bg-background">
+            <div className="shrink-0 px-5 pt-5 pb-4 border-b border-white/[0.14]">
               <div className="max-w-2xl mx-auto w-full">
                 <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-elec-yellow/80">
                   {book?.building_name}
@@ -808,7 +885,7 @@ const FireAlarmLogBookDetail = () => {
                       key={t}
                       type="button"
                       onClick={() => openAdd(t)}
-                      className="w-full flex items-center justify-between px-4 h-14 rounded-xl bg-white/[0.04] border border-white/[0.08] text-left hover:bg-white/[0.08] touch-manipulation"
+                      className="w-full flex items-center justify-between px-4 h-14 rounded-xl bg-white/[0.04] border border-white/[0.14] text-left hover:bg-gradient-to-b from-white/[0.08] to-white/[0.04] touch-manipulation"
                     >
                       <span className="text-[14.5px] font-medium text-white">
                         {ENTRY_TYPE_LABELS[t]}
@@ -821,7 +898,7 @@ const FireAlarmLogBookDetail = () => {
                 <div className="space-y-3">
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <p className="text-[11px] font-medium text-white/75 mb-1.5">Date</p>
+                      <p className="text-[11px] font-medium text-white mb-1.5">Date</p>
                       <Input
                         type="date"
                         className={cn(inputCn, '[color-scheme:dark]')}
@@ -830,7 +907,7 @@ const FireAlarmLogBookDetail = () => {
                       />
                     </div>
                     <div>
-                      <p className="text-[11px] font-medium text-white/75 mb-1.5">Recorded by</p>
+                      <p className="text-[11px] font-medium text-white mb-1.5">Recorded by</p>
                       <Input
                         className={inputCn}
                         placeholder="Name"
@@ -840,7 +917,7 @@ const FireAlarmLogBookDetail = () => {
                     </div>
                   </div>
                   <div>
-                    <p className="text-[11px] font-medium text-white/75 mb-1.5">
+                    <p className="text-[11px] font-medium text-white mb-1.5">
                       Photo (optional)
                     </p>
                     {addPhoto ? (
@@ -848,18 +925,18 @@ const FireAlarmLogBookDetail = () => {
                         <img
                           src={addPhoto}
                           alt="Attached"
-                          className="h-16 w-16 rounded-lg object-cover border border-white/[0.12]"
+                          className="h-16 w-16 rounded-lg object-cover border border-white/[0.14]"
                         />
                         <button
                           type="button"
                           onClick={() => setAddPhoto('')}
-                          className="h-11 px-3 rounded-lg text-[12px] font-medium text-white/80 hover:text-white hover:bg-white/[0.08] touch-manipulation"
+                          className="h-11 px-3 rounded-lg text-[12px] font-medium text-white hover:text-white hover:bg-gradient-to-b from-white/[0.08] to-white/[0.04] touch-manipulation"
                         >
                           Remove
                         </button>
                       </div>
                     ) : (
-                      <label className="flex items-center justify-center h-12 rounded-xl bg-white/[0.04] border border-dashed border-white/[0.15] text-[13px] text-white/80 touch-manipulation cursor-pointer hover:bg-white/[0.07]">
+                      <label className="flex items-center justify-center h-12 rounded-xl bg-white/[0.04] border border-dashed border-white/[0.14] text-[13px] text-white touch-manipulation cursor-pointer hover:bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
                         Take or choose a photo
                         <input
                           type="file"
@@ -873,7 +950,7 @@ const FireAlarmLogBookDetail = () => {
                   </div>
                   {ENTRY_FIELDS[addType].map((f) => (
                     <div key={f.key}>
-                      <p className="text-[11px] font-medium text-white/75 mb-1.5">{f.label}</p>
+                      <p className="text-[11px] font-medium text-white mb-1.5">{f.label}</p>
                       {f.options ? (
                         <FireLogSelect
                           value={addData[f.key] ?? ''}
@@ -898,7 +975,7 @@ const FireAlarmLogBookDetail = () => {
                                 'focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50',
                                 addData[f.key] === c
                                   ? 'bg-elec-yellow text-black'
-                                  : 'bg-white/[0.06] text-white border border-white/[0.12] hover:bg-white/[0.1]'
+                                  : 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-white border border-white/[0.14] hover:bg-white/[0.1]'
                               )}
                             >
                               {c}
@@ -931,12 +1008,12 @@ const FireAlarmLogBookDetail = () => {
             </div>
 
             {addType && (
-              <div className="shrink-0 px-5 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] border-t border-white/[0.06]">
+              <div className="shrink-0 px-5 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] border-t border-white/[0.14]">
                 <div className="max-w-2xl mx-auto w-full flex gap-2.5">
                   <Button
                     onClick={() => setAddType(null)}
                     variant="outline"
-                    className="h-12 px-4 rounded-xl border-white/[0.15] bg-white/[0.05] text-white hover:bg-white/[0.1] touch-manipulation"
+                    className="h-12 px-4 rounded-xl border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-white hover:bg-white/[0.1] touch-manipulation"
                   >
                     Back
                   </Button>
@@ -958,8 +1035,8 @@ const FireAlarmLogBookDetail = () => {
       <Sheet open={!!viewEntry} onOpenChange={(o) => !o && setViewEntry(null)}>
         <SheetContent side="bottom" className="max-h-[85vh] p-0 rounded-t-2xl overflow-hidden flex flex-col">
           {viewEntry && (
-            <div className="bg-[#0a0a0a] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto overscroll-contain min-h-0">
-              <div className="px-5 pt-5 pb-4 border-b border-white/[0.06]">
+            <div className="bg-background pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto overscroll-contain min-h-0">
+              <div className="px-5 pt-5 pb-4 border-b border-white/[0.14]">
                 <div className="max-w-xl mx-auto w-full">
                   <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-elec-yellow/80">
                     {format(new Date(viewEntry.entry_date + 'T00:00:00'), 'EEEE d MMMM yyyy')}
@@ -971,12 +1048,12 @@ const FireAlarmLogBookDetail = () => {
               </div>
               <div className="px-5 py-4">
                 <div className="max-w-xl mx-auto w-full space-y-3">
-                  <div className="rounded-xl bg-white/[0.06] border border-white/[0.12] divide-y divide-white/[0.08]">
+                  <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] divide-y divide-white/[0.08]">
                     {ENTRY_FIELDS[viewEntry.entry_type]
                       .filter((f) => viewEntry.data[f.key])
                       .map((f) => (
                         <div key={f.key} className="px-4 py-2.5">
-                          <p className="text-[10.5px] font-medium text-white/70">{f.label}</p>
+                          <p className="text-[10.5px] font-medium text-white">{f.label}</p>
                           <p className="mt-0.5 text-[13.5px] text-white leading-snug">
                             {f.date ? format(new Date(viewEntry.data[f.key] + 'T00:00:00'), 'd MMM yyyy') : viewEntry.data[f.key]}
                           </p>
@@ -984,7 +1061,7 @@ const FireAlarmLogBookDetail = () => {
                       ))}
                     {viewEntry.data.photo && (
                       <div className="px-4 py-2.5">
-                        <p className="text-[10.5px] font-medium text-white/70 mb-1.5">Photo</p>
+                        <p className="text-[10.5px] font-medium text-white mb-1.5">Photo</p>
                         <img
                           src={viewEntry.data.photo}
                           alt="Entry evidence"
@@ -994,13 +1071,13 @@ const FireAlarmLogBookDetail = () => {
                     )}
                     {viewEntry.tester_name && (
                       <div className="px-4 py-2.5">
-                        <p className="text-[10.5px] font-medium text-white/70">Recorded by</p>
+                        <p className="text-[10.5px] font-medium text-white">Recorded by</p>
                         <p className="mt-0.5 text-[13.5px] text-white">{viewEntry.tester_name}</p>
                       </div>
                     )}
                     {viewEntry.entry_type === 'fault' && (
                       <div className="px-4 py-2.5">
-                        <p className="text-[10.5px] font-medium text-white/70">Status</p>
+                        <p className="text-[10.5px] font-medium text-white">Status</p>
                         <p
                           className={cn(
                             'mt-0.5 text-[13.5px] font-medium',
@@ -1015,7 +1092,7 @@ const FireAlarmLogBookDetail = () => {
                     )}
                   </div>
                   <div className="flex items-center justify-between gap-3">
-                    <p className="text-[11px] text-white/65 leading-relaxed flex-1">
+                    <p className="text-[11px] text-white leading-relaxed flex-1">
                       Logged {format(new Date(viewEntry.created_at), 'd MMM yyyy HH:mm')}. Entries
                       can't be edited — delete a mistake and re-log it.
                     </p>
@@ -1036,7 +1113,7 @@ const FireAlarmLogBookDetail = () => {
                         'shrink-0 h-11 px-4 rounded-xl text-[12.5px] font-semibold touch-manipulation border transition-colors',
                         confirmDelete
                           ? 'bg-red-500/15 text-red-400 border-red-500/40'
-                          : 'bg-white/[0.05] text-white/70 border-white/[0.12] hover:bg-white/[0.1]'
+                          : 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-white border-white/[0.14] hover:bg-white/[0.1]'
                       )}
                     >
                       {confirmDelete ? 'Tap again to delete' : 'Delete entry'}
@@ -1052,8 +1129,8 @@ const FireAlarmLogBookDetail = () => {
       {/* Export sheet */}
       <Sheet open={exportOpen} onOpenChange={setExportOpen}>
         <SheetContent side="bottom" className="max-h-[85vh] p-0 rounded-t-2xl overflow-hidden flex flex-col">
-          <div className="bg-[#0a0a0a] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto overscroll-contain min-h-0">
-            <div className="px-5 pt-5 pb-4 border-b border-white/[0.06]">
+          <div className="bg-background pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto overscroll-contain min-h-0">
+            <div className="px-5 pt-5 pb-4 border-b border-white/[0.14]">
               <div className="max-w-xl mx-auto w-full">
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-elec-yellow/80">
                 Annex H export
@@ -1061,7 +1138,7 @@ const FireAlarmLogBookDetail = () => {
               <h3 className="mt-1 text-[17px] font-semibold text-white tracking-tight">
                 Export the log as PDF
               </h3>
-              <p className="mt-1 text-[12.5px] text-white/75">
+              <p className="mt-1 text-[12.5px] text-white">
                 Laid out on the BS 5839-1:2025 Annex H model — ready for the client, risk assessor
                 or fire authority.
               </p>
@@ -1084,7 +1161,7 @@ const FireAlarmLogBookDetail = () => {
                         'h-11 rounded-xl text-[13px] font-medium touch-manipulation border transition-colors',
                         delivery === mode
                           ? 'bg-elec-yellow text-black border-elec-yellow'
-                          : 'bg-white/[0.06] text-white border-white/[0.12] hover:bg-white/[0.1]'
+                          : 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-white border-white/[0.14] hover:bg-white/[0.1]'
                       )}
                     >
                       {label}
@@ -1102,7 +1179,7 @@ const FireAlarmLogBookDetail = () => {
                       value={recipientEmail}
                       onChange={(e) => setRecipientEmail(e.target.value)}
                     />
-                    <p className="mt-1 text-[11px] text-white/65">
+                    <p className="mt-1 text-[11px] text-white">
                       Sent under your company name with the PDF attached — replies come to you.
                     </p>
                   </div>
@@ -1118,13 +1195,13 @@ const FireAlarmLogBookDetail = () => {
                       type="button"
                       disabled={sendingExport}
                       onClick={() => runExport(opt.months, opt.label.toLowerCase())}
-                      className="w-full flex items-center justify-between px-4 h-14 rounded-xl bg-white/[0.04] border border-white/[0.08] text-left hover:bg-white/[0.08] touch-manipulation disabled:opacity-50"
+                      className="w-full flex items-center justify-between px-4 h-14 rounded-xl bg-white/[0.04] border border-white/[0.14] text-left hover:bg-gradient-to-b from-white/[0.08] to-white/[0.04] touch-manipulation disabled:opacity-50"
                     >
                       <span>
                         <span className="block text-[14.5px] font-medium text-white">
                           {opt.label}
                         </span>
-                        <span className="block text-[11.5px] text-white/70">{opt.hint}</span>
+                        <span className="block text-[11.5px] text-white">{opt.hint}</span>
                       </span>
                       <span className="text-elec-yellow text-[13px]">
                         {sendingExport ? '…' : delivery === 'email' ? 'Send →' : '→'}
@@ -1227,8 +1304,8 @@ const ManageSheet = ({
           side="bottom"
           className="max-h-[85vh] p-0 rounded-t-2xl overflow-hidden flex flex-col"
         >
-        <div className="flex flex-col min-h-0 bg-[#0a0a0a]">
-          <div className="shrink-0 px-5 pt-5 pb-4 border-b border-white/[0.06]">
+        <div className="flex flex-col min-h-0 bg-background">
+          <div className="shrink-0 px-5 pt-5 pb-4 border-b border-white/[0.14]">
             <div className="max-w-5xl mx-auto w-full">
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-elec-yellow/80">
                 {book.building_name}
@@ -1245,9 +1322,9 @@ const ManageSheet = ({
             <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-elec-yellow/80">
               Rotation
             </p>
-            <div className="rounded-xl bg-white/[0.06] border border-white/[0.12] px-4 py-4">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] px-4 py-4">
               <div className="flex items-center justify-between mb-2">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/70">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
                   Call points (rotation order)
                 </p>
                 <button
@@ -1262,7 +1339,7 @@ const ManageSheet = ({
               </div>
               <div className="space-y-2">
                 {callPoints.length === 0 && (
-                  <p className="text-[12.5px] text-white/70">No call points yet — add the first.</p>
+                  <p className="text-[12.5px] text-white">No call points yet — add the first.</p>
                 )}
                 {callPoints.map((cp, i) => (
                   <div key={i} className="flex gap-2">
@@ -1300,7 +1377,7 @@ const ManageSheet = ({
                     <button
                       type="button"
                       onClick={() => setCallPoints((prev) => prev.filter((_, idx) => idx !== i))}
-                      className="shrink-0 w-11 h-12 rounded-lg text-white/65 hover:text-white hover:bg-white/[0.08] touch-manipulation"
+                      className="shrink-0 w-11 h-12 rounded-lg text-white hover:text-white hover:bg-gradient-to-b from-white/[0.08] to-white/[0.04] touch-manipulation"
                       aria-label="Remove call point"
                     >
                       ×
@@ -1310,8 +1387,8 @@ const ManageSheet = ({
               </div>
             </div>
 
-            <div className="rounded-xl bg-white/[0.06] border border-white/[0.12] px-4 py-4">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/70 mb-2">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] px-4 py-4">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white mb-2">
                 Weekly test day
               </p>
               <div className="flex flex-wrap gap-2">
@@ -1325,7 +1402,7 @@ const ManageSheet = ({
                       'focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50',
                       testDay === d
                         ? 'bg-elec-yellow text-black'
-                        : 'bg-white/[0.06] text-white border border-white/[0.12] hover:bg-white/[0.1]'
+                        : 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-white border border-white/[0.14] hover:bg-white/[0.1]'
                     )}
                   >
                     {d.slice(0, 3)}
@@ -1334,13 +1411,13 @@ const ManageSheet = ({
               </div>
             </div>
 
-            <div className="rounded-xl bg-white/[0.06] border border-white/[0.12] divide-y divide-white/[0.08]">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] divide-y divide-white/[0.08]">
               <div className="flex items-center gap-4 px-4 py-3.5">
                 <div className="flex-1">
                   <p className="text-[14px] font-medium text-white">
                     Responsible person access
                   </p>
-                  <p className="text-[11.5px] text-white/70 leading-relaxed">
+                  <p className="text-[11.5px] text-white leading-relaxed">
                     Share a link so the premises records their own weekly tests and reports
                     faults — you stay the supervisor and see everything.
                   </p>
@@ -1363,7 +1440,7 @@ const ManageSheet = ({
                     </Button>
                   </div>
                   {!book.share_enabled && (
-                    <p className="mt-1.5 text-[11px] text-white/65">
+                    <p className="mt-1.5 text-[11px] text-white">
                       Save changes to activate the link.
                     </p>
                   )}
@@ -1376,11 +1453,11 @@ const ManageSheet = ({
             <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-elec-yellow/80">
               Reminders &amp; details
             </p>
-            <div className="rounded-xl bg-white/[0.06] border border-white/[0.12] divide-y divide-white/[0.08]">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] divide-y divide-white/[0.08]">
               <div className="flex items-center gap-4 px-4 py-3.5">
                 <div className="flex-1">
                   <p className="text-[14px] font-medium text-white">Weekly test reminder</p>
-                  <p className="text-[11.5px] text-white/70">
+                  <p className="text-[11.5px] text-white">
                     Nudge on {testDay[0].toUpperCase() + testDay.slice(1)}s if untested
                   </p>
                 </div>
@@ -1389,13 +1466,13 @@ const ManageSheet = ({
               <div className="flex items-center gap-4 px-4 py-3.5">
                 <div className="flex-1">
                   <p className="text-[14px] font-medium text-white">Service due reminder</p>
-                  <p className="text-[11.5px] text-white/70">14 days before the interval lapses</p>
+                  <p className="text-[11.5px] text-white">14 days before the interval lapses</p>
                 </div>
                 <Switch checked={serviceOn} onCheckedChange={setServiceOn} />
               </div>
               <div className="grid grid-cols-2 gap-3 px-4 py-3.5">
                 <div>
-                  <p className="text-[11px] font-medium text-white/75 mb-1.5">
+                  <p className="text-[11px] font-medium text-white mb-1.5">
                     Service interval (months)
                   </p>
                   <Input
@@ -1407,7 +1484,7 @@ const ManageSheet = ({
                   />
                 </div>
                 <div>
-                  <p className="text-[11px] font-medium text-white/75 mb-1.5">Last service</p>
+                  <p className="text-[11px] font-medium text-white mb-1.5">Last service</p>
                   <Input
                     type="date"
                     className={cn(inputCn, '[color-scheme:dark]')}
@@ -1418,9 +1495,9 @@ const ManageSheet = ({
               </div>
             </div>
 
-            <div className="rounded-xl bg-white/[0.06] border border-white/[0.12] px-4 py-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] px-4 py-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <p className="text-[11px] font-medium text-white/75 mb-1.5">
+                <p className="text-[11px] font-medium text-white mb-1.5">
                   Responsible person (premises)
                 </p>
                 <Input
@@ -1431,7 +1508,7 @@ const ManageSheet = ({
                 />
               </div>
               <div>
-                <p className="text-[11px] font-medium text-white/75 mb-1.5">Their email</p>
+                <p className="text-[11px] font-medium text-white mb-1.5">Their email</p>
                 <Input
                   type="email"
                   className={inputCn}
@@ -1442,9 +1519,9 @@ const ManageSheet = ({
               </div>
             </div>
 
-            <div className="rounded-xl bg-white/[0.06] border border-white/[0.12] divide-y divide-white/[0.08]">
+            <div className="rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14] divide-y divide-white/[0.08]">
               <div className="px-4 py-3.5">
-                <p className="text-[11px] font-medium text-white/75 mb-1.5">
+                <p className="text-[11px] font-medium text-white mb-1.5">
                   Automatic detectors on system
                 </p>
                 <Input
@@ -1454,14 +1531,14 @@ const ManageSheet = ({
                   value={detectorCount}
                   onChange={(e) => setDetectorCount(e.target.value)}
                 />
-                <p className="mt-1 text-[11px] text-white/65">
+                <p className="mt-1 text-[11px] text-white">
                   Powers the automatic Annex F false alarm rate check.
                 </p>
               </div>
               <div className="flex items-center gap-4 px-4 py-3.5">
                 <div className="flex-1">
                   <p className="text-[14px] font-medium text-white">ARC connected</p>
-                  <p className="text-[11.5px] text-white/70">
+                  <p className="text-[11.5px] text-white">
                     Signals transmitted to an alarm receiving centre
                   </p>
                 </div>
@@ -1469,7 +1546,7 @@ const ManageSheet = ({
               </div>
               {arcConnected && (
                 <div className="px-4 py-3.5">
-                  <p className="text-[11px] font-medium text-white/75 mb-1.5">ARC telephone</p>
+                  <p className="text-[11px] font-medium text-white mb-1.5">ARC telephone</p>
                   <Input
                     className={inputCn}
                     placeholder="For the false alarm notice by the panel"
@@ -1480,7 +1557,7 @@ const ManageSheet = ({
               )}
               <div className="grid grid-cols-2 gap-3 px-4 py-3.5">
                 <div>
-                  <p className="text-[11px] font-medium text-white/75 mb-1.5">
+                  <p className="text-[11px] font-medium text-white mb-1.5">
                     Servicing organisation
                   </p>
                   <Input
@@ -1490,7 +1567,7 @@ const ManageSheet = ({
                   />
                 </div>
                 <div>
-                  <p className="text-[11px] font-medium text-white/75 mb-1.5">Their phone</p>
+                  <p className="text-[11px] font-medium text-white mb-1.5">Their phone</p>
                   <Input
                     className={inputCn}
                     value={servicingPhone}
@@ -1499,7 +1576,7 @@ const ManageSheet = ({
                 </div>
               </div>
               <div className="px-4 py-3.5">
-                <p className="text-[11px] font-medium text-white/75 mb-1.5">
+                <p className="text-[11px] font-medium text-white mb-1.5">
                   Commissioning certificate reference
                 </p>
                 <Input
@@ -1511,9 +1588,9 @@ const ManageSheet = ({
               </div>
             </div>
 
-            <div className="rounded-xl border border-white/[0.08] px-4 py-3.5">
+            <div className="rounded-xl border border-white/[0.14] px-4 py-3.5">
               <p className="text-[14px] font-medium text-white">Archive this building</p>
-              <p className="mt-0.5 text-[11.5px] text-white/70 leading-relaxed">
+              <p className="mt-0.5 text-[11.5px] text-white leading-relaxed">
                 Removes it from the round but keeps the full record — log books should be retained,
                 not destroyed. Reminders stop.
               </p>
@@ -1531,7 +1608,7 @@ const ManageSheet = ({
                   'mt-3 h-11 px-4 rounded-xl text-[13px] font-semibold touch-manipulation transition-colors border',
                   confirmArchive
                     ? 'bg-orange-500/15 text-orange-300 border-orange-500/40'
-                    : 'bg-white/[0.05] text-white/80 border-white/[0.12] hover:bg-white/[0.1]'
+                    : 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-white border-white/[0.14] hover:bg-white/[0.1]'
                 )}
               >
                 {confirmArchive ? 'Tap again to confirm archive' : 'Archive building'}
@@ -1541,7 +1618,7 @@ const ManageSheet = ({
             </div>
           </div>
 
-          <div className="shrink-0 px-5 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] border-t border-white/[0.06]">
+          <div className="shrink-0 px-5 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] border-t border-white/[0.14]">
             <div className="max-w-5xl mx-auto w-full">
               <Button
                 onClick={save}

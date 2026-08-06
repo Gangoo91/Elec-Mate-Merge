@@ -121,8 +121,8 @@ export function MyPlansSheet({ open, onOpenChange, currentRooms, onLoadPlan, onN
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[75vh] p-0 rounded-t-2xl overflow-hidden bg-background border-t border-white/10 flex flex-col lg:left-0">
-        <SheetHeader className="px-4 pt-4 pb-3 border-b border-white/10 shrink-0">
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-background border-t border-white/10 flex flex-col">
+        <SheetHeader className="w-full max-w-3xl mx-auto px-4 pt-4 pb-3 border-b border-white/10 shrink-0">
           <SheetTitle className="text-white text-lg font-semibold flex items-center gap-2">
             My Floor Plans
             {cloudSyncing ? (
@@ -133,7 +133,7 @@ export function MyPlansSheet({ open, onOpenChange, currentRooms, onLoadPlan, onN
           </SheetTitle>
         </SheetHeader>
 
-        <div className="flex-1 min-h-0 overflow-y-auto px-4 py-4 space-y-3">
+        <div className="flex-1 min-h-0 overflow-y-auto w-full max-w-3xl mx-auto px-4 py-4 space-y-3">
           {/* Save current work */}
           {currentRooms.length > 0 && (
             <div className="p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
@@ -145,7 +145,7 @@ export function MyPlansSheet({ open, onOpenChange, currentRooms, onLoadPlan, onN
                     value={saveName}
                     onChange={(e) => setSaveName(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSaveCurrent()}
-                    className="flex-1 h-11 bg-white/10 border border-white/20 rounded-lg text-white text-sm px-3 touch-manipulation focus:border-elec-yellow focus:outline-none"
+                    className="flex-1 h-11 bg-white/10 border border-white/20 rounded-lg text-white text-base px-3 touch-manipulation focus:border-elec-yellow focus:outline-none"
                     autoFocus
                   />
                   <Button onClick={handleSaveCurrent} disabled={!saveName.trim()} className="h-11 px-4 bg-elec-yellow text-black font-semibold touch-manipulation">
@@ -217,7 +217,7 @@ export function MyPlansSheet({ open, onOpenChange, currentRooms, onLoadPlan, onN
         </div>
 
         {/* Footer */}
-        <div className="px-4 py-3 border-t border-white/10 shrink-0">
+        <div className="w-full max-w-3xl mx-auto px-4 py-3 border-t border-white/10 shrink-0">
           <Button
             onClick={() => { onNewPlan(); onOpenChange(false); }}
             variant="outline"

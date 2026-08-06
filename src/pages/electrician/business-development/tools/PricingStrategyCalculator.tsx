@@ -111,12 +111,24 @@ const PricingStrategyCalculator = () => {
     const baseCost = inputs.materialsCost + labourCost;
     const overheadCost = baseCost * (inputs.overheadPercent / 100);
     const subtotalNet = baseCost + overheadCost;
-    const priceBeforeDiscount = subtotalNet * (1 + inputs.profitMarginPercent / 100);
+
+    // MARGIN, not markup. The field is labelled "Target Margin %", and margin
+    // is a share of the SELLING price: price = cost / (1 − margin). This was
+    // cost × (1 + margin), which is markup. At the default 18% on £1,000 of
+    // cost it returned £1,180 — a 15.25% margin, not 18% — so every quote
+    // built here came out under the target it had just been given.
+    const m = Math.min(Math.max(inputs.profitMarginPercent, 0), 99) / 100;
+    const priceBeforeDiscount = m > 0 ? subtotalNet / (1 - m) : subtotalNet;
+
     const netAfterDiscount = priceBeforeDiscount * (1 - inputs.discountPercent / 100);
     const vatAmount = vatRegistered ? netAfterDiscount * (vatRate / 100) : 0;
     const totalGross = netAfterDiscount + vatAmount;
+
+    // Measured against the SAME cost base the price was built on. It used to
+    // compare with `baseCost`, which excludes overhead, so the reported margin
+    // was flattered by the whole overhead recovery.
     const achievedMargin =
-      baseCost > 0 ? ((netAfterDiscount - baseCost) / netAfterDiscount) * 100 : 0;
+      netAfterDiscount > 0 ? ((netAfterDiscount - subtotalNet) / netAfterDiscount) * 100 : 0;
 
     return {
       labourCost,

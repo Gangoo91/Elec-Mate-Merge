@@ -41,11 +41,29 @@ import {
   CHARGER_TYPES,
   EARTHING_SYSTEMS,
   DIVERSITY_FACTORS,
-  CABLE_DERATING,
+  CA_OPTIONS,
+  CI_OPTIONS,
+  CG_OPTIONS,
+  LOAD_CURTAILMENT_NOTE,
+  RDC_DD,
 } from '@/lib/ev-constants';
 
 const CAT = 'ev-storage' as const;
 const config = CALCULATOR_CONFIG[CAT];
+
+/**
+ * 🔴 The supply voltage was a free-text field defaulting to 415 V. BS 7671
+ * nominal low voltages are 230 V AC single-phase and 400 V AC three-phase
+ * (see Reg 722.312.2.1 context, Section 730/717 supply clauses and the
+ * Table 41.5 header "for Uo of 230 V"). 240/415 V is the pre-harmonisation
+ * pair, withdrawn from the Regulations — it survives only in legacy product
+ * standard titles. Making this a two-option select also removes the ambiguity
+ * that let a single-phase job be costed against a three-phase headroom.
+ */
+const SUPPLY_OPTIONS = [
+  { value: '230', label: '230 V single-phase' },
+  { value: '400', label: '400 V three-phase' },
+];
 
 const EVSELoadCalculator = () => {
   const { toast } = useToast();
@@ -53,14 +71,17 @@ const EVSELoadCalculator = () => {
 
   const [chargingPoints, setChargingPoints] = useState<ChargingPoint[]>([]);
   const [quantityInputs, setQuantityInputs] = useState<string[]>([]);
-  const [supplyVoltage, setSupplyVoltage] = useState('415');
+  const [supplyVoltage, setSupplyVoltage] = useState('400');
   const [earthingSystem, setEarthingSystem] = useState('tn-c-s');
   const [availableCapacity, setAvailableCapacity] = useState('100');
   const [cableLength, setCableLength] = useState('50');
-  const [diversityScenario, setDiversityScenario] = useState('domestic_multiple');
+  // Defaulted to 'single' (1.0). It used to default to 'domestic_multiple',
+  // which silently knocked 20% off the load of a SINGLE charge point. BS 7671
+  // publishes no EV diversity table, so nothing is reduced unless asked for.
+  const [diversityScenario, setDiversityScenario] = useState('single');
   const [powerFactor, setPowerFactor] = useState('0.95');
   const [ambientTemp, setAmbientTemp] = useState('30');
-  const [thermalInsulation, setThermalInsulation] = useState('none');
+  const [insulationLengthMm, setInsulationLengthMm] = useState('0');
   const [groupedCircuits, setGroupedCircuits] = useState('1');
   const [result, setResult] = useState<CalculationResult | null>(null);
 
@@ -82,20 +103,17 @@ const EVSELoadCalculator = () => {
     label: `${factor.label} (${(factor.value * 100).toFixed(0)}%)`,
   }));
 
-  const ambientTempOptions = Object.entries(CABLE_DERATING.ambientTemp).map(([key, data]) => ({
-    value: key,
-    label: data.label,
-  }));
+  // Ca / Ci / Cg now come from src/lib/calculators/bs7671-data/ via ev-constants.
+  // The old inline copies were truncated (Ca stopped at 50 °C, Cg at 6 circuits)
+  // and the Ci list offered a 0.75 "touching one side" factor that BS 7671 does
+  // not publish — see the block comment in ev-constants.ts.
+  const ambientTempOptions = CA_OPTIONS.map((o) => ({ value: o.value, label: o.label }));
+  const insulationOptions = CI_OPTIONS.map((o) => ({ value: o.value, label: o.label }));
+  const groupingOptions = CG_OPTIONS.map((o) => ({ value: o.value, label: o.label }));
 
-  const insulationOptions = Object.entries(CABLE_DERATING.thermalInsulation).map(([key, data]) => ({
-    value: key,
-    label: data.label,
-  }));
-
-  const groupingOptions = Object.entries(CABLE_DERATING.grouping).map(([key, data]) => ({
-    value: key,
-    label: data.label,
-  }));
+  const diversityEntry =
+    DIVERSITY_FACTORS[diversityScenario as keyof typeof DIVERSITY_FACTORS] ??
+    DIVERSITY_FACTORS.single;
 
   const addChargingPoint = () => {
     const newPoint: ChargingPoint = { chargerType: '7kw-ac', quantity: 1 };
@@ -131,13 +149,14 @@ const EVSELoadCalculator = () => {
     const inputs: CalculationInputs = {
       chargingPoints,
       supplyVoltage: parseFloat(supplyVoltage),
+      supplyPhases: supplyVoltage === '230' ? 1 : 3,
       earthingSystem,
       availableCapacity: parseFloat(availableCapacity),
       cableLength: parseFloat(cableLength),
       diversityScenario,
       powerFactor: parseFloat(powerFactor),
       ambientTemp: parseInt(ambientTemp),
-      thermalInsulation,
+      thermalInsulationLengthMm: parseInt(insulationLengthMm),
       groupedCircuits: parseInt(groupedCircuits),
     };
 
@@ -160,7 +179,7 @@ const EVSELoadCalculator = () => {
     diversityScenario,
     powerFactor,
     ambientTemp,
-    thermalInsulation,
+    insulationLengthMm,
     groupedCircuits,
     toast,
   ]);
@@ -168,14 +187,14 @@ const EVSELoadCalculator = () => {
   const handleReset = useCallback(() => {
     setChargingPoints([]);
     setQuantityInputs([]);
-    setSupplyVoltage('415');
+    setSupplyVoltage('400');
     setEarthingSystem('tn-c-s');
     setAvailableCapacity('100');
     setCableLength('50');
-    setDiversityScenario('domestic_multiple');
+    setDiversityScenario('single');
     setPowerFactor('0.95');
     setAmbientTemp('30');
-    setThermalInsulation('none');
+    setInsulationLengthMm('0');
     setGroupedCircuits('1');
     setResult(null);
   }, []);
@@ -187,7 +206,8 @@ const EVSELoadCalculator = () => {
       `Total Points: ${getTotalPoints()}`,
       `Nominal Load: ${result.totalNominalPower.toFixed(0)} kW`,
       `Diversified Load: ${result.totalDiversifiedLoad.toFixed(1)} kW`,
-      `Design Current: ${result.designCurrent.toFixed(0)}A`,
+      `Design Current (Ib): ${result.designCurrent.toFixed(0)}A`,
+      `Device Rating (In): ${result.protectiveDeviceRating ?? 'TBD'}A`,
       `Cable: ${result.selectedCable ?? 'TBD'}`,
       `Voltage Drop: ${result.voltageDropPercent.toFixed(1)}%`,
       `Protection: ${result.selectedProtection ?? 'TBD'}`,
@@ -201,10 +221,14 @@ const EVSELoadCalculator = () => {
 
   const getTotalPoints = () => chargingPoints.reduce((sum, cp) => sum + cp.quantity, 0);
 
+  // earthFaultLoop is tri-state: null means "could not be assessed from these
+  // inputs" (e.g. TT, where Ra must be measured), which must not read as a fail
+  // and must not read as a pass either — it simply is not a failure.
   const allCompliant = result
     ? result.compliance.voltageDrop &&
-      result.compliance.earthFaultLoop &&
-      result.compliance.rcdProtection
+      result.compliance.earthFaultLoop !== false &&
+      result.compliance.rcdProtection &&
+      result.compliance.overloadCoordination
     : false;
 
   return (
@@ -283,14 +307,11 @@ const EVSELoadCalculator = () => {
       {/* Supply & Installation */}
       <CalculatorSection title="Supply & Installation">
         <CalculatorInputGrid columns={2}>
-          <CalculatorInput
-            label="Supply Voltage"
-            unit="V"
-            type="text"
-            inputMode="decimal"
+          <CalculatorSelect
+            label="Supply"
             value={supplyVoltage}
             onChange={setSupplyVoltage}
-            placeholder="415"
+            options={SUPPLY_OPTIONS}
           />
           <CalculatorInput
             label="Available Capacity"
@@ -333,8 +354,8 @@ const EVSELoadCalculator = () => {
         </CalculatorInputGrid>
       </CalculatorSection>
 
-      {/* Cable Derating Factors */}
-      <CalculatorSection title="Cable Derating (BS 7671)">
+      {/* Cable Derating Factors — BS 7671 Appendix 4 (Tables 4B1, 4C1, s2.6) */}
+      <CalculatorSection title="Cable Derating (BS 7671 Appendix 4)">
         <CalculatorInputGrid columns={3}>
           <CalculatorSelect
             label="Ambient Temp (Ca)"
@@ -344,8 +365,8 @@ const EVSELoadCalculator = () => {
           />
           <CalculatorSelect
             label="Insulation (Ci)"
-            value={thermalInsulation}
-            onChange={setThermalInsulation}
+            value={insulationLengthMm}
+            onChange={setInsulationLengthMm}
             options={insulationOptions}
           />
           <CalculatorSelect
@@ -434,12 +455,45 @@ const EVSELoadCalculator = () => {
               size="sm"
             />
             <ResultValue
-              label="Protection"
-              value={result.selectedProtection || 'TBD'}
+              label="Device Rating (In)"
+              value={result.protectiveDeviceRating ? String(result.protectiveDeviceRating) : 'TBD'}
+              unit="A"
               category={CAT}
               size="sm"
             />
           </ResultsGrid>
+
+          {/* Protection — full text, Reg 722.531.3.101 */}
+          <div className="p-3 rounded-lg bg-white/5">
+            <p className="text-sm font-medium text-white mb-1">Protection</p>
+            <p className="text-sm text-white">{result.selectedProtection}</p>
+          </div>
+
+          {/* Earth fault loop impedance — BS 7671 Tables 41.3 / 41.5 */}
+          <div className="p-3 rounded-lg bg-white/5 space-y-1">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-white">Earth Fault Loop (Zs)</span>
+              <span className="text-sm text-white">
+                {result.estimatedZs !== null && result.maxZs !== null
+                  ? `${result.estimatedZs.toFixed(2)} Ω / max ${result.maxZs} Ω`
+                  : 'Not assessed'}
+              </span>
+            </div>
+            <p className="text-xs text-white">{result.zsBasis}</p>
+          </div>
+
+          {/* Diversity — Reg 722.311.201 */}
+          {result.diversityRequiresCurtailment && (
+            <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30">
+              <div className="flex items-start gap-2">
+                <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
+                <div>
+                  <p className="text-sm font-medium text-white">Diversity Applied</p>
+                  <p className="text-xs text-white">{LOAD_CURTAILMENT_NOTE}</p>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Headroom */}
           <div className="p-3 rounded-lg bg-white/5">
@@ -560,26 +614,36 @@ const EVSELoadCalculator = () => {
               },
               {
                 label: 'Diversified load',
-                formula: `P_div = ${result.totalNominalPower.toFixed(0)} kW × ${DIVERSITY_FACTORS[diversityScenario as keyof typeof DIVERSITY_FACTORS]?.value ?? 1}`,
+                formula: `P_div = ${result.totalNominalPower.toFixed(0)} kW × ${diversityEntry.value}`,
                 value: `${result.totalDiversifiedLoad.toFixed(1)} kW`,
-                description: `${DIVERSITY_FACTORS[diversityScenario as keyof typeof DIVERSITY_FACTORS]?.label ?? 'Standard'} diversity applied`,
+                description: diversityEntry.description,
               },
               {
-                label: 'Design current',
-                formula: `I = P / (V × √3 × PF) per point, then apply diversity`,
+                label: 'Design current (Ib)',
+                formula: `I = P / (Uo × PF) single-phase (Uo = 230 V), I = P / (√3 × U × PF) three-phase (U = 400 V) — per point, then apply diversity`,
                 value: `${result.designCurrent.toFixed(0)}A`,
               },
               {
+                label: 'Device coordination',
+                formula: `Reg 433.1.1: Ib ≤ In ≤ Iz — ${result.designCurrent.toFixed(1)}A ≤ ${result.protectiveDeviceRating ?? '?'}A ≤ ${result.deratedCapacity.toFixed(1)}A`,
+                value: result.compliance.overloadCoordination ? 'Satisfied' : 'Not satisfied',
+                description:
+                  'Reg 433.1.201 — for a BS EN 60898 circuit-breaker or BS EN 61009-1 RCBO, meeting (a) and (b) also meets (c) I2 ≤ 1.45 Iz',
+              },
+              {
                 label: 'Voltage drop',
-                formula: `ΔV% = (I × z × L) / (V × 1000) × 100`,
+                formula: `ΔV% = (I × z × L) / (${supplyVoltage} × 1000) × 100`,
                 value: `${result.voltageDropPercent.toFixed(1)}%`,
                 description: result.compliance.voltageDrop
-                  ? 'Within 5% limit'
+                  ? 'Within 5% limit — indicative only, see note below'
                   : 'Exceeds 5% limit — upgrade cable',
               },
               {
                 label: 'Supply headroom',
-                formula: `Headroom = ${availableCapacity}kW capacity − ${result.totalDiversifiedLoad.toFixed(1)}kW load`,
+                formula:
+                  supplyVoltage === '230'
+                    ? `I_avail = (${availableCapacity} × 1000) / (230 × PF), then − Ib`
+                    : `I_avail = (${availableCapacity} × 1000) / (√3 × 400 × PF), then − Ib`,
                 value: `${result.headroom.toFixed(0)}A`,
               },
             ]}
@@ -616,7 +680,8 @@ const EVSELoadCalculator = () => {
                 <div className="space-y-2">
                   <p className="text-sm text-white font-medium">Voltage Drop</p>
                   <p className="text-sm text-white">
-                    Must stay below 5% (BS 7671).{' '}
+                    Must stay below 5% — Reg 525.202, Appendix 4 Section 6.4, Table 4Ab (3% for
+                    lighting, 5% for other uses on a public LV supply).{' '}
                     {result.voltageDropPercent > 5
                       ? 'EXCESSIVE — increase cable size or reduce run length.'
                       : 'Within acceptable limits.'}
@@ -624,10 +689,7 @@ const EVSELoadCalculator = () => {
                 </div>
                 <div className="space-y-2">
                   <p className="text-sm text-white font-medium">Diversity Factor</p>
-                  <p className="text-sm text-white">
-                    Accounts for realistic usage patterns. Multiple chargers rarely operate at full
-                    load simultaneously.
-                  </p>
+                  <p className="text-sm text-white">{LOAD_CURTAILMENT_NOTE}</p>
                 </div>
               </div>
             </CollapsibleContent>
@@ -655,20 +717,27 @@ const EVSELoadCalculator = () => {
                 <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong>Section 722:</strong> EV charging installations — RCD protection
-                    mandatory (30mA Type A minimum)
+                    mandatory (30 mA, Type A minimum)
                   </p>
                   <p>
-                    <strong>IET Code of Practice:</strong> EV supply equipment installation and
-                    earthing arrangements
+                    <strong>Reg 433.1.1:</strong> Ib ≤ In ≤ Iz, with I2 ≤ 1.45 Iz. Reg 433.1.201 —
+                    for a BS EN 60898 circuit-breaker or BS EN 61009-1 RCBO, satisfying (a) and (b)
+                    also satisfies (c).
+                  </p>
+                  <p>
+                    <strong>Reg 722.311.201:</strong> load curtailment may be taken into account when
+                    determining maximum demand. BS 7671 publishes no EV diversity table.
                   </p>
                   <p>
                     <strong>Earthing:</strong>{' '}
                     {EARTHING_SYSTEMS[earthingSystem as keyof typeof EARTHING_SYSTEMS]?.description}
                   </p>
-                  {result.selectedProtection?.includes('DC') && (
+                  {result.dcFaultProtectionRequired && (
                     <p>
-                      <strong>DC Protection:</strong> Required for DC charger installations. Consult
-                      manufacturer specifications.
+                      {/* 🔴 This block used to fire only for DC rapid chargers. RDC-DD to
+                          BS IEC 62955 is specified for MODE 3 — AC — charging. */}
+                      <strong>DC fault protection ({RDC_DD.regulation}):</strong> {RDC_DD.note}{' '}
+                      Applies to {RDC_DD.appliesTo}.
                     </p>
                   )}
                 </div>
@@ -683,8 +752,11 @@ const EVSELoadCalculator = () => {
         <div className="flex items-start gap-2">
           <Zap className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
           <p className="text-sm text-white">
-            <strong>Professional design required.</strong> Verify calculations with supply authority
-            for commercial installations.
+            <strong>Professional design required.</strong> Voltage drop and Zs here are indicative:
+            the conductor figures are loop resistance at 20 °C, not the Appendix 4 tabulated mV/A/m
+            at operating temperature, and the Zs estimate assumes a cpc of the same size as the line
+            conductor. Confirm against Appendix 4 and by measurement, and verify the supply with the
+            distributor for commercial installations.
           </p>
         </div>
       </div>
@@ -693,11 +765,12 @@ const EVSELoadCalculator = () => {
       <FormulaReference
         category={CAT}
         name="EVSE Load Formulas"
-        formula="I = P / (V × √3 × PF)"
+        formula="I = P / (Uo × PF) 1-ph  ·  I = P / (√3 × U × PF) 3-ph"
         variables={[
-          { symbol: 'I', description: 'Design current (A)' },
-          { symbol: 'P', description: 'Total diversified power (W)' },
-          { symbol: 'V', description: 'Supply voltage (V)' },
+          { symbol: 'I', description: 'Design current Ib (A)' },
+          { symbol: 'P', description: 'Diversified power (W)' },
+          { symbol: 'Uo', description: 'Nominal line-to-earth voltage, 230 V' },
+          { symbol: 'U', description: 'Nominal line voltage, 400 V three-phase' },
           { symbol: 'PF', description: 'Power factor' },
         ]}
       />

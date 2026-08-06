@@ -67,6 +67,12 @@ const CERTS = [
   { id: 'smoke-co-alarm', name: 'Smoke & CO alarm', templateId: '904D77D8-0781-41F7-816A-F8000C795CE1',
     formatter: 'src/utils/smokeCOJsonFormatter.ts', schema: 'smoke-co', edge: 'generate-smoke-co-alarm-pdf',
     template: 'smoke-co-alarm-certificate-template.html', components: 'src/components/inspection/smoke-co' },
+  // Not a certificate but the same pipeline — an Annex H log book export that
+  // drops a field is the same failure as a cert that does, and was invisible
+  // to this guard while it rendered client-side (ELE-1483).
+  { id: 'fire-alarm-log-book', name: 'Fire alarm log book', templateId: 'A89B34B4-018F-45AE-A6C0-3AFCA4A595A6',
+    formatter: 'src/utils/fireAlarmLogBookJsonFormatter.ts', schema: 'fire-alarm-log-book', edge: 'generate-fire-alarm-log-book-pdf',
+    template: 'fire-alarm-log-book-template.html', components: 'src/pages/inspection' },
   { id: 'g98-commissioning', name: 'G98 commissioning', templateId: '3C669DC3-FFCB-4A22-A8BA-A30989BFCC10',
     formatter: 'src/utils/g98JsonFormatter.ts', schema: 'g98', edge: 'generate-g98-commissioning-pdf',
     template: 'g98-commissioning-certificate-template.html', components: 'src/components/inspection/g98' },

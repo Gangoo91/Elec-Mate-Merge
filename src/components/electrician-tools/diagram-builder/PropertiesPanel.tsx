@@ -4,6 +4,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { symbolRegistry } from './symbols/symbolRegistry';
+import { SCALE, SNAP_STEP } from './constants';
+import { useHaptic } from '@/hooks/useHaptic';
 import {
   Sheet,
   SheetContent,
@@ -19,6 +21,7 @@ interface PropertiesPanelProps {
 }
 
 export const PropertiesPanel = ({ selectedObject, onUpdate, onDelete, onClose }: PropertiesPanelProps) => {
+  const haptic = useHaptic();
   if (!selectedObject) return null;
 
   const symbolMeta = selectedObject.symbolId
@@ -29,26 +32,35 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onDelete, onClose }:
       ? Math.hypot(
           selectedObject.points[1].x - selectedObject.points[0].x,
           selectedObject.points[1].y - selectedObject.points[0].y
-        ) / 52
+        ) / SCALE
       : null;
-  const nudge = (dx: number, dy: number) => onUpdate({ x: (selectedObject.x || 0) + dx, y: (selectedObject.y || 0) + dy });
+  // Nudge by exactly one snap step (0.1m). It was a flat 10px = 0.192m, which
+  // is not a grid multiple — nudging knocked an item off the lattice it had
+  // just been snapped to, so positions drifted to awkward decimals.
+  const nudge = (dx: number, dy: number) => {
+    haptic.selection();
+    return onUpdate({
+      x: (selectedObject.x || 0) + dx * SNAP_STEP,
+      y: (selectedObject.y || 0) + dy * SNAP_STEP,
+    });
+  };
 
   return (
     <Sheet open={!!selectedObject} onOpenChange={(open) => { if (!open) onClose(); }}>
       <SheetContent
         side="bottom"
-        className="h-[50vh] p-0 rounded-t-2xl overflow-hidden bg-elec-card border-white/10 lg:left-0"
+        className="h-[85vh] lg:h-auto lg:max-h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-elec-card border-white/10 flex flex-col"
       >
         {/* Drag handle */}
         <div className="flex justify-center pt-2 pb-1">
           <div className="w-10 h-1 rounded-full bg-white/20" />
         </div>
 
-        <SheetHeader className="px-4 pb-3">
+        <SheetHeader className="w-full max-w-2xl mx-auto px-4 pb-3">
           <SheetTitle className="text-white text-lg font-semibold">Properties</SheetTitle>
         </SheetHeader>
 
-        <div className="px-4 pb-6 overflow-y-auto flex-1 space-y-4">
+        <div className="w-full max-w-2xl mx-auto px-4 pb-6 overflow-y-auto flex-1 space-y-4">
           {objectLength !== null && (
             <div className="space-y-1 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2">
               <Label className="text-white text-[11px] uppercase tracking-wide">Length</Label>
@@ -75,7 +87,7 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onDelete, onClose }:
                     key={angle}
                     variant="outline"
                     size="sm"
-                    onClick={() => onUpdate({ rotation: angle })}
+                    onClick={() => { haptic.light(); onUpdate({ rotation: angle }); }}
                     className="h-8 px-2 text-xs border-white/10 text-white hover:bg-white/10 touch-manipulation"
                   >
                     {angle}
@@ -86,13 +98,13 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onDelete, onClose }:
           </div>
 
           <div className="space-y-2">
-            <Label className="text-white text-xs">Nudge</Label>
+            <Label className="text-white text-xs">Nudge (0.1m)</Label>
             <div className="grid grid-cols-3 gap-2">
               <div />
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => nudge(0, -10)}
+                onClick={() => nudge(0, -1)}
                 className="h-9 border-white/10 text-white hover:bg-white/10 touch-manipulation"
               >
                 Up
@@ -101,7 +113,7 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onDelete, onClose }:
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => nudge(-10, 0)}
+                onClick={() => nudge(-1, 0)}
                 className="h-9 border-white/10 text-white hover:bg-white/10 touch-manipulation"
               >
                 Left
@@ -109,7 +121,7 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onDelete, onClose }:
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => nudge(0, 10)}
+                onClick={() => nudge(0, 1)}
                 className="h-9 border-white/10 text-white hover:bg-white/10 touch-manipulation"
               >
                 Down
@@ -117,7 +129,7 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onDelete, onClose }:
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => nudge(10, 0)}
+                onClick={() => nudge(1, 0)}
                 className="h-9 border-white/10 text-white hover:bg-white/10 touch-manipulation"
               >
                 Right
@@ -213,6 +225,7 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onDelete, onClose }:
           <Button
             variant="outline"
             onClick={() => {
+              haptic.heavy();
               onDelete();
               onClose();
             }}

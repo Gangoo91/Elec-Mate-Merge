@@ -219,3 +219,49 @@ export interface ExpenseWithSyncStatus extends Expense {
 
 // Default HMRC mileage rate
 export const DEFAULT_MILEAGE_RATE = 0.45; // 45p per mile
+/** HMRC approved mileage rate above the first 10,000 business miles (cars and vans). */
+export const HIGHER_BAND_MILEAGE_RATE = 0.25;
+/** Business miles in a tax year after which the lower rate applies. */
+export const MILEAGE_BAND_THRESHOLD = 10_000;
+
+/**
+ * The UK tax year containing a date: 6 April to 5 April.
+ *
+ * Not the calendar year. The 10,000-mile allowance resets on 6 April, so
+ * counting it by calendar year would hand back 10,000 miles at 45p every
+ * January — three months early.
+ */
+export function taxYearStart(on: Date = new Date()): Date {
+  const year = on.getFullYear();
+  const aprilSixth = new Date(year, 3, 6);
+  return on >= aprilSixth ? aprilSixth : new Date(year - 1, 3, 6);
+}
+
+export interface MileageClaim {
+  /** Miles charged at 45p. */
+  milesAtFullRate: number;
+  /** Miles charged at 25p, because the first 10,000 are used up. */
+  milesAtLowerRate: number;
+  amount: number;
+}
+
+/**
+ * What a mileage claim is actually worth, across both HMRC bands.
+ *
+ * The form used to state the 10,000-mile rule in a note and then bill every
+ * mile at 45p regardless — telling the user the rule while quietly breaking it.
+ * Anyone doing more than 10,000 business miles a year was over-claiming, which
+ * is the user's problem with HMRC, not ours.
+ */
+export function calculateMileageClaim(miles: number, milesAlreadyClaimed = 0): MileageClaim {
+  const remainingAtFullRate = Math.max(0, MILEAGE_BAND_THRESHOLD - milesAlreadyClaimed);
+  const milesAtFullRate = Math.min(miles, remainingAtFullRate);
+  const milesAtLowerRate = Math.max(0, miles - milesAtFullRate);
+  const amount =
+    milesAtFullRate * DEFAULT_MILEAGE_RATE + milesAtLowerRate * HIGHER_BAND_MILEAGE_RATE;
+  return {
+    milesAtFullRate,
+    milesAtLowerRate,
+    amount: Math.round(amount * 100) / 100,
+  };
+}

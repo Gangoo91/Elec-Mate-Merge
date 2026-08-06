@@ -15,10 +15,39 @@ import { MAIN_BOARD_ID } from '@/types/distributionBoard';
  *    sees was invisible and unfixable from the table.
  *
  * Numbers are scoped PER BOARD — DB1 way 1 and DB2 way 1 are both legitimate.
+ *
+ * ELE-1484 added a fourth: not every row on a schedule is a circuit. An
+ * incoming RCD, an SPD or a main switch protects several ways and occupies
+ * none, but the table forced a sequential number onto it anyway — so an
+ * "RCD 80A 30mA" row printed as circuit 7 next to the cooker, also on 7.
+ * Those rows carry `isDeviceRow` and sit outside numbering entirely.
  */
 
 /** A circuit number may be a plain way ("5"), a 3P span ("1-3") or a phase-group row ("4.1"). */
 const NUMBER_TOKEN = /(\d+(?:\.\d+)?(?:\s*-\s*\d+)?)/;
+
+/** Printed in the circuit-number column for a row that is not a circuit. */
+export const DEVICE_ROW_NUMBER = '—';
+
+/**
+ * What an electrician types in the way column to say "this isn't a circuit".
+ *
+ * Any dash, or "n/a". Both are matched as the user types, so neither may be a
+ * prefix of a legitimate way label — which is why a bare "0" is NOT here even
+ * though it is the workaround electricians improvise. Two-digit way labels
+ * ("01", "02") are common on commercial boards, and treating "0" as a trigger
+ * would convert the row the instant the first key landed. A span starts with a
+ * digit ("1-3"), so a leading dash is unambiguous.
+ */
+const NOT_A_CIRCUIT_INPUT = /^(?:[-–—]+|n\/?a)$/i;
+
+/** True when the text entered in the way column means "no way number". */
+export const meansNotACircuit = (raw: unknown): boolean =>
+  NOT_A_CIRCUIT_INPUT.test(String(raw ?? '').trim());
+
+/** True when the row records a device (RCD/SPD/main switch), not a circuit. */
+export const isDeviceRow = (circuit: Pick<TestResult, 'isDeviceRow'>): boolean =>
+  circuit.isDeviceRow === true;
 
 /**
  * The integer way a circuit occupies, for max/collision purposes.
@@ -46,6 +75,7 @@ const circuitsOnBoard = (circuits: TestResult[], boardId: string): TestResult[] 
 export const getNextCircuitNumber = (circuits: TestResult[], boardId: string): number => {
   let max = 0;
   for (const c of circuitsOnBoard(circuits, boardId)) {
+    if (isDeviceRow(c)) continue; // an RCD/SPD holds no way, so reserves nothing
     const fromNumber = parseCircuitNumberBase(c.circuitNumber);
     if (fromNumber !== null && fromNumber > max) max = fromNumber;
     const way = typeof c.wayNumber === 'number' ? c.wayNumber : null;
@@ -77,11 +107,13 @@ export interface DuplicateCircuitGroup {
 
 /**
  * Circuit numbers used more than once on the same board.
- * Blank numbers are ignored — an unfilled row is not yet a clash.
+ * Blank numbers are ignored — an unfilled row is not yet a clash. Device rows
+ * are ignored too: they print a dash, so two of them never collide.
  */
 export const findDuplicateCircuitNumbers = (circuits: TestResult[]): DuplicateCircuitGroup[] => {
   const seen = new Map<string, DuplicateCircuitGroup>();
   for (const c of circuits) {
+    if (isDeviceRow(c)) continue;
     const num = String(c.circuitNumber ?? '').trim();
     if (!num) continue;
     const boardId = c.boardId || MAIN_BOARD_ID;
@@ -106,6 +138,46 @@ export const isAutoDesignation = (designation: unknown): boolean => {
   return !s || AUTO_DESIGNATION.test(s);
 };
 
+/** A label that is nothing but a way number — "1", "12", "4.1", "1-3". */
+const BARE_NUMBER = /^\d+(?:\.\d+)?(?:\s*-\s*\d+)?$/;
+
+/**
+ * A short reference built around a way number — "Ct1", "C12", "DB/3".
+ *
+ * The prefix is capped at three letters and the number must end the string, so
+ * prose never matches: "Bed 2 sockets" keeps its 2, which is a room number and
+ * nothing to do with the way. "L1"/"L2"/"L3" are excluded outright — those are
+ * phases, and bumping one would silently move a circuit onto another line.
+ */
+const NUMBER_WITH_PREFIX = /^(?!L[123]$)([A-Za-z]{0,3}[\s./-]?)(\d+(?:\.\d+)?(?:\s*-\s*\d+)?)$/i;
+
+/**
+ * Keep a hand-typed way label in step with the number that prints (ELE-1486).
+ *
+ * `isAutoDesignation` only covers labels we generated. A bare "7" — the most
+ * natural thing to type into a column headed "Way" — is not auto, so renumber
+ * used to leave it showing 7 while the certificate printed 8. The table and
+ * the PDF disagreed, and nothing on screen moved to say so.
+ *
+ * Any label that is *only* a way number, with or without a short prefix, is
+ * rewritten. The number is not checked against the old one: a label already
+ * out of step is exactly the case this exists to repair, and `circuitNumber`
+ * is invisible in the UI, so leaving it stale keeps the divergence hidden.
+ * This runs only inside an explicit Renumber, where the user has asked for
+ * numbers to change and a visible change is the point.
+ *
+ * Returns null when the label should be left exactly as it is.
+ */
+const relabelForNewNumber = (designation: unknown, newNumber: string): string | null => {
+  const label = String(designation ?? '').trim();
+  if (!label) return null;
+
+  if (BARE_NUMBER.test(label)) return newNumber;
+
+  const m = label.match(NUMBER_WITH_PREFIX);
+  return m ? `${m[1]}${newNumber}` : null;
+};
+
 /**
  * Renumber a circuit onto a specific way, keeping a hand-typed label intact.
  * `phaseSeq` > 0 marks the row as part of an L1/L2/L3 group sharing one way,
@@ -116,6 +188,12 @@ export const applyCircuitNumber = (
   wayNum: number,
   phaseSeq = 0
 ): TestResult => {
+  // A device row holds no way, so there is nothing to apply. Without this a
+  // duplicated RCD row would keep the flag but be stamped with a real number —
+  // printing "13" while sitting outside clash detection, which is how it would
+  // silently collide with the actual way 13.
+  if (isDeviceRow(circuit)) return circuit;
+
   const next: TestResult = {
     ...circuit,
     circuitNumber: phaseSeq > 0 ? `${wayNum}.${phaseSeq}` : String(wayNum),
@@ -127,6 +205,12 @@ export const applyCircuitNumber = (
         ? ` ${circuit.phaseAssignment}`
         : '';
     next.circuitDesignation = `Way ${wayNum}${phase}`;
+  } else {
+    // ELE-1486 — a hand-typed label that carries the way number has to move
+    // with it, or the table shows one number and the certificate prints
+    // another. Genuine prose ("Kitchen ring") is left untouched.
+    const relabelled = relabelForNewNumber(circuit.circuitDesignation, next.circuitNumber);
+    if (relabelled !== null) next.circuitDesignation = relabelled;
   }
   return next;
 };
@@ -155,6 +239,11 @@ export const renumberDuplicateCircuits = (circuits: TestResult[]): TestResult[] 
   const phaseSeqByBoard = new Map<string, number>();
 
   return circuits.map((circuit) => {
+    // A device row keeps its dash and its position, and — crucially — does not
+    // advance the counter. Resequencing through it would shunt every real
+    // circuit below it down one way.
+    if (isDeviceRow(circuit)) return circuit;
+
     const boardId = circuit.boardId || MAIN_BOARD_ID;
     const phase = circuit.phaseAssignment;
     const continuesGroup =

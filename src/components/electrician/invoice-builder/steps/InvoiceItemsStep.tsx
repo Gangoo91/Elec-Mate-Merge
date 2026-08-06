@@ -14,6 +14,7 @@ import { JobTemplates } from '@/components/electrician/quote-builder/JobTemplate
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { labourLinesFor, labourAllocations, describeLabour, describeLines, shortGradeLabel } from '@/utils/labourGrades';
 import { useInvoiceScanner } from '@/hooks/useInvoiceScanner';
 import { InvoiceScannerSheet } from '../InvoiceScannerSheet';
 import { InvoiceScanResults } from '../InvoiceScanResults';
@@ -53,7 +54,7 @@ const UNIT_PRESETS = [
 
 import { DecimalInput as InlineDecimalInput } from '@/components/ui/decimal-input';
 import { AutoGrowTextarea } from '@/components/ui/auto-grow-textarea';
-import { materialQueryMatches, expandMaterialQuery } from '@/data/materialSynonyms';
+import { materialQueryMatches, expandMaterialQuery, rankMaterialMatches } from '@/data/materialSynonyms';
 
 interface InvoiceItemsStepProps {
   originalItems: InvoiceItem[];
@@ -184,6 +185,19 @@ export const InvoiceItemsStep = ({
     }
   });
   const isDayMode = labourRateMode === 'day';
+  // Deliberately no `|| 45` fallback, unlike baseHourlyRate below: an unset
+  // hourly rate means the price-book labour line is skipped entirely rather
+  // than invoicing a customer at a rate the electrician never agreed to.
+  const priceBookHourlyRate = companyProfile?.hourly_rate ?? 0;
+  // Memoised: a fresh object each render re-ran every memo that depends on it,
+  // which with 1,200+ items meant recomputing the whole book on every keystroke.
+  const rateSources = useMemo(
+    () => ({
+      workerRates: companyProfile?.worker_rates,
+      hourlyRate: companyProfile?.hourly_rate,
+    }),
+    [companyProfile?.worker_rates, companyProfile?.hourly_rate]
+  );
   const baseHourlyRate = companyProfile?.hourly_rate || 45;
   const baseDayRate = companyProfile?.day_rate ?? baseHourlyRate * 8;
   const workerRateForMode = (defaultHourlyRate: number) =>
@@ -224,7 +238,7 @@ export const InvoiceItemsStep = ({
     }
     if (priceBookSearch.trim()) {
       // ELE-1393 — match trade phrases ("2 gang socket" → "double socket").
-      return result.filter((pb) => materialQueryMatches(pb.item.name, priceBookSearch));
+      return rankMaterialMatches(result, priceBookSearch, (pb) => pb.item.name);
     }
     return result;
   }, [materialsLists, priceBookSearch]);
@@ -1343,9 +1357,10 @@ export const InvoiceItemsStep = ({
                       onClick={() => {
                         // estimated_price is ALREADY the sell price (ELE-1010) — use directly.
                         const sellPrice = pb.item.estimated_price || 0;
+                        const qty = pb.item.quantity || 1;
                         onAddItem({
                           description: pb.item.name,
-                          quantity: pb.item.quantity || 1,
+                          quantity: qty,
                           unit: pb.item.unit || 'each',
                           unitPrice: Math.round(sellPrice * 100) / 100,
                           category: 'materials',
@@ -1353,7 +1368,33 @@ export const InvoiceItemsStep = ({
                           inventoryItemId: pb.item.personal_inventory_id,
                           notes: pb.item.supplier ? `Supplier: ${pb.item.supplier}` : undefined,
                         } as any);
-                        toast({ title: 'Added to invoice', description: pb.item.name });
+
+                        // Spons-style time guide: the item's labour allowance becomes
+                        // its own labour line, costed at the hourly rate (ELE-1470).
+                        // Mirrors the quote builder — the same price-book item must
+                        // behave the same whichever wizard it is added from.
+                        // One line per grade — mirrors the quote builder so the
+                        // same item never prices differently between the two.
+                        const labour = labourLinesFor(pb.item, qty, rateSources);
+                        const addedLabour = labour.lines.length > 0;
+                        for (const line of labour.lines) {
+                          onAddItem({
+                            description: `Labour — ${pb.item.name} (${shortGradeLabel(line.grade)})`,
+                            quantity: line.hours,
+                            unit: 'hour',
+                            unitPrice: line.rate,
+                            category: 'labour',
+                            hours: line.hours,
+                            hourlyRate: line.rate,
+                          });
+                        }
+
+                        toast({
+                          title: 'Added to invoice',
+                          description: addedLabour
+                            ? `${pb.item.name} + ${describeLines(labour.lines)}`
+                            : pb.item.name,
+                        });
                       }}
                       className="flex flex-col text-left p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:bg-white/[0.08] transition-all touch-manipulation active:scale-[0.98] select-none"
                     >
@@ -1375,6 +1416,11 @@ export const InvoiceItemsStep = ({
                             )}
                           >
                             {stock.quantity} in stock
+                          </span>
+                        )}
+                        {labourAllocations(pb.item).length > 0 && (
+                          <span className="px-1.5 py-0.5 rounded text-[10px] font-medium border bg-blue-500/10 text-blue-300 border-blue-500/20">
+                            +{describeLabour(labourAllocations(pb.item))}
                           </span>
                         )}
                         {pb.item.supplier && (

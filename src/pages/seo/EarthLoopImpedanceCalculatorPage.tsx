@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet';
 import { RecentReviews } from '@/components/seo/RecentReviews';
+import { CalculatorSurface } from '@/components/calculators/shared';
 import EarthFaultLoopCalculator from '@/components/apprentice/calculators/EarthFaultLoopCalculator';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
@@ -218,7 +219,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
       {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
       <section id="calculator" className="px-5 pb-12 scroll-mt-24">
         <div className="max-w-4xl mx-auto">
-          <EarthFaultLoopCalculator />
+          <CalculatorSurface><EarthFaultLoopCalculator /></CalculatorSurface>
         </div>
       </section>
 
@@ -641,7 +642,7 @@ export default function EarthLoopImpedanceCalculatorPage() {
           {/* Type D Table */}
           <div className="mb-6">
             <h3 className="font-bold text-yellow-400 text-lg mb-4">
-              Table 41.4 — Type D MCBs (0.4 s disconnection)
+              Table 41.3(c) — Type D MCBs (0.4 s disconnection)
             </h3>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden">
               <div className="grid grid-cols-2 gap-px bg-white/10">

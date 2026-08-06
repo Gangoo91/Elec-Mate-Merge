@@ -5,6 +5,13 @@ import {
   PoolCalculationResult,
 } from '@/lib/swimming-pool';
 
+/**
+ * Any value one of the pool inputs can hold — replaces an `any` on the setter.
+ * Kept as the primitive union rather than the exact per-field literal types
+ * because the shared select controls hand back a plain `string`.
+ */
+type PoolInputValue = string | number | boolean;
+
 export const useSwimmingPoolCalculator = () => {
   const [inputs, setInputs] = useState<PoolCalculationInputs>({
     poolType: 'private',
@@ -33,11 +40,14 @@ export const useSwimmingPoolCalculator = () => {
   const [result, setResult] = useState<PoolCalculationResult | null>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const handleInputChange = (field: keyof PoolCalculationInputs, value: any) => {
-    setInputs((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+  const handleInputChange = (field: keyof PoolCalculationInputs, value: PoolInputValue) => {
+    setInputs(
+      (prev) =>
+        ({
+          ...prev,
+          [field]: value,
+        }) as PoolCalculationInputs
+    );
 
     // Clear error for this field
     if (errors[field]) {

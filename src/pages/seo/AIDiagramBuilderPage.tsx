@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 4:2024.',
+      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 4:2026.',
     icon: FileText,
     category: 'Guide',
   },
@@ -273,7 +273,7 @@ const sections = [
           each circuit, the method used for compliance with Chapter 41, the information needed for
           identification of each device, and the number and size of conductors. For installations
           with solar PV or battery storage, the schematics include the DC side connections and the
-          bidirectional protective devices required by Amendment 4:2024.
+          bidirectional protective devices required by Amendment 4:2026.
         </p>
         <SEOAppBridge
           title="Generate circuit diagrams in seconds"

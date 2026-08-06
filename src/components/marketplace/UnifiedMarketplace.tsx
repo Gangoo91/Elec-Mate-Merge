@@ -1,13 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import {
   ArrowLeft,
-  Flame,
   Search,
   RefreshCw,
-  Clock,
-  ListChecks,
-  BarChart3,
   LucideIcon,
   LayoutGrid,
 } from 'lucide-react';
@@ -24,11 +20,13 @@ import {
   MarketplaceProduct,
 } from '@/hooks/useMarketplaceSearch';
 import { SaveToListSheet } from '@/components/marketplace/SaveToListSheet';
-import { CouponCard } from '@/components/marketplace/CouponCard';
 import { DealOfTheDay } from '@/components/marketplace/DealOfTheDay';
 import { PriceAlertsBanner } from '@/components/marketplace/PriceAlertsBanner';
 import { useMarketplacePriceAlerts } from '@/hooks/useMarketplacePriceAlerts';
 import { cn } from '@/lib/utils';
+import { inputCn } from '@/components/forms/fieldStyles';
+import CableComparison from '@/components/marketplace/CableComparison';
+import { chipOff, chipOn } from '@/components/shared/surfaceStyles';
 
 
 export interface UnifiedMarketplaceProps {
@@ -81,36 +79,6 @@ const itemVariants = {
     transition: { duration: 0.2, ease: 'easeOut' },
   },
 };
-
-/** Collapsible coupon section — shows 2 by default */
-function CouponSection({ coupons }: { coupons: import('@/hooks/useMarketplaceSearch').MarketplaceCoupon[] }) {
-  const [expanded, setExpanded] = useState(false);
-  const visible = expanded ? coupons : coupons.slice(0, 2);
-  const hasMore = coupons.length > 2;
-
-  return (
-    <motion.section variants={itemVariants} className="space-y-2">
-      <button
-        onClick={() => hasMore && setExpanded(!expanded)}
-        className="w-full flex items-center justify-between px-0.5 touch-manipulation"
-      >
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider">
-          Discount Codes
-        </h2>
-        {hasMore && (
-          <span className="text-xs font-medium text-elec-yellow">
-            {expanded ? 'Show less' : `+${coupons.length - 2} more`}
-          </span>
-        )}
-      </button>
-      <div className="space-y-2">
-        {visible.map((coupon) => (
-          <CouponCard key={coupon.id} coupon={coupon} />
-        ))}
-      </div>
-    </motion.section>
-  );
-}
 
 /**
  * Unified marketplace page component shared by Materials and Tools pages.
@@ -274,140 +242,54 @@ export default function UnifiedMarketplace({
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
       {/* ── Compact Sticky Header ── */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 lg:px-6 py-2.5 flex items-center justify-between gap-2 max-w-[1400px] mx-auto">
-          {/* Back */}
+        <div className="mx-auto flex max-w-[1600px] items-center gap-2 px-4 py-2 lg:px-6">
           <button
+            type="button"
             onClick={() => navigate('/electrician/business')}
-            className="flex items-center gap-1.5 text-white active:opacity-70 transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg flex-shrink-0"
+            aria-label="Back to Business Hub"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white transition-colors hover:bg-white/10 touch-manipulation active:scale-[0.98]"
           >
             <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium hidden sm:inline">Business Hub</span>
           </button>
 
-          {/* Centre title — visible on mobile to replace hidden back label */}
-          <div className="flex items-center gap-2 flex-1 justify-center sm:hidden">
-            <Icon className={cn('h-4 w-4', accent.iconColor)} />
-            <span className="text-sm font-semibold text-white truncate">{title}</span>
-          </div>
+          {/* The page title, on every size. It used to be hidden from sm: up,
+              where the only label was "Business Hub" pointing backwards. */}
+          <h1 className="min-w-0 flex-1 truncate text-[19px] font-semibold tracking-tight text-white">
+            {title}
+          </h1>
 
-          {/* Action buttons — icons on mobile, labels on desktop */}
-          <div className="flex items-center gap-1.5 flex-shrink-0">
-            {productType === 'materials' && (
-              <Link to="/electrician/materials/procurement">
-                <Button
-                  size="sm"
-                  className="h-11 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold px-3 sm:px-4"
-                >
-                  <BarChart3 className="h-4 w-4 sm:mr-1.5" />
-                  <span className="hidden sm:inline">Compare Prices</span>
-                </Button>
+          <div className="flex shrink-0 items-center gap-2">
+            {listsPath && (
+              <Link
+                to={listsPath}
+                className="flex h-11 items-center rounded-xl px-3 text-[13px] font-medium text-white transition-colors hover:bg-white/10 touch-manipulation"
+              >
+                My lists
               </Link>
             )}
-            {listsPath && (
-              <Link to={listsPath}>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-11 touch-manipulation text-white px-3"
-                >
-                  <ListChecks className="h-4 w-4 sm:mr-1.5" />
-                  <span className="hidden sm:inline">My Lists</span>
-                </Button>
+            {productType === 'materials' && (
+              <Link
+                to="/electrician/materials/procurement"
+                className="flex h-11 items-center rounded-xl bg-elec-yellow px-4 text-[13px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
+              >
+                Compare
               </Link>
             )}
           </div>
         </div>
       </div>
 
-      <div className="max-w-[1400px] mx-auto lg:flex lg:gap-6">
+      <div className="mx-auto max-w-[1600px] lg:flex lg:gap-6">
         {/* ── Desktop Sidebar (lg+) ── */}
-        <aside className="hidden lg:block lg:w-[220px] xl:w-[260px] flex-shrink-0 sticky top-[52px] self-start py-5 pl-6">
-          {/* Search — desktop sidebar */}
-          <form onSubmit={handleSearch} className="mb-5">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-              <Input
-                type="search"
-                placeholder="Search..."
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-                className={cn(
-                  'h-10 pl-10 bg-white/[0.03] border-white/[0.08] text-sm',
-                  accent.border
-                )}
-              />
-            </div>
-          </form>
-
-          {/* Categories */}
-          <div className="space-y-1 mb-5">
-            <p className="text-xs font-semibold text-white uppercase tracking-wider mb-2 px-2">
-              Categories
-            </p>
-            {categories.map((cat) => {
-              const CatIcon = cat.icon || LayoutGrid;
-              const isActive =
-                activeCatSlug === cat.slug || (!activeCatSlug && cat.slug === undefined);
-              return (
-                <button
-                  key={cat.name}
-                  onClick={() => handleCategoryFilter(cat.slug)}
-                  className={cn(
-                    'w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium transition-all touch-manipulation text-left',
-                    isActive
-                      ? cn(
-                          'bg-white/[0.08] text-white',
-                          accent.chipActive.includes('yellow')
-                            ? 'border-l-2 border-yellow-500'
-                            : 'border-l-2 border-orange-500'
-                        )
-                      : 'text-white hover:bg-white/[0.04]'
-                  )}
-                >
-                  <CatIcon
-                    className={cn(
-                      'h-4 w-4 flex-shrink-0',
-                      isActive ? accent.iconColor : 'text-white'
-                    )}
-                  />
-                  {cat.name}
-                </button>
-              );
-            })}
-
-            <button
-              onClick={handleDealsToggle}
-              className={cn(
-                'w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium transition-all touch-manipulation text-left',
-                filters.dealsOnly
-                  ? 'bg-red-500/10 text-red-400 border-l-2 border-red-500'
-                  : 'text-white hover:bg-white/[0.04]'
-              )}
-            >
-              <Flame className="h-4 w-4 flex-shrink-0" />
-              Deals
-            </button>
-          </div>
-
-          {/* Sort */}
-          <div className="px-2">
-            <p className="text-xs font-semibold text-white uppercase tracking-wider mb-2">
-              Sort By
-            </p>
-            <SortDropdown sort={sort} onSortChange={setSort} />
-          </div>
-        </aside>
-
-        {/* ── Main Content ── */}
         <motion.main
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="flex-1 min-w-0 px-4 lg:px-0 lg:pr-6 py-4 space-y-5"
+          className="flex-1 min-w-0 px-4 lg:px-0 lg:pl-6 py-4 space-y-5"
         >
           {/* ── Product count + refresh ── */}
           <motion.div variants={itemVariants} className="flex items-center justify-between">
-            <p className="text-xs text-white">
+            <p className="text-[12px] text-white">
               {data?.total?.toLocaleString() || '...'} products from{' '}
               {(() => {
                 const liveCount = data?.facets?.suppliers?.length || 0;
@@ -417,10 +299,7 @@ export default function UnifiedMarketplace({
                 return supplierLabel;
               })()}
               {data?.lastUpdated && (
-                <span className="ml-2 inline-flex items-center gap-1">
-                  <Clock className="h-3 w-3 inline" />
-                  {formatLastUpdated(data.lastUpdated)}
-                </span>
+                <span className="ml-2">{formatLastUpdated(data.lastUpdated)}</span>
               )}
             </p>
             <Button
@@ -438,27 +317,22 @@ export default function UnifiedMarketplace({
           <motion.form
             variants={itemVariants}
             onSubmit={handleSearch}
-            className="flex gap-2 lg:hidden"
+            className="lg:hidden"
           >
+            {/* One field. The separate yellow "Search" button beside it was a
+                second control for what Enter and the keyboard's own search key
+                already do, and it took a third of the row on a phone. */}
             <div className="relative flex-1">
-              {!searchInput && (
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-              )}
-              <Input
+              <Search className="pointer-events-none absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
+              <input
                 type="search"
+                enterKeyHint="search"
                 placeholder={searchPlaceholder}
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
-                className={cn(
-                  'h-11 bg-white/[0.03] border-white/[0.08]',
-                  accent.border,
-                  !searchInput && 'pl-10'
-                )}
+                className={cn(inputCn, 'pl-7')}
               />
             </div>
-            <Button type="submit" className={cn('h-11 px-5 touch-manipulation', accent.button)}>
-              Search
-            </Button>
           </motion.form>
 
           {/* ── Price Drop Alerts ── */}
@@ -475,9 +349,12 @@ export default function UnifiedMarketplace({
             </motion.section>
           )}
 
-          {/* ── Coupon Codes (collapsible) ── */}
-          {data?.coupons && data.coupons.length > 0 && !query && (
-            <CouponSection coupons={data.coupons} />
+          {/* The comparison that no supplier's own site can offer. Materials
+              only — the parsing is cable-specific. */}
+          {productType === 'materials' && !query && (
+            <motion.div variants={itemVariants}>
+              <CableComparison />
+            </motion.div>
           )}
 
           {/* ── Deals Section ── */}
@@ -539,12 +416,9 @@ export default function UnifiedMarketplace({
                 onClick={handleDealsToggle}
                 className={cn(
                   'h-9 px-3.5 rounded-full border text-sm font-medium whitespace-nowrap touch-manipulation active:scale-[0.97] transition-all flex items-center gap-1.5',
-                  filters.dealsOnly
-                    ? 'bg-red-500 text-white border-red-500'
-                    : 'bg-white/[0.03] border-white/[0.08] text-white hover:border-red-500/50'
+                  filters.dealsOnly ? chipOn : chipOff
                 )}
               >
-                <Flame className="h-3.5 w-3.5" />
                 Deals
               </button>
 
@@ -583,8 +457,8 @@ export default function UnifiedMarketplace({
               variants={itemVariants}
               className="flex flex-col items-center justify-center py-12 text-center"
             >
-              <div className="p-3 bg-red-500/10 rounded-full mb-4">
-                <Icon className="h-8 w-8 text-red-400" />
+              <div className="p-3 bg-elec-yellow/10 rounded-full mb-4">
+                <Icon className="h-8 w-8 text-orange-300" />
               </div>
               <h3 className="text-lg font-semibold text-white mb-2">Unable to Load Products</h3>
               <p className="text-white mb-4 max-w-sm">
@@ -613,6 +487,83 @@ export default function UnifiedMarketplace({
             />
           </motion.div>
         </motion.main>
+
+        {/* ── Main Content ── */}
+        <aside className="hidden lg:block lg:w-[240px] xl:w-[280px] flex-shrink-0 sticky top-[64px] self-start py-4 pr-6">
+          {/* Search — desktop sidebar */}
+          <form onSubmit={handleSearch} className="mb-5">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
+              <Input
+                type="search"
+                placeholder="Search..."
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                className={cn(
+                  'h-10 pl-10 bg-white/[0.03] border-white/[0.08] text-sm',
+                  accent.border
+                )}
+              />
+            </div>
+          </form>
+
+          {/* Categories */}
+          <div className="space-y-1 mb-5">
+            <p className="text-xs font-semibold text-white uppercase tracking-wider mb-2 px-2">
+              Categories
+            </p>
+            {categories.map((cat) => {
+              const CatIcon = cat.icon || LayoutGrid;
+              const isActive =
+                activeCatSlug === cat.slug || (!activeCatSlug && cat.slug === undefined);
+              return (
+                <button
+                  key={cat.name}
+                  onClick={() => handleCategoryFilter(cat.slug)}
+                  className={cn(
+                    'w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium transition-all touch-manipulation text-left',
+                    isActive
+                      ? cn(
+                          'bg-white/[0.08] text-white',
+                          accent.chipActive.includes('yellow')
+                            ? 'border-l-2 border-yellow-500'
+                            : 'border-l-2 border-orange-500'
+                        )
+                      : 'text-white hover:bg-white/[0.04]'
+                  )}
+                >
+                  <CatIcon
+                    className={cn(
+                      'h-4 w-4 flex-shrink-0',
+                      isActive ? accent.iconColor : 'text-white'
+                    )}
+                  />
+                  {cat.name}
+                </button>
+              );
+            })}
+
+            <button
+              onClick={handleDealsToggle}
+              className={cn(
+                'w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium transition-all touch-manipulation text-left',
+                filters.dealsOnly
+                  ? 'bg-elec-yellow/[0.14] text-white'
+                  : 'text-white hover:bg-white/[0.04]'
+              )}
+            >
+              Deals
+            </button>
+          </div>
+
+          {/* Sort */}
+          <div className="px-2">
+            <p className="text-xs font-semibold text-white uppercase tracking-wider mb-2">
+              Sort By
+            </p>
+            <SortDropdown sort={sort} onSortChange={setSort} />
+          </div>
+        </aside>
       </div>
 
       {/* Save to List Bottom Sheet */}

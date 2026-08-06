@@ -8,6 +8,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { X } from 'lucide-react';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface SaveRoomSheetProps {
   open: boolean;
@@ -18,6 +19,7 @@ interface SaveRoomSheetProps {
 
 export const SaveRoomSheet = ({ open, onOpenChange, onSave, defaultName = '' }: SaveRoomSheetProps) => {
   const [name, setName] = useState(defaultName);
+  const haptic = useHaptic();
 
   useEffect(() => {
     if (open) {
@@ -27,17 +29,20 @@ export const SaveRoomSheet = ({ open, onOpenChange, onSave, defaultName = '' }: 
 
   const handleSave = () => {
     const trimmed = name.trim();
-    if (!trimmed) return;
+    if (!trimmed) {
+      haptic.warning();
+      return;
+    }
     onSave(trimmed);
     setName('');
   };
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[50vh] p-0 rounded-t-2xl overflow-hidden lg:left-0">
+      <SheetContent side="bottom" className="h-[85vh] lg:h-auto p-0 rounded-t-2xl overflow-hidden">
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
-          <SheetHeader className="flex flex-row items-center justify-between px-4 py-3 border-b border-white/10">
+          <SheetHeader className="flex flex-row items-center justify-between w-full max-w-lg mx-auto px-4 py-3 border-b border-white/10">
             <SheetTitle className="text-white text-base font-semibold">Save Room</SheetTitle>
             <button
               onClick={() => onOpenChange(false)}
@@ -48,16 +53,21 @@ export const SaveRoomSheet = ({ open, onOpenChange, onSave, defaultName = '' }: 
           </SheetHeader>
 
           {/* Body */}
-          <div className="flex-1 p-4 space-y-4">
+          <div className="flex-1 w-full max-w-lg mx-auto p-4 space-y-4">
             <div>
-              <label className="text-sm text-white font-medium mb-1.5 block">Room Name</label>
+              <label
+                htmlFor="save-room-name"
+                className="text-[12px] text-white font-medium mb-1 block"
+              >
+                Room name
+              </label>
               <Input
+                id="save-room-name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. Kitchen"
-                className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                className="input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base font-medium text-white placeholder:text-white/25 caret-elec-yellow transition-colors hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
                 autoFocus
-                aria-label="Room name"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') handleSave();
                 }}

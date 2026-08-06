@@ -21,13 +21,19 @@ import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
   CalculatorInput,
-  CalculatorSelect,
   CalculatorResult,
   ResultValue,
   ResultsGrid,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
 import { useToast } from '@/hooks/use-toast';
+import {
+  calculateSelfEmployedTax,
+  ratesFor,
+  CURRENT_TAX_YEAR,
+  TAX_YEAR_KEYS,
+  isRateTableStale,
+} from '@/data/uk-tax-rates';
 
 interface TaxInputs {
   annualIncome: number;
@@ -35,10 +41,12 @@ interface TaxInputs {
   capitalAllowances: number;
   pensionContributions: number;
   charitableDonations: number;
-  marriageAllowanceTransfer: boolean;
+  receivesMarriageAllowance: boolean;
+  transfersMarriageAllowance: boolean;
   vatRegistered: boolean;
   vatTurnover: number;
-  dividendIncome: number;
+  /** VAT-bearing purchases, excluding VAT — drives the input VAT you reclaim. */
+  vatPurchases: number;
 }
 
 const TaxNIEstimator = () => {
@@ -51,14 +59,16 @@ const TaxNIEstimator = () => {
     capitalAllowances: 0,
     pensionContributions: 0,
     charitableDonations: 0,
-    marriageAllowanceTransfer: false,
+    receivesMarriageAllowance: false,
+    transfersMarriageAllowance: false,
     vatRegistered: false,
     vatTurnover: 0,
-    dividendIncome: 0,
+    vatPurchases: 0,
   });
 
   const [calculated, setCalculated] = useState(false);
-  const [taxYear, setTaxYear] = useState<'2025/26' | '2024/25'>('2025/26');
+  const [taxYear, setTaxYear] = useState<string>(CURRENT_TAX_YEAR);
+  const rateTableStale = isRateTableStale();
 
   // UI state
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -89,10 +99,11 @@ const TaxNIEstimator = () => {
       capitalAllowances: 0,
       pensionContributions: 0,
       charitableDonations: 0,
-      marriageAllowanceTransfer: false,
+      receivesMarriageAllowance: false,
+      transfersMarriageAllowance: false,
       vatRegistered: false,
       vatTurnover: 0,
-      dividendIncome: 0,
+      vatPurchases: 0,
     });
     setCalculated(false);
     toast({
@@ -109,147 +120,88 @@ const TaxNIEstimator = () => {
       capitalAllowances: 3000,
       pensionContributions: 4000,
       charitableDonations: 500,
-      marriageAllowanceTransfer: false,
+      receivesMarriageAllowance: false,
+      transfersMarriageAllowance: false,
       vatRegistered: true,
       vatTurnover: 65000,
-      dividendIncome: 0,
+      vatPurchases: 18000,
     });
     setCalculated(false);
   };
 
-  // UK Tax rates and thresholds
-  const getRates = (year: '2025/26' | '2024/25') => {
-    if (year === '2025/26') {
-      return {
-        personalAllowance: 12570,
-        basicRateThreshold: 37700,
-        higherRateThreshold: 125140,
-        basicRate: 0.2,
-        higherRate: 0.4,
-        additionalRate: 0.45,
-        class2WeeklyRate: 0,
-        class2SPT: 6725,
-        class4LowerRate: 0.06,
-        class4HigherRate: 0.02,
-        class4LowerProfitsLimit: 12570,
-        class4UpperProfitsLimit: 50270,
-        marriageAllowance: 1260,
-        vatThreshold: 90000,
-        vatRate: 0.2,
-      };
-    }
-    return {
-      personalAllowance: 12570,
-      basicRateThreshold: 37700,
-      higherRateThreshold: 125140,
-      basicRate: 0.2,
-      higherRate: 0.4,
-      additionalRate: 0.45,
-      class2WeeklyRate: 3.45,
-      class2SPT: 6725,
-      class4LowerRate: 0.06,
-      class4HigherRate: 0.02,
-      class4LowerProfitsLimit: 12570,
-      class4UpperProfitsLimit: 50270,
-      marriageAllowance: 1260,
-      vatThreshold: 90000,
-      vatRate: 0.2,
-    };
-  };
-
-  const TAX_RATES = getRates(taxYear);
+  // Rates and the maths both come from the single source of truth in
+  // src/data/uk-tax-rates.ts. Nothing tax-related is computed inline here.
+  const TAX_RATES = ratesFor(taxYear);
 
   const calculateEstimates = () => {
-    if (!calculated)
+    const grossProfit = Math.max(
+      0,
+      inputs.annualIncome - inputs.businessExpenses - inputs.capitalAllowances
+    );
+
+    if (!calculated) {
       return {
         taxableIncome: 0,
+        personalAllowance: TAX_RATES.personalAllowance,
         incomeTax: 0,
         nationalInsurance: 0,
+        class2: 0,
+        class4: 0,
         totalTaxNI: 0,
         netIncome: 0,
         effectiveRate: 0,
-        vat: 0,
-        totalLiabilities: 0,
+        marginalRate: 0,
+        notes: [] as string[],
+        outputVat: 0,
+        inputVat: 0,
+        netVat: 0,
         monthlyTaxNI: 0,
         quarterlyTaxNI: 0,
         grossProfit: 0,
       };
-
-    const grossProfit = inputs.annualIncome - inputs.businessExpenses - inputs.capitalAllowances;
-    let personalAllowance = TAX_RATES.personalAllowance;
-
-    if (grossProfit > 100000) {
-      const reduction = Math.min(personalAllowance, (grossProfit - 100000) / 2);
-      personalAllowance -= reduction;
     }
 
-    if (inputs.marriageAllowanceTransfer) {
-      personalAllowance += TAX_RATES.marriageAllowance;
-    }
+    // VAT is deliberately kept OUT of the tax total — it is collected from
+    // customers for HMRC, not a cost to the business. See the VAT panel below.
+    const outputVat =
+      inputs.vatRegistered && inputs.vatTurnover > 0
+        ? inputs.vatTurnover * TAX_RATES.vatStandardRate
+        : 0;
+    const inputVat =
+      inputs.vatRegistered && inputs.vatPurchases > 0
+        ? inputs.vatPurchases * TAX_RATES.vatStandardRate
+        : 0;
+    const netVat = outputVat - inputVat;
 
-    const taxableIncome = Math.max(
-      0,
-      grossProfit - personalAllowance - inputs.pensionContributions - inputs.charitableDonations
+    const result = calculateSelfEmployedTax(
+      {
+        profit: grossProfit,
+        grossPensionContributions: inputs.pensionContributions,
+        grossGiftAid: inputs.charitableDonations,
+        receivesMarriageAllowance: inputs.receivesMarriageAllowance,
+        transfersMarriageAllowance: inputs.transfersMarriageAllowance,
+      },
+      taxYear
     );
 
-    let incomeTax = 0;
-    if (taxableIncome > 0) {
-      if (taxableIncome <= TAX_RATES.basicRateThreshold) {
-        incomeTax = taxableIncome * TAX_RATES.basicRate;
-      } else if (taxableIncome <= TAX_RATES.higherRateThreshold) {
-        incomeTax =
-          TAX_RATES.basicRateThreshold * TAX_RATES.basicRate +
-          (taxableIncome - TAX_RATES.basicRateThreshold) * TAX_RATES.higherRate;
-      } else {
-        incomeTax =
-          TAX_RATES.basicRateThreshold * TAX_RATES.basicRate +
-          (TAX_RATES.higherRateThreshold - TAX_RATES.basicRateThreshold) * TAX_RATES.higherRate +
-          (taxableIncome - TAX_RATES.higherRateThreshold) * TAX_RATES.additionalRate;
-      }
-    }
-
-    let nationalInsurance = 0;
-    if (TAX_RATES.class2WeeklyRate > 0 && grossProfit >= TAX_RATES.class2SPT) {
-      nationalInsurance += TAX_RATES.class2WeeklyRate * 52;
-    }
-
-    if (grossProfit > TAX_RATES.class4LowerProfitsLimit) {
-      const class4AtLowerBand = Math.max(
-        0,
-        Math.min(grossProfit, TAX_RATES.class4UpperProfitsLimit) - TAX_RATES.class4LowerProfitsLimit
-      );
-      nationalInsurance += class4AtLowerBand * TAX_RATES.class4LowerRate;
-
-      if (grossProfit > TAX_RATES.class4UpperProfitsLimit) {
-        nationalInsurance +=
-          (grossProfit - TAX_RATES.class4UpperProfitsLimit) * TAX_RATES.class4HigherRate;
-      }
-    }
-
-    let vat = 0;
-    if (inputs.vatRegistered && inputs.vatTurnover > 0) {
-      vat = inputs.vatTurnover * TAX_RATES.vatRate;
-    }
-
-    const totalTaxNI = incomeTax + nationalInsurance;
-    const totalLiabilities = totalTaxNI + vat;
-    const netIncome = grossProfit - totalTaxNI;
-    const effectiveRate = grossProfit > 0 ? (totalTaxNI / grossProfit) * 100 : 0;
-    const monthlyTaxNI = totalTaxNI / 12;
-    const quarterlyTaxNI = totalTaxNI / 4;
-
     return {
-      taxableIncome,
-      incomeTax,
-      nationalInsurance,
-      totalTaxNI,
-      netIncome,
-      effectiveRate,
-      vat,
-      totalLiabilities,
-      monthlyTaxNI,
-      quarterlyTaxNI,
-      grossProfit,
+      taxableIncome: result.taxableIncome,
+      personalAllowance: result.personalAllowance,
+      incomeTax: result.incomeTax,
+      nationalInsurance: result.nationalInsurance,
+      class2: result.class2,
+      class4: result.class4,
+      totalTaxNI: result.totalTaxAndNI,
+      netIncome: result.takeHome,
+      effectiveRate: result.effectiveRate,
+      marginalRate: result.marginalRate,
+      notes: result.notes,
+      outputVat,
+      inputVat,
+      netVat,
+      monthlyTaxNI: result.totalTaxAndNI / 12,
+      quarterlyTaxNI: result.totalTaxAndNI / 4,
+      grossProfit: result.profit,
     };
   };
 
@@ -276,7 +228,7 @@ const TaxNIEstimator = () => {
       label: 'High',
       color: 'text-red-400',
       bg: 'bg-red-500/10 border-red-500/30',
-      message: 'Seek professional advice for tax optimization',
+      message: 'Seek professional advice for tax optimisation',
     };
   };
 
@@ -295,10 +247,10 @@ const TaxNIEstimator = () => {
   return (
     <div className="bg-gradient-to-b from-background via-background to-background">
       <Helmet>
-        <title>UK Tax & NI Estimator for Electricians | 2025/26</title>
+        <title>UK Tax &amp; NI Estimator for Electricians | {taxYear}</title>
         <meta
           name="description"
-          content="Estimate UK Income Tax, National Insurance and VAT impacts for electricians."
+          content="Estimate Income Tax, National Insurance and your net VAT position for self-employed electricians in England, Wales and Northern Ireland."
         />
       </Helmet>
 
@@ -328,15 +280,35 @@ const TaxNIEstimator = () => {
           <SmartBackButton />
         </header>
 
+        {/* Rate table has fallen behind the live tax year */}
+        {rateTableStale && (
+          <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="h-5 w-5 text-red-400 mt-0.5" />
+              <div>
+                <span className="text-red-300 font-medium">Rates may be out of date</span>
+                <p className="text-sm text-red-200 mt-1">
+                  We do not yet hold rates for the current tax year ({CURRENT_TAX_YEAR}), so the
+                  newest figures shown are from an earlier year. Check the current HMRC rates before
+                  relying on these numbers.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Important Notice */}
         <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30">
           <div className="flex items-start gap-3">
             <AlertCircle className="h-5 w-5 text-amber-400 mt-0.5" />
             <div>
               <span className="text-amber-300 font-medium">Important Notice</span>
-              <p className="text-sm text-amber-200/80 mt-1">
-                This calculator uses {taxYear} UK rates. Always consult a qualified accountant for
-                accurate tax advice and compliance.
+              <p className="text-sm text-amber-200 mt-1">
+                This calculator uses {taxYear} rates for a self-employed sole trader in{' '}
+                <strong>England, Wales and Northern Ireland only</strong>. Scottish income tax has
+                different rates and bands and is not modelled here — if you are a Scottish taxpayer
+                the income tax figure will be wrong. National Insurance and VAT are the same UK-wide.
+                Always consult a qualified accountant for accurate tax advice and compliance.
               </p>
             </div>
           </div>
@@ -355,42 +327,28 @@ const TaxNIEstimator = () => {
           </div>
 
           <div className="flex gap-2 mb-4">
-            <button
-              onClick={() => setTaxYear('2025/26')}
-              className={cn(
-                'flex-1 h-12 rounded-xl font-medium text-sm transition-all',
-                taxYear === '2025/26'
-                  ? 'text-black'
-                  : 'bg-white/5 border border-white/10 text-white'
-              )}
-              style={
-                taxYear === '2025/26'
-                  ? {
-                      background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }
-                  : undefined
-              }
-            >
-              2025/26
-            </button>
-            <button
-              onClick={() => setTaxYear('2024/25')}
-              className={cn(
-                'flex-1 h-12 rounded-xl font-medium text-sm transition-all',
-                taxYear === '2024/25'
-                  ? 'text-black'
-                  : 'bg-white/5 border border-white/10 text-white'
-              )}
-              style={
-                taxYear === '2024/25'
-                  ? {
-                      background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
-                    }
-                  : undefined
-              }
-            >
-              2024/25
-            </button>
+            {TAX_YEAR_KEYS.map((year) => (
+              <button
+                key={year}
+                onClick={() => {
+                  setTaxYear(year);
+                  setCalculated(false);
+                }}
+                className={cn(
+                  'flex-1 h-12 rounded-xl font-medium text-sm transition-all touch-manipulation',
+                  taxYear === year ? 'text-black' : 'bg-white/5 border border-white/10 text-white'
+                )}
+                style={
+                  taxYear === year
+                    ? {
+                        background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                      }
+                    : undefined
+                }
+              >
+                {year}
+              </button>
+            ))}
           </div>
 
           {/* Business Income */}
@@ -459,6 +417,7 @@ const TaxNIEstimator = () => {
                   value={inputs.pensionContributions || ''}
                   onChange={(val) => updateInput('pensionContributions', parseFloat(val) || 0)}
                   placeholder="e.g., 4000"
+                  hint="Gross, including basic-rate relief. Widens your basic-rate band."
                 />
 
                 <CalculatorInput
@@ -469,6 +428,7 @@ const TaxNIEstimator = () => {
                   value={inputs.charitableDonations || ''}
                   onChange={(val) => updateInput('charitableDonations', parseFloat(val) || 0)}
                   placeholder="e.g., 500"
+                  hint="Gross Gift Aid. Also widens the basic-rate band."
                 />
               </div>
 
@@ -504,30 +464,74 @@ const TaxNIEstimator = () => {
                 </div>
 
                 {inputs.vatRegistered && (
-                  <CalculatorInput
-                    label="VAT Taxable Turnover"
-                    unit="£"
-                    type="text"
-                    inputMode="decimal"
-                    value={inputs.vatTurnover || ''}
-                    onChange={(val) => updateInput('vatTurnover', parseFloat(val) || 0)}
-                    placeholder="e.g., 65000"
-                    hint="Annual VAT taxable sales"
-                  />
+                  <div className="space-y-3">
+                    <CalculatorInput
+                      label="VAT Taxable Turnover"
+                      unit="£"
+                      type="text"
+                      inputMode="decimal"
+                      value={inputs.vatTurnover || ''}
+                      onChange={(val) => updateInput('vatTurnover', parseFloat(val) || 0)}
+                      placeholder="e.g., 65000"
+                      hint="Annual VAT taxable sales, excluding VAT"
+                    />
+
+                    <CalculatorInput
+                      label="VAT-bearing Purchases"
+                      unit="£"
+                      type="text"
+                      inputMode="decimal"
+                      value={inputs.vatPurchases || ''}
+                      onChange={(val) => updateInput('vatPurchases', parseFloat(val) || 0)}
+                      placeholder="e.g., 18000"
+                      hint="Materials, fuel and other standard-rated costs, excluding VAT. The VAT on these is reclaimable."
+                    />
+
+                    <p className="text-xs text-white">
+                      VAT is charged to your customers and passed on to HMRC. It is not a cost to
+                      your business, so it is shown separately and is never added to your Tax &amp;
+                      NI total.
+                    </p>
+                  </div>
                 )}
               </div>
 
-              <div className="pt-3 border-t border-white/10">
+              <div className="pt-3 border-t border-white/10 space-y-2">
+                <span className="text-sm font-medium text-white">Marriage Allowance</span>
                 <label className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 active:bg-white/15 transition-all touch-manipulation">
                   <input
                     type="checkbox"
-                    checked={inputs.marriageAllowanceTransfer}
-                    onChange={(e) => updateInput('marriageAllowanceTransfer', e.target.checked)}
+                    checked={inputs.receivesMarriageAllowance}
+                    onChange={(e) => {
+                      updateInput('receivesMarriageAllowance', e.target.checked);
+                      if (e.target.checked) updateInput('transfersMarriageAllowance', false);
+                    }}
                     className="h-4 w-4 rounded border-white/20 bg-white/10 text-blue-500 focus:ring-blue-500/50"
                   />
                   <div>
-                    <span className="text-sm text-white">Marriage Allowance</span>
-                    <p className="text-xs text-white">Receiving unused allowance from spouse</p>
+                    <span className="text-sm text-white">Receiving from my spouse</span>
+                    <p className="text-xs text-white">
+                      Worth £{(TAX_RATES.marriageAllowance * TAX_RATES.basicRate).toFixed(0)} off
+                      your tax bill. Basic-rate taxpayers only.
+                    </p>
+                  </div>
+                </label>
+                <label className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 active:bg-white/15 transition-all touch-manipulation">
+                  <input
+                    type="checkbox"
+                    checked={inputs.transfersMarriageAllowance}
+                    onChange={(e) => {
+                      updateInput('transfersMarriageAllowance', e.target.checked);
+                      if (e.target.checked) updateInput('receivesMarriageAllowance', false);
+                    }}
+                    className="h-4 w-4 rounded border-white/20 bg-white/10 text-blue-500 focus:ring-blue-500/50"
+                  />
+                  <div>
+                    <span className="text-sm text-white">Transferring to my spouse</span>
+                    <p className="text-xs text-white">
+                      Cuts your personal allowance by £
+                      {TAX_RATES.marriageAllowance.toLocaleString('en-GB')}.
+                    </p>
                   </div>
                 </label>
               </div>
@@ -657,22 +661,56 @@ const TaxNIEstimator = () => {
                 </div>
               </div>
 
-              {/* VAT if registered */}
-              {inputs.vatRegistered && estimates.vat > 0 && (
+              {/* VAT — shown separately, never inside the Tax & NI total */}
+              {inputs.vatRegistered && (estimates.outputVat > 0 || estimates.inputVat > 0) && (
                 <div className="pt-4 mt-4 border-t border-white/10">
-                  <p className="text-xs text-white mb-3">VAT Liability</p>
-                  <div className="grid grid-cols-2 gap-3 text-center">
+                  <p className="text-xs text-white mb-1">
+                    VAT — collected on behalf of HMRC, not a cost to you
+                  </p>
+                  <p className="text-xs text-white mb-3">
+                    Excluded from the Tax &amp; NI figure above. You charge output VAT to customers,
+                    reclaim input VAT on purchases, and pay HMRC the difference.
+                  </p>
+                  <div className="grid grid-cols-3 gap-3 text-center">
                     <div>
-                      <div className="text-xs text-purple-400 mb-1">Annual VAT</div>
-                      <div className="text-white font-medium">{formatCurrency(estimates.vat)}</div>
+                      <div className="text-xs text-purple-400 mb-1">Output VAT charged</div>
+                      <div className="text-white font-medium">
+                        {formatCurrency(estimates.outputVat)}
+                      </div>
                     </div>
                     <div>
-                      <div className="text-xs text-purple-400 mb-1">Quarterly VAT</div>
+                      <div className="text-xs text-purple-400 mb-1">Input VAT reclaimed</div>
                       <div className="text-white font-medium">
-                        {formatCurrency(estimates.vat / 4)}
+                        -{formatCurrency(estimates.inputVat)}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-xs text-purple-400 mb-1">
+                        {estimates.netVat < 0 ? 'Net reclaim from HMRC' : 'Net VAT payable'}
+                      </div>
+                      <div className="text-white font-medium">
+                        {formatCurrency(Math.abs(estimates.netVat))}
                       </div>
                     </div>
                   </div>
+                  <p className="text-xs text-white mt-3 text-center">
+                    Roughly {formatCurrency(Math.abs(estimates.netVat) / 4)} per quarterly return
+                    {estimates.netVat < 0 ? ' repaid to you' : ''}.
+                  </p>
+                </div>
+              )}
+
+              {/* Notes the engine raised about this particular calculation */}
+              {estimates.notes.length > 0 && (
+                <div className="pt-4 mt-4 border-t border-white/10">
+                  <p className="text-xs text-white mb-2">Worth knowing</p>
+                  <ul className="space-y-1">
+                    {estimates.notes.map((note) => (
+                      <li key={note} className="text-xs text-white">
+                        • {note}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
             </CalculatorResult>
@@ -720,19 +758,42 @@ const TaxNIEstimator = () => {
                     <div className="flex justify-between text-white">
                       <span>Personal Allowance:</span>
                       <span className="text-green-400">
-                        -{formatCurrency(TAX_RATES.personalAllowance)}
-                      </span>
-                    </div>
-                    <div className="flex justify-between text-white">
-                      <span>Pension & Donations:</span>
-                      <span className="text-green-400">
-                        -{formatCurrency(inputs.pensionContributions + inputs.charitableDonations)}
+                        -{formatCurrency(estimates.personalAllowance)}
                       </span>
                     </div>
                     <div className="flex justify-between pt-2 border-t border-white/10 font-medium">
                       <span className="text-white">Taxable Income:</span>
                       <span className="text-blue-400">
                         {formatCurrency(estimates.taxableIncome)}
+                      </span>
+                    </div>
+                    {inputs.pensionContributions + inputs.charitableDonations > 0 && (
+                      <div className="flex justify-between text-white">
+                        <span>Basic-rate band widened by:</span>
+                        <span className="text-green-400">
+                          +
+                          {formatCurrency(
+                            inputs.pensionContributions + inputs.charitableDonations
+                          )}
+                        </span>
+                      </div>
+                    )}
+                    <div className="flex justify-between pt-2 border-t border-white/10 text-white">
+                      <span>Income Tax:</span>
+                      <span className="text-white">{formatCurrency(estimates.incomeTax)}</span>
+                    </div>
+                    <div className="flex justify-between text-white">
+                      <span>Class 4 NI:</span>
+                      <span className="text-white">{formatCurrency(estimates.class4)}</span>
+                    </div>
+                    <div className="flex justify-between text-white">
+                      <span>Class 2 NI:</span>
+                      <span className="text-white">{formatCurrency(estimates.class2)}</span>
+                    </div>
+                    <div className="flex justify-between text-white">
+                      <span>Marginal rate on the next £1:</span>
+                      <span className="text-blue-400">
+                        {estimates.marginalRate.toFixed(0)}%
                       </span>
                     </div>
                   </div>
@@ -764,41 +825,60 @@ const TaxNIEstimator = () => {
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div className="space-y-1">
                   <p className="text-amber-300 font-medium">Income Tax Bands</p>
-                  <p className="text-amber-200/70">
-                    Personal: £{TAX_RATES.personalAllowance.toLocaleString()}
+                  <p className="text-amber-200">
+                    Personal allowance: £{TAX_RATES.personalAllowance.toLocaleString('en-GB')}
                   </p>
-                  <p className="text-amber-200/70">
-                    Basic (20%): £0-{TAX_RATES.basicRateThreshold.toLocaleString()}
+                  <p className="text-amber-200">
+                    Basic ({(TAX_RATES.basicRate * 100).toFixed(0)}%): first £
+                    {TAX_RATES.basicRateBand.toLocaleString('en-GB')} of taxable income
                   </p>
-                  <p className="text-amber-200/70">
-                    Higher (40%): £{TAX_RATES.basicRateThreshold.toLocaleString()}+
+                  <p className="text-amber-200">
+                    Higher ({(TAX_RATES.higherRate * 100).toFixed(0)}%): above that, to £
+                    {TAX_RATES.additionalRateThreshold.toLocaleString('en-GB')}
+                  </p>
+                  <p className="text-amber-200">
+                    Additional ({(TAX_RATES.additionalRate * 100).toFixed(0)}%): above £
+                    {TAX_RATES.additionalRateThreshold.toLocaleString('en-GB')}
                   </p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-amber-300 font-medium">National Insurance</p>
-                  <p className="text-amber-200/70">
-                    Class 4: {(TAX_RATES.class4LowerRate * 100).toFixed(0)}% (£
-                    {TAX_RATES.class4LowerProfitsLimit.toLocaleString()}-
-                    {TAX_RATES.class4UpperProfitsLimit.toLocaleString()})
+                  <p className="text-amber-200">
+                    Class 4: {(TAX_RATES.class4MainRate * 100).toFixed(0)}% (£
+                    {TAX_RATES.class4LowerProfitsLimit.toLocaleString('en-GB')}–
+                    {TAX_RATES.class4UpperProfitsLimit.toLocaleString('en-GB')})
                   </p>
-                  <p className="text-amber-200/70">
-                    Above £{TAX_RATES.class4UpperProfitsLimit.toLocaleString()}:{' '}
-                    {(TAX_RATES.class4HigherRate * 100).toFixed(0)}%
+                  <p className="text-amber-200">
+                    Above £{TAX_RATES.class4UpperProfitsLimit.toLocaleString('en-GB')}:{' '}
+                    {(TAX_RATES.class4AdditionalRate * 100).toFixed(0)}%
+                  </p>
+                  <p className="text-amber-200">
+                    Class 2: not payable above the £
+                    {TAX_RATES.smallProfitsThreshold.toLocaleString('en-GB')} Small Profits
+                    Threshold; voluntary below it at £
+                    {TAX_RATES.class2VoluntaryWeeklyRate.toFixed(2)}/week
                   </p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-amber-300 font-medium">VAT</p>
-                  <p className="text-amber-200/70">
-                    Threshold: £{TAX_RATES.vatThreshold.toLocaleString()}
+                  <p className="text-amber-200">
+                    Registration threshold: £
+                    {TAX_RATES.vatRegistrationThreshold.toLocaleString('en-GB')}
                   </p>
-                  <p className="text-amber-200/70">Standard Rate: 20%</p>
+                  <p className="text-amber-200">
+                    Standard rate: {(TAX_RATES.vatStandardRate * 100).toFixed(0)}%
+                  </p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-amber-300 font-medium">Payment Dates</p>
-                  <p className="text-amber-200/70">31st January</p>
-                  <p className="text-amber-200/70">31st July (on account)</p>
+                  <p className="text-amber-200">31st January</p>
+                  <p className="text-amber-200">31st July (on account)</p>
                 </div>
               </div>
+              <p className="text-xs text-amber-200 mt-3">
+                England, Wales and Northern Ireland. Source: {TAX_RATES.source} — checked{' '}
+                {TAX_RATES.verifiedOn}.
+              </p>
             </CollapsibleContent>
           </div>
         </Collapsible>

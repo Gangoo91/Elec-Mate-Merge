@@ -6,7 +6,6 @@ import {
   getSoilTemperatureFactor,
 } from '@/lib/calculators/bs7671-data/temperatureFactors';
 import {
-  getInstallationMethodFactor,
   getInstallationMethodCode,
   getInstallationMethodTableRef,
   isUndergroundMethod,
@@ -18,13 +17,15 @@ import {
   getDepthOfLayingFactor,
 } from '@/lib/calculators/bs7671-data/soilAndBurialFactors';
 import {
-  getCableCapacity,
-  getNextCableSize,
   CableType,
   cableCapacityData,
   getThermalInsulationCapacity,
-  flatTwinEarthThermalCapacities,
 } from '@/lib/calculators/bs7671-data/cableCapacities';
+import {
+  capacityTables,
+  CableTypeKey,
+} from '@/lib/calculators/bs7671-data/appendix4CurrentCapacity';
+import { DeviceType, ratingsByDevice } from './useProtectiveDeviceCheck';
 
 export type { CableType };
 import { getVoltageDropValue } from '@/lib/calculators/bs7671-data/voltageDropTables';
@@ -46,6 +47,12 @@ export interface CableSizingInputs {
   // Underground installation factors
   soilResistivity?: string;
   burialDepth?: string;
+  // Protective device — BS 7671 App 4 §5.1.1 sizes the cable on the rated
+  // current In of the protective device, not on Ib, and the semi-enclosed-fuse
+  // rating factor Cf depends on the device type. Both must therefore be inputs.
+  deviceType?: DeviceType;
+  /** 'auto' = smallest standard rating >= Ib, otherwise a rating in amperes */
+  deviceRating?: string;
 }
 
 export interface CableSizingErrors {
@@ -53,11 +60,13 @@ export interface CableSizingErrors {
 }
 
 export interface DeratingFactors {
-  Ca: number; // Ambient/Soil temperature factor
-  Cg: number; // Grouping factor
-  Ci: number; // Installation method factor
-  Cs: number; // Soil thermal resistivity factor
-  Cd: number; // Depth of laying factor
+  Ca: number; // Ambient/soil temperature factor — Table 4B1 / 4B2
+  Cg: number; // Grouping factor — Table 4C1
+  Ci: number; // Thermal insulation factor — App 4 §2.6
+  Cs: number; // Soil thermal resistivity factor — Table 4B3
+  Cd: number; // Depth of laying factor — Table 4B4
+  Cf: number; // Semi-enclosed fuse (BS 3036) factor — App 4 §5.1.1(c)(i)
+  Cc: number; // Buried / in-duct factor — App 4 §5.1.1(c)(ii)
   total: number;
   referenceMethod: string;
   tableRef: string;
@@ -83,36 +92,46 @@ export interface CableSizingResult {
   validation?: ValidationResult;
   deratingFactors?: DeratingFactors;
   nextCableSizeUp?: { size: number; capacity: number };
+  /** Rated current In of the protective device the cable was sized on (A) */
+  deviceRating?: number;
 }
 
-// Map cable type to BS 7671 table reference
-const getCableTableReference = (cableType: CableType): string => {
-  const tableRefs: Record<CableType, string> = {
-    'pvc-single': '4D1A',
-    'xlpe-single': '4D2A',
-    'pvc-twin-earth': '4D4A',
-    'xlpe-twin-earth': '4D4B',
-    swa: '4D4A',
-    'swa-single-core': '4D3A',
-    micc: '4E1A',
-    'aluminium-xlpe': '4J2A',
-  };
-  return tableRefs[cableType] || '4D1A';
+// Which verified Appendix 4 table actually supplies this cable type's numbers.
+// cableCapacityData is projected from exactly these tables (see
+// cableCapacities.ts), so the citation and the Table 4B1 ambient column are both
+// read from here rather than re-typed — that is how they drifted apart before.
+//
+// 90 °C flat T&E is deliberately sized on the 70 °C Table 4D5 columns
+// (accessories limit the conductor to 70 °C in practice), so it maps to
+// 'twin-earth' and therefore correctly picks up the 70 °C Table 4B1 column.
+const APPENDIX4_KEY: Partial<Record<CableType, CableTypeKey>> = {
+  'pvc-single': 'pvc-single',
+  'xlpe-single': 'xlpe-single',
+  'pvc-twin-earth': 'twin-earth',
+  'xlpe-twin-earth': 'twin-earth',
+  swa: 'swa-pvc',
+  micc: 'mineral-light',
 };
 
-// Map cable type to voltage drop table
-const getVoltageDropTableRef = (cableType: CableType): string => {
-  const tableRefs: Record<CableType, string> = {
-    'pvc-single': '4D1B',
-    'xlpe-single': '4D2B',
-    'pvc-twin-earth': '4D2B',
-    'xlpe-twin-earth': '4D2B',
-    swa: '4D4B',
-    'swa-single-core': '4D3B',
-    micc: '4E1B',
-    'aluminium-xlpe': '4J2B',
-  };
-  return tableRefs[cableType] || '4D1B';
+// 🔴 This replaces a hand-typed table map that cited 4D4A for flat twin & earth
+// (it is Table 4D5), 4D2A — a 70 °C thermoplastic MULTICORE table — for XLPE
+// single-core (it is 4E1A), 4E1A for mineral-insulated cable (it is 4G1A), and
+// the VOLTAGE-DROP table 4D4B as the source of a current-carrying capacity.
+// Verified against the printed Appendix 4 table index.
+const getCableTableReference = (cableType: CableType): string => {
+  const key = APPENDIX4_KEY[cableType];
+  return (key && capacityTables[key]?.sourceTable) || 'BS 7671 Appendix 4';
+};
+
+// 🔴 Table 4B1 has separate columns per insulation, INCLUDING a dedicated
+// mineral column. The ambient factor must come from the column matching the
+// insulation of the tabulated capacity actually used (App 4 §2.1). The old code
+// derived it from the string 'xlpe' in the cable-type key, which gave the 90 °C
+// column to XLPE twin & earth (sized on the 70 °C Table 4D5 columns) and the
+// general 70 °C thermoplastic column to MICC.
+const getAmbientInsulation = (cableType: CableType): '70C' | '90C' | '70C-mineral' => {
+  const key = APPENDIX4_KEY[cableType];
+  return (key && capacityTables[key]?.insulation) || '70C';
 };
 
 export const useCableSizing = () => {
@@ -126,6 +145,12 @@ export const useCableSizing = () => {
     cores: '2',
     soilResistivity: '2.5',
     burialDepth: '0.7',
+    // Power factor was displayed as 0.9 by the form but read as 1.0 by the
+    // calculation because it was never initialised. Seeded here so the value
+    // shown is the value used.
+    powerFactor: '1.0',
+    deviceType: 'mcb-b',
+    deviceRating: 'auto',
   });
 
   // UI state for dropdowns to display selected values correctly
@@ -294,6 +319,19 @@ export const useCableSizing = () => {
 
     // Standard cables use A1, A2, B, C, E, F, G
     // Map B1/B2 to B for trunking methods
+    //
+    // 🔴 D, D1 and D2 used to map to 'C' here, silently substituting the
+    // Method C (clipped direct, in air) capacity column for a buried cable and
+    // then applying the ground-temperature, soil-resistivity and depth factors
+    // on top of an air-based value. Appendix 4 tabulates each buried Reference
+    // Method in its OWN column, and only the armoured multicore tables have one
+    // (flat T&E, Table 4D5, has no buried column at all). Underground runs on
+    // non-armoured types are now rejected in calculateCableSize() instead of
+    // being answered with the wrong column.
+    //
+    // Installation Methods 100-103 likewise have their own Table 4D5 columns
+    // (handled by getThermalInsulationCapacity); they no longer fall back to the
+    // Method A1 column, which is a different installation entirely.
     const standardMethodMap: Record<string, string> = {
       A: 'A1',
       A1: 'A1',
@@ -302,16 +340,9 @@ export const useCableSizing = () => {
       B1: 'B', // Trunking on wall
       B2: 'B', // Trunking flush
       C: 'C',
-      D: 'C', // Underground - use C as reference for non-SWA
-      D1: 'C',
-      D2: 'C',
       E: 'E',
       F: 'F',
       G: 'G',
-      '100': 'A1',
-      '101': 'A1',
-      '102': 'A1',
-      '103': 'A1',
     };
 
     const mappedMethod = standardMethodMap[referenceMethod] || 'C';
@@ -336,35 +367,95 @@ export const useCableSizing = () => {
     const soilResistivity = parseFloat(inputs.soilResistivity || '2.5');
     const burialDepth = parseFloat(inputs.burialDepth || '0.7');
 
-    // Apply diversity factor to design current
+    // Diversity is part of assessing the design current Ib (Reg 311.1); the
+    // protective device is then chosen so that Ib <= In (Reg 433.1.1(a)).
     const effectiveDesignCurrent = designCurrent * diversityFactor;
-
-    // Calculate maximum allowable voltage drop in volts
-    const maxVoltageDrop = (maxVoltageDropPercentage / 100) * supplyVoltage;
 
     // Get installation method details
     const installationMethod = uiSelections.installationMethodUI;
     const isUnderground = isUndergroundMethod(installationMethod);
     const isDomesticInsulation = isDomesticInsulationMethod(installationMethod);
+    // The D1/D2 reversal this used to work around has been fixed at source in
+    // cableRunToReferenceMethod, so the local override is gone. An unknown key
+    // now yields null rather than silently resolving to Method C.
     const referenceMethod = getReferenceMethod(installationMethod);
     const tableRef = getInstallationMethodTableRef(installationMethod);
 
-    // Determine temperature rating based on cable type
-    const cableRating = cableType.includes('xlpe') ? '90C' : '70C';
+    // 🔴 Appendix 4 tabulates buried Reference Methods D1/D2 only for armoured
+    // cables; the non-armoured and flat T&E tables have no buried column. The
+    // calculator used to substitute the Method C (in air) column and derate it,
+    // producing an authoritative-looking answer with no basis in the standard.
+    if (isUnderground && cableType !== 'swa') {
+      setResult({
+        recommendedCable: null,
+        alternativeCables: [],
+        errors: {
+          general:
+            'BS 7671 Appendix 4 tabulates the buried Reference Methods (D1 in ducting, D2 direct in the ground) only for armoured cables. Select SWA Multicore Armoured for an underground run, or choose an above-ground installation method.',
+        },
+      });
+      return;
+    }
+
+    // Installation Methods 100-103 are flat twin & earth columns of Table 4D5.
+    if (
+      isDomesticInsulation &&
+      cableType !== 'pvc-twin-earth' &&
+      cableType !== 'xlpe-twin-earth'
+    ) {
+      setResult({
+        recommendedCable: null,
+        alternativeCables: [],
+        errors: {
+          general:
+            'BS 7671 Installation Methods 100-103 (cable in or above thermal insulation) are tabulated for flat twin & earth only. Select Flat Twin & Earth, or choose a different installation method.',
+        },
+      });
+      return;
+    }
+
+    // Protective device — BS 7671 App 4 §5.1.1 sizes the cable on the rated
+    // current In of the protective device, not on Ib. Reg 433.1.1 requires
+    // Ib <= In <= Iz, so sizing on Ib alone skips the device step entirely and
+    // lets a 32 A breaker sit on a cable chosen for a 25 A load.
+    const deviceType: DeviceType = inputs.deviceType || 'mcb-b';
+    const standardRatings = ratingsByDevice[deviceType] ?? ratingsByDevice['mcb-b'];
+    const requestedRating = parseFloat(inputs.deviceRating || '');
+    const deviceRating =
+      Number.isFinite(requestedRating) && requestedRating > 0
+        ? requestedRating
+        : (standardRatings.find((r) => r >= effectiveDesignCurrent) ??
+          standardRatings[standardRatings.length - 1]);
+
+    // Calculate maximum allowable voltage drop in volts
+    const maxVoltageDrop = (maxVoltageDropPercentage / 100) * supplyVoltage;
+
+    // Table 4B1 column matching the insulation of the tabulated capacity used.
+    const ambientInsulation = getAmbientInsulation(cableType);
 
     // Calculate all BS 7671 Appendix 4 correction factors
     // Ca - Temperature factor (use soil temp for underground, ambient for others)
     const Ca = isUnderground
-      ? getSoilTemperatureFactor(ambientTemp, cableRating)
-      : getTemperatureFactor(ambientTemp, cableRating);
+      ? getSoilTemperatureFactor(ambientTemp, ambientInsulation === '90C' ? '90C' : '70C')
+      : getTemperatureFactor(ambientTemp, ambientInsulation);
 
     // Cg - Grouping factor
     const Cg = getGroupingFactor(cableGrouping);
 
-    // Ci - Installation method factor
-    // For domestic thermal insulation methods (100-103), Ci = 1.0 because the tabulated
-    // values from thermal insulation tables already account for the installation derating
-    const Ci = isDomesticInsulation ? 1.0 : getInstallationMethodFactor(installationMethod);
+    // Ci - thermal insulation.
+    //
+    // 🔴 This was `getInstallationMethodFactor(installationMethod)`, which DOUBLE-COUNTED.
+    // BS 7671 does not publish installation-method multipliers: Appendix 4 gives each
+    // reference method its OWN tabulated Iz column, and the lookup below already selects
+    // the right one via getCapacityKey(). Multiplying that column by a second
+    // method-derived factor applied the method twice — 0.77 on top of an already-lower
+    // Method A column, and, worse, 1.15 on Method G, which INFLATED the rating by 15%
+    // and under-sized the cable. No rating factor in Appendix 4 exceeds 1.0.
+    //
+    // Thermal insulation is likewise already in the tabulated values: Installation
+    // Methods 100-103 have their own columns, selected below. So there is nothing left
+    // for a separate Ci to do here.
+    const Ci = 1.0;
 
     // Cs - Soil thermal resistivity factor (underground only)
     const burialType = installationMethod === 'buried-duct' ? 'duct' : 'direct';
@@ -373,11 +464,24 @@ export const useCableSizing = () => {
     // Cd - Depth of laying factor (underground only)
     const Cd = isUnderground ? getDepthOfLayingFactor(burialDepth, burialType) : 1.0;
 
-    // Calculate total derating
-    const totalDerating = Ca * Cg * Ci * Cs * Cd;
+    // Cf - semi-enclosed fuse. App 4 §5.1.1(c)(i): "Where the protective device
+    // is a semi-enclosed fuse to BS 3036, Cf = 0.725. Otherwise Cf = 1."
+    // (0.725 = 1.45/2, matching Reg 433.1.202.) This was missing entirely.
+    const Cf = deviceType === 'fuse-rewireable' ? 0.725 : 1.0;
 
-    // Required tabulated current capacity: It ≥ Ib_eff / (Ca × Cg × Ci × Cs × Cd)
-    const requiredTabulatedCapacity = effectiveDesignCurrent / totalDerating;
+    // Cc - buried installations. App 4 §5.1.1(c)(ii): "Where the cable
+    // installation method is 'in a duct in the ground' or 'buried direct',
+    // Cc = 0.9. For cables installed above ground Cc = 1." Also missing.
+    const Cc = isUnderground ? 0.9 : 1.0;
+
+    // Calculate total derating
+    const totalDerating = Ca * Cg * Ci * Cs * Cd * Cf * Cc;
+
+    // App 4 §5.1.1 / Reg 433.1.1: It >= In / (Ca·Cs·Cd·Ci·Cf·Cc), where In is the
+    // RATED CURRENT OF THE PROTECTIVE DEVICE. The old code divided the design
+    // current Ib by the factors, which skips the device step and under-sizes the
+    // conductor whenever In > Ib (which is almost always).
+    const requiredTabulatedCapacity = deviceRating / totalDerating;
 
     // Store derating factors for display
     const deratingFactors: DeratingFactors = {
@@ -386,6 +490,8 @@ export const useCableSizing = () => {
       Ci,
       Cs,
       Cd,
+      Cf,
+      Cc,
       total: totalDerating,
       referenceMethod,
       tableRef,
@@ -457,8 +563,11 @@ export const useCableSizing = () => {
       // Calculate derated capacity
       const deratedCapacity = tabulatedCapacity * totalDerating;
 
-      // Get voltage drop from BS 7671 tables
-      const isThreePhase = supplyVoltage > 250;
+      // Get voltage drop from BS 7671 tables.
+      // Phase count is a property of the circuit, not of the voltage magnitude:
+      // a 110 V site supply can be three-phase, and the 110 V option is offered
+      // in the voltage list. The core selection is taken as the primary signal.
+      const isThreePhase = cores === '3' || cores === '4' || supplyVoltage > 250;
       const voltageDropMvAm = getVoltageDropValue(
         cableType,
         cableData.size,
@@ -466,9 +575,19 @@ export const useCableSizing = () => {
         referenceMethod
       );
 
+      // App 4 §6.2 — correction for load power factor. For conductors of
+      // 16 mm² or less the design value is the tabulated mV/A/m × cos φ. ABOVE
+      // 16 mm² it is the VECTOR sum cos φ·(mV/A/m)r + sin φ·(mV/A/m)x, which is
+      // not a scalar scaling of the tabulated impedance (mV/A/m)z. The tables
+      // module exposes only the z component, so above 16 mm² the tabulated
+      // impedance is used unmodified — App 4 §6 states the direct use of the
+      // tabulated value is the (pessimistically high) baseline, so this errs on
+      // the safe side. Applying cos φ to z there under-stated the drop.
+      const powerFactorCorrection = cableData.size <= 16 ? powerFactor : 1;
+
       // Calculate actual voltage drop: ΔV = mV/A/m × Ib × L / 1000
       const calculatedVoltageDrop =
-        (voltageDropMvAm * designCurrent * cableLength * powerFactor) / 1000;
+        (voltageDropMvAm * designCurrent * cableLength * powerFactorCorrection) / 1000;
       const voltageDropPercent = (calculatedVoltageDrop / supplyVoltage) * 100;
 
       cableOptions.push({
@@ -480,8 +599,9 @@ export const useCableSizing = () => {
         calculatedVoltageDrop: Math.round(calculatedVoltageDrop * 100) / 100,
         voltageDropPercent: Math.round(voltageDropPercent * 100) / 100,
         meetsVoltageDrop: voltageDropPercent <= maxVoltageDropPercentage,
-        meetsCurrentCapacity: deratedCapacity >= effectiveDesignCurrent,
-        tableReference: `Table ${getCableTableReference(cableType)} Col ${referenceMethod}`,
+        // Reg 433.1.1(b): In <= Iz. The comparison used to be against Ib.
+        meetsCurrentCapacity: deratedCapacity >= deviceRating,
+        tableReference: `${getCableTableReference(cableType)} Col ${referenceMethod}`,
       });
     }
 
@@ -503,7 +623,7 @@ export const useCableSizing = () => {
       let errorMessage = '';
       if (byCurrentCapacity.length === 0) {
         const maxCapacity = Math.max(...cableOptions.map((c) => c.deratedCapacity));
-        errorMessage = `No cable meets current capacity requirement of ${designCurrent}A. Maximum available is ${maxCapacity}A derated. Consider using parallel cables or a different cable type.`;
+        errorMessage = `No cable meets the required capacity. Reg 433.1.1 needs Iz ≥ In = ${deviceRating}A (device rating); the largest tabulated size gives only ${maxCapacity}A after derating (It ≥ ${requiredTabulatedCapacity.toFixed(1)}A required). Consider using parallel cables, a lower device rating or a different cable type.`;
       } else {
         const bestVD = byCurrentCapacity[byCurrentCapacity.length - 1];
         errorMessage = `No cable meets both current capacity and voltage drop requirements. Best option: ${bestVD.sizeLabel} with ${bestVD.voltageDropPercent.toFixed(1)}% voltage drop (limit: ${maxVoltageDropPercentage}%). Consider shorter route or larger cable.`;
@@ -544,6 +664,7 @@ export const useCableSizing = () => {
       validation,
       deratingFactors,
       nextCableSizeUp,
+      deviceRating,
     });
   };
 
@@ -563,6 +684,8 @@ export const useCableSizing = () => {
       powerFactor: '1.0',
       soilResistivity: '2.5',
       burialDepth: '0.7',
+      deviceType: 'mcb-b',
+      deviceRating: 'auto',
     });
     setUiSelections({
       installationMethodUI: 'clipped-direct',

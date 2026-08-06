@@ -25,7 +25,10 @@ export const lightningProtectionContent: CalculatorContent = {
     'Assuming protection is needed without doing the risk calculation',
     'Using the wrong collection area for the structure’s height and footprint',
     'Ignoring incoming services (power, comms) as a strike/surge path',
-    'Forgetting surge protection as part of the overall scheme',
+    // Reg 443.4.1 (BS 7671:2018+A4:2026) — SPDs are the default, so "no SPD" is an
+    // owner declaration, not an outcome of a lightning risk calculation.
+    'Treating SPDs as optional — Reg 443.4.1 requires protection against transient overvoltages unless the owner declares in writing that it is not required',
+    'Fitting a Type 2 SPD where the structure has an external LPS — Reg 534.4.1.3 calls for Type 1 as close as possible to the origin',
   ],
 
   workedExample: {
@@ -50,12 +53,30 @@ export const lightningProtectionContent: CalculatorContent = {
       clauseText:
         'BS EN 62305-2 sets out the risk assessment: calculate the risk components from the expected number of dangerous events and the probabilities and losses, and compare against the tolerable risk (typically 1×10⁻⁵ for loss of life) to decide the need and class of protection.',
     },
+    {
+      standard: 'BS 7671',
+      citation: 'BS 7671:2018+A4:2026 Reg 443.4.1 — Protection against transient overvoltages',
+      clauseText:
+        'Protection against transient overvoltages shall be provided where the consequence caused by the overvoltage could result in (a) serious injury to, or loss of, human life; (b) failure of a safety service, as defined in Part 2; or (c) significant financial or data loss. For all other cases, protection against transient overvoltages shall be provided unless the owner of the installation declares it is not required, on the basis that any loss or damage is tolerable and that they accept the risk of damage to equipment and any consequential loss.',
+    },
+    {
+      standard: 'BS 7671',
+      citation: 'BS 7671:2018+A4:2026 Regs 534.4.1.3 and 534.4.1.4 — SPD type at the origin',
+      clauseText:
+        'Where the installation of SPDs is required by Section 443 and the structure is equipped with an external lightning protection system or protection against the effects of direct lightning, Type 1 SPDs shall be installed as close as possible to the origin of the electrical installation (534.4.1.3). Where the structure is not so equipped, or does not require protection against the effects of direct lightning, Type 2 SPDs shall be installed as close as possible to the origin (534.4.1.4).',
+    },
+    {
+      standard: 'BS 7671',
+      citation: 'BS 7671:2018+A4:2026 Reg 534.4.4.4.2 and Table 534.4 — impulse discharge current',
+      clauseText:
+        'Where Type 1 SPDs are required at or near the origin and no risk analysis to BS EN 62305-2 has been carried out, the impulse discharge current Iimp shall be not less than the values in Table 534.4 (12.5 kA for the L-N and L-PE connections; the table refers to lightning protection levels III and IV). Where a risk analysis to BS EN 62305-2 has been carried out, Iimp shall be determined to the BS EN 62305 series.',
+    },
   ],
 
   _grounding: {
     status: 'needs-review',
-    generatedAt: '2026-06-01',
+    generatedAt: '2026-08-06',
     notes:
-      'Collection area, Nd and risk-vs-tolerable approach per BS EN 62305-2 match the engine (not in BS 7671 facets).',
+      'BS 7671 SPD clauses (443.4.1, 534.4.1.3, 534.4.1.4, 534.4.4.4.2 / Table 534.4) verified against bs7671_facets A4:2026 and the printed standard. The BS EN 62305-2 risk model itself (Cd, PB, loss factors, tolerable risk RT, risk components) is NOT in the BS 7671 / GN3 / OSG corpus and remains unverified — the engine is an indicative screening tool, not a formal BS EN 62305-2 risk assessment.',
   },
 };

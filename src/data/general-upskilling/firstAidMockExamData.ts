@@ -1385,7 +1385,7 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'Apply a sterile eye pad to both eyes and arrange transport to hospital',
       'Irrigate for 2 minutes, then neutralise the alkali with a mild acid such as vinegar',
       'Encourage the casualty to keep their eyes tightly shut until help arrives',
-      'Irrigate the affected eye(s) with cool, clean water for at least 20 minutes, ensuring runoff does not enter the unaffected eye',
+      'Irrigate the affected eye(s) with cool, clean water for at least 20 minutes',
     ] as [string, string, string, string],
     correctAnswer: 3,
     explanation:
@@ -1608,7 +1608,7 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'Angina pain always radiates to the jaw, whereas heart attack pain never does',
       'Angina only affects people under 40, whereas heart attacks affect older adults',
       'Angina pain is sharp and worsens on breathing in; heart attack pain does not',
-      'Angina pain is usually relieved by rest or GTN spray within a few minutes; heart attack pain is not',
+      'Angina pain is usually relieved by rest or GTN spray within a few minutes',
     ],
     correctAnswer: 3,
     explanation:
@@ -1694,7 +1694,7 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A colleague suddenly develops slurred speech and weakness on one side of their body. Symptoms completely resolve after 20 minutes. What is the correct course of action?',
     options: [
-      'Treat it as a medical emergency — call 999, as this may be a TIA and requires urgent assessment',
+      'Treat it as a medical emergency — call 999',
       'Reassure them that, as the symptoms have gone, no action is needed',
       'Advise them to book a routine GP appointment within the next week',
       'Give them aspirin to chew and send them home to rest',
@@ -1878,7 +1878,7 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     options: [
       'Give nothing and wait to see whether the symptoms improve on their own',
       'Help them inject insulin, as high blood sugar is the more dangerous state',
-      'Give them a sugary drink — if they are hypoglycaemic it will help; if hyperglycaemic it is unlikely to cause significant additional harm in the short term',
+      'Give them a sugary drink — if they are hypoglycaemic it will help',
       'Give a large glass of plain water to dilute the blood sugar either way',
     ],
     correctAnswer: 2,
@@ -2198,7 +2198,7 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A severely hypothermic casualty is found unresponsive and you cannot detect any breathing or pulse. According to first aid guidance, what should you consider before deciding they are dead?',
     options: [
-      'A hypothermic casualty is not considered dead until they are warm and dead — begin CPR and call 999, as severe hypothermia can mimic death',
+      'A hypothermic casualty is not considered dead until they are warm and dead — begin CPR and call 999',
       'The absence of breathing and pulse confirms death, so resuscitation should not be attempted',
       'You should rewarm the casualty fully before deciding whether to start CPR',
       'A casualty this cold cannot be revived, so the priority is to record the time of death',
@@ -2480,7 +2480,7 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     question:
       'A worker has symptoms of carbon monoxide poisoning including headache, dizziness, and nausea. What should the first aider do first?',
     options: [
-      'Move the casualty into fresh air immediately, ensuring your own safety, and call 999',
+      'Move the casualty into fresh air immediately',
       'Open the nearest window and keep the casualty where they are',
       'Give the casualty a sugary drink to counteract the dizziness',
       'Lay the casualty down and raise their legs to treat for shock',
@@ -2807,7 +2807,7 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
     options: [
       'Leave the casualty supine and untouched to protect the spine, and wait for the ambulance',
       'Sit the casualty fully upright to let the vomit drain out of the mouth',
-      'Perform a jaw thrust without head tilt to open the airway; if the airway cannot be cleared, log roll the casualty into the recovery position with manual inline stabilisation, protecting the cervical spine',
+      'Perform a jaw thrust without head tilt to open the airway',
       'Perform a standard head-tilt chin-lift and begin chest compressions immediately',
     ],
     correctAnswer: 2,
@@ -2860,7 +2860,7 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
       'A worker sustains a high-energy impact to their pelvis after being struck by a reversing vehicle. They are conscious but in severe pain and appear pale and clammy. Why is this injury particularly dangerous, and what is the priority?',
     options: [
       'The pelvis is mostly bone, so a fracture there is rarely serious — help the casualty stand and walk it off',
-      'The pelvis contains major blood vessels; a pelvic fracture can cause massive internal haemorrhage — call 999 immediately, keep the casualty still, treat for shock, and do not attempt to bind the pelvis unless trained',
+      'The pelvis contains major blood vessels',
       'The danger is purely the pain; give pain relief and roll the casualty onto their side',
       'The risk is a damaged spine; log roll the casualty and sit them upright to check sensation',
     ],

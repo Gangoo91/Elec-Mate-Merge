@@ -861,8 +861,10 @@ export default function PFModule2Section3() {
                 <strong>The Flat Rate Scheme:</strong> For tradespeople with relatively low business
                 expenses (limited companies and sole traders), the VAT Flat Rate Scheme can simplify
                 matters. Instead of tracking VAT on every purchase and sale, you pay a fixed
-                percentage of your gross turnover to HMRC. The flat rate for electrical work is
-                typically 14.5% of gross VAT-inclusive turnover. However, since April 2017,
+                percentage of your gross turnover to HMRC. There is no electrician sector — HMRC
+                classes you by how much material you supply: 9.5% for general building or
+                construction services, or 14.5% labour-only where materials are under 10% of
+                turnover, both on gross VAT-inclusive turnover. However, since April 2017,
                 &ldquo;limited cost traders&rdquo; (those who spend less than 2% of turnover on
                 goods) pay a flat rate of 16.5%, which often makes the scheme less attractive. Speak
                 to an accountant before choosing this option.

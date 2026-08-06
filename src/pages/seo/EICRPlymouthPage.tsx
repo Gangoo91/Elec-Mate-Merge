@@ -40,7 +40,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A4:2026 (Section 631). It produces a condition assessment using C1, C2, C3 and FI observation codes.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A4:2026 (Chapter 65). It produces a condition assessment using C1, C2, C3 and FI observation codes.",
   'Plymouth EICR costs are among the most affordable in England, reflecting lower South West labour rates outside of Bristol and Bath. Expect to pay between £90 and £170 for a two-bedroom flat and £140 to £260 for a three-bedroom house.',
   'Landlords in England must obtain a valid EICR before a new tenancy begins and renew it every five years. Plymouth City Council enforces the requirements and can fine non-compliant landlords up to £30,000 per breach.',
   'Like Southampton and Coventry, Plymouth was heavily bombed during the Second World War and much of the city was rebuilt in the post-war period. The post-war and 1960s housing stock frequently returns C2 EICR findings for ageing wiring and absent RCD protection.',
@@ -160,7 +160,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (Section 631). It is a detailed condition assessment using standardised C1, C2, C3, and FI
+          (Chapter 65). It is a detailed condition assessment using standardised C1, C2, C3, and FI
           observation codes. The overall assessment is either Satisfactory or Unsatisfactory.
         </p>
       </>
@@ -402,7 +402,7 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Report completion</strong> — the inspector completes the EICR including
-                Schedules of Circuit Details and Test Results as required by Section 631, with
+                Schedules of Circuit Details and Test Results as required by Chapter 65, with
                 observation codes and an overall Satisfactory or Unsatisfactory assessment.
               </span>
             </li>

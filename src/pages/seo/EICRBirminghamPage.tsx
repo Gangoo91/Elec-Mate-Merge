@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A4:2026 (Section 631). It classifies defects using observation codes (C1, C2, C3, FI) and assesses the installation as Satisfactory or Unsatisfactory.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A4:2026 (Chapter 65). It classifies defects using observation codes (C1, C2, C3, FI) and assesses the installation as Satisfactory or Unsatisfactory.",
   'Birmingham EICR costs are moderate compared to London. Expect £120 to £200 for a two-bedroom flat, £170 to £280 for a three-bedroom semi-detached house, and £250 to £400 for larger properties.',
   'Since 1 April 2021, landlords in England must have a valid EICR for every private rented property, renewed every five years. Birmingham City Council enforces through its Environmental Health and Private Rented Sector teams.',
   'Birmingham has Article 4 directions in areas such as Selly Oak, Edgbaston, and Harborne that restrict HMO conversions. Existing HMOs in these areas require licensing, and a valid EICR is a mandatory licence condition.',
@@ -156,7 +156,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (Section 631), which specifies that an EICR must be used for periodic inspection of
+          (Chapter 65), which specifies that an EICR must be used for periodic inspection of
           existing installations. The inspector carries out a visual inspection and a programme of
           testing, recording results on Schedules of Circuit Details and Test Results. Each
           observation is classified using codes (C1, C2, C3, FI) that indicate severity.
@@ -497,7 +497,7 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Report</strong> — completed EICR with Schedules of Circuit Details and Test
-                Results as required by Section 631, including observations, codes, overall
+                Results as required by Chapter 65, including observations, codes, overall
                 assessment, and recommended next inspection date.
               </span>
             </li>

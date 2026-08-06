@@ -243,7 +243,7 @@ const sections = [
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Every five years</strong> — the EICR must be renewed at least every five
-                years or sooner if the inspector recommends it. BS 7671 Regulation 134.2 requires
+                years or sooner if the inspector recommends it. BS 7671 Regulation 135.1 requires
                 periodic inspection regimes to confirm installations remain safe.
               </span>
             </li>

@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented per BS 7671:2018+A4:2026 (Section 631). It assesses the installation as Satisfactory or Unsatisfactory using observation codes C1, C2, C3, and FI.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented per BS 7671:2018+A4:2026 (Chapter 65). It assesses the installation as Satisfactory or Unsatisfactory using observation codes C1, C2, C3, and FI.",
   'Glasgow EICR costs are competitive. Expect £110 to £190 for a two-bedroom flat, £160 to £260 for a three-bedroom house, and £220 to £360 for larger properties.',
   "Scotland has DIFFERENT legislation from England. The Housing (Scotland) Act 2006 and the Repairing Standard require landlords to ensure electrical installations are safe and have a valid EICR. The regulations have been in effect longer than England's 2020 regulations.",
   'Glasgow has a very high proportion of tenement flats — stone-built multi-storey buildings typically from the Victorian and Edwardian periods. These present unique EICR challenges including shared close (stairwell) supplies, aged wiring in thick stone walls, and common earthing issues.',
@@ -155,7 +155,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (Section 631), which specifies that an EICR must be used for periodic inspection of
+          (Chapter 65), which specifies that an EICR must be used for periodic inspection of
           existing installations. The inspector carries out a visual inspection and programme of
           testing, classifying each observation using codes (C1, C2, C3, FI). The overall
           installation is assessed as Satisfactory or Unsatisfactory.
@@ -520,7 +520,7 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Report</strong> — EICR with Schedules of Circuit Details and Test Results
-                per Section 631, observations with codes, overall assessment, and recommended next
+                per Chapter 65, observations with codes, overall assessment, and recommended next
                 inspection date.
               </span>
             </li>

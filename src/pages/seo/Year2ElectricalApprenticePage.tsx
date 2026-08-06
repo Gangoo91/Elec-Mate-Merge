@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'What insulation resistance values should I expect?',
     answer:
-      'BS 7671 Table 61 specifies the minimum acceptable insulation resistance values based on the circuit voltage. For circuits operating at SELV and PELV (up to 50V AC), the minimum is 0.5 megohms. For circuits up to 500V (which covers most domestic and commercial installations at 230V), the minimum is 1.0 megohms. For circuits above 500V, the minimum is 1.0 megohms. However, the test voltage applied depends on the circuit: 250V DC for SELV/PELV circuits, 500V DC for circuits up to 500V, and 1000V DC for circuits above 500V. In practice, a healthy domestic circuit typically reads well above the minimum — often 200 megohms or higher. A reading close to the minimum (for example, 2 megohms) suggests degraded insulation that may worsen over time. Very low readings indicate a fault that must be investigated before the circuit can be energised.',
+      'BS 7671 Table 64 specifies the minimum acceptable insulation resistance values based on the circuit voltage. For circuits operating at SELV and PELV (up to 50V AC), the minimum is 0.5 megohms. For circuits up to 500V (which covers most domestic and commercial installations at 230V), the minimum is 1.0 megohms. For circuits above 500V, the minimum is 1.0 megohms. However, the test voltage applied depends on the circuit: 250V DC for SELV/PELV circuits, 500V DC for circuits up to 500V, and 1000V DC for circuits above 500V. In practice, a healthy domestic circuit typically reads well above the minimum — often 200 megohms or higher. A reading close to the minimum (for example, 2 megohms) suggests degraded insulation that may worsen over time. Very low readings indicate a fault that must be investigated before the circuit can be energised.',
   },
   {
     question: 'Why do I need to test RCDs and what values should I get?',
@@ -239,7 +239,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Minimum value</strong> — BS 7671 Table 61 requires a minimum of 1.0 megohms
+                <strong>Minimum value</strong> — BS 7671 Table 64 requires a minimum of 1.0 megohms
                 for circuits up to 500V. In practice, a healthy circuit reads 200 megohms or more.
               </span>
             </li>

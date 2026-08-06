@@ -10,6 +10,13 @@ import { checkDeviceDirectionality } from './deviceDirectionalityValidator';
 // Main regulation checker function with enhanced Zs validation
 // Optional earthingArrangement — pass 'TT' to use RCD-based Zs limits
 export const checkRegulationCompliance = (result: TestResult, earthingArrangement?: string): RegulationCheckResult => {
+  // A device row (incoming RCD, SPD, main switch) records no circuit, so it has
+  // no cable, no Zs and no circuit type to check. Running the validators over
+  // one flags every field it was never meant to carry. See ELE-1484.
+  if (result.isDeviceRow === true) {
+    return { isCompliant: true, warnings: [] };
+  }
+
   const allWarnings: RegulationWarning[] = [
     ...checkCableProtectiveDeviceMatch(result),
     ...checkCircuitTypeConsistency(result),

@@ -28,15 +28,22 @@ import {
   type TransformerInputs,
   type TransformerResults,
 } from '@/lib/transformer-calcs';
+import { standardDeviceRatings } from '@/lib/calculators/bs7671-data/protectiveDevices';
 
 const CAT = 'power' as const;
 const config = CALCULATOR_CONFIG[CAT];
+
+// Reg 434.5.1 requires the device breaking capacity to be checked against the MAXIMUM
+// prospective fault current at its point of installation, so where the user has supplied an
+// upstream source fault level the combined figure is the one that governs.
+const getDesignFaultCurrent = (result: TransformerResults) =>
+  Math.max(result.transformerFaultCurrent, result.combinedFaultCurrent ?? 0);
 
 const getComplianceStatus = (result: TransformerResults) => {
   const issues: string[] = [];
   if (result.voltageRegulation > 0.05) issues.push('High voltage regulation');
   if (result.efficiency < 0.9) issues.push('Low efficiency');
-  if (result.transformerFaultCurrent > 35000) issues.push('Very high fault current');
+  if (getDesignFaultCurrent(result) > 35000) issues.push('Very high fault current');
 
   return {
     status: issues.length === 0 ? 'compliant' : issues.length <= 1 ? 'caution' : 'review',
@@ -44,13 +51,16 @@ const getComplianceStatus = (result: TransformerResults) => {
   };
 };
 
-const getRecommendedMCCB = (current: number) => {
-  const standardSizes = [
-    16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250,
-    1600,
-  ];
-  return standardSizes.find((size) => size >= current * 1.25) || 'Contact manufacturer';
-};
+// Reg 433.1.1(a): the rated current of the protective device (In) shall be not less than the
+// design current (Ib). The full-load secondary current IS Ib here.
+// FIX 1: the device was sized at 1.25 × the full-load current. There is no 1.25 uplift
+// anywhere in BS 7671 — that factor is NEC 450.3(B). Oversizing the device this way defeats
+// Reg 433.1.1(b) (In <= Iz) and lets an undersized cable through.
+// FIX 2: the inlined ladder stopped at 1600 A while the shared BS 7671 data module already
+// holds the full ladder to 4000 A — and the calculator's own 2500 kVA preset gives 3608 A at
+// 400 V, so the inlined copy returned "Contact manufacturer" for a routine rating.
+const getRecommendedMCCB = (current: number) =>
+  standardDeviceRatings.mccb.find((size) => size >= current) ?? 'Contact manufacturer';
 
 const getSwitchgearBreakingCapacity = (faultCurrent: number) => {
   if (faultCurrent <= 10000) return '10kA minimum';
@@ -157,12 +167,17 @@ const TransformerCalculator = () => {
       `Secondary Current: ${result.secondaryRatedCurrent.toFixed(1)} A`,
       `Real Power: ${result.kw.toFixed(1)} kW`,
       `Efficiency: ${(result.efficiency * 100).toFixed(1)}%`,
-      `Fault Current: ${(result.transformerFaultCurrent / 1000).toFixed(2)} kA`,
+      `Fault Current (transformer only): ${(result.transformerFaultCurrent / 1000).toFixed(2)} kA`,
+      ...(result.combinedFaultCurrent !== undefined
+        ? [
+            `Fault Current (incl. upstream source): ${(result.combinedFaultCurrent / 1000).toFixed(2)} kA`,
+          ]
+        : []),
       `Voltage Regulation: ${(result.voltageRegulation * 100).toFixed(2)}%`,
       '',
       'Protection:',
       `Recommended MCCB: ${getRecommendedMCCB(result.secondaryRatedCurrent)}A`,
-      `Switchgear Rating: ${getSwitchgearBreakingCapacity(result.transformerFaultCurrent)}`,
+      `Switchgear Rating: ${getSwitchgearBreakingCapacity(getDesignFaultCurrent(result))}`,
       `Inrush Current: ${(result.inrushCurrent / 1000).toFixed(1)} kA for ${result.inrushDuration}s`,
     ];
 
@@ -218,7 +233,11 @@ const TransformerCalculator = () => {
         label: 'Fault Current',
         formula: `Zbase = Vs² ÷ (kVA × 1000) = ${vs}² ÷ (${kva} × 1000) = ${(vs ** 2 / (kva * 1000)).toFixed(4)} Ω`,
         value: `Isc = ${(result.transformerFaultCurrent / 1000).toFixed(2)} kA`,
-        description: `Zt = (${zPct}% ÷ 100) × Zbase, then Isc = Vs ÷ (√3 × Zt)`,
+        // FIX: this used to print "Isc = Vs ÷ (√3 × Zt)" for single-phase too, matching the
+        // hard-coded √3 that has now been removed from the calculation (Reg 434.1).
+        description: isThreePhase
+          ? `Zt = (${zPct}% ÷ 100) × Zbase, then Isc = Vs ÷ (√3 × Zt)`
+          : `Zt = (${zPct}% ÷ 100) × Zbase, then Isc = Vs ÷ Zt (no √3 on single phase)`,
       },
       {
         label: 'Voltage Regulation',
@@ -434,7 +453,7 @@ const TransformerCalculator = () => {
 
           return (
             <>
-              <CalculatorDivider />
+              <CalculatorDivider category={CAT} />
 
               {/* Status + Copy */}
               <div className="flex items-center justify-between">
@@ -509,6 +528,20 @@ const TransformerCalculator = () => {
                   category={CAT}
                   size="sm"
                 />
+                {/* FIX: combinedFaultCurrent was computed from the "Source Fault Level"
+                    advanced input and then never rendered, so that input was a no-op. The
+                    upstream source contribution is part of determining the PFC at the point
+                    concerned (Reg 434.1) and it is the figure the breaking capacity in
+                    Reg 434.5.1 has to be checked against. */}
+                {result.combinedFaultCurrent !== undefined && (
+                  <ResultValue
+                    label="Fault Current (incl. source)"
+                    value={(result.combinedFaultCurrent / 1000).toFixed(2)}
+                    unit="kA"
+                    category={CAT}
+                    size="sm"
+                  />
+                )}
               </ResultsGrid>
 
               {/* Protection Requirements */}
@@ -524,19 +557,22 @@ const TransformerCalculator = () => {
                   />
                   <ResultValue
                     label="Breaking Capacity"
-                    value={getSwitchgearBreakingCapacity(result.transformerFaultCurrent)}
+                    value={getSwitchgearBreakingCapacity(getDesignFaultCurrent(result))}
                     category={CAT}
                     size="sm"
                   />
+                  {/* Labelled "typical": BS 7671 gives no inrush multiplier and no inrush
+                      duration — it treats inrush qualitatively only. These are indicative
+                      BS EN 60076 figures and must be confirmed against the actual unit. */}
                   <ResultValue
-                    label="Inrush Current"
+                    label="Inrush Current (typical)"
                     value={(result.inrushCurrent / 1000).toFixed(1)}
                     unit="kA"
                     category={CAT}
                     size="sm"
                   />
                   <ResultValue
-                    label="Inrush Duration"
+                    label="Inrush Duration (typical)"
                     value={`${result.inrushDuration}`}
                     unit="s"
                     category={CAT}
@@ -546,9 +582,7 @@ const TransformerCalculator = () => {
               </CalculatorSection>
 
               {/* Derating factors (if applicable) */}
-              {(result.temperatureDerating ||
-                result.altitudeDerating ||
-                result.harmonicDerating) && (
+              {(result.temperatureDerating || result.altitudeDerating) && (
                 <CalculatorSection>
                   <p className="text-sm font-medium text-white mb-2">Derating Factors</p>
                   <ResultsGrid columns={2}>
@@ -570,16 +604,11 @@ const TransformerCalculator = () => {
                         size="sm"
                       />
                     )}
-                    {result.harmonicDerating && (
-                      <ResultValue
-                        label="Harmonic Derating"
-                        value={`${(result.harmonicDerating * 100).toFixed(0)}`}
-                        unit="%"
-                        category={CAT}
-                        size="sm"
-                      />
-                    )}
                   </ResultsGrid>
+                  {/* The old "Harmonic Derating 86%" tile has been removed: 0.86 is the
+                      BS 7671 Appendix 4 §5.5 rating factor for CABLES carrying third-harmonic
+                      current (banded on THD), not a transformer kVA derating. The harmonic
+                      duty is now surfaced as cable/neutral guidance instead. */}
                 </CalculatorSection>
               )}
 
@@ -644,14 +673,17 @@ const TransformerCalculator = () => {
                     </p>
                     <p className="text-sm text-white">
                       The prospective fault current of{' '}
-                      {(result.transformerFaultCurrent / 1000).toFixed(1)} kA requires switchgear
-                      with {getSwitchgearBreakingCapacity(result.transformerFaultCurrent)} breaking
-                      capacity.
+                      {(getDesignFaultCurrent(result) / 1000).toFixed(1)} kA requires switchgear
+                      with {getSwitchgearBreakingCapacity(getDesignFaultCurrent(result))} breaking
+                      capacity (Reg 434.5.1).
                     </p>
                     <p className="text-sm text-white">
-                      Install a {getRecommendedMCCB(result.secondaryRatedCurrent)}A MCCB for
-                      secondary protection. Consider soft-start if inrush current (
-                      {(result.inrushCurrent / 1000).toFixed(1)} kA) causes supply issues.
+                      A {getRecommendedMCCB(result.secondaryRatedCurrent)}A MCCB is the smallest
+                      standard rating not less than the full-load secondary current, satisfying Reg
+                      433.1.1(a). You must still confirm the cable&apos;s current-carrying capacity
+                      Iz is not less than that rating before selecting it — Reg 433.1.1(b). Consider
+                      soft-start if inrush current ({(result.inrushCurrent / 1000).toFixed(1)} kA)
+                      causes supply issues.
                     </p>
                     {result.voltageRegulation > 0.05 && (
                       <p className="text-sm text-white">
@@ -703,20 +735,43 @@ const TransformerCalculator = () => {
                         {rec}
                       </p>
                     ))}
+                    {/* FIX — three of these citations were wrong:
+                        - "Reg 551.1: Transformer installation requirements". Section 551 is
+                          LOW VOLTAGE GENERATING SETS and 551.1 is its Scope. Removed.
+                        - "Reg 555.1: Transformer selection and application". Section 555 is
+                          TRANSFORMERS, but its single clause 555.1 is titled "Autotransformers
+                          and step-up transformers" — it does not cover the step-down
+                          double-wound unit this calculator defaults to. Retitled.
+                        - "Reg 434.5.2: Prospective fault current determination". Determination
+                          is Reg 434.1; 434.5.1 is breaking capacity; 434.5.2 is the operating
+                          characteristic required where a device sits upstream of a change in
+                          the circuit (Reg 434.2.2). Replaced with 434.1 and 434.5.1.
+                        - "411.3" is only the section heading "Requirements for fault
+                          protection"; the operative clause for earthing a transformer neutral
+                          point in a TN system is 411.4.2. */}
                     <p className="text-sm text-white">
-                      Reg 551.1: Transformer installation requirements
+                      Reg 434.1: The prospective fault current shall be determined at every
+                      relevant point of the installation, by calculation, measurement or enquiry
                     </p>
                     <p className="text-sm text-white">
-                      Reg 555.1: Transformer selection and application
+                      Reg 434.5.1: Device breaking capacity shall be not less than the maximum
+                      prospective fault current at its point of installation
                     </p>
                     <p className="text-sm text-white">
-                      Reg 434.5.2: Prospective fault current determination
+                      Reg 433.1.1: Ib ≤ In ≤ Iz — the device rating must also not exceed the
+                      current-carrying capacity of the cable it protects
                     </p>
                     <p className="text-sm text-white">
-                      Transformer earthing must comply with BS 7671 411.3
+                      Reg 411.4.2: In a TN system the neutral point or midpoint of the supply
+                      system shall be earthed
                     </p>
                     <p className="text-sm text-white">
-                      BS EN 60076: Power transformer specification
+                      Reg 555.1: Autotransformers and step-up transformers (555.1.2 — a step-up
+                      autotransformer shall not be connected to an IT system)
+                    </p>
+                    <p className="text-sm text-white">
+                      BS EN 60076: Power transformer specification — efficiency, losses, inrush
+                      and thermal derating are covered there, not by BS 7671
                     </p>
                   </div>
                 </CollapsibleContent>

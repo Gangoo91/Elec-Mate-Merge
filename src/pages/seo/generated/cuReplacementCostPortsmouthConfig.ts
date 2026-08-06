@@ -30,7 +30,7 @@ export const cuReplacementCostPortsmouthConfig: GeneratedGuideConfig = {
     'A typical 10–14 way domestic consumer unit replacement in Portsmouth costs £493–790 (2026 prices) including the new board, RCBOs, surge protection, labour and the Electrical Installation Certificate.',
     'Larger 18+ way boards, three-phase boards, or boards needing tail upgrades push the price toward £948 and beyond.',
     'Most modern installations under BS 7671:2018+A4:2026 use all-RCBO boards (one RCBO per circuit) for granular protection — older split-load designs are now legacy.',
-    'AFDDs are now mandatory in HMOs, care homes and certain residential settings under A4:2026 — adding £15–25 per circuit if specified.',
+    'AFDDs are recommended in HMOs, care homes and certain residential settings under A4:2026 — adding £15–25 per circuit if specified.',
     'A new consumer unit triggers an Electrical Installation Certificate (EIC) and is notifiable work under Part P of the Building Regulations in England and Wales.',
     'The DNO for South East is Scottish and Southern Electricity Networks (SSEN). Any work that requires the meter to be pulled (e.g. tails upgrade) must be coordinated with the DNO or a metal-seal-cutting service.',
   ],
@@ -79,7 +79,7 @@ export const cuReplacementCostPortsmouthConfig: GeneratedGuideConfig = {
           ordered: false,
           items: [
             'New metal-clad consumer unit to BS EN 61439-3 (plastic boards are no longer permitted for domestic dwellings)',
-            'RCBO per circuit (typically Type AC or Type A depending on circuit), or split-load RCDs as the minimum legacy alternative',
+            'RCBO per circuit — Type A as the general-purpose minimum, with Type F or Type B where the load has DC components (Regulation 531.3.3 restricts Type AC to fixed equipment with no DC component), or split-load RCDs as the minimum legacy alternative',
             'Surge protective device (SPD) to BS 7671 Chapter 443 — mandatory in most domestic installations under A4:2026',
             'AFDDs (Arc Fault Detection Devices) where required by A4:2026 — HMOs, care homes, student accommodation, certain residential settings',
             'Main switch isolator (often a 100A double-pole)',
@@ -144,7 +144,7 @@ export const cuReplacementCostPortsmouthConfig: GeneratedGuideConfig = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'If you are quoting consumer unit replacements in Portsmouth, the £493–790 band above is your fair-margin floor for a 10–14 way RCBO board with SPD, EIC and labour. Quoting below this band means you are absorbing the cost of your scheme fee, professional indemnity, calibrated test kit, and the certificate liability you sign. Use the bands as anchors, then adjust for: tails upgrade, bonding remedials, AFDDs (mandatory in HMOs / certain residential under A4:2026), and any DNO coordination through Scottish and Southern Electricity Networks (SSEN).',
+          text: 'If you are quoting consumer unit replacements in Portsmouth, the £493–790 band above is your fair-margin floor for a 10–14 way RCBO board with SPD, EIC and labour. Quoting below this band means you are absorbing the cost of your scheme fee, professional indemnity, calibrated test kit, and the certificate liability you sign. Use the bands as anchors, then adjust for: tails upgrade, bonding remedials, AFDDs (recommended in HMOs / certain residential under A4:2026), and any DNO coordination through Scottish and Southern Electricity Networks (SSEN).',
         },
         {
           type: 'callout',
@@ -277,8 +277,8 @@ export const cuReplacementCostPortsmouthConfig: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/guides/afdd-mandatory-hmo-care-home-a4-2026',
-      title: 'AFDD Mandatory in HMOs (A4:2026)',
+      href: '/guides/afdd-hmo-care-home-a4-2026',
+      title: 'AFDD Recommended in HMOs (A4:2026)',
       description: 'When AFDDs are required in 2026 onwards.',
       icon: 'ShieldCheck',
       category: 'Guide',

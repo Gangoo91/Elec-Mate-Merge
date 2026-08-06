@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'Maximum Zs Values BS 7671 | Complete Table Guide';
 const PAGE_DESCRIPTION =
-  'Max Zs values per BS 7671 Tables 41.2/41.3/41.4: Type B + Type C MCBs, BS 3036 fuses, 0.8 temperature correction, table lookup, exceedance fixes.';
+  'Max Zs per BS 7671: Table 41.2 fuses at 0.4 s, Table 41.3 circuit-breakers, Table 41.4 fuses at 5 s. Type B/C MCBs, BS 3036, 0.8 correction, exceedance fixes.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -34,7 +34,7 @@ const breadcrumbs = [
 const tocItems = [
   { id: 'what-are-max-zs', label: 'What Are Maximum Zs Values?' },
   { id: 'type-b-mcb', label: 'Type B MCB Values (Table 41.3)' },
-  { id: 'type-c-mcb', label: 'Type C MCB Values (Table 41.4)' },
+  { id: 'type-c-mcb', label: 'Type C MCB Values (Table 41.3)' },
   { id: 'bs3036-fuse', label: 'BS 3036 Fuse Values (Table 41.2)' },
   { id: 'correction-factor', label: '0.8 Temperature Correction Factor' },
   { id: 'how-to-use', label: 'How to Use the Tables' },
@@ -47,7 +47,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Maximum Zs values are the highest earth fault loop impedance that ensures the protective device will disconnect within the required time (0.4 s for final circuits, 5 s for distribution circuits) in the event of an earth fault.',
-  'BS 7671 Tables 41.2 (BS 3036 fuses), 41.3 (Type B MCBs), and 41.4 (Type C and D MCBs) provide the maximum values at maximum conductor operating temperature. Apply the 0.8 correction factor when testing at ambient.',
+  'BS 7671 Table 41.2 covers fuses at 0.4 s, Table 41.3 covers circuit-breakers (Types B, C and D are all in that one table), and Table 41.4 covers fuses at 5 s. All are given at maximum conductor operating temperature — apply the 0.8 correction factor when testing at ambient.',
   'Key Type B MCB values for 0.4 s disconnection: B6=7.28 ohms, B10=4.37 ohms, B16=2.73 ohms, B20=2.19 ohms, B32=1.37 ohms, B40=1.09 ohms, B50=0.87 ohms.',
   'Type C MCBs have lower maximum Zs values than Type B (same rating) because they require higher fault current to trip magnetically — Type C trips at 10x rated current vs 5x for Type B.',
   'Elec-Mate provides an instant Zs lookup calculator — select the protective device type and rating, and the app shows the maximum permitted Zs with the 0.8 correction already applied.',
@@ -72,12 +72,12 @@ const faqs = [
   {
     question: 'Do I use the 0.4-second or 5-second disconnection values?',
     answer:
-      'Use the 0.4-second values for all final circuits — circuits that directly supply current-using equipment or socket outlets. This covers socket circuits, lighting circuits, cooker circuits, shower circuits, and all other circuits that supply fixed or portable equipment in a domestic or commercial installation. Use the 5-second values only for distribution circuits — circuits that supply other distribution boards but do not directly supply current-using equipment. In a typical domestic installation, only the circuit feeding a sub-distribution board (if one exists) would use the 5-second values. The 5-second values are higher (more lenient) because the risk of electric shock is lower on distribution circuits where there is no direct user contact with exposed metalwork. If in doubt, use the 0.4-second values — they are more conservative and always acceptable.',
+      'Use the 0.4-second values for all final circuits — circuits that directly supply current-using equipment or socket outlets. This covers socket circuits, lighting circuits, cooker circuits, shower circuits, and all other circuits that supply fixed or portable equipment in a domestic or commercial installation. Use the 5-second values only for distribution circuits — circuits that supply other distribution boards but do not directly supply current-using equipment. In a typical domestic installation, only the circuit feeding a sub-distribution board (if one exists) would use the 5-second values. Note that "the 5-second values" only exist as a distinct set for some devices: fuses have a separate table (Table 41.4), and Type D MCBs have a separate row, but Type B and Type C MCBs print one Zs figure valid for both times — because an MCB clears an earth fault on its magnetic trip, the current needed does not change with the permitted time. If in doubt, use the 0.4-second values — they are more conservative and always acceptable.',
   },
   {
     question: 'What maximum Zs values apply to BS 3036 rewirable fuses?',
     answer:
-      'BS 3036 rewirable fuses (the older semi-enclosed fuses with replaceable fuse wire) have different maximum Zs values from MCBs because their operating characteristics are different. BS 7671 Table 41.2 gives the values for 0.4-second disconnection: 5 A = 10.35 ohms, 15 A = 3.26 ohms, 20 A = 2.51 ohms, 30 A = 1.69 ohms, 45 A = 1.14 ohms. These values include the Cmin voltage factor of 0.95 and a built-in correction for the less predictable operating characteristics of rewirable fuses — the fuse wire can deteriorate, oxidise, or be replaced with the wrong rating. When testing at ambient temperature, you should still apply the 0.8 factor to these values. Many older domestic installations in the UK still have BS 3036 rewirable fuses, so these values are frequently needed during EICRs.',
+      'BS 3036 rewirable fuses (the older semi-enclosed fuses with replaceable fuse wire) have different maximum Zs values from MCBs because their operating characteristics are different. BS 7671 Table 41.2 gives the values for 0.4-second disconnection: 5 A = 9.10 ohms, 15 A = 2.43 ohms, 20 A = 1.68 ohms, 30 A = 1.04 ohms, 45 A = 0.56 ohms, 60 A = 0.40 ohms. NOTE 1 to the table records that these were determined using a Cmin of 0.95. Beware of older figures such as 10.35 ohms for a 5 A — those are pre-Cmin and will pass a circuit the current edition fails. The fuse wire in a rewirable can also deteriorate, oxidise, or be replaced with the wrong gauge, so treat a result close to the limit with suspicion. When testing at ambient temperature, you should still apply the 0.8 factor to these values. Many older domestic installations in the UK still have BS 3036 rewirable fuses, so these values are frequently needed during EICRs.',
   },
   {
     question: 'Can I use the BS 7671 tables for RCBOs?',
@@ -98,7 +98,7 @@ const howToSteps = [
   },
   {
     name: 'Look up the maximum Zs from the correct table',
-    text: 'Find the maximum permitted Zs from the appropriate BS 7671 table: Table 41.2 for BS 3036 fuses, Table 41.3 for Type B MCBs (0.4 s disconnection), Table 41.4 for Type C and Type D MCBs. Use the 0.4-second values for final circuits or the 5-second values for distribution circuits.',
+    text: 'Find the maximum permitted Zs from the appropriate BS 7671 table: Table 41.2 for fuses at 0.4 s, Table 41.3 for circuit-breakers (Types B, C and D are all in that one table), Table 41.4 for fuses at 5 s. Use the 0.4-second values for final circuits or the 5-second values for distribution circuits.',
   },
   {
     name: 'Apply the 0.8 temperature correction factor',
@@ -231,7 +231,7 @@ const sections = [
   },
   {
     id: 'type-c-mcb',
-    heading: 'Type C MCB Maximum Zs Values — BS 7671 Table 41.4',
+    heading: 'Type C MCB Maximum Zs Values — BS 7671 Table 41.3',
     content: (
       <>
         <p>
@@ -326,37 +326,48 @@ const sections = [
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>5 A</span>
-              <span>10.35 Ω</span>
-              <span>8.28 Ω</span>
+              <span>9.10 Ω</span>
+              <span>7.28 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>15 A</span>
-              <span>3.26 Ω</span>
-              <span>2.61 Ω</span>
+              <span>2.43 Ω</span>
+              <span>1.94 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>20 A</span>
-              <span>2.51 Ω</span>
-              <span>2.01 Ω</span>
+              <span>1.68 Ω</span>
+              <span>1.34 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
               <span>30 A</span>
-              <span>1.69 Ω</span>
-              <span>1.35 Ω</span>
+              <span>1.04 Ω</span>
+              <span>0.83 Ω</span>
+            </div>
+            <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
+              <span>45 A</span>
+              <span>0.56 Ω</span>
+              <span>0.45 Ω</span>
             </div>
             <div className="grid grid-cols-3 gap-2 py-2 text-sm">
-              <span>45 A</span>
-              <span>1.14 Ω</span>
-              <span>0.91 Ω</span>
+              <span>60 A</span>
+              <span>0.40 Ω</span>
+              <span>0.32 Ω</span>
             </div>
           </div>
         </div>
         <p>
+          These are the current Table 41.2 figures. If you are working from older notes you may
+          recognise a different set — 10.35 Ω for a 5 A, 3.26 Ω for a 15 A and so on. Those are the
+          pre-Cmin values and they are no longer correct: NOTE 1 to Table 41.2 records that the
+          tabulated impedances were determined using a Cmin of 0.95, which tightens every figure in
+          the table. Working to the old numbers will pass a circuit that the current edition fails.
+        </p>
+        <p>
           BS 3036 fuses have less predictable operating characteristics than MCBs because the fuse
-          wire can deteriorate over time, oxidise, or even be replaced with the wrong rating by
-          someone who is not qualified. The values in Table 41.2 already include a built-in
-          correction factor of 0.725 to account for this variability. The 0.8 temperature correction
-          should still be applied on top of these values when testing at ambient temperature.
+          wire can deteriorate over time, oxidise, or be replaced with the wrong gauge by someone
+          who is not qualified. That is a good reason to treat a measured value close to the limit
+          with suspicion, and the 0.8 temperature correction still applies when testing at ambient.
         </p>
       </>
     ),
@@ -435,7 +446,8 @@ const sections = [
               <Table2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong className="text-yellow-400">Step 2 — Find the table:</strong> Use Table 41.2
-                for BS 3036 fuses, Table 41.3 for Type B MCBs, Table 41.4 for Type C or D MCBs. Use
+                for fuses at 0.4 s, Table 41.3 for circuit-breakers — every curve, B, C and D, is in
+                that one table — and Table 41.4 for fuses at 5 s. Use
                 the 0.4 s column for final circuits or the 5 s column for distribution circuits.
               </span>
             </li>
@@ -555,48 +567,45 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671 also provides maximum Zs values for 5-second disconnection times. These apply to
-          distribution circuits — circuits that supply other distribution boards but do not directly
-          supply current-using equipment or socket outlets. The 5-second values are higher (more
-          lenient) because the risk of electric shock is lower on distribution circuits.
+          BS 7671 provides maximum Zs values for 5-second disconnection, which applies to
+          distribution circuits — circuits supplying other distribution boards rather than
+          current-using equipment or socket outlets directly. But there is a catch that trips up a
+          lot of people, and it is worth being precise about.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-4">
-            Type B MCBs — 5-Second vs 0.4-Second Maximum Zs (Selected Ratings)
+            Which devices actually have different 5-second values?
           </h3>
-          <div className="space-y-2 text-white leading-relaxed">
-            <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/10 font-bold text-yellow-400 text-sm">
-              <span>Rating</span>
-              <span>0.4 s Max Zs</span>
-              <span>5 s Max Zs</span>
-            </div>
-            <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
-              <span>B16</span>
-              <span>2.73 Ω</span>
-              <span>4.55 Ω</span>
-            </div>
-            <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
-              <span>B32</span>
-              <span>1.37 Ω</span>
-              <span>2.28 Ω</span>
-            </div>
-            <div className="grid grid-cols-3 gap-2 py-2 border-b border-white/5 text-sm">
-              <span>B40</span>
-              <span>1.09 Ω</span>
-              <span>1.82 Ω</span>
-            </div>
-            <div className="grid grid-cols-3 gap-2 py-2 text-sm">
-              <span>B50</span>
-              <span>0.87 Ω</span>
-              <span>1.46 Ω</span>
-            </div>
+          <div className="space-y-3 text-white leading-relaxed text-sm">
+            <p>
+              <strong className="text-yellow-400">Type B and Type C MCBs — no difference.</strong>{' '}
+              Table 41.3(a) and 41.3(b) each print a <em>single</em> row of Zs values that is valid
+              for both 0.4 s and 5 s. This is not an omission. An MCB clears an earth fault on its
+              magnetic trip, which is effectively instantaneous — so the fault current needed does
+              not change with the permitted disconnection time. A B32 is 1.37 Ω whether the circuit
+              is a final circuit or a distribution circuit.
+            </p>
+            <p>
+              <strong className="text-yellow-400">Type D MCBs — the exception.</strong> Table
+              41.3(c) is the only circuit-breaker table that prints two rows: a 0.4 s row computed
+              at 20 × In, and a 5 s row at 10 × In. The 5 s values are exactly double the 0.4 s
+              ones.
+            </p>
+            <p>
+              <strong className="text-yellow-400">Fuses — genuinely different.</strong> Fuses clear
+              on a thermal characteristic, so time really does matter. Table 41.2 gives the 0.4 s
+              values and <strong>Table 41.4</strong> gives the 5 s values — a separate table, not a
+              separate column.
+            </p>
           </div>
         </div>
         <p>
-          In a typical domestic installation, only the circuit feeding a sub-distribution board (if
-          present) would use the 5-second values. All circuits supplying socket outlets, lighting,
-          cookers, showers, and other current-using equipment must use the 0.4-second values. If in
-          doubt, use the 0.4-second values — they are more conservative and always compliant.
+          The practical upshot: if you are looking for a more lenient 5-second figure for a Type B
+          or Type C MCB, there isn't one, and any table offering you a higher number is wrong. In a
+          typical domestic installation only the circuit feeding a sub-distribution board would use
+          5-second values at all. Everything supplying socket outlets, lighting, cookers and showers
+          uses 0.4 seconds. If in doubt, use the 0.4-second values — they are never wrong, only
+          conservative.
         </p>
       </>
     ),

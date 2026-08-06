@@ -41,8 +41,8 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Section 722 of BS 7671:2018+A4:2026 requires a dedicated circuit for each EV charging point, protected by an appropriate RCD.',
-  'Regulation 722.411.4.1 restricts the use of PME (TN-C-S) earthing for EV charging — an earth electrode or other permitted arrangement is required where the charging point is outdoors or in a location accessible to livestock.',
+  'Each EV charging point gets its own dedicated final circuit with appropriate RCD protection. This is the settled position in the IET Code of Practice for EV Charging Equipment Installation rather than a single numbered regulation in Section 722 — worth knowing if you are asked to cite it.',
+  'Regulation 722.411.4.1 restricts PME (TN-C-S) earthing for EV charging. The trigger is precise: a charging point located outdoors, or one that might reasonably be expected to be used to charge a vehicle outdoors. Where that applies, the PME facility must not be used for the protective conductor contact unless one of the alternative methods in 722.411.4 (b) to (e) is applied.',
   'Regulation 722.531.3 requires RCD protection for EV charging circuits. A charger with an integral RDC-DD (to BS IEC 62955:2018) enables use of a Type A RCD; without integral DC leakage detection, a Type B RCD is required.',
   'Load management (smart charging) is essential where the existing supply cannot support the additional EV charging demand without exceeding the supply capacity.',
   'The IET Code of Practice for Electric Vehicle Charging Equipment Installation provides detailed guidance supplementing BS 7671 Section 722.',
@@ -52,7 +52,7 @@ const faqs = [
   {
     question: 'Why can I not use the PME earth for an outdoor EV charger?',
     answer:
-      'Regulation 722.411.4.1 restricts the use of PME (Protective Multiple Earthing, i.e. TN-C-S) earthing for EV charging installations where the charging equipment is outdoors or accessible from outside the equipotential zone of the building. The concern is that a loss of the PEN conductor (combined neutral and earth) in the DNO supply cable would cause the exposed-conductive-parts of the EV charger — and the vehicle connected to it — to rise to a dangerous potential relative to true earth. Because the vehicle is in contact with the ground (via its tyres, and the user is standing on the ground), this creates a shock risk that the building main bonding cannot mitigate. The solution is to install a local earth electrode (TT arrangement for the EV circuit) or use one of the other permitted methods in the IET Code of Practice, such as an earth mat or protective earth connection to a structural earth.',
+      'Regulation 722.411.4.1 restricts the use of PME (Protective Multiple Earthing, i.e. TN-C-S) earthing for EV charging. Get the trigger condition right, because it is narrower than it is often quoted: the restriction applies to a charging point located outdoors, or one that might reasonably be expected to be used to charge a vehicle outdoors. It is not about livestock, and it is not framed around the building equipotential zone. The concern is that a loss of the PEN conductor (combined neutral and earth) in the DNO supply cable would cause the exposed-conductive-parts of the EV charger — and the vehicle connected to it — to rise to a dangerous potential relative to true earth. Because the vehicle is in contact with the ground (via its tyres, and the user is standing on the ground), this creates a shock risk that the building main bonding cannot mitigate. An earth electrode (a TT arrangement for the EV circuit) is one permitted answer, but it is not the only one — BS 7671 sets out alternatives (b) to (e), which include a device that disconnects the supply on detecting a dangerous voltage between the charging equipment CPC and Earth. Note that such a device must measure CPC-to-Earth: measuring CPC-to-neutral, or CPC-to-main-earthing-terminal, does not give equivalent safety during a PEN failure, because the neutral of a TN-C-S supply can no longer be relied on as a reference to Earth.',
   },
   {
     question: 'Do I need a Type B RCD for every EV charger?',
@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'Can I install two EV chargers on one circuit?',
     answer:
-      'No. Section 722 requires each EV charging point to be supplied by its own dedicated final circuit from the distribution board. Two chargers require two circuits, each with their own overcurrent protection and RCD. This ensures that a fault on one charger does not affect the other and allows independent control of each charging point. Additionally, Regulation 722.312.2.1 independently prohibits the inclusion of a PEN conductor in any TN-system circuit supplying EV charging equipment — so the circuit must use separate PE and N conductors throughout. For multiple chargers, a load management system is usually essential to avoid exceeding the supply capacity.',
+      'No. Each EV charging point should be supplied by its own dedicated final circuit from the distribution board — the position set out in the IET Code of Practice for EV Charging Equipment Installation, which GN3 directs you to for EV-specific requirements. Two chargers require two circuits, each with their own overcurrent protection and RCD. This ensures that a fault on one charger does not affect the other and allows independent control of each charging point. Additionally, Regulation 722.312.2.1 independently prohibits the inclusion of a PEN conductor in any TN-system circuit supplying EV charging equipment — so the circuit must use separate PE and N conductors throughout. For multiple chargers, a load management system is usually essential to avoid exceeding the supply capacity.',
   },
   {
     question: 'What earth electrode resistance is acceptable for an EV charger TT circuit?',
@@ -189,9 +189,14 @@ const sections = [
     content: (
       <>
         <p>
-          Regulation 722.312 requires that each EV charging point is supplied by its own dedicated
-          final circuit. This means a separate MCB or RCBO at the distribution board for each
-          charger, with no other loads sharing that circuit.
+          Each EV charging point should be supplied by its own dedicated final circuit — a separate
+          MCB or RCBO at the distribution board for each charger, with no other loads sharing it.
+          This is the settled position in the IET Code of Practice for Electric Vehicle Charging
+          Equipment Installation, which GN3 directs you to for EV-specific requirements, and it
+          follows from the continuous-duty nature of the load rather than from a single numbered
+          regulation. Do not cite Regulation 722.312 for it — that group deals with system earthing
+          and conductor arrangement, which is where 722.312.2.1 (no PEN conductor in the charging
+          circuit) sits.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -314,9 +319,10 @@ const sections = [
           with indent (a) are superseded.
         </p>
         <p>
-          The regulation requires that where the EV charger is connected to a PME supply and the
-          charging point is accessible from outside the main equipotential zone, an earth electrode
-          must be provided, or one of the other permitted arrangements must be used.
+          So: where the charger is on a PME supply and the charging point is outdoors, or might
+          reasonably be expected to be used to charge a vehicle outdoors, the PME facility must not
+          serve the protective conductor contact unless one of the alternatives in 722.411.4 (b) to
+          (e) is used. An earth electrode is one of them, not the only one.
         </p>
       </>
     ),

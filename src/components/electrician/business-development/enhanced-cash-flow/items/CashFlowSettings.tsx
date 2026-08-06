@@ -4,6 +4,7 @@ import { CalculatorInput, CalculatorSelect } from '@/components/calculators/shar
 interface CashFlowSettingsProps {
   startingBalance: number;
   emergencyFundTarget: number;
+  vatRegistered: boolean;
   vatQuarter: number;
   selectedScenario: string;
   vatScheme: string;
@@ -11,14 +12,15 @@ interface CashFlowSettingsProps {
   cardFeesPercent: number;
   monthlyLoanRepayments: number;
   flatRatePercent: number;
+  priorYearTaxAndNI: number;
   scenarios: { id: string; name: string }[];
   onUpdate: (updates: any) => void;
 }
 
 const vatQuarterOptions = [
-  { value: '1', label: 'Jan/Apr/Jul/Oct' },
-  { value: '2', label: 'Feb/May/Aug/Nov' },
-  { value: '3', label: 'Mar/Jun/Sep/Dec' },
+  { value: '1', label: 'Quarter ends Jan/Apr/Jul/Oct' },
+  { value: '2', label: 'Quarter ends Feb/May/Aug/Nov' },
+  { value: '3', label: 'Quarter ends Mar/Jun/Sep/Dec' },
 ];
 
 const vatSchemeOptions = [
@@ -26,9 +28,15 @@ const vatSchemeOptions = [
   { value: 'flat-rate', label: 'Flat Rate' },
 ];
 
+const vatRegisteredOptions = [
+  { value: 'no', label: 'Not registered' },
+  { value: 'yes', label: 'VAT registered' },
+];
+
 export const CashFlowSettings = ({
   startingBalance,
   emergencyFundTarget,
+  vatRegistered,
   vatQuarter,
   selectedScenario,
   vatScheme,
@@ -36,6 +44,7 @@ export const CashFlowSettings = ({
   cardFeesPercent,
   monthlyLoanRepayments,
   flatRatePercent,
+  priorYearTaxAndNI,
   scenarios,
   onUpdate,
 }: CashFlowSettingsProps) => {
@@ -65,11 +74,14 @@ export const CashFlowSettings = ({
           onChange={(val) => onUpdate({ emergencyFundTarget: parseFloat(val) || 0 })}
           hint="Target emergency reserve"
         />
-        <CalculatorSelect
-          label="VAT Quarter"
-          value={vatQuarter.toString()}
-          onChange={(val) => onUpdate({ vatQuarter: parseInt(val) })}
-          options={vatQuarterOptions}
+        <CalculatorInput
+          label="Last Year's Tax + NI Bill"
+          unit="£"
+          type="text"
+          inputMode="decimal"
+          value={priorYearTaxAndNI.toString()}
+          onChange={(val) => onUpdate({ priorYearTaxAndNI: parseFloat(val) || 0 })}
+          hint="Schedules 31 Jan & 31 Jul payments on account"
         />
         <CalculatorSelect
           label="Active Scenario"
@@ -78,11 +90,28 @@ export const CashFlowSettings = ({
           options={scenarios.map((s) => ({ value: s.id, label: s.name }))}
         />
         <CalculatorSelect
-          label="VAT Scheme"
-          value={vatScheme}
-          onChange={(val) => onUpdate({ vatScheme: val })}
-          options={vatSchemeOptions}
+          label="VAT Status"
+          value={vatRegistered ? 'yes' : 'no'}
+          onChange={(val) => onUpdate({ vatRegistered: val === 'yes' })}
+          options={vatRegisteredOptions}
+          hint="Threshold is £90,000 turnover"
         />
+        {vatRegistered && (
+          <CalculatorSelect
+            label="VAT Quarter"
+            value={vatQuarter.toString()}
+            onChange={(val) => onUpdate({ vatQuarter: parseInt(val) })}
+            options={vatQuarterOptions}
+          />
+        )}
+        {vatRegistered && (
+          <CalculatorSelect
+            label="VAT Scheme"
+            value={vatScheme}
+            onChange={(val) => onUpdate({ vatScheme: val })}
+            options={vatSchemeOptions}
+          />
+        )}
         <CalculatorInput
           label="Bad Debt %"
           unit="%"
@@ -109,7 +138,7 @@ export const CashFlowSettings = ({
           value={monthlyLoanRepayments.toString()}
           onChange={(val) => onUpdate({ monthlyLoanRepayments: parseFloat(val) || 0 })}
         />
-        {vatScheme === 'flat-rate' && (
+        {vatRegistered && vatScheme === 'flat-rate' && (
           <CalculatorInput
             label="Flat Rate %"
             unit="%"
@@ -117,10 +146,15 @@ export const CashFlowSettings = ({
             inputMode="decimal"
             value={flatRatePercent.toString()}
             onChange={(val) => onUpdate({ flatRatePercent: parseFloat(val) || 0 })}
-            hint="Typical 12.5% for services"
+            hint="Applied to VAT-inclusive turnover"
           />
         )}
       </div>
+
+      <p className="text-xs text-white">
+        Enter every income and expense figure excluding VAT. Where you are registered, receipts are
+        grossed up at 20% and the VAT is paid over one month and 7 days after each quarter end.
+      </p>
     </div>
   );
 };

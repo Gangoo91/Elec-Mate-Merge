@@ -24,7 +24,12 @@ import {
 } from '@/components/calculators/shared';
 
 const currency = (n: number) => `£${n.toFixed(2)}`;
-const roundTo = (n: number, step: number) => Math.round(n / step) * step;
+/**
+ * Round a price UP to the next step. This used to be `Math.round`, which on a
+ * £5 step pulled a £62 minimum down to £60 — a "minimum charge" that is £2 below
+ * the minimum it just calculated. A floor price may only ever be rounded up.
+ */
+const roundUpTo = (n: number, step: number) => Math.ceil(n / step) * step;
 const validateInput = (value: number, min: number, max: number) => {
   return Math.max(min, Math.min(max, value));
 };
@@ -36,6 +41,10 @@ const MinimumChargeCalculator: React.FC = () => {
   const [adminMins, setAdminMins] = React.useState('15');
   const [hourlyCost, setHourlyCost] = React.useState('30');
   const [overheadHr, setOverheadHr] = React.useState('10');
+  // Both inputs above are COSTS. Without a margin the tool priced every hour
+  // after the first at exactly cost, so a "profitable call-out pricing" tool
+  // returned a break-even price. Margin is now explicit and applies to all hours.
+  const [targetMargin, setTargetMargin] = React.useState('20');
   const [firstHourPremium, setFirstHourPremium] = React.useState('25');
   const [vatRegistered, setVatRegistered] = React.useState(true);
   const [vatRate, setVatRate] = React.useState('20');
@@ -49,20 +58,36 @@ const MinimumChargeCalculator: React.FC = () => {
   const adminMinsNum = validateInput(parseFloat(adminMins) || 0, 0, 120);
   const hourlyCostNum = validateInput(parseFloat(hourlyCost) || 0, 0, 200);
   const overheadHrNum = validateInput(parseFloat(overheadHr) || 0, 0, 100);
+  const targetMarginNum = validateInput(parseFloat(targetMargin) || 0, 0, 95);
   const firstHourPremiumNum = validateInput(parseFloat(firstHourPremium) || 0, 0, 100);
   const vatRateNum = validateInput(parseFloat(vatRate) || 0, 0, 20);
   const roundingNum = validateInput(parseFloat(rounding) || 1, 1, 50);
 
-  const timeCost = ((travelMinsNum + adminMinsNum) / 60) * (hourlyCostNum + overheadHrNum);
-  const firstHourBase = hourlyCostNum + overheadHrNum + timeCost;
-  const firstHourUplift = firstHourBase * (1 + firstHourPremiumNum / 100);
-  const firstHourRounded = roundTo(firstHourUplift, roundingNum);
+  const costPerHour = hourlyCostNum + overheadHrNum;
+  // Travel is a RETURN journey. The input is labelled "average one-way travel"
+  // but only one leg was ever costed, so half the driving on every job was
+  // unpaid. 30 minutes each way at £40/hr is £40, not £20.
+  const travelMinsReturn = travelMinsNum * 2;
+  const timeCost = ((travelMinsReturn + adminMinsNum) / 60) * costPerHour;
+
+  // MARGIN, not markup: margin is a share of the SELLING price, so
+  // price = cost / (1 − margin). Applied to every hour — previously nothing
+  // carried a margin and subsequent hours were sold at cost.
+  const priceFromMargin = (cost: number) =>
+    targetMarginNum > 0 ? cost / (1 - targetMarginNum / 100) : cost;
+
+  const firstHourCost = costPerHour + timeCost;
+  const firstHourAtMargin = priceFromMargin(firstHourCost);
+  // The first-hour premium is deliberately a MARKUP on top of the margin-priced
+  // hour — it is a short-job surcharge, not a second margin.
+  const firstHourUplift = firstHourAtMargin * (1 + firstHourPremiumNum / 100);
+  const firstHourRounded = roundUpTo(firstHourUplift, roundingNum);
   const firstHourIncVat = vatRegistered
     ? firstHourRounded * (1 + vatRateNum / 100)
     : firstHourRounded;
 
-  const subsequentHourBase = hourlyCostNum + overheadHrNum;
-  const subsequentHourRounded = roundTo(subsequentHourBase, roundingNum);
+  const subsequentHourBase = priceFromMargin(costPerHour);
+  const subsequentHourRounded = roundUpTo(subsequentHourBase, roundingNum);
   const subsequentIncVat = vatRegistered
     ? subsequentHourRounded * (1 + vatRateNum / 100)
     : subsequentHourRounded;
@@ -79,6 +104,7 @@ const MinimumChargeCalculator: React.FC = () => {
     setAdminMins('15');
     setHourlyCost('30');
     setOverheadHr('10');
+    setTargetMargin('20');
     setFirstHourPremium('25');
     setVatRegistered(true);
     setVatRate('20');
@@ -149,7 +175,7 @@ const MinimumChargeCalculator: React.FC = () => {
                 setCalculated(false);
               }}
               placeholder="e.g., 30"
-              hint="Average one-way travel"
+              hint="One way — the return leg is added for you"
             />
 
             <CalculatorInput
@@ -185,7 +211,7 @@ const MinimumChargeCalculator: React.FC = () => {
                 setCalculated(false);
               }}
               placeholder="e.g., 30"
-              hint="Wages, NI, pension, van"
+              hint="Loaded cost per BILLABLE hour (Staff Cost Calculator)"
             />
 
             <CalculatorInput
@@ -211,6 +237,20 @@ const MinimumChargeCalculator: React.FC = () => {
 
           <div className="grid grid-cols-2 gap-3">
             <CalculatorInput
+              label="Target Margin"
+              unit="%"
+              type="text"
+              inputMode="decimal"
+              value={targetMargin}
+              onChange={(val) => {
+                setTargetMargin(val);
+                setCalculated(false);
+              }}
+              placeholder="e.g., 20"
+              hint="Share of the price, applied to every hour"
+            />
+
+            <CalculatorInput
               label="First Hour Premium"
               unit="%"
               type="text"
@@ -221,7 +261,7 @@ const MinimumChargeCalculator: React.FC = () => {
                 setCalculated(false);
               }}
               placeholder="e.g., 25"
-              hint="Extra margin for short jobs"
+              hint="Short-job surcharge on top of margin"
             />
 
             <CalculatorInput
@@ -235,7 +275,7 @@ const MinimumChargeCalculator: React.FC = () => {
                 setCalculated(false);
               }}
               placeholder="e.g., 5"
-              hint="Nearest £5 or £10"
+              hint="Rounded up — never below your minimum"
             />
           </div>
 
@@ -362,7 +402,7 @@ const MinimumChargeCalculator: React.FC = () => {
                   size="sm"
                 />
                 <ResultValue
-                  label="Subsequent Hours"
+                  label={`Subsequent Hours (${vatRegistered ? 'inc' : 'ex'} VAT)`}
                   value={currency(vatRegistered ? subsequentIncVat : subsequentHourRounded)}
                   category="business"
                   size="sm"
@@ -392,7 +432,7 @@ const MinimumChargeCalculator: React.FC = () => {
                 >
                   {currency(exampleTotal)}
                 </strong>{' '}
-                total
+                total {vatRegistered ? 'inc VAT' : 'ex VAT'}
               </p>
             </div>
 
@@ -417,15 +457,23 @@ const MinimumChargeCalculator: React.FC = () => {
                 <CollapsibleContent className="p-4 pt-0">
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between items-center py-2 border-b border-white/10">
-                      <span className="text-white">Base labour (1 hour)</span>
+                      <span className="text-white">Base cost (1 hour)</span>
                       <span className="text-white font-mono font-semibold">
-                        {currency(hourlyCostNum + overheadHrNum)}
+                        {currency(costPerHour)}
                       </span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-white/10">
-                      <span className="text-white">Travel & admin time cost</span>
+                      <span className="text-white">
+                        Travel ({travelMinsReturn} mins return) &amp; admin ({adminMinsNum} mins)
+                      </span>
                       <span className="text-white font-mono font-semibold">
                         + {currency(timeCost)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-white/10">
+                      <span className="text-white">Margin ({targetMarginNum}% of price)</span>
+                      <span className="text-white font-mono font-semibold">
+                        + {currency(firstHourAtMargin - firstHourCost)}
                       </span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-white/10">
@@ -433,7 +481,13 @@ const MinimumChargeCalculator: React.FC = () => {
                         First hour premium ({firstHourPremiumNum}%)
                       </span>
                       <span className="text-white font-mono font-semibold">
-                        + {currency(firstHourUplift - firstHourBase)}
+                        + {currency(firstHourUplift - firstHourAtMargin)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-white/10">
+                      <span className="text-white">Rounded up to nearest £{roundingNum}</span>
+                      <span className="text-white font-mono font-semibold">
+                        + {currency(firstHourRounded - firstHourUplift)}
                       </span>
                     </div>
                     <div className="flex justify-between items-center py-2 font-medium bg-white/5 px-2 rounded">

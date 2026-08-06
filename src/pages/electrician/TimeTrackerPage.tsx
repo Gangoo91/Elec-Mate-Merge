@@ -2,28 +2,20 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Timer,
-  Play,
-  Square,
-  Clock,
-  PoundSterling,
   ChevronRight,
   FileText,
   Plus,
   CheckCircle2,
-  AlertCircle,
   ArrowLeft,
   Pencil,
   Trash2,
   X,
-  StickyNote,
   Loader2,
   FolderOpen,
   ChevronDown,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   AlertDialog,
@@ -47,6 +39,14 @@ import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import { v4 as uuidv4 } from 'uuid';
 import { useHaptic } from '@/hooks/useHaptic';
+import { cn } from '@/lib/utils';
+import { cardCn, chipOff, chipOn, warningPanelCn } from '@/components/shared/surfaceStyles';
+import TimeTrackerSummary, {
+  type TimeMetrics,
+} from '@/components/electrician/time-tracker/TimeTrackerSummary';
+import RunningTimerCard from '@/components/electrician/time-tracker/RunningTimerCard';
+import StartSessionCard from '@/components/electrician/time-tracker/StartSessionCard';
+import SessionRow from '@/components/electrician/time-tracker/SessionRow';
 
 // ─── State machine ───────────────────────────────────────────
 type PageState = 'idle' | 'running' | 'summary' | 'success';
@@ -195,8 +195,22 @@ const TimeTrackerPage = () => {
     setSelectedIds(new Set());
   }, []);
 
-  // ─── Metrics: today / this week / to bill ─────────────────────
-  const metrics = useMemo(() => {
+  // ─── Metrics: today / this week / ready to bill ────────────────
+  /*
+   * Two corrections here beyond the arithmetic.
+   *
+   * 1. Unbilled time is SPLIT into what is ready and what looks like a
+   *    forgotten timer, instead of being summed into one figure. One session
+   *    left running from 20 to 27 July was £9,117.41 of a £9,118.80 total: the
+   *    headline was 99.98% phantom and the £1.39 that could actually be
+   *    invoiced was invisible. Nothing is hidden — both halves are shown.
+   *
+   * 2. The RUNNING session now counts towards today and this week. It did not
+   *    before, because those totals read `duration_seconds`, which is null
+   *    until a session is stopped — so the page showed "Today 0m" to someone
+   *    who had been on the clock since breakfast.
+   */
+  const metrics = useMemo<TimeMetrics>(() => {
     const now = new Date();
     const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const dayOfWeek = (now.getDay() + 6) % 7; // Monday = 0
@@ -207,9 +221,13 @@ const TimeTrackerPage = () => {
     let todayVal = 0;
     let weekSec = 0;
     let weekVal = 0;
-    let billSec = 0;
-    let billVal = 0;
-    let billCount = 0;
+    let readySec = 0;
+    let readyVal = 0;
+    let readyCount = 0;
+    let checkSec = 0;
+    let checkVal = 0;
+    let checkCount = 0;
+
     for (const s of sessions) {
       const sec = s.duration_seconds ?? 0;
       const rate = s.hourly_rate ?? hourlyRate;
@@ -224,18 +242,59 @@ const TimeTrackerPage = () => {
         weekVal += val;
       }
       if (!s.invoice_id && sec > 0) {
-        billSec += sec;
-        billVal += val;
-        billCount += 1;
+        if (sec >= RUNAWAY_SESSION_SECONDS) {
+          checkSec += sec;
+          checkVal += val;
+          checkCount += 1;
+        } else {
+          readySec += sec;
+          readyVal += val;
+          readyCount += 1;
+        }
       }
     }
-    return { todaySec, todayVal, weekSec, weekVal, billSec, billVal, billCount };
-  }, [sessions, hourlyRate]);
+
+    if (activeSession) {
+      const rate = activeSession.hourly_rate ?? hourlyRate;
+      const val = calculateValue(elapsedSeconds, rate);
+      const start = new Date(activeSession.started_at);
+      if (start >= todayStart) {
+        todaySec += elapsedSeconds;
+        todayVal += val;
+      }
+      if (start >= weekStart) {
+        weekSec += elapsedSeconds;
+        weekVal += val;
+      }
+    }
+
+    return {
+      readySec,
+      readyVal,
+      readyCount,
+      checkSec,
+      checkVal,
+      checkCount,
+      todaySec,
+      todayVal,
+      weekSec,
+      weekVal,
+    };
+  }, [sessions, hourlyRate, activeSession, elapsedSeconds]);
 
   const filteredSessions = useMemo(
     () => (notInvoicedOnly ? sessions.filter((s) => !s.invoice_id) : sessions),
     [sessions, notInvoicedOnly]
   );
+
+  /* The most recent session's description, offered as a one-tap repeat. The
+     same job usually spans several visits, and 17 of the 44 sessions on record
+     have no description at all — the cheapest way to fix that is to make
+     reusing the last one easier than skipping the field. */
+  const lastSessionLabel = useMemo(() => {
+    const withLabel = sessions.find((s) => (s.label ?? '').trim().length > 0);
+    return withLabel?.label?.trim() ?? null;
+  }, [sessions]);
 
   // Un-invoiced sessions long enough to be a forgotten timer. Surfaced before
   // the user reaches the invoice step, because that is the point at which a
@@ -247,6 +306,15 @@ const TimeTrackerPage = () => {
       ),
     [sessions]
   );
+
+  /*
+   * The detector above can only see FINISHED sessions, because `duration_seconds`
+   * is null until a timer is stopped. So the one case it was built for — a timer
+   * still running away right now — was the one case it could never catch. On
+   * live data there is a session that has been running since 27 July: ten days,
+   * invisible to the warning, and contributing nothing to any total.
+   */
+  const activeIsRunaway = !!activeSession && elapsedSeconds >= RUNAWAY_SESSION_SECONDS;
 
   // Cross-page hand-off — Projects page sets `time-tracker-prefill` in
   // sessionStorage when the user taps "Start timer" on a project card. We
@@ -848,25 +916,25 @@ const TimeTrackerPage = () => {
   // ─── Render ──────────────────────────────────────────────
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background min-h-screen pb-24">
-      {/* Sticky compact header — matches Tasks/Calendar pattern */}
-      <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 lg:px-8 py-2 lg:max-w-[1200px] lg:mx-auto">
-          <div className="flex items-center justify-between h-11">
-            <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => navigate('/electrician/business')}
-                className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </Button>
-              <h1 className="text-lg font-bold text-white">Time Tracker</h1>
-            </div>
+      {/* Sticky header — same construction as the Price Book and the Calendar */}
+      <div className="sticky top-0 z-30 border-b border-white/[0.10] bg-background/95 backdrop-blur-sm">
+        <div className="px-4 py-2 lg:mx-auto lg:max-w-[1200px] lg:px-8">
+          <div className="flex h-11 items-center gap-2">
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/business')}
+              aria-label="Back to Business Hub"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white transition-colors hover:bg-white/10 touch-manipulation active:scale-[0.98]"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </button>
+            <h1 className="min-w-0 flex-1 truncate text-[19px] font-semibold tracking-tight text-white">
+              Time Tracker
+            </h1>
             <button
               type="button"
               onClick={() => navigate('/settings')}
-              className="text-[12px] font-medium text-white hover:text-white px-3 h-9 rounded-lg hover:bg-white/[0.06] touch-manipulation"
+              className="h-11 shrink-0 rounded-xl px-3 text-[13px] font-semibold text-elec-yellow transition-colors hover:bg-elec-yellow/[0.10] touch-manipulation"
             >
               {formatCurrency(hourlyRate)}/hr
             </button>
@@ -874,81 +942,21 @@ const TimeTrackerPage = () => {
         </div>
       </div>
 
-      {/*
-        Hero metrics. Previously three equal columns, which put the two numbers
-        that are usually £0.00 (today, this week) across two-thirds of the width
-        and squeezed the one actionable figure — what you're owed — into a third,
-        where £9,118.80 ran to the card edges. To bill now leads at full width;
-        today and this week sit beneath it as supporting context.
-      */}
-      <div className="px-4 lg:px-8 pt-4 lg:max-w-[1200px] lg:mx-auto space-y-2 sm:space-y-3 lg:space-y-0 lg:grid lg:grid-cols-4 lg:gap-3 lg:items-stretch">
-        <button
-          type="button"
-          onClick={() => {
+      <div className="px-4 pt-4 lg:mx-auto lg:max-w-[1200px] lg:px-8">
+        <TimeTrackerSummary
+          metrics={metrics}
+          formatDuration={formatDuration}
+          formatCurrency={formatCurrency}
+          filtered={notInvoicedOnly}
+          onToggleFilter={() => {
             haptic.selection();
             setNotInvoicedOnly((v) => !v);
           }}
-          className={`w-full lg:col-span-2 rounded-xl border px-4 py-3.5 text-left touch-manipulation transition-colors ${
-            metrics.billCount > 0
-              ? notInvoicedOnly
-                ? 'bg-emerald-500/[0.10] border-emerald-500/40'
-                : 'bg-emerald-500/[0.06] border-emerald-500/25 hover:bg-emerald-500/[0.10]'
-              : 'bg-white/[0.03] border-white/[0.06]'
-          }`}
-          aria-pressed={notInvoicedOnly}
-        >
-          <div className="flex items-baseline justify-between gap-3">
-            <p
-              className={`text-[10px] font-semibold uppercase tracking-[0.16em] ${
-                metrics.billCount > 0 ? 'text-emerald-400' : 'text-white'
-              }`}
-            >
-              To bill {metrics.billCount > 0 ? `· ${metrics.billCount}` : ''}
-            </p>
-            {metrics.billCount > 0 && (
-              <span className="text-[10.5px] font-medium text-white">
-                {notInvoicedOnly ? 'Showing unbilled' : 'Tap to filter'}
-              </span>
-            )}
-          </div>
-          <div className="mt-1.5 flex items-baseline justify-between gap-3">
-            <p className="text-[26px] sm:text-[30px] font-bold text-white tabular-nums leading-none">
-              {formatCurrency(metrics.billVal)}
-            </p>
-            <p className="text-[13px] text-white tabular-nums shrink-0">
-              {formatDuration(metrics.billSec)}
-            </p>
-          </div>
-        </button>
-
-        <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:contents">
-          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] px-3.5 py-2.5 lg:flex lg:flex-col lg:justify-center">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
-              Today
-            </p>
-            <p className="mt-1 flex items-baseline gap-2">
-              <span className="text-[17px] font-bold text-white tabular-nums leading-none">
-                {formatDuration(metrics.todaySec)}
-              </span>
-              <span className="text-[11.5px] text-emerald-400 tabular-nums">
-                {formatCurrency(metrics.todayVal)}
-              </span>
-            </p>
-          </div>
-          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] px-3.5 py-2.5 lg:flex lg:flex-col lg:justify-center">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
-              This week
-            </p>
-            <p className="mt-1 flex items-baseline gap-2">
-              <span className="text-[17px] font-bold text-white tabular-nums leading-none">
-                {formatDuration(metrics.weekSec)}
-              </span>
-              <span className="text-[11.5px] text-emerald-400 tabular-nums">
-                {formatCurrency(metrics.weekVal)}
-              </span>
-            </p>
-          </div>
-        </div>
+          onShowFlagged={() => {
+            haptic.selection();
+            setNotInvoicedOnly(true);
+          }}
+        />
       </div>
 
       {/* Main content area */}
@@ -981,7 +989,7 @@ const TimeTrackerPage = () => {
                 animate={{ scale: 1 }}
                 transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.1 }}
               >
-                <CheckCircle2 className="h-20 w-20 text-emerald-400" />
+                <CheckCircle2 className="h-20 w-20 text-elec-yellow" />
               </motion.div>
               <p className="text-xl font-bold text-white mt-4">Saved</p>
             </motion.div>
@@ -996,123 +1004,36 @@ const TimeTrackerPage = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] overflow-hidden">
-                <div className="p-6 sm:p-8 flex flex-col items-center">
-                  {/* Elapsed time */}
-                  <div className="relative">
-                    <p className="font-mono text-6xl sm:text-7xl font-bold text-emerald-400 tracking-tight">
-                      {formatTime(elapsedSeconds)}
-                    </p>
-                  </div>
-
-                  <p className="text-white text-sm mt-2">
-                    Started at {formatStartTime(activeSession.started_at)}
-                  </p>
-
-                  {/* Editable label */}
-                  <div className="mt-4 w-full max-w-xs">
-                    {editingLabel ? (
-                      <div className="flex items-center gap-2">
-                        <Input
-                          value={editLabelValue}
-                          onChange={(e) => setEditLabelValue(e.target.value)}
-                          placeholder="Job description"
-                          className="h-11 text-base touch-manipulation border-white/[0.12] focus:border-emerald-500 focus:ring-emerald-500 bg-white/[0.04] text-white"
-                          autoFocus
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter') handleSaveLabel();
-                            if (e.key === 'Escape') setEditingLabel(false);
-                          }}
-                        />
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          onClick={handleSaveLabel}
-                          className="h-11 w-11 text-emerald-400 hover:text-emerald-300 hover:bg-white/10 touch-manipulation"
-                        >
-                          <CheckCircle2 className="h-5 w-5" />
-                        </Button>
-                      </div>
-                    ) : (
-                      <button
-                        onClick={() => {
-                          setEditLabelValue(activeSession.label || '');
-                          setEditingLabel(true);
-                        }}
-                        className="flex items-center gap-2 text-white hover:text-white transition-colors mx-auto touch-manipulation"
-                      >
-                        <Pencil className="h-3.5 w-3.5" />
-                        <span className="text-sm">
-                          {activeSession.label || 'Add job description'}
-                        </span>
-                      </button>
-                    )}
-                  </div>
-
-                  {/* Notes */}
-                  <div className="mt-3 w-full max-w-xs">
-                    {showNotes ? (
-                      <div className="space-y-2">
-                        <Textarea
-                          value={notesValue}
-                          onChange={(e) => setNotesValue(e.target.value)}
-                          placeholder="Add notes..."
-                          className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-emerald-500/20 border-white/[0.12] focus:border-emerald-500 bg-white/[0.04] text-white"
-                          autoFocus
-                        />
-                        <div className="flex gap-2 justify-end">
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            onClick={() => setShowNotes(false)}
-                            className="text-white hover:text-white hover:bg-white/10 touch-manipulation h-11"
-                          >
-                            Cancel
-                          </Button>
-                          <Button
-                            size="sm"
-                            onClick={handleSaveNotes}
-                            className="bg-emerald-500 text-white hover:bg-emerald-400 touch-manipulation h-11"
-                          >
-                            Save
-                          </Button>
-                        </div>
-                      </div>
-                    ) : (
-                      <button
-                        onClick={() => {
-                          setNotesValue(activeSession.notes || '');
-                          setShowNotes(true);
-                        }}
-                        className="flex items-center gap-2 text-white hover:text-white transition-colors mx-auto text-sm touch-manipulation"
-                      >
-                        <StickyNote className="h-3.5 w-3.5" />
-                        <span>{activeSession.notes ? 'Edit notes' : 'Add notes'}</span>
-                      </button>
-                    )}
-                  </div>
-
-                  {/* Stop button */}
-                  <motion.div className="w-full mt-8" whileTap={{ scale: 0.97 }}>
-                    <Button
-                      onClick={handleStop}
-                      className="w-full h-12 text-[15px] font-semibold bg-red-500 hover:bg-red-400 text-white border-0 rounded-xl touch-manipulation active:scale-[0.98]"
-                    >
-                      <Square className="h-4 w-4 mr-2 fill-white" />
-                      Stop timer
-                    </Button>
-                  </motion.div>
-                </div>
-
-                {/* Pulsing ring indicator */}
-                <div className="flex justify-center pb-4">
-                  <motion.div
-                    className="w-3 h-3 rounded-full bg-red-500"
-                    animate={{ scale: [1, 1.3, 1], opacity: [1, 0.6, 1] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  />
-                </div>
-              </div>
+              <RunningTimerCard
+                elapsedSeconds={elapsedSeconds}
+                startedAt={activeSession.started_at}
+                label={activeSession.label ?? null}
+                notes={activeSession.notes ?? null}
+                hourlyRate={activeSession.hourly_rate ?? hourlyRate}
+                runawaySeconds={RUNAWAY_SESSION_SECONDS}
+                editingLabel={editingLabel}
+                editLabelValue={editLabelValue}
+                onEditLabelChange={setEditLabelValue}
+                onBeginEditLabel={() => {
+                  setEditLabelValue(activeSession.label || '');
+                  setEditingLabel(true);
+                }}
+                onSaveLabel={handleSaveLabel}
+                onCancelEditLabel={() => setEditingLabel(false)}
+                showNotes={showNotes}
+                notesValue={notesValue}
+                onNotesChange={setNotesValue}
+                onBeginNotes={() => {
+                  setNotesValue(activeSession.notes || '');
+                  setShowNotes(true);
+                }}
+                onSaveNotes={handleSaveNotes}
+                onCancelNotes={() => setShowNotes(false)}
+                onStop={handleStop}
+                formatTime={formatTime}
+                formatStartTime={formatStartTime}
+                formatCurrency={formatCurrency}
+              />
             </motion.div>
           )}
 
@@ -1131,14 +1052,14 @@ const TimeTrackerPage = () => {
                 <p className="text-2xl font-bold text-white">
                   {formatDurationLong(stoppedSession.duration_seconds ?? 0)}
                 </p>
-                <p className="text-emerald-400 text-sm mt-1">
+                <p className="text-elec-yellow text-sm mt-1">
                   @ {formatCurrency(stoppedSession.hourly_rate ?? hourlyRate)}/hr
                 </p>
               </div>
 
               {/* Value card */}
-              <div className="rounded-2xl bg-emerald-500/[0.08] border border-emerald-500/30 p-6 text-center">
-                <p className="text-5xl sm:text-6xl font-bold text-emerald-400 font-mono tabular-nums">
+              <div className="rounded-2xl bg-elec-yellow/[0.10] border border-elec-yellow/30 p-6 text-center">
+                <p className="text-5xl sm:text-6xl font-bold text-elec-yellow font-mono tabular-nums">
                   {formatCurrency(animatedValue)}
                 </p>
                 <p className="text-white text-sm mt-2">
@@ -1169,7 +1090,7 @@ const TimeTrackerPage = () => {
               <motion.div whileTap={{ scale: 0.97 }}>
                 <Button
                   onClick={() => setInvoiceSheetOpen(true)}
-                  className="w-full h-12 text-[15px] font-semibold bg-emerald-500 hover:bg-emerald-500/90 text-black border-0 rounded-xl touch-manipulation active:scale-[0.98]"
+                  className="w-full h-12 text-[15px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black border-0 rounded-xl touch-manipulation active:scale-[0.98]"
                 >
                   <FileText className="h-4 w-4 mr-2" />
                   Add to invoice
@@ -1203,94 +1124,38 @@ const TimeTrackerPage = () => {
               transition={{ duration: 0.3 }}
               className="space-y-4"
             >
-              {/* Rate warning — only when on default */}
+              {/* Rate warning — only when on the default */}
               {hourlyRate === 45 && (
-                <div className="rounded-xl border border-orange-500/25 bg-orange-500/[0.06] px-3.5 py-2.5 flex items-start gap-2.5">
-                  <AlertCircle className="h-4 w-4 text-orange-400 flex-shrink-0 mt-0.5" />
-                  <div className="text-[13px] leading-snug">
-                    <p className="text-orange-300 font-medium">Default rate in use</p>
-                    <p className="text-white mt-0.5">
-                      Set your hourly rate in{' '}
-                      <button
-                        onClick={() => navigate('/settings')}
-                        className="text-emerald-400 underline touch-manipulation"
-                      >
-                        Business Settings
-                      </button>
-                      .
-                    </p>
-                  </div>
+                <div className={warningPanelCn}>
+                  <p className="text-[13px] font-semibold text-orange-300">Default rate in use</p>
+                  <p className="mt-0.5 text-[12px] text-white">
+                    Every session is being costed at {formatCurrency(hourlyRate)}/hr.{' '}
+                    <button
+                      type="button"
+                      onClick={() => navigate('/settings')}
+                      className="font-semibold text-elec-yellow underline touch-manipulation"
+                    >
+                      Set your rate
+                    </button>
+                    .
+                  </p>
                 </div>
               )}
 
-              {/*
-                One "start a session" card rather than three stacked full-width
-                slabs (input, then button, then project chip). Grouping them
-                reads as a single control and reclaims a row of vertical space
-                on a phone, where the session list was being pushed off screen.
-              */}
-              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-3 space-y-2.5">
-                <Input
-                  value={jobLabel}
-                  onChange={(e) => setJobLabel(e.target.value)}
-                  placeholder="What's the job? (optional)"
-                  className="h-11 text-base touch-manipulation border-0 bg-transparent px-1 text-white placeholder:text-white/40 focus-visible:ring-0 focus-visible:ring-offset-0"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') handleStart();
-                  }}
-                />
-
-                <div className="flex items-center gap-2">
-                  {/* Project tag — secondary, truncates so Start never shrinks */}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      haptic.selection();
-                      setStartProjectPickerOpen(true);
-                    }}
-                    className={`flex min-w-0 flex-1 items-center gap-2 rounded-xl border px-3 h-11 touch-manipulation transition-colors ${
-                      startProject
-                        ? 'border-emerald-500/30 bg-emerald-500/[0.06] hover:bg-emerald-500/[0.10]'
-                        : 'border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.05]'
-                    }`}
-                  >
-                    <FolderOpen
-                      className={`h-4 w-4 shrink-0 ${
-                        startProject ? 'text-emerald-400' : 'text-white'
-                      }`}
-                    />
-                    <span className="min-w-0 flex-1 truncate text-left text-[13px] text-white">
-                      {startProject ? startProject.title : 'Tag a project'}
-                    </span>
-                    {startProject ? (
-                      <X
-                        className="h-3.5 w-3.5 shrink-0 text-white"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setStartProjectId(null);
-                        }}
-                      />
-                    ) : (
-                      <ChevronDown className="h-3.5 w-3.5 shrink-0 text-white" />
-                    )}
-                  </button>
-
-                  <motion.div whileTap={{ scale: isStarting ? 1 : 0.97 }} className="shrink-0">
-                    <Button
-                      onClick={handleStart}
-                      disabled={isStarting}
-                      className="h-11 px-4 text-[15px] font-semibold bg-emerald-500 hover:bg-emerald-400 text-white border-0 rounded-xl touch-manipulation disabled:opacity-70 active:scale-[0.98]"
-                    >
-                      {isStarting ? (
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      ) : (
-                        <Play className="h-4 w-4 mr-2 fill-white" />
-                      )}
-                      {isStarting ? 'Starting…' : 'Start'}
-                    </Button>
-                  </motion.div>
-                </div>
-              </div>
+              <StartSessionCard
+                jobLabel={jobLabel}
+                onJobLabelChange={setJobLabel}
+                projectTitle={startProject ? startProject.title : null}
+                onOpenProjectPicker={() => {
+                  haptic.selection();
+                  setStartProjectPickerOpen(true);
+                }}
+                onClearProject={() => setStartProjectId(null)}
+                onStart={handleStart}
+                isStarting={isStarting}
+                lastLabel={lastSessionLabel}
+                onRepeatLast={() => lastSessionLabel && setJobLabel(lastSessionLabel)}
+              />
             </motion.div>
           )}
         </AnimatePresence>
@@ -1303,23 +1168,25 @@ const TimeTrackerPage = () => {
             transition={{ delay: 0.2 }}
             className="mt-6 -mx-4 lg:-mx-0"
           >
-            {/* Forgotten-timer warning — before the invoice step, not after */}
-            {runawaySessions.length > 0 && (
-              <div className="mx-4 lg:mx-0 mb-3 rounded-xl border border-orange-500/25 bg-orange-500/[0.06] px-3.5 py-2.5 flex items-start gap-2.5">
-                <AlertCircle className="h-4 w-4 text-orange-400 flex-shrink-0 mt-0.5" />
-                <div className="text-[13px] leading-snug min-w-0">
-                  <p className="text-orange-300 font-medium">
-                    {runawaySessions.length === 1
+            {/* Forgotten-timer warning — before the invoice step, not after.
+                Covers the RUNNING timer as well: that case was invisible here,
+                because a session has no duration until it is stopped. */}
+            {(runawaySessions.length > 0 || activeIsRunaway) && (
+              <div className={cn(warningPanelCn, 'mx-4 mb-3 lg:mx-0')}>
+                <p className="text-[13px] font-semibold text-orange-300">
+                  {activeIsRunaway
+                    ? 'A timer is still running'
+                    : runawaySessions.length === 1
                       ? 'One session looks like a timer left running'
                       : `${runawaySessions.length} sessions look like timers left running`}
-                  </p>
-                  <p className="text-white mt-0.5">
-                    {runawaySessions.length === 1
-                      ? `${formatDuration(runawaySessions[0].duration_seconds ?? 0)} on one session — worth checking before you invoice it.`
-                      : 'Each is over 12 hours — worth checking before you invoice them.'}{' '}
-                    Tap a session to edit its times.
-                  </p>
-                </div>
+                </p>
+                <p className="mt-0.5 text-[12px] leading-snug text-white">
+                  {activeIsRunaway
+                    ? `It has been going ${formatDuration(elapsedSeconds)}. Stop it and correct the times before it lands on an invoice.`
+                    : runawaySessions.length === 1
+                      ? `${formatDuration(runawaySessions[0].duration_seconds ?? 0)} on one session — worth checking before you invoice it. Tap it to edit its times.`
+                      : 'Each is over 12 hours — worth checking before you invoice them. Tap one to edit its times.'}
+                </p>
               </div>
             )}
 
@@ -1328,32 +1195,29 @@ const TimeTrackerPage = () => {
               <h2 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white shrink-0">
                 Sessions
               </h2>
-              <div className="flex gap-1">
-                <button
-                  type="button"
-                  onClick={() => setNotInvoicedOnly(false)}
-                  className={`text-[12px] font-medium px-2.5 h-7 rounded-full touch-manipulation transition-colors ${
-                    !notInvoicedOnly
-                      ? 'bg-white/[0.10] text-white'
-                      : 'text-white hover:text-white hover:bg-white/[0.05]'
-                  }`}
-                >
-                  All
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setNotInvoicedOnly(true)}
-                  className={`text-[12px] font-medium px-2.5 h-7 rounded-full touch-manipulation transition-colors ${
-                    notInvoicedOnly
-                      ? 'bg-emerald-500/[0.15] text-emerald-400 ring-1 ring-emerald-500/30'
-                      : 'text-white hover:text-white hover:bg-white/[0.05]'
-                  }`}
-                >
-                  To bill
-                </button>
+              <div className="flex gap-2">
+                {(
+                  [
+                    { key: false, label: 'All' },
+                    { key: true, label: 'To bill' },
+                  ] as const
+                ).map((opt) => (
+                  <button
+                    key={opt.label}
+                    type="button"
+                    onClick={() => setNotInvoicedOnly(opt.key)}
+                    aria-pressed={notInvoicedOnly === opt.key}
+                    className={cn(
+                      'h-9 rounded-full border px-3.5 text-[12.5px] transition-colors touch-manipulation active:scale-[0.97]',
+                      notInvoicedOnly === opt.key ? chipOn : chipOff
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
               </div>
               <div className="ml-auto flex items-center gap-2">
-                <span className="text-[11px] font-medium text-white tabular-nums">
+                <span className="text-[12px] font-semibold text-white tabular-nums">
                   {filteredSessions.length}
                 </span>
                 {filteredSessions.some((s) => !s.invoice_id) && (
@@ -1363,11 +1227,7 @@ const TimeTrackerPage = () => {
                       if (selectMode) exitSelectMode();
                       else setSelectMode(true);
                     }}
-                    className={`text-[12px] font-medium px-2.5 h-7 rounded-full touch-manipulation transition-colors ${
-                      selectMode
-                        ? 'bg-white/[0.10] text-white'
-                        : 'text-white hover:text-white hover:bg-white/[0.05]'
-                    }`}
+                    className="h-9 rounded-full px-3 text-[12.5px] font-semibold text-elec-yellow transition-colors hover:bg-elec-yellow/[0.10] touch-manipulation"
                   >
                     {selectMode ? 'Cancel' : 'Select'}
                   </button>
@@ -1376,36 +1236,39 @@ const TimeTrackerPage = () => {
             </div>
 
             {filteredSessions.length === 0 ? (
-              <div className="px-4 lg:px-0 py-12 text-center">
-                <Clock className="h-7 w-7 text-white mx-auto mb-2" />
-                <p className="text-white text-[13px]">
+              <div className="px-4 py-14 text-center lg:px-0">
+                <h3 className="text-[15px] font-semibold tracking-tight text-white">
+                  {notInvoicedOnly ? 'Nothing waiting to be billed' : 'No sessions yet'}
+                </h3>
+                <p className="mx-auto mt-1.5 max-w-xs text-[13px] text-white">
                   {notInvoicedOnly
-                    ? 'Nothing waiting to be billed — everything is up to date.'
-                    : 'No sessions yet — tap Start when you arrive on site.'}
+                    ? 'Everything you have tracked is on an invoice.'
+                    : 'Tap Start when you get to site and the time costs itself.'}
                 </p>
               </div>
             ) : (
-              <div className="divide-y divide-white/[0.06]">
+              <div className={cn(cardCn, 'divide-y divide-white/[0.08] overflow-hidden')}>
                 {filteredSessions.map((session) => {
-                  const value = calculateValue(
-                    session.duration_seconds ?? 0,
-                    session.hourly_rate ?? hourlyRate
-                  );
-                  const isInvoiced = !!session.invoice_id;
-                  const isSelected = selectedIds.has(session.id);
-                  const selectable = !isInvoiced;
                   const linkedProject = session.project_id
-                    ? projects.find((p) => p.id === session.project_id)
+                    ? (projects.find((p) => p.id === session.project_id) ?? null)
                     : null;
                   return (
-                    <button
+                    <SessionRow
                       key={session.id}
-                      onClick={() => {
+                      session={session}
+                      value={calculateValue(
+                        session.duration_seconds ?? 0,
+                        session.hourly_rate ?? hourlyRate
+                      )}
+                      projectTitle={linkedProject ? linkedProject.title : null}
+                      flagged={(session.duration_seconds ?? 0) >= RUNAWAY_SESSION_SECONDS}
+                      selectMode={selectMode}
+                      selected={selectedIds.has(session.id)}
+                      onTap={() => {
                         if (selectMode) {
-                          // Distinct feel for select vs open — the same tap does
-                          // two different things depending on mode, so it should
-                          // not feel identical.
-                          if (selectable) {
+                          // A distinct feel for select vs open — the same tap
+                          // does two different things depending on mode.
+                          if (!session.invoice_id) {
                             haptic.selection();
                             toggleSelect(session.id);
                           }
@@ -1414,81 +1277,10 @@ const TimeTrackerPage = () => {
                         haptic.light();
                         setDetailSession(session);
                       }}
-                      className={`w-full flex items-center gap-3 px-4 py-3 transition-colors touch-manipulation text-left ${
-                        selectMode && !selectable
-                          ? 'opacity-40'
-                          : 'hover:bg-white/[0.03] active:bg-white/[0.05]'
-                      } ${isSelected ? 'bg-emerald-500/[0.06]' : ''}`}
-                    >
-                      {/* Leading — checkbox in select mode, status dot otherwise */}
-                      {selectMode ? (
-                        <span
-                          aria-hidden="true"
-                          className={`w-5 h-5 rounded-md shrink-0 flex items-center justify-center transition-colors ${
-                            !selectable
-                              ? 'bg-white/[0.04] border border-white/10'
-                              : isSelected
-                                ? 'bg-emerald-500 border border-emerald-500'
-                                : 'bg-transparent border-2 border-white/25'
-                          }`}
-                        >
-                          {isSelected && selectable && (
-                            <CheckCircle2 className="h-4 w-4 text-black" strokeWidth={2.4} />
-                          )}
-                        </span>
-                      ) : (
-                        <span
-                          aria-hidden="true"
-                          className={`w-1.5 h-1.5 rounded-full shrink-0 ${
-                            isInvoiced ? 'bg-emerald-400' : 'border-2 border-white bg-transparent'
-                          }`}
-                        />
-                      )}
-                      {/* Body */}
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[14px] font-medium text-white truncate leading-snug">
-                          {session.label ||
-                            (linkedProject ? linkedProject.title : 'Untitled session')}
-                        </p>
-                        {/*
-                          Starting a timer from a project card copies the project
-                          title into the label, so both lines rendered the SAME
-                          truncated string — and the project name then pushed the
-                          billing status off the end, hiding the one thing that
-                          matters most in this list. Only show the project when it
-                          actually adds information.
-                        */}
-                        <p className="text-[11.5px] text-white truncate leading-snug mt-0.5">
-                          {formatSessionDate(session.started_at)}
-                          {linkedProject &&
-                          session.label &&
-                          linkedProject.title.trim().toLowerCase() !==
-                            session.label.trim().toLowerCase()
-                            ? ` · ${linkedProject.title}`
-                            : ''}
-                          {' · '}
-                          {isInvoiced ? 'invoiced' : 'awaiting invoice'}
-                        </p>
-                      </div>
-                      {/* Right — duration + value */}
-                      <div className="text-right shrink-0">
-                        <p
-                          className={`text-[13px] font-semibold tabular-nums leading-tight ${
-                            (session.duration_seconds ?? 0) >= RUNAWAY_SESSION_SECONDS
-                              ? 'text-orange-300'
-                              : 'text-white'
-                          }`}
-                        >
-                          {formatDuration(session.duration_seconds ?? 0)}
-                        </p>
-                        <p className="text-[11.5px] text-emerald-400 tabular-nums leading-tight">
-                          {formatCurrency(value)}
-                        </p>
-                      </div>
-                      {!selectMode && (
-                        <ChevronRight className="h-3.5 w-3.5 text-white shrink-0" />
-                      )}
-                    </button>
+                      formatDuration={formatDuration}
+                      formatCurrency={formatCurrency}
+                      formatSessionDate={formatSessionDate}
+                    />
                   );
                 })}
               </div>
@@ -1511,8 +1303,8 @@ const TimeTrackerPage = () => {
               onClick={handleNewInvoice}
               className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] p-4 flex items-center gap-3 active:bg-white/[0.08] transition-colors touch-manipulation"
             >
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center flex-shrink-0">
-                <Plus className="h-5 w-5 text-white" />
+              <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-elec-yellow">
+                <Plus className="h-5 w-5 text-black" />
               </div>
               <div className="text-left">
                 <p className="text-white font-semibold text-sm">New Invoice</p>
@@ -1586,7 +1378,7 @@ const TimeTrackerPage = () => {
                   </div>
                   <div className="rounded-xl bg-white/[0.04] p-3">
                     <p className="text-xs text-white mb-1">Value</p>
-                    <p className="text-emerald-400 font-mono font-bold tabular-nums">
+                    <p className="text-elec-yellow font-mono font-bold tabular-nums">
                       {formatCurrency(
                         calculateValue(
                           detailSession.duration_seconds ?? 0,
@@ -1639,7 +1431,7 @@ const TimeTrackerPage = () => {
                             type="datetime-local"
                             value={editStartLocal}
                             onChange={(e) => setEditStartLocal(e.target.value)}
-                            className="h-11 text-base touch-manipulation border-white/[0.10] focus:border-emerald-500 focus:ring-emerald-500 bg-white/[0.04] text-white"
+                            className="h-11 text-base touch-manipulation border-white/[0.10] focus:border-elec-yellow focus:ring-0 bg-white/[0.04] text-white"
                           />
                         </div>
                         <div>
@@ -1650,7 +1442,7 @@ const TimeTrackerPage = () => {
                             type="datetime-local"
                             value={editEndLocal}
                             onChange={(e) => setEditEndLocal(e.target.value)}
-                            className="h-11 text-base touch-manipulation border-white/[0.10] focus:border-emerald-500 focus:ring-emerald-500 bg-white/[0.04] text-white"
+                            className="h-11 text-base touch-manipulation border-white/[0.10] focus:border-elec-yellow focus:ring-0 bg-white/[0.04] text-white"
                           />
                         </div>
                         <div className="flex gap-2 pt-1">
@@ -1665,7 +1457,7 @@ const TimeTrackerPage = () => {
                           <Button
                             onClick={saveEditTimes}
                             disabled={savingTimes}
-                            className="flex-1 h-11 bg-emerald-500 hover:bg-emerald-500/90 text-black font-semibold touch-manipulation"
+                            className="flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
                           >
                             {savingTimes ? (
                               <Loader2 className="h-4 w-4 animate-spin" />
@@ -1688,11 +1480,12 @@ const TimeTrackerPage = () => {
 
                 <div className="flex items-center gap-2">
                   <span
-                    className={`text-xs font-bold uppercase px-2 py-1 rounded-full ${
+                    className={cn(
+                      'rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em]',
                       detailSession.invoice_id
-                        ? 'bg-emerald-500/20 text-emerald-400'
-                        : 'bg-emerald-500/20 text-emerald-400'
-                    }`}
+                        ? 'bg-white/[0.10] text-white'
+                        : 'bg-elec-yellow/20 text-elec-yellow'
+                    )}
                   >
                     {detailSession.invoice_id ? 'Invoiced' : 'Not invoiced'}
                   </span>
@@ -1705,13 +1498,13 @@ const TimeTrackerPage = () => {
                       onClick={() => setProjectPickerOpen(true)}
                       className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl border touch-manipulation transition-colors ${
                         detailProjectId
-                          ? 'border-emerald-500/30 bg-emerald-500/[0.06] hover:bg-emerald-500/[0.10]'
+                          ? 'border-elec-yellow/30 bg-elec-yellow/[0.08] hover:bg-elec-yellow/[0.12]'
                           : 'border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.05]'
                       }`}
                     >
                       <FolderOpen
                         className={`h-4 w-4 shrink-0 ${
-                          detailProjectId ? 'text-emerald-400' : 'text-white'
+                          detailProjectId ? 'text-elec-yellow' : 'text-white'
                         }`}
                       />
                       <span className="flex-1 text-left text-sm text-white truncate">
@@ -1735,7 +1528,7 @@ const TimeTrackerPage = () => {
                     {/* Primary CTA — Create Invoice → opens full invoice wizard */}
                     <Button
                       onClick={handleOpenInvoiceWizard}
-                      className="w-full h-12 bg-emerald-500 hover:bg-emerald-500/90 text-black font-semibold rounded-xl touch-manipulation"
+                      className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-xl touch-manipulation"
                     >
                       <FileText className="h-4 w-4 mr-2" />
                       Create Invoice
@@ -1862,7 +1655,7 @@ const TimeTrackerPage = () => {
                     }}
                     className={`w-full rounded-xl border p-3.5 flex items-center gap-3 transition-colors touch-manipulation text-left ${
                       startProjectId === proj.id
-                        ? 'border-emerald-500/50 bg-emerald-500/[0.06]'
+                        ? 'border-elec-yellow/50 bg-elec-yellow/[0.08]'
                         : 'border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05]'
                     }`}
                   >
@@ -1876,7 +1669,7 @@ const TimeTrackerPage = () => {
                       )}
                     </div>
                     {startProjectId === proj.id && (
-                      <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-elec-yellow shrink-0" />
                     )}
                   </button>
                 ))}
@@ -1908,7 +1701,7 @@ const TimeTrackerPage = () => {
                   }}
                   className={`w-full rounded-xl border p-4 flex items-center gap-3 transition-colors touch-manipulation text-left ${
                     detailProjectId === proj.id
-                      ? 'border-emerald-500/50 bg-emerald-500/[0.06]'
+                      ? 'border-elec-yellow/50 bg-elec-yellow/[0.08]'
                       : 'border-white/[0.08] bg-white/[0.04] active:bg-white/[0.08]'
                   }`}
                 >
@@ -1922,7 +1715,7 @@ const TimeTrackerPage = () => {
                     )}
                   </div>
                   {detailProjectId === proj.id && (
-                    <CheckCircle2 className="h-4 w-4 text-emerald-400 flex-shrink-0" />
+                    <CheckCircle2 className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                   )}
                 </button>
               ))
@@ -1961,7 +1754,7 @@ const TimeTrackerPage = () => {
                 <Button
                   onClick={handleBillSelected}
                   disabled={billingMulti}
-                  className="h-10 px-4 text-[13.5px] font-semibold bg-emerald-500 hover:bg-emerald-500/90 text-black rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-60"
+                  className="h-10 px-4 text-[13.5px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-60"
                 >
                   {billingMulti ? (
                     <>

@@ -427,7 +427,7 @@ export default function AllPhotosTab() {
                 key={s}
                 onClick={() => setGridSize(s)}
                 aria-label={`${s === 'S' ? 'Small' : s === 'M' ? 'Medium' : 'Large'} thumbnails`}
-                className={`h-10 w-8 rounded-lg text-xs font-semibold touch-manipulation transition-colors ${
+                className={`h-10 w-11 rounded-lg text-[13px] font-semibold transition-colors touch-manipulation ${
                   gridSize === s ? 'bg-elec-yellow text-black' : 'text-white active:bg-white/10'
                 }`}
               >
@@ -449,10 +449,10 @@ export default function AllPhotosTab() {
         <div className="flex gap-2 overflow-x-auto scrollbar-hide">
           <button
             onClick={() => handleCategoryChange('all')}
-            className={`flex-shrink-0 h-8 px-3 rounded-full text-xs font-medium transition-colors touch-manipulation ${
+            className={`flex h-11 flex-shrink-0 items-center rounded-xl border px-3.5 text-[12.5px] transition-colors touch-manipulation ${
               !filters.category
-                ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-white'
-                : 'bg-white/5 border border-white/10 text-white active:bg-white/10'
+                ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                : 'border-white/[0.14] bg-white/[0.06] font-medium text-white hover:border-white/[0.24]'
             }`}
           >
             All
@@ -463,13 +463,12 @@ export default function AllPhotosTab() {
               onClick={() =>
                 handleCategoryChange(filters.category === cat.value ? 'all' : cat.value)
               }
-              className={`flex-shrink-0 flex items-center gap-1.5 h-8 px-3 rounded-full text-xs font-medium transition-colors touch-manipulation ${
+              className={`flex h-11 flex-shrink-0 items-center gap-1.5 rounded-xl border px-3.5 text-[12.5px] transition-colors touch-manipulation ${
                 filters.category === cat.value
-                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-white'
-                  : 'bg-white/5 border border-white/10 text-white active:bg-white/10'
+                  ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                  : 'border-white/[0.14] bg-white/[0.06] font-medium text-white hover:border-white/[0.24]'
               }`}
             >
-              <span className={`w-2 h-2 rounded-full ${cat.color}`} />
               {cat.label}
             </button>
           ))}
@@ -844,8 +843,7 @@ export default function AllPhotosTab() {
                     setShowFilters(false);
                   }}
                 >
-                  <span className={`w-3 h-3 rounded-full ${cat.color}`} />
-                  <span className="text-[10px] text-white text-center leading-tight">
+                  <span className="text-center text-[12px] leading-tight">
                     {cat.label.split(' ')[0]}
                   </span>
                 </button>

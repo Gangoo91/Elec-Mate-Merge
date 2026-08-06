@@ -44,6 +44,9 @@ interface PublicMockExamPageProps {
   questionsPerExam?: number;
   timeLimitMinutes?: number;
   passThreshold?: number;
+  /** Override the draw's difficulty profile. Only set where the bank's tags have
+   *  been validated against measured wrong-rates — see SEOMockExam. */
+  difficultyMix?: Record<string, number>;
   /** Topic label shown in the breadcrumb above the H1. */
   breadcrumbLabel?: string;
 }
@@ -82,6 +85,7 @@ export function PublicMockExamPage({
   intro,
   questionBank,
   questionsPerExam = 25,
+  difficultyMix,
   timeLimitMinutes = 30,
   passThreshold = 70,
   breadcrumbLabel = 'Mock exam',
@@ -294,6 +298,7 @@ export function PublicMockExamPage({
                 questionsPerExam={questionsPerExam}
                 timeLimitMinutes={timeLimitMinutes}
                 passThreshold={passThreshold}
+                difficultyMix={difficultyMix}
                 signupCta={{
                   label: 'Start Free Trial',
                   href: `/auth/signup?ref=mock-exam-${slug.replace(/\//g, '-')}`,

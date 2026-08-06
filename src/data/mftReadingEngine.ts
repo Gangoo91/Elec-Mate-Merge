@@ -149,7 +149,7 @@ export function generateReading(opts: GenerateReadingOptions): TestReading {
       value = clamp(value, 0.5, 999);
       value = roundTo(value, 1);
       displayValue = formatIR(value);
-      // BS 7671 Table 61: minimum 1.0MΩ for circuits ≤500V
+      // BS 7671 Table 64: minimum 1.0MΩ for circuits ≤500V
       compliant = value >= 1.0;
       break;
     }

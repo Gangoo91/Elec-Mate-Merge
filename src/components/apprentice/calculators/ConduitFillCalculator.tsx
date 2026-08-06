@@ -14,7 +14,32 @@ import {
   CalculatorEditorial,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+// FIX (consolidation): cable overall diameters / cross-sectional areas were inlined here and
+// disagreed with the shared module on every row. Cable OD is manufacturer data, not BS 7671 data,
+// so there must be ONE copy. Source of truth: src/lib/calculators/bs7671-data/trunkingData.ts.
+import { singlesPvc, getCableCSA } from '@/lib/calculators/bs7671-data/trunkingData';
+// FIX: grouping (Cg) was never applied. Table 4C1 is held correctly in the shared module — import
+// it rather than re-deriving. BS 7671 Reg 523.5 + Appendix 4 §2.3.1.
+import { getGroupingFactor } from '@/lib/calculators/bs7671-data/temperatureFactors';
 import { conduitFillContent } from './content/conduit-fill';
+
+// Indicative approximate mass per metre of PVC singles (6491X), kg/m.
+// NOT a BS 7671 quantity — manufacturer data, used only for the indicative pulling-tension
+// estimate below. BS 7671 gives no pulling-tension method (see Reg 522.8.6 NOTE).
+const cableMassKgPerM: Record<string, number> = {
+  '1': 0.05,
+  '1.5': 0.07,
+  '2.5': 0.1,
+  '4': 0.15,
+  '6': 0.22,
+  '10': 0.35,
+  '16': 0.55,
+  '25': 0.85,
+};
+
+// Coefficient of friction for PVC singles drawn through conduit — indicative industry figure.
+const FRICTION_COEFFICIENT = 0.3;
+const GRAVITY = 9.81;
 
 const ConduitFillCalculator = () => {
   const config = CALCULATOR_CONFIG['cable'];
@@ -23,7 +48,9 @@ const ConduitFillCalculator = () => {
   const [conduitMaterial, setConduitMaterial] = useState('pvc');
   const [cableSize, setCableSize] = useState('');
   const [cableQuantity, setCableQuantity] = useState('');
-  const [installationType, setInstallationType] = useState('straight');
+  const [circuits, setCircuits] = useState('1');
+  const [runLength, setRunLength] = useState('');
+  const [bendCount, setBendCount] = useState('0');
   const [fillTarget, setFillTarget] = useState('40');
   const [showGuidance, setShowGuidance] = useState(false);
   const [showRegs, setShowRegs] = useState(false);
@@ -32,13 +59,21 @@ const ConduitFillCalculator = () => {
     fillPercentage: number;
     maxCables: number;
     suitable: boolean;
-    actualFillTarget: number;
+    spaceFactor: number;
+    groupingFactor: number;
     bendRadius: number;
     warnings: string[];
     pullTension: number;
   } | null>(null);
 
-  // Enhanced conduit data with different materials - BS EN 61386-1
+  // Nominal internal bore and typical former bend radius by conduit size.
+  // NOTE: these are manufacturer/product figures. BS 7671, GN3 and the On-Site Guide publish no
+  // conduit bore table, and Reg 522.8.3 sets bend radius as a PERFORMANCE requirement only
+  // ("the radius of every bend ... such that conductors or cables do not suffer damage and
+  // terminations are not stressed") — it states no numeric radius. Treat as indicative and check
+  // the manufacturer's data. Formerly commented "BS EN 61386-1", which is wrong: BS EN 61386 is a
+  // conduit PRODUCT standard (corrosion class, impact class, flame propagation, fire test —
+  // Regs 422.3.4, 522.16, 527.1.5, 705.522.16) and carries no dimensional or fill data.
   const conduitData = {
     pvc: {
       '16': { diameter: 12.2, area: 117, bendRadius: 48 },
@@ -64,73 +99,91 @@ const ConduitFillCalculator = () => {
     },
   };
 
-  // Enhanced cable data for common UK cables
-  const cableData = {
-    '1.0': { diameter: 3.2, weight: 0.05 },
-    '1.5': { diameter: 3.6, weight: 0.07 },
-    '2.5': { diameter: 4.2, weight: 0.1 },
-    '4.0': { diameter: 4.8, weight: 0.15 },
-    '6.0': { diameter: 5.5, weight: 0.22 },
-    '10.0': { diameter: 6.8, weight: 0.35 },
-    '16.0': { diameter: 8.2, weight: 0.55 },
-    '25.0': { diameter: 10.5, weight: 0.85 },
-    '35.0': { diameter: 12.0, weight: 1.2 },
-  };
-
   const calculateConduitFill = () => {
     const conduit =
       conduitData[conduitMaterial as keyof typeof conduitData][
         conduitSize as keyof (typeof conduitData)[keyof typeof conduitData]
       ];
-    const cable = cableData[cableSize as keyof typeof cableData];
+    const cable = getCableCSA('singles-pvc', parseFloat(cableSize));
     const quantity = parseInt(cableQuantity);
-    const targetFill = parseFloat(fillTarget);
+    const spaceFactor = parseFloat(fillTarget);
+    const numCircuits = parseInt(circuits) || 1;
+    const bends = parseInt(bendCount) || 0;
+    const length = parseFloat(runLength) || 0;
 
-    if (!conduit || !cable || !quantity || !targetFill) return;
+    if (!conduit || !cable || !quantity || !spaceFactor) return;
 
-    const cableArea = Math.PI * Math.pow(cable.diameter / 2, 2);
+    // Shared module already holds the cross-sectional area for each cable — use it rather than
+    // re-deriving it from a locally inlined diameter.
+    const cableArea = cable.crossSectionalArea;
     const totalCableArea = cableArea * quantity;
     const fillPercentage = (totalCableArea / conduit.area) * 100;
 
-    // Determine actual fill target based on installation and cable count
-    let actualFillTarget = targetFill;
-    if (quantity === 1) actualFillTarget = 53;
-    else if (quantity === 2) actualFillTarget = 31;
-    else if (installationType === 'bends') actualFillTarget = Math.min(targetFill, 35);
-
-    // Calculate maximum cables that can fit
-    const maxFillArea = conduit.area * (actualFillTarget / 100);
+    // FIX: the previous code overrode the user's chosen space factor with 53% for a single cable
+    // and 31% for two cables, and silently discarded the bends reduction when it did so. Those
+    // percentages are the US NEC Chapter 9 Table 1 figures. No BS 7671, GN3 or On-Site Guide
+    // source states them — grep of the printed standard finds no "space factor", "cable factor"
+    // or "conduit factor" text at all, and the OSG holds conduit capacity in its own cable-factor
+    // tables (OSG 2.4; OSG 7.25, Table 4.6 / Appendix H) with no percentage figure. The chosen
+    // space factor is now used as entered, for every cable count.
+    //
+    // FIX: maxCables previously used a limit derived from the ENTERED quantity, so the answer
+    // contradicted itself (type 1 cable and it sized on 53%). With the override gone the limit no
+    // longer depends on the entered quantity.
+    const maxFillArea = conduit.area * (spaceFactor / 100);
     const maxCables = Math.floor(maxFillArea / cableArea);
 
-    const suitable = fillPercentage <= actualFillTarget;
+    const suitable = fillPercentage <= spaceFactor;
 
-    // Calculate approximate pulling tension (simplified)
-    const totalWeight = quantity * cable.weight;
-    const pullTension = totalWeight * 9.81 * 0.3; // Approximate friction coefficient
+    // FIX: grouping was never applied and the only warning was gated on quantity > 4 AND
+    // csa >= 10mm², which is wrong twice over. BS 7671 Reg 523.5 and Appendix 4 §2.3.1: group
+    // rating factors apply as soon as more than one circuit shares the enclosure, and Table 4C1 is
+    // independent of conductor csa. Cables in conduit are "bunched ... enclosed" — Table 4C1
+    // item 1 (2 circuits 0.80, 3 circuits 0.70, ...).
+    const groupingFactor = getGroupingFactor(numCircuits, 'bunched');
+
+    // Indicative pulling tension. NOT a BS 7671 quantity — Reg 522.8.6 only requires adequate
+    // means for drawing in or out, its NOTE saying pulling tensions, lubricants and intermediate
+    // pulling equipment are to be considered. No method is published in BS 7671, GN3 or the OSG.
+    // FIX: the old expression was mass x g x mu with no run length, so it produced newtons per
+    // metre while the UI labelled it "N", and the 100 N warning threshold was effectively
+    // unreachable. Straight run T = mu.w.g.L; each bend multiplies by the capstan factor
+    // e^(mu.theta) with theta = pi/2 for a 90 degree bend.
+    const massPerMetre = (cableMassKgPerM[cable.size.toString()] ?? 0) * quantity;
+    const straightTension = FRICTION_COEFFICIENT * massPerMetre * GRAVITY * length;
+    const capstan = Math.exp(FRICTION_COEFFICIENT * (Math.PI / 2) * bends);
+    const pullTension = straightTension * capstan;
 
     // Generate warnings
     const warnings: string[] = [];
-    if (fillPercentage > actualFillTarget) {
-      warnings.push(`Fill exceeds ${actualFillTarget}% limit for this configuration`);
+    if (fillPercentage > spaceFactor) {
+      warnings.push(`Fill exceeds the ${spaceFactor}% space factor — use the next conduit size up`);
     }
-    if (fillPercentage > 35 && installationType === 'bends') {
-      warnings.push('High fill percentage may cause pulling difficulties with bends');
+    if (bends >= 2 && fillPercentage > 30) {
+      warnings.push(
+        `${bends} bends at ${Math.round(fillPercentage)}% fill will be hard to draw in — reduce the fill or add a draw-in box`
+      );
     }
-    if (quantity > 4 && parseFloat(cableSize) >= 10) {
-      warnings.push('Large cables in groups may require derating consideration');
+    if (groupingFactor < 1) {
+      warnings.push(
+        `${numCircuits} circuits bunched in one conduit: apply Cg = ${groupingFactor.toFixed(2)} (Table 4C1) to each circuit's current-carrying capacity`
+      );
     }
-    if (conduitMaterial === 'pvc' && parseFloat(cableSize) >= 25) {
+    if (conduitMaterial === 'pvc' && cable.size >= 25) {
       warnings.push('Consider steel conduit for large cables and mechanical protection');
     }
-    if (pullTension > 100) {
-      warnings.push('High pulling tension - consider cable pulling lubricant');
+    if (pullTension > 500) {
+      warnings.push(
+        'High estimated pulling tension — break the run with a draw-in box (Reg 522.8.6). Any drawing-in lubricant must not have a detrimental effect on the cable or wiring system (Reg 522.8.1)'
+      );
     }
 
     setResult({
       fillPercentage: Math.round(fillPercentage * 10) / 10,
       maxCables,
       suitable,
-      actualFillTarget,
+      spaceFactor,
+      groupingFactor,
       bendRadius: conduit.bendRadius,
       warnings,
       pullTension: Math.round(pullTension),
@@ -142,7 +195,9 @@ const ConduitFillCalculator = () => {
     setConduitMaterial('pvc');
     setCableSize('');
     setCableQuantity('');
-    setInstallationType('straight');
+    setCircuits('1');
+    setRunLength('');
+    setBendCount('0');
     setFillTarget('40');
     setResult(null);
   };
@@ -164,23 +219,19 @@ const ConduitFillCalculator = () => {
     { value: '100', label: '100mm' },
   ];
 
-  const cableSizeOptions = [
-    { value: '1.0', label: '1.0mm²' },
-    { value: '1.5', label: '1.5mm²' },
-    { value: '2.5', label: '2.5mm²' },
-    { value: '4.0', label: '4.0mm²' },
-    { value: '6.0', label: '6.0mm²' },
-    { value: '10.0', label: '10.0mm²' },
-    { value: '16.0', label: '16.0mm²' },
-    { value: '25.0', label: '25.0mm²' },
-    { value: '35.0', label: '35.0mm²' },
-  ];
+  // Driven off the shared cable dataset so the options can never drift from the areas used.
+  const cableSizeOptions = singlesPvc.map((c) => ({
+    value: c.size.toString(),
+    label: `${c.size}mm²`,
+  }));
+
+  const selectedCable = cableSize ? getCableCSA('singles-pvc', parseFloat(cableSize)) : undefined;
 
   return (
     <CalculatorCard
       category="cable"
       title="Conduit Fill Calculator"
-      description="Calculate fill percentage with BS EN 61386-1 compliance"
+      description="Space-factor check with grouping to BS 7671 Table 4C1"
     >
       <CalculatorInputGrid columns={2}>
         <CalculatorSelect
@@ -220,23 +271,45 @@ const ConduitFillCalculator = () => {
       </CalculatorInputGrid>
 
       <CalculatorInputGrid columns={2}>
-        <CalculatorSelect
-          label="Installation Type"
-          value={installationType}
-          onChange={setInstallationType}
-          options={[
-            { value: 'straight', label: 'Straight Run' },
-            { value: 'bends', label: 'With Bends' },
-          ]}
+        <CalculatorInput
+          label="Circuits in Conduit"
+          type="text"
+          inputMode="numeric"
+          value={circuits}
+          onChange={setCircuits}
+          placeholder="1"
         />
         <CalculatorSelect
-          label="Fill Target"
+          label="Fill Target (space factor)"
           value={fillTarget}
           onChange={setFillTarget}
           options={[
             { value: '30', label: '30% (Conservative)' },
-            { value: '40', label: '40% (Standard)' },
-            { value: '50', label: '50% (Maximum)' },
+            { value: '35', label: '35% (Runs with bends)' },
+            { value: '40', label: '40% (Typical maximum)' },
+          ]}
+        />
+      </CalculatorInputGrid>
+
+      <CalculatorInputGrid columns={2}>
+        <CalculatorInput
+          label="Run Length (m)"
+          type="text"
+          inputMode="decimal"
+          value={runLength}
+          onChange={setRunLength}
+          placeholder="e.g. 8"
+        />
+        <CalculatorSelect
+          label="Number of 90° Bends"
+          value={bendCount}
+          onChange={setBendCount}
+          options={[
+            { value: '0', label: 'Straight run' },
+            { value: '1', label: '1 bend' },
+            { value: '2', label: '2 bends' },
+            { value: '3', label: '3 bends' },
+            { value: '4', label: '4 bends' },
           ]}
         />
       </CalculatorInputGrid>
@@ -273,7 +346,7 @@ const ConduitFillCalculator = () => {
                   result.suitable ? 'text-green-300' : 'text-red-300'
                 )}
               >
-                {result.suitable ? 'Suitable Installation' : 'Exceeds Fill Limit'}
+                {result.suitable ? 'Within Space Factor' : 'Exceeds Space Factor'}
               </span>
             </div>
 
@@ -288,7 +361,7 @@ const ConduitFillCalculator = () => {
               >
                 {result.fillPercentage}%
               </div>
-              <p className="text-sm text-white mt-1">Target: {result.actualFillTarget}%</p>
+              <p className="text-sm text-white mt-1">Space factor: {result.spaceFactor}%</p>
             </div>
 
             {/* Result Details */}
@@ -300,9 +373,8 @@ const ConduitFillCalculator = () => {
                 size="sm"
               />
               <ResultValue
-                label="Bend Radius"
-                value={result.bendRadius.toString()}
-                unit="mm"
+                label="Grouping Cg"
+                value={result.groupingFactor.toFixed(2)}
                 category="cable"
                 size="sm"
               />
@@ -313,9 +385,16 @@ const ConduitFillCalculator = () => {
                 size="sm"
               />
               <ResultValue
-                label="Pull Tension"
-                value={`~${result.pullTension}`}
-                unit="N"
+                label="Bend Radius (typical)"
+                value={result.bendRadius.toString()}
+                unit="mm"
+                category="cable"
+                size="sm"
+              />
+              <ResultValue
+                label="Est. Pull Tension"
+                value={result.pullTension > 0 ? `~${result.pullTension}` : '—'}
+                unit={result.pullTension > 0 ? 'N' : undefined}
                 category="cable"
                 size="sm"
               />
@@ -339,7 +418,7 @@ const ConduitFillCalculator = () => {
           <CalculatorDivider category="cable" />
 
           {/* How It Worked Out - Collapsible */}
-          {conduitSize && cableSize && cableQuantity && (
+          {selectedCable && cableQuantity && conduitSize && (
             <Collapsible open={showFormula} onOpenChange={setShowFormula}>
               <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
                 <div className="flex items-center gap-3">
@@ -362,52 +441,33 @@ const ConduitFillCalculator = () => {
                     <div className="text-xs text-purple-400 mb-1">
                       Step 1: Cable cross-sectional area
                     </div>
-                    <div>A = π × (d/2)²</div>
                     <div>
-                      A = π × ({cableData[cableSize as keyof typeof cableData].diameter / 2})²
+                      {selectedCable.size}mm² {selectedCable.typeLabel}, Ø
+                      {selectedCable.overallDiameter}mm
                     </div>
                     <div className="text-white font-bold">
-                      A ={' '}
-                      {(
-                        Math.PI *
-                        Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2)
-                      ).toFixed(1)}
-                      mm²
+                      A = {selectedCable.crossSectionalArea}mm²
                     </div>
                   </div>
 
                   <div className="pt-2 border-t border-purple-500/20">
                     <div className="text-xs text-purple-400 mb-1">Step 2: Total cable area</div>
                     <div>
-                      Total = A × qty ={' '}
-                      {(
-                        Math.PI *
-                        Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2)
-                      ).toFixed(1)}{' '}
-                      × {cableQuantity}
+                      Total = A × qty = {selectedCable.crossSectionalArea} × {cableQuantity}
                     </div>
                     <div className="text-white font-bold">
                       Total ={' '}
-                      {(
-                        Math.PI *
-                        Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2) *
-                        parseInt(cableQuantity)
-                      ).toFixed(1)}
+                      {(selectedCable.crossSectionalArea * parseInt(cableQuantity)).toFixed(1)}
                       mm²
                     </div>
                   </div>
 
                   <div className="pt-2 border-t border-purple-500/20">
                     <div className="text-xs text-purple-400 mb-1">Step 3: Fill percentage</div>
-                    <div>Fill = (Cable Area ÷ Conduit Area) × 100</div>
+                    <div>Fill = (Cable Area ÷ Conduit Bore Area) × 100</div>
                     <div>
                       Fill = (
-                      {(
-                        Math.PI *
-                        Math.pow(cableData[cableSize as keyof typeof cableData].diameter / 2, 2) *
-                        parseInt(cableQuantity)
-                      ).toFixed(1)}{' '}
-                      ÷{' '}
+                      {(selectedCable.crossSectionalArea * parseInt(cableQuantity)).toFixed(1)} ÷{' '}
                       {
                         conduitData[conduitMaterial as keyof typeof conduitData][
                           conduitSize as keyof (typeof conduitData)[keyof typeof conduitData]
@@ -416,6 +476,18 @@ const ConduitFillCalculator = () => {
                       ) × 100
                     </div>
                     <div className="text-white font-bold">Fill = {result.fillPercentage}%</div>
+                  </div>
+
+                  <div className="pt-2 border-t border-purple-500/20">
+                    <div className="text-xs text-purple-400 mb-1">
+                      Step 4: Grouping factor (Table 4C1, bunched)
+                    </div>
+                    <div>
+                      {circuits} circuit{parseInt(circuits) === 1 ? '' : 's'} bunched in the conduit
+                    </div>
+                    <div className="text-white font-bold">
+                      Cg = {result.groupingFactor.toFixed(2)}
+                    </div>
                   </div>
                 </div>
               </CollapsibleContent>
@@ -447,27 +519,30 @@ const ConduitFillCalculator = () => {
                 </div>
                 <div className="border-l-2 border-blue-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-white">High fill</strong> causes cables to jam during
-                    pulling and overheat in operation.
+                    <strong className="text-white">Space factor</strong> is a quick area check. The
+                    definitive UK sizing method is the On-Site Guide cable-factor / conduit-factor
+                    tables, which are indexed by run length and number of bends — always confirm
+                    against those.
                   </p>
                 </div>
                 <div className="border-l-2 border-blue-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-white">Proper fill</strong> allows easier maintenance
-                    and future cable additions.
+                    <strong className="text-white">Grouping (Cg)</strong> is separate from fill.
+                    Two circuits bunched in one conduit already derate to 0.80, whatever the cable
+                    size.
                   </p>
                 </div>
                 <div className="border-l-2 border-blue-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-white">Pull tension</strong> indicates if cable
-                    lubricant may be needed.
+                    <strong className="text-white">Pull tension</strong> here is an indicative
+                    engineering estimate only — BS 7671 publishes no pulling-tension method.
                   </p>
                 </div>
               </div>
             </CollapsibleContent>
           </Collapsible>
 
-          {/* BS EN 61386-1 Guidance - Collapsible */}
+          {/* Regs at a Glance - Collapsible */}
           <Collapsible open={showRegs} onOpenChange={setShowRegs}>
             <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
               <div className="flex items-center gap-3">
@@ -485,31 +560,62 @@ const ConduitFillCalculator = () => {
             </CollapsibleTrigger>
 
             <CollapsibleContent className="pt-2">
+              {/*
+                FIX: this panel previously presented "1 cable 53% / 2 cables 31% / 3+ cables 40% /
+                with bends 35%" as BS EN 61386-1 requirements. BS EN 61386 is a conduit PRODUCT
+                standard — BS 7671 cites it only for corrosion class, impact class, flame
+                propagation and the fire test (Regs 422.3.4, 522.16, 527.1.5, 705.522.16). It
+                contains no fill percentages, and none of 53/31/35 appears in BS 7671, GN3 or the
+                On-Site Guide.
+              */}
               <div className="space-y-3 pl-1">
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-white">BS EN 61386-1:</strong> Conduit systems for cable
-                    management
+                    <strong className="text-white">BS 7671:</strong> states no numeric conduit fill
+                    percentage. Conduit capacity is an On-Site Guide topic (OSG 2.4; OSG 7.25,
+                    Table 4.6 / Appendix H) using cable factors and conduit factors.
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-white">1 cable:</strong> 53% maximum fill
+                    <strong className="text-white">Space factor:</strong> the ~40% figure used here
+                    is the working limit the On-Site Guide conduit factors are built on, not a
+                    regulation. Reduce it for long runs and multiple bends.
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-white">2 cables:</strong> 31% maximum fill
+                    <strong className="text-white">Reg 523.5 / Table 4C1:</strong> group rating
+                    factors apply to groups containing more than one circuit — bunched or enclosed,
+                    2 circuits 0.80, 3 circuits 0.70, 4 circuits 0.65.
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-white">3+ cables:</strong> 40% max for straight runs
+                    <strong className="text-white">Reg 522.8.3:</strong> the radius of every bend
+                    shall be such that cables are not damaged and terminations are not stressed. No
+                    numeric radius is given — the figure shown is a typical former size.
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-white">With bends:</strong> Reduce to 35% maximum
+                    <strong className="text-white">Reg 522.8.6:</strong> a wiring system intended
+                    for drawing conductors in or out shall have adequate means to do so. Its note
+                    covers pulling tensions, lubricants and intermediate pulling equipment.
+                  </p>
+                </div>
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-white">Reg 522.8.1:</strong> the use of any lubricants
+                    that can have a detrimental effect on the cable or wiring system is not
+                    permitted.
+                  </p>
+                </div>
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-white">BS EN 61386:</strong> the conduit product
+                    standard — corrosion class, impact class and flame propagation. It is not a
+                    source of fill limits.
                   </p>
                 </div>
               </div>
@@ -523,8 +629,8 @@ const ConduitFillCalculator = () => {
         <div className="flex items-start gap-2">
           <Info className="h-4 w-4 text-emerald-400 mt-0.5 shrink-0" />
           <p className="text-sm text-white">
-            <strong>Fill %</strong> = (Total Cable Area ÷ Conduit Area) × 100. Lower fill = easier
-            installation.
+            <strong>Fill %</strong> = (Total Cable Area ÷ Conduit Bore Area) × 100. Indicative area
+            check — confirm against the On-Site Guide cable-factor tables, and apply Cg separately.
           </p>
         </div>
       </div>

@@ -20,6 +20,7 @@ import { cn } from '@/lib/utils';
 import { pickCableSize, getCpcForLive, BS_STANDARD_MAP } from '@/utils/circuitDefaults';
 import { getMaxZsWithRcd } from '@/utils/zsCalculations';
 import { scrollToTopForStepChange } from '@/utils/scroll';
+import { focusValidationField } from '@/utils/focusValidationField';
 
 // v3 cert shell — five steps across the top, matching the MW/EIC pattern.
 const EICR_STEPS: CertShellStep[] = [
@@ -81,6 +82,23 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
   // the header ring renders it; tapping the ring opens the missing-items sheet.
   const eicrValidation = useEICRValidation(formData);
   const [showMissingSheet, setShowMissingSheet] = useState(false);
+  // Set when a "Go" closes the sheet, so the close handler knows not to restore
+  // focus over the field we are about to land on.
+  const jumpingToFieldRef = React.useRef(false);
+  // ELE-1487 — the field to land on once the step has actually rendered.
+  // Focusing straight from the click races three things at once: the sheet's
+  // close animation, its focus trap, and React remounting the step. Holding the
+  // intent in state and acting in an effect means we focus a node that exists
+  // and is staying put.
+  const [pendingFocusField, setPendingFocusField] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!pendingFocusField) return;
+    const timer = window.setTimeout(() => {
+      void focusValidationField(pendingFocusField).finally(() => setPendingFocusField(null));
+    }, 280);
+    return () => window.clearTimeout(timer);
+  }, [pendingFocusField, currentTab]);
   // A QS-approved cert is complete by definition — don't let an in-editor
   // completeness recompute leave an approved cert un-generatable (ELE-1183).
   // EICRSummary's generate handler still runs the QS content-hash gate.
@@ -545,13 +563,24 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
         <SheetContent
           side="bottom"
           className="h-[85vh] rounded-t-2xl border-white/[0.1] p-0 overflow-hidden"
+          // ELE-1487 — when a "Go" has sent us to a field, Radix must not pull
+          // focus back to the progress ring as it closes. Closing any other way
+          // keeps the default restore, which is the correct behaviour for a
+          // keyboard user who simply dismissed the sheet.
+          onCloseAutoFocus={(e) => {
+            if (jumpingToFieldRef.current) {
+              e.preventDefault();
+              jumpingToFieldRef.current = false;
+            }
+          }}
         >
           <div className="flex h-full flex-col bg-background">
             <div className="border-b border-white/[0.08] px-4 pb-3 pt-4">
               <h2 className="text-base font-bold text-white">
                 {eicrValidation.errors.length === 0 ? 'Ready to issue' : 'Still to complete'}
               </h2>
-              <p className="text-[12px] text-white/60 tabular-nums">
+              {/* Full white — white/60 renders grey, which this app does not use. */}
+              <p className="text-[12px] font-medium text-white tabular-nums">
                 {eicrValidation.completionPercentage}% complete
                 {eicrValidation.errors.length > 0 &&
                   ` · ${eicrValidation.errors.length} required ${
@@ -570,20 +599,33 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
                   if (items.length === 0) return null;
                   return (
                     <div key={step.id}>
-                      <h3 className="mb-2 text-[13px] font-semibold text-white">{step.label}</h3>
+                      {/* ELE-1487 — a count per section, so the work is visible
+                          without opening every group. */}
+                      <div className="mb-2 flex items-baseline justify-between">
+                        <h3 className="text-[13px] font-semibold text-white">{step.label}</h3>
+                        <span className="text-[11.5px] font-semibold text-white tabular-nums">
+                          {items.length}
+                        </span>
+                      </div>
                       <div className="space-y-1.5">
                         {items.map((item) => (
                           <button
                             key={item.field}
                             type="button"
                             onClick={() => {
+                              // ELE-1487 — switching tab is not arriving. Change
+                              // step, then scroll to the field, focus it and
+                              // flash it. The step remounts, so the helper polls
+                              // for the target rather than guessing a delay.
+                              jumpingToFieldRef.current = true;
                               setShowMissingSheet(false);
                               handleTabChange(step.id);
+                              setPendingFocusField(item.field);
                             }}
-                            className="flex h-11 w-full items-center justify-between rounded-xl border border-white/[0.1] bg-white/[0.04] px-3.5 text-left text-sm font-medium text-white touch-manipulation transition-transform active:scale-[0.99]"
+                            className="flex min-h-11 w-full items-center justify-between gap-3 rounded-xl border border-white/[0.1] bg-white/[0.04] px-3.5 py-2 text-left text-sm font-medium text-white touch-manipulation transition-transform active:scale-[0.99]"
                           >
                             <span className="truncate">{item.message}</span>
-                            <span className="ml-3 shrink-0 text-[11.5px] font-semibold text-elec-yellow">
+                            <span className="shrink-0 text-[11.5px] font-semibold text-elec-yellow">
                               Go
                             </span>
                           </button>

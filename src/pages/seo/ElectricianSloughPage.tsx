@@ -282,7 +282,7 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Slough has one of the highest proportions of rented homes in England. Landlord EICRs
               are legally required every 5 years under the 2020 Electrical Safety Regulations. The
-              EICR assesses the fixed wiring and consumer unit against BS 7671 Section 631. Any C1
+              EICR assesses the fixed wiring and consumer unit against BS 7671 Chapter 65. Any C1
               or C2 defects must be remedied within 28 days.
             </p>
           </div>
@@ -349,7 +349,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Periodic inspection</strong> — BS 7671 Section 631 sets out the requirements
+                <strong>Periodic inspection</strong> — BS 7671 Chapter 65 sets out the requirements
                 for periodic inspection and testing. Rental properties require an EICR every 5 years
                 by law; owner-occupied properties are recommended every 10 years or on change of
                 occupancy.

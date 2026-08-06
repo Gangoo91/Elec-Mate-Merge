@@ -30,7 +30,7 @@ const tocItems = [
   { id: 'what-is-regs-lookup', label: 'What Is AI Regulations Lookup?' },
   { id: 'how-it-works', label: 'How It Works' },
   { id: 'practical-guidance', label: 'Practical Guidance' },
-  { id: 'amendment-3', label: 'Amendment 4:2024 Coverage' },
+  { id: 'amendment-3', label: 'Amendment 4:2026 Coverage' },
   { id: 'on-site-use', label: 'Using It on Site' },
   { id: 'how-to', label: 'How to Use It' },
   { id: 'features', label: 'Features' },
@@ -68,9 +68,9 @@ const faqs = [
       'Yes, and this is one of its most useful features. Many regulations in BS 7671 interact with or modify each other, and understanding these relationships is essential for correct application. For example, if you ask about protection against electric shock, the AI will explain the relationship between Chapter 41 (protection against electric shock), Section 411 (automatic disconnection of supply), Section 412 (double or reinforced insulation), Section 413 (electrical separation), and Section 414 (extra-low voltage). It shows how these different protective measures relate to each other and when each applies. Similarly, for cable sizing, it explains how the requirements of Chapter 52 (selection and erection of wiring systems) interact with the tables in Appendix 4 and the voltage drop limits in Appendix 4, Section 6.4.',
   },
   {
-    question: 'Does it cover Amendment 4:2024?',
+    question: 'Does it cover Amendment 4:2026?',
     answer:
-      'Yes. The AI includes the complete content of BS 7671:2018+A4:2026, which is Amendment 4 issued on 31 July 2024. The key addition in A4:2026 is Regulation 530.3.2, which introduces requirements for bidirectional and unidirectional protective devices. This is particularly relevant for installations incorporating battery energy storage systems (BESS), solar PV arrays with battery storage, and other installations where power can flow in both directions through protective devices. The AI explains what this new regulation requires, when it applies, and what it means in practice for the selection and installation of protective devices in modern installations with distributed generation and energy storage.',
+      'Yes. The AI includes the complete content of BS 7671:2018+A4:2026. Note that the free PDF supplement issued on 31 July 2024 was Amendment 3, not Amendment 4 — the two are often confused. A key regulation here is 530.3.201, which introduces requirements for bidirectional and unidirectional protective devices. This is particularly relevant for installations incorporating battery energy storage systems (BESS), solar PV arrays with battery storage, and other installations where power can flow in both directions through protective devices. The AI explains what this new regulation requires, when it applies, and what it means in practice for the selection and installation of protective devices in modern installations with distributed generation and energy storage.',
   },
   {
     question: 'How quickly does the AI return an answer?',
@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 4:2024.',
+      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 4:2026.',
     icon: FileText,
     category: 'Guide',
   },
@@ -157,7 +157,7 @@ const features = [
   },
   {
     icon: ShieldCheck,
-    title: 'Amendment 4:2024 Included',
+    title: 'Amendment 4:2026 Included',
     description:
       'Full coverage of the latest amendment including Regulation 530.3.2 for bidirectional and unidirectional protective devices.',
   },
@@ -327,17 +327,17 @@ const sections = [
   },
   {
     id: 'amendment-3',
-    heading: 'Full Coverage of Amendment 4:2024',
+    heading: 'Full Coverage of Amendment 4:2026',
     content: (
       <>
         <p>
           BS 7671:2018+A4:2026 is the current edition of the IET Wiring Regulations. Amendment 4 was
-          issued on 31 July 2024 and is a free PDF supplement to the existing 18th Edition book. The
-          AI Regulations Lookup includes the complete content of Amendment 4, so you always get
-          answers based on the current requirements.
+          the current amendment to the 18th Edition. (The free PDF supplement issued on 31 July
+          2024 was Amendment 3 — a common mix-up.) The AI Regulations Lookup includes the complete
+          content of Amendment 4, so you always get answers based on the current requirements.
         </p>
         <p>
-          The key addition in Amendment 4 is <strong>Regulation 530.3.2</strong>, which introduces
+          A key regulation here is <strong>Regulation 530.3.201</strong>, which introduces
           requirements for the selection and erection of bidirectional and unidirectional protective
           devices. This regulation is particularly relevant for installations incorporating:
         </p>
@@ -465,7 +465,7 @@ export default function AIRegulationsLookupPage() {
           <span className="text-yellow-400">Search BS 7671 in Plain English</span>
         </>
       }
-      heroSubtitle="Ask any question about electrical regulations and get the specific BS 7671 regulation number, full text, and practical guidance. Covers the complete 18th Edition with Amendment 4:2024, the IET On-Site Guide, and all eight Guidance Notes."
+      heroSubtitle="Ask any question about electrical regulations and get the specific BS 7671 regulation number, full text, and practical guidance. Covers the complete 18th Edition with Amendment 4:2026, the IET On-Site Guide, and all eight Guidance Notes."
       heroFeaturePills={[
         { icon: Search, label: 'Plain-English Search' },
         { icon: BookOpen, label: 'Full Regulation Text' },

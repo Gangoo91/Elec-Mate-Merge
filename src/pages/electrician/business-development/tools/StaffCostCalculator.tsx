@@ -27,6 +27,16 @@ import {
   ResultsGrid,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
+import {
+  JIB_RATES_2026,
+  JIB_WORKING_WEEK_HOURS,
+  UK_EMPLOYER_COSTS,
+  UK_MINIMUM_WAGE,
+  UK_STATUTORY_HOLIDAY_WEEKS,
+  employerNIOn,
+  employerPensionOn,
+  priceFromMargin,
+} from '@/data/ukRates';
 
 const currency = (n: number) => `£${n.toFixed(2)}`;
 
@@ -34,11 +44,15 @@ const StaffCostCalculator: React.FC = () => {
   const config = CALCULATOR_CONFIG['business'];
 
   const [basePayHr, setBasePayHr] = React.useState('26');
-  const [weeklyHours, setWeeklyHours] = React.useState('40');
+  // 37.5, not 40 — the JIB standard working week is 37.5 hours (National
+  // Working Rule 3.1). A 40-hour default invented 130 paid hours a year that
+  // do not exist, which UNDERSTATED the true hourly cost by about 7%.
+  const [weeklyHours, setWeeklyHours] = React.useState(String(JIB_WORKING_WEEK_HOURS));
   const [paidWeeks, setPaidWeeks] = React.useState('52');
   const [holidaysDays, setHolidaysDays] = React.useState('28');
   const [sickDays, setSickDays] = React.useState('3');
-  const [niRate, setNiRate] = React.useState('13.8');
+  // Employer NI is 15% from 6 April 2025, not 13.8%.
+  const [niRate, setNiRate] = React.useState('15');
   const [pensionRate, setPensionRate] = React.useState('3');
   const [vanYear, setVanYear] = React.useState('4200');
   const [toolsYear, setToolsYear] = React.useState('1000');
@@ -54,6 +68,13 @@ const StaffCostCalculator: React.FC = () => {
   const basePayHrNum = parseFloat(basePayHr) || 0;
   const weeklyHoursNum = parseFloat(weeklyHours) || 0;
   const paidWeeksNum = parseFloat(paidWeeks) || 0;
+  // Holiday and sick days were collected from the user and then never used in
+  // any calculation — typing 28 days of holiday changed nothing on screen. They
+  // are paid but not worked, so they must come OUT of the hours the cost is
+  // spread over, otherwise the tool bills 52 weeks of hours while paying for
+  // 5.6 weeks of holiday.
+  const holidaysDaysNum = parseFloat(holidaysDays) || 0;
+  const sickDaysNum = parseFloat(sickDays) || 0;
   const niRateNum = parseFloat(niRate) || 0;
   const pensionRateNum = parseFloat(pensionRate) || 0;
   const vanYearNum = parseFloat(vanYear) || 0;
@@ -64,16 +85,31 @@ const StaffCostCalculator: React.FC = () => {
   const targetMarginNum = parseFloat(targetMargin) || 0;
 
   const annualBase = basePayHrNum * weeklyHoursNum * paidWeeksNum;
-  const oncostNI = annualBase * (niRateNum / 100);
-  const pension = annualBase * (pensionRateNum / 100);
+  // Employer NI is due only on pay ABOVE the £5,000 secondary threshold, and the
+  // 3% employer pension minimum only on qualifying earnings (£6,240–£50,270).
+  // Both used to be applied to the whole of annualBase, which overstates the
+  // pension bill on every wage and the NI bill by 15% of the first £5,000.
+  const oncostNI = employerNIOn(annualBase, niRateNum / 100);
+  const pension = employerPensionOn(annualBase, pensionRateNum / 100);
   const annualOnCosts =
     vanYearNum + toolsYearNum + insuranceYearNum + trainingYearNum + oncostNI + pension;
 
   const totalAnnualCost = annualBase + annualOnCosts;
-  const effectiveHours = weeklyHoursNum * paidWeeksNum * (utilisationNum / 100);
+
+  // Hours actually available to work: paid hours LESS the holiday and sick days
+  // that are paid but not worked. `weeklyHours / 5` is the contracted day.
+  const paidHours = weeklyHoursNum * paidWeeksNum;
+  const hoursPerDay = weeklyHoursNum / 5;
+  const absenceHours = (holidaysDaysNum + sickDaysNum) * hoursPerDay;
+  const attendedHours = Math.max(paidHours - absenceHours, 0);
+  // Utilisation applies to hours the employee is actually on site, not to the
+  // 52 paid weeks. Applying it to paid hours counted holiday as billable.
+  const effectiveHours = attendedHours * (utilisationNum / 100);
   const loadedHourlyCost = effectiveHours > 0 ? totalAnnualCost / effectiveHours : 0;
-  const recommendedChargeOut =
-    targetMarginNum > 0 ? loadedHourlyCost / (1 - targetMarginNum / 100) : loadedHourlyCost;
+  // MARGIN, not markup: price = cost / (1 − margin). Clamped at 95% — the old
+  // guard only checked `> 0`, so entering 100 divided by zero and returned
+  // Infinity, which rendered as "£Infinity/hr".
+  const recommendedChargeOut = priceFromMargin(loadedHourlyCost, targetMarginNum);
 
   const handleCalculate = () => {
     setCalculated(true);
@@ -81,11 +117,11 @@ const StaffCostCalculator: React.FC = () => {
 
   const handleReset = () => {
     setBasePayHr('26');
-    setWeeklyHours('40');
+    setWeeklyHours(String(JIB_WORKING_WEEK_HOURS));
     setPaidWeeks('52');
     setHolidaysDays('28');
     setSickDays('3');
-    setNiRate('13.8');
+    setNiRate('15');
     setPensionRate('3');
     setVanYear('4200');
     setToolsYear('1000');
@@ -169,8 +205,8 @@ const StaffCostCalculator: React.FC = () => {
                 setWeeklyHours(val);
                 setCalculated(false);
               }}
-              placeholder="e.g., 40"
-              hint="Per week"
+              placeholder="e.g., 37.5"
+              hint="JIB standard week: 37.5 (NWR 3.1)"
             />
 
             <CalculatorInput
@@ -206,7 +242,7 @@ const StaffCostCalculator: React.FC = () => {
                 setCalculated(false);
               }}
               placeholder="e.g., 28"
-              hint="UK min: 28 days"
+              hint="Statutory 5.6 weeks = 28 days (inc bank hols)"
             />
 
             <CalculatorInput
@@ -233,8 +269,8 @@ const StaffCostCalculator: React.FC = () => {
                 setNiRate(val);
                 setCalculated(false);
               }}
-              placeholder="e.g., 13.8"
-              hint="UK: 13.8%"
+              placeholder="e.g., 15"
+              hint={`${UK_EMPLOYER_COSTS.taxYear}: 15% above £${UK_EMPLOYER_COSTS.employerNISecondaryThresholdAnnual.toLocaleString('en-GB')}`}
             />
 
             <CalculatorInput
@@ -248,7 +284,7 @@ const StaffCostCalculator: React.FC = () => {
                 setCalculated(false);
               }}
               placeholder="e.g., 3"
-              hint="UK min: 3%"
+              hint="3% of qualifying earnings (£6,240–£50,270)"
             />
           </div>
 
@@ -475,11 +511,19 @@ const StaffCostCalculator: React.FC = () => {
                       <span className="text-white font-mono shrink-0">{currency(annualBase)}</span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-white/10">
-                      <span className="text-white">Employer NI ({niRateNum}%)</span>
+                      <span className="text-white">
+                        Employer NI ({niRateNum}% above £
+                        {UK_EMPLOYER_COSTS.employerNISecondaryThresholdAnnual.toLocaleString(
+                          'en-GB'
+                        )}
+                        )
+                      </span>
                       <span className="text-white font-mono">+ {currency(oncostNI)}</span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-white/10">
-                      <span className="text-white">Pension ({pensionRateNum}%)</span>
+                      <span className="text-white">
+                        Pension ({pensionRateNum}% of qualifying earnings)
+                      </span>
                       <span className="text-white font-mono">+ {currency(pension)}</span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-white/10">
@@ -508,11 +552,24 @@ const StaffCostCalculator: React.FC = () => {
                     </h4>
                     <div className="flex justify-between items-center py-2 border-b border-white/10 min-w-0 gap-2">
                       <span className="text-white truncate min-w-0">
-                        Total Hours ({weeklyHoursNum}hrs × {paidWeeksNum}wks)
+                        Paid hours ({weeklyHoursNum}hrs × {paidWeeksNum}wks)
                       </span>
                       <span className="text-white font-mono shrink-0">
-                        {(weeklyHoursNum * paidWeeksNum).toFixed(0)} hrs
+                        {paidHours.toFixed(0)} hrs
                       </span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-white/10 min-w-0 gap-2">
+                      <span className="text-white truncate min-w-0">
+                        Less holiday &amp; sick ({holidaysDaysNum + sickDaysNum} days ×{' '}
+                        {hoursPerDay.toFixed(1)}hrs)
+                      </span>
+                      <span className="text-white font-mono shrink-0">
+                        − {absenceHours.toFixed(0)} hrs
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-white/10">
+                      <span className="text-white">= Hours worked</span>
+                      <span className="text-white font-mono">{attendedHours.toFixed(0)} hrs</span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-white/10">
                       <span className="text-white">Billable at {utilisationNum}%</span>
@@ -569,17 +626,40 @@ const StaffCostCalculator: React.FC = () => {
 
             <CollapsibleContent className="p-4 pt-0">
               <div className="grid grid-cols-2 gap-3 text-sm">
+                {/* Wage figures were a year out of date: NLW was quoted at the
+                    April 2025 rate of £12.21 and the JIB grades as a vague
+                    "Spark: £18-30". Both now come from the verified ukRates
+                    table. JIB rates are National Standard, Transport Provided. */}
                 <div className="space-y-1">
-                  <p className="text-amber-300 font-medium">UK Wage Rates (2025)</p>
-                  <p className="text-amber-200/70">NMW 21+: £12.21/hr</p>
-                  <p className="text-amber-200/70">Spark: £18-30/hr</p>
-                  <p className="text-amber-200/70">Mate: £12-18/hr</p>
+                  <p className="text-amber-300 font-medium">JIB rates (from 5 Jan 2026)</p>
+                  <p className="text-amber-200/70">
+                    Electrician: £{JIB_RATES_2026.graded.electrician.toFixed(2)}/hr
+                  </p>
+                  <p className="text-amber-200/70">
+                    Approved: £{JIB_RATES_2026.graded.approvedElectrician.toFixed(2)}/hr
+                  </p>
+                  <p className="text-amber-200/70">
+                    Technician: £{JIB_RATES_2026.graded.technician.toFixed(2)}/hr
+                  </p>
+                  <p className="text-amber-200/70">
+                    National Standard, Transport Provided. London is a separate higher table.
+                  </p>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-amber-300 font-medium">Employer Costs</p>
-                  <p className="text-amber-200/70">Employer NI: 13.8%</p>
-                  <p className="text-amber-200/70">Pension min: 3%</p>
-                  <p className="text-amber-200/70">Holidays: 28 days</p>
+                  <p className="text-amber-300 font-medium">
+                    Employer costs ({UK_EMPLOYER_COSTS.taxYear})
+                  </p>
+                  <p className="text-amber-200/70">
+                    NLW 21+: £{UK_MINIMUM_WAGE.nlw21Plus.toFixed(2)}/hr
+                  </p>
+                  <p className="text-amber-200/70">
+                    Employer NI: 15% above £
+                    {UK_EMPLOYER_COSTS.employerNISecondaryThresholdAnnual.toLocaleString('en-GB')}
+                  </p>
+                  <p className="text-amber-200/70">Pension min: 3% of £6,240–£50,270</p>
+                  <p className="text-amber-200/70">
+                    Holiday: {UK_STATUTORY_HOLIDAY_WEEKS} weeks (28 days)
+                  </p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-amber-300 font-medium">Typical Overheads</p>
@@ -596,10 +676,17 @@ const StaffCostCalculator: React.FC = () => {
               </div>
 
               <div className="mt-4 pt-3 border-t border-amber-500/20">
+                {/* The old note claimed "50-80% higher than base pay". That is
+                    roughly right for on-costs alone, but the headline figure on
+                    this screen is per BILLABLE hour, so utilisation roughly
+                    doubles the gap again. Saying 50-80% invited under-pricing. */}
                 <p className="text-xs text-amber-200/60">
                   <Info className="h-3 w-3 inline mr-1" />
-                  True hourly cost is typically 50-80% higher than base pay once all on-costs are
-                  included. Use this to price jobs accurately and avoid undercharging for labour.
+                  On-costs alone add roughly 40-60% to base pay. Because this figure is spread over
+                  billable hours only, the cost per billable hour is usually more than double the
+                  base rate. Eligible employers can also offset up to £
+                  {UK_EMPLOYER_COSTS.employmentAllowance.toLocaleString('en-GB')} of employer NI a
+                  year through the Employment Allowance, which is not deducted above.
                 </p>
               </div>
             </CollapsibleContent>

@@ -671,7 +671,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed mt-2">
                   From BS&nbsp;7671:2018+A4:2026, the Appendix 6 model forms have been amended to
                   add fields for recording SPD (surge protective device) and AFDD (arc fault
-                  detection device) details. Reg&nbsp;421.1.7 now requires AFDDs conforming to
+                  detection device) details. Reg 421.1.7 now recommends AFDDs conforming to
                   BS&nbsp;EN&nbsp;62606 on single-phase AC final circuits supplying socket-outlets
                   rated at 32&nbsp;A or less in higher-risk premises. NICEIC assessors will check
                   that these fields are correctly populated on your EICs and EICRs — omitting them

@@ -46,7 +46,7 @@ const keyTakeaways = [
   'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 require all private landlords in Nottingham to obtain an EICR before a new tenancy begins and at least every five years thereafter.',
   "Nottingham City Council is one of the most proactive local authorities in England for private rented sector enforcement. The council operates the UK's first city-wide selective licensing scheme and has imposed significant civil penalties on non-compliant landlords.",
   'HMOs in Nottingham face additional requirements — a valid EICR is a mandatory condition of both mandatory and additional HMO licensing schemes operated by Nottingham City Council.',
-  'If the EICR identifies C1 or C2 observations (classified under BS 7671 Section 631), landlords must complete remedial work within 28 days or sooner if specified by the inspector.',
+  'If the EICR identifies C1 or C2 observations (classified under BS 7671 Chapter 65), landlords must complete remedial work within 28 days or sooner if specified by the inspector.',
   'Nottingham has a very large student rental sector and high concentration of HMOs near the University of Nottingham and Nottingham Trent University. Many properties in areas such as Lenton and Dunkirk have ageing electrical installations.',
 ];
 
@@ -154,7 +154,7 @@ const sections = [
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
-                (Section 631 covers periodic inspection and testing).
+                (Chapter 65 covers periodic inspection and testing).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -403,7 +403,7 @@ const sections = [
     content: (
       <>
         <p>
-          When an EICR identifies C1 or C2 observations (classified under BS 7671 Section 631),
+          When an EICR identifies C1 or C2 observations (classified under BS 7671 Chapter 65),
           Nottingham landlords must complete remedial work within the timescales set by the 2020
           Regulations.
         </p>

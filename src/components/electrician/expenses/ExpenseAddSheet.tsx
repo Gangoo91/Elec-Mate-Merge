@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import {
@@ -30,6 +29,10 @@ import {
 } from '@/types/expense';
 import { ExpenseReceiptScanner } from './ExpenseReceiptScanner';
 import { ExpenseMileageForm } from './ExpenseMileageForm';
+import { chipBase, chipOff, eyebrowCn } from '@/components/shared/surfaceStyles';
+import { cardCn, inputCn, labelCn, selectTriggerCn, textareaCn } from '@/components/forms/fieldStyles';
+import { EVSectionHeader as SectionHeader } from '@/components/inspection/ev-charging/EVSectionHeader';
+import { calculateMileageClaim, taxYearStart } from '@/types/expense';
 import { cn } from '@/lib/utils';
 import { sanitizeMoneyInput, parseMoney, moneyToText } from '@/utils/money-input';
 import {
@@ -140,11 +143,18 @@ interface ExpenseAddSheetProps {
   defaultProjectId?: string;
   /** When true, the project is fixed to defaultProjectId and the picker is hidden. */
   lockProject?: boolean;
+  /**
+   * Business miles already claimed in the current tax year. Passed in rather
+   * than fetched here so the sheet stays presentational and there is only one
+   * definition of "this tax year" (see `taxYearStart`).
+   */
+  milesClaimedThisTaxYear?: number;
 }
 
 export function ExpenseAddSheet({
   open,
   onOpenChange,
+  milesClaimedThisTaxYear = 0,
   onSave,
   defaultProjectId,
   lockProject = false,
@@ -249,7 +259,10 @@ export function ExpenseAddSheet({
     date: string;
     description?: string;
   }) => {
-    const amount = mileageData.miles * (formData.mileage_rate || DEFAULT_MILEAGE_RATE);
+    // Banded, exactly as the form quoted it — a flat 45p here would have
+    // written a different number to the one the user just agreed to.
+    const claim = calculateMileageClaim(mileageData.miles, milesClaimedThisTaxYear);
+    const amount = claim.amount;
     setIsSubmitting(true);
     try {
       await onSave({
@@ -260,7 +273,9 @@ export function ExpenseAddSheet({
         description: mileageData.description || `${mileageData.from} to ${mileageData.to}`,
         project_id: projectId === NO_PROJECT ? null : projectId,
         mileage_miles: mileageData.miles,
-        mileage_rate: formData.mileage_rate,
+        // The effective rate for THIS journey. Stored rather than assumed, so a
+        // claim that straddled the 10,000-mile threshold can still be explained.
+        mileage_rate: mileageData.miles > 0 ? claim.amount / mileageData.miles : DEFAULT_MILEAGE_RATE,
         mileage_from: mileageData.from,
         mileage_to: mileageData.to,
         tax_deductible: true,
@@ -345,76 +360,46 @@ export function ExpenseAddSheet({
                   exit={{ opacity: 0, x: 20 }}
                   className="p-4 space-y-4"
                 >
-                  <p className="text-[13px] text-white/55 leading-snug px-0.5">
-                    Snap a receipt and let AI fill in the details, or log it yourself.
-                  </p>
-
-                  {/* Scan — AI hero (primary action) */}
+                  {/* Two ways in, told apart by type and by which one is yellow
+                      — not by a coloured tile each. 125 of the 179 expenses on
+                      record came from the scanner, so it leads. */}
                   <button
                     onClick={() => setStep('scan')}
-                    className="w-full text-left p-4 rounded-2xl bg-gradient-to-br from-elec-yellow/[0.16] to-amber-500/[0.05] border border-elec-yellow/30 hover:border-elec-yellow/50 transition-all touch-manipulation active:scale-[0.98] group"
+                    className="w-full rounded-2xl border border-elec-yellow/40 bg-elec-yellow/[0.10] p-4 text-left transition-colors hover:bg-elec-yellow/[0.14] touch-manipulation active:scale-[0.99]"
                   >
-                    <div className="flex items-center gap-3.5">
-                      <div className="w-12 h-12 rounded-xl bg-elec-yellow/20 flex items-center justify-center shrink-0 group-hover:bg-elec-yellow/30 transition-colors">
-                        <Camera className="h-6 w-6 text-elec-yellow" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <p className="font-semibold text-[15px] text-white">Scan a receipt</p>
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-elec-yellow/20 text-[10px] font-bold text-elec-yellow uppercase tracking-wide">
-                            <Sparkles className="h-3 w-3" /> AI
-                          </span>
-                        </div>
-                        <p className="text-[12.5px] text-white/60 mt-0.5 leading-snug">
-                          Vendor, amount, VAT &amp; date — filled automatically
-                        </p>
-                      </div>
-                      <ChevronRight className="h-5 w-5 text-elec-yellow/60 shrink-0" />
-                    </div>
+                    <p className="text-[15px] font-semibold tracking-tight text-white">
+                      Scan a receipt
+                    </p>
+                    <p className="mt-0.5 text-[12.5px] leading-snug text-white">
+                      Vendor, amount, VAT and date filled in for you
+                    </p>
                   </button>
 
-                  {/* Manual entry (secondary) */}
                   <button
                     onClick={() => setStep('category')}
-                    className="w-full text-left p-4 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-white/20 hover:bg-white/[0.05] transition-all touch-manipulation active:scale-[0.98] group"
+                    className="w-full rounded-2xl border border-white/[0.12] bg-white/[0.05] p-4 text-left transition-colors hover:bg-white/[0.08] touch-manipulation active:scale-[0.99]"
                   >
-                    <div className="flex items-center gap-3.5">
-                      <div className="w-12 h-12 rounded-xl bg-white/[0.08] flex items-center justify-center shrink-0 group-hover:bg-white/[0.12] transition-colors">
-                        <PenLine className="h-6 w-6 text-white/80" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-[15px] text-white">Enter manually</p>
-                        <p className="text-[12.5px] text-white/60 mt-0.5 leading-snug">
-                          Pick a category and add the details
-                        </p>
-                      </div>
-                      <ChevronRight className="h-5 w-5 text-white/30 shrink-0" />
-                    </div>
+                    <p className="text-[15px] font-semibold tracking-tight text-white">
+                      Enter it yourself
+                    </p>
+                    <p className="mt-0.5 text-[12.5px] leading-snug text-white">
+                      Pick a category and fill in the details
+                    </p>
                   </button>
 
-                  {/* Quick add — jump straight to a category */}
-                  <div className="pt-3 mt-1 border-t border-white/[0.06]">
-                    <p className="text-[11px] text-white/45 mb-3 uppercase tracking-[0.14em] font-semibold">
-                      Quick add
-                    </p>
-                    <div className="grid grid-cols-2 gap-2">
-                      {EXPENSE_CATEGORIES.slice(0, 8).map((category) => {
-                        const Icon = CATEGORY_ICONS[category.id] || MoreHorizontal;
-                        return (
-                          <button
-                            key={category.id}
-                            onClick={() => handleCategorySelect(category.id)}
-                            className="flex items-center gap-2.5 px-3 h-12 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] touch-manipulation active:scale-[0.97] transition-all"
-                          >
-                            <span className="w-7 h-7 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center shrink-0">
-                              <Icon className="h-4 w-4 text-white/70" />
-                            </span>
-                            <span className="text-[13.5px] font-medium text-white/90 truncate">
-                              {category.label}
-                            </span>
-                          </button>
-                        );
-                      })}
+                  {/* Quick add — chips, not a grid of icon tiles. */}
+                  <div className="border-t border-white/[0.10] pt-4">
+                    <p className={cn(eyebrowCn, 'mb-3')}>Quick add</p>
+                    <div className="flex flex-wrap gap-2">
+                      {EXPENSE_CATEGORIES.slice(0, 8).map((category) => (
+                        <button
+                          key={category.id}
+                          onClick={() => handleCategorySelect(category.id)}
+                          className={cn(chipBase, chipOff)}
+                        >
+                          {category.label}
+                        </button>
+                      ))}
                     </div>
                   </div>
                 </motion.div>
@@ -445,56 +430,38 @@ export function ExpenseAddSheet({
                   exit={{ opacity: 0, x: 20 }}
                   className="p-4 sm:p-6"
                 >
-                  <p className="text-base text-white mb-6 text-center">
-                    What type of expense is this?
+                  <p className="mb-4 text-[15px] font-semibold tracking-tight text-white">
+                    What kind of expense is it?
                   </p>
-                  <div className="space-y-2">
-                    {EXPENSE_CATEGORIES.map((category) => {
-                      const Icon = CATEGORY_ICONS[category.id] || MoreHorizontal;
-                      const colours = COLOUR_CLASSES[category.colour] || COLOUR_CLASSES['gray-500'];
-
-                      return (
-                        <button
-                          key={category.id}
-                          onClick={() => handleCategorySelect(category.id)}
-                          className={cn(
-                            'w-full flex items-center gap-4 p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all',
-                            'bg-white/[0.02] border-white/[0.08] hover:bg-white/[0.05] hover:border-white/[0.15]',
-                            selectedCategory === category.id &&
-                              'ring-2 ring-elec-yellow bg-elec-yellow/5'
+                  {/* Twelve categories, each previously with its own coloured
+                      tile — a paint chart to read one word off. Type only. */}
+                  <div className="overflow-hidden rounded-2xl border border-white/[0.12] divide-y divide-white/[0.10]">
+                    {EXPENSE_CATEGORIES.map((category) => (
+                      <button
+                        key={category.id}
+                        onClick={() => handleCategorySelect(category.id)}
+                        className={cn(
+                          'flex h-14 w-full items-center gap-3 px-4 text-left transition-colors touch-manipulation',
+                          selectedCategory === category.id
+                            ? 'bg-elec-yellow/[0.12]'
+                            : 'bg-white/[0.03] hover:bg-white/[0.06]'
+                        )}
+                      >
+                        <span className="flex-1 text-[14px] font-medium text-white">
+                          {category.label}
+                          {category.taxNote && (
+                            <span className="ml-2 text-[12px] text-white">
+                              ({category.taxNote})
+                            </span>
                           )}
-                        >
-                          <div
-                            className={cn(
-                              'w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0',
-                              colours.bg
-                            )}
-                          >
-                            <Icon className={cn('h-5 w-5', colours.text)} />
-                          </div>
-                          <div className="flex-1 text-left">
-                            <span className="font-medium text-foreground">{category.label}</span>
-                            {category.taxNote && (
-                              <span className="text-xs text-white ml-2">
-                                ({category.taxNote})
-                              </span>
-                            )}
-                          </div>
-                          <div
-                            className={cn(
-                              'w-5 h-5 rounded-full border-2 flex items-center justify-center',
-                              selectedCategory === category.id
-                                ? 'border-elec-yellow bg-elec-yellow'
-                                : 'border-white/20'
-                            )}
-                          >
-                            {selectedCategory === category.id && (
-                              <div className="w-2 h-2 rounded-full bg-black" />
-                            )}
-                          </div>
-                        </button>
-                      );
-                    })}
+                        </span>
+                        {selectedCategory === category.id && (
+                          <span className="text-[12px] font-semibold text-elec-yellow">
+                            Selected
+                          </span>
+                        )}
+                      </button>
+                    ))}
                   </div>
                 </motion.div>
               )}
@@ -506,60 +473,62 @@ export function ExpenseAddSheet({
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
-                  className="p-4 space-y-4"
+                  className="p-4"
                 >
-                  {/* Amount */}
-                  <div className="space-y-2">
-                    <Label htmlFor="amount">Amount</Label>
-                    <div className="flex items-center gap-2">
-                      <span className="text-2xl font-semibold text-white">£</span>
-                      <Input
-                        id="amount"
-                        type="text"
-                        inputMode="decimal"
-                        placeholder="0.00"
-                        value={amountText}
-                        onChange={(e) => {
-                          const s = sanitizeMoneyInput(e.target.value);
-                          setAmountText(s);
-                          setFormData((prev) => ({ ...prev, amount: parseMoney(s) }));
-                        }}
-                        className="h-14 text-2xl font-semibold touch-manipulation flex-1"
-                        autoFocus
-                      />
-                    </div>
+                  {/* Fields sit inside the bright card surface, under a plain
+                      type heading — the same composition as the EV charging
+                      form, which is the reference implementation. */}
+                  <div className={cardCn}>
+                    <SectionHeader title="Expense details" />
+                  <div>
+                    <label className={labelCn} htmlFor="amount">
+                      Amount (£)
+                    </label>
+                    <input
+                      id="amount"
+                      type="text"
+                      inputMode="decimal"
+                      placeholder="0.00"
+                      value={amountText}
+                      onChange={(e) => {
+                        const v = sanitizeMoneyInput(e.target.value);
+                        setAmountText(v);
+                        setFormData((prev) => ({ ...prev, amount: parseMoney(v) }));
+                      }}
+                      className={cn(inputCn, 'text-[22px] font-bold')}
+                      autoFocus
+                    />
                   </div>
 
-                  {/* Date */}
-                  <div className="space-y-2">
-                    <Label htmlFor="date">Date</Label>
-                    <Input
+                  <div>
+                    <label className={labelCn} htmlFor="date">
+                      Date
+                    </label>
+                    <input
                       id="date"
                       type="date"
                       value={formData.date || ''}
                       onChange={(e) => setFormData((prev) => ({ ...prev, date: e.target.value }))}
-                      className="h-12 touch-manipulation text-base"
+                      className={inputCn}
                     />
                     {formData.date && (
-                      <p className="text-sm text-elec-yellow font-medium">
-                        {format(new Date(formData.date), 'EEEE, d MMMM yyyy')}
+                      <p className="mt-1 text-[12px] text-white">
+                        {format(new Date(formData.date), 'EEEE d MMMM yyyy')}
                       </p>
                     )}
                   </div>
 
-                  {/* Project (optional) */}
                   {!lockProject && (
-                    <div className="space-y-2">
-                      <Label htmlFor="project">Project (optional)</Label>
+                    <div>
+                      <label className={labelCn} htmlFor="project">
+                        Job
+                      </label>
                       <Select value={projectId} onValueChange={setProjectId}>
-                        <SelectTrigger
-                          id="project"
-                          className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2"
-                        >
-                          <SelectValue placeholder="No project" />
+                        <SelectTrigger id="project" className={selectTriggerCn}>
+                          <SelectValue placeholder="None" />
                         </SelectTrigger>
-                        <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground">
-                          <SelectItem value={NO_PROJECT}>No project</SelectItem>
+                        <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] border-white/[0.12] bg-neutral-900 text-white">
+                          <SelectItem value={NO_PROJECT}>None</SelectItem>
                           {projects.map((p) => (
                             <SelectItem key={p.id} value={p.id}>
                               {p.title}
@@ -570,59 +539,58 @@ export function ExpenseAddSheet({
                     </div>
                   )}
 
-                  {/* Vendor */}
-                  <div className="space-y-2">
-                    <Label htmlFor="vendor">Vendor / Store</Label>
-                    <Input
+                  <div>
+                    <label className={labelCn} htmlFor="vendor">
+                      Where from
+                    </label>
+                    <input
                       id="vendor"
-                      placeholder="e.g. Screwfix, Shell, Toolstation"
+                      placeholder="Screwfix, Shell, Toolstation"
                       value={formData.vendor || ''}
                       onChange={(e) => setFormData((prev) => ({ ...prev, vendor: e.target.value }))}
-                      className="h-11 touch-manipulation"
+                      className={inputCn}
                     />
                   </div>
 
-                  {/* Description */}
-                  <div className="space-y-2">
-                    <Label htmlFor="description">Description (optional)</Label>
-                    <Textarea
+                  <div>
+                    <label className={labelCn} htmlFor="description">
+                      What it was for
+                    </label>
+                    <textarea
                       id="description"
-                      placeholder="What was this expense for?"
+                      placeholder="Optional"
                       value={formData.description || ''}
                       onChange={(e) =>
                         setFormData((prev) => ({ ...prev, description: e.target.value }))
                       }
-                      className="touch-manipulation min-h-[80px]"
+                      className={textareaCn}
                     />
                   </div>
 
-                  {/* VAT Amount */}
-                  <div className="space-y-2">
-                    <Label htmlFor="vat">VAT Amount (optional)</Label>
-                    <div className="flex items-center gap-2">
-                      <span className="text-lg font-medium text-white">£</span>
-                      <Input
-                        id="vat"
-                        type="text"
-                        inputMode="decimal"
-                        placeholder="0.00"
-                        value={vatText}
-                        onChange={(e) => {
-                          const s = sanitizeMoneyInput(e.target.value);
-                          setVatText(s);
-                          setFormData((prev) => ({ ...prev, vat_amount: parseMoney(s) }));
-                        }}
-                        className="h-11 touch-manipulation flex-1"
-                      />
-                    </div>
+                  <div>
+                    <label className={labelCn} htmlFor="vat">
+                      VAT (£)
+                    </label>
+                    <input
+                      id="vat"
+                      type="text"
+                      inputMode="decimal"
+                      placeholder="0.00"
+                      value={vatText}
+                      onChange={(e) => {
+                        const v = sanitizeMoneyInput(e.target.value);
+                        setVatText(v);
+                        setFormData((prev) => ({ ...prev, vat_amount: parseMoney(v) }));
+                      }}
+                      className={inputCn}
+                    />
                   </div>
 
-                  {/* Tax Deductible Toggle */}
-                  <div className="flex items-center justify-between py-2">
-                    <div>
-                      <Label>Tax Deductible</Label>
-                      <p className="text-xs text-white">
-                        Include in tax deduction calculations
+                  <div className="flex items-center justify-between border-t border-white/[0.10] pt-4">
+                    <div className="min-w-0 pr-4">
+                      <p className="text-[14px] font-medium text-white">Tax deductible</p>
+                      <p className="mt-0.5 text-[12px] text-white">
+                        Counts towards what comes off your tax bill
                       </p>
                     </div>
                     <Switch
@@ -633,12 +601,12 @@ export function ExpenseAddSheet({
                     />
                   </div>
 
-                  {/* AI Extracted Badge */}
                   {formData.ai_extracted && (
-                    <div className="text-xs text-white bg-blue-500/10 border border-blue-500/20 rounded-lg px-3 py-2">
-                      <span className="text-blue-400">AI extracted</span> - Review the details above
-                    </div>
+                    <p className="text-[12px] leading-snug text-white">
+                      Read off the receipt — check the figures before you save.
+                    </p>
                   )}
+                  </div>
                 </motion.div>
               )}
 
@@ -653,12 +621,9 @@ export function ExpenseAddSheet({
                 >
                   {!lockProject && (
                     <div className="space-y-2">
-                      <Label htmlFor="project-mileage">Project (optional)</Label>
+                      <label className={labelCn} htmlFor="project-mileage">Job</label>
                       <Select value={projectId} onValueChange={setProjectId}>
-                        <SelectTrigger
-                          id="project-mileage"
-                          className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2"
-                        >
+                        <SelectTrigger id="project-mileage" className={selectTriggerCn}>
                           <SelectValue placeholder="No project" />
                         </SelectTrigger>
                         <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground">
@@ -672,7 +637,11 @@ export function ExpenseAddSheet({
                       </Select>
                     </div>
                   )}
-                  <ExpenseMileageForm onSave={handleMileageSave} isSubmitting={isSubmitting} />
+                  <ExpenseMileageForm
+                    onSave={handleMileageSave}
+                    isSubmitting={isSubmitting}
+                    milesClaimedThisTaxYear={milesClaimedThisTaxYear}
+                  />
                 </motion.div>
               )}
             </AnimatePresence>

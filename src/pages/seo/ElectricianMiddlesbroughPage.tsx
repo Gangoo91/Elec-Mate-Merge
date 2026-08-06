@@ -211,7 +211,7 @@ const sections = [
               <span>
                 <strong>Rental property EICRs</strong> — five-yearly EICRs required under the
                 Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020.
-                Periodic inspection follows Section 631 of BS 7671. Given Middlesbrough's large
+                Periodic inspection follows Chapter 65 of BS 7671. Given Middlesbrough's large
                 private rented sector — concentrated in the terraced streets of Linthorpe, Newport,
                 and Gresham, and across the former council estates — EICR demand is consistently
                 high.

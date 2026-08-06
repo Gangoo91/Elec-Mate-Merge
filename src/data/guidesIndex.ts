@@ -118,7 +118,7 @@ export const GUIDES_INDEX: GuideIndexEntry[] = [
   { slug: '8202-unit-307-requirements-for-electrical-installations-revision', title: '8202 Unit 307 Requirements For Electrical Installations Revision' },
   { slug: 'ac-vs-dc-earthing-solar-ev', title: 'AC Vs DC Earthing Solar EV' },
   { slug: 'afdd-arc-fault-detection', title: 'AFDD Arc Fault Detection' },
-  { slug: 'afdd-mandatory-hmo-care-home-a4-2026', title: 'AFDD Mandatory HMO Care Home A4 2026' },
+  { slug: 'afdd-hmo-care-home-a4-2026', title: 'AFDD in HMOs and Care Homes A4 2026' },
   { slug: 'after-am2-what-happens-next', title: 'After AM2 What Happens Next' },
   { slug: 'agricultural-electrical-installations', title: 'Agricultural Electrical Installations' },
   { slug: 'ai-electrical-fault-finding', title: 'Ai Electrical Fault Finding' },

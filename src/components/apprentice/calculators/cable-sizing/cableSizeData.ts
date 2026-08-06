@@ -1,3 +1,22 @@
+/**
+ * ⚠️ DEPRECATED — DO NOT ADD NEW CONSUMERS, DO NOT EDIT THE NUMBERS HERE.
+ *
+ * This is a third inline copy of BS 7671 Appendix 4 current-carrying capacities
+ * and voltage drops. The verified dataset is
+ * `src/lib/calculators/bs7671-data/appendix4CurrentCapacity.ts` (per-reference-
+ * method Iz columns) and `.../voltageDropTables.ts` (mV/A/m) — inline copies
+ * like this one are exactly how fixes to the shared tables fail to reach the
+ * calculators.
+ *
+ * Note also that this table collapses every reference method into a single
+ * `currentRating` per insulation. Appendix 4 gives each reference method its own
+ * tabulated column, so a single number cannot be right for more than one
+ * installation method.
+ *
+ * The cable-sizing calculator no longer reads this file. The remaining consumer
+ * is `src/components/electrician-tools/VoltageDropCalculator.tsx`, which needs
+ * migrating onto the shared tables before this file can be deleted.
+ */
 export interface CableSizeOption {
   value: string;
   size: string;

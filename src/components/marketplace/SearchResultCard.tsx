@@ -1,8 +1,6 @@
-import { ExternalLink, Tag, Package, CheckCircle2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { MarketplaceProduct } from '@/hooks/useMarketplaceSearch';
 import { cn } from '@/lib/utils';
+import ProductImage from './ProductImage';
 
 interface SearchResultCardProps {
   product: MarketplaceProduct;
@@ -30,114 +28,71 @@ const calculateSavings = (
 export function SearchResultCard({ product, className }: SearchResultCardProps) {
   const savings = calculateSavings(product.regular_price, product.current_price);
 
-  // Stock status color
-  const stockColor = product.stock_status?.toLowerCase().includes('in stock')
-    ? 'text-green-500'
-    : product.stock_status?.toLowerCase().includes('low')
-      ? 'text-orange-500'
-      : 'text-red-500';
+  /*
+   * Stock status is deliberately NOT shown.
+   *
+   * Of 13,631 products, 12,314 say "unknown" (in two different casings), and
+   * only 1,300 claim a real state. A green "In Stock" on one card and nothing
+   * on the next reads as a promise the data cannot keep — worse than staying
+   * quiet and letting the supplier's own page answer it.
+   */
 
   return (
     <div
       className={cn(
-        'flex flex-col sm:flex-row gap-4 p-4 border-b border-border hover:bg-muted/50 transition-colors',
+        'flex flex-col gap-4 border-b border-white/[0.08] p-4 transition-colors hover:bg-white/[0.03] sm:flex-row sm:p-5',
         className
       )}
     >
-      {/* Product Image */}
-      <div className="w-full sm:w-24 h-32 sm:h-24 bg-white rounded-lg flex-shrink-0 overflow-hidden">
-        {product.image_url ? (
-          <img
-            src={product.image_url}
-            alt={product.name}
-            className="w-full h-full object-contain p-2"
-            loading="lazy"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center bg-muted">
-            <Package className="h-8 w-8 text-muted-foreground" />
-          </div>
-        )}
-      </div>
+      <ProductImage
+        src={product.image_url}
+        alt={product.name}
+        fallbackLabel={product.name}
+        sizeClassName="h-32 w-full shrink-0 sm:h-24 sm:w-24"
+        className="rounded-xl"
+      />
 
-      {/* Product Info */}
-      <div className="flex-1 min-w-0 space-y-2">
-        {/* Title */}
-        <h3 className="font-medium text-base sm:text-lg leading-tight line-clamp-2">
+      <div className="min-w-0 flex-1">
+        <h3 className="line-clamp-2 text-[15px] font-semibold leading-snug tracking-tight text-white">
           {product.name}
         </h3>
 
-        {/* Brand & Category */}
-        <div className="flex flex-wrap items-center gap-2 text-sm">
-          {product.brand && <span className="text-muted-foreground">{product.brand}</span>}
-          {product.category && (
-            <Badge variant="secondary" className="text-xs">
-              {product.category}
-            </Badge>
-          )}
-        </div>
+        {/* One meta line. Brand, category and supplier were three separate
+            rows of pills in three different colours. */}
+        <p className="mt-1 truncate text-[12px] text-white">
+          {[product.brand, product.supplier_name, product.category].filter(Boolean).join(' · ')}
+        </p>
 
-        {/* Supplier Badge */}
-        <div className="flex items-center gap-2">
-          <SupplierBadge name={product.supplier_name} slug={product.supplier_slug} />
-          {product.is_on_sale && (
-            <Badge className="bg-green-500/20 text-green-500 border-green-500/30">
-              <Tag className="h-3 w-3 mr-1" />
-              {product.discount_percentage}% off
-            </Badge>
-          )}
-        </div>
-
-        {/* Highlights */}
         {product.highlights && product.highlights.length > 0 && (
-          <ul className="hidden sm:flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
+          <ul className="mt-2 hidden flex-wrap gap-x-4 gap-y-1 text-[12px] text-white sm:flex">
             {product.highlights.slice(0, 3).map((highlight, i) => (
-              <li key={i} className="flex items-center gap-1">
-                <CheckCircle2 className="h-3 w-3 text-green-500" />
-                {highlight}
-              </li>
+              <li key={i}>{highlight}</li>
             ))}
           </ul>
         )}
       </div>
 
-      {/* Price & CTA */}
-      <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-2 sm:gap-1 sm:min-w-[140px]">
-        {/* Price */}
+      <div className="flex shrink-0 items-end justify-between gap-3 sm:min-w-[150px] sm:flex-col sm:items-end">
         <div className="text-right">
-          <p className="text-xl sm:text-2xl font-bold text-elec-yellow">
+          <p className="text-[22px] font-bold leading-none tracking-tight text-elec-yellow tabular-nums">
             £{formatPrice(product.current_price)}
           </p>
           {product.is_on_sale && savings && (
-            <>
-              <p className="text-sm text-muted-foreground line-through">
-                £{formatPrice(product.regular_price)}
-              </p>
-              <p className="text-sm text-green-500 font-medium">Save £{savings}</p>
-            </>
+            <p className="mt-1 text-[12px] text-white tabular-nums">
+              <span className="line-through">£{formatPrice(product.regular_price)}</span>
+              {' · '}Save £{savings}
+            </p>
           )}
         </div>
 
-        {/* Stock Status */}
-        <p className={cn('text-sm font-medium hidden sm:block', stockColor)}>
-          {product.stock_status || 'Check availability'}
-        </p>
-
-        {/* CTA Button */}
-        <Button
-          asChild
-          className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium h-11 touch-manipulation"
+        <a
+          href={product.product_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex h-11 shrink-0 items-center justify-center rounded-xl bg-elec-yellow px-5 text-[14px] font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98] sm:w-full"
         >
-          <a
-            href={product.product_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2"
-          >
-            View Deal
-            <ExternalLink className="h-4 w-4" />
-          </a>
-        </Button>
+          View deal
+        </a>
       </div>
     </div>
   );
@@ -146,22 +101,19 @@ export function SearchResultCard({ product, className }: SearchResultCardProps) 
 /**
  * Supplier Badge Component
  */
-function SupplierBadge({ name, slug }: { name: string; slug: string }) {
-  // Supplier colors
-  const colors: Record<string, string> = {
-    screwfix: 'bg-orange-500/20 text-orange-500 border-orange-500/30',
-    toolstation: 'bg-blue-500/20 text-blue-500 border-blue-500/30',
-    cef: 'bg-green-500/20 text-green-500 border-green-500/30',
-    'electrical-direct': 'bg-purple-500/20 text-purple-500 border-purple-500/30',
-    'rs-components': 'bg-red-500/20 text-red-500 border-red-500/30',
-    'tlc-electrical': 'bg-cyan-500/20 text-cyan-500 border-cyan-500/30',
-    edmundson: 'bg-yellow-500/20 text-yellow-500 border-yellow-500/30',
-  };
-
+/**
+ * Supplier name.
+ *
+ * There were seven hand-picked brand colours here — orange for Screwfix, blue
+ * for Toolstation, red for RS and so on — so a list of results from several
+ * wholesalers looked like a colour chart, and the eleventh supplier got no
+ * colour at all. One treatment for all of them.
+ */
+function SupplierBadge({ name }: { name: string; slug?: string }) {
   return (
-    <Badge variant="outline" className={cn('text-xs', colors[slug] || '')}>
+    <span className="rounded-full border border-white/[0.14] bg-white/[0.06] px-2 py-0.5 text-[11px] font-medium text-white">
       {name}
-    </Badge>
+    </span>
   );
 }
 

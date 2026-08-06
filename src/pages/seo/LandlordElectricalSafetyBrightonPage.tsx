@@ -158,7 +158,7 @@ const sections = [
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
-                (Section 631 covers periodic inspection and testing requirements).
+                (Chapter 65 covers periodic inspection and testing requirements).
               </span>
             </li>
             <li className="flex items-start gap-3">

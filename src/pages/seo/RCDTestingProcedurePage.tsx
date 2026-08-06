@@ -24,7 +24,7 @@ import {
 
 const PAGE_TITLE = 'RCD Trip Times UK 2026: 30mA, 100mA, 300mA (A4:2026)';
 const PAGE_DESCRIPTION =
-  'RCD trip times under BS 7671 A4:2026 Reg 643.7.3: 300 ms max for general type, 130-500 ms for Type S. Plus 30/100/300 mA, Type AC restriction, what changed in A4:2026.';
+  'RCD trip times under BS 7671 A4:2026 Reg 643.7.3.201: 300 ms max at IΔn for general type; 130-500 ms for Type S per BS EN 61008/61009. Plus 30/100/300 mA, Type AC restriction, what changed in A4:2026.';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -34,9 +34,8 @@ const breadcrumbs = [
 const tocItems = [
   { id: 'what-is-rcd-testing', label: 'What Is RCD Testing?' },
   { id: 'test-sequence', label: 'The Full RCD Test Sequence' },
-  { id: 'half-rated', label: 'Half-Rated Current Test (Must NOT Trip)' },
-  { id: 'rated-current', label: '1x Rated Current Test' },
-  { id: 'five-times', label: '5x Rated Current Test' },
+  { id: 'rated-current', label: 'The Test at IΔn — What BS 7671 Requires' },
+  { id: 'diagnostics', label: 'Half-Rated, Five-Times and Ramp' },
   { id: 'phase-angle', label: 'Testing at 0 and 180 Degrees' },
   { id: 'ramp-test', label: 'Ramp Test' },
   { id: 'button-test', label: 'Button Test' },
@@ -49,9 +48,10 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'RCD testing involves multiple tests at different current levels: half-rated (must NOT trip), 1x rated (must trip within 300 ms), and 5x rated (must trip within 40 ms for general-type 30 mA RCDs).',
-  'All tests must be performed on both positive (0 degree) and negative (180 degree) half-cycles of the supply waveform — the worst-case (longest) trip time is the value recorded on the certificate.',
-  'Time-delayed (Type S) RCDs have different trip time requirements: 130 to 500 ms at 1x rated current and 50 to 200 ms at 5x rated current — they must NOT trip faster than the lower limit.',
+  'Amendment 4 changed the test. Table 3A of Appendix 3 (time/current performance criteria for RCDs) has been deleted, and Regulation 643.7.3.201 now verifies an RCD with a single alternating current test at the rated residual operating current, IΔn — whatever the device type, AC, A, F or B.',
+  'A general (non-delay) RCD must operate within 300 ms at IΔn — that is the acceptance figure the A4 NOTE states, and it is what goes on the certificate. For a Type S (time-delayed) device the corresponding 130 to 500 ms band comes from the product standard BS EN 61008/61009 rather than from BS 7671 itself.',
+  'The half-rated and five-times tests are no longer part of the required verification. They remain genuinely useful for fault-finding, and 40 ms at 5x IΔn is still a device characteristic under BS EN 61008/61009 — but that is the product standard describing the device, not BS 7671 telling you what to test.',
+  'Test on both positive (0 degree) and negative (180 degree) half-cycles — the worst-case (longest) trip time is the value recorded.',
   'The push-button test confirms the mechanical trip mechanism works but does NOT verify the electrical trip function — instrument testing is mandatory for compliance. BS 7671 Regs 514.12.1/514.12.2 require a notice instructing occupants to test six-monthly by pressing the relevant test button(s).',
   'Elec-Mate validates all RCD trip times automatically against BS 7671 requirements and supports voice-to-test-results for hands-free data entry on site.',
 ];
@@ -60,7 +60,7 @@ const faqs = [
   {
     question: 'What are the RCD trip time limits for a 30 mA general-type RCD?',
     answer:
-      'For a standard 30 mA general-type RCD (not time-delayed), the trip time limits are defined by BS EN 61008 (for RCCBs) and BS EN 61009 (for RCBOs). At half-rated current (0.5x, which is 15 mA), the device must NOT trip — this confirms it is not overly sensitive. At rated current (1x, which is 30 mA), the device must trip within 300 milliseconds. At five times rated current (5x, which is 150 mA), the device must trip within 40 milliseconds. The 5x test is the most critical because it simulates a significant fault condition where rapid disconnection is essential to prevent electric shock. All tests must be performed on both the positive (0 degree) and negative (180 degree) half-cycles of the supply waveform, and the worst-case (longest) trip time from either half-cycle is the value recorded on the certificate.',
+      'Two different things get muddled here, and Amendment 4 makes the distinction matter. What BS 7671 requires you to verify: Regulation 643.7.3.201 calls for a single alternating current test at the rated residual operating current (IΔn = 30 mA for a 30 mA device), regardless of RCD type. A general (non-delay) device must operate within 300 milliseconds; a Type S between 130 and 500 milliseconds. That is the test, and that trip time is what goes on the certificate. What the product standards say about the device: BS EN 61008 (RCCBs) and BS EN 61009 (RCBOs) give 40 milliseconds at five times rated current for a general device, and 50 to 200 milliseconds for a Type S. Those describe how the device must be built, not what BS 7671 asks you to measure — Table 3A of Appendix 3 has been deleted, so the half-rated and five-times tests are no longer part of the required sequence. Whichever test you run, do it on both the positive (0 degree) and negative (180 degree) half-cycles and record the worst-case (longest) trip time.',
   },
   {
     question: 'Why must RCDs be tested on both half-cycles?',
@@ -70,12 +70,12 @@ const faqs = [
   {
     question: 'What is the difference between a general-type RCD and a Type S (time-delayed) RCD?',
     answer:
-      'A general-type RCD is designed to trip as quickly as possible when it detects a fault current at or above its rated residual operating current. Note that Type AC and Type A are distinct device types (Reg 534.4.7): Type AC operates only on alternating sinusoidal residual current; Type A additionally responds to residual pulsating DC current. Critically, under Reg 531.3.3, Type AC shall only be used to serve fixed equipment where it is known that the load current contains no DC components — circuits supplying inverters, EV chargers, or variable-speed drives must use Type A or higher. A Type S (selective or time-delayed) RCD has an intentional time delay built in — it will NOT trip within a certain minimum time, even if the fault current exceeds its rated value. This delay is designed to achieve discrimination with a downstream general-type RCD. For example, if a 100 mA Type S RCCB is installed upstream of a 30 mA general-type RCBO, a fault on a circuit protected by the 30 mA RCBO should trip the RCBO first without tripping the upstream 100 mA Type S device. This prevents unnecessary disconnection of other circuits. The trip time limits for a Type S RCD are: at 1x rated current, it must trip between 130 ms and 500 ms (not faster than 130 ms); at 5x rated current, it must trip between 50 ms and 200 ms.',
+      'A general-type RCD is designed to trip as quickly as possible when it detects a fault current at or above its rated residual operating current. Note that Type AC and Type A are distinct device types (Reg 534.4.7): Type AC operates only on alternating sinusoidal residual current; Type A additionally responds to residual pulsating DC current. Critically, under Reg 531.3.3, Type AC shall only be used to serve fixed equipment where it is known that the load current contains no DC components — circuits supplying inverters, EV chargers, or variable-speed drives must use Type A or higher. A Type S (selective or time-delayed) RCD has an intentional time delay built in — it will NOT trip within a certain minimum time, even if the fault current exceeds its rated value. This delay is designed to achieve discrimination with a downstream general-type RCD. For example, if a 100 mA Type S RCCB is installed upstream of a 30 mA general-type RCBO, a fault on a circuit protected by the 30 mA RCBO should trip the RCBO first without tripping the upstream 100 mA Type S device. This prevents unnecessary disconnection of other circuits. Tested at IΔn, a Type S device should operate between 130 ms and 500 ms under BS EN 61008/61009 — the lower bound matters as much as the upper one, because a Type S that trips too fast has lost its discrimination. Note that the acceptance figure stated in the BS 7671 A4 NOTE is the 300 ms maximum for a general non-delay device; the Type S band is the product standard. (BS EN 61008/61009 additionally gives 50 to 200 ms at five times rated current, but since Amendment 4 deleted Table 3A that is a device characteristic rather than a test BS 7671 requires.)',
   },
   {
     question: 'Is the push-button test sufficient for BS 7671 compliance?',
     answer:
-      'No. The push-button test (the test button on the front of the RCD) only confirms that the mechanical trip mechanism works correctly — that when the trip coil is activated, the mechanism releases and disconnects the supply. It does NOT verify the electrical trip function at the correct current level or within the required time. An RCD could pass the push-button test but fail the instrument tests because the sensing toroid is damaged, the electronics have drifted, or the contacts are degraded. BS 7671 requires full instrument testing at the specified current levels (0.5x, 1x, and 5x rated current) on both half-cycles. The push-button test is an additional mechanical check that should be performed first, but it is not a substitute for instrument testing. Occupants should be advised to press the test button six-monthly as a routine check between periodic inspections — this matches the mandatory notice wording required by BS 7671 Regs 514.12.1 and 514.12.2: "Test six-monthly by pressing the relevant test button(s)."',
+      'No. The push-button test (the test button on the front of the RCD) only confirms that the mechanical trip mechanism works correctly — that when the trip coil is activated, the mechanism releases and disconnects the supply. It does NOT verify the electrical trip function at the correct current level or within the required time. An RCD could pass the push-button test but fail the instrument tests because the sensing toroid is damaged, the electronics have drifted, or the contacts are degraded. BS 7671 requires an instrument test — under Regulation 643.7.3.201 that is an alternating current test at IΔn, on both half-cycles. The push-button test is an additional mechanical check that should be performed first, but it is not a substitute for instrument testing. Occupants should be advised to press the test button six-monthly as a routine check between periodic inspections — this matches the mandatory notice wording required by BS 7671 Regs 514.12.1 and 514.12.2: "Test six-monthly by pressing the relevant test button(s)."',
   },
   {
     question: 'What is a ramp test and when is it used?',
@@ -88,9 +88,9 @@ const faqs = [
       'RCD discrimination testing verifies that when a fault occurs on a circuit protected by a downstream RCD, only the downstream device trips — the upstream device remains closed, maintaining supply to other circuits. To test this, you must verify that the upstream device (typically a Type S time-delayed RCD) does not trip when the downstream device (typically a general-type RCD) is tested at its rated current. The test procedure is: (1) perform the full test sequence on the downstream RCD — the upstream RCD must not trip during any of these tests; (2) if the upstream RCD trips during downstream testing, discrimination has failed. For discrimination to work, there must be a sufficient time margin between the fastest trip time of the upstream device and the slowest trip time of the downstream device. This is why Type S RCDs have a minimum trip time (130 ms at 1x) — to give the downstream general-type device (which must trip within 300 ms at 1x) time to operate first.',
   },
   {
-    question: 'What should I do if an RCD fails the 5x trip time test?',
+    question: 'What should I do if an RCD fails the trip time test?',
     answer:
-      'If an RCD fails the 5x trip time test (trips slower than 40 ms for a general-type device or slower than 200 ms for a Type S device), the device is not providing adequate protection against electric shock and must be replaced. Before condemning the device, verify your test is correct: ensure the MFT is calibrated, confirm you are testing at the correct multiple (5x the rated residual operating current, not 5x the rated current of the device), and check that the supply voltage is stable. If the device consistently fails, it should be classified as C2 (potentially dangerous) on the EICR because the delayed disconnection could result in a lethal electric shock. Replace the RCD with a device of the same type, rating, and sensitivity. After replacement, perform the full test sequence on the new device to confirm it passes all tests. Record both the failure and the remediation on the EICR.',
+      'A failure means the device did not operate within 300 ms at IΔn (general type) or fell outside the 130 to 500 ms band (Type S). Before condemning it, verify the test itself: check the instrument is in calibration, confirm you are testing at the rated residual operating current and not at the device current rating — IΔn for a 30 mA RCBO is 30 mA, not the 32 A of the overcurrent element, which is a genuinely common mix-up — and check the supply voltage is stable. Re-test on both half-cycles, because a device can pass on one and fail on the other. If it consistently fails, it is not providing the protection the design relies on and should be replaced with a device of the same type, rating and sensitivity. On an EICR this is normally a C2 (potentially dangerous), since delayed disconnection on a circuit relying on that RCD for additional protection could result in a lethal shock — but code the observation on what the device actually protects, not by reflex. After replacement, re-test and record both the original failure and the remediation.',
   },
 ];
 
@@ -104,20 +104,20 @@ const howToSteps = [
     text: 'Press the test button on the front of the RCD. The device should trip immediately, disconnecting the supply. Reset the RCD. This confirms the mechanical trip mechanism works. If the test button does not trip the RCD, the device is faulty and must be replaced — do not proceed with instrument testing.',
   },
   {
-    name: 'Test at half-rated current (must NOT trip)',
-    text: 'Set your MFT to the 0.5x test mode. Apply the half-rated current (15 mA for a 30 mA RCD) on the positive half-cycle (0 degrees). The RCD must NOT trip. Repeat on the negative half-cycle (180 degrees). The RCD must NOT trip on either half-cycle. If the RCD trips at half-rated current, it is overly sensitive.',
+    name: 'Test at IΔn on the positive half-cycle',
+    text: 'This is the verification Regulation 643.7.3.201 requires. Set the instrument to an alternating current test at the rated residual operating current (30 mA for a 30 mA device) and apply it on the positive half-cycle (0 degrees). Record the trip time. A general (non-delay) device must operate within 300 ms; a Type S between 130 and 500 ms. The same AC test at IΔn applies whatever the device type — AC, A, F or B.',
   },
   {
-    name: 'Test at rated current (must trip within 300 ms)',
-    text: 'Set the MFT to 1x test mode. Apply the rated current (30 mA for a 30 mA RCD) on the positive half-cycle. Record the trip time — it must be within 300 ms for a general-type device. Reset the RCD and repeat on the negative half-cycle. Record the worst-case (longest) trip time.',
+    name: 'Reset and repeat on the negative half-cycle',
+    text: 'Reset the RCD and repeat the same test at IΔn on the negative half-cycle (180 degrees). An RCD can behave differently depending on the polarity of the residual current at the instant the fault occurs, so a device that passes on one half-cycle can fail on the other. The worst-case (longest) of the two readings is the value that must meet the limit.',
   },
   {
-    name: 'Test at five times rated current (must trip within 40 ms)',
-    text: 'Set the MFT to 5x test mode. Apply five times the rated current (150 mA for a 30 mA RCD) on the positive half-cycle. Record the trip time — it must be within 40 ms for a general-type device. Reset and repeat on the negative half-cycle. Record the worst-case trip time. This is the most critical test for shock protection.',
+    name: 'Optional: diagnostic tests when investigating a problem',
+    text: 'The half-rated and five-times tests are no longer part of the required verification — Amendment 4 deleted Table 3A of Appendix 3 — but they remain useful diagnostics. A half-rated test (15 mA for a 30 mA device, must not trip) helps confirm an over-sensitive device when chasing nuisance tripping, and a ramp test identifies the actual trip current. Run them when you are investigating something, not as a matter of routine.',
   },
   {
-    name: 'Record all results on the schedule of test results',
-    text: 'Record the worst-case trip times for each test on the schedule of test results. Note the RCD type, rated residual operating current, and whether the half-rated test was passed (device did NOT trip). Elec-Mate validates all trip times automatically against BS 7671 requirements.',
+    name: 'Record the result on the schedule of test results',
+    text: 'Record the worst-case trip time at IΔn, together with the RCD type and its rated residual operating current. Do not record a five-times figure as the certified trip time — the certified value is the one measured at IΔn. Elec-Mate validates trip times automatically against the current BS 7671 requirements.',
   },
 ];
 
@@ -148,14 +148,13 @@ const sections = [
           energised and deliberately injects fault current through the earth path.
         </p>
         <p>
-          The test procedure involves applying specific multiples of the rated residual operating
-          current (IΔn) and verifying that the device trips within the required time — or, in the
-          case of the half-rated test, does NOT trip. The tests must be performed on both the
-          positive and negative half-cycles of the supply waveform to verify correct operation under
-          all conditions.
+          The test applies the rated residual operating current (IΔn) as an alternating current and
+          verifies that the device operates within the required time. It is performed on both the
+          positive and negative half-cycles of the supply waveform, because an RCD can behave
+          differently depending on the polarity of the residual current when it appears.
         </p>
         <p>
-          A4:2026 introduced an important change to Reg 643.3: regardless of RCD type (AC, A, F, B
+          A4:2026 introduced an important change to Reg 643.7.3.201: regardless of RCD type (AC, A, F, B
           etc.), an alternating current test at rated residual operating current (IΔn) shall be used
           to verify the effectiveness of the RCD. This means the 1x IΔn effectiveness test is always
           performed as an AC sinusoidal test, even for Type A, F, or B devices. Where your MFT has a
@@ -172,154 +171,130 @@ const sections = [
     content: (
       <>
         <p>
-          For each RCD in the installation, the following tests must be performed in order. Each
-          test must be carried out on both the positive (0 degree) and negative (180 degree)
-          half-cycles.
+          Amendment 4 made this shorter than most electricians expect. Table 3A of Appendix 3 —
+          the time/current performance criteria table that drove the old half-rated, rated and
+          five-times routine — has been deleted. Regulation 643.7.3.201 now verifies an RCD with a{' '}
+          <strong>single alternating current test at the rated residual operating current</strong>,
+          IΔn, whatever the device type. Type AC, A, F and B are all verified the same way.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-4">
-            RCD Test Sequence — 30 mA General-Type RCD
+            Required verification — 30 mA general-type RCD
           </h3>
           <ul className="space-y-3 text-white leading-relaxed">
             <li className="flex items-start gap-3">
               <Timer className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong className="text-yellow-400">Push-button test:</strong> Press the test button
-                on the RCD — must trip mechanically. Reset.
+                on the RCD — must trip mechanically. Reset. (A mechanical check, not a substitute
+                for the instrument test.)
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Timer className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">0.5x IΔn (15 mA) at 0 degrees:</strong> Must NOT
-                trip.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Timer className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong className="text-yellow-400">0.5x IΔn (15 mA) at 180 degrees:</strong> Must
-                NOT trip.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Timer className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong className="text-yellow-400">1x IΔn (30 mA) at 0 degrees:</strong> Must trip
+                <strong className="text-yellow-400">IΔn (30 mA) at 0 degrees:</strong> Must operate
                 within 300 ms. Record time.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Timer className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">1x IΔn (30 mA) at 180 degrees:</strong> Must
-                trip within 300 ms. Record time.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Timer className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong className="text-yellow-400">5x IΔn (150 mA) at 0 degrees:</strong> Must trip
-                within 40 ms. Record time.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Timer className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong className="text-yellow-400">5x IΔn (150 mA) at 180 degrees:</strong> Must
-                trip within 40 ms. Record time.
+                <strong className="text-yellow-400">IΔn (30 mA) at 180 degrees:</strong> Must
+                operate within 300 ms. Record time.
               </span>
             </li>
           </ul>
+          <p className="text-white text-sm leading-relaxed mt-4 pt-4 border-t border-white/[0.1]">
+            A Type S (time-delayed) device is verified with the same single AC test at IΔn, but
+            should operate <strong>between 130 and 500 ms</strong> per BS EN 61008/61009 — the
+            lower bound matters too, because a Type S that trips too quickly has lost the
+            discrimination it exists to provide.
+          </p>
         </div>
         <p>
-          The worst-case (longest) trip time from the 0 degree and 180 degree tests at each current
-          level is the value recorded on the schedule of test results. For example, if the 5x test
-          gives 28 ms at 0 degrees and 34 ms at 180 degrees, you record 34 ms.
-        </p>
-      </>
-    ),
-  },
-  {
-    id: 'half-rated',
-    heading: 'Half-Rated Current Test — Must NOT Trip',
-    content: (
-      <>
-        <p>
-          The half-rated current test (0.5x IΔn) is often overlooked but is an essential part of the
-          RCD test sequence. For a 30 mA RCD, this means applying 15 mA of fault current. The RCD
-          must NOT trip at this current on either half-cycle.
+          The worst-case (longest) trip time from the 0 degree and 180 degree tests is the value
+          recorded on the schedule of test results. If the test gives 28 ms at 0 degrees and 34 ms
+          at 180 degrees, you record 34 ms.
         </p>
         <p>
-          The purpose of this test is to verify that the RCD is not overly sensitive. BS EN
-          61008/61009 specifies that an RCD must trip between 50% and 100% of its rated residual
-          operating current. A device that trips below 50% (below 15 mA for a 30 mA device) is
-          excessively sensitive and presents a nuisance tripping risk. Nuisance tripping is not just
-          an inconvenience — it can lead occupants to bypass or remove the RCD entirely, leaving
-          circuits unprotected.
-        </p>
-        <p>
-          If the RCD trips at half-rated current, investigate the cause. There may be existing earth
-          leakage on the downstream circuits (from electronic equipment, long cable runs, or damp
-          conditions) that, combined with the test current, exceeds the trip threshold.
-          Alternatively, the RCD itself may be faulty and should be replaced.
+          The half-rated and five-times tests have not become wrong — they have stopped being
+          required. Both remain useful when you are investigating a specific problem, and the
+          familiar 40 ms at five times IΔn is still a real figure from BS EN 61008/61009. It
+          describes how the device must be built, though, not what BS 7671 asks you to measure. The
+          practical consequence on site: record the trip time at IΔn as the certified value, and do
+          not fail a device against a criterion the standard no longer applies.
         </p>
       </>
     ),
   },
   {
     id: 'rated-current',
-    heading: '1x Rated Current Test',
+    heading: 'The Test at IΔn — What BS 7671 Requires',
     content: (
       <>
         <p>
-          The rated current test (1x IΔn) applies the full rated residual operating current — 30 mA
-          for a 30 mA RCD. The device must trip within 300 milliseconds on both the positive and
-          negative half-cycles.
+          The test applies the full rated residual operating current — 30 mA for a 30 mA device —
+          as an alternating current, on both the positive and negative half-cycles. A general
+          (non-delay) RCD must operate within 300 milliseconds. Since Amendment 4 this is the whole
+          of the required verification, and it applies identically to Type AC, A, F and B devices.
         </p>
         <p>
-          The 300 ms limit applies to general-type (non-time-delayed) RCDs. This is the maximum
-          acceptable trip time at the rated current. In practice, most healthy RCDs trip
-          significantly faster — typically between 15 ms and 30 ms at rated current. A trip time
-          approaching 300 ms, while technically a pass, may indicate a device that is nearing the
-          end of its useful life.
+          The 300 ms figure is a limit, not a target. Most healthy RCDs operate far faster —
+          typically 15 to 30 ms at IΔn. A device passing at 250 ms is compliant but worth a second
+          look: trip times drift upward as a device ages, and a reading that high on a modern
+          installation usually means something is wrong with the device rather than the circuit.
         </p>
         <p>
-          The test is performed on both half-cycles because the RCD's sensitivity may differ
-          depending on the polarity of the fault current at the instant the test is applied. The
-          worst-case (longest) trip time from either half-cycle is recorded on the certificate.
+          Both half-cycles matter because an RCD's sensitivity can differ with the polarity of the
+          residual current at the instant it appears. A device can pass at 0 degrees and fail at
+          180. The worst-case (longest) trip time from either half-cycle is the one recorded on the
+          certificate.
         </p>
+        <SEOAppBridge
+          title="Auto-validated RCD trip times in the schedule of tests"
+          description="Enter the trip time from your instrument and Elec-Mate validates it against the current BS 7671 requirement — 300 ms at IΔn for a general device, 130 to 500 ms for a Type S."
+          icon={ClipboardCheck}
+        />
       </>
     ),
   },
   {
-    id: 'five-times',
-    heading: '5x Rated Current Test',
+    id: 'diagnostics',
+    heading: 'Half-Rated, Five-Times and Ramp — Diagnostics, Not Verification',
     content: (
       <>
         <p>
-          The five times rated current test (5x IΔn) is the most critical test for shock protection.
-          For a 30 mA RCD, this applies 150 mA of fault current. The device must trip within 40
-          milliseconds for a general-type RCD.
+          These three tests used to be part of the routine. Amendment 4 deleted Table 3A of
+          Appendix 3, which is what required them, so they are no longer part of verifying an RCD.
+          They have not become useless — they have become diagnostic tools you reach for when
+          investigating something specific.
         </p>
         <p>
-          The 40 ms limit is specifically designed to ensure protection against ventricular
-          fibrillation — the most dangerous consequence of electric shock. Research has shown that
-          currents above 30 mA flowing through the body for more than approximately 40 ms can induce
-          fibrillation. The 5x test simulates a significant fault condition where a large leakage
-          current is flowing to earth, and the rapid 40 ms disconnection prevents the shock duration
-          from reaching dangerous levels.
+          <strong>Half-rated (0.5x IΔn — 15 mA on a 30 mA device).</strong> The device should not
+          trip. This is the test to run when chasing nuisance tripping, because it distinguishes an
+          over-sensitive device from a circuit with genuine earth leakage. BS EN 61008/61009
+          requires an RCD to operate between 50% and 100% of IΔn, so a device tripping below 15 mA
+          is out of specification. Bear in mind that existing leakage downstream — electronic
+          equipment, long runs, damp — adds to the test current, so a trip here is not automatically
+          the device's fault.
         </p>
         <p>
-          If an RCD fails the 5x test (trips in more than 40 ms), it must be replaced. This is a C2
-          (potentially dangerous) observation on an EICR because the delayed disconnection could
-          result in a lethal electric shock.
+          <strong>Five times (5x IΔn — 150 mA on a 30 mA device).</strong> The familiar 40 ms figure
+          comes from BS EN 61008/61009 and describes how the device must be built. The reasoning
+          behind it is sound and worth knowing: currents of that magnitude flowing through the body
+          for more than roughly 40 ms risk inducing ventricular fibrillation, which is why a device
+          intended for additional protection is built to clear a heavy residual current that
+          quickly. What has changed is that BS 7671 no longer asks you to measure it. Run it when
+          you want the extra evidence; record the IΔn result as the certified value.
         </p>
-        <SEOAppBridge
-          title="Auto-validated RCD trip times in the schedule of tests"
-          description="Enter the trip times from your MFT and Elec-Mate instantly validates them against BS 7671 requirements — 300 ms at 1x, 40 ms at 5x for general-type…"
-          icon={ClipboardCheck}
-        />
+        <p>
+          <strong>Ramp test.</strong> Rather than applying a fixed current and timing the trip, a
+          ramp test raises the current gradually from zero and reports the current at which the
+          device actually operates — a 30 mA RCD might let go at 22 mA. It is the most informative
+          of the three when a device is behaving oddly, and it has never been part of the required
+          sequence.
+        </p>
       </>
     ),
   },
@@ -422,36 +397,29 @@ const sections = [
             <li className="flex items-start gap-3">
               <Timer className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">At 1x IΔn (rated current):</strong> Must trip
-                between 130 ms and 500 ms. The device must NOT trip faster than 130 ms — this is the
-                minimum time that provides the delay for discrimination.
+                <strong className="text-yellow-400">At IΔn — the required test:</strong> Should
+                operate between 130 ms and 500 ms (BS EN 61008/61009). The device must NOT operate faster than 130 ms —
+                that minimum is the delay that makes discrimination possible.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Timer className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong className="text-yellow-400">At 5x IΔn (five times rated):</strong> Must trip
-                between 50 ms and 200 ms per BS EN 61008/61009 device-standard requirements. Again,
-                the device must NOT trip faster than 50 ms. Note: BS 7671 Reg 643.7.3 specifies the
-                1x IΔn window (130–500 ms) for Type S — the 5x window is governed by the device
-                product standard, not by BS 7671 directly.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Timer className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                <strong className="text-yellow-400">At 0.5x IΔn (half-rated):</strong> Must NOT trip
-                — same as general-type RCDs.
+                <strong className="text-yellow-400">At 5x IΔn — device characteristic:</strong> 50
+                ms to 200 ms under BS EN 61008/61009. This is the product standard describing the
+                device, not a BS 7671 test — Amendment 4 deleted Table 3A of Appendix 3, so the
+                five-times test is not part of the required verification for a Type S any more than
+                it is for a general device.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Note the critical difference: for a Type S device, there is both a maximum AND a minimum
-          trip time. If the device trips faster than the minimum (for example, tripping at 1x in
-          less than 130 ms), it is not providing the intended time delay and discrimination will
-          fail. If it trips slower than the maximum (for example, tripping at 5x in more than 200
-          ms), it is not providing adequate protection. Both conditions are failures.
+          Note the difference that catches people out: a Type S device has both a maximum{' '}
+          <em>and</em> a minimum. Operating faster than 130 ms at IΔn is a failure, not a good
+          result — the device is not providing the intended delay, and the downstream general-type
+          RCD will no longer discriminate against it. Operating slower than 500 ms is also a
+          failure. Both are recorded as such.
         </p>
       </>
     ),
@@ -520,25 +488,26 @@ const sections = [
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
           <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. For each RCD, you must
           record the type (RCCB, RCBO, socket-outlet), the rated residual operating current
-          (typically 30 mA), and the trip times at each test level.
+          (typically 30 mA), and the operating time measured at IΔn.
         </p>
         <p>
           The worst-case (longest) trip time from the 0 degree and 180 degree half-cycle tests is
-          the value recorded. For example, if the 5x test gives 25 ms at 0 degrees and 32 ms at 180
-          degrees, you record 32 ms. For the half-rated test, record "Did not trip" or the
-          appropriate pass indication.
+          the value recorded. If the test at IΔn gives 25 ms at 0 degrees and 32 ms at 180 degrees,
+          you record 32 ms. Since Amendment 4 there is no second figure to enter alongside it — if
+          you ran a five-times test as a diagnostic, that result is not the certified value.
         </p>
         <SEOAppBridge
           title="Voice to test results — speak trip times hands-free"
-          description="On site with your MFT in one hand? Just speak: 'RCBO 1, 5x trip time 28 milliseconds.' Elec-Mate fills in the schedule of test results and validates the…"
+          description="On site with your instrument in one hand? Just speak: 'RCBO 1, trip time 28 milliseconds.' Elec-Mate fills in the schedule of test results and validates it."
           icon={Mic}
         />
         <p>
-          If any test fails, record the failure and classify the observation appropriately. An RCD
-          that fails the 5x test (does not trip within 40 ms) is typically C2 (potentially
-          dangerous). An RCD that trips at half-rated current may be C3 (improvement recommended) if
-          it is causing nuisance tripping, or C2 if the overly sensitive operation is likely to
-          cause occupants to bypass the device.
+          If the test fails, record the failure and classify the observation on what the device
+          actually protects. An RCD that does not operate within 300 ms at IΔn on a circuit relying
+          on it for additional protection is normally C2 (potentially dangerous). A device that
+          proves over-sensitive on a diagnostic half-rated test may be C3 (improvement recommended)
+          where it is merely causing nuisance tripping, or C2 where the nuisance is likely to lead
+          occupants to bypass the device altogether.
         </p>
       </>
     ),
@@ -611,7 +580,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="EICR and EIC forms capture all RCD test data"
-          description="Elec-Mate's digital EICR and EIC forms have dedicated fields for every RCD test — trip times at 1x and 5x on both half-cycles, half-rated pass/fail…"
+          description="Elec-Mate's digital EICR and EIC forms have dedicated fields for RCD results — the operating time at IΔn on both half-cycles, device type and rating."
           icon={FileCheck2}
         />
       </>
@@ -687,7 +656,7 @@ export default function RCDTestingProcedurePage() {
           <span className="text-yellow-400">How to Test RCDs per BS 7671</span>
         </>
       }
-      heroSubtitle="The complete RCD testing procedure for UK electricians. Full test sequence at half-rated, 1x, and 5x rated current. Testing at 0 and 180 degree phase angle. Ramp test, button test, Type S time-delayed testing, and discrimination testing. BS 7671 compliant."
+      heroSubtitle="The complete RCD testing procedure for UK electricians, updated for Amendment 4 — which deleted Table 3A and reduced verification to a single AC test at IΔn. Testing at 0 and 180 degree phase angle. Ramp test, button test, Type S time-delayed testing, and discrimination testing. BS 7671 compliant."
       readingTime={22}
       answerBox={{
         question: 'How do you test an RCD to BS 7671?',
@@ -698,7 +667,7 @@ export default function RCDTestingProcedurePage() {
       sections={sections}
       howToSteps={howToSteps}
       howToHeading="How to Test an RCD — Step by Step"
-      howToDescription="Step-by-step RCD testing procedure per BS 7671 and BS EN 61008/61009, from push-button test through to full instrument testing at multiple current levels."
+      howToDescription="Step-by-step RCD testing per BS 7671:2018+A4:2026 — push-button check, then the required alternating current test at IΔn on both half-cycles."
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Validate RCD trip times automatically on site"

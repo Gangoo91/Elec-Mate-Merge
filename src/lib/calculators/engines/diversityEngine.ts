@@ -1,12 +1,33 @@
-// IET On-Site Guide Appendix A, Table A2 — Allowances for diversity.
-// BS 7671:2018+A4:2026.
+// IET On-Site Guide Appendix A — Table A1 (typical current demands) and
+// Table A2 (allowances for diversity). BS 7671:2018+A4:2026.
 //
-// ELE-1423: the VALUES here are correct (66% domestic lighting, 40% remainder),
-// but the citations were stale — the current On-Site Guide numbers this table
-// A2, not "Table A2"/"Table H2", and the amendment is A4:2026 not A3:2024.
-// Verified against the printed table, pp.151-152. BS 7671 itself has no
-// diversity tables; Reg 311.1 merely permits diversity to be taken into account.
+// BS 7671 itself publishes NO diversity table. Reg 311.1 reads: "For economic
+// and reliable design of an installation within thermal limits and admissible
+// voltage drop, the maximum demand shall be determined. In determining the
+// maximum demand of an installation or part thereof, diversity MAY be taken
+// into account." The "shall" attaches to determining maximum demand; applying
+// diversity is permissive.
+//
+// Citation audit (verified against the On-Site Guide 9th Ed:2022 (A4) text):
+//   - The diversity table is Appendix A, Table A2. There is no "Table H2" and
+//     no "Table 1B" diversity table. Appendix H is standard circuit
+//     arrangements for household and similar premises.
+//   - The On-Site Guide expressly excludes blocks of dwellings, large hotels,
+//     industrial and large commercial premises from its diversity guidance and
+//     requires case-by-case assessment by the designer. Non-domestic figures
+//     below are therefore labelled as designer allowances, not OSG values.
+//   - BS 7671 Appendix 4 is "Current-carrying capacity and voltage drop for
+//     cables" and contains no diversity allowances of any kind.
+//   - BS 7671 Reg 722.311.201 PERMITS load curtailment to be taken into account
+//     when determining maximum demand. It states no EV "no diversity" rule.
 import { CalculationError, validateInput } from '../utils/calculatorUtils';
+
+// Verified OSG citation strings. Row numbers are deliberately not quoted —
+// Table A2 rows are described by their subject instead.
+const OSG_TABLE_A2 = 'IET On-Site Guide Appendix A, Table A2';
+const NON_DOMESTIC_REF =
+  'Designer allowance — IET On-Site Guide Appendix A covers household and similar premises only; ' +
+  'industrial and large commercial premises must be assessed case by case';
 
 export interface CircuitLoad {
   id: string;
@@ -23,7 +44,10 @@ export interface CircuitLoad {
     | 'shower'
     | 'ev-charging'
     | 'floor-warming'
-    | 'thermal-storage';
+    | 'thermal-storage'
+    // Safety service / special-case loads that take no diversity.
+    | 'emergency-lighting'
+    | 'lift-motor';
   designCurrent: number;
   installedPower: number; // kW
   quantity: number;
@@ -70,16 +94,48 @@ const DISPLAY_NAMES: Record<string, string> = {
   'ev-charging': 'EV Charging',
   'floor-warming': 'Floor Warming',
   'thermal-storage': 'Thermal Storage',
+  'emergency-lighting': 'Emergency Lighting',
+  'lift-motor': 'Lift Motors',
 };
 
 /**
+ * Expand a set of circuit entries into one current per individual circuit/unit,
+ * sorted largest first. `quantity` on a CircuitLoad means "this many identical
+ * circuits", and `designCurrent` is the total across them.
+ */
+function perUnitCurrents(circuits: CircuitLoad[]): number[] {
+  const out: number[] = [];
+  circuits.forEach((c) => {
+    const units = Math.max(1, Math.floor(c.quantity) || 1);
+    const each = (c.designCurrent || 0) / units;
+    for (let i = 0; i < units; i += 1) out.push(each);
+  });
+  return out.sort((a, b) => b - a);
+}
+
+/**
+ * Scale the entered installed power (kW) by the diversity factor.
+ *
+ * Previously every helper re-derived kW from current as `I × V / 1000`. That is
+ * wrong for a three-phase supply (it omits √3) and wrong wherever a power
+ * factor was applied on the way in, and it produced absurd figures such as a
+ * 32 A ring final becoming 12.8 kW when 400 V was selected. Scaling the power
+ * the caller supplied keeps kW and A consistent with each other whatever the
+ * supply arrangement.
+ */
+function scalePower(installedPower: number, totalCurrent: number, diversifiedCurrent: number) {
+  if (totalCurrent <= 0) return installedPower;
+  return installedPower * (diversifiedCurrent / totalCurrent);
+}
+
+/**
  * Apply diversity for lighting circuits
- * IET On-Site Guide Table A2 row 1 (domestic): 66% of total current demand
- * Table H2 item 1 (commercial/industrial): 90%
+ * IET On-Site Guide Appendix A, Table A2 — lighting row (domestic): 66%
+ * Non-domestic: 90% is a designer allowance, not an OSG-published value.
  */
 function applyLightingDiversity(
   circuits: CircuitLoad[],
-  voltage: number
+  _voltage: number
 ): Omit<TypeBreakdown, 'type' | 'displayName' | 'count'> {
   const totalPower = circuits.reduce((sum, c) => sum + c.installedPower, 0);
   const totalCurrent = circuits.reduce((sum, c) => sum + c.designCurrent, 0);
@@ -90,9 +146,7 @@ function applyLightingDiversity(
   const diversifiedLoad = totalPower * factor;
   const pct = (factor * 100).toFixed(0);
   const ref =
-    location === 'domestic'
-      ? 'IET On-Site Guide Table A2 row 1'
-      : 'IET On-Site Guide Table A2 row 1 (non-domestic column)';
+    location === 'domestic' ? `${OSG_TABLE_A2} — lighting` : `${NON_DOMESTIC_REF} (lighting)`;
 
   return {
     installedLoad: totalPower,
@@ -112,55 +166,71 @@ function applyLightingDiversity(
 
 /**
  * Apply diversity for ring final circuits
- * IET On-Site Guide Table A2 row 9/10 (domestic):
- *   Assumed 32A per ring. 100% of largest ring + 40% each additional ring
+ * IET On-Site Guide Appendix A, Table A2 — socket-outlet row:
+ *   100% of the largest circuit + 40% of every other circuit (domestic).
+ *
+ * FIX: the entered "Rating per Ring" used to be discarded and every ring
+ * hard-coded to 32 A. The On-Site Guide rule for an Appendix H standard circuit
+ * is that its current demand is the rated current of ITS OWN overcurrent
+ * protective device — 20 A, 30 A, 32 A or 40 A as installed. The entered value
+ * is now used, with 32 A kept only as a fallback when nothing was entered.
+ * The kW figure is also no longer re-derived as I × V / 1000, which made a ring
+ * final 12.8 kW whenever 400 V was selected.
  */
 function applyRingFinalDiversity(
   circuits: CircuitLoad[],
-  voltage: number
+  _voltage: number
 ): Omit<TypeBreakdown, 'type' | 'displayName' | 'count'> {
   const location = circuits[0].location;
-  const assumedCurrent = 32; // A per ring final circuit
-  const numRings = circuits.reduce((sum, c) => sum + c.quantity, 0);
+  const entered = perUnitCurrents(circuits).filter((c) => c > 0);
+  const numRings = Math.max(1, entered.length || circuits.reduce((s, c) => s + c.quantity, 0));
 
-  const totalCurrent = numRings * assumedCurrent;
-  const totalPower = (totalCurrent * voltage) / 1000;
+  // Fallback only — 32 A is the most common domestic ring OCPD rating.
+  const ringCurrents = entered.length ? entered : Array.from({ length: numRings }, () => 32);
+  const usedFallback = entered.length === 0;
+
+  const totalCurrent = ringCurrents.reduce((s, c) => s + c, 0);
+  const totalPower = circuits.reduce((sum, c) => sum + (c.installedPower || 0), 0);
 
   let diversifiedCurrent: number;
   const steps: string[] = [];
 
-  if (numRings === 1) {
-    diversifiedCurrent = assumedCurrent;
-    steps.push(`Single ring final circuit: ${assumedCurrent}A (assumed)`);
-    steps.push(`No diversity applied for single ring`);
+  if (ringCurrents.length === 1) {
+    diversifiedCurrent = ringCurrents[0];
+    steps.push(
+      `Single ring final circuit: ${diversifiedCurrent.toFixed(1)}A${usedFallback ? ' (32A assumed)' : ''}`
+    );
+    steps.push('No diversity applied for a single ring');
   } else {
     const remainderFactor = location === 'domestic' ? 0.4 : 0.5;
     const remainderPct = (remainderFactor * 100).toFixed(0);
-    const remainderCurrent = (numRings - 1) * assumedCurrent * remainderFactor;
-    diversifiedCurrent = assumedCurrent + remainderCurrent;
+    const largest = ringCurrents[0];
+    const others = totalCurrent - largest;
+    const remainderCurrent = others * remainderFactor;
+    diversifiedCurrent = largest + remainderCurrent;
 
-    steps.push(`${numRings} ring final circuits at ${assumedCurrent}A each`);
-    steps.push(`100% of largest ring: ${assumedCurrent}A`);
+    steps.push(`${ringCurrents.length} ring final circuits, ${totalCurrent.toFixed(1)}A total`);
+    steps.push(`100% of largest ring: ${largest.toFixed(1)}A`);
     steps.push(
-      `${remainderPct}% of ${numRings - 1} additional ring(s): ${numRings - 1} × ${assumedCurrent}A × ${remainderFactor} = ${remainderCurrent.toFixed(1)}A`
+      `${remainderPct}% of the other ring(s): ${others.toFixed(1)}A × ${remainderFactor} = ${remainderCurrent.toFixed(1)}A`
     );
     steps.push(
-      `Total diversified: ${assumedCurrent}A + ${remainderCurrent.toFixed(1)}A = ${diversifiedCurrent.toFixed(1)}A`
+      `Total diversified: ${largest.toFixed(1)}A + ${remainderCurrent.toFixed(1)}A = ${diversifiedCurrent.toFixed(1)}A`
     );
   }
 
-  const diversifiedLoad = (diversifiedCurrent * voltage) / 1000;
   const diversityFactor = totalCurrent > 0 ? diversifiedCurrent / totalCurrent : 1;
+  const diversifiedLoad = scalePower(totalPower, totalCurrent, diversifiedCurrent);
   const ref =
     location === 'domestic'
-      ? 'IET On-Site Guide Table A2 row 9/10'
-      : 'IET On-Site Guide Table A2 row 9/10 (non-domestic column)';
+      ? `${OSG_TABLE_A2} — socket-outlets`
+      : `${NON_DOMESTIC_REF} (socket-outlets)`;
   steps.push(`Per ${ref}`);
 
   const formula =
-    numRings === 1
-      ? `Single ring = ${assumedCurrent}A (assumed)`
-      : `${assumedCurrent}A + ${location === 'domestic' ? '40' : '50'}% × ${numRings - 1} × ${assumedCurrent}A = ${diversifiedCurrent.toFixed(1)}A`;
+    ringCurrents.length === 1
+      ? `Single ring = ${diversifiedCurrent.toFixed(1)}A`
+      : `100% of largest + ${location === 'domestic' ? '40' : '50'}% of every other ring = ${diversifiedCurrent.toFixed(1)}A`;
 
   return {
     installedLoad: totalPower,
@@ -176,11 +246,29 @@ function applyRingFinalDiversity(
 
 /**
  * Apply diversity for radial socket outlets
- * IET On-Site Guide Table A2 row 9/10 (domestic): 100% up to 10A + 40% of remainder
+ * IET On-Site Guide Appendix A, Table A2 — socket-outlet row:
+ *   100% of the largest circuit + 40% of every other circuit (domestic).
+ *
+ * FIX: this used to compute "100% of the first 10 A + 40% of the remainder",
+ * which returned 18.8 A for a single 32 A radial. Two problems:
+ *   1. The "first 10 A + x% of the remainder" structure is the Table A2
+ *      HOUSEHOLD COOKING APPLIANCE row (verified: first 10 A + 30% of the
+ *      remainder, +5 A where the control unit incorporates a socket-outlet).
+ *      It is not the socket-outlet row.
+ *   2. It contradicted applyRingFinalDiversity, which cited the same Table A2
+ *      row while implementing 100%-of-largest + 40%-of-each-other. One
+ *      Table A2 row cannot carry two different formulas.
+ * The socket-outlet structure is now used for both, matching this calculator's
+ * own editorial ("Sockets (largest + 40%)"). It is also the more conservative
+ * of the two for every input, so it can never over-state spare capacity.
+ * Separately, the On-Site Guide states that for a standard circuit arrangement
+ * complying with Appendix H the current demand of that final circuit is the
+ * rated current of its own overcurrent protective device — so a 32 A radial
+ * contributes 32 A, not 18.8 A.
  */
 function applyRadialSocketDiversity(
   circuits: CircuitLoad[],
-  voltage: number
+  _voltage: number
 ): Omit<TypeBreakdown, 'type' | 'displayName' | 'count'> {
   const totalCurrent = circuits.reduce((sum, c) => sum + c.designCurrent, 0);
   const totalPower = circuits.reduce((sum, c) => sum + c.installedPower, 0);
@@ -191,37 +279,31 @@ function applyRadialSocketDiversity(
   else if (location === 'commercial') remainderFactor = 0.5;
   else remainderFactor = 0.6;
 
-  let diversifiedCurrent: number;
-  const steps: string[] = [];
-  steps.push(`Total radial socket load: ${totalCurrent.toFixed(2)}A`);
+  const units = perUnitCurrents(circuits);
+  const largest = units[0] || 0;
+  const others = Math.max(0, totalCurrent - largest);
+  const remainderCurrent = others * remainderFactor;
+  const diversifiedCurrent = largest + remainderCurrent;
 
-  if (totalCurrent <= 10) {
-    diversifiedCurrent = totalCurrent;
-    steps.push(`Load ≤ 10A: 100% = ${diversifiedCurrent.toFixed(2)}A`);
-  } else {
-    const remainder = totalCurrent - 10;
-    diversifiedCurrent = 10 + remainder * remainderFactor;
-    steps.push(`First 10A at 100%: 10A`);
+  const steps: string[] = [];
+  steps.push(`${units.length} radial socket circuit(s), ${totalCurrent.toFixed(2)}A total`);
+  steps.push(`100% of largest circuit: ${largest.toFixed(2)}A`);
+  if (others > 0) {
     steps.push(
-      `${(remainderFactor * 100).toFixed(0)}% of remainder: ${remainder.toFixed(2)}A × ${remainderFactor} = ${(remainder * remainderFactor).toFixed(2)}A`
-    );
-    steps.push(
-      `Total: 10A + ${(remainder * remainderFactor).toFixed(2)}A = ${diversifiedCurrent.toFixed(2)}A`
+      `${(remainderFactor * 100).toFixed(0)}% of every other circuit: ${others.toFixed(2)}A × ${remainderFactor} = ${remainderCurrent.toFixed(2)}A`
     );
   }
+  steps.push(`Total diversified: ${diversifiedCurrent.toFixed(2)}A`);
 
-  const diversifiedLoad = (diversifiedCurrent * voltage) / 1000;
   const diversityFactor = totalCurrent > 0 ? diversifiedCurrent / totalCurrent : 1;
+  const diversifiedLoad = scalePower(totalPower, totalCurrent, diversifiedCurrent);
   const ref =
     location === 'domestic'
-      ? 'IET On-Site Guide Table A2 row 9/10'
-      : 'IET On-Site Guide Table A2 row 9/10 (non-domestic column)';
+      ? `${OSG_TABLE_A2} — socket-outlets`
+      : `${NON_DOMESTIC_REF} (socket-outlets)`;
   steps.push(`Per ${ref}`);
 
-  const formula =
-    totalCurrent <= 10
-      ? `100% (load ≤ 10A)`
-      : `10A + ${(remainderFactor * 100).toFixed(0)}% of ${(totalCurrent - 10).toFixed(1)}A = ${diversifiedCurrent.toFixed(1)}A`;
+  const formula = `100% of largest + ${(remainderFactor * 100).toFixed(0)}% of every other circuit = ${diversifiedCurrent.toFixed(1)}A`;
 
   return {
     installedLoad: totalPower,
@@ -237,12 +319,14 @@ function applyRadialSocketDiversity(
 
 /**
  * Apply diversity for cooker circuits
- * IET On-Site Guide Table A2 row 3 (domestic):
- *   10A + 30% of remainder over 10A. +5A if cooker unit has socket outlet
+ * IET On-Site Guide Appendix A, Table A2 — household cooking appliances:
+ *   the first 10 A of the rated current, plus 30% of the remainder, plus 5 A
+ *   where the cooker control unit incorporates a socket-outlet.
+ *   (Verified: a 40 A appliance gives 10 + 9 = 19 A, or 24 A with a socket.)
  */
 function applyCookerDiversity(
   circuits: CircuitLoad[],
-  voltage: number
+  _voltage: number
 ): Omit<TypeBreakdown, 'type' | 'displayName' | 'count'> {
   const totalCurrent = circuits.reduce((sum, c) => sum + c.designCurrent, 0);
   const totalPower = circuits.reduce((sum, c) => sum + c.installedPower, 0);
@@ -279,12 +363,12 @@ function applyCookerDiversity(
     steps.push(`80% diversity: ${diversifiedCurrent.toFixed(2)}A`);
   }
 
-  const diversifiedLoad = (diversifiedCurrent * voltage) / 1000;
   const diversityFactor = totalCurrent > 0 ? diversifiedCurrent / totalCurrent : 1;
+  const diversifiedLoad = scalePower(totalPower, totalCurrent, diversifiedCurrent);
   const ref =
     location === 'domestic'
-      ? 'IET On-Site Guide Table A2 row 3'
-      : 'IET On-Site Guide Table H2 item 3';
+      ? `${OSG_TABLE_A2} — household cooking appliances`
+      : `${NON_DOMESTIC_REF} (cooking appliances)`;
   steps.push(`Per ${ref}`);
 
   let formula = '10A + 30% of remainder over 10A';
@@ -304,13 +388,13 @@ function applyCookerDiversity(
 
 /**
  * Apply diversity for space heating
- * IET On-Site Guide Table A2 row 4 (domestic):
+ * IET On-Site Guide Appendix A, Table A2 — space heating (domestic):
  *   Thermostatically controlled: 100% (no diversity)
  *   Non-thermostatically controlled: Largest 100% + 75% of remainder
  */
 function applySpaceHeatingDiversity(
   circuits: CircuitLoad[],
-  voltage: number
+  _voltage: number
 ): Omit<TypeBreakdown, 'type' | 'displayName' | 'count'> {
   const totalCurrent = circuits.reduce((sum, c) => sum + c.designCurrent, 0);
   const totalPower = circuits.reduce((sum, c) => sum + c.installedPower, 0);
@@ -357,12 +441,12 @@ function applySpaceHeatingDiversity(
     steps.push(`100% (no diversity for industrial)`);
   }
 
-  const diversifiedLoad = (diversifiedCurrent * voltage) / 1000;
   const diversityFactor = totalCurrent > 0 ? diversifiedCurrent / totalCurrent : 1;
+  const diversifiedLoad = scalePower(totalPower, totalCurrent, diversifiedCurrent);
   const ref =
     location === 'domestic'
-      ? 'IET On-Site Guide Table A2 row 4'
-      : 'IET On-Site Guide Table H2 item 4';
+      ? `${OSG_TABLE_A2} — space heating`
+      : `${NON_DOMESTIC_REF} (space heating)`;
   steps.push(`Per ${ref}`);
 
   const formula =
@@ -387,13 +471,13 @@ function applySpaceHeatingDiversity(
 }
 
 /**
- * Apply diversity for shower circuits
- * IET On-Site Guide Table A2 row 5 (domestic):
+ * Apply diversity for shower circuits (instantaneous water heaters)
+ * IET On-Site Guide Appendix A, Table A2 — instantaneous water heaters:
  *   100% of largest + 100% of 2nd largest + 25% of remainder
  */
 function applyShowerDiversity(
   circuits: CircuitLoad[],
-  voltage: number
+  _voltage: number
 ): Omit<TypeBreakdown, 'type' | 'displayName' | 'count'> {
   const totalCurrent = circuits.reduce((sum, c) => sum + c.designCurrent, 0);
   const totalPower = circuits.reduce((sum, c) => sum + c.installedPower, 0);
@@ -436,12 +520,12 @@ function applyShowerDiversity(
     steps.push(`Total diversified: ${diversifiedCurrent.toFixed(2)}A`);
   }
 
-  const diversifiedLoad = (diversifiedCurrent * voltage) / 1000;
   const diversityFactor = totalCurrent > 0 ? diversifiedCurrent / totalCurrent : 1;
+  const diversifiedLoad = scalePower(totalPower, totalCurrent, diversifiedCurrent);
   const ref =
     location === 'domestic'
-      ? 'IET On-Site Guide Table A2 row 5'
-      : 'IET On-Site Guide Table H2 item 5';
+      ? `${OSG_TABLE_A2} — instantaneous water heaters`
+      : `${NON_DOMESTIC_REF} (instantaneous water heaters)`;
   steps.push(`Per ${ref}`);
 
   const formula =
@@ -463,13 +547,19 @@ function applyShowerDiversity(
 
 /**
  * Apply diversity for motor circuits
- * IET On-Site Guide Table H2 (commercial/industrial):
- *   Largest 100% + 40% of remaining
- * Domestic: 100% (no diversity)
+ * Non-domestic: largest 100% + 40% of remaining — a designer allowance, NOT an
+ *   On-Site Guide published value (Appendix A covers household and similar
+ *   premises only).
+ * Domestic: 100% (no diversity).
+ *
+ * FIX: the domestic branch used to cite "BS 7671 Appendix 4". Appendix 4
+ * (Informative) is "Current-carrying capacity and voltage drop for cables" and
+ * contains no diversity allowances. Diversity is permitted by Reg 311.1 and
+ * quantified only in the On-Site Guide.
  */
 function applyMotorDiversity(
   circuits: CircuitLoad[],
-  voltage: number
+  _voltage: number
 ): Omit<TypeBreakdown, 'type' | 'displayName' | 'count'> {
   const totalCurrent = circuits.reduce((sum, c) => sum + c.designCurrent, 0);
   const totalPower = circuits.reduce((sum, c) => sum + c.installedPower, 0);
@@ -499,9 +589,12 @@ function applyMotorDiversity(
     steps.push(`Total diversified: ${diversifiedCurrent.toFixed(2)}A`);
   }
 
-  const diversifiedLoad = (diversifiedCurrent * voltage) / 1000;
   const diversityFactor = totalCurrent > 0 ? diversifiedCurrent / totalCurrent : 1;
-  const ref = location === 'domestic' ? 'BS 7671 Appendix 4' : 'IET On-Site Guide Table H2';
+  const diversifiedLoad = scalePower(totalPower, totalCurrent, diversifiedCurrent);
+  const ref =
+    location === 'domestic'
+      ? 'No diversity applied (conservative) — BS 7671 Reg 311.1 permits diversity but publishes no allowance'
+      : `${NON_DOMESTIC_REF} (motors)`;
   steps.push(`Per ${ref}`);
 
   const formula =
@@ -520,25 +613,38 @@ function applyMotorDiversity(
 }
 
 /**
- * Apply no diversity (100%) for load types that do not permit diversity
- * Water heating (Table A2 row 7), Floor warming (Table A2 row 8),
- * EV charging (BS 7671 Section 722.311), Thermal storage, Dedicated outlets
+ * Apply no diversity (100%) for load types that do not permit diversity.
+ *
+ * FIX: EV charging used to be attributed to "BS 7671:2018 Section 722.311" as
+ * if that section prohibited diversity. 722.311 is only the section heading
+ * "Maximum demand and diversity", and its single regulation, 722.311.201
+ * (A4:2026), is permissive: "Load curtailment, including load reduction or
+ * disconnection, either automatically or manually, may be taken into account
+ * when determining maximum demand of the installation or part thereof." It
+ * states no 100%/no-diversity rule. The On-Site Guide separately notes that
+ * Table A2 does not contemplate EV chargers and that the designer may need to
+ * INCREASE the Table A2 values where they are present — which is why no
+ * diversity is applied here.
  */
 function applyNoDiversity(
   circuits: CircuitLoad[],
-  voltage: number,
+  _voltage: number,
   loadType: string
 ): Omit<TypeBreakdown, 'type' | 'displayName' | 'count'> {
   const totalCurrent = circuits.reduce((sum, c) => sum + c.designCurrent, 0);
   const totalPower = circuits.reduce((sum, c) => sum + c.installedPower, 0);
 
   const regulationMap: Record<string, string> = {
-    'water-heating': 'IET On-Site Guide Table A2 row 7',
-    'floor-warming': 'IET On-Site Guide Table A2 row 8',
-    'ev-charging': 'BS 7671:2018 Section 722.311',
-    'thermal-storage': 'IET On-Site Guide Table H2 item 9',
-    'dedicated-outlet': 'IET On-Site Guide — no diversity for dedicated circuits',
-    'small-power': 'IET On-Site Guide Table A2 row 9/10',
+    'water-heating': `${OSG_TABLE_A2} — thermostatically controlled water heating`,
+    'floor-warming': `${OSG_TABLE_A2} — floor warming`,
+    'ev-charging':
+      'No diversity applied — Table A2 does not contemplate EV charge points; BS 7671 Reg 722.311.201 permits load curtailment to be taken into account but sets no allowance',
+    'thermal-storage': `${OSG_TABLE_A2} — thermal storage space heating`,
+    'dedicated-outlet': 'No diversity applied — dedicated circuit serving a single load',
+    'small-power': `${OSG_TABLE_A2} — socket-outlets`,
+    'emergency-lighting':
+      'No diversity applied — emergency lighting is a safety service and its supply is sized for the full load',
+    'lift-motor': 'No diversity applied — lift motors are treated as a special case',
   };
 
   const regulation = regulationMap[loadType] || 'Conservative approach — no diversity applied';
@@ -562,7 +668,7 @@ function applyNoDiversity(
 
 /**
  * Apply diversity for small power / radial socket (domestic)
- * Same as radial socket for domestic: 100% up to 10A + 40% remainder
+ * Same as radial socket for domestic: 100% of largest + 40% of every other.
  */
 function applySmallPowerDiversity(
   circuits: CircuitLoad[],
@@ -580,7 +686,7 @@ function applySmallPowerDiversity(
   const factor = location === 'commercial' ? 0.75 : 0.8;
   const diversifiedCurrent = totalCurrent * factor;
   const diversifiedLoad = totalPower * factor;
-  const ref = 'IET On-Site Guide Table A2 row 9/10 (non-domestic column)';
+  const ref = `${NON_DOMESTIC_REF} (small power)`;
 
   return {
     installedLoad: totalPower,
@@ -660,6 +766,8 @@ export const calculateDiversity = (
       case 'floor-warming':
       case 'thermal-storage':
       case 'dedicated-outlet':
+      case 'emergency-lighting':
+      case 'lift-motor':
         result = applyNoDiversity(typeCircuits, voltage, type);
         break;
       default:
@@ -695,20 +803,36 @@ export const calculateDiversity = (
   const overallDiversityFactor =
     totalInstalledLoad > 0 ? totalDiversifiedLoad / totalInstalledLoad : 1;
 
-  // Recalculate design current based on supply type
-  let totalDesignCurrent: number;
-  let diversifiedCurrent: number;
+  // FIX: the totals used to be re-derived from kW as P / V (single-phase) or
+  // P / (√3 · V) (three-phase). The per-type helpers had already produced kW
+  // from current WITHOUT √3 and without power factor, so the three-phase branch
+  // divided by √3 with nothing to cancel it and the round trip A → kW → A did
+  // not return the entered current. The per-type currents are already line
+  // currents, so summing them is both correct and self-consistent for either
+  // supply arrangement. `supplyType` and `voltage` are still used for
+  // validation and for the notes below.
+  const totalDesignCurrent = totalInstalledCurrent;
+  const diversifiedCurrent = totalDiversifiedCurrent;
 
-  if (supplyType === 'three-phase') {
-    totalDesignCurrent = (totalInstalledLoad * 1000) / (Math.sqrt(3) * voltage);
-    diversifiedCurrent = (totalDiversifiedLoad * 1000) / (Math.sqrt(3) * voltage);
-  } else {
-    totalDesignCurrent = (totalInstalledLoad * 1000) / voltage;
-    diversifiedCurrent = (totalDiversifiedLoad * 1000) / voltage;
+  complianceNotes.push(
+    `Currents shown are line currents at ${voltage} V ${supplyType === 'three-phase' ? 'three-phase' : 'single-phase'}.`
+  );
+
+  complianceNotes.push(
+    `Diversity allowances come from the ${OSG_TABLE_A2} (Table A1 gives typical current demands). ` +
+      'BS 7671 publishes no diversity table — Reg 311.1 states that in determining maximum demand, diversity MAY be taken into account.'
+  );
+
+  const location = circuits[0].location;
+  if (location !== 'domestic') {
+    complianceNotes.push(
+      'The On-Site Guide diversity guidance covers household and similar premises. Blocks of dwellings, large hotels, industrial and large commercial premises are excluded and must be assessed case by case — the non-domestic figures used here are designer allowances, not published values.'
+    );
   }
 
   complianceNotes.push(
-    'Diversity allowances per IET On-Site Guide (not BS 7671 directly). Diversity is published in the IET On-Site Guide, Tables 1B (domestic) and H2 (commercial/industrial).'
+    'Reg 536.4.202: diversity shall NOT be used as a means of load curtailment, load control or overload protection. ' +
+      'The rated current of the consumer unit or distribution board must be justified by the upstream device rating (In ≤ Ina and Inc), by documented load curtailment, or by the total connected load WITHOUT diversity — not by this diversified figure.'
   );
 
   if (overallDiversityFactor < 0.6) {

@@ -1,11 +1,12 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { lazy, Suspense, useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
+import { lazyWithRetry } from '@/utils/lazyWithRetry';
 import { withTimeout, trackImport } from '@/lib/lazy';
 import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
 import { CourseSkeleton } from '@/components/ui/page-skeleton';
 
 // Import Level2Routes for nested routing
-const Level2Routes = lazy(() => import('@/routes/Level2Routes'));
+const Level2Routes = lazyWithRetry(() => import('@/routes/Level2Routes'));
 import { level3Routes } from '@/routes/Level3Routes';
 
 // Loading component
@@ -37,230 +38,230 @@ function ApprenticeCoursesTracker() {
   return null;
 }
 
-const AM2 = lazy(() =>
+const AM2 = lazyWithRetry(() =>
   withTimeout(() => trackImport('AM2', () => import('@/pages/apprentice-courses/AM2')))
 );
-const AM2Module1 = lazy(() =>
+const AM2Module1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module1', () => import('@/pages/apprentice-courses/AM2Module1'))
   )
 );
-const AM2Module1Section1 = lazy(() =>
+const AM2Module1Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module1Section1', () => import('@/pages/apprentice-courses/AM2Module1Section1'))
   )
 );
-const AM2Module1Section2 = lazy(() =>
+const AM2Module1Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module1Section2', () => import('@/pages/apprentice-courses/AM2Module1Section2'))
   )
 );
-const AM2Module1Section3 = lazy(() =>
+const AM2Module1Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module1Section3', () => import('@/pages/apprentice-courses/AM2Module1Section3'))
   )
 );
-const AM2Module1Section4 = lazy(() =>
+const AM2Module1Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module1Section4', () => import('@/pages/apprentice-courses/AM2Module1Section4'))
   )
 );
-const AM2Module2 = lazy(() =>
+const AM2Module2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module2', () => import('@/pages/apprentice-courses/AM2Module2'))
   )
 );
-const AM2Module2Section1 = lazy(() =>
+const AM2Module2Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module2Section1', () => import('@/pages/apprentice-courses/AM2Module2Section1'))
   )
 );
-const AM2Module2Section2 = lazy(() =>
+const AM2Module2Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module2Section2', () => import('@/pages/apprentice-courses/AM2Module2Section2'))
   )
 );
-const AM2Module2Section3 = lazy(() =>
+const AM2Module2Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module2Section3', () => import('@/pages/apprentice-courses/AM2Module2Section3'))
   )
 );
-const AM2Module2Section4 = lazy(() =>
+const AM2Module2Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module2Section4', () => import('@/pages/apprentice-courses/AM2Module2Section4'))
   )
 );
-const AM2Module2Section5 = lazy(() =>
+const AM2Module2Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module2Section5', () => import('@/pages/apprentice-courses/AM2Module2Section5'))
   )
 );
-const AM2Module3 = lazy(() =>
+const AM2Module3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module3', () => import('@/pages/apprentice-courses/AM2Module3'))
   )
 );
-const AM2Module3Section1 = lazy(() =>
+const AM2Module3Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module3Section1', () => import('@/pages/apprentice-courses/AM2Module3Section1'))
   )
 );
-const AM2Module3Section2 = lazy(() =>
+const AM2Module3Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module3Section2', () => import('@/pages/apprentice-courses/AM2Module3Section2'))
   )
 );
-const AM2Module3Section3 = lazy(() =>
+const AM2Module3Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module3Section3', () => import('@/pages/apprentice-courses/AM2Module3Section3'))
   )
 );
-const AM2Module3Section4 = lazy(() =>
+const AM2Module3Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module3Section4', () => import('@/pages/apprentice-courses/AM2Module3Section4'))
   )
 );
-const AM2Module3Section5 = lazy(() =>
+const AM2Module3Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module3Section5', () => import('@/pages/apprentice-courses/AM2Module3Section5'))
   )
 );
-const AM2Module3Section6 = lazy(() =>
+const AM2Module3Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module3Section6', () => import('@/pages/apprentice-courses/AM2Module3Section6'))
   )
 );
-const AM2Module4 = lazy(() =>
+const AM2Module4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module4', () => import('@/pages/apprentice-courses/AM2Module4'))
   )
 );
-const AM2Module4Section1 = lazy(() =>
+const AM2Module4Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module4Section1', () => import('@/pages/apprentice-courses/AM2Module4Section1'))
   )
 );
-const AM2Module4Section2 = lazy(() =>
+const AM2Module4Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module4Section2', () => import('@/pages/apprentice-courses/AM2Module4Section2'))
   )
 );
-const AM2Module4Section3 = lazy(() =>
+const AM2Module4Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module4Section3', () => import('@/pages/apprentice-courses/AM2Module4Section3'))
   )
 );
-const AM2Module4Section4 = lazy(() =>
+const AM2Module4Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module4Section4', () => import('@/pages/apprentice-courses/AM2Module4Section4'))
   )
 );
-const AM2Module4Section5 = lazy(() =>
+const AM2Module4Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module4Section5', () => import('@/pages/apprentice-courses/AM2Module4Section5'))
   )
 );
-const AM2Module4Section6 = lazy(() =>
+const AM2Module4Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module4Section6', () => import('@/pages/apprentice-courses/AM2Module4Section6'))
   )
 );
-const AM2Module5 = lazy(() =>
+const AM2Module5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module5', () => import('@/pages/apprentice-courses/AM2Module5'))
   )
 );
-const AM2Module5Section1 = lazy(() =>
+const AM2Module5Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module5Section1', () => import('@/pages/apprentice-courses/AM2Module5Section1'))
   )
 );
-const AM2Module5Section2 = lazy(() =>
+const AM2Module5Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module5Section2', () => import('@/pages/apprentice-courses/AM2Module5Section2'))
   )
 );
-const AM2Module5Section3 = lazy(() =>
+const AM2Module5Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module5Section3', () => import('@/pages/apprentice-courses/AM2Module5Section3'))
   )
 );
-const AM2Module5Section4 = lazy(() =>
+const AM2Module5Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module5Section4', () => import('@/pages/apprentice-courses/AM2Module5Section4'))
   )
 );
-const AM2Module5Section5 = lazy(() =>
+const AM2Module5Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module5Section5', () => import('@/pages/apprentice-courses/AM2Module5Section5'))
   )
 );
-const AM2Module5Section6 = lazy(() =>
+const AM2Module5Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module5Section6', () => import('@/pages/apprentice-courses/AM2Module5Section6'))
   )
 );
-const AM2Module6 = lazy(() =>
+const AM2Module6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module6', () => import('@/pages/apprentice-courses/AM2Module6'))
   )
 );
-const AM2Module6Section1 = lazy(() =>
+const AM2Module6Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module6Section1', () => import('@/pages/apprentice-courses/AM2Module6Section1'))
   )
 );
-const AM2Module6Section2 = lazy(() =>
+const AM2Module6Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module6Section2', () => import('@/pages/apprentice-courses/AM2Module6Section2'))
   )
 );
-const AM2Module6Section3 = lazy(() =>
+const AM2Module6Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module6Section3', () => import('@/pages/apprentice-courses/AM2Module6Section3'))
   )
 );
-const AM2Module6Section4 = lazy(() =>
+const AM2Module6Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module6Section4', () => import('@/pages/apprentice-courses/AM2Module6Section4'))
   )
 );
-const AM2Module7 = lazy(() =>
+const AM2Module7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module7', () => import('@/pages/apprentice-courses/AM2Module7'))
   )
 );
-const AM2Module7Section1 = lazy(() =>
+const AM2Module7Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module7Section1', () => import('@/pages/apprentice-courses/AM2Module7Section1'))
   )
 );
-const AM2Module7Section2 = lazy(() =>
+const AM2Module7Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module7Section2', () => import('@/pages/apprentice-courses/AM2Module7Section2'))
   )
 );
-const AM2Module7Section3 = lazy(() =>
+const AM2Module7Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module7Section3', () => import('@/pages/apprentice-courses/AM2Module7Section3'))
   )
 );
-const AM2Module7Section4 = lazy(() =>
+const AM2Module7Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module7Section4', () => import('@/pages/apprentice-courses/AM2Module7Section4'))
   )
 );
-const AM2Module8 = lazy(() =>
+const AM2Module8 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('AM2Module8', () => import('@/pages/apprentice-courses/AM2Module8'))
   )
 );
-const FunctionalSkills = lazy(() =>
+const FunctionalSkills = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('FunctionalSkills', () => import('@/pages/apprentice-courses/FunctionalSkills'))
   )
 );
-const FunctionalSkillsModule1 = lazy(() =>
+const FunctionalSkillsModule1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule1',
@@ -268,7 +269,7 @@ const FunctionalSkillsModule1 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule1Section1 = lazy(() =>
+const FunctionalSkillsModule1Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule1Section1',
@@ -276,7 +277,7 @@ const FunctionalSkillsModule1Section1 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule1Section2 = lazy(() =>
+const FunctionalSkillsModule1Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule1Section2',
@@ -284,7 +285,7 @@ const FunctionalSkillsModule1Section2 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule1Section3 = lazy(() =>
+const FunctionalSkillsModule1Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule1Section3',
@@ -292,7 +293,7 @@ const FunctionalSkillsModule1Section3 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule1Section4 = lazy(() =>
+const FunctionalSkillsModule1Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule1Section4',
@@ -300,7 +301,7 @@ const FunctionalSkillsModule1Section4 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule2 = lazy(() =>
+const FunctionalSkillsModule2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule2',
@@ -308,7 +309,7 @@ const FunctionalSkillsModule2 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule2Section1 = lazy(() =>
+const FunctionalSkillsModule2Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule2Section1',
@@ -316,7 +317,7 @@ const FunctionalSkillsModule2Section1 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule2Section2 = lazy(() =>
+const FunctionalSkillsModule2Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule2Section2',
@@ -324,7 +325,7 @@ const FunctionalSkillsModule2Section2 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule2Section3 = lazy(() =>
+const FunctionalSkillsModule2Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule2Section3',
@@ -332,7 +333,7 @@ const FunctionalSkillsModule2Section3 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule2Section4 = lazy(() =>
+const FunctionalSkillsModule2Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule2Section4',
@@ -340,7 +341,7 @@ const FunctionalSkillsModule2Section4 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule3 = lazy(() =>
+const FunctionalSkillsModule3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule3',
@@ -348,7 +349,7 @@ const FunctionalSkillsModule3 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule3Section1 = lazy(() =>
+const FunctionalSkillsModule3Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule3Section1',
@@ -356,7 +357,7 @@ const FunctionalSkillsModule3Section1 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule3Section2 = lazy(() =>
+const FunctionalSkillsModule3Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule3Section2',
@@ -364,7 +365,7 @@ const FunctionalSkillsModule3Section2 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule3Section3 = lazy(() =>
+const FunctionalSkillsModule3Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule3Section3',
@@ -372,7 +373,7 @@ const FunctionalSkillsModule3Section3 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule3Section4 = lazy(() =>
+const FunctionalSkillsModule3Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule3Section4',
@@ -380,7 +381,7 @@ const FunctionalSkillsModule3Section4 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule4 = lazy(() =>
+const FunctionalSkillsModule4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule4',
@@ -388,7 +389,7 @@ const FunctionalSkillsModule4 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule4Section1 = lazy(() =>
+const FunctionalSkillsModule4Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule4Section1',
@@ -396,7 +397,7 @@ const FunctionalSkillsModule4Section1 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule4Section2 = lazy(() =>
+const FunctionalSkillsModule4Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule4Section2',
@@ -404,7 +405,7 @@ const FunctionalSkillsModule4Section2 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule4Section3 = lazy(() =>
+const FunctionalSkillsModule4Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule4Section3',
@@ -412,7 +413,7 @@ const FunctionalSkillsModule4Section3 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule4Section4 = lazy(() =>
+const FunctionalSkillsModule4Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule4Section4',
@@ -420,7 +421,7 @@ const FunctionalSkillsModule4Section4 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule5 = lazy(() =>
+const FunctionalSkillsModule5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule5',
@@ -428,7 +429,7 @@ const FunctionalSkillsModule5 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule5Section1 = lazy(() =>
+const FunctionalSkillsModule5Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule5Section1',
@@ -436,7 +437,7 @@ const FunctionalSkillsModule5Section1 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule5Section2 = lazy(() =>
+const FunctionalSkillsModule5Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule5Section2',
@@ -444,7 +445,7 @@ const FunctionalSkillsModule5Section2 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule5Section3 = lazy(() =>
+const FunctionalSkillsModule5Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule5Section3',
@@ -452,7 +453,7 @@ const FunctionalSkillsModule5Section3 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule5Section4 = lazy(() =>
+const FunctionalSkillsModule5Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule5Section4',
@@ -460,7 +461,7 @@ const FunctionalSkillsModule5Section4 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsModule6 = lazy(() =>
+const FunctionalSkillsModule6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsModule6',
@@ -468,7 +469,7 @@ const FunctionalSkillsModule6 = lazy(() =>
     )
   )
 );
-const FunctionalSkillsMockExam = lazy(() =>
+const FunctionalSkillsMockExam = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'FunctionalSkillsMockExam',
@@ -476,36 +477,36 @@ const FunctionalSkillsMockExam = lazy(() =>
     )
   )
 );
-const HNC = lazy(() =>
+const HNC = lazyWithRetry(() =>
   withTimeout(() => trackImport('HNC', () => import('@/pages/apprentice-courses/HNC')))
 );
-const HNCModule1 = lazy(() =>
+const HNCModule1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule1', () => import('@/pages/apprentice-courses/HNCModule1'))
   )
 );
-const HNCModule1Section1 = lazy(() =>
+const HNCModule1Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule1Section1', () => import('@/pages/apprentice-courses/HNCModule1Section1'))
   )
 );
-const HNCModule1Section2 = lazy(() =>
+const HNCModule1Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule1Section2', () => import('@/pages/apprentice-courses/HNCModule1Section2'))
   )
 );
-const HNCModule1Section3 = lazy(() =>
+const HNCModule1Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule1Section3', () => import('@/pages/apprentice-courses/HNCModule1Section3'))
   )
 );
-const HNCModule1Section4 = lazy(() =>
+const HNCModule1Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule1Section4', () => import('@/pages/apprentice-courses/HNCModule1Section4'))
   )
 );
 // HNC Module 1 Subsections
-const HNCModule1Section1_1 = lazy(() =>
+const HNCModule1Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section1_1',
@@ -513,7 +514,7 @@ const HNCModule1Section1_1 = lazy(() =>
     )
   )
 );
-const HNCModule1Section1_2 = lazy(() =>
+const HNCModule1Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section1_2',
@@ -521,7 +522,7 @@ const HNCModule1Section1_2 = lazy(() =>
     )
   )
 );
-const HNCModule1Section1_3 = lazy(() =>
+const HNCModule1Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section1_3',
@@ -529,7 +530,7 @@ const HNCModule1Section1_3 = lazy(() =>
     )
   )
 );
-const HNCModule1Section1_4 = lazy(() =>
+const HNCModule1Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section1_4',
@@ -537,7 +538,7 @@ const HNCModule1Section1_4 = lazy(() =>
     )
   )
 );
-const HNCModule1Section1_5 = lazy(() =>
+const HNCModule1Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section1_5',
@@ -545,7 +546,7 @@ const HNCModule1Section1_5 = lazy(() =>
     )
   )
 );
-const HNCModule1Section1_6 = lazy(() =>
+const HNCModule1Section1_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section1_6',
@@ -553,7 +554,7 @@ const HNCModule1Section1_6 = lazy(() =>
     )
   )
 );
-const HNCModule1Section2_1 = lazy(() =>
+const HNCModule1Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section2_1',
@@ -561,7 +562,7 @@ const HNCModule1Section2_1 = lazy(() =>
     )
   )
 );
-const HNCModule1Section2_2 = lazy(() =>
+const HNCModule1Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section2_2',
@@ -569,7 +570,7 @@ const HNCModule1Section2_2 = lazy(() =>
     )
   )
 );
-const HNCModule1Section2_3 = lazy(() =>
+const HNCModule1Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section2_3',
@@ -577,7 +578,7 @@ const HNCModule1Section2_3 = lazy(() =>
     )
   )
 );
-const HNCModule1Section2_4 = lazy(() =>
+const HNCModule1Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section2_4',
@@ -585,7 +586,7 @@ const HNCModule1Section2_4 = lazy(() =>
     )
   )
 );
-const HNCModule1Section2_5 = lazy(() =>
+const HNCModule1Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section2_5',
@@ -593,7 +594,7 @@ const HNCModule1Section2_5 = lazy(() =>
     )
   )
 );
-const HNCModule1Section2_6 = lazy(() =>
+const HNCModule1Section2_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section2_6',
@@ -601,7 +602,7 @@ const HNCModule1Section2_6 = lazy(() =>
     )
   )
 );
-const HNCModule1Section3_1 = lazy(() =>
+const HNCModule1Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section3_1',
@@ -609,7 +610,7 @@ const HNCModule1Section3_1 = lazy(() =>
     )
   )
 );
-const HNCModule1Section3_2 = lazy(() =>
+const HNCModule1Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section3_2',
@@ -617,7 +618,7 @@ const HNCModule1Section3_2 = lazy(() =>
     )
   )
 );
-const HNCModule1Section3_3 = lazy(() =>
+const HNCModule1Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section3_3',
@@ -625,7 +626,7 @@ const HNCModule1Section3_3 = lazy(() =>
     )
   )
 );
-const HNCModule1Section3_4 = lazy(() =>
+const HNCModule1Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section3_4',
@@ -633,7 +634,7 @@ const HNCModule1Section3_4 = lazy(() =>
     )
   )
 );
-const HNCModule1Section3_5 = lazy(() =>
+const HNCModule1Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section3_5',
@@ -641,7 +642,7 @@ const HNCModule1Section3_5 = lazy(() =>
     )
   )
 );
-const HNCModule1Section3_6 = lazy(() =>
+const HNCModule1Section3_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section3_6',
@@ -649,7 +650,7 @@ const HNCModule1Section3_6 = lazy(() =>
     )
   )
 );
-const HNCModule1Section4_1 = lazy(() =>
+const HNCModule1Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section4_1',
@@ -657,7 +658,7 @@ const HNCModule1Section4_1 = lazy(() =>
     )
   )
 );
-const HNCModule1Section4_2 = lazy(() =>
+const HNCModule1Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section4_2',
@@ -665,7 +666,7 @@ const HNCModule1Section4_2 = lazy(() =>
     )
   )
 );
-const HNCModule1Section4_3 = lazy(() =>
+const HNCModule1Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section4_3',
@@ -673,7 +674,7 @@ const HNCModule1Section4_3 = lazy(() =>
     )
   )
 );
-const HNCModule1Section4_4 = lazy(() =>
+const HNCModule1Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section4_4',
@@ -681,7 +682,7 @@ const HNCModule1Section4_4 = lazy(() =>
     )
   )
 );
-const HNCModule1Section4_5 = lazy(() =>
+const HNCModule1Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule1Section4_5',
@@ -689,17 +690,17 @@ const HNCModule1Section4_5 = lazy(() =>
     )
   )
 );
-const HNCModule2 = lazy(() =>
+const HNCModule2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule2', () => import('@/pages/apprentice-courses/HNCModule2'))
   )
 );
-const HNCModule2Section1 = lazy(() =>
+const HNCModule2Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule2Section1', () => import('@/pages/apprentice-courses/HNCModule2Section1'))
   )
 );
-const HNCModule2Section1_1 = lazy(() =>
+const HNCModule2Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section1_1',
@@ -707,7 +708,7 @@ const HNCModule2Section1_1 = lazy(() =>
     )
   )
 );
-const HNCModule2Section1_2 = lazy(() =>
+const HNCModule2Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section1_2',
@@ -715,7 +716,7 @@ const HNCModule2Section1_2 = lazy(() =>
     )
   )
 );
-const HNCModule2Section1_3 = lazy(() =>
+const HNCModule2Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section1_3',
@@ -723,7 +724,7 @@ const HNCModule2Section1_3 = lazy(() =>
     )
   )
 );
-const HNCModule2Section1_4 = lazy(() =>
+const HNCModule2Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section1_4',
@@ -731,7 +732,7 @@ const HNCModule2Section1_4 = lazy(() =>
     )
   )
 );
-const HNCModule2Section1_5 = lazy(() =>
+const HNCModule2Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section1_5',
@@ -739,7 +740,7 @@ const HNCModule2Section1_5 = lazy(() =>
     )
   )
 );
-const HNCModule2Section1_6 = lazy(() =>
+const HNCModule2Section1_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section1_6',
@@ -747,7 +748,7 @@ const HNCModule2Section1_6 = lazy(() =>
     )
   )
 );
-const HNCModule2Section1_7 = lazy(() =>
+const HNCModule2Section1_7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section1_7',
@@ -755,12 +756,12 @@ const HNCModule2Section1_7 = lazy(() =>
     )
   )
 );
-const HNCModule2Section2 = lazy(() =>
+const HNCModule2Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule2Section2', () => import('@/pages/apprentice-courses/HNCModule2Section2'))
   )
 );
-const HNCModule2Section2_1 = lazy(() =>
+const HNCModule2Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section2_1',
@@ -768,7 +769,7 @@ const HNCModule2Section2_1 = lazy(() =>
     )
   )
 );
-const HNCModule2Section2_2 = lazy(() =>
+const HNCModule2Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section2_2',
@@ -776,7 +777,7 @@ const HNCModule2Section2_2 = lazy(() =>
     )
   )
 );
-const HNCModule2Section2_3 = lazy(() =>
+const HNCModule2Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section2_3',
@@ -784,7 +785,7 @@ const HNCModule2Section2_3 = lazy(() =>
     )
   )
 );
-const HNCModule2Section2_4 = lazy(() =>
+const HNCModule2Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section2_4',
@@ -792,7 +793,7 @@ const HNCModule2Section2_4 = lazy(() =>
     )
   )
 );
-const HNCModule2Section2_5 = lazy(() =>
+const HNCModule2Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section2_5',
@@ -800,7 +801,7 @@ const HNCModule2Section2_5 = lazy(() =>
     )
   )
 );
-const HNCModule2Section2_6 = lazy(() =>
+const HNCModule2Section2_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section2_6',
@@ -808,7 +809,7 @@ const HNCModule2Section2_6 = lazy(() =>
     )
   )
 );
-const HNCModule2Section2_7 = lazy(() =>
+const HNCModule2Section2_7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section2_7',
@@ -816,12 +817,12 @@ const HNCModule2Section2_7 = lazy(() =>
     )
   )
 );
-const HNCModule2Section3 = lazy(() =>
+const HNCModule2Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule2Section3', () => import('@/pages/apprentice-courses/HNCModule2Section3'))
   )
 );
-const HNCModule2Section3_1 = lazy(() =>
+const HNCModule2Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section3_1',
@@ -829,7 +830,7 @@ const HNCModule2Section3_1 = lazy(() =>
     )
   )
 );
-const HNCModule2Section3_2 = lazy(() =>
+const HNCModule2Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section3_2',
@@ -837,7 +838,7 @@ const HNCModule2Section3_2 = lazy(() =>
     )
   )
 );
-const HNCModule2Section3_3 = lazy(() =>
+const HNCModule2Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section3_3',
@@ -845,7 +846,7 @@ const HNCModule2Section3_3 = lazy(() =>
     )
   )
 );
-const HNCModule2Section3_4 = lazy(() =>
+const HNCModule2Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section3_4',
@@ -853,7 +854,7 @@ const HNCModule2Section3_4 = lazy(() =>
     )
   )
 );
-const HNCModule2Section3_5 = lazy(() =>
+const HNCModule2Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section3_5',
@@ -861,7 +862,7 @@ const HNCModule2Section3_5 = lazy(() =>
     )
   )
 );
-const HNCModule2Section3_6 = lazy(() =>
+const HNCModule2Section3_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section3_6',
@@ -869,12 +870,12 @@ const HNCModule2Section3_6 = lazy(() =>
     )
   )
 );
-const HNCModule2Section4 = lazy(() =>
+const HNCModule2Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule2Section4', () => import('@/pages/apprentice-courses/HNCModule2Section4'))
   )
 );
-const HNCModule2Section4_1 = lazy(() =>
+const HNCModule2Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section4_1',
@@ -882,7 +883,7 @@ const HNCModule2Section4_1 = lazy(() =>
     )
   )
 );
-const HNCModule2Section4_2 = lazy(() =>
+const HNCModule2Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section4_2',
@@ -890,7 +891,7 @@ const HNCModule2Section4_2 = lazy(() =>
     )
   )
 );
-const HNCModule2Section4_3 = lazy(() =>
+const HNCModule2Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section4_3',
@@ -898,7 +899,7 @@ const HNCModule2Section4_3 = lazy(() =>
     )
   )
 );
-const HNCModule2Section4_4 = lazy(() =>
+const HNCModule2Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section4_4',
@@ -906,7 +907,7 @@ const HNCModule2Section4_4 = lazy(() =>
     )
   )
 );
-const HNCModule2Section4_5 = lazy(() =>
+const HNCModule2Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section4_5',
@@ -914,7 +915,7 @@ const HNCModule2Section4_5 = lazy(() =>
     )
   )
 );
-const HNCModule2Section4_6 = lazy(() =>
+const HNCModule2Section4_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section4_6',
@@ -922,7 +923,7 @@ const HNCModule2Section4_6 = lazy(() =>
     )
   )
 );
-const HNCModule2Section4_7 = lazy(() =>
+const HNCModule2Section4_7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section4_7',
@@ -930,12 +931,12 @@ const HNCModule2Section4_7 = lazy(() =>
     )
   )
 );
-const HNCModule2Section5 = lazy(() =>
+const HNCModule2Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule2Section5', () => import('@/pages/apprentice-courses/HNCModule2Section5'))
   )
 );
-const HNCModule2Section5_1 = lazy(() =>
+const HNCModule2Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule2Section5_1',
@@ -943,22 +944,22 @@ const HNCModule2Section5_1 = lazy(() =>
     )
   )
 );
-const HNCModule2Section6 = lazy(() =>
+const HNCModule2Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule2Section6', () => import('@/pages/apprentice-courses/HNCModule2Section6'))
   )
 );
-const HNCModule3 = lazy(() =>
+const HNCModule3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule3', () => import('@/pages/apprentice-courses/HNCModule3'))
   )
 );
-const HNCModule3Section1 = lazy(() =>
+const HNCModule3Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule3Section1', () => import('@/pages/apprentice-courses/HNCModule3Section1'))
   )
 );
-const HNCModule3Section1_1 = lazy(() =>
+const HNCModule3Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section1_1',
@@ -966,7 +967,7 @@ const HNCModule3Section1_1 = lazy(() =>
     )
   )
 );
-const HNCModule3Section1_2 = lazy(() =>
+const HNCModule3Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section1_2',
@@ -974,7 +975,7 @@ const HNCModule3Section1_2 = lazy(() =>
     )
   )
 );
-const HNCModule3Section1_3 = lazy(() =>
+const HNCModule3Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section1_3',
@@ -982,7 +983,7 @@ const HNCModule3Section1_3 = lazy(() =>
     )
   )
 );
-const HNCModule3Section1_4 = lazy(() =>
+const HNCModule3Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section1_4',
@@ -990,7 +991,7 @@ const HNCModule3Section1_4 = lazy(() =>
     )
   )
 );
-const HNCModule3Section1_5 = lazy(() =>
+const HNCModule3Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section1_5',
@@ -998,7 +999,7 @@ const HNCModule3Section1_5 = lazy(() =>
     )
   )
 );
-const HNCModule3Section1_6 = lazy(() =>
+const HNCModule3Section1_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section1_6',
@@ -1006,7 +1007,7 @@ const HNCModule3Section1_6 = lazy(() =>
     )
   )
 );
-const HNCModule3Section1_7 = lazy(() =>
+const HNCModule3Section1_7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section1_7',
@@ -1014,12 +1015,12 @@ const HNCModule3Section1_7 = lazy(() =>
     )
   )
 );
-const HNCModule3Section2 = lazy(() =>
+const HNCModule3Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule3Section2', () => import('@/pages/apprentice-courses/HNCModule3Section2'))
   )
 );
-const HNCModule3Section2_1 = lazy(() =>
+const HNCModule3Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section2_1',
@@ -1027,7 +1028,7 @@ const HNCModule3Section2_1 = lazy(() =>
     )
   )
 );
-const HNCModule3Section2_2 = lazy(() =>
+const HNCModule3Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section2_2',
@@ -1035,7 +1036,7 @@ const HNCModule3Section2_2 = lazy(() =>
     )
   )
 );
-const HNCModule3Section2_3 = lazy(() =>
+const HNCModule3Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section2_3',
@@ -1043,7 +1044,7 @@ const HNCModule3Section2_3 = lazy(() =>
     )
   )
 );
-const HNCModule3Section2_4 = lazy(() =>
+const HNCModule3Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section2_4',
@@ -1051,7 +1052,7 @@ const HNCModule3Section2_4 = lazy(() =>
     )
   )
 );
-const HNCModule3Section2_5 = lazy(() =>
+const HNCModule3Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section2_5',
@@ -1059,7 +1060,7 @@ const HNCModule3Section2_5 = lazy(() =>
     )
   )
 );
-const HNCModule3Section2_6 = lazy(() =>
+const HNCModule3Section2_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section2_6',
@@ -1067,7 +1068,7 @@ const HNCModule3Section2_6 = lazy(() =>
     )
   )
 );
-const HNCModule3Section2_7 = lazy(() =>
+const HNCModule3Section2_7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section2_7',
@@ -1075,12 +1076,12 @@ const HNCModule3Section2_7 = lazy(() =>
     )
   )
 );
-const HNCModule3Section3 = lazy(() =>
+const HNCModule3Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule3Section3', () => import('@/pages/apprentice-courses/HNCModule3Section3'))
   )
 );
-const HNCModule3Section3_1 = lazy(() =>
+const HNCModule3Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section3_1',
@@ -1088,7 +1089,7 @@ const HNCModule3Section3_1 = lazy(() =>
     )
   )
 );
-const HNCModule3Section3_2 = lazy(() =>
+const HNCModule3Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section3_2',
@@ -1096,7 +1097,7 @@ const HNCModule3Section3_2 = lazy(() =>
     )
   )
 );
-const HNCModule3Section3_3 = lazy(() =>
+const HNCModule3Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section3_3',
@@ -1104,7 +1105,7 @@ const HNCModule3Section3_3 = lazy(() =>
     )
   )
 );
-const HNCModule3Section3_4 = lazy(() =>
+const HNCModule3Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section3_4',
@@ -1112,7 +1113,7 @@ const HNCModule3Section3_4 = lazy(() =>
     )
   )
 );
-const HNCModule3Section3_5 = lazy(() =>
+const HNCModule3Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section3_5',
@@ -1120,7 +1121,7 @@ const HNCModule3Section3_5 = lazy(() =>
     )
   )
 );
-const HNCModule3Section3_6 = lazy(() =>
+const HNCModule3Section3_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section3_6',
@@ -1128,7 +1129,7 @@ const HNCModule3Section3_6 = lazy(() =>
     )
   )
 );
-const HNCModule3Section3_7 = lazy(() =>
+const HNCModule3Section3_7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section3_7',
@@ -1136,12 +1137,12 @@ const HNCModule3Section3_7 = lazy(() =>
     )
   )
 );
-const HNCModule3Section4 = lazy(() =>
+const HNCModule3Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule3Section4', () => import('@/pages/apprentice-courses/HNCModule3Section4'))
   )
 );
-const HNCModule3Section4_1 = lazy(() =>
+const HNCModule3Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section4_1',
@@ -1149,7 +1150,7 @@ const HNCModule3Section4_1 = lazy(() =>
     )
   )
 );
-const HNCModule3Section4_2 = lazy(() =>
+const HNCModule3Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section4_2',
@@ -1157,7 +1158,7 @@ const HNCModule3Section4_2 = lazy(() =>
     )
   )
 );
-const HNCModule3Section4_3 = lazy(() =>
+const HNCModule3Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section4_3',
@@ -1165,7 +1166,7 @@ const HNCModule3Section4_3 = lazy(() =>
     )
   )
 );
-const HNCModule3Section4_4 = lazy(() =>
+const HNCModule3Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section4_4',
@@ -1173,7 +1174,7 @@ const HNCModule3Section4_4 = lazy(() =>
     )
   )
 );
-const HNCModule3Section4_5 = lazy(() =>
+const HNCModule3Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section4_5',
@@ -1181,7 +1182,7 @@ const HNCModule3Section4_5 = lazy(() =>
     )
   )
 );
-const HNCModule3Section4_6 = lazy(() =>
+const HNCModule3Section4_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section4_6',
@@ -1189,7 +1190,7 @@ const HNCModule3Section4_6 = lazy(() =>
     )
   )
 );
-const HNCModule3Section4_7 = lazy(() =>
+const HNCModule3Section4_7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section4_7',
@@ -1197,7 +1198,7 @@ const HNCModule3Section4_7 = lazy(() =>
     )
   )
 );
-const HNCModule3Section4_8 = lazy(() =>
+const HNCModule3Section4_8 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section4_8',
@@ -1205,12 +1206,12 @@ const HNCModule3Section4_8 = lazy(() =>
     )
   )
 );
-const HNCModule3Section5 = lazy(() =>
+const HNCModule3Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule3Section5', () => import('@/pages/apprentice-courses/HNCModule3Section5'))
   )
 );
-const HNCModule3Section5_1 = lazy(() =>
+const HNCModule3Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section5_1',
@@ -1218,7 +1219,7 @@ const HNCModule3Section5_1 = lazy(() =>
     )
   )
 );
-const HNCModule3Section5_2 = lazy(() =>
+const HNCModule3Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section5_2',
@@ -1226,7 +1227,7 @@ const HNCModule3Section5_2 = lazy(() =>
     )
   )
 );
-const HNCModule3Section5_3 = lazy(() =>
+const HNCModule3Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section5_3',
@@ -1234,7 +1235,7 @@ const HNCModule3Section5_3 = lazy(() =>
     )
   )
 );
-const HNCModule3Section5_4 = lazy(() =>
+const HNCModule3Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section5_4',
@@ -1242,7 +1243,7 @@ const HNCModule3Section5_4 = lazy(() =>
     )
   )
 );
-const HNCModule3Section5_5 = lazy(() =>
+const HNCModule3Section5_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section5_5',
@@ -1250,7 +1251,7 @@ const HNCModule3Section5_5 = lazy(() =>
     )
   )
 );
-const HNCModule3Section5_6 = lazy(() =>
+const HNCModule3Section5_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section5_6',
@@ -1258,7 +1259,7 @@ const HNCModule3Section5_6 = lazy(() =>
     )
   )
 );
-const HNCModule3Section5_7 = lazy(() =>
+const HNCModule3Section5_7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section5_7',
@@ -1266,7 +1267,7 @@ const HNCModule3Section5_7 = lazy(() =>
     )
   )
 );
-const HNCModule3Section5_8 = lazy(() =>
+const HNCModule3Section5_8 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section5_8',
@@ -1274,12 +1275,12 @@ const HNCModule3Section5_8 = lazy(() =>
     )
   )
 );
-const HNCModule3Section6 = lazy(() =>
+const HNCModule3Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule3Section6', () => import('@/pages/apprentice-courses/HNCModule3Section6'))
   )
 );
-const HNCModule3Section6_1 = lazy(() =>
+const HNCModule3Section6_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section6_1',
@@ -1287,7 +1288,7 @@ const HNCModule3Section6_1 = lazy(() =>
     )
   )
 );
-const HNCModule3Section6_2 = lazy(() =>
+const HNCModule3Section6_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section6_2',
@@ -1295,7 +1296,7 @@ const HNCModule3Section6_2 = lazy(() =>
     )
   )
 );
-const HNCModule3Section6_3 = lazy(() =>
+const HNCModule3Section6_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section6_3',
@@ -1303,7 +1304,7 @@ const HNCModule3Section6_3 = lazy(() =>
     )
   )
 );
-const HNCModule3Section6_4 = lazy(() =>
+const HNCModule3Section6_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section6_4',
@@ -1311,7 +1312,7 @@ const HNCModule3Section6_4 = lazy(() =>
     )
   )
 );
-const HNCModule3Section6_5 = lazy(() =>
+const HNCModule3Section6_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section6_5',
@@ -1319,7 +1320,7 @@ const HNCModule3Section6_5 = lazy(() =>
     )
   )
 );
-const HNCModule3Section6_6 = lazy(() =>
+const HNCModule3Section6_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section6_6',
@@ -1327,7 +1328,7 @@ const HNCModule3Section6_6 = lazy(() =>
     )
   )
 );
-const HNCModule3Section6_7 = lazy(() =>
+const HNCModule3Section6_7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule3Section6_7',
@@ -1335,17 +1336,17 @@ const HNCModule3Section6_7 = lazy(() =>
     )
   )
 );
-const HNCModule4 = lazy(() =>
+const HNCModule4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule4', () => import('@/pages/apprentice-courses/HNCModule4'))
   )
 );
-const HNCModule4Section1 = lazy(() =>
+const HNCModule4Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule4Section1', () => import('@/pages/apprentice-courses/HNCModule4Section1'))
   )
 );
-const HNCModule4Section1_1 = lazy(() =>
+const HNCModule4Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section1_1',
@@ -1353,7 +1354,7 @@ const HNCModule4Section1_1 = lazy(() =>
     )
   )
 );
-const HNCModule4Section1_2 = lazy(() =>
+const HNCModule4Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section1_2',
@@ -1361,7 +1362,7 @@ const HNCModule4Section1_2 = lazy(() =>
     )
   )
 );
-const HNCModule4Section1_3 = lazy(() =>
+const HNCModule4Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section1_3',
@@ -1369,7 +1370,7 @@ const HNCModule4Section1_3 = lazy(() =>
     )
   )
 );
-const HNCModule4Section1_4 = lazy(() =>
+const HNCModule4Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section1_4',
@@ -1377,7 +1378,7 @@ const HNCModule4Section1_4 = lazy(() =>
     )
   )
 );
-const HNCModule4Section1_5 = lazy(() =>
+const HNCModule4Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section1_5',
@@ -1385,7 +1386,7 @@ const HNCModule4Section1_5 = lazy(() =>
     )
   )
 );
-const HNCModule4Section1_6 = lazy(() =>
+const HNCModule4Section1_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section1_6',
@@ -1393,12 +1394,12 @@ const HNCModule4Section1_6 = lazy(() =>
     )
   )
 );
-const HNCModule4Section2 = lazy(() =>
+const HNCModule4Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule4Section2', () => import('@/pages/apprentice-courses/HNCModule4Section2'))
   )
 );
-const HNCModule4Section2_1 = lazy(() =>
+const HNCModule4Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section2_1',
@@ -1406,7 +1407,7 @@ const HNCModule4Section2_1 = lazy(() =>
     )
   )
 );
-const HNCModule4Section2_2 = lazy(() =>
+const HNCModule4Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section2_2',
@@ -1414,7 +1415,7 @@ const HNCModule4Section2_2 = lazy(() =>
     )
   )
 );
-const HNCModule4Section2_3 = lazy(() =>
+const HNCModule4Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section2_3',
@@ -1422,7 +1423,7 @@ const HNCModule4Section2_3 = lazy(() =>
     )
   )
 );
-const HNCModule4Section2_4 = lazy(() =>
+const HNCModule4Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section2_4',
@@ -1430,7 +1431,7 @@ const HNCModule4Section2_4 = lazy(() =>
     )
   )
 );
-const HNCModule4Section2_5 = lazy(() =>
+const HNCModule4Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section2_5',
@@ -1438,7 +1439,7 @@ const HNCModule4Section2_5 = lazy(() =>
     )
   )
 );
-const HNCModule4Section2_6 = lazy(() =>
+const HNCModule4Section2_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section2_6',
@@ -1446,12 +1447,12 @@ const HNCModule4Section2_6 = lazy(() =>
     )
   )
 );
-const HNCModule4Section3 = lazy(() =>
+const HNCModule4Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule4Section3', () => import('@/pages/apprentice-courses/HNCModule4Section3'))
   )
 );
-const HNCModule4Section3_1 = lazy(() =>
+const HNCModule4Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section3_1',
@@ -1459,7 +1460,7 @@ const HNCModule4Section3_1 = lazy(() =>
     )
   )
 );
-const HNCModule4Section3_2 = lazy(() =>
+const HNCModule4Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section3_2',
@@ -1467,7 +1468,7 @@ const HNCModule4Section3_2 = lazy(() =>
     )
   )
 );
-const HNCModule4Section3_3 = lazy(() =>
+const HNCModule4Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section3_3',
@@ -1475,7 +1476,7 @@ const HNCModule4Section3_3 = lazy(() =>
     )
   )
 );
-const HNCModule4Section3_4 = lazy(() =>
+const HNCModule4Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section3_4',
@@ -1483,7 +1484,7 @@ const HNCModule4Section3_4 = lazy(() =>
     )
   )
 );
-const HNCModule4Section3_5 = lazy(() =>
+const HNCModule4Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section3_5',
@@ -1491,7 +1492,7 @@ const HNCModule4Section3_5 = lazy(() =>
     )
   )
 );
-const HNCModule4Section3_6 = lazy(() =>
+const HNCModule4Section3_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section3_6',
@@ -1499,12 +1500,12 @@ const HNCModule4Section3_6 = lazy(() =>
     )
   )
 );
-const HNCModule4Section4 = lazy(() =>
+const HNCModule4Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule4Section4', () => import('@/pages/apprentice-courses/HNCModule4Section4'))
   )
 );
-const HNCModule4Section4_1 = lazy(() =>
+const HNCModule4Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section4_1',
@@ -1512,7 +1513,7 @@ const HNCModule4Section4_1 = lazy(() =>
     )
   )
 );
-const HNCModule4Section4_2 = lazy(() =>
+const HNCModule4Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section4_2',
@@ -1520,7 +1521,7 @@ const HNCModule4Section4_2 = lazy(() =>
     )
   )
 );
-const HNCModule4Section4_3 = lazy(() =>
+const HNCModule4Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section4_3',
@@ -1528,7 +1529,7 @@ const HNCModule4Section4_3 = lazy(() =>
     )
   )
 );
-const HNCModule4Section4_4 = lazy(() =>
+const HNCModule4Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section4_4',
@@ -1536,7 +1537,7 @@ const HNCModule4Section4_4 = lazy(() =>
     )
   )
 );
-const HNCModule4Section4_5 = lazy(() =>
+const HNCModule4Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section4_5',
@@ -1544,7 +1545,7 @@ const HNCModule4Section4_5 = lazy(() =>
     )
   )
 );
-const HNCModule4Section4_6 = lazy(() =>
+const HNCModule4Section4_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section4_6',
@@ -1552,12 +1553,12 @@ const HNCModule4Section4_6 = lazy(() =>
     )
   )
 );
-const HNCModule4Section5 = lazy(() =>
+const HNCModule4Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule4Section5', () => import('@/pages/apprentice-courses/HNCModule4Section5'))
   )
 );
-const HNCModule4Section5_1 = lazy(() =>
+const HNCModule4Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section5_1',
@@ -1565,7 +1566,7 @@ const HNCModule4Section5_1 = lazy(() =>
     )
   )
 );
-const HNCModule4Section5_2 = lazy(() =>
+const HNCModule4Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section5_2',
@@ -1573,7 +1574,7 @@ const HNCModule4Section5_2 = lazy(() =>
     )
   )
 );
-const HNCModule4Section5_3 = lazy(() =>
+const HNCModule4Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section5_3',
@@ -1581,7 +1582,7 @@ const HNCModule4Section5_3 = lazy(() =>
     )
   )
 );
-const HNCModule4Section5_4 = lazy(() =>
+const HNCModule4Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section5_4',
@@ -1589,7 +1590,7 @@ const HNCModule4Section5_4 = lazy(() =>
     )
   )
 );
-const HNCModule4Section5_5 = lazy(() =>
+const HNCModule4Section5_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section5_5',
@@ -1597,7 +1598,7 @@ const HNCModule4Section5_5 = lazy(() =>
     )
   )
 );
-const HNCModule4Section5_6 = lazy(() =>
+const HNCModule4Section5_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section5_6',
@@ -1605,12 +1606,12 @@ const HNCModule4Section5_6 = lazy(() =>
     )
   )
 );
-const HNCModule4Section6 = lazy(() =>
+const HNCModule4Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule4Section6', () => import('@/pages/apprentice-courses/HNCModule4Section6'))
   )
 );
-const HNCModule4Section6_1 = lazy(() =>
+const HNCModule4Section6_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section6_1',
@@ -1618,7 +1619,7 @@ const HNCModule4Section6_1 = lazy(() =>
     )
   )
 );
-const HNCModule4Section6_2 = lazy(() =>
+const HNCModule4Section6_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section6_2',
@@ -1626,7 +1627,7 @@ const HNCModule4Section6_2 = lazy(() =>
     )
   )
 );
-const HNCModule4Section6_3 = lazy(() =>
+const HNCModule4Section6_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section6_3',
@@ -1634,7 +1635,7 @@ const HNCModule4Section6_3 = lazy(() =>
     )
   )
 );
-const HNCModule4Section6_4 = lazy(() =>
+const HNCModule4Section6_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section6_4',
@@ -1642,7 +1643,7 @@ const HNCModule4Section6_4 = lazy(() =>
     )
   )
 );
-const HNCModule4Section6_5 = lazy(() =>
+const HNCModule4Section6_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section6_5',
@@ -1650,7 +1651,7 @@ const HNCModule4Section6_5 = lazy(() =>
     )
   )
 );
-const HNCModule4Section6_6 = lazy(() =>
+const HNCModule4Section6_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule4Section6_6',
@@ -1658,17 +1659,17 @@ const HNCModule4Section6_6 = lazy(() =>
     )
   )
 );
-const HNCModule5 = lazy(() =>
+const HNCModule5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule5', () => import('@/pages/apprentice-courses/HNCModule5'))
   )
 );
-const HNCModule5Section1 = lazy(() =>
+const HNCModule5Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule5Section1', () => import('@/pages/apprentice-courses/HNCModule5Section1'))
   )
 );
-const HNCModule5Section1_1 = lazy(() =>
+const HNCModule5Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section1_1',
@@ -1676,7 +1677,7 @@ const HNCModule5Section1_1 = lazy(() =>
     )
   )
 );
-const HNCModule5Section1_2 = lazy(() =>
+const HNCModule5Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section1_2',
@@ -1684,7 +1685,7 @@ const HNCModule5Section1_2 = lazy(() =>
     )
   )
 );
-const HNCModule5Section1_3 = lazy(() =>
+const HNCModule5Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section1_3',
@@ -1692,7 +1693,7 @@ const HNCModule5Section1_3 = lazy(() =>
     )
   )
 );
-const HNCModule5Section1_4 = lazy(() =>
+const HNCModule5Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section1_4',
@@ -1700,7 +1701,7 @@ const HNCModule5Section1_4 = lazy(() =>
     )
   )
 );
-const HNCModule5Section1_5 = lazy(() =>
+const HNCModule5Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section1_5',
@@ -1708,7 +1709,7 @@ const HNCModule5Section1_5 = lazy(() =>
     )
   )
 );
-const HNCModule5Section1_6 = lazy(() =>
+const HNCModule5Section1_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section1_6',
@@ -1716,12 +1717,12 @@ const HNCModule5Section1_6 = lazy(() =>
     )
   )
 );
-const HNCModule5Section2 = lazy(() =>
+const HNCModule5Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule5Section2', () => import('@/pages/apprentice-courses/HNCModule5Section2'))
   )
 );
-const HNCModule5Section2_1 = lazy(() =>
+const HNCModule5Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section2_1',
@@ -1729,7 +1730,7 @@ const HNCModule5Section2_1 = lazy(() =>
     )
   )
 );
-const HNCModule5Section2_2 = lazy(() =>
+const HNCModule5Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section2_2',
@@ -1737,7 +1738,7 @@ const HNCModule5Section2_2 = lazy(() =>
     )
   )
 );
-const HNCModule5Section2_3 = lazy(() =>
+const HNCModule5Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section2_3',
@@ -1745,7 +1746,7 @@ const HNCModule5Section2_3 = lazy(() =>
     )
   )
 );
-const HNCModule5Section2_4 = lazy(() =>
+const HNCModule5Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section2_4',
@@ -1753,7 +1754,7 @@ const HNCModule5Section2_4 = lazy(() =>
     )
   )
 );
-const HNCModule5Section2_5 = lazy(() =>
+const HNCModule5Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section2_5',
@@ -1761,7 +1762,7 @@ const HNCModule5Section2_5 = lazy(() =>
     )
   )
 );
-const HNCModule5Section2_6 = lazy(() =>
+const HNCModule5Section2_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section2_6',
@@ -1769,12 +1770,12 @@ const HNCModule5Section2_6 = lazy(() =>
     )
   )
 );
-const HNCModule5Section3 = lazy(() =>
+const HNCModule5Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule5Section3', () => import('@/pages/apprentice-courses/HNCModule5Section3'))
   )
 );
-const HNCModule5Section3_1 = lazy(() =>
+const HNCModule5Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section3_1',
@@ -1782,7 +1783,7 @@ const HNCModule5Section3_1 = lazy(() =>
     )
   )
 );
-const HNCModule5Section3_2 = lazy(() =>
+const HNCModule5Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section3_2',
@@ -1790,7 +1791,7 @@ const HNCModule5Section3_2 = lazy(() =>
     )
   )
 );
-const HNCModule5Section3_3 = lazy(() =>
+const HNCModule5Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section3_3',
@@ -1798,7 +1799,7 @@ const HNCModule5Section3_3 = lazy(() =>
     )
   )
 );
-const HNCModule5Section3_4 = lazy(() =>
+const HNCModule5Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section3_4',
@@ -1806,7 +1807,7 @@ const HNCModule5Section3_4 = lazy(() =>
     )
   )
 );
-const HNCModule5Section3_5 = lazy(() =>
+const HNCModule5Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section3_5',
@@ -1814,7 +1815,7 @@ const HNCModule5Section3_5 = lazy(() =>
     )
   )
 );
-const HNCModule5Section3_6 = lazy(() =>
+const HNCModule5Section3_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section3_6',
@@ -1822,12 +1823,12 @@ const HNCModule5Section3_6 = lazy(() =>
     )
   )
 );
-const HNCModule5Section4 = lazy(() =>
+const HNCModule5Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule5Section4', () => import('@/pages/apprentice-courses/HNCModule5Section4'))
   )
 );
-const HNCModule5Section4_1 = lazy(() =>
+const HNCModule5Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section4_1',
@@ -1835,7 +1836,7 @@ const HNCModule5Section4_1 = lazy(() =>
     )
   )
 );
-const HNCModule5Section4_2 = lazy(() =>
+const HNCModule5Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section4_2',
@@ -1843,7 +1844,7 @@ const HNCModule5Section4_2 = lazy(() =>
     )
   )
 );
-const HNCModule5Section4_3 = lazy(() =>
+const HNCModule5Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section4_3',
@@ -1851,7 +1852,7 @@ const HNCModule5Section4_3 = lazy(() =>
     )
   )
 );
-const HNCModule5Section4_4 = lazy(() =>
+const HNCModule5Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section4_4',
@@ -1859,7 +1860,7 @@ const HNCModule5Section4_4 = lazy(() =>
     )
   )
 );
-const HNCModule5Section4_5 = lazy(() =>
+const HNCModule5Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section4_5',
@@ -1867,7 +1868,7 @@ const HNCModule5Section4_5 = lazy(() =>
     )
   )
 );
-const HNCModule5Section4_6 = lazy(() =>
+const HNCModule5Section4_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section4_6',
@@ -1875,12 +1876,12 @@ const HNCModule5Section4_6 = lazy(() =>
     )
   )
 );
-const HNCModule5Section5 = lazy(() =>
+const HNCModule5Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule5Section5', () => import('@/pages/apprentice-courses/HNCModule5Section5'))
   )
 );
-const HNCModule5Section5_1 = lazy(() =>
+const HNCModule5Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section5_1',
@@ -1888,7 +1889,7 @@ const HNCModule5Section5_1 = lazy(() =>
     )
   )
 );
-const HNCModule5Section5_2 = lazy(() =>
+const HNCModule5Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section5_2',
@@ -1896,7 +1897,7 @@ const HNCModule5Section5_2 = lazy(() =>
     )
   )
 );
-const HNCModule5Section5_3 = lazy(() =>
+const HNCModule5Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section5_3',
@@ -1904,7 +1905,7 @@ const HNCModule5Section5_3 = lazy(() =>
     )
   )
 );
-const HNCModule5Section5_4 = lazy(() =>
+const HNCModule5Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section5_4',
@@ -1912,7 +1913,7 @@ const HNCModule5Section5_4 = lazy(() =>
     )
   )
 );
-const HNCModule5Section5_5 = lazy(() =>
+const HNCModule5Section5_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section5_5',
@@ -1920,7 +1921,7 @@ const HNCModule5Section5_5 = lazy(() =>
     )
   )
 );
-const HNCModule5Section5_6 = lazy(() =>
+const HNCModule5Section5_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section5_6',
@@ -1928,12 +1929,12 @@ const HNCModule5Section5_6 = lazy(() =>
     )
   )
 );
-const HNCModule5Section6 = lazy(() =>
+const HNCModule5Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule5Section6', () => import('@/pages/apprentice-courses/HNCModule5Section6'))
   )
 );
-const HNCModule5Section6_1 = lazy(() =>
+const HNCModule5Section6_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section6_1',
@@ -1941,7 +1942,7 @@ const HNCModule5Section6_1 = lazy(() =>
     )
   )
 );
-const HNCModule5Section6_2 = lazy(() =>
+const HNCModule5Section6_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section6_2',
@@ -1949,7 +1950,7 @@ const HNCModule5Section6_2 = lazy(() =>
     )
   )
 );
-const HNCModule5Section6_3 = lazy(() =>
+const HNCModule5Section6_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section6_3',
@@ -1957,7 +1958,7 @@ const HNCModule5Section6_3 = lazy(() =>
     )
   )
 );
-const HNCModule5Section6_4 = lazy(() =>
+const HNCModule5Section6_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section6_4',
@@ -1965,7 +1966,7 @@ const HNCModule5Section6_4 = lazy(() =>
     )
   )
 );
-const HNCModule5Section6_5 = lazy(() =>
+const HNCModule5Section6_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section6_5',
@@ -1973,7 +1974,7 @@ const HNCModule5Section6_5 = lazy(() =>
     )
   )
 );
-const HNCModule5Section6_6 = lazy(() =>
+const HNCModule5Section6_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule5Section6_6',
@@ -1981,17 +1982,17 @@ const HNCModule5Section6_6 = lazy(() =>
     )
   )
 );
-const HNCModule6 = lazy(() =>
+const HNCModule6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule6', () => import('@/pages/apprentice-courses/HNCModule6'))
   )
 );
-const HNCModule6Section1 = lazy(() =>
+const HNCModule6Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule6Section1', () => import('@/pages/apprentice-courses/HNCModule6Section1'))
   )
 );
-const HNCModule6Section1_1 = lazy(() =>
+const HNCModule6Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section1_1',
@@ -1999,7 +2000,7 @@ const HNCModule6Section1_1 = lazy(() =>
     )
   )
 );
-const HNCModule6Section1_2 = lazy(() =>
+const HNCModule6Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section1_2',
@@ -2007,7 +2008,7 @@ const HNCModule6Section1_2 = lazy(() =>
     )
   )
 );
-const HNCModule6Section1_3 = lazy(() =>
+const HNCModule6Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section1_3',
@@ -2015,7 +2016,7 @@ const HNCModule6Section1_3 = lazy(() =>
     )
   )
 );
-const HNCModule6Section1_4 = lazy(() =>
+const HNCModule6Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section1_4',
@@ -2023,7 +2024,7 @@ const HNCModule6Section1_4 = lazy(() =>
     )
   )
 );
-const HNCModule6Section1_5 = lazy(() =>
+const HNCModule6Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section1_5',
@@ -2031,7 +2032,7 @@ const HNCModule6Section1_5 = lazy(() =>
     )
   )
 );
-const HNCModule6Section1_6 = lazy(() =>
+const HNCModule6Section1_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section1_6',
@@ -2039,12 +2040,12 @@ const HNCModule6Section1_6 = lazy(() =>
     )
   )
 );
-const HNCModule6Section2 = lazy(() =>
+const HNCModule6Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule6Section2', () => import('@/pages/apprentice-courses/HNCModule6Section2'))
   )
 );
-const HNCModule6Section2_1 = lazy(() =>
+const HNCModule6Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section2_1',
@@ -2052,7 +2053,7 @@ const HNCModule6Section2_1 = lazy(() =>
     )
   )
 );
-const HNCModule6Section2_2 = lazy(() =>
+const HNCModule6Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section2_2',
@@ -2060,7 +2061,7 @@ const HNCModule6Section2_2 = lazy(() =>
     )
   )
 );
-const HNCModule6Section2_3 = lazy(() =>
+const HNCModule6Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section2_3',
@@ -2068,7 +2069,7 @@ const HNCModule6Section2_3 = lazy(() =>
     )
   )
 );
-const HNCModule6Section2_4 = lazy(() =>
+const HNCModule6Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section2_4',
@@ -2076,7 +2077,7 @@ const HNCModule6Section2_4 = lazy(() =>
     )
   )
 );
-const HNCModule6Section2_5 = lazy(() =>
+const HNCModule6Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section2_5',
@@ -2084,7 +2085,7 @@ const HNCModule6Section2_5 = lazy(() =>
     )
   )
 );
-const HNCModule6Section2_6 = lazy(() =>
+const HNCModule6Section2_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section2_6',
@@ -2092,12 +2093,12 @@ const HNCModule6Section2_6 = lazy(() =>
     )
   )
 );
-const HNCModule6Section3 = lazy(() =>
+const HNCModule6Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule6Section3', () => import('@/pages/apprentice-courses/HNCModule6Section3'))
   )
 );
-const HNCModule6Section3_1 = lazy(() =>
+const HNCModule6Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section3_1',
@@ -2105,7 +2106,7 @@ const HNCModule6Section3_1 = lazy(() =>
     )
   )
 );
-const HNCModule6Section3_2 = lazy(() =>
+const HNCModule6Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section3_2',
@@ -2113,7 +2114,7 @@ const HNCModule6Section3_2 = lazy(() =>
     )
   )
 );
-const HNCModule6Section3_3 = lazy(() =>
+const HNCModule6Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section3_3',
@@ -2121,7 +2122,7 @@ const HNCModule6Section3_3 = lazy(() =>
     )
   )
 );
-const HNCModule6Section3_4 = lazy(() =>
+const HNCModule6Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section3_4',
@@ -2129,7 +2130,7 @@ const HNCModule6Section3_4 = lazy(() =>
     )
   )
 );
-const HNCModule6Section3_5 = lazy(() =>
+const HNCModule6Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section3_5',
@@ -2137,7 +2138,7 @@ const HNCModule6Section3_5 = lazy(() =>
     )
   )
 );
-const HNCModule6Section3_6 = lazy(() =>
+const HNCModule6Section3_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section3_6',
@@ -2145,12 +2146,12 @@ const HNCModule6Section3_6 = lazy(() =>
     )
   )
 );
-const HNCModule6Section4 = lazy(() =>
+const HNCModule6Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule6Section4', () => import('@/pages/apprentice-courses/HNCModule6Section4'))
   )
 );
-const HNCModule6Section4_1 = lazy(() =>
+const HNCModule6Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section4_1',
@@ -2158,7 +2159,7 @@ const HNCModule6Section4_1 = lazy(() =>
     )
   )
 );
-const HNCModule6Section4_2 = lazy(() =>
+const HNCModule6Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section4_2',
@@ -2166,7 +2167,7 @@ const HNCModule6Section4_2 = lazy(() =>
     )
   )
 );
-const HNCModule6Section4_3 = lazy(() =>
+const HNCModule6Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section4_3',
@@ -2174,7 +2175,7 @@ const HNCModule6Section4_3 = lazy(() =>
     )
   )
 );
-const HNCModule6Section4_4 = lazy(() =>
+const HNCModule6Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section4_4',
@@ -2182,7 +2183,7 @@ const HNCModule6Section4_4 = lazy(() =>
     )
   )
 );
-const HNCModule6Section4_5 = lazy(() =>
+const HNCModule6Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section4_5',
@@ -2190,7 +2191,7 @@ const HNCModule6Section4_5 = lazy(() =>
     )
   )
 );
-const HNCModule6Section4_6 = lazy(() =>
+const HNCModule6Section4_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section4_6',
@@ -2198,12 +2199,12 @@ const HNCModule6Section4_6 = lazy(() =>
     )
   )
 );
-const HNCModule6Section5 = lazy(() =>
+const HNCModule6Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule6Section5', () => import('@/pages/apprentice-courses/HNCModule6Section5'))
   )
 );
-const HNCModule6Section5_1 = lazy(() =>
+const HNCModule6Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section5_1',
@@ -2211,7 +2212,7 @@ const HNCModule6Section5_1 = lazy(() =>
     )
   )
 );
-const HNCModule6Section5_2 = lazy(() =>
+const HNCModule6Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section5_2',
@@ -2219,7 +2220,7 @@ const HNCModule6Section5_2 = lazy(() =>
     )
   )
 );
-const HNCModule6Section5_3 = lazy(() =>
+const HNCModule6Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section5_3',
@@ -2227,7 +2228,7 @@ const HNCModule6Section5_3 = lazy(() =>
     )
   )
 );
-const HNCModule6Section5_4 = lazy(() =>
+const HNCModule6Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section5_4',
@@ -2235,7 +2236,7 @@ const HNCModule6Section5_4 = lazy(() =>
     )
   )
 );
-const HNCModule6Section5_5 = lazy(() =>
+const HNCModule6Section5_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section5_5',
@@ -2243,7 +2244,7 @@ const HNCModule6Section5_5 = lazy(() =>
     )
   )
 );
-const HNCModule6Section5_6 = lazy(() =>
+const HNCModule6Section5_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section5_6',
@@ -2251,12 +2252,12 @@ const HNCModule6Section5_6 = lazy(() =>
     )
   )
 );
-const HNCModule6Section6 = lazy(() =>
+const HNCModule6Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule6Section6', () => import('@/pages/apprentice-courses/HNCModule6Section6'))
   )
 );
-const HNCModule6Section6_1 = lazy(() =>
+const HNCModule6Section6_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section6_1',
@@ -2264,7 +2265,7 @@ const HNCModule6Section6_1 = lazy(() =>
     )
   )
 );
-const HNCModule6Section6_2 = lazy(() =>
+const HNCModule6Section6_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section6_2',
@@ -2272,7 +2273,7 @@ const HNCModule6Section6_2 = lazy(() =>
     )
   )
 );
-const HNCModule6Section6_3 = lazy(() =>
+const HNCModule6Section6_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section6_3',
@@ -2280,7 +2281,7 @@ const HNCModule6Section6_3 = lazy(() =>
     )
   )
 );
-const HNCModule6Section6_4 = lazy(() =>
+const HNCModule6Section6_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section6_4',
@@ -2288,7 +2289,7 @@ const HNCModule6Section6_4 = lazy(() =>
     )
   )
 );
-const HNCModule6Section6_5 = lazy(() =>
+const HNCModule6Section6_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section6_5',
@@ -2296,7 +2297,7 @@ const HNCModule6Section6_5 = lazy(() =>
     )
   )
 );
-const HNCModule6Section6_6 = lazy(() =>
+const HNCModule6Section6_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule6Section6_6',
@@ -2304,17 +2305,17 @@ const HNCModule6Section6_6 = lazy(() =>
     )
   )
 );
-const HNCModule7 = lazy(() =>
+const HNCModule7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule7', () => import('@/pages/apprentice-courses/HNCModule7'))
   )
 );
-const HNCModule7Section1 = lazy(() =>
+const HNCModule7Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule7Section1', () => import('@/pages/apprentice-courses/HNCModule7Section1'))
   )
 );
-const HNCModule7Section1_1 = lazy(() =>
+const HNCModule7Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section1_1',
@@ -2322,7 +2323,7 @@ const HNCModule7Section1_1 = lazy(() =>
     )
   )
 );
-const HNCModule7Section1_2 = lazy(() =>
+const HNCModule7Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section1_2',
@@ -2330,7 +2331,7 @@ const HNCModule7Section1_2 = lazy(() =>
     )
   )
 );
-const HNCModule7Section1_3 = lazy(() =>
+const HNCModule7Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section1_3',
@@ -2338,7 +2339,7 @@ const HNCModule7Section1_3 = lazy(() =>
     )
   )
 );
-const HNCModule7Section1_4 = lazy(() =>
+const HNCModule7Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section1_4',
@@ -2346,7 +2347,7 @@ const HNCModule7Section1_4 = lazy(() =>
     )
   )
 );
-const HNCModule7Section1_5 = lazy(() =>
+const HNCModule7Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section1_5',
@@ -2354,7 +2355,7 @@ const HNCModule7Section1_5 = lazy(() =>
     )
   )
 );
-const HNCModule7Section1_6 = lazy(() =>
+const HNCModule7Section1_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section1_6',
@@ -2362,12 +2363,12 @@ const HNCModule7Section1_6 = lazy(() =>
     )
   )
 );
-const HNCModule7Section2 = lazy(() =>
+const HNCModule7Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule7Section2', () => import('@/pages/apprentice-courses/HNCModule7Section2'))
   )
 );
-const HNCModule7Section2_1 = lazy(() =>
+const HNCModule7Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section2_1',
@@ -2375,7 +2376,7 @@ const HNCModule7Section2_1 = lazy(() =>
     )
   )
 );
-const HNCModule7Section2_2 = lazy(() =>
+const HNCModule7Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section2_2',
@@ -2383,7 +2384,7 @@ const HNCModule7Section2_2 = lazy(() =>
     )
   )
 );
-const HNCModule7Section2_3 = lazy(() =>
+const HNCModule7Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section2_3',
@@ -2391,7 +2392,7 @@ const HNCModule7Section2_3 = lazy(() =>
     )
   )
 );
-const HNCModule7Section2_4 = lazy(() =>
+const HNCModule7Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section2_4',
@@ -2399,7 +2400,7 @@ const HNCModule7Section2_4 = lazy(() =>
     )
   )
 );
-const HNCModule7Section2_5 = lazy(() =>
+const HNCModule7Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section2_5',
@@ -2407,7 +2408,7 @@ const HNCModule7Section2_5 = lazy(() =>
     )
   )
 );
-const HNCModule7Section2_6 = lazy(() =>
+const HNCModule7Section2_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section2_6',
@@ -2415,12 +2416,12 @@ const HNCModule7Section2_6 = lazy(() =>
     )
   )
 );
-const HNCModule7Section3 = lazy(() =>
+const HNCModule7Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule7Section3', () => import('@/pages/apprentice-courses/HNCModule7Section3'))
   )
 );
-const HNCModule7Section3_1 = lazy(() =>
+const HNCModule7Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section3_1',
@@ -2428,7 +2429,7 @@ const HNCModule7Section3_1 = lazy(() =>
     )
   )
 );
-const HNCModule7Section3_2 = lazy(() =>
+const HNCModule7Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section3_2',
@@ -2436,7 +2437,7 @@ const HNCModule7Section3_2 = lazy(() =>
     )
   )
 );
-const HNCModule7Section3_3 = lazy(() =>
+const HNCModule7Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section3_3',
@@ -2444,7 +2445,7 @@ const HNCModule7Section3_3 = lazy(() =>
     )
   )
 );
-const HNCModule7Section3_4 = lazy(() =>
+const HNCModule7Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section3_4',
@@ -2452,7 +2453,7 @@ const HNCModule7Section3_4 = lazy(() =>
     )
   )
 );
-const HNCModule7Section3_5 = lazy(() =>
+const HNCModule7Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section3_5',
@@ -2460,7 +2461,7 @@ const HNCModule7Section3_5 = lazy(() =>
     )
   )
 );
-const HNCModule7Section3_6 = lazy(() =>
+const HNCModule7Section3_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section3_6',
@@ -2468,12 +2469,12 @@ const HNCModule7Section3_6 = lazy(() =>
     )
   )
 );
-const HNCModule7Section4 = lazy(() =>
+const HNCModule7Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule7Section4', () => import('@/pages/apprentice-courses/HNCModule7Section4'))
   )
 );
-const HNCModule7Section4_1 = lazy(() =>
+const HNCModule7Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section4_1',
@@ -2481,7 +2482,7 @@ const HNCModule7Section4_1 = lazy(() =>
     )
   )
 );
-const HNCModule7Section4_2 = lazy(() =>
+const HNCModule7Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section4_2',
@@ -2489,7 +2490,7 @@ const HNCModule7Section4_2 = lazy(() =>
     )
   )
 );
-const HNCModule7Section4_3 = lazy(() =>
+const HNCModule7Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section4_3',
@@ -2497,7 +2498,7 @@ const HNCModule7Section4_3 = lazy(() =>
     )
   )
 );
-const HNCModule7Section4_4 = lazy(() =>
+const HNCModule7Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section4_4',
@@ -2505,7 +2506,7 @@ const HNCModule7Section4_4 = lazy(() =>
     )
   )
 );
-const HNCModule7Section4_5 = lazy(() =>
+const HNCModule7Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section4_5',
@@ -2513,7 +2514,7 @@ const HNCModule7Section4_5 = lazy(() =>
     )
   )
 );
-const HNCModule7Section4_6 = lazy(() =>
+const HNCModule7Section4_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section4_6',
@@ -2521,12 +2522,12 @@ const HNCModule7Section4_6 = lazy(() =>
     )
   )
 );
-const HNCModule7Section5 = lazy(() =>
+const HNCModule7Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule7Section5', () => import('@/pages/apprentice-courses/HNCModule7Section5'))
   )
 );
-const HNCModule7Section5_1 = lazy(() =>
+const HNCModule7Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section5_1',
@@ -2534,7 +2535,7 @@ const HNCModule7Section5_1 = lazy(() =>
     )
   )
 );
-const HNCModule7Section5_2 = lazy(() =>
+const HNCModule7Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section5_2',
@@ -2542,7 +2543,7 @@ const HNCModule7Section5_2 = lazy(() =>
     )
   )
 );
-const HNCModule7Section5_3 = lazy(() =>
+const HNCModule7Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section5_3',
@@ -2550,7 +2551,7 @@ const HNCModule7Section5_3 = lazy(() =>
     )
   )
 );
-const HNCModule7Section5_4 = lazy(() =>
+const HNCModule7Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section5_4',
@@ -2558,7 +2559,7 @@ const HNCModule7Section5_4 = lazy(() =>
     )
   )
 );
-const HNCModule7Section5_5 = lazy(() =>
+const HNCModule7Section5_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section5_5',
@@ -2566,7 +2567,7 @@ const HNCModule7Section5_5 = lazy(() =>
     )
   )
 );
-const HNCModule7Section5_6 = lazy(() =>
+const HNCModule7Section5_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section5_6',
@@ -2574,12 +2575,12 @@ const HNCModule7Section5_6 = lazy(() =>
     )
   )
 );
-const HNCModule7Section6 = lazy(() =>
+const HNCModule7Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule7Section6', () => import('@/pages/apprentice-courses/HNCModule7Section6'))
   )
 );
-const HNCModule7Section6_1 = lazy(() =>
+const HNCModule7Section6_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section6_1',
@@ -2587,7 +2588,7 @@ const HNCModule7Section6_1 = lazy(() =>
     )
   )
 );
-const HNCModule7Section6_2 = lazy(() =>
+const HNCModule7Section6_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section6_2',
@@ -2595,7 +2596,7 @@ const HNCModule7Section6_2 = lazy(() =>
     )
   )
 );
-const HNCModule7Section6_3 = lazy(() =>
+const HNCModule7Section6_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section6_3',
@@ -2603,7 +2604,7 @@ const HNCModule7Section6_3 = lazy(() =>
     )
   )
 );
-const HNCModule7Section6_4 = lazy(() =>
+const HNCModule7Section6_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section6_4',
@@ -2611,7 +2612,7 @@ const HNCModule7Section6_4 = lazy(() =>
     )
   )
 );
-const HNCModule7Section6_5 = lazy(() =>
+const HNCModule7Section6_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section6_5',
@@ -2619,7 +2620,7 @@ const HNCModule7Section6_5 = lazy(() =>
     )
   )
 );
-const HNCModule7Section6_6 = lazy(() =>
+const HNCModule7Section6_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule7Section6_6',
@@ -2627,17 +2628,17 @@ const HNCModule7Section6_6 = lazy(() =>
     )
   )
 );
-const HNCModule8 = lazy(() =>
+const HNCModule8 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule8', () => import('@/pages/apprentice-courses/HNCModule8'))
   )
 );
-const HNCModule8Section1 = lazy(() =>
+const HNCModule8Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule8Section1', () => import('@/pages/apprentice-courses/HNCModule8Section1'))
   )
 );
-const HNCModule8Section1_1 = lazy(() =>
+const HNCModule8Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section1_1',
@@ -2645,7 +2646,7 @@ const HNCModule8Section1_1 = lazy(() =>
     )
   )
 );
-const HNCModule8Section1_2 = lazy(() =>
+const HNCModule8Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section1_2',
@@ -2653,7 +2654,7 @@ const HNCModule8Section1_2 = lazy(() =>
     )
   )
 );
-const HNCModule8Section1_3 = lazy(() =>
+const HNCModule8Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section1_3',
@@ -2661,7 +2662,7 @@ const HNCModule8Section1_3 = lazy(() =>
     )
   )
 );
-const HNCModule8Section1_4 = lazy(() =>
+const HNCModule8Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section1_4',
@@ -2669,7 +2670,7 @@ const HNCModule8Section1_4 = lazy(() =>
     )
   )
 );
-const HNCModule8Section1_5 = lazy(() =>
+const HNCModule8Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section1_5',
@@ -2677,7 +2678,7 @@ const HNCModule8Section1_5 = lazy(() =>
     )
   )
 );
-const HNCModule8Section1_6 = lazy(() =>
+const HNCModule8Section1_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section1_6',
@@ -2685,12 +2686,12 @@ const HNCModule8Section1_6 = lazy(() =>
     )
   )
 );
-const HNCModule8Section2 = lazy(() =>
+const HNCModule8Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule8Section2', () => import('@/pages/apprentice-courses/HNCModule8Section2'))
   )
 );
-const HNCModule8Section2_1 = lazy(() =>
+const HNCModule8Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section2_1',
@@ -2698,7 +2699,7 @@ const HNCModule8Section2_1 = lazy(() =>
     )
   )
 );
-const HNCModule8Section2_2 = lazy(() =>
+const HNCModule8Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section2_2',
@@ -2706,7 +2707,7 @@ const HNCModule8Section2_2 = lazy(() =>
     )
   )
 );
-const HNCModule8Section2_3 = lazy(() =>
+const HNCModule8Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section2_3',
@@ -2714,7 +2715,7 @@ const HNCModule8Section2_3 = lazy(() =>
     )
   )
 );
-const HNCModule8Section2_4 = lazy(() =>
+const HNCModule8Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section2_4',
@@ -2722,7 +2723,7 @@ const HNCModule8Section2_4 = lazy(() =>
     )
   )
 );
-const HNCModule8Section2_5 = lazy(() =>
+const HNCModule8Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section2_5',
@@ -2730,7 +2731,7 @@ const HNCModule8Section2_5 = lazy(() =>
     )
   )
 );
-const HNCModule8Section2_6 = lazy(() =>
+const HNCModule8Section2_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section2_6',
@@ -2738,12 +2739,12 @@ const HNCModule8Section2_6 = lazy(() =>
     )
   )
 );
-const HNCModule8Section3 = lazy(() =>
+const HNCModule8Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule8Section3', () => import('@/pages/apprentice-courses/HNCModule8Section3'))
   )
 );
-const HNCModule8Section3_1 = lazy(() =>
+const HNCModule8Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section3_1',
@@ -2751,7 +2752,7 @@ const HNCModule8Section3_1 = lazy(() =>
     )
   )
 );
-const HNCModule8Section3_2 = lazy(() =>
+const HNCModule8Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section3_2',
@@ -2759,7 +2760,7 @@ const HNCModule8Section3_2 = lazy(() =>
     )
   )
 );
-const HNCModule8Section3_3 = lazy(() =>
+const HNCModule8Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section3_3',
@@ -2767,7 +2768,7 @@ const HNCModule8Section3_3 = lazy(() =>
     )
   )
 );
-const HNCModule8Section3_4 = lazy(() =>
+const HNCModule8Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section3_4',
@@ -2775,7 +2776,7 @@ const HNCModule8Section3_4 = lazy(() =>
     )
   )
 );
-const HNCModule8Section3_5 = lazy(() =>
+const HNCModule8Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section3_5',
@@ -2783,7 +2784,7 @@ const HNCModule8Section3_5 = lazy(() =>
     )
   )
 );
-const HNCModule8Section3_6 = lazy(() =>
+const HNCModule8Section3_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section3_6',
@@ -2791,12 +2792,12 @@ const HNCModule8Section3_6 = lazy(() =>
     )
   )
 );
-const HNCModule8Section4 = lazy(() =>
+const HNCModule8Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule8Section4', () => import('@/pages/apprentice-courses/HNCModule8Section4'))
   )
 );
-const HNCModule8Section4_1 = lazy(() =>
+const HNCModule8Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section4_1',
@@ -2804,7 +2805,7 @@ const HNCModule8Section4_1 = lazy(() =>
     )
   )
 );
-const HNCModule8Section4_2 = lazy(() =>
+const HNCModule8Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section4_2',
@@ -2812,7 +2813,7 @@ const HNCModule8Section4_2 = lazy(() =>
     )
   )
 );
-const HNCModule8Section4_3 = lazy(() =>
+const HNCModule8Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section4_3',
@@ -2820,7 +2821,7 @@ const HNCModule8Section4_3 = lazy(() =>
     )
   )
 );
-const HNCModule8Section4_4 = lazy(() =>
+const HNCModule8Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section4_4',
@@ -2828,7 +2829,7 @@ const HNCModule8Section4_4 = lazy(() =>
     )
   )
 );
-const HNCModule8Section4_5 = lazy(() =>
+const HNCModule8Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section4_5',
@@ -2836,7 +2837,7 @@ const HNCModule8Section4_5 = lazy(() =>
     )
   )
 );
-const HNCModule8Section4_6 = lazy(() =>
+const HNCModule8Section4_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section4_6',
@@ -2844,12 +2845,12 @@ const HNCModule8Section4_6 = lazy(() =>
     )
   )
 );
-const HNCModule8Section5 = lazy(() =>
+const HNCModule8Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule8Section5', () => import('@/pages/apprentice-courses/HNCModule8Section5'))
   )
 );
-const HNCModule8Section5_1 = lazy(() =>
+const HNCModule8Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section5_1',
@@ -2857,7 +2858,7 @@ const HNCModule8Section5_1 = lazy(() =>
     )
   )
 );
-const HNCModule8Section5_2 = lazy(() =>
+const HNCModule8Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section5_2',
@@ -2865,7 +2866,7 @@ const HNCModule8Section5_2 = lazy(() =>
     )
   )
 );
-const HNCModule8Section5_3 = lazy(() =>
+const HNCModule8Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section5_3',
@@ -2873,7 +2874,7 @@ const HNCModule8Section5_3 = lazy(() =>
     )
   )
 );
-const HNCModule8Section5_4 = lazy(() =>
+const HNCModule8Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section5_4',
@@ -2881,7 +2882,7 @@ const HNCModule8Section5_4 = lazy(() =>
     )
   )
 );
-const HNCModule8Section5_5 = lazy(() =>
+const HNCModule8Section5_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section5_5',
@@ -2889,7 +2890,7 @@ const HNCModule8Section5_5 = lazy(() =>
     )
   )
 );
-const HNCModule8Section5_6 = lazy(() =>
+const HNCModule8Section5_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section5_6',
@@ -2897,12 +2898,12 @@ const HNCModule8Section5_6 = lazy(() =>
     )
   )
 );
-const HNCModule8Section6 = lazy(() =>
+const HNCModule8Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule8Section6', () => import('@/pages/apprentice-courses/HNCModule8Section6'))
   )
 );
-const HNCModule8Section6_1 = lazy(() =>
+const HNCModule8Section6_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section6_1',
@@ -2910,7 +2911,7 @@ const HNCModule8Section6_1 = lazy(() =>
     )
   )
 );
-const HNCModule8Section6_2 = lazy(() =>
+const HNCModule8Section6_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section6_2',
@@ -2918,7 +2919,7 @@ const HNCModule8Section6_2 = lazy(() =>
     )
   )
 );
-const HNCModule8Section6_3 = lazy(() =>
+const HNCModule8Section6_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section6_3',
@@ -2926,7 +2927,7 @@ const HNCModule8Section6_3 = lazy(() =>
     )
   )
 );
-const HNCModule8Section6_4 = lazy(() =>
+const HNCModule8Section6_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section6_4',
@@ -2934,7 +2935,7 @@ const HNCModule8Section6_4 = lazy(() =>
     )
   )
 );
-const HNCModule8Section6_5 = lazy(() =>
+const HNCModule8Section6_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section6_5',
@@ -2942,7 +2943,7 @@ const HNCModule8Section6_5 = lazy(() =>
     )
   )
 );
-const HNCModule8Section6_6 = lazy(() =>
+const HNCModule8Section6_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'HNCModule8Section6_6',
@@ -2950,23 +2951,23 @@ const HNCModule8Section6_6 = lazy(() =>
     )
   )
 );
-const HNCModule9 = lazy(() =>
+const HNCModule9 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule9', () => import('@/pages/apprentice-courses/HNCModule9'))
   )
 );
-const HNCModule9MockExam = lazy(() =>
+const HNCModule9MockExam = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('HNCModule9MockExam', () => import('@/pages/apprentice-courses/HNCModule9MockExam'))
   )
 );
-const Index = lazy(() =>
+const Index = lazyWithRetry(() =>
   withTimeout(() => trackImport('Index', () => import('@/pages/apprentice-courses/Index')))
 );
-const Level2 = lazy(() =>
+const Level2 = lazyWithRetry(() =>
   withTimeout(() => trackImport('Level2', () => import('@/pages/apprentice-courses/Level2')))
 );
-const Level2Module6Section6_1 = lazy(() =>
+const Level2Module6Section6_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level2Module6Section6_1',
@@ -2974,7 +2975,7 @@ const Level2Module6Section6_1 = lazy(() =>
     )
   )
 );
-const Level2Module6Section6_2 = lazy(() =>
+const Level2Module6Section6_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level2Module6Section6_2',
@@ -2982,7 +2983,7 @@ const Level2Module6Section6_2 = lazy(() =>
     )
   )
 );
-const Level2Module6Section6_3 = lazy(() =>
+const Level2Module6Section6_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level2Module6Section6_3',
@@ -2990,7 +2991,7 @@ const Level2Module6Section6_3 = lazy(() =>
     )
   )
 );
-const Level2Module6Section6_4 = lazy(() =>
+const Level2Module6Section6_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level2Module6Section6_4',
@@ -2998,7 +2999,7 @@ const Level2Module6Section6_4 = lazy(() =>
     )
   )
 );
-const Level2Module6Section6_5 = lazy(() =>
+const Level2Module6Section6_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level2Module6Section6_5',
@@ -3006,7 +3007,7 @@ const Level2Module6Section6_5 = lazy(() =>
     )
   )
 );
-const Level2Module8MockExam1 = lazy(() =>
+const Level2Module8MockExam1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level2Module8MockExam1',
@@ -3014,7 +3015,7 @@ const Level2Module8MockExam1 = lazy(() =>
     )
   )
 );
-const Level2Module8MockExam2 = lazy(() =>
+const Level2Module8MockExam2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level2Module8MockExam2',
@@ -3022,7 +3023,7 @@ const Level2Module8MockExam2 = lazy(() =>
     )
   )
 );
-const Level2Module8MockExam3 = lazy(() =>
+const Level2Module8MockExam3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level2Module8MockExam3',
@@ -3030,7 +3031,7 @@ const Level2Module8MockExam3 = lazy(() =>
     )
   )
 );
-const Level2Module8MockExam4 = lazy(() =>
+const Level2Module8MockExam4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level2Module8MockExam4',
@@ -3038,7 +3039,7 @@ const Level2Module8MockExam4 = lazy(() =>
     )
   )
 );
-const Level2Module8MockExam5 = lazy(() =>
+const Level2Module8MockExam5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level2Module8MockExam5',
@@ -3046,7 +3047,7 @@ const Level2Module8MockExam5 = lazy(() =>
     )
   )
 );
-const Level2Module8MockExam8 = lazy(() =>
+const Level2Module8MockExam8 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level2Module8MockExam8',
@@ -3054,7 +3055,7 @@ const Level2Module8MockExam8 = lazy(() =>
     )
   )
 );
-const Level2Module8Section1 = lazy(() =>
+const Level2Module8Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level2Module8Section1',
@@ -3062,7 +3063,7 @@ const Level2Module8Section1 = lazy(() =>
     )
   )
 );
-const Level2Module8Section2 = lazy(() =>
+const Level2Module8Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level2Module8Section2',
@@ -3070,7 +3071,7 @@ const Level2Module8Section2 = lazy(() =>
     )
   )
 );
-const Level2Module8Section2Section1 = lazy(() =>
+const Level2Module8Section2Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level2Module8Section2Section1',
@@ -3078,7 +3079,7 @@ const Level2Module8Section2Section1 = lazy(() =>
     )
   )
 );
-const Level2Module8Section2Section2 = lazy(() =>
+const Level2Module8Section2Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level2Module8Section2Section2',
@@ -3086,7 +3087,7 @@ const Level2Module8Section2Section2 = lazy(() =>
     )
   )
 );
-const Level2Module8Section2Section3 = lazy(() =>
+const Level2Module8Section2Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level2Module8Section2Section3',
@@ -3094,7 +3095,7 @@ const Level2Module8Section2Section3 = lazy(() =>
     )
   )
 );
-const Level2Module8Section2Section4 = lazy(() =>
+const Level2Module8Section2Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Level2Module8Section2Section4',
@@ -3102,73 +3103,73 @@ const Level2Module8Section2Section4 = lazy(() =>
     )
   )
 );
-const Module1 = lazy(() =>
+const Module1 = lazyWithRetry(() =>
   withTimeout(() => trackImport('Module1', () => import('@/pages/apprentice-courses/level2/module1/Module1')))
 );
-const Module1Section5_4 = lazy(() =>
+const Module1Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module1Section5_4', () => import('@/pages/apprentice-courses/Module1Section5_4'))
   )
 );
-const Module2 = lazy(() =>
+const Module2 = lazyWithRetry(() =>
   withTimeout(() => trackImport('Module2', () => import('@/pages/apprentice-courses/Module2')))
 );
-const Module2Section1_1 = lazy(() =>
+const Module2Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section1_1', () => import('@/pages/apprentice-courses/Module2Section1_1'))
   )
 );
-const Module2Section1_2 = lazy(() =>
+const Module2Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section1_2', () => import('@/pages/apprentice-courses/Module2Section1_2'))
   )
 );
-const Module2Section1_3 = lazy(() =>
+const Module2Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section1_3', () => import('@/pages/apprentice-courses/Module2Section1_3'))
   )
 );
-const Module2Section1_4 = lazy(() =>
+const Module2Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section1_4', () => import('@/pages/apprentice-courses/Module2Section1_4'))
   )
 );
-const Module2Section1_5 = lazy(() =>
+const Module2Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section1_5', () => import('@/pages/apprentice-courses/Module2Section1_5'))
   )
 );
-const Module2Section2_1 = lazy(() =>
+const Module2Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section2_1', () => import('@/pages/apprentice-courses/Module2Section2_1'))
   )
 );
-const Module2Section2_2 = lazy(() =>
+const Module2Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section2_2', () => import('@/pages/apprentice-courses/Module2Section2_2'))
   )
 );
-const Module2Section2_3 = lazy(() =>
+const Module2Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section2_3', () => import('@/pages/apprentice-courses/Module2Section2_3'))
   )
 );
-const Module2Section2_4 = lazy(() =>
+const Module2Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section2_4', () => import('@/pages/apprentice-courses/Module2Section2_4'))
   )
 );
-const Module2Section2_5 = lazy(() =>
+const Module2Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section2_5', () => import('@/pages/apprentice-courses/Module2Section2_5'))
   )
 );
-const Module2Section2_6 = lazy(() =>
+const Module2Section2_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section2_6', () => import('@/pages/apprentice-courses/Module2Section2_6'))
   )
 );
-const Module2Section2_Intro = lazy(() =>
+const Module2Section2_Intro = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Module2Section2_Intro',
@@ -3176,1002 +3177,1002 @@ const Module2Section2_Intro = lazy(() =>
     )
   )
 );
-const Module2Section3_1 = lazy(() =>
+const Module2Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section3_1', () => import('@/pages/apprentice-courses/Module2Section3_1'))
   )
 );
-const Module2Section3_2 = lazy(() =>
+const Module2Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section3_2', () => import('@/pages/apprentice-courses/Module2Section3_2'))
   )
 );
-const Module2Section3_3 = lazy(() =>
+const Module2Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section3_3', () => import('@/pages/apprentice-courses/Module2Section3_3'))
   )
 );
-const Module2Section3_4 = lazy(() =>
+const Module2Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section3_4', () => import('@/pages/apprentice-courses/Module2Section3_4'))
   )
 );
-const Module2Section3_5 = lazy(() =>
+const Module2Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section3_5', () => import('@/pages/apprentice-courses/Module2Section3_5'))
   )
 );
-const Module2Section3_6 = lazy(() =>
+const Module2Section3_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section3_6', () => import('@/pages/apprentice-courses/Module2Section3_6'))
   )
 );
-const Module2Section4_1 = lazy(() =>
+const Module2Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section4_1', () => import('@/pages/apprentice-courses/Module2Section4_1'))
   )
 );
-const Module2Section4_2 = lazy(() =>
+const Module2Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section4_2', () => import('@/pages/apprentice-courses/Module2Section4_2'))
   )
 );
-const Module2Section4_3 = lazy(() =>
+const Module2Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section4_3', () => import('@/pages/apprentice-courses/Module2Section4_3'))
   )
 );
-const Module2Section4_4 = lazy(() =>
+const Module2Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section4_4', () => import('@/pages/apprentice-courses/Module2Section4_4'))
   )
 );
-const Module2Section4_5 = lazy(() =>
+const Module2Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section4_5', () => import('@/pages/apprentice-courses/Module2Section4_5'))
   )
 );
-const Module2Section4_6 = lazy(() =>
+const Module2Section4_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section4_6', () => import('@/pages/apprentice-courses/Module2Section4_6'))
   )
 );
-const Module2Section5_1 = lazy(() =>
+const Module2Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section5_1', () => import('@/pages/apprentice-courses/Module2Section5_1'))
   )
 );
-const Module2Section5_2 = lazy(() =>
+const Module2Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section5_2', () => import('@/pages/apprentice-courses/Module2Section5_2'))
   )
 );
-const Module2Section5_3 = lazy(() =>
+const Module2Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section5_3', () => import('@/pages/apprentice-courses/Module2Section5_3'))
   )
 );
-const Module2Section5_4 = lazy(() =>
+const Module2Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section5_4', () => import('@/pages/apprentice-courses/Module2Section5_4'))
   )
 );
-const Module2Section5_5 = lazy(() =>
+const Module2Section5_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section5_5', () => import('@/pages/apprentice-courses/Module2Section5_5'))
   )
 );
-const Module2Section5_6 = lazy(() =>
+const Module2Section5_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section5_6', () => import('@/pages/apprentice-courses/Module2Section5_6'))
   )
 );
-const Module2Section6_1 = lazy(() =>
+const Module2Section6_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section6_1', () => import('@/pages/apprentice-courses/Module2Section6_1'))
   )
 );
-const Module2Section6_2 = lazy(() =>
+const Module2Section6_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section6_2', () => import('@/pages/apprentice-courses/Module2Section6_2'))
   )
 );
-const Module2Section6_3 = lazy(() =>
+const Module2Section6_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section6_3', () => import('@/pages/apprentice-courses/Module2Section6_3'))
   )
 );
-const Module2Section6_4 = lazy(() =>
+const Module2Section6_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section6_4', () => import('@/pages/apprentice-courses/Module2Section6_4'))
   )
 );
-const Module2Section6_5 = lazy(() =>
+const Module2Section6_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section6_5', () => import('@/pages/apprentice-courses/Module2Section6_5'))
   )
 );
-const Module2Section6_6 = lazy(() =>
+const Module2Section6_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module2Section6_6', () => import('@/pages/apprentice-courses/Module2Section6_6'))
   )
 );
-const Module3 = lazy(() =>
+const Module3 = lazyWithRetry(() =>
   withTimeout(() => trackImport('Module3', () => import('@/pages/apprentice-courses/Module3')))
 );
-const Module3Section1 = lazy(() =>
+const Module3Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section1', () => import('@/pages/apprentice-courses/Module3Section1'))
   )
 );
-const Module3Section1_1 = lazy(() =>
+const Module3Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section1_1', () => import('@/pages/apprentice-courses/Module3Section1_1'))
   )
 );
-const Module3Section1_2 = lazy(() =>
+const Module3Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section1_2', () => import('@/pages/apprentice-courses/Module3Section1_2'))
   )
 );
-const Module3Section1_3 = lazy(() =>
+const Module3Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section1_3', () => import('@/pages/apprentice-courses/Module3Section1_3'))
   )
 );
-const Module3Section1_4 = lazy(() =>
+const Module3Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section1_4', () => import('@/pages/apprentice-courses/Module3Section1_4'))
   )
 );
-const Module3Section1_5 = lazy(() =>
+const Module3Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section1_5', () => import('@/pages/apprentice-courses/Module3Section1_5'))
   )
 );
-const Module3Section1_6 = lazy(() =>
+const Module3Section1_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section1_6', () => import('@/pages/apprentice-courses/Module3Section1_6'))
   )
 );
-const Module3Section1_7 = lazy(() =>
+const Module3Section1_7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section1_7', () => import('@/pages/apprentice-courses/Module3Section1_7'))
   )
 );
-const Module3Section2 = lazy(() =>
+const Module3Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section2', () => import('@/pages/apprentice-courses/Module3Section2'))
   )
 );
-const Module3Section2_1 = lazy(() =>
+const Module3Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section2_1', () => import('@/pages/apprentice-courses/Module3Section2_1'))
   )
 );
-const Module3Section2_2 = lazy(() =>
+const Module3Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section2_2', () => import('@/pages/apprentice-courses/Module3Section2_2'))
   )
 );
-const Module3Section2_3 = lazy(() =>
+const Module3Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section2_3', () => import('@/pages/apprentice-courses/Module3Section2_3'))
   )
 );
-const Module3Section2_4 = lazy(() =>
+const Module3Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section2_4', () => import('@/pages/apprentice-courses/Module3Section2_4'))
   )
 );
-const Module3Section2_5 = lazy(() =>
+const Module3Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section2_5', () => import('@/pages/apprentice-courses/Module3Section2_5'))
   )
 );
-const Module3Section2_6 = lazy(() =>
+const Module3Section2_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section2_6', () => import('@/pages/apprentice-courses/Module3Section2_6'))
   )
 );
-const Module3Section2_7 = lazy(() =>
+const Module3Section2_7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section2_7', () => import('@/pages/apprentice-courses/Module3Section2_7'))
   )
 );
-const Module3Section3 = lazy(() =>
+const Module3Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section3', () => import('@/pages/apprentice-courses/Module3Section3'))
   )
 );
-const Module3Section3_1 = lazy(() =>
+const Module3Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section3_1', () => import('@/pages/apprentice-courses/Module3Section3_1'))
   )
 );
-const Module3Section3_2 = lazy(() =>
+const Module3Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section3_2', () => import('@/pages/apprentice-courses/Module3Section3_2'))
   )
 );
-const Module3Section3_3 = lazy(() =>
+const Module3Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section3_3', () => import('@/pages/apprentice-courses/Module3Section3_3'))
   )
 );
-const Module3Section3_4 = lazy(() =>
+const Module3Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section3_4', () => import('@/pages/apprentice-courses/Module3Section3_4'))
   )
 );
-const Module3Section3_5 = lazy(() =>
+const Module3Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section3_5', () => import('@/pages/apprentice-courses/Module3Section3_5'))
   )
 );
-const Module3Section3_6 = lazy(() =>
+const Module3Section3_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section3_6', () => import('@/pages/apprentice-courses/Module3Section3_6'))
   )
 );
-const Module3Section4 = lazy(() =>
+const Module3Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section4', () => import('@/pages/apprentice-courses/Module3Section4'))
   )
 );
-const Module3Section4_1 = lazy(() =>
+const Module3Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section4_1', () => import('@/pages/apprentice-courses/Module3Section4_1'))
   )
 );
-const Module3Section4_2 = lazy(() =>
+const Module3Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section4_2', () => import('@/pages/apprentice-courses/Module3Section4_2'))
   )
 );
-const Module3Section4_3 = lazy(() =>
+const Module3Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section4_3', () => import('@/pages/apprentice-courses/Module3Section4_3'))
   )
 );
-const Module3Section4_4 = lazy(() =>
+const Module3Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section4_4', () => import('@/pages/apprentice-courses/Module3Section4_4'))
   )
 );
-const Module3Section4_5 = lazy(() =>
+const Module3Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section4_5', () => import('@/pages/apprentice-courses/Module3Section4_5'))
   )
 );
-const Module3Section4_6 = lazy(() =>
+const Module3Section4_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section4_6', () => import('@/pages/apprentice-courses/Module3Section4_6'))
   )
 );
-const Module3Section5 = lazy(() =>
+const Module3Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section5', () => import('@/pages/apprentice-courses/Module3Section5'))
   )
 );
-const Module3Section5_1 = lazy(() =>
+const Module3Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section5_1', () => import('@/pages/apprentice-courses/Module3Section5_1'))
   )
 );
-const Module3Section5_2 = lazy(() =>
+const Module3Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section5_2', () => import('@/pages/apprentice-courses/Module3Section5_2'))
   )
 );
-const Module3Section5_3 = lazy(() =>
+const Module3Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section5_3', () => import('@/pages/apprentice-courses/Module3Section5_3'))
   )
 );
-const Module3Section5_4 = lazy(() =>
+const Module3Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section5_4', () => import('@/pages/apprentice-courses/Module3Section5_4'))
   )
 );
-const Module3Section5_5 = lazy(() =>
+const Module3Section5_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section5_5', () => import('@/pages/apprentice-courses/Module3Section5_5'))
   )
 );
-const Module3Section6 = lazy(() =>
+const Module3Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section6', () => import('@/pages/apprentice-courses/Module3Section6'))
   )
 );
-const Module3Section6_1 = lazy(() =>
+const Module3Section6_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section6_1', () => import('@/pages/apprentice-courses/Module3Section6_1'))
   )
 );
-const Module3Section6_2 = lazy(() =>
+const Module3Section6_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section6_2', () => import('@/pages/apprentice-courses/Module3Section6_2'))
   )
 );
-const Module3Section6_3 = lazy(() =>
+const Module3Section6_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section6_3', () => import('@/pages/apprentice-courses/Module3Section6_3'))
   )
 );
-const Module3Section6_4 = lazy(() =>
+const Module3Section6_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section6_4', () => import('@/pages/apprentice-courses/Module3Section6_4'))
   )
 );
-const Module3Section6_5 = lazy(() =>
+const Module3Section6_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section6_5', () => import('@/pages/apprentice-courses/Module3Section6_5'))
   )
 );
-const Module3Section6_6 = lazy(() =>
+const Module3Section6_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module3Section6_6', () => import('@/pages/apprentice-courses/Module3Section6_6'))
   )
 );
-const Module4 = lazy(() =>
+const Module4 = lazyWithRetry(() =>
   withTimeout(() => trackImport('Module4', () => import('@/pages/apprentice-courses/Module4')))
 );
-const Module4Section1 = lazy(() =>
+const Module4Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section1', () => import('@/pages/apprentice-courses/Module4Section1'))
   )
 );
-const Module4Section1_1 = lazy(() =>
+const Module4Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section1_1', () => import('@/pages/apprentice-courses/Module4Section1_1'))
   )
 );
-const Module4Section1_2 = lazy(() =>
+const Module4Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section1_2', () => import('@/pages/apprentice-courses/Module4Section1_2'))
   )
 );
-const Module4Section1_3 = lazy(() =>
+const Module4Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section1_3', () => import('@/pages/apprentice-courses/Module4Section1_3'))
   )
 );
-const Module4Section1_4 = lazy(() =>
+const Module4Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section1_4', () => import('@/pages/apprentice-courses/Module4Section1_4'))
   )
 );
-const Module4Section1_5 = lazy(() =>
+const Module4Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section1_5', () => import('@/pages/apprentice-courses/Module4Section1_5'))
   )
 );
-const Module4Section2 = lazy(() =>
+const Module4Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section2', () => import('@/pages/apprentice-courses/Module4Section2'))
   )
 );
-const Module4Section2_1 = lazy(() =>
+const Module4Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section2_1', () => import('@/pages/apprentice-courses/Module4Section2_1'))
   )
 );
-const Module4Section2_2 = lazy(() =>
+const Module4Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section2_2', () => import('@/pages/apprentice-courses/Module4Section2_2'))
   )
 );
-const Module4Section2_3 = lazy(() =>
+const Module4Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section2_3', () => import('@/pages/apprentice-courses/Module4Section2_3'))
   )
 );
-const Module4Section2_4 = lazy(() =>
+const Module4Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section2_4', () => import('@/pages/apprentice-courses/Module4Section2_4'))
   )
 );
-const Module4Section3 = lazy(() =>
+const Module4Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section3', () => import('@/pages/apprentice-courses/Module4Section3'))
   )
 );
-const Module4Section3_1 = lazy(() =>
+const Module4Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section3_1', () => import('@/pages/apprentice-courses/Module4Section3_1'))
   )
 );
-const Module4Section3_2 = lazy(() =>
+const Module4Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section3_2', () => import('@/pages/apprentice-courses/Module4Section3_2'))
   )
 );
-const Module4Section3_3 = lazy(() =>
+const Module4Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section3_3', () => import('@/pages/apprentice-courses/Module4Section3_3'))
   )
 );
-const Module4Section3_4 = lazy(() =>
+const Module4Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section3_4', () => import('@/pages/apprentice-courses/Module4Section3_4'))
   )
 );
-const Module4Section3_5 = lazy(() =>
+const Module4Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section3_5', () => import('@/pages/apprentice-courses/Module4Section3_5'))
   )
 );
-const Module4Section4 = lazy(() =>
+const Module4Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section4', () => import('@/pages/apprentice-courses/Module4Section4'))
   )
 );
-const Module4Section4_1 = lazy(() =>
+const Module4Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section4_1', () => import('@/pages/apprentice-courses/Module4Section4_1'))
   )
 );
-const Module4Section4_2 = lazy(() =>
+const Module4Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section4_2', () => import('@/pages/apprentice-courses/Module4Section4_2'))
   )
 );
-const Module4Section4_3 = lazy(() =>
+const Module4Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section4_3', () => import('@/pages/apprentice-courses/Module4Section4_3'))
   )
 );
-const Module4Section4_4 = lazy(() =>
+const Module4Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section4_4', () => import('@/pages/apprentice-courses/Module4Section4_4'))
   )
 );
-const Module4Section4_5 = lazy(() =>
+const Module4Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section4_5', () => import('@/pages/apprentice-courses/Module4Section4_5'))
   )
 );
-const Module4Section4_6 = lazy(() =>
+const Module4Section4_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section4_6', () => import('@/pages/apprentice-courses/Module4Section4_6'))
   )
 );
-const Module4Section4_7 = lazy(() =>
+const Module4Section4_7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section4_7', () => import('@/pages/apprentice-courses/Module4Section4_7'))
   )
 );
-const Module4Section5 = lazy(() =>
+const Module4Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section5', () => import('@/pages/apprentice-courses/Module4Section5'))
   )
 );
-const Module4Section5_1 = lazy(() =>
+const Module4Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section5_1', () => import('@/pages/apprentice-courses/Module4Section5_1'))
   )
 );
-const Module4Section5_2 = lazy(() =>
+const Module4Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section5_2', () => import('@/pages/apprentice-courses/Module4Section5_2'))
   )
 );
-const Module4Section5_3 = lazy(() =>
+const Module4Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section5_3', () => import('@/pages/apprentice-courses/Module4Section5_3'))
   )
 );
-const Module4Section5_4 = lazy(() =>
+const Module4Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section5_4', () => import('@/pages/apprentice-courses/Module4Section5_4'))
   )
 );
-const Module4Section5_5 = lazy(() =>
+const Module4Section5_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section5_5', () => import('@/pages/apprentice-courses/Module4Section5_5'))
   )
 );
-const Module4Section5_6 = lazy(() =>
+const Module4Section5_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section5_6', () => import('@/pages/apprentice-courses/Module4Section5_6'))
   )
 );
-const Module4Section5_7 = lazy(() =>
+const Module4Section5_7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section5_7', () => import('@/pages/apprentice-courses/Module4Section5_7'))
   )
 );
-const Module4Section5_8 = lazy(() =>
+const Module4Section5_8 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section5_8', () => import('@/pages/apprentice-courses/Module4Section5_8'))
   )
 );
-const Module4Section6 = lazy(() =>
+const Module4Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section6', () => import('@/pages/apprentice-courses/Module4Section6'))
   )
 );
-const Module4Section6_1 = lazy(() =>
+const Module4Section6_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section6_1', () => import('@/pages/apprentice-courses/Module4Section6_1'))
   )
 );
-const Module4Section6_2 = lazy(() =>
+const Module4Section6_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section6_2', () => import('@/pages/apprentice-courses/Module4Section6_2'))
   )
 );
-const Module4Section6_3 = lazy(() =>
+const Module4Section6_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section6_3', () => import('@/pages/apprentice-courses/Module4Section6_3'))
   )
 );
-const Module4Section6_4 = lazy(() =>
+const Module4Section6_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section6_4', () => import('@/pages/apprentice-courses/Module4Section6_4'))
   )
 );
-const Module4Section6_5 = lazy(() =>
+const Module4Section6_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section6_5', () => import('@/pages/apprentice-courses/Module4Section6_5'))
   )
 );
-const Module4Section6_6 = lazy(() =>
+const Module4Section6_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section6_6', () => import('@/pages/apprentice-courses/Module4Section6_6'))
   )
 );
-const Module4Section7 = lazy(() =>
+const Module4Section7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section7', () => import('@/pages/apprentice-courses/Module4Section7'))
   )
 );
-const Module4Section7_1 = lazy(() =>
+const Module4Section7_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section7_1', () => import('@/pages/apprentice-courses/Module4Section7_1'))
   )
 );
-const Module4Section7_2 = lazy(() =>
+const Module4Section7_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section7_2', () => import('@/pages/apprentice-courses/Module4Section7_2'))
   )
 );
-const Module4Section7_3 = lazy(() =>
+const Module4Section7_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section7_3', () => import('@/pages/apprentice-courses/Module4Section7_3'))
   )
 );
-const Module4Section7_4 = lazy(() =>
+const Module4Section7_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section7_4', () => import('@/pages/apprentice-courses/Module4Section7_4'))
   )
 );
-const Module4Section7_5 = lazy(() =>
+const Module4Section7_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module4Section7_5', () => import('@/pages/apprentice-courses/Module4Section7_5'))
   )
 );
-const Module5 = lazy(() =>
+const Module5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5', () => import('@/pages/apprentice-courses/level2/module5/Module5'))
   )
 );
-const Module5Section1 = lazy(() =>
+const Module5Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section1', () => import('@/pages/apprentice-courses/Module5Section1'))
   )
 );
-const Module5Section1_1 = lazy(() =>
+const Module5Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section1_1', () => import('@/pages/apprentice-courses/Module5Section1_1'))
   )
 );
-const Module5Section1_2 = lazy(() =>
+const Module5Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section1_2', () => import('@/pages/apprentice-courses/Module5Section1_2'))
   )
 );
-const Module5Section1_3 = lazy(() =>
+const Module5Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section1_3', () => import('@/pages/apprentice-courses/Module5Section1_3'))
   )
 );
-const Module5Section1_4 = lazy(() =>
+const Module5Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section1_4', () => import('@/pages/apprentice-courses/Module5Section1_4'))
   )
 );
-const Module5Section1_5 = lazy(() =>
+const Module5Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section1_5', () => import('@/pages/apprentice-courses/Module5Section1_5'))
   )
 );
-const Module5Section1_6 = lazy(() =>
+const Module5Section1_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section1_6', () => import('@/pages/apprentice-courses/Module5Section1_6'))
   )
 );
-const Module5Section2 = lazy(() =>
+const Module5Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section2', () => import('@/pages/apprentice-courses/Module5Section2'))
   )
 );
-const Module5Section2_1 = lazy(() =>
+const Module5Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section2_1', () => import('@/pages/apprentice-courses/Module5Section2_1'))
   )
 );
-const Module5Section2_2 = lazy(() =>
+const Module5Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section2_2', () => import('@/pages/apprentice-courses/Module5Section2_2'))
   )
 );
-const Module5Section2_3 = lazy(() =>
+const Module5Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section2_3', () => import('@/pages/apprentice-courses/Module5Section2_3'))
   )
 );
-const Module5Section2_4 = lazy(() =>
+const Module5Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section2_4', () => import('@/pages/apprentice-courses/Module5Section2_4'))
   )
 );
-const Module5Section2_5 = lazy(() =>
+const Module5Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section2_5', () => import('@/pages/apprentice-courses/Module5Section2_5'))
   )
 );
-const Module5Section3 = lazy(() =>
+const Module5Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section3', () => import('@/pages/apprentice-courses/Module5Section3'))
   )
 );
-const Module5Section3_1 = lazy(() =>
+const Module5Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section3_1', () => import('@/pages/apprentice-courses/Module5Section3_1'))
   )
 );
-const Module5Section3_2 = lazy(() =>
+const Module5Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section3_2', () => import('@/pages/apprentice-courses/Module5Section3_2'))
   )
 );
-const Module5Section3_3 = lazy(() =>
+const Module5Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section3_3', () => import('@/pages/apprentice-courses/Module5Section3_3'))
   )
 );
-const Module5Section3_4 = lazy(() =>
+const Module5Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section3_4', () => import('@/pages/apprentice-courses/Module5Section3_4'))
   )
 );
-const Module5Section3_5 = lazy(() =>
+const Module5Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section3_5', () => import('@/pages/apprentice-courses/Module5Section3_5'))
   )
 );
-const Module5Section3_6 = lazy(() =>
+const Module5Section3_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section3_6', () => import('@/pages/apprentice-courses/Module5Section3_6'))
   )
 );
-const Module5Section4 = lazy(() =>
+const Module5Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section4', () => import('@/pages/apprentice-courses/Module5Section4'))
   )
 );
-const Module5Section4_1 = lazy(() =>
+const Module5Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section4_1', () => import('@/pages/apprentice-courses/Module5Section4_1'))
   )
 );
-const Module5Section4_2 = lazy(() =>
+const Module5Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section4_2', () => import('@/pages/apprentice-courses/Module5Section4_2'))
   )
 );
-const Module5Section4_3 = lazy(() =>
+const Module5Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section4_3', () => import('@/pages/apprentice-courses/Module5Section4_3'))
   )
 );
-const Module5Section4_4 = lazy(() =>
+const Module5Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section4_4', () => import('@/pages/apprentice-courses/Module5Section4_4'))
   )
 );
-const Module5Section4_5 = lazy(() =>
+const Module5Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section4_5', () => import('@/pages/apprentice-courses/Module5Section4_5'))
   )
 );
-const Module5Section5 = lazy(() =>
+const Module5Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section5', () => import('@/pages/apprentice-courses/Module5Section5'))
   )
 );
-const Module5Section5_1 = lazy(() =>
+const Module5Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section5_1', () => import('@/pages/apprentice-courses/Module5Section5_1'))
   )
 );
-const Module5Section5_2 = lazy(() =>
+const Module5Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section5_2', () => import('@/pages/apprentice-courses/Module5Section5_2'))
   )
 );
-const Module5Section5_3 = lazy(() =>
+const Module5Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section5_3', () => import('@/pages/apprentice-courses/Module5Section5_3'))
   )
 );
-const Module5Section5_4 = lazy(() =>
+const Module5Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section5_4', () => import('@/pages/apprentice-courses/Module5Section5_4'))
   )
 );
-const Module5Section5_5 = lazy(() =>
+const Module5Section5_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section5_5', () => import('@/pages/apprentice-courses/Module5Section5_5'))
   )
 );
-const Module5Section6 = lazy(() =>
+const Module5Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section6', () => import('@/pages/apprentice-courses/Module5Section6'))
   )
 );
-const Module5Section6_1 = lazy(() =>
+const Module5Section6_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section6_1', () => import('@/pages/apprentice-courses/Module5Section6_1'))
   )
 );
-const Module5Section6_2 = lazy(() =>
+const Module5Section6_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section6_2', () => import('@/pages/apprentice-courses/Module5Section6_2'))
   )
 );
-const Module5Section6_3 = lazy(() =>
+const Module5Section6_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section6_3', () => import('@/pages/apprentice-courses/Module5Section6_3'))
   )
 );
-const Module5Section6_4 = lazy(() =>
+const Module5Section6_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section6_4', () => import('@/pages/apprentice-courses/Module5Section6_4'))
   )
 );
-const Module5Section7 = lazy(() =>
+const Module5Section7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section7', () => import('@/pages/apprentice-courses/Module5Section7'))
   )
 );
-const Module5Section7_1 = lazy(() =>
+const Module5Section7_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section7_1', () => import('@/pages/apprentice-courses/Module5Section7_1'))
   )
 );
-const Module5Section7_2 = lazy(() =>
+const Module5Section7_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section7_2', () => import('@/pages/apprentice-courses/Module5Section7_2'))
   )
 );
-const Module5Section7_3 = lazy(() =>
+const Module5Section7_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section7_3', () => import('@/pages/apprentice-courses/Module5Section7_3'))
   )
 );
-const Module5Section7_4 = lazy(() =>
+const Module5Section7_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section7_4', () => import('@/pages/apprentice-courses/Module5Section7_4'))
   )
 );
-const Module5Section7_5 = lazy(() =>
+const Module5Section7_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module5Section7_5', () => import('@/pages/apprentice-courses/Module5Section7_5'))
   )
 );
-const Module6 = lazy(() =>
+const Module6 = lazyWithRetry(() =>
   withTimeout(() => trackImport('Module6', () => import('@/pages/apprentice-courses/Module6')))
 );
-const Module6Section1 = lazy(() =>
+const Module6Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section1', () => import('@/pages/apprentice-courses/Module6Section1'))
   )
 );
-const Module6Section1_1 = lazy(() =>
+const Module6Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section1_1', () => import('@/pages/apprentice-courses/Module6Section1_1'))
   )
 );
-const Module6Section1_2 = lazy(() =>
+const Module6Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section1_2', () => import('@/pages/apprentice-courses/Module6Section1_2'))
   )
 );
-const Module6Section1_3 = lazy(() =>
+const Module6Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section1_3', () => import('@/pages/apprentice-courses/Module6Section1_3'))
   )
 );
-const Module6Section1_4 = lazy(() =>
+const Module6Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section1_4', () => import('@/pages/apprentice-courses/Module6Section1_4'))
   )
 );
-const Module6Section1_5 = lazy(() =>
+const Module6Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section1_5', () => import('@/pages/apprentice-courses/Module6Section1_5'))
   )
 );
-const Module6Section2 = lazy(() =>
+const Module6Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section2', () => import('@/pages/apprentice-courses/Module6Section2'))
   )
 );
-const Module6Section2_1 = lazy(() =>
+const Module6Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section2_1', () => import('@/pages/apprentice-courses/Module6Section2_1'))
   )
 );
-const Module6Section2_2 = lazy(() =>
+const Module6Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section2_2', () => import('@/pages/apprentice-courses/Module6Section2_2'))
   )
 );
-const Module6Section2_3 = lazy(() =>
+const Module6Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section2_3', () => import('@/pages/apprentice-courses/Module6Section2_3'))
   )
 );
-const Module6Section2_4 = lazy(() =>
+const Module6Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section2_4', () => import('@/pages/apprentice-courses/Module6Section2_4'))
   )
 );
-const Module6Section2_5 = lazy(() =>
+const Module6Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section2_5', () => import('@/pages/apprentice-courses/Module6Section2_5'))
   )
 );
-const Module6Section2_6 = lazy(() =>
+const Module6Section2_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section2_6', () => import('@/pages/apprentice-courses/Module6Section2_6'))
   )
 );
-const Module6Section3 = lazy(() =>
+const Module6Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section3', () => import('@/pages/apprentice-courses/Module6Section3'))
   )
 );
-const Module6Section3_1 = lazy(() =>
+const Module6Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section3_1', () => import('@/pages/apprentice-courses/Module6Section3_1'))
   )
 );
-const Module6Section3_2 = lazy(() =>
+const Module6Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section3_2', () => import('@/pages/apprentice-courses/Module6Section3_2'))
   )
 );
-const Module6Section3_3 = lazy(() =>
+const Module6Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section3_3', () => import('@/pages/apprentice-courses/Module6Section3_3'))
   )
 );
-const Module6Section3_4 = lazy(() =>
+const Module6Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section3_4', () => import('@/pages/apprentice-courses/Module6Section3_4'))
   )
 );
-const Module6Section3_5 = lazy(() =>
+const Module6Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section3_5', () => import('@/pages/apprentice-courses/Module6Section3_5'))
   )
 );
-const Module6Section3_6 = lazy(() =>
+const Module6Section3_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section3_6', () => import('@/pages/apprentice-courses/Module6Section3_6'))
   )
 );
-const Module6Section4 = lazy(() =>
+const Module6Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section4', () => import('@/pages/apprentice-courses/Module6Section4'))
   )
 );
-const Module6Section4_1 = lazy(() =>
+const Module6Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section4_1', () => import('@/pages/apprentice-courses/Module6Section4_1'))
   )
 );
-const Module6Section4_2 = lazy(() =>
+const Module6Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section4_2', () => import('@/pages/apprentice-courses/Module6Section4_2'))
   )
 );
-const Module6Section4_3 = lazy(() =>
+const Module6Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section4_3', () => import('@/pages/apprentice-courses/Module6Section4_3'))
   )
 );
-const Module6Section4_4 = lazy(() =>
+const Module6Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section4_4', () => import('@/pages/apprentice-courses/Module6Section4_4'))
   )
 );
-const Module6Section4_5 = lazy(() =>
+const Module6Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section4_5', () => import('@/pages/apprentice-courses/Module6Section4_5'))
   )
 );
-const Module6Section5 = lazy(() =>
+const Module6Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section5', () => import('@/pages/apprentice-courses/Module6Section5'))
   )
 );
-const Module6Section5_1 = lazy(() =>
+const Module6Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section5_1', () => import('@/pages/apprentice-courses/Module6Section5_1'))
   )
 );
-const Module6Section5_2 = lazy(() =>
+const Module6Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section5_2', () => import('@/pages/apprentice-courses/Module6Section5_2'))
   )
 );
-const Module6Section5_3 = lazy(() =>
+const Module6Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section5_3', () => import('@/pages/apprentice-courses/Module6Section5_3'))
   )
 );
-const Module6Section5_4 = lazy(() =>
+const Module6Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section5_4', () => import('@/pages/apprentice-courses/Module6Section5_4'))
   )
 );
-const Module6Section6 = lazy(() =>
+const Module6Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section6', () => import('@/pages/apprentice-courses/Module6Section6'))
   )
 );
-const Module6Section7 = lazy(() =>
+const Module6Section7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section7', () => import('@/pages/apprentice-courses/Module6Section7'))
   )
 );
-const Module6Section7_1 = lazy(() =>
+const Module6Section7_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section7_1', () => import('@/pages/apprentice-courses/Module6Section7_1'))
   )
 );
-const Module6Section7_2 = lazy(() =>
+const Module6Section7_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section7_2', () => import('@/pages/apprentice-courses/Module6Section7_2'))
   )
 );
-const Module6Section7_3 = lazy(() =>
+const Module6Section7_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section7_3', () => import('@/pages/apprentice-courses/Module6Section7_3'))
   )
 );
-const Module6Section7_4 = lazy(() =>
+const Module6Section7_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('Module6Section7_4', () => import('@/pages/apprentice-courses/Module6Section7_4'))
   )
 );
-const Module8 = lazy(() =>
+const Module8 = lazyWithRetry(() =>
   withTimeout(() => trackImport('Module8', () => import('@/pages/apprentice-courses/Module8')))
 );
-const MOET = lazy(() =>
+const MOET = lazyWithRetry(() =>
   withTimeout(() => trackImport('MOET', () => import('@/pages/apprentice-courses/MOET')))
 );
-const MOETModule1 = lazy(() =>
+const MOETModule1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('MOETModule1', () => import('@/pages/apprentice-courses/MOETModule1'))
   )
 );
-const MOETModule1Section1 = lazy(() =>
+const MOETModule1Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section1',
@@ -4179,7 +4180,7 @@ const MOETModule1Section1 = lazy(() =>
     )
   )
 );
-const MOETModule1Section1_1 = lazy(() =>
+const MOETModule1Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section1_1',
@@ -4187,7 +4188,7 @@ const MOETModule1Section1_1 = lazy(() =>
     )
   )
 );
-const MOETModule1Section2 = lazy(() =>
+const MOETModule1Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section2',
@@ -4195,7 +4196,7 @@ const MOETModule1Section2 = lazy(() =>
     )
   )
 );
-const MOETModule1Section3 = lazy(() =>
+const MOETModule1Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section3',
@@ -4203,7 +4204,7 @@ const MOETModule1Section3 = lazy(() =>
     )
   )
 );
-const MOETModule1Section4 = lazy(() =>
+const MOETModule1Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section4',
@@ -4211,7 +4212,7 @@ const MOETModule1Section4 = lazy(() =>
     )
   )
 );
-const MOETModule1Section5 = lazy(() =>
+const MOETModule1Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section5',
@@ -4219,7 +4220,7 @@ const MOETModule1Section5 = lazy(() =>
     )
   )
 );
-const MOETModule1Section6 = lazy(() =>
+const MOETModule1Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section6',
@@ -4227,12 +4228,12 @@ const MOETModule1Section6 = lazy(() =>
     )
   )
 );
-const MOETModule2 = lazy(() =>
+const MOETModule2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('MOETModule2', () => import('@/pages/apprentice-courses/MOETModule2'))
   )
 );
-const MOETModule2Section1 = lazy(() =>
+const MOETModule2Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section1',
@@ -4240,7 +4241,7 @@ const MOETModule2Section1 = lazy(() =>
     )
   )
 );
-const MOETModule2Section1_1 = lazy(() =>
+const MOETModule2Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section1_1',
@@ -4248,7 +4249,7 @@ const MOETModule2Section1_1 = lazy(() =>
     )
   )
 );
-const MOETModule2Section2 = lazy(() =>
+const MOETModule2Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section2',
@@ -4256,7 +4257,7 @@ const MOETModule2Section2 = lazy(() =>
     )
   )
 );
-const MOETModule2Section3 = lazy(() =>
+const MOETModule2Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section3',
@@ -4264,7 +4265,7 @@ const MOETModule2Section3 = lazy(() =>
     )
   )
 );
-const MOETModule2Section4 = lazy(() =>
+const MOETModule2Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section4',
@@ -4272,7 +4273,7 @@ const MOETModule2Section4 = lazy(() =>
     )
   )
 );
-const MOETModule2Section5 = lazy(() =>
+const MOETModule2Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section5',
@@ -4280,12 +4281,12 @@ const MOETModule2Section5 = lazy(() =>
     )
   )
 );
-const MOETModule3 = lazy(() =>
+const MOETModule3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('MOETModule3', () => import('@/pages/apprentice-courses/MOETModule3'))
   )
 );
-const MOETModule3Section1 = lazy(() =>
+const MOETModule3Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section1',
@@ -4293,7 +4294,7 @@ const MOETModule3Section1 = lazy(() =>
     )
   )
 );
-const MOETModule3Section1_1 = lazy(() =>
+const MOETModule3Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section1_1',
@@ -4301,7 +4302,7 @@ const MOETModule3Section1_1 = lazy(() =>
     )
   )
 );
-const MOETModule3Section2 = lazy(() =>
+const MOETModule3Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section2',
@@ -4309,7 +4310,7 @@ const MOETModule3Section2 = lazy(() =>
     )
   )
 );
-const MOETModule3Section3 = lazy(() =>
+const MOETModule3Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section3',
@@ -4317,7 +4318,7 @@ const MOETModule3Section3 = lazy(() =>
     )
   )
 );
-const MOETModule3Section4 = lazy(() =>
+const MOETModule3Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section4',
@@ -4325,7 +4326,7 @@ const MOETModule3Section4 = lazy(() =>
     )
   )
 );
-const MOETModule3Section5 = lazy(() =>
+const MOETModule3Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section5',
@@ -4333,7 +4334,7 @@ const MOETModule3Section5 = lazy(() =>
     )
   )
 );
-const MOETModule3Section6 = lazy(() =>
+const MOETModule3Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section6',
@@ -4341,12 +4342,12 @@ const MOETModule3Section6 = lazy(() =>
     )
   )
 );
-const MOETModule4 = lazy(() =>
+const MOETModule4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('MOETModule4', () => import('@/pages/apprentice-courses/MOETModule4'))
   )
 );
-const MOETModule4Section1 = lazy(() =>
+const MOETModule4Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section1',
@@ -4354,7 +4355,7 @@ const MOETModule4Section1 = lazy(() =>
     )
   )
 );
-const MOETModule4Section1_1 = lazy(() =>
+const MOETModule4Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section1_1',
@@ -4362,7 +4363,7 @@ const MOETModule4Section1_1 = lazy(() =>
     )
   )
 );
-const MOETModule4Section2 = lazy(() =>
+const MOETModule4Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section2',
@@ -4370,7 +4371,7 @@ const MOETModule4Section2 = lazy(() =>
     )
   )
 );
-const MOETModule4Section3 = lazy(() =>
+const MOETModule4Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section3',
@@ -4378,7 +4379,7 @@ const MOETModule4Section3 = lazy(() =>
     )
   )
 );
-const MOETModule4Section4 = lazy(() =>
+const MOETModule4Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section4',
@@ -4386,7 +4387,7 @@ const MOETModule4Section4 = lazy(() =>
     )
   )
 );
-const MOETModule4Section5 = lazy(() =>
+const MOETModule4Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section5',
@@ -4394,7 +4395,7 @@ const MOETModule4Section5 = lazy(() =>
     )
   )
 );
-const MOETModule4Section6 = lazy(() =>
+const MOETModule4Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section6',
@@ -4402,7 +4403,7 @@ const MOETModule4Section6 = lazy(() =>
     )
   )
 );
-const MOETModule4Section7 = lazy(() =>
+const MOETModule4Section7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section7',
@@ -4410,12 +4411,12 @@ const MOETModule4Section7 = lazy(() =>
     )
   )
 );
-const MOETModule5 = lazy(() =>
+const MOETModule5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('MOETModule5', () => import('@/pages/apprentice-courses/MOETModule5'))
   )
 );
-const MOETModule5Section1 = lazy(() =>
+const MOETModule5Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section1',
@@ -4423,7 +4424,7 @@ const MOETModule5Section1 = lazy(() =>
     )
   )
 );
-const MOETModule5Section1_1 = lazy(() =>
+const MOETModule5Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section1_1',
@@ -4431,7 +4432,7 @@ const MOETModule5Section1_1 = lazy(() =>
     )
   )
 );
-const MOETModule5Section2 = lazy(() =>
+const MOETModule5Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section2',
@@ -4439,7 +4440,7 @@ const MOETModule5Section2 = lazy(() =>
     )
   )
 );
-const MOETModule5Section3 = lazy(() =>
+const MOETModule5Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section3',
@@ -4447,7 +4448,7 @@ const MOETModule5Section3 = lazy(() =>
     )
   )
 );
-const MOETModule5Section4 = lazy(() =>
+const MOETModule5Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section4',
@@ -4455,7 +4456,7 @@ const MOETModule5Section4 = lazy(() =>
     )
   )
 );
-const MOETModule5Section5 = lazy(() =>
+const MOETModule5Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section5',
@@ -4463,7 +4464,7 @@ const MOETModule5Section5 = lazy(() =>
     )
   )
 );
-const MOETModule5Section6 = lazy(() =>
+const MOETModule5Section6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section6',
@@ -4471,12 +4472,12 @@ const MOETModule5Section6 = lazy(() =>
     )
   )
 );
-const MOETModule6 = lazy(() =>
+const MOETModule6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('MOETModule6', () => import('@/pages/apprentice-courses/MOETModule6'))
   )
 );
-const MOETModule6Section1 = lazy(() =>
+const MOETModule6Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section1',
@@ -4484,7 +4485,7 @@ const MOETModule6Section1 = lazy(() =>
     )
   )
 );
-const MOETModule6Section1_1 = lazy(() =>
+const MOETModule6Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section1_1',
@@ -4492,7 +4493,7 @@ const MOETModule6Section1_1 = lazy(() =>
     )
   )
 );
-const MOETModule6Section1_2 = lazy(() =>
+const MOETModule6Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section1_2',
@@ -4500,7 +4501,7 @@ const MOETModule6Section1_2 = lazy(() =>
     )
   )
 );
-const MOETModule6Section2 = lazy(() =>
+const MOETModule6Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section2',
@@ -4508,7 +4509,7 @@ const MOETModule6Section2 = lazy(() =>
     )
   )
 );
-const MOETModule6Section3 = lazy(() =>
+const MOETModule6Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section3',
@@ -4516,7 +4517,7 @@ const MOETModule6Section3 = lazy(() =>
     )
   )
 );
-const MOETModule6Section4 = lazy(() =>
+const MOETModule6Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section4',
@@ -4524,12 +4525,12 @@ const MOETModule6Section4 = lazy(() =>
     )
   )
 );
-const MOETModule7 = lazy(() =>
+const MOETModule7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('MOETModule7', () => import('@/pages/apprentice-courses/MOETModule7'))
   )
 );
-const MOETModule7Section1 = lazy(() =>
+const MOETModule7Section1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section1',
@@ -4537,7 +4538,7 @@ const MOETModule7Section1 = lazy(() =>
     )
   )
 );
-const MOETModule7Section1_1 = lazy(() =>
+const MOETModule7Section1_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section1_1',
@@ -4545,7 +4546,7 @@ const MOETModule7Section1_1 = lazy(() =>
     )
   )
 );
-const MOETModule7Section2 = lazy(() =>
+const MOETModule7Section2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section2',
@@ -4553,7 +4554,7 @@ const MOETModule7Section2 = lazy(() =>
     )
   )
 );
-const MOETModule7Section3 = lazy(() =>
+const MOETModule7Section3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section3',
@@ -4561,7 +4562,7 @@ const MOETModule7Section3 = lazy(() =>
     )
   )
 );
-const MOETModule7Section4 = lazy(() =>
+const MOETModule7Section4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section4',
@@ -4569,7 +4570,7 @@ const MOETModule7Section4 = lazy(() =>
     )
   )
 );
-const MOETModule7Section5 = lazy(() =>
+const MOETModule7Section5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section5',
@@ -4577,7 +4578,7 @@ const MOETModule7Section5 = lazy(() =>
     )
   )
 );
-const MOETModule1Section1_2 = lazy(() =>
+const MOETModule1Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section1_2',
@@ -4585,7 +4586,7 @@ const MOETModule1Section1_2 = lazy(() =>
     )
   )
 );
-const MOETModule1Section1_3 = lazy(() =>
+const MOETModule1Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section1_3',
@@ -4593,7 +4594,7 @@ const MOETModule1Section1_3 = lazy(() =>
     )
   )
 );
-const MOETModule1Section1_4 = lazy(() =>
+const MOETModule1Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section1_4',
@@ -4601,7 +4602,7 @@ const MOETModule1Section1_4 = lazy(() =>
     )
   )
 );
-const MOETModule1Section1_5 = lazy(() =>
+const MOETModule1Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section1_5',
@@ -4609,7 +4610,7 @@ const MOETModule1Section1_5 = lazy(() =>
     )
   )
 );
-const MOETModule1Section2_1 = lazy(() =>
+const MOETModule1Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section2_1',
@@ -4617,7 +4618,7 @@ const MOETModule1Section2_1 = lazy(() =>
     )
   )
 );
-const MOETModule1Section2_2 = lazy(() =>
+const MOETModule1Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section2_2',
@@ -4625,7 +4626,7 @@ const MOETModule1Section2_2 = lazy(() =>
     )
   )
 );
-const MOETModule1Section2_3 = lazy(() =>
+const MOETModule1Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section2_3',
@@ -4633,7 +4634,7 @@ const MOETModule1Section2_3 = lazy(() =>
     )
   )
 );
-const MOETModule1Section2_4 = lazy(() =>
+const MOETModule1Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section2_4',
@@ -4641,7 +4642,7 @@ const MOETModule1Section2_4 = lazy(() =>
     )
   )
 );
-const MOETModule1Section2_5 = lazy(() =>
+const MOETModule1Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section2_5',
@@ -4649,7 +4650,7 @@ const MOETModule1Section2_5 = lazy(() =>
     )
   )
 );
-const MOETModule1Section3_1 = lazy(() =>
+const MOETModule1Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section3_1',
@@ -4657,7 +4658,7 @@ const MOETModule1Section3_1 = lazy(() =>
     )
   )
 );
-const MOETModule1Section3_2 = lazy(() =>
+const MOETModule1Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section3_2',
@@ -4665,7 +4666,7 @@ const MOETModule1Section3_2 = lazy(() =>
     )
   )
 );
-const MOETModule1Section3_3 = lazy(() =>
+const MOETModule1Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section3_3',
@@ -4673,7 +4674,7 @@ const MOETModule1Section3_3 = lazy(() =>
     )
   )
 );
-const MOETModule1Section3_4 = lazy(() =>
+const MOETModule1Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section3_4',
@@ -4681,7 +4682,7 @@ const MOETModule1Section3_4 = lazy(() =>
     )
   )
 );
-const MOETModule1Section3_5 = lazy(() =>
+const MOETModule1Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section3_5',
@@ -4689,7 +4690,7 @@ const MOETModule1Section3_5 = lazy(() =>
     )
   )
 );
-const MOETModule1Section4_1 = lazy(() =>
+const MOETModule1Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section4_1',
@@ -4697,7 +4698,7 @@ const MOETModule1Section4_1 = lazy(() =>
     )
   )
 );
-const MOETModule1Section4_2 = lazy(() =>
+const MOETModule1Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section4_2',
@@ -4705,7 +4706,7 @@ const MOETModule1Section4_2 = lazy(() =>
     )
   )
 );
-const MOETModule1Section4_3 = lazy(() =>
+const MOETModule1Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section4_3',
@@ -4713,7 +4714,7 @@ const MOETModule1Section4_3 = lazy(() =>
     )
   )
 );
-const MOETModule1Section4_4 = lazy(() =>
+const MOETModule1Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section4_4',
@@ -4721,7 +4722,7 @@ const MOETModule1Section4_4 = lazy(() =>
     )
   )
 );
-const MOETModule1Section4_5 = lazy(() =>
+const MOETModule1Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section4_5',
@@ -4729,7 +4730,7 @@ const MOETModule1Section4_5 = lazy(() =>
     )
   )
 );
-const MOETModule1Section4_6 = lazy(() =>
+const MOETModule1Section4_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section4_6',
@@ -4737,7 +4738,7 @@ const MOETModule1Section4_6 = lazy(() =>
     )
   )
 );
-const MOETModule1Section5_1 = lazy(() =>
+const MOETModule1Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section5_1',
@@ -4745,7 +4746,7 @@ const MOETModule1Section5_1 = lazy(() =>
     )
   )
 );
-const MOETModule1Section5_2 = lazy(() =>
+const MOETModule1Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section5_2',
@@ -4753,7 +4754,7 @@ const MOETModule1Section5_2 = lazy(() =>
     )
   )
 );
-const MOETModule1Section5_3 = lazy(() =>
+const MOETModule1Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section5_3',
@@ -4761,7 +4762,7 @@ const MOETModule1Section5_3 = lazy(() =>
     )
   )
 );
-const MOETModule1Section5_4 = lazy(() =>
+const MOETModule1Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section5_4',
@@ -4769,7 +4770,7 @@ const MOETModule1Section5_4 = lazy(() =>
     )
   )
 );
-const MOETModule1Section5_5 = lazy(() =>
+const MOETModule1Section5_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section5_5',
@@ -4777,7 +4778,7 @@ const MOETModule1Section5_5 = lazy(() =>
     )
   )
 );
-const MOETModule1Section6_1 = lazy(() =>
+const MOETModule1Section6_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section6_1',
@@ -4785,7 +4786,7 @@ const MOETModule1Section6_1 = lazy(() =>
     )
   )
 );
-const MOETModule1Section6_2 = lazy(() =>
+const MOETModule1Section6_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section6_2',
@@ -4793,7 +4794,7 @@ const MOETModule1Section6_2 = lazy(() =>
     )
   )
 );
-const MOETModule1Section6_3 = lazy(() =>
+const MOETModule1Section6_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section6_3',
@@ -4801,7 +4802,7 @@ const MOETModule1Section6_3 = lazy(() =>
     )
   )
 );
-const MOETModule1Section6_4 = lazy(() =>
+const MOETModule1Section6_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section6_4',
@@ -4809,7 +4810,7 @@ const MOETModule1Section6_4 = lazy(() =>
     )
   )
 );
-const MOETModule1Section6_5 = lazy(() =>
+const MOETModule1Section6_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule1Section6_5',
@@ -4817,7 +4818,7 @@ const MOETModule1Section6_5 = lazy(() =>
     )
   )
 );
-const MOETModule2Section1_2 = lazy(() =>
+const MOETModule2Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section1_2',
@@ -4825,7 +4826,7 @@ const MOETModule2Section1_2 = lazy(() =>
     )
   )
 );
-const MOETModule2Section1_3 = lazy(() =>
+const MOETModule2Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section1_3',
@@ -4833,7 +4834,7 @@ const MOETModule2Section1_3 = lazy(() =>
     )
   )
 );
-const MOETModule2Section1_4 = lazy(() =>
+const MOETModule2Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section1_4',
@@ -4841,7 +4842,7 @@ const MOETModule2Section1_4 = lazy(() =>
     )
   )
 );
-const MOETModule2Section1_5 = lazy(() =>
+const MOETModule2Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section1_5',
@@ -4849,7 +4850,7 @@ const MOETModule2Section1_5 = lazy(() =>
     )
   )
 );
-const MOETModule2Section2_1 = lazy(() =>
+const MOETModule2Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section2_1',
@@ -4857,7 +4858,7 @@ const MOETModule2Section2_1 = lazy(() =>
     )
   )
 );
-const MOETModule2Section2_2 = lazy(() =>
+const MOETModule2Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section2_2',
@@ -4865,7 +4866,7 @@ const MOETModule2Section2_2 = lazy(() =>
     )
   )
 );
-const MOETModule2Section2_3 = lazy(() =>
+const MOETModule2Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section2_3',
@@ -4873,7 +4874,7 @@ const MOETModule2Section2_3 = lazy(() =>
     )
   )
 );
-const MOETModule2Section2_4 = lazy(() =>
+const MOETModule2Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section2_4',
@@ -4881,7 +4882,7 @@ const MOETModule2Section2_4 = lazy(() =>
     )
   )
 );
-const MOETModule2Section2_5 = lazy(() =>
+const MOETModule2Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section2_5',
@@ -4889,7 +4890,7 @@ const MOETModule2Section2_5 = lazy(() =>
     )
   )
 );
-const MOETModule2Section2_6 = lazy(() =>
+const MOETModule2Section2_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section2_6',
@@ -4897,7 +4898,7 @@ const MOETModule2Section2_6 = lazy(() =>
     )
   )
 );
-const MOETModule2Section3_1 = lazy(() =>
+const MOETModule2Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section3_1',
@@ -4905,7 +4906,7 @@ const MOETModule2Section3_1 = lazy(() =>
     )
   )
 );
-const MOETModule2Section3_2 = lazy(() =>
+const MOETModule2Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section3_2',
@@ -4913,7 +4914,7 @@ const MOETModule2Section3_2 = lazy(() =>
     )
   )
 );
-const MOETModule2Section3_3 = lazy(() =>
+const MOETModule2Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section3_3',
@@ -4921,7 +4922,7 @@ const MOETModule2Section3_3 = lazy(() =>
     )
   )
 );
-const MOETModule2Section3_4 = lazy(() =>
+const MOETModule2Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section3_4',
@@ -4929,7 +4930,7 @@ const MOETModule2Section3_4 = lazy(() =>
     )
   )
 );
-const MOETModule2Section3_5 = lazy(() =>
+const MOETModule2Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section3_5',
@@ -4937,7 +4938,7 @@ const MOETModule2Section3_5 = lazy(() =>
     )
   )
 );
-const MOETModule2Section4_1 = lazy(() =>
+const MOETModule2Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section4_1',
@@ -4945,7 +4946,7 @@ const MOETModule2Section4_1 = lazy(() =>
     )
   )
 );
-const MOETModule2Section4_2 = lazy(() =>
+const MOETModule2Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section4_2',
@@ -4953,7 +4954,7 @@ const MOETModule2Section4_2 = lazy(() =>
     )
   )
 );
-const MOETModule2Section4_3 = lazy(() =>
+const MOETModule2Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section4_3',
@@ -4961,7 +4962,7 @@ const MOETModule2Section4_3 = lazy(() =>
     )
   )
 );
-const MOETModule2Section4_4 = lazy(() =>
+const MOETModule2Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section4_4',
@@ -4969,7 +4970,7 @@ const MOETModule2Section4_4 = lazy(() =>
     )
   )
 );
-const MOETModule2Section4_5 = lazy(() =>
+const MOETModule2Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section4_5',
@@ -4977,7 +4978,7 @@ const MOETModule2Section4_5 = lazy(() =>
     )
   )
 );
-const MOETModule2Section4_6 = lazy(() =>
+const MOETModule2Section4_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section4_6',
@@ -4985,7 +4986,7 @@ const MOETModule2Section4_6 = lazy(() =>
     )
   )
 );
-const MOETModule2Section5_1 = lazy(() =>
+const MOETModule2Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section5_1',
@@ -4993,7 +4994,7 @@ const MOETModule2Section5_1 = lazy(() =>
     )
   )
 );
-const MOETModule2Section5_2 = lazy(() =>
+const MOETModule2Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section5_2',
@@ -5001,7 +5002,7 @@ const MOETModule2Section5_2 = lazy(() =>
     )
   )
 );
-const MOETModule2Section5_3 = lazy(() =>
+const MOETModule2Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section5_3',
@@ -5009,7 +5010,7 @@ const MOETModule2Section5_3 = lazy(() =>
     )
   )
 );
-const MOETModule2Section5_4 = lazy(() =>
+const MOETModule2Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule2Section5_4',
@@ -5017,7 +5018,7 @@ const MOETModule2Section5_4 = lazy(() =>
     )
   )
 );
-const MOETModule3Section1_2 = lazy(() =>
+const MOETModule3Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section1_2',
@@ -5025,7 +5026,7 @@ const MOETModule3Section1_2 = lazy(() =>
     )
   )
 );
-const MOETModule3Section1_3 = lazy(() =>
+const MOETModule3Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section1_3',
@@ -5033,7 +5034,7 @@ const MOETModule3Section1_3 = lazy(() =>
     )
   )
 );
-const MOETModule3Section1_4 = lazy(() =>
+const MOETModule3Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section1_4',
@@ -5041,7 +5042,7 @@ const MOETModule3Section1_4 = lazy(() =>
     )
   )
 );
-const MOETModule3Section1_5 = lazy(() =>
+const MOETModule3Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section1_5',
@@ -5049,7 +5050,7 @@ const MOETModule3Section1_5 = lazy(() =>
     )
   )
 );
-const MOETModule3Section1_6 = lazy(() =>
+const MOETModule3Section1_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section1_6',
@@ -5057,7 +5058,7 @@ const MOETModule3Section1_6 = lazy(() =>
     )
   )
 );
-const MOETModule3Section2_1 = lazy(() =>
+const MOETModule3Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section2_1',
@@ -5065,7 +5066,7 @@ const MOETModule3Section2_1 = lazy(() =>
     )
   )
 );
-const MOETModule3Section2_2 = lazy(() =>
+const MOETModule3Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section2_2',
@@ -5073,7 +5074,7 @@ const MOETModule3Section2_2 = lazy(() =>
     )
   )
 );
-const MOETModule3Section2_3 = lazy(() =>
+const MOETModule3Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section2_3',
@@ -5081,7 +5082,7 @@ const MOETModule3Section2_3 = lazy(() =>
     )
   )
 );
-const MOETModule3Section2_4 = lazy(() =>
+const MOETModule3Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section2_4',
@@ -5089,7 +5090,7 @@ const MOETModule3Section2_4 = lazy(() =>
     )
   )
 );
-const MOETModule3Section2_5 = lazy(() =>
+const MOETModule3Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section2_5',
@@ -5097,7 +5098,7 @@ const MOETModule3Section2_5 = lazy(() =>
     )
   )
 );
-const MOETModule3Section3_1 = lazy(() =>
+const MOETModule3Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section3_1',
@@ -5105,7 +5106,7 @@ const MOETModule3Section3_1 = lazy(() =>
     )
   )
 );
-const MOETModule3Section3_2 = lazy(() =>
+const MOETModule3Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section3_2',
@@ -5113,7 +5114,7 @@ const MOETModule3Section3_2 = lazy(() =>
     )
   )
 );
-const MOETModule3Section3_3 = lazy(() =>
+const MOETModule3Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section3_3',
@@ -5121,7 +5122,7 @@ const MOETModule3Section3_3 = lazy(() =>
     )
   )
 );
-const MOETModule3Section3_4 = lazy(() =>
+const MOETModule3Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section3_4',
@@ -5129,7 +5130,7 @@ const MOETModule3Section3_4 = lazy(() =>
     )
   )
 );
-const MOETModule3Section3_5 = lazy(() =>
+const MOETModule3Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section3_5',
@@ -5137,7 +5138,7 @@ const MOETModule3Section3_5 = lazy(() =>
     )
   )
 );
-const MOETModule3Section4_1 = lazy(() =>
+const MOETModule3Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section4_1',
@@ -5145,7 +5146,7 @@ const MOETModule3Section4_1 = lazy(() =>
     )
   )
 );
-const MOETModule3Section4_2 = lazy(() =>
+const MOETModule3Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section4_2',
@@ -5153,7 +5154,7 @@ const MOETModule3Section4_2 = lazy(() =>
     )
   )
 );
-const MOETModule3Section4_3 = lazy(() =>
+const MOETModule3Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section4_3',
@@ -5161,7 +5162,7 @@ const MOETModule3Section4_3 = lazy(() =>
     )
   )
 );
-const MOETModule3Section4_4 = lazy(() =>
+const MOETModule3Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section4_4',
@@ -5169,7 +5170,7 @@ const MOETModule3Section4_4 = lazy(() =>
     )
   )
 );
-const MOETModule3Section5_1 = lazy(() =>
+const MOETModule3Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section5_1',
@@ -5177,7 +5178,7 @@ const MOETModule3Section5_1 = lazy(() =>
     )
   )
 );
-const MOETModule3Section5_2 = lazy(() =>
+const MOETModule3Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section5_2',
@@ -5185,7 +5186,7 @@ const MOETModule3Section5_2 = lazy(() =>
     )
   )
 );
-const MOETModule3Section5_3 = lazy(() =>
+const MOETModule3Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section5_3',
@@ -5193,7 +5194,7 @@ const MOETModule3Section5_3 = lazy(() =>
     )
   )
 );
-const MOETModule3Section5_4 = lazy(() =>
+const MOETModule3Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section5_4',
@@ -5201,7 +5202,7 @@ const MOETModule3Section5_4 = lazy(() =>
     )
   )
 );
-const MOETModule3Section5_5 = lazy(() =>
+const MOETModule3Section5_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section5_5',
@@ -5209,7 +5210,7 @@ const MOETModule3Section5_5 = lazy(() =>
     )
   )
 );
-const MOETModule3Section6_1 = lazy(() =>
+const MOETModule3Section6_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section6_1',
@@ -5217,7 +5218,7 @@ const MOETModule3Section6_1 = lazy(() =>
     )
   )
 );
-const MOETModule3Section6_2 = lazy(() =>
+const MOETModule3Section6_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section6_2',
@@ -5225,7 +5226,7 @@ const MOETModule3Section6_2 = lazy(() =>
     )
   )
 );
-const MOETModule3Section6_3 = lazy(() =>
+const MOETModule3Section6_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section6_3',
@@ -5233,7 +5234,7 @@ const MOETModule3Section6_3 = lazy(() =>
     )
   )
 );
-const MOETModule3Section6_4 = lazy(() =>
+const MOETModule3Section6_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section6_4',
@@ -5241,7 +5242,7 @@ const MOETModule3Section6_4 = lazy(() =>
     )
   )
 );
-const MOETModule3Section6_5 = lazy(() =>
+const MOETModule3Section6_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule3Section6_5',
@@ -5249,7 +5250,7 @@ const MOETModule3Section6_5 = lazy(() =>
     )
   )
 );
-const MOETModule4Section1_2 = lazy(() =>
+const MOETModule4Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section1_2',
@@ -5257,7 +5258,7 @@ const MOETModule4Section1_2 = lazy(() =>
     )
   )
 );
-const MOETModule4Section1_3 = lazy(() =>
+const MOETModule4Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section1_3',
@@ -5265,7 +5266,7 @@ const MOETModule4Section1_3 = lazy(() =>
     )
   )
 );
-const MOETModule4Section1_4 = lazy(() =>
+const MOETModule4Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section1_4',
@@ -5273,7 +5274,7 @@ const MOETModule4Section1_4 = lazy(() =>
     )
   )
 );
-const MOETModule4Section1_5 = lazy(() =>
+const MOETModule4Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section1_5',
@@ -5281,7 +5282,7 @@ const MOETModule4Section1_5 = lazy(() =>
     )
   )
 );
-const MOETModule4Section2_1 = lazy(() =>
+const MOETModule4Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section2_1',
@@ -5289,7 +5290,7 @@ const MOETModule4Section2_1 = lazy(() =>
     )
   )
 );
-const MOETModule4Section2_2 = lazy(() =>
+const MOETModule4Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section2_2',
@@ -5297,7 +5298,7 @@ const MOETModule4Section2_2 = lazy(() =>
     )
   )
 );
-const MOETModule4Section2_3 = lazy(() =>
+const MOETModule4Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section2_3',
@@ -5305,7 +5306,7 @@ const MOETModule4Section2_3 = lazy(() =>
     )
   )
 );
-const MOETModule4Section2_4 = lazy(() =>
+const MOETModule4Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section2_4',
@@ -5313,7 +5314,7 @@ const MOETModule4Section2_4 = lazy(() =>
     )
   )
 );
-const MOETModule4Section2_5 = lazy(() =>
+const MOETModule4Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section2_5',
@@ -5321,7 +5322,7 @@ const MOETModule4Section2_5 = lazy(() =>
     )
   )
 );
-const MOETModule4Section2_6 = lazy(() =>
+const MOETModule4Section2_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section2_6',
@@ -5329,7 +5330,7 @@ const MOETModule4Section2_6 = lazy(() =>
     )
   )
 );
-const MOETModule4Section3_1 = lazy(() =>
+const MOETModule4Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section3_1',
@@ -5337,7 +5338,7 @@ const MOETModule4Section3_1 = lazy(() =>
     )
   )
 );
-const MOETModule4Section3_2 = lazy(() =>
+const MOETModule4Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section3_2',
@@ -5345,7 +5346,7 @@ const MOETModule4Section3_2 = lazy(() =>
     )
   )
 );
-const MOETModule4Section3_3 = lazy(() =>
+const MOETModule4Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section3_3',
@@ -5353,7 +5354,7 @@ const MOETModule4Section3_3 = lazy(() =>
     )
   )
 );
-const MOETModule4Section3_4 = lazy(() =>
+const MOETModule4Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section3_4',
@@ -5361,7 +5362,7 @@ const MOETModule4Section3_4 = lazy(() =>
     )
   )
 );
-const MOETModule4Section3_5 = lazy(() =>
+const MOETModule4Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section3_5',
@@ -5369,7 +5370,7 @@ const MOETModule4Section3_5 = lazy(() =>
     )
   )
 );
-const MOETModule4Section3_6 = lazy(() =>
+const MOETModule4Section3_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section3_6',
@@ -5377,7 +5378,7 @@ const MOETModule4Section3_6 = lazy(() =>
     )
   )
 );
-const MOETModule4Section3_7 = lazy(() =>
+const MOETModule4Section3_7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section3_7',
@@ -5385,7 +5386,7 @@ const MOETModule4Section3_7 = lazy(() =>
     )
   )
 );
-const MOETModule4Section4_1 = lazy(() =>
+const MOETModule4Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section4_1',
@@ -5393,7 +5394,7 @@ const MOETModule4Section4_1 = lazy(() =>
     )
   )
 );
-const MOETModule4Section4_2 = lazy(() =>
+const MOETModule4Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section4_2',
@@ -5401,7 +5402,7 @@ const MOETModule4Section4_2 = lazy(() =>
     )
   )
 );
-const MOETModule4Section4_3 = lazy(() =>
+const MOETModule4Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section4_3',
@@ -5409,7 +5410,7 @@ const MOETModule4Section4_3 = lazy(() =>
     )
   )
 );
-const MOETModule4Section4_4 = lazy(() =>
+const MOETModule4Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section4_4',
@@ -5417,7 +5418,7 @@ const MOETModule4Section4_4 = lazy(() =>
     )
   )
 );
-const MOETModule4Section4_5 = lazy(() =>
+const MOETModule4Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section4_5',
@@ -5425,7 +5426,7 @@ const MOETModule4Section4_5 = lazy(() =>
     )
   )
 );
-const MOETModule4Section5_1 = lazy(() =>
+const MOETModule4Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section5_1',
@@ -5433,7 +5434,7 @@ const MOETModule4Section5_1 = lazy(() =>
     )
   )
 );
-const MOETModule4Section5_2 = lazy(() =>
+const MOETModule4Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section5_2',
@@ -5441,7 +5442,7 @@ const MOETModule4Section5_2 = lazy(() =>
     )
   )
 );
-const MOETModule4Section5_3 = lazy(() =>
+const MOETModule4Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section5_3',
@@ -5449,7 +5450,7 @@ const MOETModule4Section5_3 = lazy(() =>
     )
   )
 );
-const MOETModule4Section5_4 = lazy(() =>
+const MOETModule4Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section5_4',
@@ -5457,7 +5458,7 @@ const MOETModule4Section5_4 = lazy(() =>
     )
   )
 );
-const MOETModule4Section5_5 = lazy(() =>
+const MOETModule4Section5_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section5_5',
@@ -5465,7 +5466,7 @@ const MOETModule4Section5_5 = lazy(() =>
     )
   )
 );
-const MOETModule4Section5_6 = lazy(() =>
+const MOETModule4Section5_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section5_6',
@@ -5473,7 +5474,7 @@ const MOETModule4Section5_6 = lazy(() =>
     )
   )
 );
-const MOETModule4Section6_1 = lazy(() =>
+const MOETModule4Section6_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section6_1',
@@ -5481,7 +5482,7 @@ const MOETModule4Section6_1 = lazy(() =>
     )
   )
 );
-const MOETModule4Section6_2 = lazy(() =>
+const MOETModule4Section6_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section6_2',
@@ -5489,7 +5490,7 @@ const MOETModule4Section6_2 = lazy(() =>
     )
   )
 );
-const MOETModule4Section6_3 = lazy(() =>
+const MOETModule4Section6_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section6_3',
@@ -5497,7 +5498,7 @@ const MOETModule4Section6_3 = lazy(() =>
     )
   )
 );
-const MOETModule4Section6_4 = lazy(() =>
+const MOETModule4Section6_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section6_4',
@@ -5505,7 +5506,7 @@ const MOETModule4Section6_4 = lazy(() =>
     )
   )
 );
-const MOETModule4Section6_5 = lazy(() =>
+const MOETModule4Section6_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section6_5',
@@ -5513,7 +5514,7 @@ const MOETModule4Section6_5 = lazy(() =>
     )
   )
 );
-const MOETModule4Section7_1 = lazy(() =>
+const MOETModule4Section7_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section7_1',
@@ -5521,7 +5522,7 @@ const MOETModule4Section7_1 = lazy(() =>
     )
   )
 );
-const MOETModule4Section7_2 = lazy(() =>
+const MOETModule4Section7_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section7_2',
@@ -5529,7 +5530,7 @@ const MOETModule4Section7_2 = lazy(() =>
     )
   )
 );
-const MOETModule4Section7_3 = lazy(() =>
+const MOETModule4Section7_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section7_3',
@@ -5537,7 +5538,7 @@ const MOETModule4Section7_3 = lazy(() =>
     )
   )
 );
-const MOETModule4Section7_4 = lazy(() =>
+const MOETModule4Section7_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule4Section7_4',
@@ -5545,7 +5546,7 @@ const MOETModule4Section7_4 = lazy(() =>
     )
   )
 );
-const MOETModule5Section1_2 = lazy(() =>
+const MOETModule5Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section1_2',
@@ -5553,7 +5554,7 @@ const MOETModule5Section1_2 = lazy(() =>
     )
   )
 );
-const MOETModule5Section1_3 = lazy(() =>
+const MOETModule5Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section1_3',
@@ -5561,7 +5562,7 @@ const MOETModule5Section1_3 = lazy(() =>
     )
   )
 );
-const MOETModule5Section1_4 = lazy(() =>
+const MOETModule5Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section1_4',
@@ -5569,7 +5570,7 @@ const MOETModule5Section1_4 = lazy(() =>
     )
   )
 );
-const MOETModule5Section1_5 = lazy(() =>
+const MOETModule5Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section1_5',
@@ -5577,7 +5578,7 @@ const MOETModule5Section1_5 = lazy(() =>
     )
   )
 );
-const MOETModule5Section2_1 = lazy(() =>
+const MOETModule5Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section2_1',
@@ -5585,7 +5586,7 @@ const MOETModule5Section2_1 = lazy(() =>
     )
   )
 );
-const MOETModule5Section2_2 = lazy(() =>
+const MOETModule5Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section2_2',
@@ -5593,7 +5594,7 @@ const MOETModule5Section2_2 = lazy(() =>
     )
   )
 );
-const MOETModule5Section2_3 = lazy(() =>
+const MOETModule5Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section2_3',
@@ -5601,7 +5602,7 @@ const MOETModule5Section2_3 = lazy(() =>
     )
   )
 );
-const MOETModule5Section2_4 = lazy(() =>
+const MOETModule5Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section2_4',
@@ -5609,7 +5610,7 @@ const MOETModule5Section2_4 = lazy(() =>
     )
   )
 );
-const MOETModule5Section2_5 = lazy(() =>
+const MOETModule5Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section2_5',
@@ -5617,7 +5618,7 @@ const MOETModule5Section2_5 = lazy(() =>
     )
   )
 );
-const MOETModule5Section2_6 = lazy(() =>
+const MOETModule5Section2_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section2_6',
@@ -5625,7 +5626,7 @@ const MOETModule5Section2_6 = lazy(() =>
     )
   )
 );
-const MOETModule5Section3_1 = lazy(() =>
+const MOETModule5Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section3_1',
@@ -5633,7 +5634,7 @@ const MOETModule5Section3_1 = lazy(() =>
     )
   )
 );
-const MOETModule5Section3_2 = lazy(() =>
+const MOETModule5Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section3_2',
@@ -5641,7 +5642,7 @@ const MOETModule5Section3_2 = lazy(() =>
     )
   )
 );
-const MOETModule5Section3_3 = lazy(() =>
+const MOETModule5Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section3_3',
@@ -5649,7 +5650,7 @@ const MOETModule5Section3_3 = lazy(() =>
     )
   )
 );
-const MOETModule5Section3_4 = lazy(() =>
+const MOETModule5Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section3_4',
@@ -5657,7 +5658,7 @@ const MOETModule5Section3_4 = lazy(() =>
     )
   )
 );
-const MOETModule5Section3_5 = lazy(() =>
+const MOETModule5Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section3_5',
@@ -5665,7 +5666,7 @@ const MOETModule5Section3_5 = lazy(() =>
     )
   )
 );
-const MOETModule5Section4_1 = lazy(() =>
+const MOETModule5Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section4_1',
@@ -5673,7 +5674,7 @@ const MOETModule5Section4_1 = lazy(() =>
     )
   )
 );
-const MOETModule5Section4_2 = lazy(() =>
+const MOETModule5Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section4_2',
@@ -5681,7 +5682,7 @@ const MOETModule5Section4_2 = lazy(() =>
     )
   )
 );
-const MOETModule5Section4_3 = lazy(() =>
+const MOETModule5Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section4_3',
@@ -5689,7 +5690,7 @@ const MOETModule5Section4_3 = lazy(() =>
     )
   )
 );
-const MOETModule5Section4_4 = lazy(() =>
+const MOETModule5Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section4_4',
@@ -5697,7 +5698,7 @@ const MOETModule5Section4_4 = lazy(() =>
     )
   )
 );
-const MOETModule5Section4_5 = lazy(() =>
+const MOETModule5Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section4_5',
@@ -5705,7 +5706,7 @@ const MOETModule5Section4_5 = lazy(() =>
     )
   )
 );
-const MOETModule5Section4_6 = lazy(() =>
+const MOETModule5Section4_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section4_6',
@@ -5713,7 +5714,7 @@ const MOETModule5Section4_6 = lazy(() =>
     )
   )
 );
-const MOETModule5Section5_1 = lazy(() =>
+const MOETModule5Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section5_1',
@@ -5721,7 +5722,7 @@ const MOETModule5Section5_1 = lazy(() =>
     )
   )
 );
-const MOETModule5Section5_2 = lazy(() =>
+const MOETModule5Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section5_2',
@@ -5729,7 +5730,7 @@ const MOETModule5Section5_2 = lazy(() =>
     )
   )
 );
-const MOETModule5Section5_3 = lazy(() =>
+const MOETModule5Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section5_3',
@@ -5737,7 +5738,7 @@ const MOETModule5Section5_3 = lazy(() =>
     )
   )
 );
-const MOETModule5Section5_4 = lazy(() =>
+const MOETModule5Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section5_4',
@@ -5745,7 +5746,7 @@ const MOETModule5Section5_4 = lazy(() =>
     )
   )
 );
-const MOETModule5Section5_5 = lazy(() =>
+const MOETModule5Section5_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section5_5',
@@ -5753,7 +5754,7 @@ const MOETModule5Section5_5 = lazy(() =>
     )
   )
 );
-const MOETModule5Section6_1 = lazy(() =>
+const MOETModule5Section6_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section6_1',
@@ -5761,7 +5762,7 @@ const MOETModule5Section6_1 = lazy(() =>
     )
   )
 );
-const MOETModule5Section6_2 = lazy(() =>
+const MOETModule5Section6_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section6_2',
@@ -5769,7 +5770,7 @@ const MOETModule5Section6_2 = lazy(() =>
     )
   )
 );
-const MOETModule5Section6_3 = lazy(() =>
+const MOETModule5Section6_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section6_3',
@@ -5777,7 +5778,7 @@ const MOETModule5Section6_3 = lazy(() =>
     )
   )
 );
-const MOETModule5Section6_4 = lazy(() =>
+const MOETModule5Section6_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule5Section6_4',
@@ -5785,7 +5786,7 @@ const MOETModule5Section6_4 = lazy(() =>
     )
   )
 );
-const MOETModule6Section1_3 = lazy(() =>
+const MOETModule6Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section1_3',
@@ -5793,7 +5794,7 @@ const MOETModule6Section1_3 = lazy(() =>
     )
   )
 );
-const MOETModule6Section1_4 = lazy(() =>
+const MOETModule6Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section1_4',
@@ -5801,7 +5802,7 @@ const MOETModule6Section1_4 = lazy(() =>
     )
   )
 );
-const MOETModule6Section1_5 = lazy(() =>
+const MOETModule6Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section1_5',
@@ -5809,7 +5810,7 @@ const MOETModule6Section1_5 = lazy(() =>
     )
   )
 );
-const MOETModule6Section2_1 = lazy(() =>
+const MOETModule6Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section2_1',
@@ -5817,7 +5818,7 @@ const MOETModule6Section2_1 = lazy(() =>
     )
   )
 );
-const MOETModule6Section2_2 = lazy(() =>
+const MOETModule6Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section2_2',
@@ -5825,7 +5826,7 @@ const MOETModule6Section2_2 = lazy(() =>
     )
   )
 );
-const MOETModule6Section2_3 = lazy(() =>
+const MOETModule6Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section2_3',
@@ -5833,7 +5834,7 @@ const MOETModule6Section2_3 = lazy(() =>
     )
   )
 );
-const MOETModule6Section2_4 = lazy(() =>
+const MOETModule6Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section2_4',
@@ -5841,7 +5842,7 @@ const MOETModule6Section2_4 = lazy(() =>
     )
   )
 );
-const MOETModule6Section3_1 = lazy(() =>
+const MOETModule6Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section3_1',
@@ -5849,7 +5850,7 @@ const MOETModule6Section3_1 = lazy(() =>
     )
   )
 );
-const MOETModule6Section3_2 = lazy(() =>
+const MOETModule6Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section3_2',
@@ -5857,7 +5858,7 @@ const MOETModule6Section3_2 = lazy(() =>
     )
   )
 );
-const MOETModule6Section3_3 = lazy(() =>
+const MOETModule6Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section3_3',
@@ -5865,7 +5866,7 @@ const MOETModule6Section3_3 = lazy(() =>
     )
   )
 );
-const MOETModule6Section3_4 = lazy(() =>
+const MOETModule6Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section3_4',
@@ -5873,7 +5874,7 @@ const MOETModule6Section3_4 = lazy(() =>
     )
   )
 );
-const MOETModule6Section3_5 = lazy(() =>
+const MOETModule6Section3_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section3_5',
@@ -5881,7 +5882,7 @@ const MOETModule6Section3_5 = lazy(() =>
     )
   )
 );
-const MOETModule6Section4_1 = lazy(() =>
+const MOETModule6Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section4_1',
@@ -5889,7 +5890,7 @@ const MOETModule6Section4_1 = lazy(() =>
     )
   )
 );
-const MOETModule6Section4_2 = lazy(() =>
+const MOETModule6Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section4_2',
@@ -5897,7 +5898,7 @@ const MOETModule6Section4_2 = lazy(() =>
     )
   )
 );
-const MOETModule6Section4_3 = lazy(() =>
+const MOETModule6Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section4_3',
@@ -5905,7 +5906,7 @@ const MOETModule6Section4_3 = lazy(() =>
     )
   )
 );
-const MOETModule6Section4_4 = lazy(() =>
+const MOETModule6Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule6Section4_4',
@@ -5913,7 +5914,7 @@ const MOETModule6Section4_4 = lazy(() =>
     )
   )
 );
-const MOETModule7MockExam = lazy(() =>
+const MOETModule7MockExam = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7MockExam',
@@ -5921,7 +5922,7 @@ const MOETModule7MockExam = lazy(() =>
     )
   )
 );
-const MOETModule7Section1_2 = lazy(() =>
+const MOETModule7Section1_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section1_2',
@@ -5929,7 +5930,7 @@ const MOETModule7Section1_2 = lazy(() =>
     )
   )
 );
-const MOETModule7Section1_3 = lazy(() =>
+const MOETModule7Section1_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section1_3',
@@ -5937,7 +5938,7 @@ const MOETModule7Section1_3 = lazy(() =>
     )
   )
 );
-const MOETModule7Section1_4 = lazy(() =>
+const MOETModule7Section1_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section1_4',
@@ -5945,7 +5946,7 @@ const MOETModule7Section1_4 = lazy(() =>
     )
   )
 );
-const MOETModule7Section1_5 = lazy(() =>
+const MOETModule7Section1_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section1_5',
@@ -5953,7 +5954,7 @@ const MOETModule7Section1_5 = lazy(() =>
     )
   )
 );
-const MOETModule7Section2_1 = lazy(() =>
+const MOETModule7Section2_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section2_1',
@@ -5961,7 +5962,7 @@ const MOETModule7Section2_1 = lazy(() =>
     )
   )
 );
-const MOETModule7Section2_2 = lazy(() =>
+const MOETModule7Section2_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section2_2',
@@ -5969,7 +5970,7 @@ const MOETModule7Section2_2 = lazy(() =>
     )
   )
 );
-const MOETModule7Section2_3 = lazy(() =>
+const MOETModule7Section2_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section2_3',
@@ -5977,7 +5978,7 @@ const MOETModule7Section2_3 = lazy(() =>
     )
   )
 );
-const MOETModule7Section2_4 = lazy(() =>
+const MOETModule7Section2_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section2_4',
@@ -5985,7 +5986,7 @@ const MOETModule7Section2_4 = lazy(() =>
     )
   )
 );
-const MOETModule7Section2_5 = lazy(() =>
+const MOETModule7Section2_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section2_5',
@@ -5993,7 +5994,7 @@ const MOETModule7Section2_5 = lazy(() =>
     )
   )
 );
-const MOETModule7Section2_6 = lazy(() =>
+const MOETModule7Section2_6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section2_6',
@@ -6001,7 +6002,7 @@ const MOETModule7Section2_6 = lazy(() =>
     )
   )
 );
-const MOETModule7Section3_1 = lazy(() =>
+const MOETModule7Section3_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section3_1',
@@ -6009,7 +6010,7 @@ const MOETModule7Section3_1 = lazy(() =>
     )
   )
 );
-const MOETModule7Section3_2 = lazy(() =>
+const MOETModule7Section3_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section3_2',
@@ -6017,7 +6018,7 @@ const MOETModule7Section3_2 = lazy(() =>
     )
   )
 );
-const MOETModule7Section3_3 = lazy(() =>
+const MOETModule7Section3_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section3_3',
@@ -6025,7 +6026,7 @@ const MOETModule7Section3_3 = lazy(() =>
     )
   )
 );
-const MOETModule7Section3_4 = lazy(() =>
+const MOETModule7Section3_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section3_4',
@@ -6033,7 +6034,7 @@ const MOETModule7Section3_4 = lazy(() =>
     )
   )
 );
-const MOETModule7Section4_1 = lazy(() =>
+const MOETModule7Section4_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section4_1',
@@ -6041,7 +6042,7 @@ const MOETModule7Section4_1 = lazy(() =>
     )
   )
 );
-const MOETModule7Section4_2 = lazy(() =>
+const MOETModule7Section4_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section4_2',
@@ -6049,7 +6050,7 @@ const MOETModule7Section4_2 = lazy(() =>
     )
   )
 );
-const MOETModule7Section4_3 = lazy(() =>
+const MOETModule7Section4_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section4_3',
@@ -6057,7 +6058,7 @@ const MOETModule7Section4_3 = lazy(() =>
     )
   )
 );
-const MOETModule7Section4_4 = lazy(() =>
+const MOETModule7Section4_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section4_4',
@@ -6065,7 +6066,7 @@ const MOETModule7Section4_4 = lazy(() =>
     )
   )
 );
-const MOETModule7Section4_5 = lazy(() =>
+const MOETModule7Section4_5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section4_5',
@@ -6073,7 +6074,7 @@ const MOETModule7Section4_5 = lazy(() =>
     )
   )
 );
-const MOETModule7Section5_1 = lazy(() =>
+const MOETModule7Section5_1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section5_1',
@@ -6081,7 +6082,7 @@ const MOETModule7Section5_1 = lazy(() =>
     )
   )
 );
-const MOETModule7Section5_2 = lazy(() =>
+const MOETModule7Section5_2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section5_2',
@@ -6089,7 +6090,7 @@ const MOETModule7Section5_2 = lazy(() =>
     )
   )
 );
-const MOETModule7Section5_3 = lazy(() =>
+const MOETModule7Section5_3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section5_3',
@@ -6097,7 +6098,7 @@ const MOETModule7Section5_3 = lazy(() =>
     )
   )
 );
-const MOETModule7Section5_4 = lazy(() =>
+const MOETModule7Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'MOETModule7Section5_4',
@@ -6105,16 +6106,16 @@ const MOETModule7Section5_4 = lazy(() =>
     )
   )
 );
-const NotFound = lazy(() =>
+const NotFound = lazyWithRetry(() =>
   withTimeout(() => trackImport('NotFound', () => import('@/pages/apprentice-courses/NotFound')))
 );
-const Section1 = lazy(() =>
+const Section1 = lazyWithRetry(() =>
   withTimeout(() => trackImport('Section1', () => import('@/pages/apprentice-courses/level2/module1/section1/Landing')))
 );
-const Section2 = lazy(() =>
+const Section2 = lazyWithRetry(() =>
   withTimeout(() => trackImport('Section2', () => import('@/pages/apprentice-courses/level2/module1/section2/Landing')))
 );
-const Section2_1_ElectricShock = lazy(() =>
+const Section2_1_ElectricShock = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport(
       'Section2_1_ElectricShock',
@@ -6122,184 +6123,184 @@ const Section2_1_ElectricShock = lazy(() =>
     )
   )
 );
-const Section3 = lazy(() =>
+const Section3 = lazyWithRetry(() =>
   withTimeout(() => trackImport('Section3', () => import('@/pages/apprentice-courses/level2/module1/section3/Landing')))
 );
-const Section4 = lazy(() =>
+const Section4 = lazyWithRetry(() =>
   withTimeout(() => trackImport('Section4', () => import('@/pages/apprentice-courses/level2/module1/section4/Landing')))
 );
-const Section5 = lazy(() =>
+const Section5 = lazyWithRetry(() =>
   withTimeout(() => trackImport('Section5', () => import('@/pages/apprentice-courses/level2/module1/section5/Landing')))
 );
-const Section6 = lazy(() =>
+const Section6 = lazyWithRetry(() =>
   withTimeout(() => trackImport('Section6', () => import('@/pages/apprentice-courses/level2/module1/section6/Landing')))
 );
-const subsection1 = lazy(() =>
+const subsection1 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection1', () => import('@/pages/apprentice-courses/level2/module1/section1/Sub1'))
   )
 );
-const subsection10 = lazy(() =>
+const subsection10 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection10', () => import('@/pages/apprentice-courses/level2/module1/section3/Sub1'))
   )
 );
-const subsection11 = lazy(() =>
+const subsection11 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection11', () => import('@/pages/apprentice-courses/level2/module1/section3/Sub2'))
   )
 );
-const subsection12 = lazy(() =>
+const subsection12 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection12', () => import('@/pages/apprentice-courses/level2/module1/section3/Sub3'))
   )
 );
-const subsection13 = lazy(() =>
+const subsection13 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection13', () => import('@/pages/apprentice-courses/level2/module1/section3/Sub4'))
   )
 );
-const subsection14 = lazy(() =>
+const subsection14 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection14', () => import('@/pages/apprentice-courses/level2/module1/section4/Sub1'))
   )
 );
-const subsection15 = lazy(() =>
+const subsection15 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection15', () => import('@/pages/apprentice-courses/level2/module1/section4/Sub2'))
   )
 );
-const subsection16 = lazy(() =>
+const subsection16 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection16', () => import('@/pages/apprentice-courses/level2/module1/section4/Sub3'))
   )
 );
-const subsection17 = lazy(() =>
+const subsection17 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection17', () => import('@/pages/apprentice-courses/level2/module1/section4/Sub4'))
   )
 );
-const subsection18 = lazy(() =>
+const subsection18 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection18', () => import('@/pages/apprentice-courses/level2/module1/section5/Sub1'))
   )
 );
-const subsection19 = lazy(() =>
+const subsection19 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection19', () => import('@/pages/apprentice-courses/level2/module1/section5/Sub2'))
   )
 );
-const subsection2 = lazy(() =>
+const subsection2 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection2', () => import('@/pages/apprentice-courses/level2/module1/section1/Sub2'))
   )
 );
-const subsection20 = lazy(() =>
+const subsection20 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection20', () => import('@/pages/apprentice-courses/level2/module1/section5/Sub3'))
   )
 );
-const subsection21 = lazy(() =>
+const subsection21 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection21', () => import('@/pages/apprentice-courses/level2/module1/section5/Sub4'))
   )
 );
-const subsection22 = lazy(() =>
+const subsection22 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection22', () => import('@/pages/apprentice-courses/level2/module1/section5/Sub5'))
   )
 );
-const subsection23 = lazy(() =>
+const subsection23 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection23', () => import('@/pages/apprentice-courses/level2/module1/section6/Sub1'))
   )
 );
-const subsection24 = lazy(() =>
+const subsection24 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection24', () => import('@/pages/apprentice-courses/level2/module1/section6/Sub2'))
   )
 );
-const subsection25 = lazy(() =>
+const subsection25 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection25', () => import('@/pages/apprentice-courses/level2/module1/section6/Sub3'))
   )
 );
-const subsection26 = lazy(() =>
+const subsection26 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection26', () => import('@/pages/apprentice-courses/level2/module1/section6/Sub4'))
   )
 );
-const subsection27 = lazy(() =>
+const subsection27 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection27', () => import('@/pages/apprentice-courses/level2/module1/section6/Sub5'))
   )
 );
-const subsection28 = lazy(() =>
+const subsection28 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection28', () => import('@/pages/apprentice-courses/level2/module1/section6/Sub6'))
   )
 );
-const subsection29 = lazy(() =>
+const subsection29 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection29', () => import('@/pages/apprentice-courses/subsection29'))
   )
 );
-const subsection3 = lazy(() =>
+const subsection3 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection3', () => import('@/pages/apprentice-courses/level2/module1/section1/Sub3'))
   )
 );
-const subsection30 = lazy(() =>
+const subsection30 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection30', () => import('@/pages/apprentice-courses/subsection30'))
   )
 );
-const subsection31 = lazy(() =>
+const subsection31 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection31', () => import('@/pages/apprentice-courses/subsection31'))
   )
 );
-const subsection32 = lazy(() =>
+const subsection32 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection32', () => import('@/pages/apprentice-courses/subsection32'))
   )
 );
-const subsection33 = lazy(() =>
+const subsection33 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection33', () => import('@/pages/apprentice-courses/subsection33'))
   )
 );
-const subsection34 = lazy(() =>
+const subsection34 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection34', () => import('@/pages/apprentice-courses/subsection34'))
   )
 );
-const subsection4 = lazy(() =>
+const subsection4 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection4', () => import('@/pages/apprentice-courses/level2/module1/section1/Sub4'))
   )
 );
-const subsection5 = lazy(() =>
+const subsection5 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection5', () => import('@/pages/apprentice-courses/subsection5'))
   )
 );
-const subsection6 = lazy(() =>
+const subsection6 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection6', () => import('@/pages/apprentice-courses/level2/module1/section2/Sub2'))
   )
 );
-const subsection7 = lazy(() =>
+const subsection7 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection7', () => import('@/pages/apprentice-courses/level2/module1/section2/Sub3'))
   )
 );
-const subsection8 = lazy(() =>
+const subsection8 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection8', () => import('@/pages/apprentice-courses/level2/module1/section2/Sub4'))
   )
 );
-const subsection9 = lazy(() =>
+const subsection9 = lazyWithRetry(() =>
   withTimeout(() =>
     trackImport('subsection9', () => import('@/pages/apprentice-courses/level2/module1/section2/Sub5'))
   )

@@ -72,7 +72,7 @@ export const EighteenthEditionChapter41ProtectionAgainstElectricShockExamConfig:
         blocks: [
           {
             type: 'paragraph',
-            text: '30mA RCD protection is mandatory for: sockets up to 32A in dwellings (Reg 411.3.3). Final circuits supplying mobile equipment ≤32A outdoors. Circuits supplying luminaires in dwellings (Reg 411.3.4). Special locations (700-series). A4:2026 added: Reg 421.1.7.101 — AFDD mandatory in HMOs, care homes, residential high-rise (also Chapter 4-related).',
+            text: '30mA RCD protection is mandatory for: sockets up to 32A in dwellings (Reg 411.3.3). Final circuits supplying mobile equipment ≤32A outdoors. Circuits supplying luminaires in dwellings (Reg 411.3.4). Special locations (700-series). A4:2026 added: Reg 421.1.7.101 — AFDD recommended in HMOs, care homes, residential high-rise (also Chapter 4-related).',
           },
         ],
       },

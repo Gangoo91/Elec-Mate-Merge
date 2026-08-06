@@ -154,7 +154,7 @@ export const CalculatorEditorial = ({ content, category }: CalculatorEditorialPr
                             key={i}
                             className="p-2 rounded-lg bg-white/[0.04] border border-white/5"
                           >
-                            <p className="text-xs text-white/60">{input.label}</p>
+                            <p className="text-xs text-white">{input.label}</p>
                             <p className="text-sm text-white font-medium">{input.value}</p>
                           </div>
                         ))}
@@ -217,7 +217,7 @@ export const CalculatorEditorial = ({ content, category }: CalculatorEditorialPr
                       </table>
                     </div>
                     {content.quickReference.footnote && (
-                      <p className="text-xs text-white/60 mt-2">{content.quickReference.footnote}</p>
+                      <p className="text-xs text-white mt-2">{content.quickReference.footnote}</p>
                     )}
                   </div>
                 )}

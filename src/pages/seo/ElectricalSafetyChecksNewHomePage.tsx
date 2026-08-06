@@ -76,7 +76,7 @@ const faqs = [
   {
     question: 'What is main protective bonding and how do I check if it is present?',
     answer:
-      'Main protective bonding (also called equipotential bonding) connects the main metallic services entering the building — gas pipes and water pipes — to the main earthing terminal at the consumer unit. It is required by BS 7671 Regulation 411.3.1.1, which mandates that extraneous-conductive-parts liable to introduce a dangerous potential difference shall be connected to the main earthing terminal by protective bonding conductors. Main bonding cables are typically 10mm green-and-yellow insulated cables that can be seen connecting the gas meter pipework or incoming water pipe to the consumer unit or to an earth rod. The connection point on the gas or water service is a yellow earthing clamp. If no main bonding is visible, the installation should be inspected — absence of main bonding is typically a C2 deficiency on an EICR. Note: under BS 7671:2018+A4:2026, bonding of metallic service pipes may be omitted where an insulating section is provided at the point of entry to the building; an inspector should verify whether this applies before coding absent bonding as C2.',
+      'Main protective bonding (also called equipotential bonding) connects the main metallic services entering the building — gas pipes and water pipes — to the main earthing terminal at the consumer unit. It is required by BS 7671 Regulation 411.3.1.2, which mandates that extraneous-conductive-parts liable to introduce a dangerous potential difference shall be connected to the main earthing terminal by protective bonding conductors. (411.3.1.1 is the companion regulation covering protective earthing of exposed-conductive-parts.) Main bonding cables are typically 10mm green-and-yellow insulated cables that can be seen connecting the gas meter pipework or incoming water pipe to the consumer unit or to an earth rod. The connection point on the gas or water service is a yellow earthing clamp. If no main bonding is visible, the installation should be inspected — absence of main bonding is typically a C2 deficiency on an EICR. Note: under BS 7671:2018+A4:2026, bonding of metallic service pipes may be omitted where an insulating section is provided at the point of entry to the building; an inspector should verify whether this applies before coding absent bonding as C2.',
   },
   {
     question: 'How long does an EICR take and what does it cost?',
@@ -568,7 +568,7 @@ const sections = [
                     when advising on new or rewired circuits.
                   </li>
                   <li>
-                    <strong>Reg 411.3.1.1 — Main bonding exemption:</strong> Protective bonding of
+                    <strong>Reg 411.3.1.2 — Main bonding exemption:</strong> Protective bonding of
                     metallic service pipes may be omitted where an insulating section is provided at
                     the point of entry to the building. Verify before coding absent bonding as C2.
                   </li>

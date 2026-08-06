@@ -66,7 +66,7 @@ const faqs = [
   {
     question: 'Do I need RCD protection on every circuit in a three phase board?',
     answer:
-      'BS 7671:2018+A2:2022 requires RCD protection (rated residual current not exceeding 30mA) for socket outlets rated up to 32A and mobile equipment rated up to 32A for outdoor use (Regulation 411.3.3), and for cables concealed in walls at a depth less than 50mm (Regulation 411.3.4). This applies equally to three phase installations. In practice, most three phase distribution boards use RCBOs (combined MCB and RCD) on individual circuits or split the board into RCD-protected and non-RCD-protected sections using separate RCDs. For three phase circuits (such as a three phase motor or three phase oven), a 4-pole RCBO or a 4-pole RCD protecting a group of three phase MCBs is required. Ensure the RCD is rated for the correct number of poles and that it is suitable for the type of load — Type A for general use, Type B for circuits with variable speed drives or inverters.',
+      'BS 7671:2018+A4:2026 requires RCD protection (rated residual current not exceeding 30mA) for socket outlets rated up to 32A and mobile equipment rated up to 32A for outdoor use (Regulation 411.3.3), and for cables concealed in walls at a depth less than 50mm (Regulation 411.3.4). This applies equally to three phase installations. In practice, most three phase distribution boards use RCBOs (combined MCB and RCD) on individual circuits or split the board into RCD-protected and non-RCD-protected sections using separate RCDs. For three phase circuits (such as a three phase motor or three phase oven), a 4-pole RCBO or a 4-pole RCD protecting a group of three phase MCBs is required. Ensure the RCD is rated for the correct number of poles and that it is suitable for the type of load — Type A for general use, Type B for circuits with variable speed drives or inverters.',
   },
   {
     question: 'How do I test a three phase installation for initial verification?',
@@ -634,7 +634,7 @@ export default function ThreePhaseInstallationPage() {
           <span className="text-yellow-400">The Complete BS 7671 Guide</span>
         </>
       }
-      heroSubtitle="Three phase supplies are essential for commercial premises, industrial sites, and increasingly for domestic properties with high electrical demand. This guide covers everything from load balancing and TPN board selection to cable sizing, testing, and certification — all referenced to BS 7671:2018+A2:2022."
+      heroSubtitle="Three phase supplies are essential for commercial premises, industrial sites, and increasingly for domestic properties with high electrical demand. This guide covers everything from load balancing and TPN board selection to cable sizing, testing, and certification — all referenced to BS 7671:2018+A4:2026."
       readingTime={14}
       keyTakeaways={keyTakeaways}
       sections={sections}

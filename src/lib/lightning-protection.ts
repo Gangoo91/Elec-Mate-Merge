@@ -10,6 +10,17 @@
  *
  * All values use SI units unless stated otherwise.
  * Costs are in GBP (typical UK market rates).
+ *
+ * ⚠️ SCOPE — this is an INDICATIVE SCREENING model, not a formal BS EN 62305-2 risk
+ * assessment. The look-up tables below (Cd, PB, loss factors, tolerable risk RT, the
+ * contents / service / existing-protection multipliers) are a simplification and have
+ * NOT been verified against BS EN 62305-2, which is a separate standard and is not held
+ * in the BS 7671 / GN3 / On-Site Guide corpus. Do not present the output as a completed
+ * risk analysis — note that BS 7671 Reg 534.4.4.4.2 distinguishes the case "where no risk
+ * analysis according to BS EN 62305-2 has been carried out".
+ *
+ * The SPD outputs (spdRequired, spdType, spdOwnerDeclarationRoute) ARE grounded, in
+ * BS 7671:2018+A4:2026 Regs 443.4.1, 534.4.1.3, 534.4.1.4, 534.4.1.5 and 534.4.4.4.2.
  */
 
 // ---------------------------------------------------------------------------
@@ -62,8 +73,32 @@ export interface LightningResult {
   verdict: string;
   /** Required LPS class (I / II / III / IV) or null if not needed */
   lpsClass: string | null;
-  /** Whether surge protective devices are recommended */
+  /**
+   * Whether surge protective devices are required.
+   *
+   * FIX (BS 7671:2018+A4:2026 Reg 443.4.1): this was previously derived from a
+   * risk score, so the tool could report "SPDs Not Required". 443.4.1 makes SPDs
+   * the DEFAULT — "For all other cases, protection against transient overvoltages
+   * shall be provided unless the owner of the installation declares it is not
+   * required". Omission is an owner-declaration route, never a calculator verdict,
+   * so this flag is now always true.
+   */
   spdRequired: boolean;
+  /**
+   * True where the consequence categories in Reg 443.4.1 (a) serious injury or
+   * loss of human life, (b) failure of a safety service, (c) significant financial
+   * or data loss do NOT apply, so the owner-declaration route to omit SPDs under
+   * 443.4.1 remains open. False where (a), (b) or (c) applies and protection is
+   * unconditionally required.
+   */
+  spdOwnerDeclarationRoute: boolean;
+  /**
+   * SPD type required at or near the origin.
+   * Reg 534.4.1.3 — Type 1 where the structure has an external lightning protection
+   * system or protection against the effects of direct lightning.
+   * Reg 534.4.1.4 — Type 2 where it does not.
+   */
+  spdType: 'Type 1' | 'Type 2';
   /** Indicative installed cost range in GBP */
   costEstimate: { min: number; max: number };
 }
@@ -221,36 +256,111 @@ function determineLpsClass(totalRisk: number, tolerableRisk: number): string | n
   return 'IV';
 }
 
+/**
+ * Decide whether the Reg 443.4.1 owner-declaration route to omit SPDs is open.
+ *
+ * BS 7671:2018+A4:2026 Reg 443.4.1 requires protection against transient
+ * overvoltages where the consequence could result in (a) serious injury to, or
+ * loss of, human life; (b) failure of a safety service as defined in Part 2; or
+ * (c) significant financial or data loss. Only outside (a)-(c) may the owner
+ * declare protection is not required.
+ *
+ * This is an indicative mapping from the inputs this tool collects — the designer
+ * must still apply 443.4.1(a)-(c) to the actual installation.
+ */
+function ownerDeclarationRouteOpen(inputs: LightningInputs): boolean {
+  // (a) / (b) — life risk and safety services
+  if (inputs.occupancy === 'hospital' || inputs.occupancy === 'public') return false;
+  // (c) — significant financial or data loss
+  if (inputs.contentsRisk === 'high' || inputs.contentsRisk === 'critical') return false;
+  return true;
+}
+
+/**
+ * SPD type required at or near the origin.
+ * Reg 534.4.1.3 — Type 1 where the structure is equipped with an external lightning
+ * protection system or protection against the effects of direct lightning.
+ * Reg 534.4.1.4 — Type 2 where it is not, or does not require it.
+ */
+function determineSpdType(
+  inputs: LightningInputs,
+  lpsClass: string | null
+): 'Type 1' | 'Type 2' {
+  const hasExternalLps =
+    inputs.existingProtection === 'external_lps' || inputs.existingProtection === 'both';
+  return hasExternalLps || lpsClass !== null ? 'Type 1' : 'Type 2';
+}
+
 /** Build a human-readable verdict string. */
 function buildVerdict(
   protectionRequired: boolean,
   lpsClass: string | null,
-  spdRequired: boolean,
+  spdType: 'Type 1' | 'Type 2',
+  ownerDeclarationOpen: boolean,
   totalRisk: number,
   tolerableRisk: number
 ): string {
+  const parts: string[] = [];
+
   if (!protectionRequired) {
-    return (
-      'Lightning protection is not required under BS EN 62305-2. ' +
-      `Total risk (${totalRisk.toExponential(2)}) is within the ` +
-      `tolerable limit (${tolerableRisk.toExponential(2)}).`
+    parts.push(
+      'This indicative screening does not show a need for a structural lightning ' +
+        `protection system (risk ${totalRisk.toExponential(2)} against ${tolerableRisk.toExponential(2)}). ` +
+        'It is a screening estimate only — a full BS EN 62305-2 risk assessment is ' +
+        'required before concluding that no lightning protection system is needed.'
+    );
+  } else {
+    parts.push(
+      `Lightning protection IS indicated. Risk (${totalRisk.toExponential(2)}) exceeds ` +
+        `the tolerable limit (${tolerableRisk.toExponential(2)}). Confirm with a full ` +
+        'BS EN 62305-2 risk assessment.'
+    );
+    if (lpsClass) {
+      parts.push(`Install a Class ${lpsClass} LPS to BS EN 62305-3.`);
+    }
+  }
+
+  // FIX — SPD advice was previously "SPDs should be installed at the origin and
+  // distribution boards to BS EN 62305-4", with no Type selection and no Iimp.
+  // BS 7671:2018+A4:2026 Reg 443.4.1 makes SPDs the default; Regs 534.4.1.3 and
+  // 534.4.1.4 decide Type 1 vs Type 2; Reg 534.4.4.4.2 / Table 534.4 set Iimp.
+  if (spdType === 'Type 1') {
+    parts.push(
+      'Protection against transient overvoltages is required (Reg 443.4.1). Because ' +
+        'the structure has, or requires, protection against direct lightning, Type 1 ' +
+        'SPDs shall be installed as close as possible to the origin of the installation ' +
+        '(Reg 534.4.1.3). Where no BS EN 62305-2 risk analysis has been carried out, ' +
+        'Iimp shall be not less than Table 534.4 — 12.5 kA for the L-N and L-PE ' +
+        'connections at LPL III/IV, with a higher value for N-PE in CT2 systems ' +
+        '(Reg 534.4.4.4.2(a)). Where a BS EN 62305-2 risk analysis has been carried ' +
+        'out, Iimp is determined to the BS EN 62305 series (Reg 534.4.4.4.2(b)).'
+    );
+  } else {
+    parts.push(
+      'Protection against transient overvoltages is required (Reg 443.4.1). With no ' +
+        'external lightning protection system, Type 2 SPDs shall be installed as close ' +
+        'as possible to the origin of the installation (Reg 534.4.1.4), with nominal ' +
+        'discharge current In not less than Table 534.3 (Reg 534.4.4.4.1).'
     );
   }
 
-  const parts: string[] = [
-    `Lightning protection IS required. Total risk ` +
-      `(${totalRisk.toExponential(2)}) exceeds the tolerable limit ` +
-      `(${tolerableRisk.toExponential(2)}).`,
-  ];
+  parts.push(
+    'Any downstream Type 2 or Type 3 SPDs shall be coordinated with the device at the ' +
+      'origin (Reg 534.4.1.5).'
+  );
 
-  if (lpsClass) {
-    parts.push(`Install a Class ${lpsClass} LPS to BS EN 62305-3.`);
-  }
-
-  if (spdRequired) {
+  if (ownerDeclarationOpen) {
     parts.push(
-      'Surge protective devices (SPDs) should be installed at the ' +
-        'origin and distribution boards to BS EN 62305-4.'
+      'The consequences here appear to fall outside Reg 443.4.1 (a)-(c), so SPDs may ' +
+        'only be omitted if the owner of the installation declares in writing that any ' +
+        'loss or damage is tolerable and accepts the risk of damage to equipment and ' +
+        'any consequential loss. Record that declaration with the certification.'
+    );
+  } else {
+    parts.push(
+      'Reg 443.4.1 (a)-(c) applies to this installation (life safety, a safety service, ' +
+        'or significant financial or data loss), so protection against transient ' +
+        'overvoltages is required and the owner-declaration route to omit it is not available.'
     );
   }
 
@@ -314,20 +424,35 @@ export function calculateLightningProtection(inputs: LightningInputs): Lightning
   // 13. LPS class
   const lpsClass = determineLpsClass(totalRisk, tolerableRisk);
 
-  // 14. SPD recommendation
-  //     Required if R3 alone exceeds RT, or overhead lines are present,
-  //     or contents risk is high / critical.
-  const spdRequired =
-    riskR3 > tolerableRisk ||
-    inputs.incomingServices.includes('overhead_lines') ||
-    inputs.contentsRisk === 'high' ||
-    inputs.contentsRisk === 'critical';
+  // 14. SPD requirement.
+  //     WAS: spdRequired = riskR3 > RT || overhead lines || contents high/critical,
+  //     which let the tool report "SPDs Not Required".
+  //     BS 7671:2018+A4:2026 Reg 443.4.1: protection against transient overvoltages
+  //     shall be provided where the consequence could result in (a) serious injury to,
+  //     or loss of, human life, (b) failure of a safety service, or (c) significant
+  //     financial or data loss; and "For all other cases, protection against transient
+  //     overvoltages shall be provided unless the owner of the installation declares
+  //     it is not required". SPDs are therefore the default in every case — omission
+  //     is an owner declaration, not a calculated verdict.
+  const spdRequired = true;
+  const spdOwnerDeclarationRoute = ownerDeclarationRouteOpen(inputs);
+
+  // Reg 534.4.1.3 (Type 1, external LPS / direct lightning protection present)
+  // vs Reg 534.4.1.4 (Type 2, not present).
+  const spdType = determineSpdType(inputs, lpsClass);
 
   // 15. Cost estimate
   const costEstimate = calculateCostEstimate(lpsClass, spdRequired);
 
   // 16. Verdict
-  const verdict = buildVerdict(protectionRequired, lpsClass, spdRequired, totalRisk, tolerableRisk);
+  const verdict = buildVerdict(
+    protectionRequired,
+    lpsClass,
+    spdType,
+    spdOwnerDeclarationRoute,
+    totalRisk,
+    tolerableRisk
+  );
 
   return {
     collectionArea: round(ad, 2),
@@ -342,6 +467,8 @@ export function calculateLightningProtection(inputs: LightningInputs): Lightning
     verdict,
     lpsClass,
     spdRequired,
+    spdOwnerDeclarationRoute,
+    spdType,
     costEstimate,
   };
 }

@@ -320,10 +320,11 @@ export default function HowToFillInMinorWorksPage() {
                   </div>
                   <p className="text-white text-sm leading-relaxed">
                     If the circuit is protected by an RCD (or RCBO), test and record the operating
-                    time. A 30 mA RCD must trip within 300 ms at rated residual current (1x) and
-                    within 40 ms at five times rated residual current (5x = 150 mA). Record both the
-                    1x and 5x results. If the circuit has no RCD protection, record "N/A" — do not
-                    leave it blank.
+                    time. Under BS 7671:2018+A4:2026 that is a single alternating current test at
+                    the rated residual operating current (IΔn), whatever the device type — a
+                    general 30 mA RCD must operate within 300 ms. Amendment 4 deleted Table 3A of
+                    Appendix 3, so there is no longer a 5x result to record alongside it. If the
+                    circuit has no RCD protection, record "N/A" — do not leave it blank.
                   </p>
                 </div>
               </div>
@@ -566,7 +567,7 @@ export default function HowToFillInMinorWorksPage() {
         },
         {
           name: 'Carry out and record the essential tests',
-          text: 'Test and record: continuity of protective conductors (R1+R2 in ohms), insulation resistance at 500V DC (in megohms, minimum 1.0 megohm acceptable), polarity (confirmed correct), earth fault loop impedance Zs (in ohms, must not exceed the maximum permitted for the protective device), and RCD operating time (in milliseconds at 1x and 5x rated current, or N/A if no RCD). Use a calibrated multifunction tester.',
+          text: 'Test and record: continuity of protective conductors (R1+R2 in ohms), insulation resistance at 500V DC (in megohms, minimum 1.0 megohm acceptable), polarity (confirmed correct), earth fault loop impedance Zs (in ohms, must not exceed the maximum permitted for the protective device), and RCD operating time (in milliseconds, measured at the rated residual operating current IΔn — Amendment 4 deleted Table 3A so there is no 5x figure to record — or N/A if no RCD). Use a calibrated multifunction tester.',
         },
         {
           name: 'Recommend the next inspection date',

@@ -113,7 +113,7 @@ export function PriceSparkline({ history, currentPrice, className }: PriceSparkl
         <span
           className={cn(
             'text-[10px] font-medium whitespace-nowrap',
-            lastPrice < firstPrice ? 'text-green-500' : 'text-red-500'
+            lastPrice < firstPrice ? 'text-elec-yellow' : 'text-orange-300'
           )}
         >
           {trendText}

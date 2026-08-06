@@ -27,11 +27,28 @@ import {
   type ContainmentType,
   type TrunkingSize,
 } from '@/lib/calculators/bs7671-data/trunkingData';
+// Table 4C1 group rating factors — shared module, not a local copy.
+import { getGroupingFactor } from '@/lib/calculators/bs7671-data/temperatureFactors';
 
 const CAT = 'cable' as const;
 const config = CALCULATOR_CONFIG[CAT];
 
-const MAX_FILL = 45; // BS 7671 Regulation 522.8.1
+/**
+ * 45% space factor.
+ *
+ * CORRECTION: this was previously commented "BS 7671 Regulation 522.8.1". That citation is
+ * wrong. Reg 522.8.1 (BS 7671:2018+A4:2026) reads: "A wiring system shall be selected and
+ * erected to avoid, during installation, use or maintenance, damage to the sheath or
+ * insulation of cables and their terminations. The use of any lubricants that can have a
+ * detrimental effect on the cable or wiring system are not permitted." It contains no fill,
+ * capacity or percentage requirement, and a full-text search of BS 7671:2018+A4:2026 finds no
+ * trunking space factor anywhere in the standard.
+ *
+ * The 45% figure is IET On-Site Guide / long-standing industry guidance for the physical
+ * drawing-in of cables — it is NOT a BS 7671 requirement, and satisfying it does not by itself
+ * demonstrate compliance. Thermal derating is a separate step (see GROUPING note below).
+ */
+const MAX_FILL = 45;
 
 interface CableRow {
   id: string;
@@ -56,10 +73,13 @@ interface TrunkingResult {
   sizeOptions: SizeOption[];
   status: 'pass' | 'warning' | 'fail';
   statusLabel: string;
+  circuits: number;
+  groupingFactor: number;
 }
 
 const TrunkingSizeCalculator = () => {
   const [containmentType, setContainmentType] = useState<ContainmentType>('pvc-trunking');
+  const [circuits, setCircuits] = useState('1');
   const [cables, setCables] = useState<CableRow[]>([
     { id: crypto.randomUUID(), cableType: 'twin-earth', size: '2.5', quantity: 1 },
   ]);
@@ -110,6 +130,16 @@ const TrunkingSizeCalculator = () => {
     // Get available trunking sizes
     const sizes = getTrunkingSizes(containmentType);
 
+    // Cg — Table 4C1 item 1 (bunched in air, on a surface, embedded or ENCLOSED), taken from
+    // the shared bs7671-data module rather than re-typed here. Reg 523.4 requires the group
+    // rating factors of Tables 4C1–4C6 to be applied to grouped cables; Table 4A2 footnote b
+    // states that where there is more than one circuit in the trunking the Table 4C1 group
+    // rating factor is applicable "irrespective of the presence of an internal barrier or
+    // partition". Reported for information only — this calculator sizes the containment, it
+    // does not size conductors.
+    const nCircuits = Math.max(1, parseInt(circuits) || 1);
+    const groupingFactor = getGroupingFactor(nCircuits, 'bunched');
+
     if (sizes.length === 0) {
       // Cable tray/basket — no enclosed fill calculation applies
       setResult({
@@ -121,35 +151,45 @@ const TrunkingSizeCalculator = () => {
         sizeOptions: [],
         status: 'info' as 'pass',
         statusLabel: 'Cable tray/basket — fill rule does not apply in the same way',
+        circuits: nCircuits,
+        groupingFactor,
       });
       return;
     }
 
-    // Calculate fill for each size
-    const sizeOptions: SizeOption[] = sizes.map((s) => {
-      const fillPercent = (totalCableArea / s.internalArea) * 100;
-      return {
-        label: s.label,
-        internalArea: s.internalArea,
-        fillPercent,
-        fits: fillPercent <= MAX_FILL,
-      };
-    });
+    // Calculate fill for each size.
+    // FIX: getTrunkingSizes() returns arrays that are NOT ordered by internal area (PVC runs
+    // …4400 then 3900; steel runs …4200 then 3700), so the previous `fitting[0]` was the first
+    // entry that fits in declaration order, not the smallest that fits. Sort ascending by
+    // internal area so "smallest size that fits" is actually true.
+    const sizeOptions: SizeOption[] = sizes
+      .map((s) => {
+        const fillPercent = (totalCableArea / s.internalArea) * 100;
+        return {
+          label: s.label,
+          internalArea: s.internalArea,
+          fillPercent,
+          fits: fillPercent <= MAX_FILL,
+        };
+      })
+      .sort((a, b) => a.internalArea - b.internalArea);
 
     // Find recommended (smallest that fits at ≤45%)
     const fitting = sizeOptions.filter((s) => s.fits);
     const recommended = fitting.length > 0 ? fitting[0] : sizeOptions[sizeOptions.length - 1];
     const fillPercent = recommended.fillPercent;
 
-    // Status
+    // Status. Wording is deliberately "space factor (fill only)" — passing the 45% space factor
+    // is a physical drawing-in check, not a demonstration of BS 7671 compliance. Grouping
+    // derating (Reg 523.4 / Table 4C1) is a separate check and is surfaced below.
     let status: 'pass' | 'warning' | 'fail' = 'pass';
-    let statusLabel = `${fillPercent.toFixed(1)}% fill — within 45% maximum`;
+    let statusLabel = `${fillPercent.toFixed(1)}% fill — within the 45% space factor (fill only)`;
     if (fillPercent > MAX_FILL) {
       status = 'fail';
-      statusLabel = `${fillPercent.toFixed(1)}% fill — exceeds 45% maximum`;
+      statusLabel = `${fillPercent.toFixed(1)}% fill — exceeds the 45% space factor`;
     } else if (fillPercent > 40) {
       status = 'warning';
-      statusLabel = `${fillPercent.toFixed(1)}% fill — close to 45% maximum`;
+      statusLabel = `${fillPercent.toFixed(1)}% fill — close to the 45% space factor`;
     }
 
     setResult({
@@ -161,22 +201,29 @@ const TrunkingSizeCalculator = () => {
       sizeOptions,
       status,
       statusLabel,
+      circuits: nCircuits,
+      groupingFactor,
     });
   };
 
   const reset = () => {
     setContainmentType('pvc-trunking');
+    setCircuits('1');
     setCables([{ id: crypto.randomUUID(), cableType: 'twin-earth', size: '2.5', quantity: 1 }]);
     setResult(null);
   };
 
   const isTrunking = containmentType === 'pvc-trunking' || containmentType === 'steel-trunking';
 
+  // Title renamed from "Pipe & Trunking Size Calculator": conduit is explicitly out of scope
+  // (see the fill-rules panel below), and the old description "BS 7671 compliant" overstated
+  // the result — BS 7671 sets no trunking space factor, so a fill figure is not on its own a
+  // compliance statement.
   return (
     <CalculatorCard
       category={CAT}
-      title="Pipe & Trunking Size Calculator"
-      description="Calculate the minimum trunking size for your cables — BS 7671 compliant"
+      title="Trunking Size Calculator"
+      description="Work out the minimum trunking size for your cables using the 45% space factor"
     >
       <CalculatorSelect
         label="Containment Type"
@@ -187,6 +234,20 @@ const TrunkingSizeCalculator = () => {
         }}
         options={containmentTypeOptions}
       />
+
+      {isTrunking && (
+        <CalculatorInput
+          label="Circuits in this trunking"
+          type="text"
+          inputMode="numeric"
+          value={circuits}
+          onChange={(v) => {
+            setCircuits(v);
+            setResult(null);
+          }}
+          placeholder="1"
+        />
+      )}
 
       <CalculatorDivider category={CAT} />
 
@@ -298,6 +359,31 @@ const TrunkingSizeCalculator = () => {
             <ResultValue label="Cable Count" value={result.cableCount} category={CAT} size="sm" />
           </ResultsGrid>
 
+          {/*
+            Grouping (Cg). The 45% space factor is a physical drawing-in check only — it says
+            nothing about conductor temperature. Reg 523.4 requires the group rating factors of
+            Tables 4C1–4C6 to be applied to grouped cables, and Table 4A2 footnote b states that
+            where there is more than one circuit in the trunking the Table 4C1 factor applies
+            "irrespective of the presence of an internal barrier or partition". Previously a 45%
+            fill was returned as an unqualified pass with no mention of grouping at all.
+          */}
+          {isTrunking && (
+            <div className="p-3 rounded-xl border border-orange-500/30 bg-orange-500/10 space-y-2">
+              <p className="text-sm text-white">
+                <span className="font-medium">Grouping factor Cg = {result.groupingFactor.toFixed(2)}</span>{' '}
+                — Table 4C1, {result.circuits} circuit{result.circuits === 1 ? '' : 's'} bunched
+                and enclosed.
+              </p>
+              <p className="text-sm text-white">
+                Fill is a physical check only. Where more than one circuit shares the trunking,
+                Regulation 523.4 requires the Table 4C1 group rating factor to be applied to the
+                cables&apos; current-carrying capacity — and Table 4A2 note (b) confirms it
+                applies irrespective of any internal barrier or partition. Size the conductors on
+                the derated capacity separately; a fill pass is not a thermal pass.
+              </p>
+            </div>
+          )}
+
           {/* Size Options */}
           {result.sizeOptions.length > 0 && (
             <>
@@ -376,7 +462,7 @@ const TrunkingSizeCalculator = () => {
           {/* BS 7671 Fill Rules */}
           <Collapsible>
             <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2 text-sm font-medium text-white hover:text-white transition-colors touch-manipulation">
-              <span>BS 7671 Fill Rules</span>
+              <span>Where the 45% figure comes from</span>
               <ChevronDown className="h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
             </CollapsibleTrigger>
             <CollapsibleContent className="pt-2">
@@ -387,18 +473,41 @@ const TrunkingSizeCalculator = () => {
                   background: `${config.gradientFrom}05`,
                 }}
               >
+                {/*
+                  CORRECTED. The previous text attributed "cables must be installed so they are
+                  not subject to mechanical strain" to Reg 522.8.1. That requirement is
+                  Regulation 522.8.5 ("Every cable or conductor shall be supported in such a way
+                  that it is not exposed to undue mechanical strain…"). Reg 522.8.1 covers
+                  avoidance of damage to the sheath, insulation and terminations during
+                  installation, use or maintenance, plus the prohibition on detrimental
+                  lubricants. Neither regulation — nor anywhere else in BS 7671:2018+A4:2026 —
+                  states a trunking fill or space factor.
+                */}
                 <p className="text-sm text-white">
-                  <span className="font-medium">Regulation 522.8.1</span> — Cables must be installed
-                  so they are not subject to mechanical strain. Trunking fill should not exceed 45%
-                  of the internal cross-sectional area.
+                  <span className="font-medium">The 45% space factor is not in BS 7671.</span> It
+                  is IET On-Site Guide and long-standing industry guidance for drawing cables in
+                  without damage. BS 7671 sets no trunking fill percentage anywhere.
                 </p>
                 <p className="text-sm text-white">
-                  The 45% rule ensures cables can be drawn in without damage, allows for heat
-                  dissipation, and leaves space for future additions.
+                  <span className="font-medium">Regulation 522.8.1</span> — a wiring system shall
+                  be selected and erected to avoid damage to the sheath or insulation of cables
+                  and their terminations during installation, use or maintenance; lubricants that
+                  could harm the cable are not permitted.
                 </p>
                 <p className="text-sm text-white">
-                  <span className="font-medium">Space factor</span> — For conduit, the space factor
-                  is calculated differently. This calculator covers trunking only.
+                  <span className="font-medium">Regulation 522.8.5</span> — every cable shall be
+                  supported so that it is not exposed to undue mechanical strain, and so there is
+                  no appreciable strain on the terminations.
+                </p>
+                <p className="text-sm text-white">
+                  <span className="font-medium">Conduit is not covered here.</span> Conduit
+                  capacity uses a different method again — this calculator covers trunking only.
+                </p>
+                <p className="text-sm text-white">
+                  <span className="font-medium">SWA figures</span> — one representative overall
+                  diameter is held per conductor size. A 3- or 4-core cable of the same conductor
+                  size is physically larger, so check the manufacturer&apos;s dimensions before
+                  relying on the result for multicore SWA.
                 </p>
               </div>
             </CollapsibleContent>
@@ -441,6 +550,7 @@ const TrunkingSizeCalculator = () => {
 
       <FormulaReference
         category={CAT}
+        name="Trunking space factor"
         formula="Fill % = (Total Cable Area ÷ Trunking Area) × 100"
       />
       <CalculatorEditorial content={trunkingSizeContent} category={CAT} />

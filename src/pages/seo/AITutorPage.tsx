@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'Is the content kept up to date with regulation changes?',
     answer:
-      'Yes. The AI Tutor is updated to reflect the current edition of BS 7671, including Amendment 4:2024 (A4:2026, issued July 2024). When regulations change, the tutor content is updated to reflect the new requirements. It also notes where the current edition differs from previous editions, which is useful for electricians who qualified under an earlier edition and need to understand what has changed. For example, it explains the new Regulation 530.3.2 added by A4:2026 covering bidirectional and unidirectional protective devices, and how this affects installations with battery storage or solar PV. The tutor clearly distinguishes between requirements that have always been in BS 7671 and those added by recent amendments.',
+      'Yes. The AI Tutor is updated to reflect the current edition of BS 7671, including Amendment 4:2026 (A4:2026, issued July 2024). When regulations change, the tutor content is updated to reflect the new requirements. It also notes where the current edition differs from previous editions, which is useful for electricians who qualified under an earlier edition and need to understand what has changed. For example, it explains the new Regulation 530.3.2 added by A4:2026 covering bidirectional and unidirectional protective devices, and how this affects installations with battery storage or solar PV. The tutor clearly distinguishes between requirements that have always been in BS 7671 and those added by recent amendments.',
   },
 ];
 
@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
-      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 4:2024.',
+      'Complete guide to the 18th Edition of the IET Wiring Regulations including Amendment 4:2026.',
     icon: FileText,
     category: 'Guide',
   },

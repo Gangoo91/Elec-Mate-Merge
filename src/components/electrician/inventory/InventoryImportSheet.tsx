@@ -152,7 +152,7 @@ function ImportItemRow({
           <Input
             value={item.name}
             onChange={(e) => onUpdate(index, { name: e.target.value })}
-            className="h-10 text-sm touch-manipulation border-white/20 focus:border-yellow-500"
+            className="input-underline h-12 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
           />
 
           {/* Quantity + Unit row */}
@@ -161,7 +161,7 @@ function ImportItemRow({
               type="number"
               value={item.quantity}
               onChange={(e) => onUpdate(index, { quantity: parseFloat(e.target.value) || 0 })}
-              className="h-10 text-sm touch-manipulation border-white/20 focus:border-yellow-500"
+              className="input-underline h-12 w-full rounded-xl border border-white/[0.14] bg-white/[0.06] px-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/30 hover:border-white/[0.24] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none [color-scheme:dark] touch-manipulation"
               min={0}
               placeholder="Qty"
             />
@@ -186,10 +186,10 @@ function ImportItemRow({
                 type="button"
                 onClick={() => onUpdate(index, { location: l.id })}
                 className={cn(
-                  'px-2.5 py-1 rounded-full text-[11px] font-medium touch-manipulation transition-all',
+                  'flex h-11 items-center rounded-xl border px-3 text-[12.5px] transition-colors touch-manipulation',
                   item.location === l.id
-                    ? 'bg-teal-500/20 text-teal-300 border border-teal-500/30'
-                    : 'bg-white/[0.04] text-white border border-transparent'
+                    ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
+                    : 'border-white/[0.14] bg-white/[0.06] font-medium text-white hover:border-white/[0.24]'
                 )}
               >
                 {l.label}
@@ -205,7 +205,7 @@ function ImportItemRow({
                 type="button"
                 onClick={() => onUpdate(index, { category: c.id })}
                 className={cn(
-                  'px-2.5 py-1 rounded-full text-[11px] font-medium touch-manipulation transition-all',
+                  'flex h-11 items-center rounded-xl border px-3 text-[12.5px] transition-colors touch-manipulation',
                   item.category === c.id
                     ? c.pillActiveClass
                     : 'bg-white/[0.04] text-white border border-transparent'
@@ -418,9 +418,9 @@ export function InventoryImportSheet({
             type="button"
             onClick={() => setAllLocations(loc.id)}
             className={cn(
-              'flex-1 py-2 rounded-xl text-[12px] font-medium touch-manipulation transition-all text-center',
+              'flex h-11 flex-1 items-center justify-center rounded-xl border text-[12.5px] transition-colors touch-manipulation',
               defaultLocation === loc.id
-                ? 'bg-teal-500/20 text-teal-300 border border-teal-500/30'
+                ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
                 : 'bg-white/[0.04] text-white border border-transparent'
             )}
           >
@@ -433,8 +433,9 @@ export function InventoryImportSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
+      <SheetContent side="bottom"
+          className="h-[88vh] overflow-hidden rounded-t-2xl border-t border-white/[0.14] bg-[#141419] p-0 focus:outline-none focus-visible:outline-none">
+        <div className="flex h-full flex-col">
           {/* Header */}
           <div className="px-4 pt-6 pb-3">
             <h2 className="text-lg font-semibold text-white">Import / Export</h2>
@@ -478,12 +479,12 @@ export function InventoryImportSheet({
                       value={pasteText}
                       onChange={(e) => setPasteText(e.target.value)}
                       placeholder={`e.g.\n50m 2.5mm T&E\n20m 6mm T&E\n10x 32A MCB Type B\nBox of red plugs\n2x double socket outlets`}
-                      className="touch-manipulation text-base min-h-[140px] border-white/30 focus:border-yellow-500 placeholder:text-white"
+                      className="min-h-[160px] w-full resize-none rounded-xl border border-white/[0.14] bg-white/[0.06] p-3 text-base font-medium text-white caret-elec-yellow transition-colors placeholder:text-white/25 hover:border-white/[0.3] focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
                     />
                     <Button
                       onClick={handleParse}
                       disabled={isParsing || !pasteText.trim()}
-                      className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-xl touch-manipulation"
+                      className="h-11 w-full rounded-xl bg-elec-yellow font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation disabled:bg-white/[0.08] disabled:text-white/40 disabled:hover:bg-white/[0.08] disabled:cursor-not-allowed disabled:opacity-100"
                     >
                       {isParsing ? (
                         <>
@@ -581,7 +582,7 @@ export function InventoryImportSheet({
                               'w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 transition-colors',
                               selectedPBItems.has(item.id)
                                 ? 'bg-elec-yellow border-elec-yellow'
-                                : 'border-white/30'
+                                : 'border-white/[0.15]'
                             )}
                           >
                             {selectedPBItems.has(item.id) && (
@@ -629,7 +630,7 @@ export function InventoryImportSheet({
                   onClick={handleCopyText}
                   className="w-full flex items-center gap-3 p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:bg-white/[0.06] transition-colors"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.06]">
                     <FileText className="h-5 w-5 text-teal-400" />
                   </div>
                   <div className="text-left">

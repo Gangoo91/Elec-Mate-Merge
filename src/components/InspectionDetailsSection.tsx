@@ -691,6 +691,7 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
           >
             <Input
               type="date"
+              data-field="inspectionDate"
               value={formData.inspectionDate || ''}
               onChange={(e) => onUpdate('inspectionDate', e.target.value)}
               className={inputCn}
@@ -699,6 +700,7 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
           <FormField label="Next inspection">
             <Input
               type="date"
+              data-field="nextInspectionDate"
               value={formData.nextInspectionDate || ''}
               onChange={(e) => {
                 // ELE-882 — flag manual edit so the auto-calc effect stops

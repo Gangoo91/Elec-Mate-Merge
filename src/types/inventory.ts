@@ -41,64 +41,64 @@ export const INVENTORY_CATEGORIES: InventoryCategoryConfig[] = [
     label: 'Cable',
     icon: 'Cable',
     dotClass: 'bg-blue-500',
-    pillActiveClass: 'bg-blue-500/20 text-white border border-blue-500/40',
-    filterActiveClass: 'bg-blue-500/20 text-white border border-blue-500/30',
+    pillActiveClass: 'border-elec-yellow bg-elec-yellow font-semibold text-black',
+    filterActiveClass: 'border-elec-yellow bg-elec-yellow font-semibold text-black',
   },
   {
     id: 'accessories',
     label: 'Accessories',
     icon: 'Plug',
     dotClass: 'bg-cyan-500',
-    pillActiveClass: 'bg-cyan-500/20 text-white border border-cyan-500/40',
-    filterActiveClass: 'bg-cyan-500/20 text-white border border-cyan-500/30',
+    pillActiveClass: 'border-elec-yellow bg-elec-yellow font-semibold text-black',
+    filterActiveClass: 'border-elec-yellow bg-elec-yellow font-semibold text-black',
   },
   {
     id: 'fixings',
     label: 'Fixings',
     icon: 'Wrench',
     dotClass: 'bg-amber-500',
-    pillActiveClass: 'bg-amber-500/20 text-white border border-amber-500/40',
-    filterActiveClass: 'bg-amber-500/20 text-white border border-amber-500/30',
+    pillActiveClass: 'border-elec-yellow bg-elec-yellow font-semibold text-black',
+    filterActiveClass: 'border-elec-yellow bg-elec-yellow font-semibold text-black',
   },
   {
     id: 'consumer_units',
     label: 'Consumer Units',
     icon: 'LayoutGrid',
     dotClass: 'bg-purple-500',
-    pillActiveClass: 'bg-purple-500/20 text-white border border-purple-500/40',
-    filterActiveClass: 'bg-purple-500/20 text-white border border-purple-500/30',
+    pillActiveClass: 'border-elec-yellow bg-elec-yellow font-semibold text-black',
+    filterActiveClass: 'border-elec-yellow bg-elec-yellow font-semibold text-black',
   },
   {
     id: 'mcbs_rcds',
     label: 'MCBs/RCDs',
     icon: 'Zap',
     dotClass: 'bg-orange-500',
-    pillActiveClass: 'bg-orange-500/20 text-white border border-orange-500/40',
-    filterActiveClass: 'bg-orange-500/20 text-white border border-orange-500/30',
+    pillActiveClass: 'border-elec-yellow bg-elec-yellow font-semibold text-black',
+    filterActiveClass: 'border-elec-yellow bg-elec-yellow font-semibold text-black',
   },
   {
     id: 'tools',
     label: 'Tools',
     icon: 'Hammer',
     dotClass: 'bg-emerald-500',
-    pillActiveClass: 'bg-emerald-500/20 text-white border border-emerald-500/40',
-    filterActiveClass: 'bg-emerald-500/20 text-white border border-emerald-500/30',
+    pillActiveClass: 'border-elec-yellow bg-elec-yellow font-semibold text-black',
+    filterActiveClass: 'border-elec-yellow bg-elec-yellow font-semibold text-black',
   },
   {
     id: 'ppe',
     label: 'PPE',
     icon: 'HardHat',
     dotClass: 'bg-red-500',
-    pillActiveClass: 'bg-red-500/20 text-white border border-red-500/40',
-    filterActiveClass: 'bg-red-500/20 text-white border border-red-500/30',
+    pillActiveClass: 'border-elec-yellow bg-elec-yellow font-semibold text-black',
+    filterActiveClass: 'border-elec-yellow bg-elec-yellow font-semibold text-black',
   },
   {
     id: 'other',
     label: 'Other',
     icon: 'Package',
     dotClass: 'bg-gray-500',
-    pillActiveClass: 'bg-gray-500/20 text-white border border-gray-500/40',
-    filterActiveClass: 'bg-gray-500/20 text-white border border-gray-500/30',
+    pillActiveClass: 'border-elec-yellow bg-elec-yellow font-semibold text-black',
+    filterActiveClass: 'border-elec-yellow bg-elec-yellow font-semibold text-black',
   },
 ];
 
@@ -208,3 +208,31 @@ export function formatQuantity(quantity: number, unit: InventoryUnit): string {
   const label = quantity === 1 ? unitConfig.label : unitConfig.pluralLabel;
   return `${quantity} ${label}`;
 }
+
+/**
+ * A sensible "you're running out" level per unit.
+ *
+ * Low-stock alerting is the entire point of a stock tracker, and it only fires
+ * when an item has a threshold. The field sat behind a collapsed "More details"
+ * panel, so in production just 3 of 42 items had one — meaning the feature was
+ * inert for 93% of stock, and a "0 low stock" reading meant "nobody told us
+ * what low is", not "you have plenty".
+ *
+ * These are starting points, pre-filled and editable, not rules: a van carrying
+ * cable in metres runs out at a very different number from one carrying
+ * consumer units.
+ */
+export const DEFAULT_LOW_STOCK_THRESHOLD: Record<InventoryUnit, number> = {
+  each: 5,
+  metres: 25,
+  rolls: 2,
+  boxes: 2,
+  packs: 2,
+  pairs: 2,
+  sets: 2,
+  litres: 2,
+  kg: 2,
+};
+
+export const defaultThresholdFor = (unit: InventoryUnit): number =>
+  DEFAULT_LOW_STOCK_THRESHOLD[unit] ?? 5;

@@ -1,194 +1,194 @@
-import { lazy } from 'react';
+import { lazyWithRetry } from '@/utils/lazyWithRetry';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { LazyRoute } from '@/components/LazyRoute';
 import { ApprenticeTabBar } from '@/components/apprentice-hub/ApprenticeTabBar';
 
 // Lazy-loaded pages
-const ApprenticeHub = lazy(() => import('@/pages/ApprenticeHub'));
-const TodayPage = lazy(() => import('@/pages/apprentice/TodayPage'));
-const RevisionSessionPage = lazy(() => import('@/pages/apprentice/RevisionSessionPage'));
-const ApprenticeMentalHealth = lazy(() => import('@/pages/MentalHealthHub'));
-const RightsAndPay = lazy(() => import('@/pages/apprentice/RightsAndPay'));
-const MyCollegePlanPage = lazy(() => import('@/pages/apprentice/MyCollegePlanPage'));
-const MyCollegeSectionPage = lazy(() => import('@/pages/apprentice/MyCollegeSectionPage'));
-const VoiceSurveyPage = lazy(() => import('@/pages/apprentice/VoiceSurveyPage'));
-const CollegeAiPage = lazy(() => import('@/pages/apprentice/CollegeAiPage'));
-const RightsWages = lazy(() => import('@/pages/apprentice/rights-guide/WagesPage'));
-const RightsYourRights = lazy(() => import('@/pages/apprentice/rights-guide/RightsPage'));
-const RightsSupport = lazy(() => import('@/pages/apprentice/rights-guide/SupportPage'));
-const RightsTools = lazy(() => import('@/pages/apprentice/rights-guide/ToolsPage'));
-const OnJobTools = lazy(() => import('@/pages/apprentice/OnJobTools'));
-const OnJobCalculations = lazy(() => import('@/pages/apprentice/OnJobCalculations'));
-const OnJobSafetyCases = lazy(() => import('@/pages/apprentice/OnJobSafetyCases'));
-const OnJobWorkplaceCulture = lazy(() => import('@/pages/apprentice/OnJobWorkplaceCulture'));
-const TestingProcedures = lazy(() => import('@/pages/apprentice/TestingProcedures'));
-const OnJobAssessment = lazy(() => import('@/pages/apprentice/OnJobAssessment'));
-const OnJobBS7671RunThrough = lazy(() => import('@/pages/apprentice/OnJobBS7671RunThrough'));
-const OnJobSupervisorKnowledge = lazy(() => import('@/pages/apprentice/OnJobSupervisorKnowledge'));
-const OnJobFlashcards = lazy(() => import('@/pages/apprentice/OnJobFlashcards'));
-const ApprenticeToolbox = lazy(() => import('@/pages/apprentice/ApprenticeToolbox'));
-const ProfessionalDevelopment = lazy(() => import('@/pages/apprentice/ProfessionalDevelopment'));
-const CareerPathwaysPage = lazy(
+const ApprenticeHub = lazyWithRetry(() => import('@/pages/ApprenticeHub'));
+const TodayPage = lazyWithRetry(() => import('@/pages/apprentice/TodayPage'));
+const RevisionSessionPage = lazyWithRetry(() => import('@/pages/apprentice/RevisionSessionPage'));
+const ApprenticeMentalHealth = lazyWithRetry(() => import('@/pages/MentalHealthHub'));
+const RightsAndPay = lazyWithRetry(() => import('@/pages/apprentice/RightsAndPay'));
+const MyCollegePlanPage = lazyWithRetry(() => import('@/pages/apprentice/MyCollegePlanPage'));
+const MyCollegeSectionPage = lazyWithRetry(() => import('@/pages/apprentice/MyCollegeSectionPage'));
+const VoiceSurveyPage = lazyWithRetry(() => import('@/pages/apprentice/VoiceSurveyPage'));
+const CollegeAiPage = lazyWithRetry(() => import('@/pages/apprentice/CollegeAiPage'));
+const RightsWages = lazyWithRetry(() => import('@/pages/apprentice/rights-guide/WagesPage'));
+const RightsYourRights = lazyWithRetry(() => import('@/pages/apprentice/rights-guide/RightsPage'));
+const RightsSupport = lazyWithRetry(() => import('@/pages/apprentice/rights-guide/SupportPage'));
+const RightsTools = lazyWithRetry(() => import('@/pages/apprentice/rights-guide/ToolsPage'));
+const OnJobTools = lazyWithRetry(() => import('@/pages/apprentice/OnJobTools'));
+const OnJobCalculations = lazyWithRetry(() => import('@/pages/apprentice/OnJobCalculations'));
+const OnJobSafetyCases = lazyWithRetry(() => import('@/pages/apprentice/OnJobSafetyCases'));
+const OnJobWorkplaceCulture = lazyWithRetry(() => import('@/pages/apprentice/OnJobWorkplaceCulture'));
+const TestingProcedures = lazyWithRetry(() => import('@/pages/apprentice/TestingProcedures'));
+const OnJobAssessment = lazyWithRetry(() => import('@/pages/apprentice/OnJobAssessment'));
+const OnJobBS7671RunThrough = lazyWithRetry(() => import('@/pages/apprentice/OnJobBS7671RunThrough'));
+const OnJobSupervisorKnowledge = lazyWithRetry(() => import('@/pages/apprentice/OnJobSupervisorKnowledge'));
+const OnJobFlashcards = lazyWithRetry(() => import('@/pages/apprentice/OnJobFlashcards'));
+const ApprenticeToolbox = lazyWithRetry(() => import('@/pages/apprentice/ApprenticeToolbox'));
+const ProfessionalDevelopment = lazyWithRetry(() => import('@/pages/apprentice/ProfessionalDevelopment'));
+const CareerPathwaysPage = lazyWithRetry(
   () => import('@/pages/apprentice/professional-development/CareerPathways')
 );
-const CertificationsPage = lazy(
+const CertificationsPage = lazyWithRetry(
   () => import('@/pages/apprentice/professional-development/Certifications')
 );
-const ProfessionalSkillsPage = lazy(
+const ProfessionalSkillsPage = lazyWithRetry(
   () => import('@/pages/apprentice/professional-development/ProfessionalSkills')
 );
-const ContinuingEducationPage = lazy(
+const ContinuingEducationPage = lazyWithRetry(
   () => import('@/pages/apprentice/professional-development/ContinuingEducation')
 );
-const IndustryNetworkingPage = lazy(
+const IndustryNetworkingPage = lazyWithRetry(
   () => import('@/pages/apprentice/professional-development/IndustryNetworking')
 );
-const AdvancedHelp = lazy(() => import('@/pages/apprentice/AdvancedHelp'));
-const ProfessionalToolGuide = lazy(() => import('@/pages/apprentice/ProfessionalToolGuide'));
-const PortfolioBuilding = lazy(() => import('@/pages/apprentice/toolbox/PortfolioBuilding'));
-const ToolsGuide = lazy(() => import('@/pages/apprentice/toolbox/ToolsGuide'));
-const ElectricalInstallationGuides = lazy(
+const AdvancedHelp = lazyWithRetry(() => import('@/pages/apprentice/AdvancedHelp'));
+const ProfessionalToolGuide = lazyWithRetry(() => import('@/pages/apprentice/ProfessionalToolGuide'));
+const PortfolioBuilding = lazyWithRetry(() => import('@/pages/apprentice/toolbox/PortfolioBuilding'));
+const ToolsGuide = lazyWithRetry(() => import('@/pages/apprentice/toolbox/ToolsGuide'));
+const ElectricalInstallationGuides = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/ElectricalInstallationGuides')
 );
-const CommercialInstallations = lazy(
+const CommercialInstallations = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/CommercialInstallations')
 );
-const IndustrialInstallations = lazy(
+const IndustrialInstallations = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/IndustrialInstallations')
 );
-const DomesticInstallations = lazy(() => import('@/pages/apprentice/DomesticInstallations'));
-const SpecialistInstallations = lazy(() => import('@/pages/apprentice/SpecialistInstallations'));
-const CommunicationSkills = lazy(() => import('@/pages/apprentice/toolbox/CommunicationSkills'));
-const CommsWorkplace = lazy(
+const DomesticInstallations = lazyWithRetry(() => import('@/pages/apprentice/DomesticInstallations'));
+const SpecialistInstallations = lazyWithRetry(() => import('@/pages/apprentice/SpecialistInstallations'));
+const CommunicationSkills = lazyWithRetry(() => import('@/pages/apprentice/toolbox/CommunicationSkills'));
+const CommsWorkplace = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/communication-guide/WorkplacePage')
 );
-const CommsProfessionalSkills = lazy(
+const CommsProfessionalSkills = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/communication-guide/ProfessionalSkillsPage')
 );
-const CommsDifficultSituations = lazy(
+const CommsDifficultSituations = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/communication-guide/DifficultSituationsPage')
 );
-const CommsToolsTips = lazy(
+const CommsToolsTips = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/communication-guide/ToolsTipsPage')
 );
-const StudyTips = lazy(() => import('@/pages/apprentice/toolbox/StudyTips'));
-const StudyFundamentals = lazy(
+const StudyTips = lazyWithRetry(() => import('@/pages/apprentice/toolbox/StudyTips'));
+const StudyFundamentals = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/study-guide/FundamentalsPage')
 );
-const StudyExamStrategies = lazy(
+const StudyExamStrategies = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/study-guide/ExamStrategiesPage')
 );
-const StudyRevision = lazy(() => import('@/pages/apprentice/toolbox/study-guide/RevisionPage'));
-const StudyTime = lazy(() => import('@/pages/apprentice/toolbox/study-guide/StudyTimePage'));
-const StudyResources = lazy(() => import('@/pages/apprentice/toolbox/study-guide/ResourcesPage'));
-const StudyPsychology = lazy(() => import('@/pages/apprentice/toolbox/study-guide/PsychologyPage'));
-const LearningFromMistakes = lazy(() => import('@/pages/apprentice/toolbox/LearningFromMistakes'));
-const MistakeCategories = lazy(
+const StudyRevision = lazyWithRetry(() => import('@/pages/apprentice/toolbox/study-guide/RevisionPage'));
+const StudyTime = lazyWithRetry(() => import('@/pages/apprentice/toolbox/study-guide/StudyTimePage'));
+const StudyResources = lazyWithRetry(() => import('@/pages/apprentice/toolbox/study-guide/ResourcesPage'));
+const StudyPsychology = lazyWithRetry(() => import('@/pages/apprentice/toolbox/study-guide/PsychologyPage'));
+const LearningFromMistakes = lazyWithRetry(() => import('@/pages/apprentice/toolbox/LearningFromMistakes'));
+const MistakeCategories = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/mistakes-guide/CategoriesPage')
 );
-const MistakeRecovery = lazy(
+const MistakeRecovery = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/mistakes-guide/RecoveryPage')
 );
-const MistakeResilience = lazy(
+const MistakeResilience = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/mistakes-guide/ResiliencePage')
 );
-const MistakeCaseStudies = lazy(
+const MistakeCaseStudies = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/mistakes-guide/CaseStudiesPage')
 );
-const MistakePrevention = lazy(
+const MistakePrevention = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/mistakes-guide/PreventionPage')
 );
-const MistakeSupport = lazy(() => import('@/pages/apprentice/toolbox/mistakes-guide/SupportPage'));
-const TimeManagement = lazy(() => import('@/pages/apprentice/toolbox/TimeManagement'));
-const TimeFundamentals = lazy(
+const MistakeSupport = lazyWithRetry(() => import('@/pages/apprentice/toolbox/mistakes-guide/SupportPage'));
+const TimeManagement = lazyWithRetry(() => import('@/pages/apprentice/toolbox/TimeManagement'));
+const TimeFundamentals = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/time-guide/FundamentalsPage')
 );
-const TimeScheduling = lazy(() => import('@/pages/apprentice/toolbox/time-guide/SchedulingPage'));
-const TimeStress = lazy(() => import('@/pages/apprentice/toolbox/time-guide/StressPage'));
-const TimeBalance = lazy(() => import('@/pages/apprentice/toolbox/time-guide/BalancePage'));
-const TimeProductivity = lazy(
+const TimeScheduling = lazyWithRetry(() => import('@/pages/apprentice/toolbox/time-guide/SchedulingPage'));
+const TimeStress = lazyWithRetry(() => import('@/pages/apprentice/toolbox/time-guide/StressPage'));
+const TimeBalance = lazyWithRetry(() => import('@/pages/apprentice/toolbox/time-guide/BalancePage'));
+const TimeProductivity = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/time-guide/ProductivityPage')
 );
-const TimeInteractive = lazy(() => import('@/pages/apprentice/toolbox/time-guide/InteractivePage'));
-const ApprenticeshipExpectations = lazy(
+const TimeInteractive = lazyWithRetry(() => import('@/pages/apprentice/toolbox/time-guide/InteractivePage'));
+const ApprenticeshipExpectations = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/ApprenticeshipExpectations')
 );
-const OffJobTrainingGuide = lazy(() => import('@/pages/apprentice/toolbox/OffJobTrainingGuide'));
-const OJTWhatCounts = lazy(() => import('@/pages/apprentice/toolbox/ojt-guide/WhatCountsPage'));
-const OJTEvidence = lazy(() => import('@/pages/apprentice/toolbox/ojt-guide/EvidencePage'));
-const OJTPlanning = lazy(() => import('@/pages/apprentice/toolbox/ojt-guide/PlanningPage'));
-const OJTDelivery = lazy(() => import('@/pages/apprentice/toolbox/ojt-guide/DeliveryPage'));
-const OJTRights = lazy(() => import('@/pages/apprentice/toolbox/ojt-guide/RightsPage'));
-const OJTAssessment = lazy(() => import('@/pages/apprentice/toolbox/ojt-guide/AssessmentPage'));
-const OJTFAQs = lazy(() => import('@/pages/apprentice/toolbox/ojt-guide/FAQsPage'));
-const SiteJargon = lazy(() => import('@/pages/apprentice/toolbox/SiteJargon'));
-const JargonCategory = lazy(
+const OffJobTrainingGuide = lazyWithRetry(() => import('@/pages/apprentice/toolbox/OffJobTrainingGuide'));
+const OJTWhatCounts = lazyWithRetry(() => import('@/pages/apprentice/toolbox/ojt-guide/WhatCountsPage'));
+const OJTEvidence = lazyWithRetry(() => import('@/pages/apprentice/toolbox/ojt-guide/EvidencePage'));
+const OJTPlanning = lazyWithRetry(() => import('@/pages/apprentice/toolbox/ojt-guide/PlanningPage'));
+const OJTDelivery = lazyWithRetry(() => import('@/pages/apprentice/toolbox/ojt-guide/DeliveryPage'));
+const OJTRights = lazyWithRetry(() => import('@/pages/apprentice/toolbox/ojt-guide/RightsPage'));
+const OJTAssessment = lazyWithRetry(() => import('@/pages/apprentice/toolbox/ojt-guide/AssessmentPage'));
+const OJTFAQs = lazyWithRetry(() => import('@/pages/apprentice/toolbox/ojt-guide/FAQsPage'));
+const SiteJargon = lazyWithRetry(() => import('@/pages/apprentice/toolbox/SiteJargon'));
+const JargonCategory = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/jargon-guide/JargonCategoryPage')
 );
-const JargonStudy = lazy(() => import('@/pages/apprentice/toolbox/jargon-guide/JargonStudyPage'));
-const ApprenticeshipFunding = lazy(
+const JargonStudy = lazyWithRetry(() => import('@/pages/apprentice/toolbox/jargon-guide/JargonStudyPage'));
+const ApprenticeshipFunding = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/ApprenticeshipFunding')
 );
-const FundingModels = lazy(
+const FundingModels = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/funding-guide/FundingModelsPage')
 );
-const FundingGrants = lazy(() => import('@/pages/apprentice/toolbox/funding-guide/GrantsPage'));
-const FundingEmployerInfo = lazy(
+const FundingGrants = lazyWithRetry(() => import('@/pages/apprentice/toolbox/funding-guide/GrantsPage'));
+const FundingEmployerInfo = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/funding-guide/EmployerInfoPage')
 );
-const FundingYourRights = lazy(
+const FundingYourRights = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/funding-guide/YourRightsPage')
 );
-const FundingFAQs = lazy(() => import('@/pages/apprentice/toolbox/funding-guide/FundingFAQsPage'));
-const PortfolioGettingStarted = lazy(
+const FundingFAQs = lazyWithRetry(() => import('@/pages/apprentice/toolbox/funding-guide/FundingFAQsPage'));
+const PortfolioGettingStarted = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/portfolio-guide/GettingStartedPage')
 );
-const PortfolioStructure = lazy(
+const PortfolioStructure = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/portfolio-guide/StructurePage')
 );
-const PortfolioEvidence = lazy(
+const PortfolioEvidence = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/portfolio-guide/EvidencePage')
 );
-const PortfolioReflective = lazy(
+const PortfolioReflective = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/portfolio-guide/ReflectivePracticePage')
 );
-const PortfolioIndustry = lazy(
+const PortfolioIndustry = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/portfolio-guide/IndustryGuidancePage')
 );
-const EndPointAssessment = lazy(() => import('@/pages/apprentice/toolbox/EndPointAssessment'));
-const EPAComponents = lazy(() => import('@/pages/apprentice/toolbox/epa-guide/ComponentsPage'));
-const EPAGrading = lazy(() => import('@/pages/apprentice/toolbox/epa-guide/GradingPage'));
-const EPAPreparation = lazy(() => import('@/pages/apprentice/toolbox/epa-guide/PreparationPage'));
-const EPAGateway = lazy(() => import('@/pages/apprentice/toolbox/epa-guide/GatewayPage'));
-const EPAMistakesAndTips = lazy(
+const EndPointAssessment = lazyWithRetry(() => import('@/pages/apprentice/toolbox/EndPointAssessment'));
+const EPAComponents = lazyWithRetry(() => import('@/pages/apprentice/toolbox/epa-guide/ComponentsPage'));
+const EPAGrading = lazyWithRetry(() => import('@/pages/apprentice/toolbox/epa-guide/GradingPage'));
+const EPAPreparation = lazyWithRetry(() => import('@/pages/apprentice/toolbox/epa-guide/PreparationPage'));
+const EPAGateway = lazyWithRetry(() => import('@/pages/apprentice/toolbox/epa-guide/GatewayPage'));
+const EPAMistakesAndTips = lazyWithRetry(
   () => import('@/pages/apprentice/toolbox/epa-guide/MistakesAndTipsPage')
 );
-const Year1 = lazy(() => import('@/pages/apprentice/toolbox/apprenticeship-expectations/Year1'));
-const Year2 = lazy(() => import('@/pages/apprentice/toolbox/apprenticeship-expectations/Year2'));
-const Year3 = lazy(() => import('@/pages/apprentice/toolbox/apprenticeship-expectations/Year3'));
-const Year4 = lazy(() => import('@/pages/apprentice/toolbox/apprenticeship-expectations/Year4'));
-const SafetyFundamentals = lazy(() => import('@/pages/apprentice/SafetyFundamentals'));
-const SafeIsolation = lazy(() => import('@/pages/apprentice/safety-guide/SafeIsolationPage'));
-const PPEEquipment = lazy(() => import('@/pages/apprentice/safety-guide/PPEEquipmentPage'));
-const WorkingAtHeight = lazy(() => import('@/pages/apprentice/safety-guide/WorkingAtHeightPage'));
-const EmergencyProcedures = lazy(
+const Year1 = lazyWithRetry(() => import('@/pages/apprentice/toolbox/apprenticeship-expectations/Year1'));
+const Year2 = lazyWithRetry(() => import('@/pages/apprentice/toolbox/apprenticeship-expectations/Year2'));
+const Year3 = lazyWithRetry(() => import('@/pages/apprentice/toolbox/apprenticeship-expectations/Year3'));
+const Year4 = lazyWithRetry(() => import('@/pages/apprentice/toolbox/apprenticeship-expectations/Year4'));
+const SafetyFundamentals = lazyWithRetry(() => import('@/pages/apprentice/SafetyFundamentals'));
+const SafeIsolation = lazyWithRetry(() => import('@/pages/apprentice/safety-guide/SafeIsolationPage'));
+const PPEEquipment = lazyWithRetry(() => import('@/pages/apprentice/safety-guide/PPEEquipmentPage'));
+const WorkingAtHeight = lazyWithRetry(() => import('@/pages/apprentice/safety-guide/WorkingAtHeightPage'));
+const EmergencyProcedures = lazyWithRetry(
   () => import('@/pages/apprentice/safety-guide/EmergencyProceduresPage')
 );
-const RiskAssessment = lazy(() => import('@/pages/apprentice/safety-guide/RiskAssessmentPage'));
-const SiteSafetyRules = lazy(() => import('@/pages/apprentice/safety-guide/SiteSafetyRulesPage'));
-const InspectionTesting = lazy(() => import('@/pages/apprentice/InspectionTesting'));
-const InspectionTestingHubPage = lazy(() => import('@/pages/apprentice/LearningHubPage'));
-const UnifiedApprenticeHub = lazy(() => import('@/pages/apprentice/UnifiedApprenticeHub'));
+const RiskAssessment = lazyWithRetry(() => import('@/pages/apprentice/safety-guide/RiskAssessmentPage'));
+const SiteSafetyRules = lazyWithRetry(() => import('@/pages/apprentice/safety-guide/SiteSafetyRulesPage'));
+const InspectionTesting = lazyWithRetry(() => import('@/pages/apprentice/InspectionTesting'));
+const InspectionTestingHubPage = lazyWithRetry(() => import('@/pages/apprentice/LearningHubPage'));
+const UnifiedApprenticeHub = lazyWithRetry(() => import('@/pages/apprentice/UnifiedApprenticeHub'));
 // Retired: /apprentice/portfolio-hub now redirects to /apprentice/hub.
 // The unified workspace at /apprentice/hub (UnifiedApprenticeHub) is the
 // single source of truth for portfolio work — keeps deep links pointing
 // to the right place.
-const OJTHub = lazy(() => import('@/pages/apprentice/ojt-hub/OJTHub'));
-const LearningVideos = lazy(() => import('@/pages/apprentice/LearningVideos'));
-const SiteDiary = lazy(() => import('@/pages/apprentice/SiteDiary'));
-const EPASimulator = lazy(() => import('@/pages/apprentice/epa/EPASimulator'));
-const AM2Simulator = lazy(() => import('@/pages/apprentice/am2/AM2Simulator'));
-const TakeQuizPage = lazy(() => import('@/pages/apprentice/TakeQuizPage'));
+const OJTHub = lazyWithRetry(() => import('@/pages/apprentice/ojt-hub/OJTHub'));
+const LearningVideos = lazyWithRetry(() => import('@/pages/apprentice/LearningVideos'));
+const SiteDiary = lazyWithRetry(() => import('@/pages/apprentice/SiteDiary'));
+const EPASimulator = lazyWithRetry(() => import('@/pages/apprentice/epa/EPASimulator'));
+const AM2Simulator = lazyWithRetry(() => import('@/pages/apprentice/am2/AM2Simulator'));
+const TakeQuizPage = lazyWithRetry(() => import('@/pages/apprentice/TakeQuizPage'));
 
 const ApprenticeRoutes = () => (
   <>

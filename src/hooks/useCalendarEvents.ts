@@ -10,6 +10,22 @@ import type {
 } from '@/types/calendar';
 
 /**
+ * Ids this tab has just written.
+ *
+ * The realtime INSERT handler announces new events, which is right when one
+ * arrives from somewhere else — a public booking, the AI agent, another device
+ * — and wrong when you just tapped Create yourself: the mutation already
+ * toasted "Event created", so you got told twice about your own action.
+ * Ids are dropped after a beat; the set never grows.
+ */
+const locallyCreatedIds = new Set<string>();
+
+function noteLocalEvent(id: string) {
+  locallyCreatedIds.add(id);
+  setTimeout(() => locallyCreatedIds.delete(id), 10_000);
+}
+
+/**
  * Subscribe to calendar_events realtime changes and invalidate React Query cache.
  * Call this from any component that renders calendar data (e.g. CalendarPageContent).
  */
@@ -38,11 +54,14 @@ export function useCalendarRealtimeInvalidation() {
           },
           (payload) => {
             const evt = payload.new as Record<string, unknown>;
-            toast({
-              title: 'New event',
-              description: (evt.title as string) || 'Calendar event added',
-              duration: 4000,
-            });
+            const id = evt.id as string;
+            if (!locallyCreatedIds.has(id)) {
+              toast({
+                title: 'New event',
+                description: (evt.title as string) || 'Calendar event added',
+                duration: 4000,
+              });
+            }
             queryClient.invalidateQueries({ queryKey: ['calendar-events'] });
           }
         )
@@ -97,16 +116,27 @@ export function useCalendarEvents(dateFrom: string, dateTo: string) {
           `
           *,
           customer:customers(id, name),
-          job:employer_jobs(id, title)
+          job:employer_jobs(id, title),
+          project:spark_projects(id, title)
         `
         )
         .eq('user_id', user.id)
-        .gte('start_at', dateFrom)
+        // OVERLAP, not "starts inside". Filtering on start_at alone dropped
+        // every event that began before the window — a job running Sat–Tue
+        // simply vanished from the week you opened on the Monday. An event is
+        // in range when it starts before the window ends AND ends after the
+        // window begins.
         .lte('start_at', dateTo)
+        .gte('end_at', dateFrom)
         .order('start_at', { ascending: true });
 
       if (error) throw error;
-      return (data ?? []) as CalendarEvent[];
+      // Through `unknown`: types.ts predates the project_id FK, so the generated
+      // types resolve the `project:spark_projects(...)` embed to a
+      // SelectQueryError rather than a row. The embed is valid — the FK exists
+      // (calendar_events_project_id_fkey) — only the checked-in types are stale.
+      // Drop the double cast when types.ts is regenerated.
+      return (data ?? []) as unknown as CalendarEvent[];
     },
     enabled: !!dateFrom && !!dateTo,
     staleTime: 30_000,
@@ -141,28 +171,51 @@ export function useTodayEvents() {
           `
           *,
           customer:customers(id, name),
-          job:employer_jobs(id, title)
+          job:employer_jobs(id, title),
+          project:spark_projects(id, title)
         `
         )
         .eq('user_id', user.id)
-        .gte('start_at', startOfDay)
+        // Overlap — a job that started yesterday and runs through today is on
+        // today. See the note in useCalendarEvents.
         .lte('start_at', endOfDay)
+        .gte('end_at', startOfDay)
         .order('start_at', { ascending: true });
 
       if (error) throw error;
-      return (data ?? []) as CalendarEvent[];
+      // Through `unknown`: types.ts predates the project_id FK, so the generated
+      // types resolve the `project:spark_projects(...)` embed to a
+      // SelectQueryError rather than a row. The embed is valid — the FK exists
+      // (calendar_events_project_id_fkey) — only the checked-in types are stale.
+      // Drop the double cast when types.ts is regenerated.
+      return (data ?? []) as unknown as CalendarEvent[];
     },
     staleTime: 30_000,
   });
 }
 
-// Fetch upcoming events (next N days)
+/**
+ * Events from the start of today to `days` ahead.
+ *
+ * Anchored to midnight rather than to `now` so the window is stable across a
+ * render and a job already under way still counts as on. Feeds the summary
+ * strip, which has to read the same whichever month the grid is showing.
+ */
 export function useUpcomingEvents(days: number = 7) {
-  const now = new Date().toISOString();
-  const future = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString();
+  const today = new Date();
+  const from = new Date(today.getFullYear(), today.getMonth(), today.getDate()).toISOString();
+  const to = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + days,
+    23,
+    59,
+    59,
+    999
+  ).toISOString();
 
   return useQuery({
-    queryKey: ['calendar-events', 'upcoming', days],
+    queryKey: ['calendar-events', 'upcoming', days, from],
     queryFn: async (): Promise<CalendarEvent[]> => {
       const {
         data: { user },
@@ -175,16 +228,22 @@ export function useUpcomingEvents(days: number = 7) {
           `
           *,
           customer:customers(id, name),
-          job:employer_jobs(id, title)
+          job:employer_jobs(id, title),
+          project:spark_projects(id, title)
         `
         )
         .eq('user_id', user.id)
-        .gte('start_at', now)
-        .lte('start_at', future)
+        .lte('start_at', to)
+        .gte('end_at', from)
         .order('start_at', { ascending: true });
 
       if (error) throw error;
-      return (data ?? []) as CalendarEvent[];
+      // Through `unknown`: types.ts predates the project_id FK, so the generated
+      // types resolve the `project:spark_projects(...)` embed to a
+      // SelectQueryError rather than a row. The embed is valid — the FK exists
+      // (calendar_events_project_id_fkey) — only the checked-in types are stale.
+      // Drop the double cast when types.ts is regenerated.
+      return (data ?? []) as unknown as CalendarEvent[];
     },
     staleTime: 30_000,
   });
@@ -211,6 +270,13 @@ export function useCreateCalendarEvent() {
 
       const syncStatus = tokenData?.sync_enabled ? 'pending_push' : 'local_only';
 
+      // Id minted here rather than by the database so it can be registered as
+      // ours BEFORE the row exists. Realtime is quick enough to deliver the
+      // INSERT ahead of this promise resolving, and a note written in onSuccess
+      // would land after the toast it was meant to suppress.
+      const id = crypto.randomUUID();
+      noteLocalEvent(id);
+
       // `as never`: types.ts predates migration 20260805150000, so it does not
       // know calendar_events.project_id exists (ELE-1472). Cast at the boundary
       // rather than reaching for `any`. Drop when types.ts is regenerated.
@@ -218,6 +284,7 @@ export function useCreateCalendarEvent() {
         .from('calendar_events')
         .insert({
           ...input,
+          id,
           user_id: user.id,
           sync_status: syncStatus,
         } as never)

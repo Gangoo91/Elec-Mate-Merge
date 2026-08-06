@@ -154,15 +154,27 @@ export default function VATSchemeComparisonPage() {
               <p>
                 The flat rate scheme simplifies VAT by allowing you to pay HMRC a fixed percentage
                 of your gross (VAT-inclusive) turnover, instead of tracking VAT on every individual
-                purchase. For electrical services, the flat rate is{' '}
-                <strong className="text-yellow-400">16.5%</strong> of your gross turnover. In your
-                first year of VAT registration, you receive a 1% discount, reducing it to 15.5%.
+                purchase. There is no electrician sector — HMRC classes you by how much material
+                you supply. Most electricians who supply materials use{' '}
+                <strong className="text-yellow-400">9.5%</strong> (general building or construction
+                services); labour-only electricians, with materials under 10% of turnover, use{' '}
+                <strong className="text-yellow-400">14.5%</strong>. Take 1 percentage point off in
+                your first year of VAT registration.
+              </p>
+              <p>
+                If your goods cost less than 2% of turnover, or less than £1,000 a year, you are a{' '}
+                <strong className="text-yellow-400">limited cost business</strong> and must use
+                16.5% instead — HMRC gives you no choice, and it is high enough that the scheme
+                rarely pays at that point.
               </p>
               <p>
                 <strong className="text-yellow-400">Example:</strong> You invoice £30,000 plus
-                £6,000 VAT (£36,000 gross) in a quarter. Under the flat rate scheme, you pay HMRC
-                16.5% of £36,000 = £5,940. Under standard rate with the same purchases as above, you
-                would pay £4,140. In this example, standard rate is cheaper by £1,800.
+                £6,000 VAT (£36,000 gross) in a quarter, having bought £9,300 of materials. Those
+                materials are 31% of turnover, so you are in the 9.5% band. You pay HMRC 9.5% of
+                £36,000 = £3,420. Under standard accounting you would pay £6,000 output VAT less
+                £1,860 input VAT = £4,140. Here the flat rate scheme is cheaper by £720 — but the
+                more materials you buy, the more standard accounting wins, because on the flat rate
+                you cannot reclaim any of that input VAT.
               </p>
               <p>
                 <strong className="text-yellow-400">When flat rate can save money:</strong> The flat

@@ -3,6 +3,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import DefectObservationsList from './DefectObservationsList';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
+import RaiseRemedialItemsSheet from '@/components/inspection/RaiseRemedialItemsSheet';
 
 const cardCn =
   '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
@@ -77,6 +78,7 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
   ) => {
     const haptic = useHaptic();
     const [isOpen, setIsOpen] = useState(defaultOpen);
+    const [raiseOpen, setRaiseOpen] = useState(false);
 
     const handleAddObservation = () => {
       haptic.light();
@@ -99,6 +101,11 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
     const unrectifiedCodeable = codeableObs.filter((obs) => !obs.rectified);
     const showMarkAllRectified = codeableObs.length >= 2 && unrectifiedCodeable.length > 0;
 
+    // Anything coded and not yet put right is outstanding remedial work.
+    const outstandingCount = defectObservations.filter(
+      (obs) => !obs.rectified && obs.defectCode !== 'N/A' && obs.defectCode !== 'LIM'
+    ).length;
+
     const handleMarkAllRectified = () => {
       haptic.success();
       unrectifiedCodeable.forEach((obs) => {
@@ -108,6 +115,14 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
 
     return (
       <div ref={ref}>
+        <RaiseRemedialItemsSheet
+          open={raiseOpen}
+          onOpenChange={setRaiseOpen}
+          reportId={reportId}
+          observations={defectObservations}
+          customerName={certificateContext?.clientName}
+          location={certificateContext?.installationAddress}
+        />
         <section className={cardCn}>
           <Collapsible
             open={isOpen}
@@ -174,6 +189,27 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
                     className="h-11 w-full rounded-xl border border-white/[0.12] bg-white/[0.06] text-sm font-medium text-white transition-all touch-manipulation active:scale-[0.98] sm:w-auto sm:px-6"
                   >
                     Mark all rectified
+                  </button>
+                )}
+
+                {/*
+                  A coded observation IS remedial work: found, classified, and
+                  someone has to go back and put it right. It was being captured
+                  properly here and going no further — 1,846 coded defects across
+                  the certificates against 23 hand-typed snags. Raising them
+                  writes tasks tagged `snagging`, so they land on the Snagging
+                  page and, if a job is chosen, on that job's task list too.
+                */}
+                {outstandingCount > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      haptic.light();
+                      setRaiseOpen(true);
+                    }}
+                    className="h-11 w-full rounded-xl border border-elec-yellow/40 bg-elec-yellow/[0.10] text-sm font-semibold text-white transition-colors touch-manipulation hover:bg-elec-yellow/[0.14] active:scale-[0.98] sm:w-auto sm:px-6"
+                  >
+                    Raise {outstandingCount} as remedial work
                   </button>
                 )}
 

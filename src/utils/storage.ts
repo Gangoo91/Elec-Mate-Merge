@@ -116,19 +116,33 @@ export function storageGetSync(key: string): string | null {
   }
 }
 
-export function storageSetSync(key: string, value: string): void {
+/**
+ * Returns `false` when the write did not land (web quota exceeded).
+ *
+ * This used to swallow every error silently. Callers that store large payloads
+ * — the Room Planner keeps base64 room images — would blow the ~5MB localStorage
+ * quota and carry on showing a success toast while nothing had been written.
+ * A silent failure that reports success is worse than a loud one.
+ *
+ * On native the write is fire-and-forget through Capacitor Preferences (no
+ * practical quota), so this always reports `true`; a persist failure is logged.
+ */
+export function storageSetSync(key: string, value: string): boolean {
   if (isNative) {
     cache.set(key, value);
     // Fire-and-forget persist to native storage
     Preferences.set({ key, value }).catch((err) =>
       console.warn('[storage] setSync persist failed:', err)
     );
-    return;
+    return true;
   }
   try {
     localStorage.setItem(key, value);
-  } catch {
-    // ignore
+    return true;
+  } catch (e: unknown) {
+    const name = (e as { name?: string } | null)?.name;
+    console.warn(`[storage] setSync failed for key "${key}"`, name ?? e);
+    return false;
   }
 }
 
@@ -159,6 +173,7 @@ export function storageGetJSONSync<T>(key: string, defaultValue: T): T {
   }
 }
 
-export function storageSetJSONSync<T>(key: string, value: T): void {
-  storageSetSync(key, JSON.stringify(value));
+/** Returns `false` when the write did not land — see `storageSetSync`. */
+export function storageSetJSONSync<T>(key: string, value: T): boolean {
+  return storageSetSync(key, JSON.stringify(value));
 }

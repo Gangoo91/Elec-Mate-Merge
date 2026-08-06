@@ -342,7 +342,7 @@ export default function BatteryBackupCalculatorPage() {
                   of the mains supply.
                 </li>
               </ul>
-              <p className="mt-4 text-sm text-white/70">
+              <p className="mt-4 text-sm text-white">
                 For domestic installations, Reg 570.6.7.203 additionally requires that stationary
                 secondary batteries in dwellings are installed in a suitable location in accordance
                 with the manufacturer&apos;s instructions and PAS 63100. For non-dwelling premises,

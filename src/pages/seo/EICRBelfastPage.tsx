@@ -41,7 +41,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A4:2026 (Section 631). Belfast electricians use the same technical standard as the rest of the UK.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A4:2026 (Chapter 65). Belfast electricians use the same technical standard as the rest of the UK.",
   'Belfast EICR costs are among the most affordable in the UK. Expect to pay between £90 and £180 for a two-bedroom flat and £140 to £260 for a three-bedroom house.',
   'Northern Ireland has its own legislative framework. EICR requirements for private landlords in Northern Ireland are enforced under the Housing (Amendment) Act (Northern Ireland) 2022, which introduced mandatory electrical safety checks similar to those in England.',
   'Belfast has a significant proportion of Victorian and inter-war terraced housing, as well as 1960s and 1970s social housing that has been privatised or transferred to housing associations. Both housing types commonly produce C2 EICR findings.',
@@ -161,7 +161,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (Section 631), which applies across the entire United Kingdom including Northern Ireland.
+          (Chapter 65), which applies across the entire United Kingdom including Northern Ireland.
           The technical standard, test methods, and observation codes are identical whether the
           inspection takes place in Belfast, London, or anywhere else in the UK.
         </p>
@@ -262,7 +262,7 @@ const sections = [
                 <strong>EICR requirement</strong> — landlords must obtain an EICR from a qualified
                 person and must provide a copy to tenants. The recommended maximum interval for
                 periodic inspection of rented properties is five years, aligned with BS 7671
-                Regulation 134.2 guidance.
+                Regulation 135.1 guidance.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -437,7 +437,7 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Report completion</strong> — the inspector completes the EICR including
-                Schedules of Circuit Details and Test Results as required by Section 631, with
+                Schedules of Circuit Details and Test Results as required by Chapter 65, with
                 observation codes and an overall assessment.
               </span>
             </li>
@@ -459,7 +459,7 @@ const sections = [
                 <strong>Private rented property (Northern Ireland)</strong> — the Housing
                 (Amendment) Act (Northern Ireland) 2022 requires landlords to ensure the
                 installation is safe. A maximum five-year interval for EICRs aligns with BS 7671
-                Regulation 134.2 guidance.
+                Regulation 135.1 guidance.
               </span>
             </li>
             <li className="flex items-start gap-3">

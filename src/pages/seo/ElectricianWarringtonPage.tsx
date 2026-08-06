@@ -204,8 +204,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Periodic inspection (Section 631)</strong> — EICRs must comply with BS 7671
-                Section 631. Landlords must have a valid EICR every five years under the Private
+                <strong>Periodic inspection (Chapter 65)</strong> — EICRs must comply with BS 7671
+                Chapter 65. Landlords must have a valid EICR every five years under the Private
                 Rented Sector regulations, with C1/C2 defects remedied within 28 days.
               </span>
             </li>

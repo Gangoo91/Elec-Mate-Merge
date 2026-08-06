@@ -34,8 +34,10 @@ import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { getIrMaxForVoltage, isBlankReading } from '@/utils/irDefaults';
 import { checkRegulationCompliance } from '@/utils/autoRegChecker';
 import EnhancedRegulationWarningDialog from '@/components/EnhancedRegulationWarningDialog';
+import CircuitDescriptionInput from '@/components/table-cells/CircuitDescriptionInput';
 
 interface MobileHorizontalScrollTableRowProps {
+  earthingArrangement?: string;
   result: TestResult;
   onUpdate: (id: string, field: keyof TestResult, value: string) => void;
   onRemove: (id: string) => void;
@@ -55,6 +57,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
   onMoveDown,
   canMoveUp = false,
   canMoveDown = false,
+  earthingArrangement,
 }) => {
   // ELE-1438/1467 — same one-tap max fill as the desktop cells. This app is
   // used on a phone on site, which is exactly where retyping ">1049" twenty
@@ -72,7 +75,12 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
   // dialog as the desktop row — this was never a missing feature, only a
   // missing call.
   const [showRegWarning, setShowRegWarning] = useState(false);
-  const regulationCompliance = useMemo(() => checkRegulationCompliance(result), [result]);
+  // ELE-1505 — without the earthing arrangement a TT circuit is judged against
+  // the TN tables, so a normal electrode reading reads as a critical failure.
+  const regulationCompliance = useMemo(
+    () => checkRegulationCompliance(result, earthingArrangement),
+    [result, earthingArrangement]
+  );
 
   const { toast } = useToast();
 
@@ -162,7 +170,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
             value={result.circuitDesignation}
             onChange={(e) => onUpdate(result.id, 'circuitDesignation', e.target.value)}
             className={inputClassName}
-            placeholder="Way 1"
+            placeholder="Way 1 or —"
           />
           {!regulationCompliance.isCompliant && (
             <button
@@ -180,10 +188,17 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
       </TableCell>
 
       <TableCell className="p-0.5 border-r border-white/[0.08] w-[152px] min-w-[152px] max-w-[152px]">
-        <Input
+        {/* Same type-ahead as the desktop grid — this is the surface used at
+            the board, so it must not be the poor relation. */}
+        <CircuitDescriptionInput
           value={result.circuitDescription}
-          onChange={(e) => onUpdate(result.id, 'circuitDescription', e.target.value)}
-          className={cn(inputClassName, 'truncate')}
+          onChange={(value) => onUpdate(result.id, 'circuitDescription', value)}
+          onApplyPreset={(updates) =>
+            Object.entries(updates).forEach(([field, v]) =>
+              onUpdate(result.id, field as keyof TestResult, String(v))
+            )
+          }
+          className={cn(inputClassName, 'truncate w-full')}
           placeholder="Desc"
         />
       </TableCell>

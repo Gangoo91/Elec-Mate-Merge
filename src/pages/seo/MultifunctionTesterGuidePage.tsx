@@ -43,7 +43,7 @@ const keyTakeaways = [
   'A multifunction tester (MFT) combines continuity, insulation resistance, earth fault loop impedance, RCD, and prospective fault current testing in one instrument.',
   'Lead connections change between test modes — using the wrong terminals is the most common cause of incorrect readings and blown fuses inside the instrument.',
   'Calibration must be current (typically every 12 months) for test results to be accepted on EICR and EIC certificates.',
-  'Modern MFTs from Megger, Fluke, Metrel, and Kewtech cover all tests required by BS 7671 Chapter 61 for initial verification and periodic inspection.',
+  'Modern MFTs from Megger, Fluke, Metrel, and Kewtech cover all tests required by BS 7671 Chapter 64 for initial verification and periodic inspection.',
   'Elec-Mate pairs with your MFT workflow — speak your readings as you test and the schedule of test results fills in automatically.',
 ];
 

@@ -204,7 +204,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Periodic inspection</strong> — EICRs follow Section 631 of BS 7671. Rental
+                <strong>Periodic inspection</strong> — EICRs follow Chapter 65 of BS 7671. Rental
                 properties require an EICR every five years under the 2020 Regulations.
                 Owner-occupied properties are recommended every ten years or on change of occupancy.
               </span>

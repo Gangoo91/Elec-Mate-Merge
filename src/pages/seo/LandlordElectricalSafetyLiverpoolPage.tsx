@@ -46,7 +46,7 @@ const keyTakeaways = [
   'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 require all private landlords in Liverpool to obtain an EICR before a new tenancy begins and at least every five years thereafter.',
   'Liverpool City Council enforces these regulations with civil penalties of up to £30,000 per breach. Liverpool has a substantial private rented sector and a proactive enforcement approach, particularly through selective and HMO licensing schemes.',
   'HMOs in Liverpool face additional requirements — a valid EICR is a mandatory condition of both mandatory and additional HMO licensing operated by Liverpool City Council.',
-  'If the EICR identifies C1 or C2 observations (classified under BS 7671 Section 631), landlords must complete remedial work within 28 days or sooner if specified by the inspector.',
+  'If the EICR identifies C1 or C2 observations (classified under BS 7671 Chapter 65), landlords must complete remedial work within 28 days or sooner if specified by the inspector.',
   'Liverpool has a large stock of pre-war terraced housing in areas such as Toxteth, Kensington, and Wavertree — many with ageing electrical installations that frequently generate C2 observations including absence of RCD protection.',
 ];
 
@@ -153,7 +153,7 @@ const sections = [
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A4:2026
                 </SEOInternalLink>{' '}
-                (Section 631 covers periodic inspection and testing).
+                (Chapter 65 covers periodic inspection and testing).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -383,7 +383,7 @@ const sections = [
     content: (
       <>
         <p>
-          When an EICR identifies C1 or C2 observations (classified under BS 7671 Section 631),
+          When an EICR identifies C1 or C2 observations (classified under BS 7671 Chapter 65),
           Liverpool landlords must complete remedial work within the timescales set by the 2020
           Regulations.
         </p>

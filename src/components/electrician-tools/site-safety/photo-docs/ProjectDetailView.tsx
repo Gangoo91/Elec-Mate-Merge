@@ -216,12 +216,14 @@ export default function ProjectDetailView({
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
+  // Must match the badge on the project card in ProjectsTab — the same project
+  // was showing a green badge in the list and a yellow one when opened.
   const statusBadgeColour =
     project.status === 'active'
-      ? 'bg-green-500/20 text-green-400'
+      ? 'bg-elec-yellow text-black'
       : project.status === 'completed'
-        ? 'bg-blue-500/20 text-blue-400'
-        : 'bg-white/10 text-white';
+        ? 'bg-white/[0.14] text-white'
+        : 'bg-white/[0.08] text-white';
 
   return (
     <>
@@ -396,12 +398,13 @@ export default function ProjectDetailView({
                     onOpenChange={() => togglePhase(phase.id)}
                   >
                     <CollapsibleTrigger className="w-full">
-                      <div className="flex items-center gap-2.5 py-2 touch-manipulation">
-                        <span className={`w-2.5 h-2.5 rounded-full ${phase.dotColour}`} />
-                        <span className="text-sm font-semibold text-white flex-1 text-left">
+                      <div className="flex min-h-[44px] items-center gap-2.5 py-2 touch-manipulation">
+                        <span className="flex-1 text-left text-[13px] font-semibold tracking-tight text-white">
                           {phase.label}
                         </span>
-                        <span className="text-xs text-white">{phase.photos.length}</span>
+                        <span className="text-[12.5px] tabular-nums text-white">
+                          {phase.photos.length}
+                        </span>
                         <ChevronDown
                           className={`h-4 w-4 text-white transition-transform ${
                             openPhases.has(phase.id) ? 'rotate-0' : '-rotate-90'
@@ -417,13 +420,15 @@ export default function ProjectDetailView({
                             setCameraPhotoType(phase.photoTypes[0]);
                             setCameraOpen(true);
                           }}
-                          className="w-full h-24 rounded-xl border-2 border-dashed border-white/10 flex flex-col items-center justify-center gap-1.5 mb-2 touch-manipulation active:border-white/20 active:bg-white/[0.02] transition-colors"
+                          className="mb-2 flex h-24 w-full flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-white/[0.18] bg-white/[0.02] transition-colors hover:border-white/[0.3] hover:bg-white/[0.04] touch-manipulation"
                         >
                           <Plus className="h-5 w-5 text-white" />
-                          <span className="text-xs text-white">Add {phase.label} Photos</span>
+                          <span className="text-[12.5px] font-medium text-white">
+                            Add {phase.label.toLowerCase()} photos
+                          </span>
                         </button>
                       ) : (
-                        <div className="grid grid-cols-3 gap-2 mb-2">
+                        <div className="mb-2 grid grid-cols-3 gap-2 md:grid-cols-4 xl:grid-cols-6">
                           {phase.photos.map((photo, index) => (
                             <motion.div
                               key={photo.id}

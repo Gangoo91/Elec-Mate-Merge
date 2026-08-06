@@ -1,5 +1,13 @@
 {
   "version": "5",
+  "specifiers": {
+    "jsr:@supabase/functions-js@*": "2.108.0"
+  },
+  "jsr": {
+    "@supabase/functions-js@2.108.0": {
+      "integrity": "8601892c30d31df6cb9d22334ebfb4a49295586980b8d6db8a74b8ca717bb4c3"
+    }
+  },
   "redirects": {
     "https://esm.sh/@supabase/supabase-js@2": "https://esm.sh/@supabase/supabase-js@2.103.3"
   },

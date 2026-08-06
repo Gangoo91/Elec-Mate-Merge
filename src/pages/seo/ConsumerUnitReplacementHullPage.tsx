@@ -58,7 +58,7 @@ const faqs = [
   {
     question: 'Is a metal consumer unit required for my Hull property?',
     answer:
-      'Yes. Since January 2016, Regulation 421.1.201 of BS 7671 (introduced by Amendment 4) requires that consumer units and similar switchgear in domestic premises have a non-combustible (metal) enclosure. This requirement was carried forward into BS 7671:2018 (18th Edition) and remains current in BS 7671:2018+A4:2026. Any replacement in Hull must use a metal consumer unit. If your electrician proposes fitting a plastic unit, do not proceed.',
+      'Yes. Since January 2016, Regulation 421.1.201 of BS 7671 (introduced by Amendment 3 to BS 7671:2008) requires that consumer units and similar switchgear in domestic premises have a non-combustible (metal) enclosure. This requirement was carried forward into BS 7671:2018 (18th Edition) and remains current in BS 7671:2018+A4:2026. Any replacement in Hull must use a metal consumer unit. If your electrician proposes fitting a plastic unit, do not proceed.',
   },
   {
     question: 'My Hull terrace still has rewireable fuses — what does this mean?',
@@ -279,7 +279,7 @@ const sections = [
     content: (
       <>
         <p>
-          Amendment 4 to BS 7671:2008, effective from 1 January 2016, added Regulation 421.1.201
+          Amendment 3 to BS 7671:2008, effective from 1 January 2016, added Regulation 421.1.201
           requiring that all consumer units and similar switchgear assemblies in domestic premises
           have an enclosure of non-combustible material. A metal enclosure is the standard compliant
           solution. This requirement is unchanged in BS 7671:2018+A4:2026.
@@ -349,7 +349,7 @@ const sections = [
               <span>
                 <strong>What is included</strong> — metal consumer unit (specified make/model), all
                 labour, circuit reconnection, main bonding verification, full testing per BS 7671
-                Chapter 61, EIC with schedule of test results, and Part P notification.
+                Chapter 64, EIC with schedule of test results, and Part P notification.
               </span>
             </li>
           </ul>
@@ -389,7 +389,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Testing</strong> — full schedule of tests per BS 7671 Chapter 61:
+                <strong>Testing</strong> — full schedule of tests per BS 7671 Chapter 64:
                 continuity, insulation resistance, polarity, earth fault loop impedance, and RCD
                 operating time. All results recorded on the schedule.
               </span>

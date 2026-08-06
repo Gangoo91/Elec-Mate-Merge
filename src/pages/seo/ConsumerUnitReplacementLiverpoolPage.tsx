@@ -199,7 +199,7 @@ const sections = [
       <>
         <p>
           The requirement for non-combustible consumer unit enclosures in domestic premises was
-          introduced by Amendment 2 to BS 7671:2008, effective 1 July 2016. It is carried forward
+          introduced by Amendment 3 to BS 7671:2008, with this requirement effective 1 January 2016. It is carried forward
           unchanged in BS 7671:2018+A4:2026, which is the current edition applicable to all work in
           Liverpool and across England.
         </p>

@@ -1,18 +1,19 @@
 import { useMemo } from 'react';
 import {
-  startOfMonth,
-  endOfMonth,
-  startOfWeek,
-  endOfWeek,
   eachDayOfInterval,
-  isSameMonth,
-  isSameDay,
-  isToday,
+  endOfMonth,
+  endOfWeek,
   format,
+  isSameDay,
+  isSameMonth,
+  isToday,
+  startOfMonth,
+  startOfWeek,
 } from 'date-fns';
 import { useSwipeable } from 'react-swipeable';
 import { cn } from '@/lib/utils';
-import CalendarEventDot from './CalendarEventDot';
+import { cardCn, eyebrowCn } from './calendarStyles';
+import { compareEvents, dayKey, effectiveEnd, eventsOnDay, isMultiDay } from './eventUtils';
 import type { CalendarEvent } from '@/types/calendar';
 
 interface CalendarMonthViewProps {
@@ -24,8 +25,87 @@ interface CalendarMonthViewProps {
   selectedDate?: Date;
 }
 
-const WEEKDAY_LABELS_FULL = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-const WEEKDAY_LABELS_SHORT = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+/**
+ * How many continuous bars a week row shows before the rest collapse into the
+ * day's "+n". Two keeps a phone row readable; a third pushes the grid past the
+ * fold and buries the agenda underneath it.
+ */
+const MAX_LANES = 2;
+/** Vertical pitch of one lane, and where the lane stack starts in a cell. */
+const LANE_PITCH = 16;
+const LANE_TOP = 38;
+
+/** A run of one event across one week row, in column terms. */
+interface Segment {
+  event: CalendarEvent;
+  /** 0–6 within the week row. */
+  startCol: number;
+  endCol: number;
+  /** The event itself begins here, rather than continuing from an earlier week. */
+  opensLeft: boolean;
+  /** The event itself ends here. */
+  closesRight: boolean;
+}
+
+/**
+ * Pack a week's spanning events into lanes.
+ *
+ * Greedy interval packing: an event takes the first lane whose segments have
+ * all finished before it starts. Same principle as a Gantt row, and it keeps a
+ * single event on one visual line across the whole week instead of repeating
+ * it in seven unconnected cells.
+ */
+function packLanes(
+  weekDays: Date[],
+  events: CalendarEvent[]
+): { lanes: Segment[][]; hidden: Map<string, number> } {
+  const weekStart = weekDays[0];
+  const weekEnd = weekDays[6];
+
+  const spanning = events
+    .filter((e) => e.all_day || isMultiDay(e))
+    .filter((e) => new Date(e.start_at) <= weekEnd && effectiveEnd(e) >= weekStart)
+    .sort(compareEvents);
+
+  const colOf = (date: Date) => weekDays.findIndex((d) => isSameDay(d, date));
+
+  const lanes: Segment[][] = [];
+  const hidden = new Map<string, number>();
+
+  for (const event of spanning) {
+    const rawStart = colOf(new Date(event.start_at));
+    const rawEnd = colOf(effectiveEnd(event));
+    // -1 means the event runs in from the previous week, or on into the next.
+    const startCol = rawStart === -1 ? 0 : rawStart;
+    const endCol = rawEnd === -1 ? 6 : rawEnd;
+
+    const segment: Segment = {
+      event,
+      startCol,
+      endCol,
+      opensLeft: rawStart !== -1,
+      closesRight: rawEnd !== -1,
+    };
+
+    const lane = lanes.find((l) => l.every((s) => s.endCol < startCol || s.startCol > endCol));
+    if (lane) {
+      lane.push(segment);
+    } else if (lanes.length < MAX_LANES) {
+      lanes.push([segment]);
+    } else {
+      // No room for a bar — the days it covers carry it in their "+n" instead,
+      // so a hidden event is still counted somewhere rather than dropped.
+      for (let c = startCol; c <= endCol; c++) {
+        const key = dayKey(weekDays[c]);
+        hidden.set(key, (hidden.get(key) ?? 0) + 1);
+      }
+    }
+  }
+
+  return { lanes, hidden };
+}
 
 const CalendarMonthView = ({
   currentDate,
@@ -42,105 +122,154 @@ const CalendarMonthView = ({
     delta: 50,
   });
 
-  // Build calendar grid (Monday start)
-  const days = useMemo(() => {
-    const monthStart = startOfMonth(currentDate);
-    const monthEnd = endOfMonth(currentDate);
-    const gridStart = startOfWeek(monthStart, { weekStartsOn: 1 });
-    const gridEnd = endOfWeek(monthEnd, { weekStartsOn: 1 });
-    return eachDayOfInterval({ start: gridStart, end: gridEnd });
+  // Monday-start grid, split into week rows — bars are laid out per row, so a
+  // row has to be the unit rather than one flat list of 42 cells.
+  const weeks = useMemo(() => {
+    const gridStart = startOfWeek(startOfMonth(currentDate), { weekStartsOn: 1 });
+    const gridEnd = endOfWeek(endOfMonth(currentDate), { weekStartsOn: 1 });
+    const days = eachDayOfInterval({ start: gridStart, end: gridEnd });
+    const rows: Date[][] = [];
+    for (let i = 0; i < days.length; i += 7) rows.push(days.slice(i, i + 7));
+    return rows;
   }, [currentDate]);
 
-  // Map events to day keys for quick lookup
-  const eventsByDay = useMemo(() => {
-    const map = new Map<string, CalendarEvent[]>();
-    events.forEach((event) => {
-      const key = format(new Date(event.start_at), 'yyyy-MM-dd');
-      const existing = map.get(key) ?? [];
-      existing.push(event);
-      map.set(key, existing);
-    });
-    return map;
-  }, [events]);
-
   return (
-    <div {...swipeHandlers} className="select-none">
-      {/* Grid — flat on mobile, subtle border on sm+. Dense rows so the agenda
-          below the grid is visible without scrolling on a phone. */}
-      <div className="rounded-xl sm:border sm:border-white/[0.06] overflow-hidden">
-        {/* Weekday headers — single letters on mobile, full on sm+ */}
-        <div className="grid grid-cols-7">
-          {WEEKDAY_LABELS_FULL.map((label, i) => (
-            <div
-              key={label + i}
-              className={cn(
-                'text-center text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.14em] py-1.5 sm:py-2',
-                i >= 5 ? 'text-white/35' : 'text-white/45'
-              )}
-            >
-              <span className="hidden sm:inline">{label}</span>
-              <span className="sm:hidden">{WEEKDAY_LABELS_SHORT[i]}</span>
-            </div>
-          ))}
-        </div>
+    <div {...swipeHandlers} className={cn(cardCn, 'select-none overflow-hidden')}>
+      {/* Weekday header */}
+      <div className="grid grid-cols-7 border-b border-white/[0.10]">
+        {WEEKDAYS.map((label) => (
+          <div key={label} className={cn(eyebrowCn, 'py-2.5 text-center')}>
+            <span className="hidden sm:inline">{label}</span>
+            <span className="sm:hidden">{label[0]}</span>
+          </div>
+        ))}
+      </div>
 
-        {/* Day cells — tighter on mobile (~46px) so agenda fits */}
-        <div className="grid grid-cols-7">
-          {days.map((day, i) => {
-            const key = format(day, 'yyyy-MM-dd');
-            const dayEvents = eventsByDay.get(key) ?? [];
-            const inMonth = isSameMonth(day, currentDate);
-            const today = isToday(day);
-            const selected = selectedDate ? isSameDay(day, selectedDate) : false;
-            const isWeekend = i % 7 >= 5;
+      {weeks.map((weekDays, weekIndex) => {
+        const { lanes, hidden } = packLanes(weekDays, events);
 
-            return (
-              <button
-                key={key}
-                type="button"
-                onClick={() => onDateSelect(day)}
-                className={cn(
-                  'relative flex flex-col items-center justify-start pt-1.5 pb-1 min-h-[46px] sm:min-h-[56px] touch-manipulation transition-colors',
-                  !inMonth && 'opacity-35',
-                  isWeekend && inMonth && 'bg-white/[0.015]',
-                  'hover:bg-white/[0.03] active:bg-white/[0.05]'
-                )}
-              >
-                {/* Date number */}
-                <div
+        return (
+          <div
+            key={dayKey(weekDays[0])}
+            className={cn(
+              'relative grid grid-cols-7',
+              weekIndex > 0 && 'border-t border-white/[0.07]'
+            )}
+          >
+            {weekDays.map((day, col) => {
+              const key = dayKey(day);
+              const inMonth = isSameMonth(day, currentDate);
+              const today = isToday(day);
+              const selected = selectedDate ? isSameDay(day, selectedDate) : false;
+              const weekend = col >= 5;
+
+              // Dots stand for timed work; anything spanning is already a bar.
+              const dotted = eventsOnDay(events, day).filter((e) => !e.all_day && !isMultiDay(e));
+              const overflow = hidden.get(key) ?? 0;
+              const extra = dotted.length + overflow - 3;
+
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => onDateSelect(day)}
+                  aria-label={format(day, 'EEEE d MMMM')}
+                  aria-pressed={selected}
                   className={cn(
-                    'w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-[13px] sm:text-sm font-semibold transition-colors',
-                    today && !selected && 'bg-elec-yellow text-black',
-                    selected && !today && 'bg-white/[0.12] text-white ring-1 ring-white/30',
-                    selected && today && 'bg-elec-yellow text-black ring-2 ring-white/50',
-                    !today && !selected && 'text-white'
+                    // Taller cells as the grid gets wider, so a wide window
+                    // shows squares rather than stretched letterboxes.
+                    'flex min-h-[76px] touch-manipulation flex-col items-center pt-1.5 transition-colors sm:min-h-[104px] xl:min-h-[124px]',
+                    col > 0 && 'border-l border-white/[0.05]',
+                    weekend && inMonth && 'bg-white/[0.02]',
+                    // An out-of-month day dims as a whole cell. Greying the type
+                    // instead would break the all-text-is-white rule and read as
+                    // a different colour rather than a quieter day.
+                    !inMonth && 'opacity-30',
+                    'hover:bg-white/[0.04] active:bg-white/[0.06]'
                   )}
                 >
-                  {format(day, 'd')}
-                </div>
-
-                {/* Event dots (max 3 visible) */}
-                {dayEvents.length > 0 && (
-                  <div className="flex items-center gap-[3px] mt-0.5">
-                    {dayEvents.slice(0, 3).map((event) => (
-                      <CalendarEventDot
-                        key={event.id}
-                        colour={event.colour}
-                        className="w-[4px] h-[4px] sm:w-[5px] sm:h-[5px]"
-                      />
-                    ))}
-                    {dayEvents.length > 3 && (
-                      <span className="text-[8px] text-white/60 font-semibold ml-0.5 tabular-nums">
-                        +{dayEvents.length - 3}
-                      </span>
+                  <span
+                    className={cn(
+                      'flex h-7 w-7 items-center justify-center rounded-full text-[13px] font-semibold tabular-nums transition-colors sm:h-8 sm:w-8 sm:text-sm',
+                      today && 'bg-elec-yellow text-black',
+                      selected && !today && 'bg-white/[0.14] text-white ring-1 ring-white/40',
+                      selected && today && 'ring-2 ring-white/60',
+                      !today && !selected && 'text-white'
                     )}
-                  </div>
-                )}
-              </button>
-            );
-          })}
-        </div>
-      </div>
+                  >
+                    {format(day, 'd')}
+                  </span>
+
+                  {/* Room the bar overlay is drawn into. */}
+                  <span
+                    aria-hidden
+                    className="w-full shrink-0"
+                    style={{ height: MAX_LANES * LANE_PITCH }}
+                  />
+
+                  {/* Timed events */}
+                  {(dotted.length > 0 || overflow > 0) && (
+                    <span className="flex items-center gap-[3px] px-1">
+                      {dotted.slice(0, 3).map((event) => (
+                        <span
+                          key={event.id}
+                          className="h-[5px] w-[5px] shrink-0 rounded-full"
+                          style={{ backgroundColor: event.colour }}
+                        />
+                      ))}
+                      {extra > 0 && (
+                        <span className="text-[9px] font-semibold tabular-nums text-white">
+                          +{extra}
+                        </span>
+                      )}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+
+            {/* Continuous bars, laid over the cells. Non-interactive, so a tap
+                anywhere on a day still selects that day. */}
+            <div
+              className="pointer-events-none absolute inset-x-0"
+              style={{ top: LANE_TOP }}
+              aria-hidden
+            >
+              {lanes.map((lane, laneIndex) => (
+                <div key={laneIndex} className="relative" style={{ height: LANE_PITCH }}>
+                  {lane.map((seg) => {
+                    const inset = (seg.opensLeft ? 3 : 0) + (seg.closesRight ? 3 : 0);
+                    return (
+                      <div
+                        key={`${seg.event.id}-${seg.startCol}`}
+                        className={cn(
+                          'absolute flex items-center overflow-hidden px-1.5',
+                          seg.opensLeft && 'rounded-l-md',
+                          seg.closesRight && 'rounded-r-md'
+                        )}
+                        style={{
+                          left: `calc(${(seg.startCol / 7) * 100}% + ${seg.opensLeft ? 3 : 0}px)`,
+                          width: `calc(${((seg.endCol - seg.startCol + 1) / 7) * 100}% - ${inset}px)`,
+                          height: 12,
+                          backgroundColor: `${seg.event.colour}38`,
+                          borderLeft: seg.opensLeft ? `2px solid ${seg.event.colour}` : undefined,
+                        }}
+                      >
+                        {/* A title only fits where the cells are wide enough. */}
+                        {seg.opensLeft && (
+                          <span className="hidden truncate text-[10px] font-medium leading-none text-white sm:inline">
+                            {seg.event.title}
+                          </span>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };

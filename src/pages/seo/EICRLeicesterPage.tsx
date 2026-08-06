@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A4:2026 (Section 631). It records the condition of wiring, protective devices, earthing and bonding using observation codes.",
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A4:2026 (Chapter 65). It records the condition of wiring, protective devices, earthing and bonding using observation codes.",
   'Leicester EICR costs are broadly in line with Midlands averages. Expect to pay between £150 and £280 for a two-bedroom flat and £250 to £400 for a three-bedroom house in 2026.',
   'Since 1 April 2021, landlords in England must obtain an EICR before a new tenancy begins and at least every five years. Failure to comply can result in fines of up to £30,000 per breach, enforced by Leicester City Council.',
   'Leicester has a large private rented sector, particularly around the university area (Clarendon Park, Evington, Highfields). Leicester City Council actively enforces electrical safety standards and operates an HMO licensing scheme.',
@@ -78,7 +78,7 @@ const faqs = [
   {
     question: 'Do I need an EICR for a Leicester property I own and live in?',
     answer:
-      'There is no legal requirement for owner-occupiers to obtain an EICR. However, it is strongly recommended every 10 years (or every 5 years for properties over 25 years old) as best practice under BS 7671 Regulation 134.2. If you are selling the property, an EICR is not legally required but mortgage lenders and conveyancers increasingly request one.',
+      'There is no legal requirement for owner-occupiers to obtain an EICR. However, it is strongly recommended every 10 years (or every 5 years for properties over 25 years old) as best practice under BS 7671 Regulation 135.1. If you are selling the property, an EICR is not legally required but mortgage lenders and conveyancers increasingly request one.',
   },
   {
     question: 'Does Leicester City Council enforce EICR requirements?',
@@ -155,7 +155,7 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A4:2026
           </SEOInternalLink>{' '}
-          (Section 631), which requires that an Electrical Installation Condition Report is used for
+          (Chapter 65), which requires that an Electrical Installation Condition Report is used for
           periodic inspection and testing of existing installations — not an Electrical Installation
           Certificate, which is for new work only.
         </p>
@@ -295,7 +295,7 @@ const sections = [
           Multiple Occupation (HMOs). Social housing providers have separate obligations under the
           Homes (Fitness for Human Habitation) Act 2018. Owner-occupied properties are not covered
           by these regulations but periodic inspection is recommended as best practice under
-          Regulation 134.2 of BS 7671.
+          Regulation 135.1 of BS 7671.
         </p>
       </>
     ),
@@ -503,7 +503,7 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Report completion</strong> — the inspector completes the EICR including
-                Schedules of Circuit Details and Test Results (as required by Section 631). The
+                Schedules of Circuit Details and Test Results (as required by Chapter 65). The
                 report includes observations with classification codes, an overall assessment, and a
                 recommended date for the next inspection.
               </span>
@@ -524,7 +524,7 @@ const sections = [
     content: (
       <>
         <p>
-          The required frequency of EICRs depends on the property type and use. BS 7671 Section 631
+          The required frequency of EICRs depends on the property type and use. BS 7671 Chapter 65
           establishes the framework for periodic inspection and testing of existing installations:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">

@@ -818,8 +818,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
                     setShowFilters(false);
                   }}
                 >
-                  <span className={`w-3 h-3 rounded-full ${cat.color}`} />
-                  <span className="text-[10px] text-white text-center leading-tight">
+                  <span className="text-center text-[12px] leading-tight">
                     {cat.label.split(' ')[0]}
                   </span>
                 </button>

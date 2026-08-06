@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'How do I test a radial circuit?',
     answer:
-      'Testing a radial circuit follows the standard sequence set out in BS 7671 Chapter 64 and GN3 (Guidance Note 3: Inspection and Testing). The key tests are: continuity of protective conductors (R1+R2 method), insulation resistance (minimum 1M\u03A9 at 500V DC for a 230V circuit), polarity verification at every point, earth fault loop impedance (Zs) at the furthest point (which must not exceed the maximum Zs value for the protective device from Table 41.3 or 41.4 of BS 7671), and prospective fault current at the origin. For a radial circuit, the R1+R2 continuity test is simpler than for a ring circuit because there is only one path — you do not need to perform the ring circuit continuity test (the three-step method). The measured Zs at the furthest point must be checked against the tabulated maximum values to ensure disconnection within the required time (0.4 seconds for socket outlets, 5 seconds for fixed equipment circuits).',
+      'Testing a radial circuit follows the standard sequence set out in BS 7671 Chapter 64 and GN3 (Guidance Note 3: Inspection and Testing). The key tests are: continuity of protective conductors (R1+R2 method), insulation resistance (minimum 1M\u03A9 at 500V DC for a 230V circuit), polarity verification at every point, earth fault loop impedance (Zs) at the furthest point (which must not exceed the maximum Zs value for the protective device from Table 41.3 for circuit-breakers, or Table 41.2 for fuses at 0.4 s), and prospective fault current at the origin. For a radial circuit, the R1+R2 continuity test is simpler than for a ring circuit because there is only one path — you do not need to perform the ring circuit continuity test (the three-step method). The measured Zs at the furthest point must be checked against the tabulated maximum to ensure disconnection within the required time. Be careful with the old rule of thumb that fixed equipment gets 5 seconds — the Table 41.1 times (0.4 s on a TN system at 230 V) apply to final circuits up to 63 A with socket-outlets AND to final circuits up to 32 A supplying only fixed connected equipment. Regulation 411.3.2.2 holds the maximum disconnection times; the 5-second figure belongs to distribution circuits.',
   },
   {
     question: 'Is a spur allowed on a radial circuit?',
@@ -190,7 +190,8 @@ const sections = [
                 <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">
                   BS 7671 voltage drop limits
                 </SEOInternalLink>{' '}
-                (5% for lighting, 5% for other circuits in domestic installations).
+                — 3% for lighting and 5% for other uses, for an installation supplied directly from
+                a public low voltage distribution system (Table 4Ab).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -430,11 +431,15 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <span>
-                <strong>Fault current protection (Regulation 434)</strong> — the protective device
-                must disconnect the circuit within 5 seconds for a circuit supplying fixed
-                equipment, or 0.4 seconds for a circuit supplying socket outlets or portable
-                equipment (Table 41.1). The earth fault loop impedance (Zs) at the furthest point
-                must not exceed the maximum value for the device type and rating.
+                <strong>Automatic disconnection of supply (Regulation 411.3.2.2)</strong> — this is
+                the regulation that decides which disconnection time your radial has to meet, and
+                it catches people out. Regulation 411.3.2.2 holds the maximum disconnection times, and Table 41.1 applies to two categories of final circuit:
+                those rated up to 63 A that include one or more socket-outlets, and those rated up
+                to 32 A supplying only fixed connected current-using equipment. So a 20 A radial
+                feeding fixed equipment is <em>not</em> a 5-second circuit — it is 0.4 s on a TN
+                system at 230 V, the same as a socket-outlet circuit. The 5-second time is for distribution circuits, and for final circuits above those
+                thresholds. The earth fault loop impedance (Zs) at the furthest point must
+                not exceed the maximum for the device type and rating.
               </span>
             </li>
             <li className="flex items-start gap-3">

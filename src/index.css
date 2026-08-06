@@ -1459,14 +1459,6 @@ input::-webkit-caps-lock-indicator {
   }
 
   /* Calculator input styling - 16px font prevents iOS zoom */
-  .calculator-input {
-    @apply bg-white/5 border border-white/10 rounded-xl text-white
-           focus:border-white/30 focus:ring-2 focus:ring-white/5 focus:ring-offset-0
-           placeholder:text-white;
-    font-size: 16px !important; /* Prevent iOS zoom */
-    -webkit-appearance: none; /* iOS Safari consistency */
-  }
-
   /* Calculator result box */
   .calculator-result {
     @apply rounded-xl p-4 border animate-fade-in;
@@ -2535,6 +2527,42 @@ input::-webkit-caps-lock-indicator {
     border: 1px solid hsl(0 0% 100% / 0.12);
   }
 
+  /* Row depth — 40px, up from the 32px the cells hardcode as `h-8`.
+     ────────────────────────────────────────────────────────────────
+     A 30-column schedule at 32px is a hard target for a trackpad and an
+     impossible one for a finger; the app's own rule is a 44px minimum, and the
+     mobile table already meets it at h-11 (44px). 52px goes past that on
+     purpose: this is a dense 34-column grid read at arm's length on a board,
+     and 32px rows made it a wall of text with nothing to separate one circuit
+     from the next. The extra depth is what makes a row scannable, not just
+     hittable.
+
+     Set here rather than by editing `h-8` in twenty cell components — one
+     place to change, and no chance of a cell being missed and sitting 8px
+     short of its neighbours. `.sot-table-wrapper td` (0,1,1) outranks
+     Tailwind's `.h-8` (0,1,0), so it wins without !important.
+
+     Scoped to this wrapper, which only the desktop tables use — the mobile
+     schedule is untouched and stays at its own h-11. */
+  .sot-table-wrapper td {
+    height: 52px;
+  }
+
+  /* Header rows deepen with the body so the grid reads as one thing. `th`, so
+     it is untouched by the `td` rule above. */
+  .sot-table-wrapper th {
+    height: 48px;
+  }
+
+  /* Text inputs and dropdown triggers only. Deliberately NOT `td button` —
+     the row's duplicate / delete / reorder controls are square h-7 w-7 icon
+     buttons, and stretching them to 40px tall against a 28px width would turn
+     every one of them into a lozenge. They simply centre in the taller row. */
+  .sot-table-wrapper td input,
+  .sot-table-wrapper td [role='combobox'] {
+    height: 52px;
+  }
+
   /* Table Header - Group Row.
      The table renders border-separate (needed for the sticky columns), so
      borders on <tr> never paint — every horizontal divider is declared on the
@@ -2545,7 +2573,7 @@ input::-webkit-caps-lock-indicator {
   }
 
   .sot-header-group-cell {
-    @apply text-xs font-bold text-white text-center py-2 px-2;
+    @apply text-xs font-bold text-white text-center py-3 px-2;
     /* Uniform 1px divider so group row aligns perfectly with label + body rows */
     @apply border-r border-white/10 last:border-r-0;
     /* Horizontal divider lives on the cell — tr borders don't paint in the
@@ -2557,7 +2585,9 @@ input::-webkit-caps-lock-indicator {
   /* Table Header - Column Labels Row — pinned directly under the 40px group
      row (TableHead h-10 + border-box border). */
   .sot-header-labels {
-    @apply sticky top-[40px] z-30;
+    /* Offset = the group row's height. Deepening one without the other
+       makes the two sticky header rows overlap as you scroll. */
+    @apply sticky top-[48px] z-30;
     background: hsl(0 0% 12%);
   }
 
@@ -3170,9 +3200,40 @@ html.lesson-print-html body {
    the DOM, painted over the Next button so apprentices could not advance a
    question. ExamMobileLayout sets .exam-active on <body> for as long as an
    exam is on screen; the tab bar stands down for the duration. Driving it from
-   the exam component rather than the URL means no exam route can be missed. */
-body.exam-active [data-apprentice-tabbar] {
+   the exam component rather than the URL means no exam route can be missed.
+
+   ELE-1503 — the original fix only stood down [data-apprentice-tabbar], which is
+   the Study Centre (app) bar. The FREE public mock exams render inside
+   PublicPageLayout, whose logged-out sticky mobile CTA is also fixed bottom-0 at
+   z-50 and sat on top of the Next button — so the same bug survived on the web
+   half after ELE-1451 was closed. [data-exam-obstructs] is the general opt-in for
+   any bar that would cover exam controls; SEOMockExam sets .exam-active for the
+   public exams the same way ExamMobileLayout does for the app. */
+body.exam-active [data-apprentice-tabbar],
+body.exam-active [data-exam-obstructs] {
   display: none;
+}
+
+/* The sticky-CTA spacer goes with the bar. Once the bar is stood down for an
+   exam there is nothing left to clear, and 7rem of dead space under the exam
+   reads as a broken layout. */
+body.exam-active [data-sticky-cta-pad] {
+  padding-bottom: 0;
+}
+
+/* Anything floating at the bottom of a public page has to clear the sticky CTA,
+   which is 100px tall, pinned to bottom-0 at z-50 and mobile-only. Raising the
+   floater's z-index instead would just stack it ON the CTA's own buttons — they
+   need to sit one above the other, not fight. Scoped to the same breakpoint the
+   CTA uses (sm = 640px) so the two can never disagree about when it applies. */
+@media (max-width: 639px) {
+  body.has-sticky-cta [data-bottom-floating] {
+    bottom: 7rem;
+  }
+  /* No bar during an exam, so no offset either. */
+  body.has-sticky-cta.exam-active [data-bottom-floating] {
+    bottom: 1rem;
+  }
 }
 
 /* Board-scanner intro hero — each breaker module flashes volt in sequence

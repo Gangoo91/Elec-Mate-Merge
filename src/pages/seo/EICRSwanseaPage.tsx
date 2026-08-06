@@ -42,7 +42,7 @@ const keyTakeaways = [
   'Electrical installation safety regulations in Wales are enforced under the Renting Homes (Wales) Act 2016, which requires landlords to ensure electrical installations are safe and to obtain an Electrical Installation Condition Report (EICR) at least every five years.',
   'The Welsh Government and Swansea Council enforce landlord electrical safety obligations. The Renting Homes (Wales) Act 2016 imposes fit-for-human-habitation duties on occupation contracts, with electrical safety as a core component.',
   'BS 7671 — the technical standard for electrical installations — is identical across England and Wales. The same inspection and testing requirements, observation codes, and remedial timescales apply to Swansea properties as to English ones.',
-  'C1 (danger present) and C2 (potentially dangerous) observations under BS 7671 Section 631 require urgent remedial action and result in an Unsatisfactory EICR.',
+  'C1 (danger present) and C2 (potentially dangerous) observations under BS 7671 Chapter 65 require urgent remedial action and result in an Unsatisfactory EICR.',
   'Swansea has a significant private rented sector driven by Swansea University student demand, with a mix of Victorian terraces in Uplands and Brynmill and more modern properties in Sketty and Sketty Park.',
 ];
 
@@ -162,7 +162,7 @@ const sections = [
         </div>
         <p>
           The EICR supersedes the older Periodic Inspection Report (PIR) format and is carried out
-          in accordance with BS 7671 Section 631. It is the document required by both Welsh landlord
+          in accordance with BS 7671 Chapter 65. It is the document required by both Welsh landlord
           legislation and by HMO licensing conditions in Swansea.
         </p>
       </>

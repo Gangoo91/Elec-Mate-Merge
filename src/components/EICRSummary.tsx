@@ -38,6 +38,7 @@ import { openOrDownloadPdf } from '@/utils/pdf-download';
 import QsReviewPanel from '@/components/inspection/shared/QsReviewPanel';
 import { useQsReviewStatus } from '@/hooks/useQsReview';
 import { useEICRValidation } from '@/hooks/useEICRValidation';
+import RaiseRemedialItemsSheet from '@/components/inspection/RaiseRemedialItemsSheet';
 
 const cardCn =
   '-mx-4 rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x bg-gradient-to-b from-white/[0.08] to-white/[0.04] p-4 sm:p-5 space-y-4';
@@ -155,6 +156,7 @@ const EICRSummary = ({
 
   // Collapsible sections for mobile
   const [standardsOpen, setStandardsOpen] = useState(false);
+  const [raiseRemedialOpen, setRaiseRemedialOpen] = useState(false);
   const [inspectedByOpen, setInspectedByOpen] = useState(true);
   const [authorisedByOpen, setAuthorisedByOpen] = useState(false);
 
@@ -808,6 +810,19 @@ const EICRSummary = ({
   ).length;
   const remedialBlocked = blockingObsCount > 0;
 
+  /*
+   * Outstanding remedial work on this certificate.
+   *
+   * The summary tab is where the inspector finishes, so it is where the offer
+   * to raise the work belongs — the coded observations are a remedial scope of
+   * works and were going no further than the PDF. Anything already ticked as
+   * rectified is excluded; it was put right on the visit.
+   */
+  const outstandingRemedial = (formData.defectObservations || []).filter(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (d: any) => !d.rectified && d.defectCode && d.defectCode !== 'N/A' && d.defectCode !== 'LIM'
+  );
+
   const threeStateOptions = [
     { value: 'yes', label: 'Yes', activeClass: chipGreen },
     { value: 'no', label: 'No', activeClass: chipRed },
@@ -816,6 +831,44 @@ const EICRSummary = ({
 
   return (
     <div className="space-y-4">
+      <RaiseRemedialItemsSheet
+        open={raiseRemedialOpen}
+        onOpenChange={setRaiseRemedialOpen}
+        // effectiveReportId, NOT certificateNumber. The observations section
+        // raises against effectiveReportId too, and the two must agree or the
+        // same observation raised from both places would dedupe against
+        // nothing and be created twice.
+        reportId={effectiveReportId}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        observations={outstandingRemedial as any}
+        customerName={formData.clientName as string | undefined}
+        location={formData.installationAddress as string | undefined}
+      />
+
+      {/* Remedial work — the scope this certificate has just produced. */}
+      {outstandingRemedial.length > 0 && (
+        <div className="-mx-4 border-y border-elec-yellow/30 bg-elec-yellow/[0.08] p-4 sm:mx-0 sm:rounded-2xl sm:border-x sm:p-5">
+          <h2 className="text-[15px] font-semibold tracking-tight text-white">
+            {outstandingRemedial.length} item
+            {outstandingRemedial.length === 1 ? '' : 's'} need putting right
+          </h2>
+          <p className="mt-1 text-[13px] leading-snug text-white">
+            Raise them as remedial work and they land on your snagging list — and on a job, ready
+            to quote.
+          </p>
+          <button
+            type="button"
+            onClick={() => {
+              haptic.light();
+              setRaiseRemedialOpen(true);
+            }}
+            className="mt-3 h-11 w-full rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-colors touch-manipulation hover:bg-elec-yellow/90 active:scale-[0.98] sm:w-auto sm:px-6"
+          >
+            Raise remedial work
+          </button>
+        </div>
+      )}
+
       {/* Standards compliance */}
       <CollapsibleSection
         title="Standards compliance"

@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { MapPin, Car, Calculator } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { DEFAULT_MILEAGE_RATE } from '@/types/expense';
+import { useMemo, useState } from 'react';
+import { cn } from '@/lib/utils';
+import { inputCn, labelCn, textareaCn } from '@/components/forms/fieldStyles';
+import { cardCn, eyebrowCn } from '@/components/shared/surfaceStyles';
+import {
+  DEFAULT_MILEAGE_RATE,
+  HIGHER_BAND_MILEAGE_RATE,
+  MILEAGE_BAND_THRESHOLD,
+  calculateMileageClaim,
+} from '@/types/expense';
 
 interface ExpenseMileageFormProps {
   onSave: (data: {
@@ -16,25 +18,31 @@ interface ExpenseMileageFormProps {
     description?: string;
   }) => Promise<void>;
   isSubmitting: boolean;
+  /**
+   * Business miles already claimed in the current tax year. Decides how much of
+   * this journey falls in the 45p band and how much in the 25p one.
+   */
+  milesClaimedThisTaxYear?: number;
 }
 
-export function ExpenseMileageForm({ onSave, isSubmitting }: ExpenseMileageFormProps) {
+export function ExpenseMileageForm({
+  onSave,
+  isSubmitting,
+  milesClaimedThisTaxYear = 0,
+}: ExpenseMileageFormProps) {
   const [miles, setMiles] = useState<number | ''>('');
   const [fromLocation, setFromLocation] = useState('');
   const [toLocation, setToLocation] = useState('');
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [description, setDescription] = useState('');
-  const [calculatedAmount, setCalculatedAmount] = useState(0);
 
-  // Calculate amount when miles change
-  useEffect(() => {
-    const numMiles = typeof miles === 'number' ? miles : 0;
-    setCalculatedAmount(Math.round(numMiles * DEFAULT_MILEAGE_RATE * 100) / 100);
-  }, [miles]);
+  const claim = useMemo(
+    () => calculateMileageClaim(typeof miles === 'number' ? miles : 0, milesClaimedThisTaxYear),
+    [miles, milesClaimedThisTaxYear]
+  );
 
   const handleSubmit = async () => {
-    if (!miles || !fromLocation || !toLocation) return;
-
+    if (!miles || !fromLocation.trim() || !toLocation.trim()) return;
     await onSave({
       miles: typeof miles === 'number' ? miles : 0,
       from: fromLocation,
@@ -44,114 +52,118 @@ export function ExpenseMileageForm({ onSave, isSubmitting }: ExpenseMileageFormP
     });
   };
 
-  const isValid = miles && miles > 0 && fromLocation.trim() && toLocation.trim();
+  const isValid = !!miles && miles > 0 && !!fromLocation.trim() && !!toLocation.trim();
+  const straddlesBands = claim.milesAtLowerRate > 0;
+  const remainingAtFullRate = Math.max(0, MILEAGE_BAND_THRESHOLD - milesClaimedThisTaxYear);
 
   return (
-    <div className="space-y-4">
-      {/* Amount Preview */}
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20 rounded-xl p-4 text-center"
-      >
-        <div className="flex items-center justify-center gap-2 text-sm text-white mb-1">
-          <Calculator className="h-4 w-4" />
-          <span>Calculated at {DEFAULT_MILEAGE_RATE * 100}p per mile</span>
-        </div>
-        <p className="text-3xl font-bold text-green-400">£{calculatedAmount.toFixed(2)}</p>
-      </motion.div>
-
-      {/* Miles Input */}
-      <div className="space-y-2">
-        <Label htmlFor="miles">Distance (miles)</Label>
-        <div className="flex items-center gap-2">
-          <Car className="h-5 w-5 text-white flex-shrink-0" />
-          <Input
-            id="miles"
-            type="number"
-            inputMode="decimal"
-            step="0.1"
-            min="0"
-            placeholder="0"
-            value={miles}
-            onChange={(e) => setMiles(e.target.value ? parseFloat(e.target.value) : '')}
-            className="h-14 text-2xl font-semibold touch-manipulation flex-1"
-            autoFocus
-          />
-          <span className="text-white flex-shrink-0">miles</span>
-        </div>
+    <div className="space-y-5">
+      {/* What it is worth */}
+      <div className={cn(cardCn, 'p-4 sm:p-5')}>
+        <span className={cn(eyebrowCn, 'block')}>Claim</span>
+        <p className="mt-1 text-[30px] font-bold leading-none tracking-tight text-elec-yellow tabular-nums">
+          £{claim.amount.toFixed(2)}
+        </p>
+        {/*
+          Both bands are shown when a journey crosses the threshold, because the
+          alternative — one figure at one rate — is how the old form quietly
+          over-claimed for anyone past 10,000 miles.
+        */}
+        <p className="mt-2 text-[12px] leading-snug text-white">
+          {straddlesBands
+            ? `${claim.milesAtFullRate} mi at ${DEFAULT_MILEAGE_RATE * 100}p · ${claim.milesAtLowerRate} mi at ${HIGHER_BAND_MILEAGE_RATE * 100}p`
+            : `${DEFAULT_MILEAGE_RATE * 100}p per mile`}
+        </p>
       </div>
 
-      {/* From Location */}
-      <div className="space-y-2">
-        <Label htmlFor="from">From</Label>
-        <div className="flex items-center gap-2">
-          <MapPin className="h-4 w-4 text-green-400 flex-shrink-0" />
-          <Input
+      <div>
+        <label className={labelCn} htmlFor="miles">
+          Distance (miles)
+        </label>
+        <input
+          id="miles"
+          type="number"
+          inputMode="decimal"
+          step="0.1"
+          min="0"
+          placeholder="0"
+          value={miles}
+          onChange={(e) => setMiles(e.target.value ? parseFloat(e.target.value) : '')}
+          className={inputCn}
+          autoFocus
+        />
+      </div>
+
+      <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+        <div>
+          <label className={labelCn} htmlFor="from">
+            From
+          </label>
+          <input
             id="from"
-            placeholder="Starting location"
+            placeholder="Starting point"
             value={fromLocation}
             onChange={(e) => setFromLocation(e.target.value)}
-            className="h-11 touch-manipulation flex-1"
+            className={inputCn}
           />
         </div>
-      </div>
-
-      {/* To Location */}
-      <div className="space-y-2">
-        <Label htmlFor="to">To</Label>
-        <div className="flex items-center gap-2">
-          <MapPin className="h-4 w-4 text-red-400 flex-shrink-0" />
-          <Input
+        <div>
+          <label className={labelCn} htmlFor="to">
+            To
+          </label>
+          <input
             id="to"
             placeholder="Destination"
             value={toLocation}
             onChange={(e) => setToLocation(e.target.value)}
-            className="h-11 touch-manipulation flex-1"
+            className={inputCn}
           />
         </div>
       </div>
 
-      {/* Date */}
-      <div className="space-y-2">
-        <Label htmlFor="mileage-date">Date</Label>
-        <Input
+      <div>
+        <label className={labelCn} htmlFor="mileage-date">
+          Date
+        </label>
+        <input
           id="mileage-date"
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
-          className="h-11 touch-manipulation"
+          className={inputCn}
         />
       </div>
 
-      {/* Description (optional) */}
-      <div className="space-y-2">
-        <Label htmlFor="mileage-description">Notes (optional)</Label>
-        <Textarea
+      <div>
+        <label className={labelCn} htmlFor="mileage-description">
+          Notes
+        </label>
+        <textarea
           id="mileage-description"
-          placeholder="e.g. Site visit to customer, supplier run"
+          placeholder="Site visit, supplier run"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="touch-manipulation min-h-[80px]"
+          className={textareaCn}
         />
       </div>
 
-      {/* HMRC Info */}
-      <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg px-3 py-2">
-        <p className="text-xs text-blue-400">
-          <strong>HMRC Rate:</strong> 45p per mile for the first 10,000 miles, then 25p per mile.
-          This form uses the 45p rate - adjust manually if needed.
-        </p>
-      </div>
+      <p className="text-[12px] leading-snug text-white">
+        HMRC allows {DEFAULT_MILEAGE_RATE * 100}p per mile for the first{' '}
+        {MILEAGE_BAND_THRESHOLD.toLocaleString('en-GB')} business miles in a tax year, then{' '}
+        {HIGHER_BAND_MILEAGE_RATE * 100}p.{' '}
+        {milesClaimedThisTaxYear > 0
+          ? `You have claimed ${Math.round(milesClaimedThisTaxYear).toLocaleString('en-GB')} miles so far this tax year — ${Math.round(remainingAtFullRate).toLocaleString('en-GB')} left at the higher rate.`
+          : 'This is worked out for you.'}
+      </p>
 
-      {/* Submit Button */}
-      <Button
+      <button
+        type="button"
         onClick={handleSubmit}
         disabled={!isValid || isSubmitting}
-        className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98]"
+        className="h-12 w-full rounded-xl bg-elec-yellow text-[15px] font-semibold text-black transition-colors touch-manipulation active:scale-[0.98] disabled:opacity-50"
       >
-        {isSubmitting ? 'Saving...' : `Log £${calculatedAmount.toFixed(2)} Mileage`}
-      </Button>
+        {isSubmitting ? 'Saving…' : `Log £${claim.amount.toFixed(2)} mileage`}
+      </button>
     </div>
   );
 }

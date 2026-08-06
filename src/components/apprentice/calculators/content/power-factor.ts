@@ -26,6 +26,7 @@ export const powerFactorContent: CalculatorContent = {
     'Forgetting that current scales with 1/pf for a given kW',
     'Confusing displacement power factor with true power factor where harmonics are present',
     'Ignoring kVA-based charges on commercial tariffs',
+    'Over-correcting: adding capacitors past unity pushes the power factor leading, which brings voltage rise and resonance risk. A leading power factor is corrected by removing capacitance, never by adding more.',
   ],
 
   workedExample: {

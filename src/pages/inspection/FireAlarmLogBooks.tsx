@@ -53,7 +53,7 @@ export const SYSTEM_CATEGORIES: { code: string; scope: string }[] = [
 ];
 
 export const inputCn =
-  'h-12 text-base touch-manipulation bg-white/[0.08] border-white/[0.16] text-white placeholder:text-white/45 focus:border-yellow-500 focus:ring-yellow-500';
+  'input-underline h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 text-base md:text-base font-medium text-white placeholder:font-normal placeholder:text-white/25 caret-elec-yellow transition-colors duration-150 hover:border-white/[0.3] focus:border-elec-yellow focus-visible:ring-0 focus:ring-0 focus:outline-none focus:shadow-none !leading-[2.75rem] [color-scheme:dark] touch-manipulation';
 
 const containerVariants = {
   hidden: {},
@@ -75,9 +75,9 @@ export const Field = ({
   children: React.ReactNode;
 }) => (
   <div>
-    <p className="text-[11.5px] font-medium text-white/80 mb-1.5">{label}</p>
+    <p className="text-[11.5px] font-medium text-white mb-1.5">{label}</p>
     {children}
-    {hint && <p className="mt-1 text-[11px] text-white/65 leading-relaxed">{hint}</p>}
+    {hint && <p className="mt-1 text-[11px] text-white leading-relaxed">{hint}</p>}
   </div>
 );
 
@@ -115,8 +115,10 @@ const BuildingRow = ({
   const statusBits: { text: string; tone?: 'warn' }[] = [];
   if (status) {
     // Due buildings carry the action strip below instead of a text bit
+    // Not "Add call points to start the rotation" as flat text — that named the
+    // problem and offered nothing, on the one card the user was looking at. The
+    // card now carries the action instead (see needsSetup below).
     if (status.testedThisWeek) statusBits.push({ text: 'Tested this week' });
-    else if (!nextCp) statusBits.push({ text: 'Add call points to start the rotation' });
     if (status.serviceDue)
       statusBits.push({
         text: `${status.serviceOverdue ? 'Service overdue' : 'Service due'} ${new Date(
@@ -129,6 +131,13 @@ const BuildingRow = ({
   }
 
   const due = !!status && !status.testedThisWeek && !!nextCp;
+  /**
+   * A building with no call points cannot start its rotation, so it is not
+   * "due" — it is unfinished. That is a different state and needs a different
+   * prompt: telling someone their log book is waiting on them is only useful if
+   * the next step is one tap away.
+   */
+  const needsSetup = !!status && !nextCp;
   return (
     <div
       role="button"
@@ -140,7 +149,7 @@ const BuildingRow = ({
           onOpen();
         }
       }}
-      className="group w-full h-full flex flex-col text-left px-5 sm:px-6 py-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.08] hover:bg-[hsl(0_0%_14%)] hover:border-white/[0.12] transition-colors touch-manipulation cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-elec-yellow/50 active:scale-[0.99]"
+      className="group w-full h-full flex flex-col text-left px-5 sm:px-6 py-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.14] hover:bg-[hsl(0_0%_14%)] hover:border-white/[0.14] transition-colors touch-manipulation cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-elec-yellow/50 active:scale-[0.99]"
     >
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0 flex-1">
@@ -155,7 +164,7 @@ const BuildingRow = ({
             )}
           </div>
           {book.building_address && (
-            <div className="mt-0.5 text-[12px] text-white/70 truncate">{book.building_address}</div>
+            <div className="mt-0.5 text-[12px] text-white truncate">{book.building_address}</div>
           )}
           <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
             {statusBits.map((bit, i) => (
@@ -163,7 +172,7 @@ const BuildingRow = ({
                 key={i}
                 className={cn(
                   'text-[12px]',
-                  bit.tone === 'warn' ? 'text-orange-300' : 'text-white/80'
+                  bit.tone === 'warn' ? 'text-orange-300' : 'text-white'
                 )}
               >
                 {bit.text}
@@ -173,7 +182,7 @@ const BuildingRow = ({
         </div>
         <div className="flex flex-col items-end gap-2 shrink-0 pt-0.5">
           {book.system_category && (
-            <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/70 border border-white/[0.12] rounded px-1.5 py-0.5">
+            <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white border border-white/[0.14] rounded px-1.5 py-0.5">
               {book.system_category}
             </span>
           )}
@@ -181,9 +190,30 @@ const BuildingRow = ({
         </div>
       </div>
 
+      {/* Unfinished setup gets the same weight as a due test — it is the only
+          thing standing between this building and a working log. */}
+      {needsSetup && (
+        <div className="mt-3 pt-3 border-t border-white/[0.14] flex flex-wrap items-center gap-2.5">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onOpen();
+            }}
+            className="h-11 px-4 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-yellow-400 touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+          >
+            Add call points
+          </button>
+          <span className="text-[11.5px] text-white">
+            BS 5839-1 wants a different call point tested each week — add them once and the
+            rotation runs itself.
+          </span>
+        </div>
+      )}
+
       {/* Work the round without leaving it — one tap logs this week's test */}
       {due && (
-        <div className="mt-3 pt-3 border-t border-white/[0.06] flex items-center gap-2.5">
+        <div className="mt-3 pt-3 border-t border-white/[0.14] flex items-center gap-2.5">
           <button
             type="button"
             disabled={quickPassBusy}
@@ -195,7 +225,7 @@ const BuildingRow = ({
           >
             {quickPassBusy ? 'Logging…' : `Record pass — CP ${nextCp!.number}`}
           </button>
-          <span className="text-[11.5px] text-white/70 truncate">
+          <span className="text-[11.5px] text-white truncate">
             {[nextCp!.zone && `Zone ${nextCp!.zone}`, nextCp!.location]
               .filter(Boolean)
               .join(' · ')}
@@ -241,10 +271,10 @@ const ExampleLog = ({ className }: { className?: string }) => {
 
   return (
     <div aria-hidden className={cn('select-none lg:sticky lg:top-24', className)}>
-      <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/65 mb-2.5">
+      <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-white mb-2.5">
         What a live log looks like
       </p>
-      <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.08] ring-1 ring-white/[0.04] shadow-2xl shadow-black/50 overflow-hidden">
+      <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.14] ring-1 ring-white/[0.04] shadow-2xl shadow-black/50 overflow-hidden">
         {/* Building row */}
         <div className="px-5 py-4">
           <div className="flex items-start justify-between gap-4">
@@ -252,7 +282,7 @@ const ExampleLog = ({ className }: { className?: string }) => {
               <span className="text-[15.5px] font-semibold tracking-tight text-white">
                 Harbour House
               </span>
-              <div className="mt-0.5 text-[12px] text-white/70">12 Quay Street, Bristol</div>
+              <div className="mt-0.5 text-[12px] text-white">12 Quay Street, Bristol</div>
               <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1">
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.span
@@ -263,17 +293,17 @@ const ExampleLog = ({ className }: { className?: string }) => {
                     transition={{ duration: 0.25 }}
                     className={cn(
                       'text-[12px] font-medium',
-                      logged ? 'text-white/80' : 'text-elec-yellow'
+                      logged ? 'text-white' : 'text-elec-yellow'
                     )}
                   >
                     {logged ? 'Tested this week' : 'Test CP 7 this week'}
                   </motion.span>
                 </AnimatePresence>
-                <span className="text-[12px] text-white/80">Service due 12 Sep</span>
+                <span className="text-[12px] text-white">Service due 12 Sep</span>
               </div>
             </div>
             <div className="flex flex-col items-end gap-2 shrink-0 pt-0.5">
-              <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/70 border border-white/[0.12] rounded px-1.5 py-0.5">
+              <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white border border-white/[0.14] rounded px-1.5 py-0.5">
                 L2
               </span>
               <div className="flex items-center gap-1">
@@ -296,7 +326,7 @@ const ExampleLog = ({ className }: { className?: string }) => {
         </div>
 
         {/* This week panel */}
-        <div className="border-t border-white/[0.06] px-5 py-4 min-h-[168px]">
+        <div className="border-t border-white/[0.14] px-5 py-4 min-h-[168px]">
           <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-elec-yellow/80">
             This week
           </p>
@@ -312,7 +342,7 @@ const ExampleLog = ({ className }: { className?: string }) => {
                 <p className="mt-1 text-[16px] font-semibold text-white tracking-tight">
                   Test call point 7
                 </p>
-                <p className="mt-0.5 text-[12.5px] text-white/80">Zone 2 · Stairwell B</p>
+                <p className="mt-0.5 text-[12.5px] text-white">Zone 2 · Stairwell B</p>
                 <motion.div
                   animate={phase === 2 ? { scale: 0.95 } : { scale: 1 }}
                   transition={{ duration: 0.16 }}
@@ -344,18 +374,18 @@ const ExampleLog = ({ className }: { className?: string }) => {
                 <p className="mt-1 text-[16px] font-semibold text-white tracking-tight">
                   Tested — all done
                 </p>
-                <p className="mt-0.5 text-[12.5px] text-white/80">
+                <p className="mt-0.5 text-[12.5px] text-white">
                   Next rotation: CP 8 — Reception
                 </p>
                 <motion.div
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.15, duration: 0.3 }}
-                  className="mt-3 flex items-baseline gap-3 rounded-xl bg-white/[0.04] border border-white/[0.08] px-3.5 py-2.5"
+                  className="mt-3 flex items-baseline gap-3 rounded-xl bg-white/[0.04] border border-white/[0.14] px-3.5 py-2.5"
                 >
-                  <span className="text-[11px] text-white/70 tabular-nums shrink-0">Today</span>
+                  <span className="text-[11px] text-white tabular-nums shrink-0">Today</span>
                   <span className="min-w-0">
-                    <span className="block text-[9px] font-semibold uppercase tracking-[0.14em] text-white/70">
+                    <span className="block text-[9px] font-semibold uppercase tracking-[0.14em] text-white">
                       Weekly call point test
                     </span>
                     <span className="block text-[12.5px] text-white truncate">
@@ -367,7 +397,7 @@ const ExampleLog = ({ className }: { className?: string }) => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.9, duration: 0.4 }}
-                  className="mt-2 text-[11px] text-white/65"
+                  className="mt-2 text-[11px] text-white"
                 >
                   Next reminder — Monday, if CP 8 isn't logged.
                 </motion.p>
@@ -377,34 +407,34 @@ const ExampleLog = ({ className }: { className?: string }) => {
         </div>
 
         {/* Compliance */}
-        <div className="border-t border-white/[0.06] px-5 py-4 space-y-2.5">
+        <div className="border-t border-white/[0.14] px-5 py-4 space-y-2.5">
           <div className="flex items-baseline justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/70">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
               False alarm rate
             </span>
             <span className="text-[13.5px] font-bold tabular-nums text-white">
               2.1
-              <span className="text-[10.5px] font-medium text-white/70"> / 100 detectors / yr</span>
+              <span className="text-[10.5px] font-medium text-white"> / 100 detectors / yr</span>
             </span>
           </div>
           <div className="flex items-baseline justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/70">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
               Rotation coverage
             </span>
             <span className="text-[13.5px] font-bold tabular-nums text-white">
               {logged ? 12 : 11}
-              <span className="text-[10.5px] font-medium text-white/70"> of 12 in 12 mo</span>
+              <span className="text-[10.5px] font-medium text-white"> of 12 in 12 mo</span>
             </span>
           </div>
           <div className="flex items-baseline justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/70">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
               Last export
             </span>
-            <span className="text-[12px] text-white/80">Annex H PDF · 6 months</span>
+            <span className="text-[12px] text-white">Annex H PDF · 6 months</span>
           </div>
         </div>
       </div>
-      <p className="mt-2.5 text-[11px] text-white/60 text-right">Live example</p>
+      <p className="mt-2.5 text-[11px] text-white text-right">Live example</p>
     </div>
   );
 };
@@ -502,6 +532,17 @@ const FireAlarmLogBooks = () => {
     return { total, tested, faults };
   }, [books, statuses]);
 
+  /**
+   * True while any building still has no call points, so its weekly rotation
+   * cannot start. Drives the explainer below the list — it earns its place only
+   * while there is setup left to do, and gets out of the way once every
+   * building is running.
+   */
+  const anyNeedsSetup = useMemo(
+    () => books.some((b) => !nextCallPoint(b, entriesByBook[b.id] ?? [])),
+    [books, entriesByBook]
+  );
+
   // Still-to-test buildings lead the round; tested ones settle to the bottom.
   const orderedBooks = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -586,12 +627,12 @@ const FireAlarmLogBooks = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-background">
       <Helmet>
         <title>Fire Alarm Log Books | Elec-Mate</title>
       </Helmet>
 
-      <header className="sticky top-0 z-40 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/[0.06]">
+      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/[0.14]">
         <div className="px-4 sm:px-6">
           <div className="flex items-center h-14 sm:h-16">
             <button
@@ -635,14 +676,18 @@ const FireAlarmLogBooks = () => {
                   </span>
                 )}
               </h2>
-              <p className="mt-2 text-[13px] text-white/80 max-w-md leading-relaxed">
+              <p className="mt-2 text-[13px] text-white max-w-md leading-relaxed">
                 BS 5839-1:2025 permits a digital log book as the system record. One building, one
                 live log — weekly call point rotation, faults, services and the Annex H export,
                 all kept for you.
               </p>
             </div>
-            {!loading && books.length > 0 && (
-              <div className="hidden lg:flex items-stretch divide-x divide-white/[0.08] rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.08] shrink-0">
+            {/* Only shown once it can say something. "1 building · 0 tested ·
+                0 faults" is three zeros in a box: it takes up the top-right of
+                the screen to report that nothing has happened yet, which the
+                headline already says. */}
+            {!loading && (summary.total > 1 || summary.tested > 0 || summary.faults > 0) && (
+              <div className="hidden lg:flex items-stretch divide-x divide-white/[0.08] rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.14] shrink-0">
                 {(
                   [
                     [String(summary.total), summary.total === 1 ? 'Building' : 'Buildings'],
@@ -661,7 +706,7 @@ const FireAlarmLogBooks = () => {
                     >
                       {value}
                     </p>
-                    <p className="mt-1.5 text-[11px] text-white/70">{label}</p>
+                    <p className="mt-1.5 text-[11px] text-white">{label}</p>
                   </div>
                 ))}
               </div>
@@ -671,7 +716,7 @@ const FireAlarmLogBooks = () => {
 
         {/* Buildings */}
         {loading ? (
-          <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.08] h-40 animate-pulse" />
+          <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.14] h-40 animate-pulse" />
         ) : books.length === 0 ? (
           <div className="pt-8 sm:pt-12 grid grid-cols-1 lg:grid-cols-[1fr_420px] lg:grid-rows-[auto_1fr] gap-8 lg:gap-12 items-start">
             {/* Pitch */}
@@ -684,7 +729,7 @@ const FireAlarmLogBooks = () => {
                 <br />
                 off the wall
               </h2>
-              <p className="mt-3 text-[13.5px] text-white/80 max-w-md leading-relaxed">
+              <p className="mt-3 text-[13.5px] text-white max-w-md leading-relaxed">
                 The 2025 edition lets the dog-eared book by the panel go digital. One live log per
                 building — and the parts everyone gets wrong, the app does for you.
               </p>
@@ -696,7 +741,7 @@ const FireAlarmLogBooks = () => {
                 >
                   Set up your first building
                 </Button>
-                <p className="text-[11.5px] text-white/65">
+                <p className="text-[11.5px] text-white">
                   Under a minute — only the name is required.
                 </p>
               </div>
@@ -706,7 +751,7 @@ const FireAlarmLogBooks = () => {
             <ExampleLog className="lg:col-start-2 lg:row-start-1 lg:row-span-2" />
 
             <div className="lg:col-start-1 lg:row-start-2">
-              <div className="space-y-0 max-w-md divide-y divide-white/[0.06] border-y border-white/[0.06]">
+              <div className="space-y-0 max-w-md divide-y divide-white/[0.06] border-y border-white/[0.14]">
                 {[
                   {
                     n: '01',
@@ -732,13 +777,13 @@ const FireAlarmLogBooks = () => {
                       <p className="text-[14.5px] font-semibold text-white tracking-tight">
                         {f.title}
                       </p>
-                      <p className="mt-0.5 text-[12.5px] text-white/75 leading-relaxed">{f.body}</p>
+                      <p className="mt-0.5 text-[12.5px] text-white leading-relaxed">{f.body}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <p className="mt-5 max-w-md text-[11px] text-white/65 leading-relaxed">
+              <p className="mt-5 max-w-md text-[11px] text-white leading-relaxed">
                 BS 5839-1:2025 Clause 48.2 recognises a digital log book as the system record —
                 the export follows the Annex H model, so risk assessors and the fire authority see
                 the format they already know.
@@ -762,7 +807,7 @@ const FireAlarmLogBooks = () => {
             className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4"
           >
             {orderedBooks.length === 0 && (
-              <p className="col-span-full px-5 py-8 text-center text-[13px] text-white/75">
+              <p className="col-span-full px-5 py-8 text-center text-[13px] text-white">
                 No buildings match "{search}".
               </p>
             )}
@@ -790,10 +835,68 @@ const FireAlarmLogBooks = () => {
               record={[true, true, true, true, true, true, true, true]}
               className="opacity-60 [&>span]:h-1.5 [&>span]:w-1.5"
             />
-            <span className="text-[11px] text-white/70">
+            <span className="text-[11px] text-white">
               Last 8 weeks — filled squares are weeks with a logged test
             </span>
           </div>
+        )}
+
+        {/* Shown only while a building is still waiting on its call points.
+            With one unfinished building the page otherwise ended after a single
+            card and left two thirds of the screen empty — which reads as a
+            product with nothing in it rather than one waiting on five minutes
+            of setup. This is not filler: it shows exactly what finishing buys,
+            and disappears the moment every building has its rotation. */}
+        {!loading && books.length > 0 && anyNeedsSetup && (
+          <section className="mt-10 sm:mt-12 grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-8 lg:gap-12 items-start">
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-elec-yellow/80">
+                Once the call points are in
+              </p>
+              <h2 className="mt-1.5 text-2xl sm:text-3xl font-semibold text-white tracking-[-0.02em] leading-[1.1]">
+                The weekly round
+                <br />
+                becomes one tap
+              </h2>
+              <p className="mt-3 text-[13.5px] text-white max-w-md leading-relaxed">
+                Add the call points once and the rotation runs itself — the app names the one
+                due this week, you log the pass on the spot, and the Annex H record builds as
+                you go.
+              </p>
+              <div className="mt-6 space-y-0 max-w-md divide-y divide-white/[0.06] border-y border-white/[0.14]">
+                {[
+                  {
+                    n: '01',
+                    title: 'A different call point each week',
+                    body: 'BS 5839-1 wants the rotation spread across every point. The app tracks where you are in it, so nobody has to keep count.',
+                  },
+                  {
+                    n: '02',
+                    title: 'The compliance maths, done',
+                    body: 'False alarm rate per 100 detectors against the Annex F investigation trigger, and the service window, worked out live.',
+                  },
+                  {
+                    n: '03',
+                    title: 'Annex H export when asked',
+                    body: 'The full record laid out on the model log book — branded, saved, and emailable to the responsible person.',
+                  },
+                ].map((f) => (
+                  <div key={f.n} className="flex gap-4 py-4">
+                    <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.18em] text-elec-yellow/80 pt-1 tabular-nums">
+                      {f.n}
+                    </span>
+                    <div>
+                      <p className="text-[14.5px] font-semibold text-white tracking-tight">
+                        {f.title}
+                      </p>
+                      <p className="mt-1 text-[13px] text-white leading-relaxed">{f.body}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <ExampleLog />
+          </section>
         )}
       </main>
 
@@ -809,8 +912,8 @@ const FireAlarmLogBooks = () => {
           side="bottom"
           className="max-h-[90vh] p-0 rounded-t-2xl overflow-hidden flex flex-col"
         >
-          <div className="flex flex-col min-h-0 bg-[#0a0a0a]">
-            <div className="shrink-0 px-5 pt-5 pb-4 border-b border-white/[0.06]">
+          <div className="flex flex-col min-h-0 bg-background">
+            <div className="shrink-0 px-5 pt-5 pb-4 border-b border-white/[0.14]">
               <div className="max-w-5xl mx-auto w-full">
                 <div className="flex items-center justify-between">
                   <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-elec-yellow/80">
@@ -882,7 +985,7 @@ const FireAlarmLogBooks = () => {
                 {step === 1 && (
                   <>
                     <div>
-                      <p className="text-[11.5px] font-medium text-white/80 mb-1.5">
+                      <p className="text-[11.5px] font-medium text-white mb-1.5">
                         System category
                       </p>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -896,7 +999,7 @@ const FireAlarmLogBooks = () => {
                               'focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50',
                               category === c.code
                                 ? 'bg-elec-yellow/10 border-elec-yellow/50'
-                                : 'bg-white/[0.07] border-white/[0.14] hover:bg-white/[0.1]'
+                                : 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-white/[0.14] hover:bg-white/[0.1]'
                             )}
                           >
                             <span
@@ -907,14 +1010,14 @@ const FireAlarmLogBooks = () => {
                             >
                               {c.code}
                             </span>
-                            <span className="text-[11.5px] text-white/80 leading-snug">
+                            <span className="text-[11.5px] text-white leading-snug">
                               {c.scope}
                             </span>
                           </button>
                         ))}
                       </div>
                     </div>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-elec-yellow/80 border-t border-white/[0.08] pt-4">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-elec-yellow/80 border-t border-white/[0.14] pt-4">
                       Panel &amp; detection
                     </p>
                     <Field
@@ -963,19 +1066,19 @@ const FireAlarmLogBooks = () => {
                           onChange={(e) => setDetectorCount(e.target.value)}
                         />
                       </Field>
-                      <div className="sm:mt-[22px] flex items-center gap-4 px-4 h-12 rounded-xl bg-white/[0.07] border border-white/[0.14]">
+                      <div className="sm:mt-[22px] flex items-center gap-4 px-4 h-12 rounded-xl bg-gradient-to-b from-white/[0.08] to-white/[0.04] border border-white/[0.14]">
                         <div className="flex-1 min-w-0">
                           <p className="text-[13px] font-medium text-white truncate">
                             Alarm receiving centre
                           </p>
-                          <p className="text-[10.5px] text-white/70 truncate">
+                          <p className="text-[10.5px] text-white truncate">
                             Signals go to an ARC / fire service
                           </p>
                         </div>
                         <Switch checked={arcConnected} onCheckedChange={setArcConnected} />
                       </div>
                     </div>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-elec-yellow/80 border-t border-white/[0.08] pt-4">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-elec-yellow/80 border-t border-white/[0.14] pt-4">
                       Servicing
                     </p>
                     <div className="grid grid-cols-2 gap-3">
@@ -1002,7 +1105,7 @@ const FireAlarmLogBooks = () => {
                 {step === 2 && (
                   <>
                     <div>
-                      <p className="text-[11.5px] font-medium text-white/80 mb-1.5">
+                      <p className="text-[11.5px] font-medium text-white mb-1.5">
                         Weekly test day
                       </p>
                       <div className="flex flex-wrap gap-2">
@@ -1016,21 +1119,21 @@ const FireAlarmLogBooks = () => {
                               'focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50',
                               testDay === d
                                 ? 'bg-elec-yellow text-black'
-                                : 'bg-white/[0.08] text-white border border-white/[0.16] hover:bg-white/[0.12]'
+                                : 'bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-white border border-white/[0.16] hover:bg-white/[0.12]'
                             )}
                           >
                             {d.slice(0, 3)}
                           </button>
                         ))}
                       </div>
-                      <p className="mt-1.5 text-[11px] text-white/65">
+                      <p className="mt-1.5 text-[11px] text-white">
                         Test at roughly the same time each week, during normal working hours.
                       </p>
                     </div>
 
                     <div>
                       <div className="flex items-center justify-between mb-1.5">
-                        <p className="text-[11.5px] font-medium text-white/80">
+                        <p className="text-[11.5px] font-medium text-white">
                           Manual call points, in rotation order
                         </p>
                         <button
@@ -1066,7 +1169,7 @@ const FireAlarmLogBooks = () => {
                           </div>
                         ))}
                       </div>
-                      <p className="mt-2 text-[11px] text-white/65 leading-relaxed">
+                      <p className="mt-2 text-[11px] text-white leading-relaxed">
                         A different call point is tested each week so every one is covered inside 12
                         months. Numbers auto-increment as you add — the app tracks whose turn it is.
                       </p>
@@ -1077,7 +1180,7 @@ const FireAlarmLogBooks = () => {
               </AnimatePresence>
             </div>
 
-            <div className="shrink-0 px-5 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] border-t border-white/[0.06] bg-[#0a0a0a]">
+            <div className="shrink-0 px-5 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] border-t border-white/[0.14] bg-background">
               <div className="max-w-5xl mx-auto w-full flex gap-2.5">
                 {step > 0 && (
                   <Button
@@ -1086,7 +1189,7 @@ const FireAlarmLogBooks = () => {
                       scrollToTop();
                     }}
                     variant="outline"
-                    className="h-12 px-5 rounded-xl border-white/[0.15] bg-white/[0.05] text-white hover:bg-white/[0.1] touch-manipulation"
+                    className="h-12 px-5 rounded-xl border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04] text-white hover:bg-white/[0.1] touch-manipulation"
                   >
                     Back
                   </Button>
@@ -1116,7 +1219,7 @@ const FireAlarmLogBooks = () => {
                 )}
               </div>
               {step > 0 && (
-                <p className="max-w-5xl mx-auto w-full mt-2 text-center text-[11px] text-white/65">
+                <p className="max-w-5xl mx-auto w-full mt-2 text-center text-[11px] text-white">
                   Everything here is optional — you can fill it in later under Manage.
                 </p>
               )}

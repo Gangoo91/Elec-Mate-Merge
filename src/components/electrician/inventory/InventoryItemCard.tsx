@@ -1,7 +1,6 @@
 import { memo, useState, useRef } from 'react';
 import { motion, PanInfo, useAnimation } from 'framer-motion';
-import { Minus, Plus, AlertTriangle, Trash2, MapPin } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Minus, Plus, Trash2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
 import { useHaptic } from '@/hooks/useHaptic';
@@ -134,58 +133,65 @@ export const InventoryItemCard = memo(function InventoryItemCard({
         onDrag={handleDrag}
         onDragEnd={handleDragEnd}
         animate={controls}
-        className="relative rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 active:bg-white/[0.06] transition-colors touch-manipulation"
+        className={cn(
+          'relative h-full rounded-2xl border bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-4 transition-colors active:bg-white/[0.08] touch-manipulation',
+          isLowStock ? 'border-amber-500/40' : 'border-white/[0.12]'
+        )}
         onClick={() => !isDragging && onTap(item)}
       >
         <div className="flex items-start gap-3">
-          {/* Left: category dot + info + optional photo */}
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1">
-              {item.photo_url ? (
+          {/* Left: what it is and where */}
+          <div className="min-w-0 flex-1">
+            <div className="flex items-start gap-2.5">
+              {item.photo_url && (
                 <img
                   src={item.photo_url}
                   alt=""
-                  className="w-8 h-8 rounded-lg object-cover flex-shrink-0"
+                  loading="lazy"
+                  className="h-10 w-10 flex-shrink-0 rounded-lg border border-white/[0.1] object-cover"
                 />
-              ) : (
-                <div className={cn('w-2 h-2 rounded-full flex-shrink-0', category.dotClass)} />
               )}
-              <p className="text-[15px] font-medium text-white truncate">
-                <HighlightText text={item.name} query={searchQuery} />
-              </p>
-              {isLowStock && <AlertTriangle className="h-3.5 w-3.5 text-amber-400 flex-shrink-0" />}
-            </div>
-            <div className="flex items-center gap-2 ml-4">
-              <span className="text-[11px] text-white bg-white/[0.06] px-2 py-0.5 rounded-full flex items-center gap-1">
-                <MapPin className="h-2.5 w-2.5" />
-                {location.label}
-              </span>
-              <span className="text-[11px] text-white bg-white/[0.06] px-2 py-0.5 rounded-full">
-                {category.label}
-              </span>
-              {item.supplier && (
-                <span className="text-[11px] text-white truncate">
-                  <HighlightText text={item.supplier} query={searchQuery} />
-                </span>
-              )}
+              <div className="min-w-0 flex-1">
+                <p className="line-clamp-2 text-[15px] font-medium leading-snug text-white">
+                  <HighlightText text={item.name} query={searchQuery} />
+                </p>
+                {/* Location, category and supplier as plain text, not three
+                    pills and a coloured dot. The rainbow of per-category
+                    colours was decoration competing with the quantity, which
+                    is the only thing on this card anyone reads at a glance. */}
+                <p className="mt-1 truncate text-[12px] text-white">
+                  {location.label} · {category.label}
+                  {item.supplier ? ' · ' : ''}
+                  {item.supplier && <HighlightText text={item.supplier} query={searchQuery} />}
+                </p>
+                {isLowStock && (
+                  <p className="mt-1.5 text-[11px] font-semibold text-amber-400">
+                    Low stock
+                    {item.low_stock_threshold != null
+                      ? ` — reorder at ${item.low_stock_threshold}`
+                      : ''}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
 
-          {/* Right: quantity + stepper */}
+          {/* Right: the stepper. Full 44px targets — these get tapped with
+              gloves on, in a van, in the dark. */}
           <div
-            className="flex items-center gap-2 flex-shrink-0"
+            className="flex flex-shrink-0 items-center gap-1"
             onClick={(e) => e.stopPropagation()}
           >
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-white"
+            <button
+              type="button"
+              aria-label={`Remove one ${item.name}`}
+              className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/[0.06] text-white transition-colors hover:bg-white/[0.12] disabled:opacity-40 touch-manipulation"
               onClick={() => onAdjust(item.id, -step)}
               disabled={item.quantity <= 0}
             >
               <Minus className="h-5 w-5" />
-            </Button>
-            <div className="min-w-[56px] text-center">
+            </button>
+            <div className="min-w-[64px] text-center">
               {isEditingQty ? (
                 <Input
                   ref={qtyInputRef}
@@ -194,7 +200,7 @@ export const InventoryItemCard = memo(function InventoryItemCard({
                   onChange={(e) => setEditQty(e.target.value)}
                   onBlur={handleQtySubmit}
                   onKeyDown={(e) => e.key === 'Enter' && handleQtySubmit()}
-                  className="h-11 w-16 text-center text-[15px] font-bold p-0 border-elec-yellow/50 bg-transparent touch-manipulation"
+                  className="h-11 w-16 border-elec-yellow/50 bg-transparent p-0 text-center text-[17px] font-bold touch-manipulation"
                   min={0}
                   step={step}
                   autoFocus
@@ -203,31 +209,32 @@ export const InventoryItemCard = memo(function InventoryItemCard({
                 <button
                   type="button"
                   onClick={handleQtyTap}
-                  className="min-h-[44px] min-w-[44px] flex flex-col items-center justify-center touch-manipulation"
+                  aria-label={`Set quantity for ${item.name}`}
+                  className="flex h-11 w-full flex-col items-center justify-center rounded-xl transition-colors hover:bg-white/[0.04] touch-manipulation"
                 >
-                  <motion.p
+                  <motion.span
                     key={item.quantity}
-                    initial={{ scale: 1.3, opacity: 0.5 }}
+                    initial={{ scale: 1.25, opacity: 0.6 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                    className={cn('text-[17px] font-bold leading-tight', quantityColour)}
+                    className={cn('text-[19px] font-bold leading-none tabular-nums', quantityColour)}
                   >
                     {item.quantity}
-                  </motion.p>
-                  <p className="text-[10px] text-white leading-tight">
-                    {item.unit === 'each' ? '' : item.unit}
-                  </p>
+                  </motion.span>
+                  {item.unit !== 'each' && (
+                    <span className="mt-0.5 text-[10px] leading-none text-white">{item.unit}</span>
+                  )}
                 </button>
               )}
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-white"
+            <button
+              type="button"
+              aria-label={`Add one ${item.name}`}
+              className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/[0.06] text-white transition-colors hover:bg-white/[0.12] touch-manipulation"
               onClick={() => onAdjust(item.id, step)}
             >
               <Plus className="h-5 w-5" />
-            </Button>
+            </button>
           </div>
         </div>
       </motion.div>

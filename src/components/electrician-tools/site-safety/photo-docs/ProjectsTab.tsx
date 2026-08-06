@@ -46,25 +46,23 @@ const formatBytes = (bytes: number): string => {
 };
 
 // Workflow progress mini-bar
-function WorkflowProgressBar({ typeCounts }: { typeCounts?: Record<string, number> }) {
+function WorkflowPhases({ typeCounts }: { typeCounts?: Record<string, number> }) {
   if (!typeCounts || Object.keys(typeCounts).length === 0) return null;
-
-  const total = Object.values(typeCounts).reduce((a, b) => a + b, 0);
-  if (total === 0) return null;
-
-  const phaseProgress = WORKFLOW_PHASES.map((phase) => {
-    const count = phase.photoTypes.reduce((sum, type) => sum + (typeCounts[type] || 0), 0);
-    return { ...phase, count, percentage: (count / total) * 100 };
-  }).filter((p) => p.count > 0);
+  const present = WORKFLOW_PHASES.map((phase) => ({
+    ...phase,
+    count: phase.photoTypes.reduce((sum, type) => sum + (typeCounts[type] || 0), 0),
+  })).filter((p) => p.count > 0);
+  if (present.length === 0) return null;
 
   return (
-    <div className="flex gap-0.5 h-1 rounded-full overflow-hidden bg-white/5">
-      {phaseProgress.map((phase) => (
-        <div
+    <div className="flex flex-wrap gap-1.5">
+      {present.map((phase) => (
+        <span
           key={phase.id}
-          className={`${phase.dotColour} rounded-full`}
-          style={{ width: `${phase.percentage}%`, minWidth: '4px' }}
-        />
+          className="rounded border border-white/[0.12] bg-white/[0.06] px-1.5 py-0.5 text-[10.5px] font-medium text-white"
+        >
+          {phase.label} {phase.count}
+        </span>
       ))}
     </div>
   );
@@ -183,29 +181,33 @@ export default function ProjectsTab({
             )}
           </div>
 
-          {/* Stats Strip */}
+          {/* Stats — one surface split into cells rather than three boxes with
+              three borders and three icons competing for the same glance. */}
           <div className="px-3 pt-3">
-            <div className="grid grid-cols-3 gap-2">
-              <div className="bg-white/[0.03] rounded-xl border border-white/[0.06] p-3 text-center">
-                <div className="text-lg font-bold text-white">{totalPhotoCount}</div>
-                <div className="text-[10px] text-white uppercase tracking-wide mt-0.5 flex items-center justify-center gap-1">
-                  <Camera className="h-3 w-3" />
+            <div className="grid grid-cols-3 overflow-hidden rounded-2xl border border-white/[0.14] bg-gradient-to-b from-white/[0.08] to-white/[0.04]">
+              <div className="px-3 py-3.5 sm:px-4">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
                   Photos
-                </div>
+                </p>
+                <p className="mt-1 text-[20px] font-bold leading-none tracking-tight tabular-nums text-white">
+                  {totalPhotoCount}
+                </p>
               </div>
-              <div className="bg-white/[0.03] rounded-xl border border-white/[0.06] p-3 text-center">
-                <div className="text-lg font-bold text-white">{projectCount}</div>
-                <div className="text-[10px] text-white uppercase tracking-wide mt-0.5 flex items-center justify-center gap-1">
-                  <FolderOpen className="h-3 w-3" />
+              <div className="border-l border-white/[0.10] px-3 py-3.5 sm:px-4">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
                   Projects
-                </div>
+                </p>
+                <p className="mt-1 text-[20px] font-bold leading-none tracking-tight tabular-nums text-white">
+                  {projectCount}
+                </p>
               </div>
-              <div className="bg-white/[0.03] rounded-xl border border-white/[0.06] p-3 text-center">
-                <div className="text-lg font-bold text-white">{formatBytes(totalBytes)}</div>
-                <div className="text-[10px] text-white uppercase tracking-wide mt-0.5 flex items-center justify-center gap-1">
-                  <HardDrive className="h-3 w-3" />
+              <div className="border-l border-white/[0.10] px-3 py-3.5 sm:px-4">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
                   Storage
-                </div>
+                </p>
+                <p className="mt-1 text-[20px] font-bold leading-none tracking-tight tabular-nums text-white">
+                  {formatBytes(totalBytes)}
+                </p>
               </div>
             </div>
           </div>
@@ -214,11 +216,11 @@ export default function ProjectsTab({
           {recentPhotos.length > 0 && (
             <div className="mt-4">
               <div className="flex items-center justify-between px-4 mb-2">
-                <h2 className="text-sm font-semibold text-white">Recent</h2>
+                <h2 className="text-[13px] font-semibold tracking-tight text-white">Recent</h2>
                 {onViewAllPhotos && (
                   <button
                     onClick={onViewAllPhotos}
-                    className="text-xs text-elec-yellow font-medium touch-manipulation active:opacity-70"
+                    className="flex h-11 items-center px-2 text-[12.5px] font-medium text-elec-yellow touch-manipulation active:opacity-70"
                   >
                     View All
                   </button>
@@ -231,7 +233,7 @@ export default function ProjectsTab({
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: i * 0.03 }}
-                    className="flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden bg-[#1e1e1e] border border-white/10"
+                    className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl border border-white/[0.12] bg-[#1e1e1e] sm:h-24 sm:w-24"
                   >
                     <img
                       src={photo.thumbnail_url || photo.file_url}
@@ -249,7 +251,7 @@ export default function ProjectsTab({
           <div className="mt-4 px-3">
             {/* Section header + status tabs */}
             <div className="flex items-center justify-between mb-3">
-              <h2 className="text-sm font-semibold text-white">Projects</h2>
+              <h2 className="text-[13px] font-semibold tracking-tight text-white">Projects</h2>
             </div>
 
             {/* Segmented status control */}
@@ -258,7 +260,7 @@ export default function ProjectsTab({
                 <button
                   key={tab}
                   onClick={() => setStatusTab(tab)}
-                  className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all touch-manipulation capitalize ${
+                  className={`flex h-11 flex-1 items-center justify-center rounded-lg text-[13px] font-semibold capitalize transition-colors touch-manipulation ${
                     statusTab === tab
                       ? 'bg-elec-yellow text-black shadow-sm'
                       : 'text-white active:bg-white/5'
@@ -270,22 +272,45 @@ export default function ProjectsTab({
             </div>
 
             {/* Empty state */}
-            {!isLoading && projects.length === 0 && statusTab === 'active' && (
-              <div className="flex flex-col items-center py-12">
-                <div className="w-16 h-16 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center mb-3">
-                  <Folder className="h-8 w-8 text-elec-yellow" />
+            {/* Every tab gets an empty state. Gated on 'active' only, Completed
+                and Archived rendered a blank void — no heading, no explanation,
+                nothing to click. */}
+            {!isLoading && projects.length === 0 && (
+              <div className="flex flex-col items-center rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.06] to-white/[0.03] px-6 py-12">
+                <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-2xl border border-white/[0.12] bg-white/[0.06]">
+                  <Folder className="h-7 w-7 text-white" />
                 </div>
-                <h3 className="text-base font-semibold text-white mb-1">No projects yet</h3>
-                <p className="text-xs text-white text-center max-w-[240px] mb-4">
-                  Create a project to organise your job photos by customer and workflow phase.
+                <h3 className="text-[15px] font-semibold text-white">
+                  {statusTab === 'active'
+                    ? 'No projects yet'
+                    : statusTab === 'completed'
+                      ? 'Nothing completed yet'
+                      : 'Nothing archived'}
+                </h3>
+                <p className="mt-1 max-w-[280px] text-center text-[12.5px] text-white">
+                  {statusTab === 'active'
+                    ? 'Group a job\u2019s photos in one place \u2014 before, progress, completion \u2014 so the whole record is together when you need it.'
+                    : statusTab === 'completed'
+                      ? 'Projects you mark as complete land here, so finished work stops cluttering your active list.'
+                      : 'Archived projects are kept but hidden. Nothing here yet.'}
                 </p>
-                <button
-                  onClick={() => setCreateOpen(true)}
-                  className="flex items-center gap-2 px-5 py-3 rounded-xl bg-elec-yellow text-black font-semibold touch-manipulation active:scale-[0.98] transition-all"
-                >
-                  <Plus className="h-5 w-5" />
-                  <span>New Project</span>
-                </button>
+                {statusTab === 'active' && (
+                  <button
+                    onClick={() => setCreateOpen(true)}
+                    className="mt-4 flex h-12 items-center gap-2 rounded-xl bg-elec-yellow px-5 font-semibold text-black transition-colors hover:bg-elec-yellow/90 touch-manipulation"
+                  >
+                    <Plus className="h-5 w-5" />
+                    <span>New project</span>
+                  </button>
+                )}
+                {statusTab !== 'active' && (
+                  <button
+                    onClick={() => setStatusTab('active')}
+                    className="mt-4 flex h-11 items-center rounded-xl border border-white/[0.14] bg-white/[0.06] px-4 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.10] touch-manipulation"
+                  >
+                    Back to active
+                  </button>
+                )}
               </div>
             )}
 
@@ -317,7 +342,9 @@ export default function ProjectsTab({
             )}
 
             {/* Project cards */}
-            <div className="space-y-2.5">
+            {/* Two/three up from md: — one column of rows on a wide screen
+                left two thirds of the display empty. */}
+            <div className="grid grid-cols-1 gap-2.5 md:grid-cols-2 xl:grid-cols-3">
               {filteredProjects.map((project, index) => (
                 <motion.button
                   key={project.id}
@@ -325,11 +352,11 @@ export default function ProjectsTab({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.03 }}
                   onClick={() => onSelectProject(project)}
-                  className="w-full text-left p-3.5 bg-white/[0.03] rounded-2xl border border-white/[0.06] active:scale-[0.99] active:bg-white/[0.05] transition-all touch-manipulation"
+                  className="h-full w-full rounded-2xl border border-white/[0.12] bg-gradient-to-b from-white/[0.07] to-white/[0.03] p-3.5 text-left transition-colors active:bg-white/[0.08] touch-manipulation"
                 >
                   <div className="flex items-center gap-3">
                     {/* Thumbnail or folder icon */}
-                    <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0">
+                    <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-xl">
                       {project.thumbnail_urls && project.thumbnail_urls.length > 0 ? (
                         <div className="grid grid-cols-2 gap-px w-full h-full bg-white/10 rounded-xl overflow-hidden">
                           {Array.from({ length: 4 }).map((_, i) => (
@@ -348,29 +375,32 @@ export default function ProjectsTab({
                           ))}
                         </div>
                       ) : (
-                        <div className="w-full h-full rounded-xl bg-gradient-to-br from-elec-yellow/15 to-amber-600/10 border border-elec-yellow/20 flex items-center justify-center">
-                          <Folder className="h-6 w-6 text-elec-yellow" />
+                        <div className="flex h-full w-full flex-col items-center justify-center rounded-xl border border-dashed border-white/[0.18] bg-white/[0.03]">
+                          <Folder className="h-5 w-5 text-white" />
+                          <span className="mt-0.5 text-[9px] font-medium text-white">Empty</span>
                         </div>
                       )}
                     </div>
 
                     {/* Info */}
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <p className="text-sm font-semibold text-white truncate">{project.name}</p>
+                      <div className="flex items-start gap-2">
+                        <p className="line-clamp-2 min-w-0 flex-1 text-[14px] font-semibold leading-snug text-white">
+                          {project.name}
+                        </p>
                         <span
-                          className={`text-[9px] font-semibold px-1.5 py-0.5 rounded-full capitalize flex-shrink-0 ${
+                          className={`flex-shrink-0 rounded px-1.5 py-0.5 text-[10px] font-bold capitalize ${
                             project.status === 'active'
-                              ? 'bg-green-500/20 text-green-400 border border-green-500/20'
+                              ? 'bg-elec-yellow text-black'
                               : project.status === 'completed'
-                                ? 'bg-blue-500/20 text-blue-400 border border-blue-500/20'
-                                : 'bg-white/10 text-white border border-white/10'
+                                ? 'bg-white/[0.14] text-white'
+                                : 'bg-white/[0.08] text-white'
                           }`}
                         >
                           {project.status}
                         </span>
                       </div>
-                      <div className="flex items-center gap-1.5 mt-0.5 text-xs text-white">
+                      <div className="mt-0.5 flex items-center gap-1.5 text-[12px] text-white">
                         {project.customer_name && (
                           <>
                             <span className="truncate">{project.customer_name}</span>
@@ -380,18 +410,19 @@ export default function ProjectsTab({
                         <span className="flex-shrink-0">{project.photo_count || 0} photos</span>
                       </div>
 
-                      {/* Workflow progress */}
-                      <div className="mt-2">
-                        <WorkflowProgressBar typeCounts={project.type_counts} />
-                      </div>
+                      {(project.photo_count || 0) > 0 && (
+                        <div className="mt-2">
+                          <WorkflowPhases typeCounts={project.type_counts} />
+                        </div>
+                      )}
 
                       {/* Last updated */}
-                      <div className="mt-1 text-[10px] text-white">
+                      <div className="mt-1 text-[11.5px] text-white">
                         {formatDistanceToNow(new Date(project.updated_at), { addSuffix: true })}
                       </div>
                     </div>
 
-                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
+
                   </div>
                 </motion.button>
               ))}
@@ -399,18 +430,26 @@ export default function ProjectsTab({
 
             {/* Unorganised photos card */}
             {statusTab === 'active' && unorganisedCount > 0 && (
-              <div className="mt-3 w-full flex items-center gap-3 p-3.5 bg-orange-500/5 rounded-2xl border border-dashed border-orange-500/20">
-                <div className="p-2.5 rounded-xl bg-orange-500/10 border border-orange-500/20 flex-shrink-0">
-                  <ImageIcon className="h-5 w-5 text-orange-400" />
+              /* Was a plain div carrying a chevron — it looked tappable and did
+                 nothing. It now opens the photo library, which is where those
+                 photos actually live. */
+              <button
+                type="button"
+                onClick={onViewAllPhotos}
+                disabled={!onViewAllPhotos}
+                className="mt-3 flex w-full items-center gap-3 rounded-2xl border border-dashed border-white/[0.18] bg-white/[0.03] p-3.5 text-left transition-colors hover:bg-white/[0.06] disabled:cursor-default touch-manipulation"
+              >
+                <div className="flex-shrink-0 rounded-xl border border-white/[0.12] bg-white/[0.06] p-2.5">
+                  <ImageIcon className="h-5 w-5 text-white" />
                 </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-white">Unorganised</p>
-                  <p className="text-xs text-white mt-0.5">
+                <div className="min-w-0 flex-1">
+                  <p className="text-[14px] font-semibold text-white">Unorganised</p>
+                  <p className="mt-0.5 text-[12px] text-white">
                     {unorganisedCount} photo{unorganisedCount !== 1 ? 's' : ''} not in a project
                   </p>
                 </div>
-                <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
-              </div>
+                <ChevronRight className="h-4 w-4 flex-shrink-0 text-white" />
+              </button>
             )}
           </div>
         </div>

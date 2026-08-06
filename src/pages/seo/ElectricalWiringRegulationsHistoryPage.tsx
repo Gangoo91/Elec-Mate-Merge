@@ -57,7 +57,7 @@ const a4Changes = [
   },
   {
     reg: 'Reg 421.1.7',
-    title: 'AFDDs now required in higher-risk premises',
+    title: 'AFDDs recommended in higher-risk premises',
     detail:
       'Redrafted so that AFDDs are now a requirement (not just a recommendation) for socket-outlet final circuits rated up to 32 A in Higher-Risk Residential Buildings, Houses in Multiple Occupation, purpose-built student accommodation and care homes. AFDDs remain recommended for single-phase socket-outlet circuits up to 32 A in all other premises.',
   },

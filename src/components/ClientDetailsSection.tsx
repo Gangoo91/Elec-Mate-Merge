@@ -255,8 +255,15 @@ const ClientDetailsSectionInner = ({ formData, onUpdate, certType }: ClientDetai
         <SectionHeading title="Installation details" />
 
         {/* Same address toggle */}
+        {/* ELE-1487 — the address field below is conditional, so when "same as
+            client address" is on there is nothing for a jump-to-field to land
+            on. Tagging the toggle means the validation panel still takes the
+            electrician to the control that decides the address. */}
         <button
           type="button"
+          data-field={
+            localValues.sameAsClientAddress === 'true' ? 'installationAddress' : undefined
+          }
           onClick={() => handleSameAddressToggle(localValues.sameAsClientAddress !== 'true')}
           className={cn(
             'w-full h-11 rounded-xl text-sm transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center',

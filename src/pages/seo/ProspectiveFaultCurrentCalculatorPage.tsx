@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet';
 import { RecentReviews } from '@/components/seo/RecentReviews';
+import { CalculatorSurface } from '@/components/calculators/shared';
 import PFCCalculator from '@/components/apprentice/calculators/PFCCalculator';
 import useSEO from '@/hooks/useSEO';
 import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
@@ -252,7 +253,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
       {/* Live calculator — free, no signup, BS 7671:2018+A4:2026 compliant */}
       <section id="calculator" className="px-5 pb-12 scroll-mt-24">
         <div className="max-w-4xl mx-auto">
-          <PFCCalculator />
+          <CalculatorSurface><PFCCalculator /></CalculatorSurface>
         </div>
       </section>
 
@@ -373,19 +374,19 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
               <h4 className="font-bold text-white mb-3">Domestic TN-C-S (PME) Supply</h4>
               <div className="space-y-1.5 text-white text-sm">
                 <div className="flex justify-between gap-3 border-b border-white/10 pb-1.5">
-                  <span className="text-white/70">Ze (earth loop, at origin)</span>
+                  <span className="text-white">Ze (earth loop, at origin)</span>
                   <span className="font-mono">0.20 Ω</span>
                 </div>
                 <div className="flex justify-between gap-3 border-b border-white/10 pb-1.5">
-                  <span className="text-white/70">Line-neutral impedance</span>
+                  <span className="text-white">Line-neutral impedance</span>
                   <span className="font-mono">0.12 Ω</span>
                 </div>
                 <div className="flex justify-between gap-3 border-b border-white/10 pb-1.5">
-                  <span className="text-white/70">PEFC = 230 ÷ 0.20</span>
+                  <span className="text-white">PEFC = 230 ÷ 0.20</span>
                   <span className="font-mono font-bold text-yellow-400">1,150 A (1.15 kA)</span>
                 </div>
                 <div className="flex justify-between gap-3 border-b border-white/10 pb-1.5">
-                  <span className="text-white/70">PSCC = 230 ÷ 0.12</span>
+                  <span className="text-white">PSCC = 230 ÷ 0.12</span>
                   <span className="font-mono font-bold text-yellow-400">1,917 A (1.92 kA)</span>
                 </div>
               </div>
@@ -397,19 +398,19 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
               <h4 className="font-bold text-white mb-3">Commercial Unit Near a Transformer</h4>
               <div className="space-y-1.5 text-white text-sm">
                 <div className="flex justify-between gap-3 border-b border-white/10 pb-1.5">
-                  <span className="text-white/70">Ze (earth loop, at origin)</span>
+                  <span className="text-white">Ze (earth loop, at origin)</span>
                   <span className="font-mono">0.08 Ω</span>
                 </div>
                 <div className="flex justify-between gap-3 border-b border-white/10 pb-1.5">
-                  <span className="text-white/70">Line-neutral impedance</span>
+                  <span className="text-white">Line-neutral impedance</span>
                   <span className="font-mono">0.03 Ω</span>
                 </div>
                 <div className="flex justify-between gap-3 border-b border-white/10 pb-1.5">
-                  <span className="text-white/70">PEFC = 230 ÷ 0.08</span>
+                  <span className="text-white">PEFC = 230 ÷ 0.08</span>
                   <span className="font-mono font-bold text-yellow-400">2,875 A (2.88 kA)</span>
                 </div>
                 <div className="flex justify-between gap-3 border-b border-white/10 pb-1.5">
-                  <span className="text-white/70">PSCC = 230 ÷ 0.03</span>
+                  <span className="text-white">PSCC = 230 ÷ 0.03</span>
                   <span className="font-mono font-bold text-yellow-400">7,667 A (7.67 kA)</span>
                 </div>
               </div>

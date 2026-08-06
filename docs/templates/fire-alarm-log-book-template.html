@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Fire Alarm Log Book - BS 5839-1:2025</title>
+    <style>
+      :root { --accent: {{ company_accent_color | default: "#dc2626" }}; }
+      @page { size: A4; margin: 3mm; }
+
+      /* Client-facing cover renders full-bleed (zero page margin) — the named
+         page is what allows a different margin to the rest of the document. */
+      @page cover { size: A4; margin: 0; }
+
+      /* ---------- CLIENT-FACING COVER SHEET (shared G-series recipe) ----------
+         height is 296mm, NOT min-height 297mm: at a full 297 the block spills
+         one hairline onto a second sheet and renders a blank page 2. For the
+         same reason there is no explicit page-break div after the cover — the
+         named page already breaks. */
+      .cover-page { page: cover; width: 210mm; height: 296mm; overflow: hidden; display: flex; flex-direction: column; color: #0a1628; }
+      .cover-hero { position: relative; background: linear-gradient(160deg, #0a1628 0%, #152238 60%, #1c2e4a 100%); color: #fff; padding: 22mm 18mm 16mm; }
+      .cover-hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: var(--accent); }
+      .cover-logos { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18mm; min-height: 60px; }
+      .cover-logos img { max-height: 60px; max-width: 190px; object-fit: contain; }
+      .cover-band-name { color: var(--accent); font-weight: 700; font-size: 18px; letter-spacing: 0.3px; }
+      .cover-eyebrow { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 12px; }
+      .cover-title { font-size: 40px; line-height: 1.08; font-weight: 800; letter-spacing: -0.5px; color: #fff; }
+      .cover-title-rule { width: 80px; height: 4px; background: var(--accent); margin-top: 16px; border-radius: 2px; }
+      .cover-subtitle { margin-top: 16px; font-size: 11px; color: #cbd5e1; letter-spacing: 0.3px; }
+      .cover-status { padding: 14px 18mm; display: flex; align-items: center; justify-content: space-between; background: #475569; color: #fff; }
+      .cover-status.is-sat { background: #16a34a; }
+      .cover-status.is-due { background: #dc2626; }
+      .cover-status-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; opacity: 0.95; }
+      .cover-status-value { font-size: 24px; font-weight: 800; letter-spacing: 2px; }
+      .cover-details { flex: 1; padding: 14mm 18mm; border-left: 4px solid var(--accent); }
+      .cover-details-h { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #94a3b8; font-weight: 700; margin-bottom: 6px; }
+      .cover-row { display: flex; border-bottom: 1px solid #e2e8f0; }
+      .cover-row:last-child { border-bottom: 0; }
+      .cover-k { width: 185px; flex-shrink: 0; color: #0a1628; font-weight: 700; text-transform: uppercase; font-size: 9.5px; letter-spacing: 0.5px; padding: 11px 0; align-self: center; }
+      .cover-v { flex: 1; color: #0f172a; font-weight: 600; font-size: 12px; padding: 11px 0; align-self: center; }
+      .cover-v .muted { color: #64748b; font-weight: 500; }
+      .cover-footer { background: #0a1628; color: #94a3b8; font-size: 8.5px; font-style: italic; padding: 11px 18mm; }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 8.5px; line-height: 1.4; color: #1a1a1a; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+      .header { background: linear-gradient(180deg, #0a1628, #152238); color: #fff; padding: 10px 12px; border-radius: 2px; position: relative; margin-bottom: 2px; }
+      .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+      .header-content { display: flex; justify-content: space-between; align-items: center; }
+      .header-brand { display: flex; align-items: center; gap: 10px; margin-right: 12px; }
+      .header-logo img { max-height: 45px; max-width: 120px; object-fit: contain; }
+      .header-company { font-size: 11px; font-weight: 700; }
+      .header-title { flex: 1; }
+      .header-title h1 { font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
+      .header-title p { font-size: 7.5px; opacity: 0.85; }
+      .header-meta { text-align: right; }
+      .header-cert-no { font-size: 11px; font-weight: 700; color: var(--accent); }
+      .header-page { font-size: 8px; opacity: 0.7; margin-top: 2px; }
+
+      .section { margin-bottom: 4px; }
+      .section-title { background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; padding: 4px 8px; margin-bottom: 3px; border-left: 3px solid var(--accent); }
+      .section-title .count { float: right; opacity: 0.75; font-weight: 400; letter-spacing: 0; }
+      .grid { display: table; width: 100%; border-collapse: collapse; margin-bottom: 2px; }
+      .row { display: table-row; }
+      .lbl { display: table-cell; font-size: 7.5px; font-weight: 600; color: #475569; padding: 5px 6px; width: 120px; vertical-align: middle; background: #f8fafc; border: 1px solid #e2e8f0; }
+      .val { display: table-cell; font-size: 9.5px; color: #1e293b; padding: 5px 6px; vertical-align: middle; border: 1px solid #e2e8f0; background: #fff; }
+      .tbl { width: 100%; border-collapse: collapse; font-size: 8.5px; margin-bottom: 3px; }
+      .tbl th { background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; font-weight: 600; font-size: 7.5px; padding: 5px 6px; text-align: left; border: 1px solid #0f172a; }
+      .tbl td { padding: 5px 6px; border: 1px solid #e2e8f0; background: #fff; }
+      .tbl .pass { background: #dcfce7; color: #166534; font-weight: 600; }
+      .tbl .fail { background: #fee2e2; color: #991b1b; font-weight: 600; }
+      .tbl .na { background: #f1f5f9; color: #64748b; }
+      /* Dates and results are read down a column — proportional digits make a
+         scan for a missing week much harder. */
+      .tbl td, .eq-box .count { font-variant-numeric: tabular-nums; }
+
+      .eq-grid { display: flex; gap: 4px; margin-bottom: 4px; }
+      .eq-box { flex: 1; background: linear-gradient(135deg, #f8fafc, #e2e8f0); border: 1px solid #cbd5e1; border-radius: 3px; padding: 6px; text-align: center; }
+      .eq-box .count { font-size: 16px; font-weight: 700; color: var(--accent); line-height: 1; }
+      .eq-box .count.ok { color: #16a34a; }
+      .eq-box .count.bad { color: #dc2626; }
+      .eq-box .label { font-size: 7px; color: #64748b; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.3px; }
+
+      .no-defects { background: #dcfce7; border: 1px solid #86efac; border-left: 3px solid #22c55e; border-radius: 2px; padding: 8px 12px; text-align: center; }
+      .no-defects .text { font-size: 9px; font-weight: 600; color: #166534; }
+      .defect-card { background: #fff; border: 1px solid #e2e8f0; border-left: 3px solid #f59e0b; border-radius: 3px; padding: 6px; margin-bottom: 4px; }
+      .defect-card.outstanding { border-left-color: #dc2626; }
+      .defect-card .d-hdr { font-size: 8.5px; font-weight: 700; color: #1e293b; margin-bottom: 2px; }
+      .defect-card .d-meta { font-size: 7.5px; color: #64748b; }
+
+      .declaration { background: #f0fdf4; border: 1px solid #86efac; border-left: 3px solid var(--accent); border-radius: 2px; padding: 6px 10px; margin-bottom: 4px; }
+      .declaration p { font-size: 7.5px; color: #166534; line-height: 1.5; text-align: justify; }
+
+      .sig-grid { display: flex; gap: 6px; margin-top: 2px; }
+      .sig-box { flex: 1; border: 1px solid #cbd5e1; border-radius: 2px; overflow: hidden; }
+      .sig-box-hdr { background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; font-size: 7.5px; font-weight: 600; padding: 3px 8px; border-bottom: 2px solid var(--accent); }
+      .sig-box-body { padding: 4px 6px; background: #fafbfc; }
+      .sig-field { display: flex; align-items: center; margin-bottom: 3px; gap: 4px; }
+      .sig-field:last-child { margin-bottom: 0; }
+      .sig-lbl { font-size: 7px; font-weight: 600; color: #64748b; min-width: 70px; flex-shrink: 0; }
+      .sig-val { flex: 1; font-size: 9px; color: #1e293b; padding: 4px 6px; background: #fff; border: 1px solid #e2e8f0; border-radius: 1px; min-height: 20px; }
+      .sig-val.sig { min-height: 35px; display: flex; align-items: center; }
+      .sig-val img { max-height: 30px; }
+
+      .photos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .photo-item { border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden; }
+      .photo-item img { width: 100%; height: 120px; object-fit: cover; }
+      .photo-caption { font-size: 7px; color: #64748b; padding: 4px 6px; background: #f8fafc; text-align: center; }
+
+      .avoid-break { page-break-inside: avoid; }
+      .page-break { page-break-before: always; }
+      .footer { margin-top: 8px; padding-top: 6px; border-top: 2px solid var(--accent); display: flex; justify-content: space-between; font-size: 7px; color: #64748b; }
+    </style>
+  </head>
+  <body>
+
+<!-- ============================ COVER ============================ -->
+<div class="cover-page">
+    <div class="cover-hero">
+        <div class="cover-logos">
+            {% if company_logo %}<img src="{{ company_logo }}" alt="{{ company_name }}" />{% else %}<span class="cover-band-name">{{ company_name }}</span>{% endif %}
+            {% if registration_scheme_logo %}<img src="{{ registration_scheme_logo }}" alt="Registration Scheme" />{% endif %}
+        </div>
+        <div class="cover-eyebrow">BS 5839-1:2025 &middot; Clause 48.2</div>
+        <h1 class="cover-title">Fire Detection &amp; Alarm<br />System Log Book</h1>
+        <div class="cover-title-rule"></div>
+        <div class="cover-subtitle">Record of testing, servicing and events{% if company_name %} &middot; {{ company_name }}{% endif %}</div>
+    </div>
+
+    <!-- The band answers the inspector's first question before they open the
+         document: is the weekly testing actually up to date. -->
+    <div class="cover-status{% if weekly_overdue %} is-due{% else %} is-sat{% endif %}">
+        <span class="cover-status-label">Weekly Testing</span>
+        <span class="cover-status-value">{% if weekly_overdue %}OVERDUE{% else %}UP TO DATE{% endif %}</span>
+    </div>
+
+    <div class="cover-details">
+        <div class="cover-details-h">Log Book Details</div>
+        <div class="cover-row"><span class="cover-k">Premises</span><span class="cover-v">{{ premises_name }}{% unless premises_address == blank %} <span class="muted">&middot; {{ premises_address }}</span>{% endunless %}</span></div>
+        <div class="cover-row"><span class="cover-k">System Category</span><span class="cover-v">{% if system_category == blank %}<span class="muted">&mdash;</span>{% else %}{{ system_category }}{% endif %}</span></div>
+        <div class="cover-row"><span class="cover-k">Period Covered</span><span class="cover-v">{{ period_label }}</span></div>
+        <div class="cover-row"><span class="cover-k">Entries In Period</span><span class="cover-v">{{ entries_total | default: 0 }}</span></div>
+        <div class="cover-row"><span class="cover-k">Last Weekly Test</span><span class="cover-v">{% if last_weekly_test == blank %}<span class="muted">&mdash;</span>{% else %}{{ last_weekly_test }}{% endif %}</span></div>
+        <div class="cover-row"><span class="cover-k">Next Test Due</span><span class="cover-v">{% if next_weekly_due == blank %}<span class="muted">&mdash;</span>{% else %}{{ next_weekly_due }}{% endif %}</span></div>
+        <div class="cover-row"><span class="cover-k">Responsible Person</span><span class="cover-v">{% if responsible_person_name == blank %}<span class="muted">&mdash;</span>{% else %}{{ responsible_person_name }}{% endif %}</span></div>
+        {% if servicing_org and servicing_org != "" %}<div class="cover-row"><span class="cover-k">Servicing Organisation</span><span class="cover-v">{{ servicing_org }}</span></div>{% endif %}
+    </div>
+
+    <div class="cover-footer">BS 5839-1:2025 Clause 48.2 expressly permits a log book to be maintained digitally. This export is a copy of that record as it stood on {{ exported_at }}; the maintained log continues and remains available to the responsible person on demand.</div>
+</div>
+<!-- cover fills the sheet; no explicit break needed (an extra one renders a blank page) -->
+
+    <div class="header">
+      <div class="header-content">
+        <div class="header-brand">
+          {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" /></div>{% endif %}
+          {% if registration_scheme_logo %}<div class="header-logo" style="margin-left: 8px;"><img src="{{ registration_scheme_logo }}" alt="Scheme" /></div>{% endif %}
+          <div><div class="header-company">{{ company_name }}</div></div>
+        </div>
+        <div class="header-title">
+          <h1>FIRE ALARM SYSTEM LOG BOOK</h1>
+          <p>In accordance with {{ standard_edition | default: "BS 5839-1:2025" }} — Clause 48.2 and Annex H</p>
+        </div>
+        <div class="header-meta">
+          <div class="header-cert-no">{{ premises_name }}</div>
+          <div class="header-page">{{ period_label }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- At-a-glance counts. An inspector reads these four before anything else. -->
+    <div class="section avoid-break">
+      <div class="section-title">Status at Date of Export</div>
+      <div class="eq-grid">
+        <div class="eq-box">
+          <div class="count">{{ weekly_tests_count | default: 0 }}</div>
+          <div class="label">Weekly Tests Logged</div>
+        </div>
+        <div class="eq-box">
+          <div class="count{% if open_defect_count > 0 %} bad{% else %} ok{% endif %}">{{ open_defect_count | default: 0 }}</div>
+          <div class="label">Open Defects</div>
+        </div>
+        <div class="eq-box">
+          <div class="count">{{ false_alarm_count | default: 0 }}</div>
+          <div class="label">False Alarms</div>
+        </div>
+        <!-- Annex F benchmark. Shown as the rate, not just a count, because the
+             rate is what triggers an investigation — a count means nothing
+             without knowing how many detectors produced it. -->
+        <div class="eq-box">
+          <div class="count{% if false_alarm_trigger_exceeded %} bad{% endif %}">{% if false_alarm_rate == blank %}&mdash;{% else %}{{ false_alarm_rate }}{% endif %}</div>
+          <div class="label">Per 100 Detectors/yr</div>
+        </div>
+        <div class="eq-box">
+          <div class="count">{{ service_visit_count | default: 0 }}</div>
+          <div class="label">Service Visits</div>
+        </div>
+      </div>
+
+      {% if false_alarm_trigger_exceeded %}
+        <div class="defect-card outstanding">
+          <div class="d-hdr">False alarm rate exceeds the Annex F investigation threshold</div>
+          <div class="d-meta">{{ false_alarm_rate }} per 100 automatic detectors over the last 12 months ({{ false_alarm_count_12mo }} recorded, {{ detector_count }} detectors). BS 5839-1 Annex F calls for a preliminary investigation above 4 per 100 detectors per year.</div>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Sorted purely by date, an unresolved fault from months ago sits mid-table
+         and reads like history. It is the most important thing in the document. -->
+    <div class="section avoid-break">
+      <div class="section-title">Outstanding Defects</div>
+      {% if open_defects.size > 0 %}
+        {% for d in open_defects %}
+          <div class="defect-card outstanding">
+            <div class="d-hdr">{{ d.description }}</div>
+            <div class="d-meta">Raised {{ d.date }}{% if d.location != "" %} &middot; {{ d.location }}{% endif %}{% if d.days_open != blank %} &middot; open {{ d.days_open }} days{% endif %}</div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="no-defects"><div class="text">No outstanding defects recorded at date of export</div></div>
+      {% endif %}
+    </div>
+
+    <div class="section avoid-break">
+      <div class="section-title">System Particulars</div>
+      <div class="grid">
+        <div class="row"><span class="lbl">Premises</span><span class="val">{{ premises_name }}</span><span class="lbl">System category</span><span class="val">{{ system_category | default: "—" }}</span></div>
+        <div class="row"><span class="lbl">Address</span><span class="val">{{ premises_address | default: "—" }}</span><span class="lbl">Panel location</span><span class="val">{{ panel_location | default: "—" }}</span></div>
+        <div class="row"><span class="lbl">Control panel</span><span class="val">{{ panel_make_model | default: "—" }}</span><span class="lbl">Automatic detectors</span><span class="val">{{ detector_count | default: "—" }}</span></div>
+        <div class="row"><span class="lbl">Manual call points</span><span class="val">{{ call_point_count | default: "—" }}</span><span class="lbl">ARC connection</span><span class="val">{{ arc_summary | default: "No" }}</span></div>
+        <div class="row"><span class="lbl">Date of installation</span><span class="val">{{ installation_date | default: "—" }}</span><span class="lbl">Date of acceptance</span><span class="val">{{ acceptance_date | default: "—" }}</span></div>
+        <div class="row"><span class="lbl">Commissioning cert</span><span class="val">{{ commissioning_cert_ref | default: "—" }}</span><span class="lbl">Weekly test day</span><span class="val">{{ weekly_test_day | default: "—" }}</span></div>
+        <div class="row"><span class="lbl">Servicing organisation</span><span class="val">{{ servicing_org | default: "—" }}</span><span class="lbl">Service interval</span><span class="val">{{ service_interval | default: "—" }}</span></div>
+        <div class="row"><span class="lbl">Responsible person</span><span class="val">{{ responsible_person_name | default: "—" }}</span><span class="lbl">Last service</span><span class="val">{{ last_service_date | default: "—" }}</span></div>
+        <div class="row"><span class="lbl">False alarm rate</span><span class="val">{% if false_alarm_rate == blank %}&mdash;{% else %}{{ false_alarm_rate }} per 100 detectors/yr ({{ false_alarm_count_12mo }} in last 12 months){% endif %}</span><span class="lbl">Annex F threshold</span><span class="val">{% if false_alarm_trigger_exceeded %}Exceeded — investigation required{% else %}Within 4 per 100/yr{% endif %}</span></div>
+      </div>
+    </div>
+
+    <!-- System documentation. BS 5839-1:2025 made the log book an active
+         compliance document: zone charts must be verified at every maintenance
+         visit and discrepancies recorded, and the certification history must be
+         traceable from the log. An inspector asks for these by name. -->
+    <div class="section avoid-break">
+      <div class="section-title">System Documentation</div>
+      <div class="grid">
+        <div class="row"><span class="lbl">Fire risk assessment</span><span class="val">{{ fire_risk_assessment_ref | default: "—" }}</span><span class="lbl">FRA date</span><span class="val">{{ fire_risk_assessment_date | default: "—" }}</span></div>
+        <div class="row"><span class="lbl">Zone plan reference</span><span class="val">{{ zone_plan_ref | default: "—" }}{% if zone_plan_verified %} — present at panel and checked against CIE{% endif %}</span><span class="lbl">Last verified</span><span class="val">{{ zone_plan_verified_date | default: "—" }}</span></div>
+        <div class="row"><span class="lbl">Cause &amp; effect ref</span><span class="val">{{ cause_effect_ref | default: "—" }}{% if cause_effect_verified %} — operation verified{% endif %}</span><span class="lbl">Last verified</span><span class="val">{{ cause_effect_verified_date | default: "—" }}</span></div>
+      </div>
+
+      {% if certificates.size > 0 %}
+        <table class="tbl">
+          <thead><tr><th>Certificate</th><th>Reference</th><th>Date</th><th>Issued by</th></tr></thead>
+          <tbody>
+            {% for c in certificates %}
+              <tr class="avoid-break">
+                <td>{{ c.type }}</td>
+                <td>{{ c.reference | default: "—" }}</td>
+                <td>{{ c.date | default: "—" }}</td>
+                <td>{{ c.issued_by | default: "—" }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+    </div>
+
+    <!-- New in 2025: deviations must be explicitly documented. Kept separate
+         from agreed variations — an agreed variation is sanctioned, a deviation
+         may not be, and an inspector treats them differently. -->
+    {% if deviations.size > 0 %}
+      <div class="section avoid-break">
+        <div class="section-title">Deviations from {{ standard_edition | default: "BS 5839-1:2025" }}<span class="count">{{ deviations.size }}</span></div>
+        {% for d in deviations %}
+          <div class="defect-card">
+            <div class="d-hdr">{{ d.description }}</div>
+            <div class="d-meta">Recorded {{ d.date }}{% if d.agreed_with != "" %} &middot; agreed with {{ d.agreed_with }}{% endif %}{% if d.reason != "" %} &middot; {{ d.reason }}{% endif %}</div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- Record tables. `sections` is generic — the formatter shapes columns and
+         rows, so a new entry type does not mean a template change. -->
+    {% for s in sections %}
+      {% if s.rows.size > 0 %}
+        <div class="section">
+          <div class="section-title">{{ s.title }}<span class="count">{{ s.rows.size }}</span></div>
+          <table class="tbl">
+            <thead>
+              <tr>{% for c in s.columns %}<th>{{ c }}</th>{% endfor %}</tr>
+            </thead>
+            <tbody>
+              {% for r in s.rows %}
+                <tr class="avoid-break">{% for cell in r %}<td{% if cell == "Pass" %} class="pass"{% elsif cell == "Fail" or cell == "No response" %} class="fail"{% elsif cell == "N/A" %} class="na"{% endif %}>{% if cell == blank %}&mdash;{% else %}{{ cell }}{% endif %}</td>{% endfor %}</tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    {% if entries_total == 0 %}
+      <div class="section">
+        <div class="no-defects" style="background:#f8fafc;border-color:#e2e8f0;border-left-color:#94a3b8;">
+          <div class="text" style="color:#475569;">No log entries were recorded in this period</div>
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="section avoid-break">
+      <div class="section-title">Declaration</div>
+      <div class="declaration">
+        <p>The entries in this log book are a true record of the testing, servicing and events carried out on the fire detection and fire alarm system at the premises named above. This record is maintained digitally in accordance with {{ standard_edition | default: "BS 5839-1:2025" }} Clause 48.2, is kept available to the responsible person, and can be produced on demand for inspection by an enforcing authority.</p>
+      </div>
+    </div>
+
+    <!-- The log book is a shared duty: the responsible person must ensure the
+         record is kept, the servicing organisation maintains the system. Both
+         sign, so the document shows who is accountable for which half. -->
+    <div class="section avoid-break">
+      <div class="section-title">Signatures</div>
+      <div class="sig-grid">
+        <div class="sig-box">
+          <div class="sig-box-hdr">Responsible Person</div>
+          <div class="sig-box-body">
+            <div class="sig-field"><span class="sig-lbl">Name</span><span class="sig-val">{{ responsible_person_name }}</span></div>
+            <div class="sig-field"><span class="sig-lbl">Position</span><span class="sig-val">{{ responsible_person_position }}</span></div>
+            <div class="sig-field"><span class="sig-lbl">Date</span><span class="sig-val">{{ responsible_person_date }}</span></div>
+            <div class="sig-field"><span class="sig-lbl">Signature</span><span class="sig-val sig">{% if responsible_person_signature %}<img src="{{ responsible_person_signature }}" />{% endif %}</span></div>
+          </div>
+        </div>
+        <div class="sig-box">
+          <div class="sig-box-hdr">Servicing Organisation</div>
+          <div class="sig-box-body">
+            <div class="sig-field"><span class="sig-lbl">Name</span><span class="sig-val">{{ engineer_name }}</span></div>
+            <div class="sig-field"><span class="sig-lbl">Company</span><span class="sig-val">{{ servicing_org }}</span></div>
+            <div class="sig-field"><span class="sig-lbl">Date</span><span class="sig-val">{{ engineer_date }}</span></div>
+            <div class="sig-field"><span class="sig-lbl">Signature</span><span class="sig-val sig">{% if engineer_signature %}<img src="{{ engineer_signature }}" />{% endif %}</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if has_photos %}
+    <div class="section page-break">
+      <div class="section-title">Appendix — Photographic Evidence</div>
+      <div class="photos-grid">
+        {% for p in photos %}
+          <div class="photo-item avoid-break">
+            <img src="{{ p.url }}" alt="" />
+            <div class="photo-caption">{{ p.date }}{% if p.caption != "" %} &middot; {{ p.caption }}{% endif %}</div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="footer">
+      <span>{{ premises_name }}{% if premises_address != "" %} &middot; {{ premises_address }}{% endif %}</span>
+      <span>{{ standard_edition | default: "BS 5839-1:2025" }} Annex H &middot; exported {{ exported_at }}</span>
+    </div>
+
+  </body>
+</html>

@@ -1,303 +1,106 @@
-// BS 7671:2018+A4:2026 Maximum Zs Values - Official Tables 41.2, 41.3, 41.4, 41.5
-// All values for 230V nominal voltage (Uo)
+// BS 7671:2018+A4:2026 Maximum Zs Values — Tables 41.2, 41.3, 41.4, 41.5
+// All values for 230 V nominal voltage (Uo), Cmin = 0.95.
 //
-// ELE-1390 — relabelled A3:2024 → A4:2026 only AFTER checking the figures against
-// the A4:2026 text, because the header is a claim about the data. Table 41.3
-// Type B (all 13 ratings, 3 A–125 A) and Type C (all 12) match the published
-// A4 values exactly; they are unchanged between A3 and A4. Confirmed by Andrew.
-// If these tables are ever edited, re-verify before touching this header.
+// ─────────────────────────────────────────────────────────────────────────────
+// CONSOLIDATION (audit fix). This file used to carry its OWN transcription of
+// Tables 41.2–41.5 — a fourth parallel copy alongside `src/data/zsLimits.ts`,
+// which is the project's canonical Zs source. Parallel copies are how drift
+// happens, and it had already happened here:
+//
+//   WAS WRONG: `zsValues5s.mcb['type-c']` held the **Type B** figures
+//   (3 A → 14.57 Ω … 125 A → 0.35 Ω) under a comment claiming "for Type B and C,
+//   5 s values equal Type B 0.4 s values". They do not. Table 41.3(b) prints a
+//   SINGLE Zs row for Type C — 6 A → 3.64 Ω … 125 A → 0.17 Ω — and that one row
+//   is valid for BOTH the 0.4 s time of Reg 411.3.2.2 and the 5 s time of
+//   Reg 411.3.2.3 (table title, and Reg 411.4.202). The old data therefore
+//   over-stated the permitted Zs for a Type C device on a 5 s circuit by a
+//   factor of two, and invented a 3 A Type C rating that Table 41.3(b) does not
+//   publish. Verified against the printed A4:2026 Table 41.3(a)/(b)/(c).
+//
+//   Type D is the only curve with two printed rows in Table 41.3(c):
+//   0.4 s = 230 × 0.95 / (20·In), 5 s = 230 × 0.95 / (10·In).
+//
+// Every figure now comes from `@/data/zsLimits`. Do NOT re-inline numbers here —
+// fix them at the canonical source so every consumer gets the fix.
+// ─────────────────────────────────────────────────────────────────────────────
 
-// Helper function to get 80% test value
+import {
+  MCB_RCBO_ZS_LIMITS,
+  FUSE_ZS_LIMITS_04S,
+  FUSE_ZS_LIMITS_5S,
+  RCD_ZS_LIMITS,
+} from '@/data/zsLimits';
+
+/** One tabulated column: device rating (A) → maximum Zs (Ω). */
+type ZsRow = Record<number, number>;
+
+/** The shape of a full 230 V Zs dataset for one disconnection time. */
+interface ZsTable {
+  mcb: Record<string, ZsRow>;
+  rcbo: Record<string, ZsRow>;
+  'bs88-2': ZsRow;
+  'bs88-3': ZsRow;
+  bs3036: ZsRow;
+  bs1362: ZsRow;
+}
+
+// Helper function to get 80% test value.
+// NOTE: the 0.8 factor is the GN3 rule-of-thumb temperature allowance applied
+// when testing on cold conductors — it is NOT a BS 7671 tabulated value.
 export const get80PercentZs = (maxZs: number): number => {
   return Math.round(maxZs * 0.8 * 1000) / 1000;
 };
 
-// Table 41.3 - MCBs to BS EN 60898 and RCBOs to BS EN 61009-1
-// 0.4s disconnection time (final circuits ≤32A)
-export const zsValues = {
-  mcb: {
-    'type-b': {
-      3: 14.57,
-      6: 7.28,
-      10: 4.37,
-      16: 2.73,
-      20: 2.19,
-      25: 1.75,
-      32: 1.37,
-      40: 1.09,
-      50: 0.87,
-      63: 0.69,
-      80: 0.55,
-      100: 0.44,
-      125: 0.35,
-    },
-    'type-c': {
-      6: 3.64,
-      10: 2.19,
-      16: 1.37,
-      20: 1.09,
-      25: 0.87,
-      32: 0.68,
-      40: 0.55,
-      50: 0.44,
-      63: 0.35,
-      80: 0.27,
-      100: 0.22,
-      125: 0.17,
-    },
-    'type-d': {
-      6: 1.82,
-      10: 1.09,
-      16: 0.68,
-      20: 0.55,
-      25: 0.44,
-      32: 0.34,
-      40: 0.27,
-      50: 0.22,
-      63: 0.17,
-      80: 0.14,
-      100: 0.11,
-      125: 0.09,
-    },
-  },
-  rcbo: {
-    'type-b': {
-      3: 14.57,
-      6: 7.28,
-      10: 4.37,
-      16: 2.73,
-      20: 2.19,
-      25: 1.75,
-      32: 1.37,
-      40: 1.09,
-      50: 0.87,
-      63: 0.69,
-      80: 0.55,
-      100: 0.44,
-      125: 0.35,
-    },
-    'type-c': {
-      6: 3.64,
-      10: 2.19,
-      16: 1.37,
-      20: 1.09,
-      25: 0.87,
-      32: 0.68,
-      40: 0.55,
-      50: 0.44,
-      63: 0.35,
-      80: 0.27,
-      100: 0.22,
-      125: 0.17,
-    },
-    'type-d': {
-      6: 1.82,
-      10: 1.09,
-      16: 0.68,
-      20: 0.55,
-      25: 0.44,
-      32: 0.34,
-      40: 0.27,
-      50: 0.22,
-      63: 0.17,
-      80: 0.14,
-      100: 0.11,
-      125: 0.09,
-    },
-  },
-  // Table 41.2 - Fuses (0.4s disconnection)
-  // BS 88-2 gG/gM fuses - Table 41.2(a)
-  'bs88-2': {
-    2: 33.1,
-    4: 15.6,
-    6: 7.8,
-    10: 4.65,
-    16: 2.43,
-    20: 1.68,
-    25: 1.29,
-    32: 0.99,
-    40: 0.75,
-    50: 0.57,
-    63: 0.44,
-  },
-  // BS 88-3 System C fuses - Table 41.2(b)
-  'bs88-3': {
-    5: 9.93,
-    16: 2.3,
-    20: 1.93,
-    32: 0.91,
-    45: 0.57,
-    63: 0.36,
-  },
-  // BS 3036 Rewirable fuses - Table 41.2(c)
-  bs3036: {
-    5: 9.1,
-    15: 2.43,
-    20: 1.68,
-    30: 1.04,
-    45: 0.56,
-    60: 0.4,
-  },
-  // BS 1362 Plug fuses - Table 41.2(d)
-  bs1362: {
-    3: 15.6,
-    13: 2.3,
-  },
+// Table 41.3(a)/(b)/(c) — 0.4 s column, per Reg 411.4.202.
+// RCBOs to BS EN 61009-1 share the circuit-breaker overcurrent characteristic,
+// so the same rows apply (see also Reg 411.4.204 / Table 41.5 for the residual
+// path).
+const mcbCurves04s: Record<string, ZsRow> = {
+  'type-b': MCB_RCBO_ZS_LIMITS.typeB['0.4s'],
+  'type-c': MCB_RCBO_ZS_LIMITS.typeC['0.4s'],
+  'type-d': MCB_RCBO_ZS_LIMITS.typeD['0.4s'],
 };
 
-// Table 41.3 - MCBs (5s disconnection time - distribution circuits)
-// Note: For Type B and C, 5s values equal Type B 0.4s values per BS 7671
-// Type D has explicit 5s row in Table 41.3
-export const zsValues5s = {
-  mcb: {
-    'type-b': {
-      3: 14.57,
-      6: 7.28,
-      10: 4.37,
-      16: 2.73,
-      20: 2.19,
-      25: 1.75,
-      32: 1.37,
-      40: 1.09,
-      50: 0.87,
-      63: 0.69,
-      80: 0.55,
-      100: 0.44,
-      125: 0.35,
-    },
-    'type-c': {
-      3: 14.57,
-      6: 7.28,
-      10: 4.37,
-      16: 2.73,
-      20: 2.19,
-      25: 1.75,
-      32: 1.37,
-      40: 1.09,
-      50: 0.87,
-      63: 0.69,
-      80: 0.55,
-      100: 0.44,
-      125: 0.35,
-    },
-    // Type D 5s values from BS 7671 Table 41.3
-    'type-d': {
-      6: 3.64,
-      10: 2.19,
-      16: 1.37,
-      20: 1.09,
-      25: 0.87,
-      32: 0.68,
-      40: 0.55,
-      50: 0.44,
-      63: 0.35,
-      80: 0.27,
-      100: 0.22,
-      125: 0.17,
-    },
-  },
-  rcbo: {
-    'type-b': {
-      3: 14.57,
-      6: 7.28,
-      10: 4.37,
-      16: 2.73,
-      20: 2.19,
-      25: 1.75,
-      32: 1.37,
-      40: 1.09,
-      50: 0.87,
-      63: 0.69,
-      80: 0.55,
-      100: 0.44,
-      125: 0.35,
-    },
-    'type-c': {
-      3: 14.57,
-      6: 7.28,
-      10: 4.37,
-      16: 2.73,
-      20: 2.19,
-      25: 1.75,
-      32: 1.37,
-      40: 1.09,
-      50: 0.87,
-      63: 0.69,
-      80: 0.55,
-      100: 0.44,
-      125: 0.35,
-    },
-    // Type D 5s values from BS 7671 Table 41.3
-    'type-d': {
-      6: 3.64,
-      10: 2.19,
-      16: 1.37,
-      20: 1.09,
-      25: 0.87,
-      32: 0.68,
-      40: 0.55,
-      50: 0.44,
-      63: 0.35,
-      80: 0.27,
-      100: 0.22,
-      125: 0.17,
-    },
-  },
-  // Table 41.4 - Fuses (5s disconnection)
-  // BS 88-2 gG/gM fuses - Table 41.4(a)
-  'bs88-2': {
-    2: 44,
-    4: 21,
-    6: 12.0,
-    10: 6.8,
-    16: 4.0,
-    20: 2.8,
-    25: 2.2,
-    32: 1.7,
-    40: 1.3,
-    50: 0.99,
-    63: 0.78,
-    80: 0.55,
-    100: 0.42,
-    125: 0.32,
-    160: 0.27,
-    200: 0.18,
-  },
-  // BS 88-3 System C fuses - Table 41.4(b)
-  'bs88-3': {
-    5: 14.6,
-    16: 3.9,
-    20: 3.2,
-    32: 1.6,
-    45: 1.0,
-    63: 0.68,
-    80: 0.51,
-    100: 0.38,
-  },
-  // BS 3036 Rewirable fuses - Table 41.4(c)
-  bs3036: {
-    5: 16.8,
-    15: 5.08,
-    20: 3.64,
-    30: 2.51,
-    45: 1.51,
-    60: 1.07,
-    100: 0.51,
-  },
-  // BS 1362 Plug fuses - Table 41.4(d)
-  bs1362: {
-    3: 22.0,
-    13: 3.64,
-  },
+const mcbCurves5s: Record<string, ZsRow> = {
+  'type-b': MCB_RCBO_ZS_LIMITS.typeB['5s'],
+  'type-c': MCB_RCBO_ZS_LIMITS.typeC['5s'],
+  'type-d': MCB_RCBO_ZS_LIMITS.typeD['5s'],
 };
 
-// Table 41.5 - RCDs (maximum Zs where RCD provides additional protection)
-export const rcdZsValues = {
-  30: 1667, // 30mA RCD - max Zs 1667Ω
-  100: 500, // 100mA RCD - max Zs 500Ω
-  300: 167, // 300mA RCD - max Zs 167Ω
-  500: 100, // 500mA RCD - max Zs 100Ω
+/** 0.4 s dataset — Table 41.3 (circuit-breakers) + Table 41.2 (fuses). */
+export const zsValues: ZsTable = {
+  mcb: mcbCurves04s,
+  rcbo: mcbCurves04s,
+  'bs88-2': FUSE_ZS_LIMITS_04S.bs88_2,
+  'bs88-3': FUSE_ZS_LIMITS_04S.bs88_3,
+  bs3036: FUSE_ZS_LIMITS_04S.bs3036,
+  bs1362: FUSE_ZS_LIMITS_04S.bs1362,
 };
+
+/** 5 s dataset — Table 41.3 (circuit-breakers) + Table 41.4 (fuses). */
+export const zsValues5s: ZsTable = {
+  mcb: mcbCurves5s,
+  rcbo: mcbCurves5s,
+  'bs88-2': FUSE_ZS_LIMITS_5S.bs88_2,
+  'bs88-3': FUSE_ZS_LIMITS_5S.bs88_3,
+  bs3036: FUSE_ZS_LIMITS_5S.bs3036,
+  bs1362: FUSE_ZS_LIMITS_5S.bs1362,
+};
+
+// Table 41.5 — maximum Zs for non-delayed and time-delayed 'S' type RCDs to
+// BS EN 61008-1 / BS EN 61009-1 at Uo = 230 V (see Reg 411.5.3, Reg 411.4.204).
+export const rcdZsValues = { ...RCD_ZS_LIMITS };
+
+/**
+ * Table 41.5 NOTE 2 (asterisked against the 30 mA and 100 mA rows):
+ * "The resistance of the installation earth electrode should be as low as
+ * practicable. A value exceeding 200 ohms may not be stable. Refer to
+ * Regulation 542.2.4."
+ * Reg 542.2.4 in turn requires the type and embedded depth of the electrode to
+ * be such that soil drying and freezing will not increase its resistance above
+ * the required value. This is a stability caveat ("should"), not a hard limit.
+ */
+export const EARTH_ELECTRODE_STABILITY_LIMIT_OHMS = 200;
 
 // MCB Curve Types (BS EN 60898) - Type A removed as not in BS 7671
 export const curveTypes: Record<string, string> = {
@@ -314,24 +117,73 @@ export const fuseTypes: Record<string, string> = {
   bs1362: 'BS 1362 (Plug Fuse)',
 };
 
-// Available ratings for each fuse type
-export const fuseRatings: Record<string, number[]> = {
-  'bs88-2': [2, 4, 6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200],
-  'bs88-3': [5, 16, 20, 32, 45, 63, 80, 100],
-  bs3036: [5, 15, 20, 30, 45, 60, 100],
-  bs1362: [3, 13],
+const ratingsOf = (row: ZsRow): number[] =>
+  Object.keys(row)
+    .map((r) => parseInt(r, 10))
+    .sort((a, b) => a - b);
+
+/**
+ * Ratings that actually exist in the tables, per disconnection time.
+ *
+ * WAS WRONG: `fuseRatings` was a hand-written superset offered for BOTH times,
+ * so a 0.4 s lookup could be asked for e.g. a 100 A BS 88-2 fuse — a rating
+ * Table 41.2 does not publish (it stops at 63 A). Those ratings exist only in
+ * Table 41.4 (5 s, Reg 411.4.203). Deriving the list from the table in use
+ * makes an unanswerable selection impossible.
+ */
+export const getFuseRatings = (
+  fuseType: string,
+  disconnectionTime: '0.4' | '5' = '0.4'
+): number[] => {
+  const table = disconnectionTime === '0.4' ? zsValues : zsValues5s;
+  const row = table[fuseType as keyof ZsTable];
+  if (!row || fuseType === 'mcb' || fuseType === 'rcbo') return [];
+  return ratingsOf(row as ZsRow);
 };
 
-// Available ratings for MCBs/RCBOs
-export const mcbRatings = [3, 6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125];
+/** Ratings published for a circuit-breaker curve at the given disconnection time. */
+export const getMcbRatings = (
+  curveType: string,
+  disconnectionTime: '0.4' | '5' = '0.4'
+): number[] => {
+  const curves = disconnectionTime === '0.4' ? mcbCurves04s : mcbCurves5s;
+  const row = curves[curveType];
+  return row ? ratingsOf(row) : [];
+};
+
+/**
+ * Available fuse ratings — the union across both disconnection times
+ * (i.e. the Table 41.4 rating set, which is a superset of Table 41.2's).
+ * Prefer `getFuseRatings()`: this list is only safe where the consumer checks
+ * for a missing lookup.
+ */
+export const fuseRatings: Record<string, number[]> = {
+  'bs88-2': ratingsOf(FUSE_ZS_LIMITS_5S.bs88_2),
+  'bs88-3': ratingsOf(FUSE_ZS_LIMITS_5S.bs88_3),
+  bs3036: ratingsOf(FUSE_ZS_LIMITS_5S.bs3036),
+  bs1362: ratingsOf(FUSE_ZS_LIMITS_5S.bs1362),
+};
+
+/**
+ * Available ratings for MCBs/RCBOs — the union across all three curves.
+ * Type C and Type D start at 6 A (Table 41.3(b)/(c) publish no 3 A row), so
+ * prefer `getMcbRatings(curve, time)` where the curve is known.
+ */
+export const mcbRatings = ratingsOf(MCB_RCBO_ZS_LIMITS.typeB['0.4s']);
 
 // RCD ratings (mA)
 export const rcdRatings = [30, 100, 300, 500];
 
-// Disconnection times
+// Disconnection times.
+// 0.4 s = Table 41.1 via Reg 411.3.2.2 (TN, 230 V) for final circuits ≤ 63 A
+//         with socket-outlets and ≤ 32 A supplying only fixed connected
+//         current-using equipment.
+// 5 s   = Reg 411.3.2.3 — TN distribution circuits and circuits not covered by
+//         411.3.2.2. (In a TT system the corresponding allowance is 1 s,
+//         Reg 411.3.2.4 — these tables are the TN 230 V set.)
 export const disconnectionTimes: Record<string, string> = {
-  '0.4': '0.4s (Final circuits ≤32A)',
-  '5': '5s (Distribution circuits)',
+  '0.4': '0.4 s (Reg 411.3.2.2 final circuits)',
+  '5': '5 s (Reg 411.3.2.3 TN distribution circuits)',
 };
 
 // Get Zs value based on device type, rating, and disconnection time
@@ -345,24 +197,25 @@ export const getZsValue = (
 
   if (deviceType === 'mcb' || deviceType === 'rcbo') {
     if (!curveType) return null;
-    const deviceData = data[deviceType as keyof typeof data];
-    if (!deviceData || typeof deviceData !== 'object') return null;
-    const curveData = deviceData[curveType as keyof typeof deviceData];
-    if (!curveData || typeof curveData !== 'object') return null;
-    return (curveData as Record<number, number>)[rating] || null;
+    const curveData = data[deviceType][curveType];
+    if (!curveData) return null;
+    return curveData[rating] ?? null;
   }
 
   if (deviceType === 'rcd') {
-    return rcdZsValues[rating as keyof typeof rcdZsValues] || null;
+    return rcdZsValues[String(rating) as keyof typeof rcdZsValues] ?? null;
   }
 
   // Fuse types
-  const fuseData = data[deviceType as keyof typeof data];
-  if (!fuseData || typeof fuseData !== 'object') return null;
-  return (fuseData as Record<number, number>)[rating] || null;
+  const fuseData = data[deviceType as keyof ZsTable];
+  if (!fuseData) return null;
+  return (fuseData as ZsRow)[rating] ?? null;
 };
 
-// Get table reference for display
+// Get table reference for display.
+// Circuit-breakers/RCBOs → Table 41.3 (Reg 411.4.202, covers both times).
+// Fuses → Table 41.2 at 0.4 s (Reg 411.4.201) or Table 41.4 at 5 s (Reg 411.4.203).
+// RCDs → Table 41.5 (Reg 411.5.3 / 411.4.204).
 export const getTableReference = (
   deviceType: string,
   disconnectionTime: '0.4' | '5' = '0.4'
