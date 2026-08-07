@@ -292,11 +292,21 @@ const EICRInspectionChecklist = ({
     // Update the form data with all changes at once
     scrollSafeUpdate('inspectionItems', updatedItems);
 
-    // If updating notes and there's a linked observation with a critical outcome, sync notes to observation
-    if (
-      field === 'notes' &&
-      (currentItem.outcome === 'C1' || currentItem.outcome === 'C2' || currentItem.outcome === 'C3')
-    ) {
+    /**
+     * Notes typed after the item was classified still reach its observation.
+     *
+     * The natural order on site is: see the defect, code it, then write it up —
+     * so this path, not the creation path, is how most observations get their
+     * wording. It matters more now the boilerplate default is gone: without it
+     * the observation would simply stay empty.
+     *
+     * **FI is included.** It was previously C1/C2/C3 only, yet FI creates an
+     * observation like the rest (see `autoCreateObservation`), so anything
+     * written against a Further Investigation item never reached the
+     * certificate.
+     */
+    const CODED_OUTCOMES = ['C1', 'C2', 'C3', 'FI'];
+    if (field === 'notes' && CODED_OUTCOMES.includes(String(currentItem.outcome))) {
       const existingObservations = getDefectObservations();
       const linkedObservation = existingObservations.find((obs) => obs.inspectionItemId === id);
 
@@ -335,11 +345,17 @@ const EICRInspectionChecklist = ({
       (obs) => obs.inspectionItemId === inspectionItem.id
     );
 
-    // Use notes from inspection item if available
+    /**
+     * The description is the electrician's own words, or nothing.
+     *
+     * This previously defaulted to "Item requires attention - inspection
+     * outcome not satisfactory", which is a coded defect that describes no
+     * defect. It is stored, not a placeholder, so it prints verbatim on a
+     * signed certificate and reads as though nobody looked. Left empty, the
+     * pre-issue gate can insist on real wording before the certificate goes out.
+     */
     const description =
-      inspectionItem.notes && inspectionItem.notes.trim()
-        ? inspectionItem.notes
-        : 'Item requires attention - inspection outcome not satisfactory';
+      inspectionItem.notes && inspectionItem.notes.trim() ? inspectionItem.notes : '';
 
     let observationId: string;
 
@@ -351,7 +367,14 @@ const EICRInspectionChecklist = ({
               ...obs,
               defectCode: inspectionItem.outcome as 'C1' | 'C2' | 'C3' | 'FI',
               item: inspectionItem.item,
-              description: description, // Update description with notes
+              /**
+               * Never overwrite wording the electrician has already written.
+               *
+               * This unconditionally replaced `description`, so changing an
+               * outcome from C2 to C3 wiped a hand-written observation and put
+               * the boilerplate back. Only fill it when it is still empty.
+               */
+              description: obs.description?.trim() ? obs.description : description,
             }
           : obs
       );
@@ -363,7 +386,10 @@ const EICRInspectionChecklist = ({
         item: inspectionItem.item,
         defectCode: inspectionItem.outcome as 'C1' | 'C2' | 'C3' | 'FI',
         description: description,
-        recommendation: 'Investigate and rectify as required to comply with BS 7671',
+        // Left empty for the same reason as the description: "Investigate and
+        // rectify as required to comply with BS 7671" is what the client is
+        // paying the electrician to specify, not something we can assert.
+        recommendation: '',
         rectified: false,
         inspectionItemId: inspectionItem.id,
       };

@@ -43,16 +43,17 @@ export const useEICObservations = (initialObservations: EICObservation[] = []) =
 
       if (!existingObservation) {
         // Use notes from the inspection item if available
+        // The electrician's own words, or nothing — the previous default was
+        // stored, not a placeholder, and printed verbatim on signed certificates.
         const description =
-          inspectionItem.notes && inspectionItem.notes.trim()
-            ? inspectionItem.notes
-            : 'Item requires attention - inspection outcome not satisfactory';
+          inspectionItem.notes && inspectionItem.notes.trim() ? inspectionItem.notes : '';
 
         return addObservation({
           item: `${inspectionItem.item} (${inspectionItem.clause})`,
           defectCode: 'C2',
           description,
-          recommendation: 'Investigate and rectify as required to comply with BS 7671',
+          // Left empty for the same reason as the description.
+          recommendation: '',
           rectified: false,
           inspectionItemId: inspectionItem.id,
         });

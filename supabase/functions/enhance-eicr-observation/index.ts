@@ -64,18 +64,107 @@ serve(async (req) => {
     // which previously produced invented, job-brief "regulations". Remedial /
     // labour guidance still comes from practical_work_intelligence (its purpose).
     const [facets, remedialResults] = await Promise.all([
-      searchFacets(supabase, { query: ragQuery, matchCount: 6 }),
+      // Retrieve wider than we need, because the Part 7 scope filter below
+      // discards out-of-location matches — on a bathroom observation four of
+      // six came back from the wrong special location. One extra vector query
+      // costs nothing; being left with two in-scope regulations does.
+      searchFacets(supabase, { query: ragQuery, matchCount: 12 }),
       searchPracticalWorkIntelligence(supabase, {
         query: `remedial action repair ${description}`,
         matchCount: 8,
       }),
     ]);
 
+    /**
+     * Part 7 special-location gate.
+     *
+     * Retrieval is semantic, and phrases like "supplementary protective
+     * equipotential bonding" appear in *every* Part 7 section. So a plain
+     * domestic bathroom observation came back citing 710 (medical locations),
+     * 702 (swimming pools), 740 (fairgrounds) and 714 (outdoor lighting)
+     * alongside the one that actually applied, 701 — four wrong out of six,
+     * behind a button labelled "Use these".
+     *
+     * A `7xx` regulation is therefore only offered when the observation itself
+     * indicates that location. Anything outside Part 7 (Parts 1–6, the general
+     * requirements) is always kept — those apply everywhere.
+     *
+     * Section scopes below were verified against `bs7671_facets` (A4:2026), not
+     * recalled. When nothing matches we drop every `7xx` rather than guess: a
+     * general Part 4 citation is right but unspecific, whereas a swimming-pool
+     * regulation on a bathroom is simply wrong and an assessor will see it.
+     */
+    const PART7_SCOPES: Array<{ section: string; test: RegExp }> = [
+      { section: '701', test: /\b(bath|shower|wet ?room|en.?suite|wc\b|washroom)/i },
+      { section: '702', test: /\b(swimming|pool|paddling|basin|hot ?tub|spa\b)/i },
+      { section: '703', test: /\b(sauna)/i },
+      { section: '704', test: /\b(construction|demolition|building site)/i },
+      { section: '705', test: /\b(agricultur|horticultur|livestock|barn|farm)/i },
+      { section: '706', test: /\b(restricted movement|conducting location)/i },
+      { section: '708', test: /\b(caravan park|camping|touring pitch)/i },
+      { section: '709', test: /\b(marina|pontoon|berth|inland navigation)/i },
+      { section: '710', test: /\b(medical|hospital|clinic|dental|patient|operating theatre)/i },
+      { section: '711', test: /\b(exhibition|show ?stand|booth)/i },
+      { section: '712', test: /\b(solar|photovoltaic|\bpv\b)/i },
+      { section: '714', test: /\b(street ?light|outdoor lighting|highway|bollard|traffic sign)/i },
+      { section: '715', test: /\b(extra.?low voltage lighting|elv lighting)/i },
+      { section: '717', test: /\b(mobile unit|transportable unit|portable building)/i },
+      { section: '721', test: /\b(caravan|motor ?caravan|motorhome)/i },
+      { section: '722', test: /\b(electric vehicle|ev charg|charge ?point|evse)/i },
+      { section: '729', test: /\b(gangway|switchroom|maintenance access)/i },
+      { section: '730', test: /\b(shore connection|vessel)/i },
+      { section: '740', test: /\b(fairground|amusement|circus|funfair)/i },
+      { section: '753', test: /\b(underfloor heating|heating cable|embedded heating)/i },
+    ];
+
+    const locationHay = `${description} ${location || ''}`;
+    const allowedPart7 = new Set(
+      PART7_SCOPES.filter((s) => s.test.test(locationHay)).map((s) => s.section)
+    );
+
+    const isOutOfScopePart7 = (regNumber: string): boolean => {
+      const section = regNumber.match(/^(7\d{2})\./)?.[1];
+      if (!section) return false; // not Part 7 — always allowed
+      return !allowedPart7.has(section);
+    };
+
     // Regulation references sourced ONLY from authoritative facets, deduped by
     // reg number. Facets carrying no reg number (general guidance) are skipped.
+    //
+    // The scope filter is applied to the FACETS, before anything downstream, so
+    // an out-of-scope special location is not merely hidden from the reference
+    // list — it never reaches the model at all. Filtering only the returned
+    // refs would leave the prose grounded in swimming-pool and fairground
+    // regulations while appearing clean. Dropping them early also shortens the
+    // prompt, which is the cheapest latency saving available here.
+    const droppedPart7: string[] = [];
+    const scopedFacets = facets.filter((f) => {
+      const num = (f.regNumber || '').trim();
+      if (num && isOutOfScopePart7(num)) {
+        droppedPart7.push(num);
+        return false;
+      }
+      return true;
+    });
+
+    /**
+     * Only BS 7671 itself is cited as a BS 7671 reference.
+     *
+     * The corpus holds three documents — bs7671, gn3 and osg — and their
+     * section numbering overlaps in shape. A bathroom query returned "8.1" and
+     * "7.2.5" alongside the real regulations; those are GN3/OSG section numbers
+     * being listed under a heading that reads "BS 7671 references". An
+     * electrician quoting one back to a scheme assessor would be quoting a
+     * guidance note as though it were the standard.
+     *
+     * GN3 and OSG still reach the model through `regulationContext` below —
+     * they ground the wording, which is their purpose. They are simply not
+     * offered as citations.
+     */
     const regulationRefs: Array<{ number: string; title: string; relevance: string }> = [];
     const seenRegs = new Set<string>();
-    for (const f of facets) {
+    for (const f of scopedFacets) {
+      if ((f.documentType || '').toLowerCase() !== 'bs7671') continue;
       const num = (f.regNumber || '').trim();
       if (!num || seenRegs.has(num)) continue;
       seenRegs.add(num);
@@ -85,9 +174,15 @@ serve(async (req) => {
         relevance: (f.content || '').replace(/\s+/g, ' ').trim().slice(0, 160),
       });
     }
+    if (droppedPart7.length) {
+      console.log(
+        `[enhance-eicr-observation] dropped out-of-scope Part 7: ${droppedPart7.join(', ')}` +
+          ` (in scope: ${[...allowedPart7].join(', ') || 'none'})`
+      );
+    }
 
-    // Grounding blocks for the prompt
-    const regulationContext = formatFacetsForPrompt(facets);
+    // Grounding blocks for the prompt — scoped facets only.
+    const regulationContext = formatFacetsForPrompt(scopedFacets);
     const remedialContext = formatForAIContext(remedialResults.results.slice(0, 5));
 
     // Call LLM to enhance the observation

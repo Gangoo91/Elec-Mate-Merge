@@ -404,7 +404,13 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       ring_rn: na(result.ringRn),
       ring_r2: na(result.ringR2),
       r1r2: na(result.r1r2),
-      r2: na(result.r2),
+      // The schedule's R₂ column writes `ringContinuityLive`, not `r2` —
+      // ContinuityCells binds it there, marked "temporary field", and no cell
+      // component writes `r2` at all. The template renders `{{circuit.r2}}`, so
+      // without this fallback the R₂ reading the electrician recorded printed
+      // blank on every certificate. Voice dictation (`set_r2`) does write `r2`,
+      // so both sources have to be honoured; `r2` wins where it is present.
+      r2: na(result.r2 || result.ringContinuityLive),
       ring_continuity_live: na(result.ringContinuityLive),
       ring_continuity_neutral: na(result.ringContinuityNeutral),
       insulation_test_voltage: na(result.insulationTestVoltage),
@@ -538,7 +544,13 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       ring_rn: na(result.ringRn),
       ring_r2: na(result.ringR2),
       r1r2: na(result.r1r2),
-      r2: na(result.r2),
+      // The schedule's R₂ column writes `ringContinuityLive`, not `r2` —
+      // ContinuityCells binds it there, marked "temporary field", and no cell
+      // component writes `r2` at all. The template renders `{{circuit.r2}}`, so
+      // without this fallback the R₂ reading the electrician recorded printed
+      // blank on every certificate. Voice dictation (`set_r2`) does write `r2`,
+      // so both sources have to be honoured; `r2` wins where it is present.
+      r2: na(result.r2 || result.ringContinuityLive),
       ring_continuity_live: na(result.ringContinuityLive),
       ring_continuity_neutral: na(result.ringContinuityNeutral),
       insulation_test_voltage: na(result.insulationTestVoltage),

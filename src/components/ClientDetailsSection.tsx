@@ -169,6 +169,18 @@ const ClientDetailsSectionInner = ({ formData, onUpdate, certType }: ClientDetai
     [haptic, localValues.sameAsClientAddress, setValues, flush]
   );
 
+  /**
+   * True only once something has been typed that cannot be an address.
+   *
+   * Deliberately permissive — one `@`, something either side, a dot in the
+   * domain. This is a typo catcher, not an RFC validator: rejecting an unusual
+   * but valid address would be worse than accepting a strange one, and the
+   * consequence of a wrong address here is that the certificate never arrives.
+   */
+  const clientEmailValue = (localValues.clientEmail || '').trim();
+  const clientEmailInvalid =
+    clientEmailValue.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(clientEmailValue);
+
   return (
     <div className="space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
       {/* Client details — the New/Existing toggle and CRM selector live INSIDE
@@ -235,8 +247,18 @@ const ClientDetailsSectionInner = ({ formData, onUpdate, certType }: ClientDetai
               value={localValues.clientEmail || ''}
               onChange={(e) => handleFieldChange('clientEmail', e.target.value)}
               placeholder="Email address"
-              className={inputCn}
+              aria-invalid={clientEmailInvalid || undefined}
+              className={cn(inputCn, clientEmailInvalid && 'border-b-red-400 focus:border-red-400')}
             />
+            {/* The browser already knows this address is unusable — it just was
+                not saying so. Silence here matters because this is where the
+                certificate gets emailed. Only shown once something is typed, so
+                an empty optional field is never nagged. */}
+            {clientEmailInvalid && (
+              <p className="mt-1 text-[11.5px] font-medium text-red-300">
+                This address will not receive the certificate — check for a typo.
+              </p>
+            )}
           </FormField>
         </div>
 

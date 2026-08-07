@@ -31,6 +31,33 @@ const textareaCn =
 
 const labelCn = 'text-[12px] font-medium text-white mb-1 block';
 
+/**
+ * Registration and insurance expiry both print on the certificate, and both
+ * accepted a long-lapsed date in silence — an inspector with cover that ran out
+ * years ago could issue a certificate showing exactly that, unchallenged.
+ *
+ * A warning rather than a block: the date may be lapsed because renewal is in
+ * progress, and refusing to issue a certificate over it would be the app
+ * overreaching. Saying so plainly is enough.
+ *
+ * Compared date-only, so a certificate issued on the expiry date itself is not
+ * flagged — cover runs to the end of that day.
+ */
+const hasExpired = (value?: string): boolean => {
+  if (!value) return false;
+  const expiry = new Date(`${value}T23:59:59`);
+  if (Number.isNaN(expiry.getTime())) return false;
+  return expiry.getTime() < Date.now();
+};
+
+const formatExpiry = (value?: string): string => {
+  if (!value) return '';
+  const d = new Date(`${value}T00:00:00`);
+  return Number.isNaN(d.getTime())
+    ? value
+    : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+};
+
 const chipOn = 'bg-elec-yellow border border-elec-yellow text-black font-semibold';
 const chipOff = 'bg-white/[0.06] border border-white/[0.12] text-white font-medium';
 
@@ -473,8 +500,19 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
               type="date"
               value={formData.registrationExpiry || ''}
               onChange={(e) => onUpdate('registrationExpiry', e.target.value)}
-              className={inputCn}
+              aria-invalid={hasExpired(formData.registrationExpiry) || undefined}
+              className={cn(
+                inputCn,
+                hasExpired(formData.registrationExpiry) &&
+                  'border-b-amber-400 focus:border-amber-400'
+              )}
             />
+            {hasExpired(formData.registrationExpiry) && (
+              <p className="mt-1 text-[11.5px] font-medium text-amber-300">
+                Expired {formatExpiry(formData.registrationExpiry)} — this date prints on the
+                certificate.
+              </p>
+            )}
           </FormField>
         </div>
       </div>
@@ -516,8 +554,18 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
               type="date"
               value={formData.insuranceExpiry || ''}
               onChange={(e) => onUpdate('insuranceExpiry', e.target.value)}
-              className={inputCn}
+              aria-invalid={hasExpired(formData.insuranceExpiry) || undefined}
+              className={cn(
+                inputCn,
+                hasExpired(formData.insuranceExpiry) && 'border-b-amber-400 focus:border-amber-400'
+              )}
             />
+            {hasExpired(formData.insuranceExpiry) && (
+              <p className="mt-1 text-[11.5px] font-medium text-amber-300">
+                Expired {formatExpiry(formData.insuranceExpiry)} — this date prints on the
+                certificate.
+              </p>
+            )}
           </FormField>
         </div>
       </div>

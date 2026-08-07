@@ -32,6 +32,7 @@ import {
   formatBoardsForFormData,
 } from '@/utils/boardMigration';
 import { isSpareCircuit, describeBulkFill } from '@/utils/spareWays';
+import { getScheduleProgress } from '@/utils/scheduleProgress';
 import {
   getNextCircuitNumber,
   deriveCircuitNumber,
@@ -58,7 +59,6 @@ import { BoardScannerOverlay } from '@/components/testing/BoardScannerOverlay';
 import TestResultsPhotoCapture from '../testing/TestResultsPhotoCapture';
 import TestResultsReviewDialog from '../testing/TestResultsReviewDialog';
 import ScribbleToTableDialog from '../mobile/ScribbleToTableDialog';
-import BulkInfillDialog from '../BulkInfillDialog';
 import { useOrientation } from '@/hooks/useOrientation';
 import { useInlineVoice } from '@/hooks/useInlineVoice';
 import { toast } from 'sonner';
@@ -286,7 +286,6 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   const [showScribbleDialog, setShowScribbleDialog] = useState(false);
   const [showSmartAutoFillDialog, setShowSmartAutoFillDialog] = useState(false);
   const [showRcdPresetsDialog, setShowRcdPresetsDialog] = useState(false);
-  const [showBulkInfillDialog, setShowBulkInfillDialog] = useState(false);
   const [showClearAllConfirm, setShowClearAllConfirm] = useState(false);
   const [selectedCircuitIndex, setSelectedCircuitIndex] = useState(0);
   const [activeBoardId, setActiveBoardId] = useState<string | null>(null);
@@ -1159,10 +1158,6 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         setActiveBoardId(boardId);
         setShowRcdPresetsDialog(true);
       },
-      onBulkInfill: () => {
-        setActiveBoardId(boardId);
-        setShowBulkInfillDialog(true);
-      },
       onVoiceToggle: toggleVoice,
       voiceActive,
       voiceConnecting,
@@ -1170,16 +1165,15 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     [toggleVoice, voiceActive, voiceConnecting]
   );
 
-  // Calculate completion stats for progress indicator
+  // Calculate completion stats for progress indicator — ELE-1501. Spare ways
+  // and device rows are excluded from the denominator; counting them as
+  // outstanding work put 100% out of reach on any board holding a spare.
   const { completedCount, progressPercent, pendingCount } = useMemo(() => {
-    const completed = testResults.filter(
-      (r) => r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
-    ).length;
-    const percent = testResults.length > 0 ? Math.round((completed / testResults.length) * 100) : 0;
+    const progress = getScheduleProgress(testResults);
     return {
-      completedCount: completed,
-      progressPercent: percent,
-      pendingCount: testResults.length - completed,
+      completedCount: progress.tested,
+      progressPercent: progress.percent,
+      pendingCount: progress.remaining,
     };
   }, [testResults]);
 
@@ -2106,78 +2100,6 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   // Bulk infill handler — presented per-board (createBoardTools sets
   // activeBoardId), so only fill circuits on THAT board; other boards'
   // circuits must never be overwritten from another board's tools.
-  const handleBulkInfill = (value: string, mode: 'all' | 'empty') => {
-    const scopedBoardId = activeBoardId;
-    const isInScope = (result: TestResult) =>
-      !scopedBoardId || (result.boardId || MAIN_BOARD_ID) === scopedBoardId;
-    const fillableFields: (keyof TestResult)[] = [
-      'typeOfWiring',
-      'referenceMethod',
-      'pointsServed',
-      'liveSize',
-      'cpcSize',
-      'bsStandard',
-      'protectiveDeviceType',
-      'protectiveDeviceCurve',
-      'protectiveDeviceRating',
-      'protectiveDeviceKaRating',
-      'maxZs',
-      'rcdBsStandard',
-      'rcdType',
-      'rcdRating',
-      'rcdRatingA',
-      'ringR1',
-      'ringRn',
-      'ringR2',
-      'r1r2',
-      'r2',
-      'insulationTestVoltage',
-      'insulationLiveNeutral',
-      'insulationLiveEarth',
-      'polarity',
-      'zs',
-      'rcdOneX',
-      'rcdTestButton',
-      'afddTest',
-      'pfc',
-      'notes',
-    ];
-
-    let updatedCount = 0;
-
-    // Build updated results in a single pass
-    const updatedResults = testResults.map((result) => {
-      if (!isInScope(result)) return result;
-      let updatedResult = { ...result };
-      let hasChanges = false;
-
-      fillableFields.forEach((field) => {
-        const currentValue = result[field];
-        const isEmpty = !currentValue || currentValue.toString().trim() === '';
-
-        if (mode === 'all' || (mode === 'empty' && isEmpty)) {
-          (updatedResult as any)[field] = value;
-          updatedCount++;
-          hasChanges = true;
-        }
-      });
-
-      // Clear autoFilled flag if any changes made
-      if (hasChanges && result.autoFilled) {
-        updatedResult.autoFilled = false;
-      }
-
-      return updatedResult;
-    });
-
-    // Single state update
-    setTestResults(updatedResults);
-    onUpdate('scheduleOfTests', updatedResults);
-
-    toast.success(`Filled ${updatedCount} fields with "${value}"`);
-    setShowBulkInfillDialog(false);
-    setActiveBoardId(null);
-  };
 
   const updateTestResult = useCallback(
     (id: string, field: keyof TestResult, value: string) => {
@@ -2418,14 +2340,14 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
             {[...distributionBoards]
               .sort((a, b) => a.order - b.order)
               .map((board) => {
+                // `boardCircuits` stays every row — the table renders from it.
+                // Only the counts run over the testable subset (ELE-1501).
                 const boardCircuits = getCircuitsForBoard(testResults, board.id);
-                const boardCompletedCount = boardCircuits.filter(
-                  (r) => r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
-                ).length;
-                const boardProgressPercent = boardCircuits.length > 0
-                  ? Math.round((boardCompletedCount / boardCircuits.length) * 100)
-                  : 0;
-                const isComplete = boardCircuits.length > 0 && boardCompletedCount === boardCircuits.length;
+                const boardProgress = getScheduleProgress(boardCircuits);
+                const boardCompletedCount = boardProgress.tested;
+                const boardProgressPercent = boardProgress.percent;
+                const boardTestableCount = boardProgress.circuits;
+                const isComplete = boardProgress.isComplete;
 
                 return (
                   <Collapsible
@@ -2473,7 +2395,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                         >
                           {isComplete
                             ? 'Complete'
-                            : `${boardCircuits.length} circuit${boardCircuits.length === 1 ? '' : 's'} · ${boardProgressPercent}%`}
+                            : `${boardTestableCount} circuit${boardTestableCount === 1 ? '' : 's'} · ${boardCompletedCount} tested`}
                         </span>
 
                         {/* Chevron */}
@@ -2989,13 +2911,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                     onUpdateBoard={handleUpdateBoard}
                     onRemoveBoard={handleRemoveBoard}
                     onAddCircuit={() => addTestResult(board.id)}
-                    circuitCount={boardCircuits.length}
-                    completedCount={
-                      boardCircuits.filter(
-                        (r) =>
-                          r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
-                      ).length
-                    }
+                    circuitCount={getScheduleProgress(boardCircuits).circuits}
+                    completedCount={getScheduleProgress(boardCircuits).tested}
                     showTools={true}
                     tools={createBoardTools(board.id)}
                     onMoveUp={() => handleMoveBoard(board.id, 'up')}
@@ -3272,17 +3189,6 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       )}
 
       {/* Bulk Infill Dialog — scoped to the board whose tools opened it */}
-      <BulkInfillDialog
-        open={showBulkInfillDialog}
-        onOpenChange={(open) => {
-          setShowBulkInfillDialog(open);
-          if (!open) setActiveBoardId(null);
-        }}
-        testResults={
-          activeBoardId ? getCircuitsForBoard(testResults, activeBoardId) : testResults
-        }
-        onApply={handleBulkInfill}
-      />
 
       {/* Clear all confirmation — house AlertDialog, not window.confirm */}
       <AlertDialog open={showClearAllConfirm} onOpenChange={setShowClearAllConfirm}>

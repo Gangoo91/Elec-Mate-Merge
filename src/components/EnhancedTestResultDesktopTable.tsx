@@ -31,6 +31,15 @@ interface EnhancedTestResultDesktopTableProps {
   onBulkFieldUpdate?: (field: keyof TestResult, value: string, circuitIds?: string[]) => void;
   onScanBoard?: () => void;
   earthingArrangement?: string;
+  /**
+   * Row selection (ELE-1494). Optional — omit it and the table renders exactly
+   * as before, with no checkbox column and no behaviour change.
+   */
+  isRowSelected?: (id: string) => boolean;
+  onToggleRowSelect?: (id: string, shiftKey: boolean) => void;
+  onToggleSelectAll?: () => void;
+  allSelected?: boolean;
+  someSelected?: boolean;
 }
 
 const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTableProps> = ({
@@ -45,6 +54,11 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
   onBulkFieldUpdate,
   onScanBoard,
   earthingArrangement,
+  isRowSelected,
+  onToggleRowSelect,
+  onToggleSelectAll,
+  allSelected = false,
+  someSelected = false,
 }) => {
   // ELE-857 — board-scoped boundaries so arrows disable correctly
   const { firstOfBoardIds, lastOfBoardIds } = useMemo(() => {
@@ -478,6 +492,9 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
                     showRegulationStatus={showRegulationStatus}
                     collapsedGroups={collapsedGroups}
                     onToggleGroup={toggleGroupCollapse}
+                    allSelected={allSelected}
+                    someSelected={someSelected}
+                    onToggleSelectAll={onToggleSelectAll}
                     onFillAllRcdTestButton={handleFillAllRcdTestButton}
                     onFillAllAfdd={handleFillAllAfdd}
                     onFillAllRcdBsStandard={handleFillAllRcdBsStandard}
@@ -515,6 +532,8 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
                         showRegulationStatus={showRegulationStatus}
                         collapsedGroups={collapsedGroups}
                         earthingArrangement={earthingArrangement}
+                        isSelected={isRowSelected ? isRowSelected(result.id) : false}
+                        onToggleSelect={onToggleRowSelect}
                       />
                     ))}
                   </TableBody>

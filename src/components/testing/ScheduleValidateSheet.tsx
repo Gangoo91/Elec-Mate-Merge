@@ -377,9 +377,12 @@ const ScheduleValidateSheet: React.FC<ScheduleValidateSheetProps> = ({
                                               item: `${circuit.reference} — ${circuit.description}`,
                                               defectCode: code,
                                               description: `${w.title}. ${w.description}`,
-                                              recommendation:
-                                                w.suggestion ||
-                                                'Investigate and rectify as required to comply with BS 7671',
+                                              // The rule's own suggestion where
+                                              // it has one, otherwise empty —
+                                              // not a boilerplate sentence that
+                                              // would print as the remedial
+                                              // action on a signed certificate.
+                                              recommendation: w.suggestion || '',
                                             });
                                             setRaised((prev) => new Set(prev).add(key));
                                             setPicking(null);

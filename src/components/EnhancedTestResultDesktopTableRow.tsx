@@ -49,6 +49,12 @@ interface EnhancedTestResultDesktopTableRowProps {
   showRegulationStatus?: boolean;
   collapsedGroups: Set<string>;
   earthingArrangement?: string;
+  /**
+   * Row selection (ELE-1494). Optional — the checkbox only renders when a
+   * surface opts in, so the mobile table and EIC are unaffected.
+   */
+  isSelected?: boolean;
+  onToggleSelect?: (id: string, shiftKey: boolean) => void;
 }
 
 const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTableRowProps> = ({
@@ -64,6 +70,8 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
   showRegulationStatus = false,
   collapsedGroups,
   earthingArrangement,
+  isSelected = false,
+  onToggleSelect,
 }) => {
   const [showRegulationWarning, setShowRegulationWarning] = useState(false);
 
@@ -164,6 +172,24 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
           {/* One even row of compact controls — no pills, no dividers.
               Density cell — h-7 controls exempt from the 44px rule. */}
           <div className="flex items-center justify-center gap-1">
+            {/* Selection (ELE-1494). Lives in the existing Actions cell rather
+                than a new column: the header and body are 34 columns kept in
+                manual alignment, and adding one to both is how they drift. */}
+            {onToggleSelect && (
+              <input
+                type="checkbox"
+                checked={isSelected}
+                onChange={(e) =>
+                  onToggleSelect(
+                    result.id,
+                    (e.nativeEvent as MouseEvent).shiftKey === true
+                  )
+                }
+                onClick={(e) => e.stopPropagation()}
+                aria-label={`Select circuit ${result.circuitDesignation || result.circuitNumber}`}
+                className="h-4 w-4 shrink-0 accent-elec-yellow cursor-pointer touch-manipulation"
+              />
+            )}
             {onMoveUp && (
               <Button
                 variant="ghost"
@@ -362,6 +388,12 @@ const arePropsEqual = (
   // earthing change on the supply tab.
   if (prev.earthingArrangement !== next.earthingArrangement) return false;
   // Deep compare Sets: same size and same entries
+  // ELE-1494 — without these the checkbox never repaints. The comparator is a
+  // whitelist, so any prop added to the interface and not added here is
+  // silently ignored: the row keeps its old render and the tick does not
+  // appear, with nothing failing anywhere to say why.
+  if (prev.isSelected !== next.isSelected) return false;
+  if (prev.onToggleSelect !== next.onToggleSelect) return false;
   if (prev.collapsedGroups.size !== next.collapsedGroups.size) return false;
   for (const key of prev.collapsedGroups) {
     if (!next.collapsedGroups.has(key)) return false;

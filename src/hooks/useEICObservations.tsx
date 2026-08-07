@@ -70,11 +70,12 @@ export const useEICObservations = (initialObservations: EICObservation[] = []) =
       );
 
       if (!existingObservation) {
-        // Use notes from the inspection item if available
+        // The electrician's own words, or nothing. The previous default —
+        // "Item requires attention - inspection outcome not satisfactory" — is
+        // stored, not a placeholder, so it printed verbatim on signed
+        // certificates: a coded defect describing no defect.
         const description =
-          inspectionItem.notes && inspectionItem.notes.trim()
-            ? inspectionItem.notes
-            : 'Item requires attention - inspection outcome not satisfactory';
+          inspectionItem.notes && inspectionItem.notes.trim() ? inspectionItem.notes : '';
 
         // For EIC, use 'limitation' as default; for EICR, use the provided defectCode or 'C2'
         const defectCode = inspectionItem.defectCode || 'limitation';
@@ -91,7 +92,9 @@ export const useEICObservations = (initialObservations: EICObservation[] = []) =
           itemNumber: inspectionItem.itemNumber,
           defectCode,
           description,
-          recommendation: 'Investigate and rectify as required to comply with BS 7671',
+          // Left empty — the remedial action is what the client pays the
+          // electrician to specify; we cannot assert it for them.
+          recommendation: '',
           rectified: false,
           inspectionItemId: inspectionItem.id,
         });

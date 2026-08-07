@@ -7,7 +7,7 @@ import { TestResult } from '@/types/testResult';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
-import { CIRCUIT_PRESETS } from '@/constants/circuitPresets';
+import { CIRCUIT_PRESETS, describePreset } from '@/constants/circuitPresets';
 
 interface SmartAutoFillPromptDialogProps {
   open: boolean;
@@ -35,20 +35,18 @@ const circuitTypes = CIRCUIT_PRESETS;
 
 const categories = ['Lighting', 'Sockets', 'Appliances', 'Modern', 'Commercial', 'Industrial'];
 
-// '2.5mm' → '2.5', '10mm' → '10'
-const stripMm = (v?: string) => (v || '').replace(/mm$/, '');
-
-// Quiet mono summary of what the preset prefills, e.g.
-// "32A Type B RCBO · 2.5/1.5mm² · ref A · 30mA RCD Type A"
-const presetSummary = (s: Partial<TestResult>) => {
-  const parts = [
-    `${s.protectiveDeviceRating}A Type ${s.protectiveDeviceCurve} ${s.protectiveDeviceType}`,
-    `${stripMm(s.liveSize)}/${stripMm(s.cpcSize)}mm²`,
-    `ref ${s.referenceMethod}`,
-  ];
-  if (s.rcdRating) parts.push(`${s.rcdRating}mA RCD Type ${s.rcdType}`);
-  return parts.join(' · ');
-};
+/**
+ * The summary is `describePreset` from the preset module, not a local copy.
+ *
+ * The local one interpolated every field unconditionally, including
+ * `referenceMethod` — which ELE-1509 deliberately removed from the presets,
+ * because how a cable is installed is a site observation and cannot be known
+ * from a circuit's name. With the field gone the template rendered the string
+ * "ref undefined" on every preset in this sheet.
+ *
+ * `describePreset` guards each part, so a field the presets stop carrying
+ * disappears from the summary instead of printing as undefined.
+ */
 
 const noFocusRing =
   'outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0';
@@ -200,7 +198,7 @@ const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
                       isSelected ? 'text-black' : 'text-white/80'
                     )}
                   >
-                    {presetSummary(circuit.suggestions)}
+                    {describePreset(circuit)}
                   </span>
                 </button>
               );

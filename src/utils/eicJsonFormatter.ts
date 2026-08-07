@@ -592,7 +592,11 @@ export async function formatEicJson(
         protective_device_location: test.protectiveDeviceLocation || 'N/A',
         bs_standard: test.bsStandard || 'N/A',
         r1r2: test.r1r2 || 'N/A',
-        r2: test.r2 || test.cpcContinuity || 'N/A',
+        // `ringContinuityLive` is where the schedule's R₂ column actually writes
+        // — EIC shares ContinuityCells with the EICR, and that binds R₂ there
+        // rather than to `r2`. Without it in the chain the recorded R₂ printed
+        // as "N/A" on every EIC.
+        r2: test.r2 || test.cpcContinuity || test.ringContinuityLive || 'N/A',
         ring_continuity_live: test.ringContinuityLive || 'N/A',
         ring_continuity_neutral: test.ringContinuityNeutral || 'N/A',
         ring_r1: test.ringR1 || 'N/A',

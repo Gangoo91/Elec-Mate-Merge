@@ -35,6 +35,10 @@ interface EnhancedTestResultDesktopTableHeaderProps {
   onFillAllAfddNA?: () => void;
   // ELE-871 — smart RCD per-circuit fill based on bsStandard
   onSmartFillRcd?: () => void;
+  // ELE-1494 — select-all. Optional, so surfaces that opt out are unchanged.
+  allSelected?: boolean;
+  someSelected?: boolean;
+  onToggleSelectAll?: () => void;
 }
 
 const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTableHeaderProps> = ({
@@ -63,6 +67,9 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
   onFillAllPhase,
   onFillAllAfddNA,
   onSmartFillRcd,
+  allSelected = false,
+  someSelected = false,
+  onToggleSelectAll,
 }) => {
   const [rcdBsPopoverOpen, setRcdBsPopoverOpen] = useState(false);
   const [rcdTypePopoverOpen, setRcdTypePopoverOpen] = useState(false);
@@ -240,7 +247,25 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
         {/* Actions — first column, NOT sticky (founder call): scrolls away
             under the pinned Way column. */}
         <TableHead className="sot-header-cell text-[10.5px] font-semibold text-white w-[210px] min-w-[210px] max-w-[210px] text-center">
-          Actions
+          {onToggleSelectAll ? (
+            <div className="flex items-center justify-center gap-2">
+              {/* Indeterminate is set on the node — it is a DOM property, not an
+                  attribute, so React cannot express it in JSX. */}
+              <input
+                type="checkbox"
+                checked={allSelected}
+                ref={(el) => {
+                  if (el) el.indeterminate = someSelected && !allSelected;
+                }}
+                onChange={onToggleSelectAll}
+                aria-label={allSelected ? 'Clear selection' : 'Select every circuit on this board'}
+                className="h-4 w-4 shrink-0 accent-elec-yellow cursor-pointer touch-manipulation"
+              />
+              <span>Actions</span>
+            </div>
+          ) : (
+            'Actions'
+          )}
         </TableHead>
 
         {/* Circuit Number — sticky at left:0 */}
@@ -464,7 +489,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               data-group="protection"
             >
               <div className="flex items-center justify-center gap-2">
-                <span>Max Zs</span>
+                <span>Max Zs Ω</span>
                 {onFillAllMaxZs && (
                   <Popover>
                     <PopoverTrigger asChild>
@@ -863,31 +888,31 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               className="sot-header-cell text-[10.5px] font-semibold text-white w-20 min-w-[75px] max-w-[75px]"
               data-group="continuity"
             >
-              r₁
+              r₁ Ω
             </TableHead>
             <TableHead
               className="sot-header-cell text-[10.5px] font-semibold text-white w-20 min-w-[75px] max-w-[75px]"
               data-group="continuity"
             >
-              rₙ
+              rₙ Ω
             </TableHead>
             <TableHead
               className="sot-header-cell text-[10.5px] font-semibold text-white w-20 min-w-[75px] max-w-[75px]"
               data-group="continuity"
             >
-              r₂
+              r₂ Ω
             </TableHead>
             <TableHead
               className="sot-header-cell text-[10.5px] font-semibold text-white w-32 min-w-[132px] max-w-[132px]"
               data-group="continuity"
             >
-              R₁+R₂
+              R₁+R₂ Ω
             </TableHead>
             <TableHead
               className="sot-header-cell text-[10.5px] font-semibold text-white w-20 min-w-[75px] max-w-[75px]"
               data-group="continuity"
             >
-              R₂
+              R₂ Ω
             </TableHead>
           </>
         )}
@@ -950,7 +975,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               data-group="insulation"
             >
               <div className="flex items-center justify-center gap-2">
-                <span>L-N</span>
+                <span>L-N MΩ</span>
                 {onFillAllInsulationLiveNeutral && (
                   <Popover
                     open={irLiveNeutralPopoverOpen}
@@ -1013,7 +1038,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               data-group="insulation"
             >
               <div className="flex items-center justify-center gap-2">
-                <span>L-E</span>
+                <span>L-E MΩ</span>
                 {onFillAllInsulationLiveEarth && (
                   <Popover open={irLiveEarthPopoverOpen} onOpenChange={setIrLiveEarthPopoverOpen}>
                     <PopoverTrigger asChild>
@@ -1122,7 +1147,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               </div>
             </TableHead>
             <TableHead className="sot-header-cell text-[10.5px] font-semibold text-white w-24 min-w-[85px] max-w-[85px]" data-group="zs">
-              Zs
+              Zs Ω
             </TableHead>
           </>
         )}

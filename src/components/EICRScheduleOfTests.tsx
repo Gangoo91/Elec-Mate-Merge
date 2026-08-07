@@ -35,6 +35,7 @@ import {
   formatBoardsForFormData,
 } from '@/utils/boardMigration';
 import { isSpareCircuit, describeBulkFill } from '@/utils/spareWays';
+import { getSpareCircuitFields } from '@/utils/spareCircuitFields';
 import {
   getNextCircuitNumber,
   deriveCircuitNumber,
@@ -62,7 +63,6 @@ import { BoardScannerOverlay } from '@/components/testing/BoardScannerOverlay';
 import TestResultsPhotoCapture from './testing/TestResultsPhotoCapture';
 import TestResultsReviewDialog from './testing/TestResultsReviewDialog';
 import ScribbleToTableDialog from './mobile/ScribbleToTableDialog';
-import BulkInfillDialog from './BulkInfillDialog';
 import { useOrientation } from '@/hooks/useOrientation';
 import { useInlineVoice } from '@/hooks/useInlineVoice';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
@@ -83,7 +83,11 @@ import { isNotApplicableValue } from '@/utils/testValidation';
 import { getDefaultBsStandard } from '@/types/protectiveDeviceTypes';
 import { checkRegulationCompliance } from '@/utils/autoRegChecker';
 import { isRealCircuit } from '@/utils/validation/applicability';
+import { getScheduleProgress } from '@/utils/scheduleProgress';
 import ScheduleValidateSheet from './testing/ScheduleValidateSheet';
+import ScheduleFindReplaceDialog from './testing/ScheduleFindReplaceDialog';
+import ScheduleSelectionBar from './testing/ScheduleSelectionBar';
+import { useRowSelection } from '@/hooks/useRowSelection';
 
 interface EICRScheduleOfTestsProps {
   formData: any;
@@ -339,9 +343,12 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   const [showTestResultsReview, setShowTestResultsReview] = useState(false);
   const [showSmartAutoFillDialog, setShowSmartAutoFillDialog] = useState(false);
   const [showScribbleDialog, setShowScribbleDialog] = useState(false);
-  const [showBulkInfillDialog, setShowBulkInfillDialog] = useState(false);
   // Whole-schedule validate — the board whose circuits are being checked.
   const [validateBoardId, setValidateBoardId] = useState<string | null>(null);
+  // ELE-1493 — board the Find & replace tool was opened from (desktop only).
+  const [findReplaceBoardId, setFindReplaceBoardId] = useState<string | null>(null);
+  // ELE-1494 — row multi-select (desktop only).
+  const selection = useRowSelection();
   const [showClearAllConfirm, setShowClearAllConfirm] = useState(false);
   const [lastDeleted, setLastDeleted] = useState<{ circuit: TestResult; index: number } | null>(
     null
@@ -1173,12 +1180,9 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         setActiveBoardId(boardId);
         setShowSmartAutoFillDialog(true);
       },
-      onBulkInfill: () => {
-        setActiveBoardId(boardId);
-        setShowBulkInfillDialog(true);
-      },
       onValidate: () => setValidateBoardId(boardId),
       validateIssueCount: countBoardIssues(boardId),
+      onFindReplace: () => setFindReplaceBoardId(boardId),
       onVoiceToggle: toggleVoice,
       voiceActive,
       voiceConnecting,
@@ -1186,18 +1190,22 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     [toggleVoice, voiceActive, voiceConnecting, countBoardIssues]
   );
 
-  // Calculate completion stats for progress indicator
-  const { completedCount, progressPercent, pendingCount } = useMemo(() => {
-    const completed = testResults.filter(
-      (r) => r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
-    ).length;
-    const percent = testResults.length > 0 ? Math.round((completed / testResults.length) * 100) : 0;
-    return {
-      completedCount: completed,
-      progressPercent: percent,
-      pendingCount: testResults.length - completed,
-    };
-  }, [testResults]);
+  // Completion stats — ELE-1501. Spare ways and device rows are excluded from
+  // the denominator: a spare has nothing to measure, so counting it as
+  // outstanding work made 100% unreachable on 31% of certificates.
+  const { completedCount, progressPercent, pendingCount, circuitCount, excludedCount } = useMemo(
+    () => {
+      const progress = getScheduleProgress(testResults);
+      return {
+        completedCount: progress.tested,
+        progressPercent: progress.percent,
+        pendingCount: progress.remaining,
+        circuitCount: progress.circuits,
+        excludedCount: progress.excluded,
+      };
+    },
+    [testResults]
+  );
   const saveTimeoutRef = useRef<NodeJS.Timeout>();
   const lastSavedHashRef = useRef('');
   const computeResultsHash = (results: TestResult[]) =>
@@ -1214,7 +1222,12 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     [distributionBoards]
   );
 
-  // Memoize board circuit stats to avoid recomputing during scroll
+  // Memoize board circuit stats to avoid recomputing during scroll.
+  //
+  // `circuits` stays every row on the board — the table renders from it, and a
+  // spare way is still a row you can see and edit. Only the counts run over the
+  // testable subset (ELE-1501), so a board of 12 ways with 6 spares reads
+  // "6 circuits · 6 tested" and completes, instead of being stuck at 50%.
   const boardStats = useMemo(() => {
     const stats: Record<
       string,
@@ -1223,20 +1236,18 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         completedCount: number;
         progressPercent: number;
         isComplete: boolean;
+        testableCount: number;
       }
     > = {};
     sortedBoards.forEach((board) => {
       const circuits = getCircuitsForBoard(testResults, board.id);
-      const completedCount = circuits.filter(
-        (r) => r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
-      ).length;
-      const progressPercent =
-        circuits.length > 0 ? Math.round((completedCount / circuits.length) * 100) : 0;
+      const progress = getScheduleProgress(circuits);
       stats[board.id] = {
         circuits,
-        completedCount,
-        progressPercent,
-        isComplete: progressPercent === 100,
+        completedCount: progress.tested,
+        progressPercent: progress.percent,
+        isComplete: progress.isComplete,
+        testableCount: progress.circuits,
       };
     });
     return stats;
@@ -1994,73 +2005,6 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   }, [formData?.externalZe, formData?.distributionBoards]);
 
   // Bulk infill handler
-  const handleBulkInfill = (value: string, mode: 'all' | 'empty') => {
-    const fillableFields: (keyof TestResult)[] = [
-      'typeOfWiring',
-      'referenceMethod',
-      'pointsServed',
-      'liveSize',
-      'cpcSize',
-      'bsStandard',
-      'protectiveDeviceType',
-      'protectiveDeviceCurve',
-      'protectiveDeviceRating',
-      'protectiveDeviceKaRating',
-      'maxZs',
-      'rcdBsStandard',
-      'rcdType',
-      'rcdRating',
-      'rcdRatingA',
-      'ringR1',
-      'ringRn',
-      'ringR2',
-      'r1r2',
-      'r2',
-      'insulationTestVoltage',
-      'insulationLiveNeutral',
-      'insulationLiveEarth',
-      'polarity',
-      'zs',
-      'rcdOneX',
-      'rcdTestButton',
-      'afddTest',
-      'pfc',
-      'notes',
-    ];
-
-    let updatedCount = 0;
-
-    // Build updated results in a single pass
-    const updatedResults = testResults.map((result) => {
-      const updatedResult = { ...result };
-      let hasChanges = false;
-
-      fillableFields.forEach((field) => {
-        const currentValue = result[field];
-        const isEmpty = !currentValue || currentValue.toString().trim() === '';
-
-        if (mode === 'all' || (mode === 'empty' && isEmpty)) {
-          (updatedResult as any)[field] = value;
-          updatedCount++;
-          hasChanges = true;
-        }
-      });
-
-      // Clear autoFilled flag if any changes made
-      if (hasChanges && result.autoFilled) {
-        updatedResult.autoFilled = false;
-      }
-
-      return updatedResult;
-    });
-
-    // Single state update
-    setTestResults(updatedResults);
-    onUpdate('scheduleOfTests', updatedResults);
-
-    toast.success(`Filled ${updatedCount} fields with "${value}"`);
-    setShowBulkInfillDialog(false);
-  };
 
   // Enhanced bulk update handler for desktop auto-fill
   const handleBulkUpdate = useCallback(
@@ -2132,6 +2076,96 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     });
   };
 
+  /* ── Selection actions — ELE-1494 ──────────────────────────────────────────
+     These reuse handleBulkFieldUpdate rather than writing their own map, so a
+     selection write inherits its spare-way guard for free: a spare is an empty
+     position with nothing to measure, and "set this field on six circuits"
+     must not put a reading into one. */
+
+  const selectedIdList = useCallback(() => Array.from(selection.selectedIds), [selection]);
+
+  const handleSelectionSetField = useCallback(
+    (field: keyof TestResult, value: string) => {
+      handleBulkFieldUpdate(field, value, selectedIdList());
+      toast.success(`Updated ${selection.count} ${selection.count === 1 ? 'circuit' : 'circuits'}`);
+    },
+    [selection.count, selectedIdList]
+  );
+
+  /** Every test field to N/A across the selection, in one write. */
+  const handleSelectionMarkNa = useCallback(() => {
+    const ids = new Set(selection.selectedIds);
+    setTestResults((prev) => {
+      const updated = prev.map((r) =>
+        ids.has(r.id) ? { ...r, ...getSpareCircuitFields(), circuitDescription: r.circuitDescription } : r
+      );
+      queueMicrotask(() => onUpdate('scheduleOfTests', updated));
+      return updated;
+    });
+    toast.success(`Marked ${ids.size} ${ids.size === 1 ? 'circuit' : 'circuits'} N/A`);
+    selection.clear();
+  }, [selection, onUpdate]);
+
+  /** Mark as a device row — an incoming RCD or SPD, which is not a circuit
+      and must not consume a way number (ELE-1484). */
+  const handleSelectionMarkDeviceRow = useCallback(() => {
+    const ids = new Set(selection.selectedIds);
+    setTestResults((prev) => {
+      const updated = prev.map((r) =>
+        // Both fields, not just the number. `circuitNumber` prints and
+        // `circuitDesignation` is what the way box shows — setting one and not
+        // the other is exactly the silent divergence of ELE-1486.
+        ids.has(r.id)
+          ? {
+              ...r,
+              isDeviceRow: true,
+              circuitNumber: DEVICE_ROW_NUMBER,
+              circuitDesignation: DEVICE_ROW_NUMBER,
+            }
+          : r
+      );
+      queueMicrotask(() => onUpdate('scheduleOfTests', updated));
+      return updated;
+    });
+    toast.success(`${ids.size} marked as a device row`);
+    selection.clear();
+  }, [selection, onUpdate]);
+
+  /**
+   * Delete the selection, with undo.
+   *
+   * Observations are deliberately left alone. A written observation is the
+   * electrician's own words about a defect and outlives the row that prompted
+   * it — silently discarding one is the failure this ticket warns about. The
+   * single-row delete behaves the same way.
+   */
+  const handleSelectionDelete = useCallback(() => {
+    const ids = new Set(selection.selectedIds);
+    if (!ids.size) return;
+    setTestResults((prev) => {
+      const removed = prev.filter((r) => ids.has(r.id));
+      const updated = prev.filter((r) => !ids.has(r.id));
+      queueMicrotask(() => {
+        onUpdate('scheduleOfTests', updated);
+        toast.success(`${removed.length} ${removed.length === 1 ? 'circuit' : 'circuits'} deleted`, {
+          action: {
+            label: 'Undo',
+            onClick: () =>
+              setTestResults((current) => {
+                const restored = [...current, ...removed].sort(
+                  (a, b) => prev.findIndex((p) => p.id === a.id) - prev.findIndex((p) => p.id === b.id)
+                );
+                queueMicrotask(() => onUpdate('scheduleOfTests', restored));
+                return restored;
+              }),
+          },
+        });
+      });
+      return updated;
+    });
+    selection.clear();
+  }, [selection, onUpdate]);
+
   // Utility function to fix protective device terminology.
   // Defensive: some scanners pass an object ({ category, type, ... }) instead
   // of a string. Coerce safely so the schedule never crashes on apply.
@@ -2182,10 +2216,22 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   };
 
   const handleAcceptTestResults = (selectedCircuits: any[]) => {
-    // ELE-1475 — these rows carry no boardId, so they land on the main CU.
-    // Number them from the highest way already in use there rather than from
+    /**
+     * Rows land on the board the scanner was opened from.
+     *
+     * The ELE-1475 comment here used to read "these rows carry no boardId, so
+     * they land on the main CU" — a documented limitation rather than a fixed
+     * one. Scanning a paper schedule while viewing Sub-board 2 therefore put
+     * every row on the Main CU. `handleApplyAICircuits` already resolves the
+     * target this way; scribble-to-table now does too.
+     *
+     * The way numbering follows the target board for the same reason: numbering
+     * from the main CU would collide with ways already used on the sub-board.
+     */
+    const targetBoardId = activeBoardId || distributionBoards[0]?.id || MAIN_BOARD_ID;
+    // Number from the highest way already in use on that board rather than from
     // the row count, which reuses numbers once a circuit has been deleted.
-    const firstFreeWay = getNextCircuitNumber(testResults, MAIN_BOARD_ID);
+    const firstFreeWay = getNextCircuitNumber(testResults, targetBoardId);
     // Transform extracted test results to TestResult format
     const transformedResults = selectedCircuits.map((circuit, index) => {
       const nextId = (testResults.length + index + 1).toString();
@@ -2215,6 +2261,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
 
       return {
         id: nextId,
+        boardId: targetBoardId,
         circuitNumber: circuitNum,
         circuitDesignation: circuitRef,
         circuitDescription: circuit.circuit_description || '',
@@ -2269,6 +2316,13 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     onUpdate('scheduleOfTests', updatedResults);
     setShowTestResultsReview(false);
     setExtractedTestResults(null);
+    // Released here, not on scanner close — the review dialog runs after the
+    // scanner has gone, and it is this handler that needs to know the board.
+    setActiveBoardId(null);
+    const boardName = distributionBoards.find((b) => b.id === targetBoardId)?.name || 'this board';
+    toast.success(
+      `${transformedResults.length} circuit${transformedResults.length === 1 ? '' : 's'} added to ${boardName}`
+    );
   };
 
   // Normalise AI circuit values to match UI Select options
@@ -2764,11 +2818,13 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                 completedCount: boardCompletedCount,
                 progressPercent: boardProgressPercent,
                 isComplete,
+                testableCount: boardTestableCount,
               } = boardStats[board.id] || {
                 circuits: [],
                 completedCount: 0,
                 progressPercent: 0,
                 isComplete: false,
+                testableCount: 0,
               };
 
               return (
@@ -2815,9 +2871,12 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                               : 'text-white'
                         )}
                       >
+                        {/* "23 circuits · 0 tested" — the question asked at a
+                            consumer unit is how many are left, which a
+                            percentage does not answer on a board of 23. */}
                         {isComplete
                           ? 'Complete'
-                          : `${boardCircuits.length} circuit${boardCircuits.length === 1 ? '' : 's'} · ${boardProgressPercent}%`}
+                          : `${boardTestableCount} circuit${boardTestableCount === 1 ? '' : 's'} · ${boardCompletedCount} tested`}
                       </span>
 
                       {/* Chevron */}
@@ -3068,8 +3127,18 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                       </div>
                     </div>
 
-                    {/* Tools Bar — Add circuit primary, labels say what they do */}
-                    <div className="grid grid-cols-3 gap-2 px-4 py-3 bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-y border-white/[0.14]">
+                    {/* Tools Bar — Add circuit primary, labels say what they do.
+                        2×2 rather than 4-across: at phone width four buttons
+                        leave ~80px each and "Add circuit" truncates. Matches the
+                        mobile tool grid in BoardSection.
+
+                        Validate was missed here in ELE-1507 — it went onto
+                        BoardSection (desktop, and BoardSection's own mobile
+                        block) but this board path renders its own toolbar, so
+                        the phone had no way to check a schedule. That is the
+                        surface where it matters most: this app is used at a
+                        consumer unit, not at a desk. */}
+                    <div className="grid grid-cols-2 gap-2 px-4 py-3 bg-gradient-to-b from-white/[0.08] to-white/[0.04] border-y border-white/[0.14]">
                       <Button
                         className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] text-white text-[12px] font-semibold hover:bg-white/[0.10] touch-manipulation active:scale-[0.98]"
                         onClick={() => {
@@ -3096,6 +3165,17 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                         disabled={voiceConnecting}
                       >
                         {voiceActive ? 'Voice live' : voiceConnecting ? 'Connecting…' : 'Voice'}
+                      </Button>
+                      <Button
+                        className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] text-white text-[12px] font-semibold hover:bg-white/[0.10] touch-manipulation active:scale-[0.98]"
+                        onClick={() => setValidateBoardId(board.id)}
+                      >
+                        Validate
+                        {countBoardIssues(board.id) ? (
+                          <span className="ml-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-400 px-1.5 text-[11px] font-bold tabular-nums text-black">
+                            {countBoardIssues(board.id)}
+                          </span>
+                        ) : null}
                       </Button>
                     </div>
 
@@ -3198,7 +3278,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
             {/* Stat cards */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
               {[
-                { value: testResults.length, label: 'Circuits', toneClass: 'text-white' },
+                { value: circuitCount, label: 'Circuits', toneClass: 'text-white' },
                 { value: completedCount, label: 'Complete', toneClass: 'text-green-400' },
                 { value: pendingCount, label: 'Pending', toneClass: 'text-amber-400' },
                 { value: `${progressPercent}%`, label: 'Progress', toneClass: 'text-elec-yellow' },
@@ -3215,8 +3295,10 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
               ))}
             </div>
 
-            {/* Slim progress bar */}
-            {testResults.length > 0 && (
+            {/* Slim progress bar. Counts run over testable rows only, so the
+                spare ways are named rather than silently sitting in the total
+                and holding the bar short of 100% (ELE-1501). */}
+            {circuitCount > 0 && (
               <div className="flex items-center gap-4">
                 <div className="flex-1 h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
                   <div
@@ -3225,7 +3307,8 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                   />
                 </div>
                 <span className="text-[11px] font-medium text-white tabular-nums shrink-0">
-                  {completedCount}/{testResults.length} tested
+                  {completedCount}/{circuitCount} tested
+                  {excludedCount > 0 && ` · ${excludedCount} not a circuit`}
                 </span>
               </div>
             )}
@@ -3241,13 +3324,20 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
           {/* Distribution Boards with Circuit Tables */}
           <div className="space-y-4" data-autofill-section>
             {sortedBoards.map((board, boardIdx) => {
-              const { circuits: boardCircuits, completedCount: boardCompleted } = boardStats[
-                board.id
-              ] || {
+              // `boardTestable` — not `boardCircuits.length` — is what the board
+              // card counts against. The numerator already excludes spares and
+              // device rows, so the denominator must too, or a board with a
+              // spare way can never reach 100% (ELE-1501).
+              const {
+                circuits: boardCircuits,
+                completedCount: boardCompleted,
+                testableCount: boardTestable,
+              } = boardStats[board.id] || {
                 circuits: [],
                 completedCount: 0,
                 progressPercent: 0,
                 isComplete: false,
+                testableCount: 0,
               };
               return (
                 <BoardSection
@@ -3258,7 +3348,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                   onUpdateBoard={handleUpdateBoard}
                   onRemoveBoard={handleRemoveBoard}
                   onAddCircuit={() => addTestResult(board.id)}
-                  circuitCount={boardCircuits.length}
+                  circuitCount={boardTestable}
                   completedCount={boardCompleted}
                   showTools={true}
                   tools={createBoardTools(board.id)}
@@ -3269,6 +3359,23 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                   earthingArrangement={formData.earthingArrangement as string | undefined}
                   nominalVoltage={formData.nominalVoltage as string | undefined}
                 >
+                  {/* ELE-1494 — appears only when rows are selected, so it
+                      costs nothing when unused. */}
+                  {selection.count > 0 && (
+                    <ScheduleSelectionBar
+                      count={selection.count}
+                      spareCount={
+                        testResults.filter(
+                          (c) => selection.isSelected(c.id) && isSpareCircuit(c)
+                        ).length
+                      }
+                      onClear={selection.clear}
+                      onSetField={handleSelectionSetField}
+                      onMarkNotApplicable={handleSelectionMarkNa}
+                      onMarkDeviceRow={handleSelectionMarkDeviceRow}
+                      onDelete={handleSelectionDelete}
+                    />
+                  )}
                   <EnhancedTestResultDesktopTable
                     testResults={boardCircuits}
                     onUpdate={updateTestResult}
@@ -3281,6 +3388,21 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                     onAddCircuit={() => addTestResult(board.id)}
                     onBulkFieldUpdate={handleBulkFieldUpdate}
                     earthingArrangement={formData.earthingArrangement}
+                    isRowSelected={selection.isSelected}
+                    onToggleRowSelect={(id, shiftKey) =>
+                      selection.toggle(
+                        id,
+                        boardCircuits.map((c) => c.id),
+                        shiftKey
+                      )
+                    }
+                    allSelected={selection.allSelected(boardCircuits.map((c) => c.id))}
+                    someSelected={selection.someSelected(boardCircuits.map((c) => c.id))}
+                    onToggleSelectAll={() => {
+                      const ids = boardCircuits.map((c) => c.id);
+                      if (selection.allSelected(ids)) selection.clear();
+                      else selection.selectAll(ids);
+                    }}
                   />
                 </BoardSection>
               );
@@ -3472,20 +3594,36 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       {showScribbleDialog && (
         <ScribbleToTableDialog
           onCircuitsAdded={(newCircuits) => {
-            const updatedResults = [...testResults, ...newCircuits];
+            /**
+             * Circuits land on the board the tool was opened from.
+             *
+             * They were appended with no `boardId` at all, so every circuit
+             * scribbled into a sub-board silently arrived on the Main CU — the
+             * board-scoped entry point set `activeBoardId` and nothing read it.
+             * `handleApplyAICircuits` resolves the target the same way; this
+             * matches it rather than inventing a second rule.
+             */
+            const targetBoardId = activeBoardId || distributionBoards[0]?.id || MAIN_BOARD_ID;
+            const placed = newCircuits.map((c) => ({ ...c, boardId: c.boardId || targetBoardId }));
+            const updatedResults = [...testResults, ...placed];
             setTestResults(updatedResults);
             onUpdate('scheduleOfTests', updatedResults);
             setShowScribbleDialog(false);
+            setActiveBoardId(null);
+            const boardName =
+              distributionBoards.find((b) => b.id === targetBoardId)?.name || 'this board';
             toast.success('Circuits added', {
-              description: `Successfully added ${newCircuits.length} circuit(s) from text`,
+              description: `${placed.length} circuit${placed.length === 1 ? '' : 's'} added to ${boardName}`,
               duration: 2000,
             });
           }}
-          onClose={() => setShowScribbleDialog(false)}
+          onClose={() => {
+            setShowScribbleDialog(false);
+            setActiveBoardId(null);
+          }}
         />
       )}
 
-      {/* Bulk Infill Dialog */}
       {/* ELE-1487 — whole-schedule validate, reachable from the board toolbar on
           desktop AND mobile. The checks already existed; they were buried in a
           panel below the desktop table that a phone never renders. */}
@@ -3502,11 +3640,26 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         onCreateObservation={handleCreateObservation}
       />
 
-      <BulkInfillDialog
-        open={showBulkInfillDialog}
-        onOpenChange={setShowBulkInfillDialog}
-        testResults={testResults}
-        onApply={handleBulkInfill}
+      {/* Only this board's circuits, and never the spares — the preview count
+          has to describe the same rows the write will touch, or it overstates
+          what is about to happen. */}
+
+      {/* ELE-1493 — Find & replace. Commits as one state change and one save,
+          so a sweep across 23 circuits is a single thing to undo. */}
+      <ScheduleFindReplaceDialog
+        open={findReplaceBoardId !== null}
+        onOpenChange={(o) => !o && setFindReplaceBoardId(null)}
+        boardCircuits={testResults.filter(
+          (c) => (c.boardId || MAIN_BOARD_ID) === findReplaceBoardId
+        )}
+        allCircuits={testResults}
+        boardName={distributionBoards.find((b) => b.id === findReplaceBoardId)?.name}
+        boardCount={distributionBoards.length}
+        onApply={(updated) => {
+          setTestResults(updated);
+          queueMicrotask(() => onUpdate('scheduleOfTests', updated));
+          toast.success('Values replaced');
+        }}
       />
 
       {/* Clear all confirmation — house AlertDialog, not window.confirm */}

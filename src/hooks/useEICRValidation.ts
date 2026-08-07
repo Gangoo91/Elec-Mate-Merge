@@ -217,6 +217,36 @@ export const useEICRValidation = (formData: any): EICRValidationResult => {
       }
     });
 
+    /**
+     * Every coded observation needs wording, not just C1.
+     *
+     * These fields used to be pre-filled with "Item requires attention -
+     * inspection outcome not satisfactory" and "Investigate and rectify as
+     * required to comply with BS 7671". That is a coded defect describing no
+     * defect, and because both strings are non-empty they satisfied the C1
+     * check above vacuously — the gate could never fire. The defaults are now
+     * blank, so this catches what the boilerplate was hiding.
+     *
+     * Warning rather than error, matching the treatment of C2 above: C1 is the
+     * only classification that blocks. C3 and FI are advisory and must not stop
+     * a certificate being issued, but an empty observation on any of them is
+     * still worth surfacing before it prints.
+     */
+    inspectionItems
+      .filter((i) => ['C2', 'C3', 'FI'].includes(String(i.outcome)))
+      .forEach((item) => {
+        const linked = observations.find((o) => o.inspectionItemId === item.id);
+        if (!linked) return; // "missing entirely" is already reported above for C2
+        if (!linked.description?.trim() || !linked.recommendation?.trim()) {
+          warnings.push({
+            field: `obs-detail-${item.id}`,
+            message: `${item.outcome} observation needs a description and a recommendation: ${item.item?.slice(0, 34)}…`,
+            severity: 'warning',
+            tab: 'inspection',
+          });
+        }
+      });
+
     // Completion percentage
     const REQUIRED = [
       'clientName', 'installationAddress', 'inspectionDate', 'supplyVoltage', 'phases',

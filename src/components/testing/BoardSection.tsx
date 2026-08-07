@@ -30,7 +30,6 @@ export interface BoardToolCallbacks {
   onScribbleToTable?: () => void;
   onSmartAutoFill?: () => void;
   onQuickRcdPresets?: () => void;
-  onBulkInfill?: () => void;
   onVoiceToggle?: () => void;
   voiceActive?: boolean;
   voiceConnecting?: boolean;
@@ -44,6 +43,12 @@ export interface BoardToolCallbacks {
   onValidate?: () => void;
   /** Outstanding issues, shown on the button so they are visible unopened. */
   validateIssueCount?: number;
+  /**
+   * Find & replace across the schedule (ELE-1493). Desktop only — it is a
+   * keyboard tool for sweeping a value across a whole board, which is not a
+   * thing anyone does one-handed at a consumer unit.
+   */
+  onFindReplace?: () => void;
 }
 
 interface BoardSectionProps {
@@ -870,25 +875,49 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                 <span className="text-[12px] tabular-nums text-white/60">{circuitCount}</span>
                 {showTools && tools && (
                   <div className="ml-auto flex items-center gap-2 shrink-0">
-                    <Button
-                      onClick={tools.onScanBoard}
-                      className="h-11 px-3 rounded-xl border border-white/[0.12] bg-white/[0.06] hover:bg-white/[0.1] text-white text-[13px] font-semibold touch-manipulation"
-                    >
-                      AI scan
-                    </Button>
+                    {/* One flat bar, not a dropdown.
+                        Every tool is a peer here — a menu hid them behind an
+                        extra click and, worse, hid whether they existed at all
+                        (five were passed in and never rendered for months).
+                        Spread across a single row, the toolbar is a statement
+                        of what this board can do.
+
+                        Order follows the job: capture, then correct, then
+                        check, then add. Voice sits last as a mode rather than
+                        an action. `flex-wrap` lets it fold on a narrow desktop
+                        instead of overflowing. */}
+                    {[
+                      { fn: tools.onScanBoard, label: 'AI scan' },
+                      { fn: tools.onScanTestResults, label: 'Scan results' },
+                      { fn: tools.onScribbleToTable, label: 'Text to circuits' },
+                      { fn: tools.onSmartAutoFill, label: 'Smart fill' },
+                      { fn: tools.onQuickRcdPresets, label: 'RCD presets' },
+                      { fn: tools.onFindReplace, label: 'Find & replace' },
+                    ]
+                      .filter((t) => t.fn)
+                      .map((t) => (
+                        <Button
+                          key={t.label}
+                          onClick={t.fn}
+                          className="h-11 px-3 rounded-xl border border-white/[0.12] bg-white/[0.06] text-white text-[13px] font-semibold transition-colors duration-150 ease-out hover:bg-white/[0.12] touch-manipulation"
+                        >
+                          {t.label}
+                        </Button>
+                      ))}
                     {tools.onValidate && (
                       <Button
                         onClick={tools.onValidate}
-                        className={cn(
-                          'h-11 px-3 rounded-xl text-[13px] font-semibold touch-manipulation border',
-                          tools.validateIssueCount
-                            ? 'border-orange-500/40 bg-orange-500/15 text-orange-200 hover:bg-orange-500/25'
-                            : 'border-white/[0.12] bg-white/[0.06] text-white hover:bg-white/[0.1]'
-                        )}
+                        className="h-11 px-3 rounded-xl text-[13px] font-semibold touch-manipulation border border-white/[0.12] bg-white/[0.06] text-white transition-colors duration-150 ease-out hover:bg-white/[0.12]"
                       >
                         Validate
+                        {/* Solid pill, not a translucent wash on the whole
+                            button — amber at low opacity over near-black turns
+                            olive/brown. Full-opacity accent on a small element
+                            reads clean and keeps the toolbar calm. */}
                         {tools.validateIssueCount ? (
-                          <span className="ml-1.5 tabular-nums">{tools.validateIssueCount}</span>
+                          <span className="ml-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-400 px-1.5 text-[11px] font-bold tabular-nums text-black">
+                            {tools.validateIssueCount}
+                          </span>
                         ) : null}
                       </Button>
                     )}
@@ -954,16 +983,13 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                   {tools.onValidate && (
                     <Button
                       onClick={tools.onValidate}
-                      className={cn(
-                        'h-11 rounded-xl text-[13px] font-semibold touch-manipulation active:scale-95 border',
-                        tools.validateIssueCount
-                          ? 'border-orange-500/40 bg-orange-500/15 text-orange-200'
-                          : 'border-white/[0.12] bg-white/[0.06] text-white hover:bg-white/[0.1]'
-                      )}
+                      className="h-11 rounded-xl text-[13px] font-semibold touch-manipulation active:scale-95 border border-white/[0.12] bg-white/[0.06] text-white hover:bg-white/[0.1]"
                     >
                       Validate
                       {tools.validateIssueCount ? (
-                        <span className="ml-1.5 tabular-nums">{tools.validateIssueCount}</span>
+                        <span className="ml-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-400 px-1.5 text-[11px] font-bold tabular-nums text-black">
+                          {tools.validateIssueCount}
+                        </span>
                       ) : null}
                     </Button>
                   )}
